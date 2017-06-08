@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="PBXCORE">
+    <test name="Trunk" preserve-order="true">
+        <classes>
+             <!-- <class name="com.yeastar.swebtest.testcase.CheckToTest"/> -->
+            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.Trunk.NewTrunkTest"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.Trunk.TrunkCallTest"/>
+        </classes>
+    </test> <!-- YsAutoTest -->
+    <test name="Extension" preserve-order="true">
+        <classes>
+            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.ExtensionTest"/>
+        </classes>
+    </test> <!-- YsAutoTest -->
+</suite> <!-- Default Suite -->
