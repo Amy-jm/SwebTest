@@ -3,8 +3,14 @@ package com.yeastar.swebtest.driver;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.yeastar.swebtest.tools.reporter.Logger;
+import cucumber.api.java.eo.Se;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -17,44 +23,49 @@ import static com.codeborne.selenide.WebDriverRunner.*;
 public class SwebDriver extends Config {
     public static WebDriver webDriver = null;
 
-    /**
-     * 初始化Selenide，并根据参数打开浏览器和网页
-     * @param browser
-     * @param relativeOrAbsoluteUrl
-     */
-    public static int initialDriver(String browser, String relativeOrAbsoluteUrl) {
-        //Selenide的配置信息
-        Configuration.timeout = 10000;
+    public static int initialDriver(String browser) {
+        return initialDriver(browser,"");
+    }
 
+    public static int initialDriver(String browser, String relativeOrAbsoluteUrl) {
+        return initialDriver(browser,relativeOrAbsoluteUrl,null);
+    }
+
+    public static int initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl) {
+        //Selenide的配置信息
+        Configuration.timeout = FINDELEMENTTIMEOUT;
+        DesiredCapabilities grid;
         //选择测试浏览器
         //这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
         if (browser.equals("chrome")) {
             Configuration.browser = "chrome";
             System.setProperty("selenide.browser", "Chrome");
-            System.setProperty("webdriver.chrome.driver", ".\\src\\main\\resources\\driver\\chrome\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", CHROME_PATH);
+            grid = DesiredCapabilities.chrome();
         } else if (browser.equals("firefox")) {
             System.setProperty("webdriver.firefox.bin",FIREFOX_PATH);
+            grid = DesiredCapabilities.firefox();
         } else {
             Logger.error("浏览器参数有误："+browser);
             return 0;
         }
 
-        //如果指定，则打开被测服务器
-        if (relativeOrAbsoluteUrl != null) {
+        if (hubUrl != null ) {
+            try {
+                webDriver = new RemoteWebDriver(new URL(hubUrl),grid);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            webDriver.get(relativeOrAbsoluteUrl);
+            setWebDriver(webDriver);
+        } else {
+            //如果指定，则打开被测服务器
             open(relativeOrAbsoluteUrl);
+            //返回WebDriver的类型
+            webDriver = getWebDriver();
         }
 
-        //返回WebDriver的类型
-        webDriver = getWebDriver();
         return 1;
-    }
-
-    /**
-     * 初始化Selenide，并根据参数打开浏览器
-     * @param browser
-     */
-    public static int initialDriver(String browser) {
-        return initialDriver(browser,null);
     }
 
     /**
@@ -75,25 +86,36 @@ public class SwebDriver extends Config {
     public static void login(String username,String password,String language){
         if (language != null) { //不修改语言
             if (language.equalsIgnoreCase("english")) { //修改语言，暂时就中文，英文
-                select($(pageLogin.languageSelect), $(pageLogin.english));
+                select(pageLogin.languageSelect, pageLogin.english);
             } else {
-                select($(pageLogin.languageSelect), $(pageLogin.chineseSimpleFied));
+                select(pageLogin.languageSelect, pageLogin.chineseSimpleFied);
             }
         }
-        $(pageLogin.username).setValue(username);
-        $(pageLogin.password).setValue(password);
-        $(pageLogin.login).click();
-        $(pageDeskTop.taskBarUser).should(exist);
+        pageLogin.username.setValue(username);
+        pageLogin.password.setValue(password);
+        pageLogin.login.click();
+        pageDeskTop.taskBarUser.should(exist);
     }
 
     /**
      * 注销登录
      */
     public static void logout() {
-        $(pageDeskTop.taskBarUser).click();
-        $(pageDeskTop.taskBarUser_Logout).click();
-        $(pageDeskTop.messageBox_Yes).click();
-        $(pageLogin.username).should(exist);
+        pageDeskTop.taskBarUser.click();
+        pageDeskTop.taskBarUser_Logout.click();
+        pageDeskTop.messageBox_Yes.click();
+        pageLogin.username.should(exist);
+    }
+
+    public static void setValue(SelenideElement element, String text) {
+        element.should(exist).setValue(text);
+    }
+    /**
+     * 点击按钮
+     * @param element
+     */
+    public static void click(SelenideElement element) {
+        element.should(exist).click();
     }
 
     /**
@@ -102,8 +124,8 @@ public class SwebDriver extends Config {
      * @param value
      */
     public static void select(SelenideElement select, SelenideElement value) {
-        select.click();
-        value.click();
+        click(select);
+        click(value);
     }
 
     public static String executeJs(String js) {
