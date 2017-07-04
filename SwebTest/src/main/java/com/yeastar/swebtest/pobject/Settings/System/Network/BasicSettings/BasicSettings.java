@@ -1,0 +1,94 @@
+package com.yeastar.swebtest.pobject.Settings.System.Network.BasicSettings;
+
+import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
+
+import static com.codeborne.selenide.Selenide.$;
+
+/**
+ * Created by Yeastar on 2017/6/29.
+ */
+public class BasicSettings {
+    public SelenideElement basicSettings = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Basic Settings\"]"));
+
+    public SelenideElement hostname = $(By.id("st-net-hostname-inputEl"));
+    public SelenideElement mode = $(By.id("st-net-mode-trigger-picker"));
+    public SelenideElement defaultInterface = $(By.id("st-net-gwnic-trigger-picker"));
+    public SelenideElement cellularNetwork = $(By.id("st-net-lteprority-trigger-picker"));
+    /**
+     * LAN
+     */
+
+    /**
+     * DHCP
+     */
+
+    public SelenideElement l_DHCP = $(By.xpath(".//input[starts-with(@name='lan1type') ]/*/*/label[text()='DHCP']"));
+
+
+    /**
+     * Static Address
+     */
+    public SelenideElement l_staticIPAddress = $(By.xpath(".//input[starts-with(@name='lan1type') ]/*/*/label[text()='Static IP Address']"));
+
+    public SelenideElement l_IPAddress = $(By.id("st-net-ipaddress11-inputEl"));
+    public SelenideElement l_subnetMask = $(By.id("st-net-netmask11-inputEl"));
+    public SelenideElement l_gateway = $(By.id("st-net-gateway1-inputEl"));
+    public SelenideElement l_preferredDNSServer = $(By.id("st-net-dns11-inputEl"));
+    public SelenideElement l_alternateDNSServer = $(By.id("st-net-dns21-inputEl"));
+    public SelenideElement l_IPAddress2 = $(By.id("st-net-ipaddress21-inputEl"));
+    public SelenideElement l_subnetMask2 = $(By.id("st-net-netmask21-inputEl"));
+    public SelenideElement l_enableVLAN = $(By.id("st-net-enablevlan1-displayEl"));
+    public SelenideElement l_enableVLANsubinterface1 = $(By.id("st-net-enablevlan11-displayEl"));
+    public SelenideElement l_enableVLANsubinterface2 = $(By.id("st-net-enablevlan21-displayEl"));
+
+
+    /**
+     * PPPoE
+     */
+
+    public SelenideElement l_PPPoE = $(By.xpath(".//input[starts-with(@name='lan1type') ]/*/*/label[text()='PPPoE']"));
+
+    public SelenideElement l_username = $(By.id("st-net-pppoeusername1-inputEl"));
+    public SelenideElement l_password = $(By.id("st-net-pppoepassword1-inputEl"));
+
+
+    /**
+     * WAN
+     */
+    /**
+     * DHCP
+     */
+
+    public SelenideElement w_DHCP = $(By.xpath(".//input[starts-with(@name='lan2type') ]/*/*/label[text()='DHCP']"));
+
+
+    /**
+     * Static Address
+     */
+    public SelenideElement w_staticIPAddress = $(By.xpath(".//input[starts-with(@name='lan2type') ]/*/*/label[text()='Static IP Address']"));
+
+    public SelenideElement w_IPAddress = $(By.id("st-net-ipaddress12-inputEl"));
+    public SelenideElement w_subnetMask = $(By.id("st-net-netmask12-inputEl"));
+    public SelenideElement w_gateway = $(By.id("st-net-gateway2-inputEl"));
+    public SelenideElement w_preferredDNSServer = $(By.id("st-net-dns12-inputEl"));
+    public SelenideElement w_alternateDNSServer = $(By.id("st-net-dns22-inputEl"));
+    public SelenideElement w_enableVLAN = $(By.id("st-net-enablevlan2-displayEl"));
+    public SelenideElement w_enableVLANsubinterface1 = $(By.id("st-net-enablevlan12-displayEl"));
+    public SelenideElement w_enableVLANsubinterface2 = $(By.id("st-net-enablevlan22-displayEl"));
+
+
+    /**
+     * PPPoE
+     */
+
+    public SelenideElement w_PPPoE = $(By.xpath(".//input[starts-with(@name='lan2type') ]/*/*/label[text()='PPPoE']"));
+
+    public SelenideElement w_username = $(By.id("st-net-pppoeusername2-inputEl"));
+    public SelenideElement w_password = $(By.id("st-net-pppoepassword2-inputEl"));
+
+
+    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
+    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+
+}

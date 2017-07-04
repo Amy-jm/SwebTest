@@ -1,17 +1,16 @@
 package com.yeastar.swebtest.driver;
 
-import com.yeastar.swebtest.pobject.PageDeskTop;
-import com.yeastar.swebtest.pobject.PageLogin;
-import com.yeastar.swebtest.pobject.PageSettings.PageSettings;
-
-import static com.yeastar.swebtest.driver.DataReader.*;
+import com.yeastar.swebtest.pobject.*;
+import com.yeastar.swebtest.pobject.Settings.*;
+import com.yeastar.swebtest.pobject.Settings.PBX.Extensions.Extensions.*;
 
 /**
  * Created by GaGa on 2017-05-19.
  */
 public class Config extends DataReader {
 
-    public static long FINDELEMENTTIMEOUT = 10000;
+    public static long TEST_TIMEOUT = 3000;  //测试过程的时间差
+    public static long FINDELEMENT_TIMEOUT = 10000;  //元素查找的时间差
     public static String CHROME = "chrome";
     public static String FIREFOX = "firefox";
     public static String IE = "ie";
@@ -20,8 +19,8 @@ public class Config extends DataReader {
      */
     public static PageLogin pageLogin = new PageLogin();
     public static PageDeskTop pageDeskTop = new PageDeskTop();
-    public static PageSettings pageSettings = new PageSettings();
-
+    public static Settings settings = new Settings();
+    public static Extensions extensions = new Extensions();
     /**
      * log的配置
      */
