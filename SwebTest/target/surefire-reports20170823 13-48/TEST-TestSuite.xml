@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestSuite" time="3,790.806" tests="133" errors="0" skipped="0" failures="11">
+  <properties>
+    <property name="idea.version" value="2017.1.1"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin"/>
+    <property name="java.vm.version" value="25.121-b13"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="F:\MyProject\0GitProject\swebtest\SwebTest"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) Client VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="F:\MyProject\0GitProject\swebtest\SwebTest"/>
+    <property name="java.runtime.version" value="1.8.0_121-b13"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\endorsed"/>
+    <property name="os.arch" value="x86"/>
+    <property name="java.io.tmpdir" value="C:\Users\Yeastar\AppData\Local\Temp\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="classworlds.conf" value="D:\JetBrains\IntelliJ IDEA 2017.1.1\plugins\maven\lib\maven3\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Perl\site\bin;C:\Perl\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;D:\Qt\Qt5.5.1\5.5\mingw492_32\bin;D:\Microsoft SQL Server\120\Tools\Binn\;D:\Microsoft SQL Server\120\DTS\Binn\;D:\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\ManagementStudio\;D:\Microsoft SQL ServerX86\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;D:\UltarEdit;C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin;D:\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin;C:\windows\system32;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;D:\Microsoft SQL Server\110\Tools\Binn\;C:\Users\Yeastar\.dnx\bin;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="C:\Users\Yeastar"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="Yeastar"/>
+    <property name="java.class.path" value="D:\JetBrains\IntelliJ IDEA 2017.1.1\plugins\maven\lib\maven3\boot\plexus-classworlds-2.5.2.jar;D:\JetBrains\IntelliJ IDEA 2017.1.1\lib\idea_rt.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="32"/>
+    <property name="java.home" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre"/>
+    <property name="sun.java.command" value="org.codehaus.classworlds.Launcher -Didea.version=2017.1.1 test"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="zh"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_121"/>
+    <property name="java.ext.dirs" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\resources.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\rt.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\sunrsasign.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\jsse.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\jce.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\charsets.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\jfr.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="D:\JetBrains\IntelliJ IDEA 2017.1.1\plugins\maven\lib\maven3"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
+  </properties>
+  <testcase name="CleanExtensions" classname="com.yeastar.swebtest.testcase.CheckToTest" time="184.479"/>
+  <testcase name="A_SettingSystemTime" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="129.098"/>
+  <testcase name="B_CreateExtension" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="19.574"/>
+  <testcase name="C_CreateFxsExtension" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="15.547"/>
+  <testcase name="D_CreateBulkExtensions" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="24.838"/>
+  <testcase name="E_RegisterExtension" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="64.869"/>
+  <testcase name="F_ExportExtensions" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="0.944"/>
+  <testcase name="G_DelExtension" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="0"/>
+  <testcase name="H_DelExteiosns" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="0"/>
+  <testcase name="J_PstnCall" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="52.014"/>
+  <testcase name="K_ExtensionGroupSetting" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="32.283"/>
+  <testcase name="A_AddTrunk" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" time="20.151"/>
+  <testcase name="B_AddTrunkIAXTrunk" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" time="15.529"/>
+  <testcase name="C_AddSPX" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" time="15.545"/>
+  <testcase name="D_AddSPS" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" time="15.283"/>
+  <testcase name="E_SetBriTrunk" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" time="146.572">
+    <failure type="java.lang.NullPointerException:">java.lang.NullPointerException: null
+	at javax.imageio.ImageIO.write(ImageIO.java:1538)
+	at com.yeastar.swebtest.tools.ScreenShot.screenShotAsFile(ScreenShot.java:48)
+	at com.yeastar.swebtest.tools.ScreenShot.takeScreenshotByAll(ScreenShot.java:38)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1083)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:210)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk.E_SetBriTrunk(NewTrunk.java:85)
+</failure>
+    <system-out><![CDATA[return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[2].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[3].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[4].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[5].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[6].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[7].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[8].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[9].id + ' tr td')[1].textContent
+find bri BRI2-1 row=9
+Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[9].id + ' tr td img')[0].click()
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[9].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+    <system-err><![CDATA[java.io.FileNotFoundException: F:\pic\¡¾Ô¤ÆÚ£ºUp Êµ¼Ê£º¡¤ Malfunction in interface\module; please examine the relevant interface\module.[br]¡¤ No trunk connected.[br]¡¤ Service provider did not activate the trunk.¡¿.jpg (ÏµÍ³ÕÒ²»µ½Ö¸¶¨µÄÂ·¾¶¡£)
+	at java.io.RandomAccessFile.open0(Native Method)
+	at java.io.RandomAccessFile.open(RandomAccessFile.java:316)
+	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:243)
+	at javax.imageio.stream.FileImageOutputStream.<init>(FileImageOutputStream.java:69)
+	at com.sun.imageio.spi.FileImageOutputStreamSpi.createOutputStreamInstance(FileImageOutputStreamSpi.java:55)
+	at javax.imageio.ImageIO.createImageOutputStream(ImageIO.java:419)
+	at javax.imageio.ImageIO.write(ImageIO.java:1530)
+	at com.yeastar.swebtest.tools.ScreenShot.screenShotAsFile(ScreenShot.java:48)
+	at com.yeastar.swebtest.tools.ScreenShot.takeScreenshotByAll(ScreenShot.java:38)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1083)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:210)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk.E_SetBriTrunk(NewTrunk.java:85)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]></system-err>
+  </testcase>
+  <testcase name="A_RingGroup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="21.197"/>
+  <testcase name="B_Queue" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="14.044"/>
+  <testcase name="C_Conference" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="6.295"/>
+  <testcase name="D_PickupGroup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="16.35"/>
+  <testcase name="E_PagingIntercom" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="10.943"/>
+  <testcase name="F_CallBack" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="18.965"/>
+  <testcase name="F_PINList" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="14.081"/>
+  <testcase name="A_JudgeStorage" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="12.454"/>
+  <testcase name="B_AddNetworkDrive" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="12.493"/>
+  <testcase name="C_SetFileShare" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="0.312"/>
+  <testcase name="D_StorageLocations" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="4.291"/>
+  <testcase name="E_Recording_Settings" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="22.666"/>
+  <testcase name="A_TimeCondition" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="7.244"/>
+  <testcase name="B_Holiday" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="3.028"/>
+  <testcase name="C_CreateOutRoutes" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="43.656"/>
+  <testcase name="D_CreateDISA" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="18.933"/>
+  <testcase name="E_CreateIVR" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="44.28"/>
+  <testcase name="G_CallSip" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="42.614">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.G_CallSip(OutboundRoutes.java:191)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:SipÍâÏßºô³ö 1000´ò 903000
+find this 1000 IP:192.168.7.153
+find this 3000 IP:192.168.7.151
+uri/./..........sip:903000@192.168.7.153  0
+CallstateCallBack callid:0 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback"3030" <sip:3030@192.168.7.151>callid:1accid:1accounts.size()£º3
+bbbbbbbbbbbbbbbbbbbbbbbb+3000 0
+CallstateCallBack callid:1 accId:1 code:4
+CallstateCallBack : username :3000
+CallstateCallBack callid:1 accId:1 code:5
+CallstateCallBack : username :3000
+CallstateCallBack callid:0 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:0 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:0 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:1 accId:1 code:6
+CallstateCallBack : username :3000
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="H_CallFail" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="15.002"/>
+  <testcase name="I_CallIax" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="38.852">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.I_CallIax(OutboundRoutes.java:223)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:IAXÍâÏßºô³ö1000´ò903000
+find this 1000 IP:192.168.7.153
+find this 3000 IP:192.168.7.151
+uri/./..........sip:903000@192.168.7.153  0
+CallstateCallBack callid:2 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback"3034" <sip:3034@192.168.7.151>callid:3accid:1accounts.size()£º3
+bbbbbbbbbbbbbbbbbbbbbbbb+3000 2
+CallstateCallBack callid:3 accId:1 code:4
+CallstateCallBack : username :3000
+CallstateCallBack callid:3 accId:1 code:5
+CallstateCallBack : username :3000
+CallstateCallBack callid:2 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:2 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:2 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:3 accId:1 code:6
+CallstateCallBack : username :3000
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="J_CallSps" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="36.868">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.J_CallSps(OutboundRoutes.java:240)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:SPSÍâÏßºô³ö1000´ò902000
+find this 1000 IP:192.168.7.153
+find this 2000 IP:192.168.7.152
+uri/./..........sip:902000@192.168.7.153  0
+CallstateCallBack callid:4 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback"1000" <sip:1000@192.168.7.152>callid:5accid:2accounts.size()£º3
+bbbbbbbbbbbbbbbbbbbbbbbb+2000 4
+CallstateCallBack callid:5 accId:2 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:5 accId:2 code:5
+CallstateCallBack : username :2000
+CallstateCallBack callid:4 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:4 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:4 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:5 accId:2 code:6
+CallstateCallBack : username :2000
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="K_CallSpx" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="39.401">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.K_CallSpx(OutboundRoutes.java:259)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:SPXÍâÏßºô³ö1000´ò902000
+find this 1000 IP:192.168.7.153
+find this 2000 IP:192.168.7.152
+uri/./..........sip:902000@192.168.7.153  0
+CallstateCallBack callid:6 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback"1000" <sip:1000@192.168.7.152>callid:7accid:2accounts.size()£º3
+bbbbbbbbbbbbbbbbbbbbbbbb+2000 6
+CallstateCallBack callid:7 accId:2 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:7 accId:2 code:5
+CallstateCallBack : username :2000
+CallstateCallBack callid:6 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:6 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:6 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:7 accId:2 code:6
+CallstateCallBack : username :2000
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="L_CallPstn" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="41.463">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.L_CallPstn(OutboundRoutes.java:278)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:PSTNÍâÏßºô³ö1000´ò903000
+find this 1000 IP:192.168.7.153
+find this 3000 IP:192.168.7.151
+uri/./..........sip:903000@192.168.7.153  0
+CallstateCallBack callid:8 accId:0 code:1
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:8 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:8 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:8 accId:0 code:6
+CallstateCallBack : username :1000
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="M_CallBri" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="46.377">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.M_CallBri(OutboundRoutes.java:295)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:BRIÍâÏßºô³ö1000´ò903000
+find this 1000 IP:192.168.7.153
+find this 2000 IP:192.168.7.152
+uri/./..........sip:902000@192.168.7.153  0
+CallstateCallBack callid:9 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback"1000" <sip:1000@192.168.7.152>callid:10accid:2accounts.size()£º3
+bbbbbbbbbbbbbbbbbbbbbbbb+2000 9
+CallstateCallBack callid:10 accId:2 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:10 accId:2 code:5
+CallstateCallBack : username :2000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:9 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:9 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:9 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:10 accId:2 code:6
+CallstateCallBack : username :2000
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="N_CallE1" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="0"/>
+  <testcase name="O_CallGsm" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="0.001"/>
+  <testcase name="P_PinList" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="18.076"/>
+  <testcase name="Q_PinListCall" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="34.585">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.Q_PinListCall(OutboundRoutes.java:354)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:PinListÍâÏßºô³öÊ§°Ü1000´ò903000
+find this 1000 IP:192.168.7.153
+find this 3000 IP:192.168.7.151
+uri/./..........sip:903000@192.168.7.153  0
+CallstateCallBack callid:11 accId:0 code:1
+CallstateCallBack : username :1000
+In getAsteriskInfo
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAsterisk Call Manager/2.8.0 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºResponse: Success time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºMessage: Authentication accepted time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: FullyBooted time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: system,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºStatus: Fully Booted time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Reload time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: system,all time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºModule: All time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºStatus: 0 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newchannel time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: PJSIP/1000-00000008 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 4 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Ring time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: 1000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: 1000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:1
+CallstateCallBack callid:11 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:11 accId:0 code:5
+CallstateCallBack : username :1000
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: en time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 903000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 1 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503451238.18 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503451238.18 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newexten time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: PJSIP/1000-00000008 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 4 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Ring time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: 1000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: 1000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: zh time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 903000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 1 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503451238.18 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503451238.18 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExtension: 903000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºApplication: YsWalkContext time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAppData: blacklist-outbound,3000,1,1000,outbound time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newexten time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: PJSIP/1000-00000008 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 4 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Ring time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: 1000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: 1000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: zh time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 903000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 2 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503451238.18 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503451238.18 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExtension: 903000 time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºApplication: Authenticate time:1
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAppData: /etc/asterisk/pin_Pin1.conf,a time:1
+Server Find Keyword....
+TcpSocket end...
+Q_PinListCall TcpSocket return: true
+find this 1000 IP:192.168.7.153
+callId: 11send dtmf :1 num:
+send dtmf end ...
+callId: 11send dtmf :2 num:
+send dtmf end ...
+callId: 11send dtmf :3 num:
+send dtmf end ...
+incomingcallback"3030" <sip:3030@192.168.7.151>callid:12accid:1accounts.size()£º3
+bbbbbbbbbbbbbbbbbbbbbbbb+3000 11
+CallstateCallBack callid:12 accId:1 code:4
+CallstateCallBack : username :3000
+CallstateCallBack callid:12 accId:1 code:5
+CallstateCallBack : username :3000
+CallstateCallBack callid:11 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:12 accId:1 code:6
+CallstateCallBack : username :3000
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="R_PWD_None" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="13.029"/>
+  <testcase name="S_PinListCall" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="23.114"/>
+  <testcase name="T_RoutePermission" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="27.228"/>
+  <testcase name="A_EmailSettings" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="11.164"/>
+  <testcase name="B_CreateInboundRoutes" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="78.534"/>
+  <testcase name="C_RegisterExtensions" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="19.068"/>
+  <testcase name="D_CallSip" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="46.931"/>
+  <testcase name="E_CallIax" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="44.934"/>
+  <testcase name="F_CallSps" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="88.644"/>
+  <testcase name="G_CallSpx" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="48.679"/>
+  <testcase name="H_CallGsm" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="0"/>
+  <testcase name="I_CallPstn" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="48.554">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š903000 å®é™…ï¼š903000 [903000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.I_CallPstn(InboundRoutes.java:231)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:A²¦´ò90+·Ö»úºÅÂë£¨Éè±¸3µÄ·Ö»ú£©£¬PSTNÍ¨»°
+find this 2000 IP:192.168.7.152
+find this 2010 IP:
+uri: sip:2010@192.168.7.152:5060
+CallstateCallBack callid:9 accId:3 code:1
+CallstateCallBack : username :2000
+Call id... 9
+CallstateCallBack callid:9 accId:3 code:3
+CallstateCallBack : username :2000
+CallstateCallBack callid:9 accId:3 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:9 accId:3 code:5
+CallstateCallBack : username :2000
+find this 2000 IP:192.168.7.152
+callId: 9send dtmf :5 num:
+send dtmf end ...
+find this 2000 IP:192.168.7.152
+callId: 9send dtmf :9 num:
+send dtmf end ...
+callId: 9send dtmf :0 num:
+send dtmf end ...
+DtmfCallBack id:9dtmf:48
+callId: 9send dtmf :3 num:
+send dtmf end ...
+callId: 9send dtmf :0 num:
+send dtmf end ...
+callId: 9send dtmf :0 num:
+send dtmf end ...
+callId: 9send dtmf :0 num:
+send dtmf end ...
+find this 3000 IP:192.168.7.151
+Answer Call  2  3000
+incomingcallback"3030" <sip:3030@192.168.7.151>callid:10accid:4accounts.size()£º10
+bbbbbbbbbbbbbbbbbbbbbbbb+3000 2
+CallstateCallBack callid:10 accId:4 code:6
+CallstateCallBack : username :3000
+CallstateCallBack callid:9 accId:3 code:6
+CallstateCallBack : username :2000
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="J_CallE1" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="0.001"/>
+  <testcase name="K_SetDidSps" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="31.832"/>
+  <testcase name="L_CallDidSps" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="30.214"/>
+  <testcase name="A_FileShare" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="0"/>
+  <testcase name="B_DelCdr" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="11.48"/>
+  <testcase name="C_DownloadCDR" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="0.629"/>
+  <testcase name="D_Recording" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="0.737"/>
+  <testcase name="E_RecordingPlay" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="39.844"/>
+  <testcase name="F_Downloader" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="23.935"/>
+  <testcase name="G_DeleteallCDR" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="0.457"/>
+  <testcase name="H_PromprPreference" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="69.002"/>
+  <testcase name="I_Me_CDRRecording" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="30.706"/>
+  <testcase name="J_DownloaderPrompt" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="31.504"/>
+  <testcase name="K_DeleteSharetest" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" time="23.665"/>
+  <testcase name="A_AutoCLIP" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" time="71.888"/>
+  <testcase name="B_CallBri" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" time="26.772"/>
+  <testcase name="C_CallBri" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" time="24.181"/>
+  <testcase name="D_DeleteViewAutoCLIP" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" time="11.848"/>
+  <testcase name="E_CallBri" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" time="11.636"/>
+  <testcase name="A_PagingIntercom" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="42.523"/>
+  <testcase name="B_AddBlacklist" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="51.762"/>
+  <testcase name="C_ExportBlacklist" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="1.083"/>
+  <testcase name="E_ImportBlacklist" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="0.001"/>
+  <testcase name="F_AddWhitelist" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="58.695"/>
+  <testcase name="G_ExportWhitelist" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="0.757"/>
+  <testcase name="I_ImportWhitelist" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="0"/>
+  <testcase name="J_DelAllBlacklist" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="14.774"/>
+  <testcase name="K_DelAllWhitelist" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="22.609"/>
+  <testcase name="L_ExtensionPage" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="40.17"/>
+  <testcase name="M_ExtensionExport" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="0.211"/>
+  <testcase name="N_DeleteTest1Sps" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="21.54"/>
+  <testcase name="O_ExtensionImport" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="13.373"/>
+  <testcase name="P_ExtensionWhitelist" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="40.228"/>
+  <testcase name="Q_ExtensionExport" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="0.197"/>
+  <testcase name="R_WhiteTest1Delete" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="12.396"/>
+  <testcase name="S_WhiteImport" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="0.333"/>
+  <testcase name="T_BlacklistDeleteAll" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="22.268"/>
+  <testcase name="U_WhitelistDeleteAll" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="22.859"/>
+  <testcase name="V_OnlyWhitelistCheck" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="8.423"/>
+  <testcase name="W_OnlyWhitelistUnCheck" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="6.84"/>
+  <testcase name="X_AddSpeedDial" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="72.983">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction.X_AddSpeedDial(CallFunction.java:379)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:Ìí¼Ó¿ìËÙ²¦ºÅ£¬·Ö»ú1000²¦´ò*991
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('speeddial').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('speeddial').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+find this 1000 IP:192.168.7.153
+uri/./..........sip:*991@192.168.7.153  0
+CallstateCallBack callid:11 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback"1000" <sip:1000@192.168.7.152>callid:12accid:4accounts.size()£º7
+bbbbbbbbbbbbbbbbbbbbbbbb+2000 10
+CallstateCallBack callid:12 accId:4 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:12 accId:4 code:5
+CallstateCallBack : username :2000
+CallstateCallBack callid:11 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:11 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:12 accId:4 code:6
+CallstateCallBack : username :2000
+CallstateCallBack callid:11 accId:0 code:6
+CallstateCallBack : username :1000
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="Y_ExportSpeedDial" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="0.666"/>
+  <testcase name="Z_DeleteSpeedDial" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="42.565"/>
+  <testcase name="a_ImportSpeedDial" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="0.232"/>
+  <testcase name="b_DeleteAllSpeedDial" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction" time="30.868"/>
+  <testcase name="F_Transfer" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" time="66.088"/>
+  <testcase name="G_Transfer" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" time="59.37"/>
+  <testcase name="H_CallPickup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" time="41.448"/>
+  <testcase name="I_CallPickup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" time="49.02"/>
+  <testcase name="J_CallParking" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" time="76.064"/>
+  <testcase name="K_CallParking" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" time="80.717"/>
+  <testcase name="A_addEmergencyNumber" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" time="37.125"/>
+  <testcase name="B_CallEmergencyNumber" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" time="90.069">
+    <failure message="CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘" type="java.lang.AssertionError">java.lang.AssertionError: CDRè¢«å«æ–¹æ£€æµ‹ ã€é¢„æœŸï¼š902000 å®é™…ï¼š902000 [902000]ã€‘
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:299)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest.B_CallEmergencyNumber(EmergencyNumberTest.java:77)
+</failure>
+    <system-out><![CDATA[Ö´ĞĞ²Ù×÷:·Ö»úCÍ¨¹ıPSTNÏßÂ·ºô³ö£¬Í¨»°ÖĞ¡£·Ö»ú1100Ö±½Ó²¦´ò½ô¼±ºÅÂë2001
+find this 1102 IP:192.168.7.153
+find this 2000 IP:192.168.7.152
+uri/./..........sip:902000@192.168.7.153  2
+CallstateCallBack callid:0 accId:2 code:1
+CallstateCallBack : username :1102
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[5].id + ' tr td div div')[0].getAttribute('data-qtip')
+incomingcallback"2010" <sip:2010@192.168.7.152>callid:1accid:3accounts.size()£º5
+bbbbbbbbbbbbbbbbbbbbbbbb+2000 0
+CallstateCallBack callid:1 accId:3 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:1 accId:3 code:5
+CallstateCallBack : username :2000
+CallstateCallBack callid:0 accId:2 code:4
+CallstateCallBack : username :1102
+CallstateCallBack callid:0 accId:2 code:5
+CallstateCallBack : username :1102
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[5].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[5].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[5].id + ' tr td div div')[0].getAttribute('data-qtip')
+find this 1100 IP:192.168.7.153
+find this 2001 IP:192.168.7.152
+uri/./..........sip:2001@192.168.7.153  0
+CallstateCallBack callid:2 accId:0 code:1
+CallstateCallBack : username :1100
+incomingcallback"1100dial2001" <sip:Emergency@192.168.7.153>callid:3accid:1accounts.size()£º5
+bbbbbbbbbbbbbbbbbbbbbbbb+1101 -1
+CallstateCallBack callid:3 accId:1 code:4
+CallstateCallBack : username :1101
+CallstateCallBack callid:3 accId:1 code:5
+CallstateCallBack : username :1101
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:0 accId:2 code:6
+CallstateCallBack : username :1102
+CallstateCallBack callid:1 accId:3 code:6
+CallstateCallBack : username :2000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+incomingcallback"2010" <sip:2010@192.168.7.152>callid:4accid:4accounts.size()£º5
+bbbbbbbbbbbbbbbbbbbbbbbb+2001 2
+CallstateCallBack callid:4 accId:4 code:4
+CallstateCallBack : username :2001
+CallstateCallBack callid:4 accId:4 code:5
+CallstateCallBack : username :2001
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:2 accId:0 code:4
+CallstateCallBack : username :1100
+CallstateCallBack callid:2 accId:0 code:5
+CallstateCallBack : username :1100
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:3 accId:1 code:6
+CallstateCallBack : username :1101
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+In getAsteriskInfo
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAsterisk Call Manager/2.8.0 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºResponse: Success time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºMessage: Authentication accepted time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: FullyBooted time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: system,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºStatus: Fully Booted time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newchannel time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: PJSIP/1100-0000003b time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 4 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Ring time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: 1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: 1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: en time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 2001 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 1 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503453422.126 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503453422.126 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newexten time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: PJSIP/1100-0000003b time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 4 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Ring time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: 1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: 1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: zh time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 2001 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 1 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503453422.126 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503453422.126 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExtension: 2001 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºApplication: AGI time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAppData: /ysdisk/ysapps/pbxcenter/bin/notify,emergency,2001,1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newchannel time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: Local/1101@DLPN_DialPlan1101-00000003;1 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 0 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Down time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: en time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1101 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 1101 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 1 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503453422.127 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503453422.127 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newexten time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: PJSIP/1100-0000003b time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 4 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Ring time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: 1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: 1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: zh time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 2001 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 2 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503453422.126 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503453422.126 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExtension: 2001 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºApplication: Set time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAppData: EVENTCONTEXT=extension=1100&emernumber=2001 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newchannel time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: Local/1101@DLPN_DialPlan1101-00000003;2 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 4 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Ring time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: en time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1101 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 1101 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 1 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503453422.128 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503453422.127 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newexten time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: Local/1101@DLPN_DialPlan1101-00000003;1 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 0 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Down time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: en time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1101 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 1101 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 1 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503453422.127 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503453422.127 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExtension: 1101 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºApplication: AppDial2 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAppData: (Outgoing Line) time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: Newexten time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: PJSIP/1100-0000003b time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 4 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Ring time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: 1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDName: 1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineNum: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºConnectedLineName: <unknown> time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLanguage: zh time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAccountCode:  time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºContext: DLPN_DialPlan1100 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExten: 2001 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPriority: 3 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºUniqueid: 1503453422.126 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºLinkedid: 1503453422.126 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºExtension: 2001 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºApplication: AGI time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºAppData: /ysbin/eventadd,3018,extension=1100&emernumber=2001 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£º time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºEvent: NewCallerid time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºPrivilege: call,all time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannel: Local/1101@DLPN_DialPlan1101-00000003;1 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelState: 0 time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºChannelStateDesc: Down time:0
+½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢1£ºCallerIDNum: Emergency time:0
+Server Find Keyword....
+TcpSocket end...
+find this 1101 IP:192.168.7.153
+Answer Call  3  1101
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:2 accId:0 code:6
+CallstateCallBack : username :1100
+CallstateCallBack callid:4 accId:4 code:6
+CallstateCallBack : username :2001
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[2].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[2].id + ' tr td')[2].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[2].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[2].id + ' tr td')[2].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[2].id + ' tr td')[5].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[5].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[3].id + ' tr td')[1].textContent
+return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[3].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="C_DeleteEmergencyNumber" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" time="45.035"/>
+  <testcase name="D_DeleteAllEmergencyNumber" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" time="53.77"/>
+  <testcase name="A_IVR" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="12.413"/>
+  <testcase name="B_IVR" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="26.25"/>
+  <testcase name="C_RingGroup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="9.013"/>
+  <testcase name="D_RingGroup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="33.176"/>
+  <testcase name="E_Queue" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="8.867"/>
+  <testcase name="F_Queue" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="37.583"/>
+  <testcase name="G_Conference" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="8.934"/>
+  <testcase name="H_Conferene" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="17.101"/>
+  <testcase name="I_PickupGroup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="8.961"/>
+  <testcase name="J_PickupGroup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="37.9"/>
+  <testcase name="K_PagingIntercom" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="8.897"/>
+  <testcase name="L_PagingIntercom" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="19.778"/>
+  <testcase name="M_CallBack" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="9.578"/>
+  <testcase name="N_CallBack" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="31.486"/>
+  <testcase name="O_Disa" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="8.914"/>
+  <testcase name="P_Disa" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="43.24"/>
+  <testcase name="R_PINList" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="9.067"/>
+  <testcase name="S_PINList" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="23.644"/>
+  <testcase name="T_OutboundRoutes" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="11.071"/>
+  <testcase name="U_OutboundRoutes" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="29.037"/>
+  <testcase name="V_InboundRoutes" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="8.93"/>
+  <testcase name="W_InboundRoutes" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" time="48.497"/>
+</testsuite>

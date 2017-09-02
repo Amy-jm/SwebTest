@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="5"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="145.359">
+  <properties />
+  
+  
+            <testcase name="D_DeleteViewAutoCLIP" time="11.856" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" />
+                <testcase name="A_AutoCLIP" time="71.264" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" />
+                <testcase name="B_CallBri" time="26.579" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" />
+                <testcase name="C_CallBri" time="24.035" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" />
+                <testcase name="E_CallBri" time="11.625" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl" />
+      
+</testsuite>

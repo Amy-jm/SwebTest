@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="syscore"
+           tests="2"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="34.314">
+  <properties />
+  
+  
+            <testcase name="A_DualSetting" time="9.572" classname="com.yeastar.swebtest.testcase.smokecase.syscase.Network" />
+                <testcase name="B_DualSetting" time="24.742" classname="com.yeastar.swebtest.testcase.smokecase.syscase.Network" />
+      
+</testsuite>

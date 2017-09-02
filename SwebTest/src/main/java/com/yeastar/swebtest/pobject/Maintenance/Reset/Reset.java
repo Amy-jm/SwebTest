@@ -10,4 +10,10 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class Reset {
     public SelenideElement reset = $(By.id("mt-rr-reset-btnInnerEl"));
+
+    public SelenideElement resetCode = $(By.id("mt-rr-resetcode"));
+    public SelenideElement resetInputCode = $(By.id("mt-rr-code-inputEl"));
+
+    public SelenideElement startReset = $(By.xpath(".//div[starts-with(@id,'webreset')]//span[text()='Reset']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'webreset')]//span[text()='Cancel']"));
 }

@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="SYSCORE">
-    <test name="VPN" preserve-order="true">
+    <test name="syscore" preserve-order="true">
         <classes>
-            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.VPN.VPNEditTest"/>
-            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.VPN.VPNRunTest"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Network"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Security"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Maintain"/>
         </classes>
     </test> <!-- YsAutoTest -->
-    <test name="DateTime" preserve-order="true">
-        <classes>
-            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime.DateTimeTest"/>
-        </classes>
-    </test> <!-- YsAutoTest -->
-    <test name="Event" preserve-order="true">
-        <classes>
-            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Event.EventTest"/>
-        </classes>
-    </test> <!-- YsAutoTest -->
+
 </suite> <!-- Default Suite -->

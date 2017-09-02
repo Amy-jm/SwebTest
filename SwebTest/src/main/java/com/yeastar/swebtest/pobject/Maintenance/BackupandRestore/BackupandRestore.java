@@ -10,14 +10,24 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class BackupandRestore {
 
+    public String grid = "Ext.getCmp('maintance').down('backupandrestore').down('tableview')";
+    public String gridLoading = "Ext.getCmp('maintance').down('backupandrestore').down('loadmask')";
+
+    public int gridColumn_Checked = 0;
+    public int gridColumn_Name = 1;
+    public int gridColumn_BackUpTime = 2;
+    public int gridColumn_Memo = 3;
+    public int gridDownload = 0;
+    public int gridRestroe = 1;
+    public int gridDelete = 2;
     /**
      * 功能按钮
      */
 
-    public SelenideElement backup = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Add\"]"));
-    public SelenideElement upload = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Bulk Add\"]"));
+    public SelenideElement backup = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Backup\"]"));
+    public SelenideElement upload = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Upload\"]"));
     public SelenideElement delete = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Delete\"]"));
-    public SelenideElement backupSchedule = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Import\"]"));
+    public SelenideElement backupSchedule = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Backup Schedule\"]"));
 
     /**
      * 删除功能

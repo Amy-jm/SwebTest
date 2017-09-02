@@ -1,0 +1,392 @@
+<h2>Reporter output</h2><table><tr><td>【测试类场景初始化】清空分机</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_ExtensionTest</td></tr>
+<tr><td>  【执行操作】设置系统时间为9点整</td></tr>
+<tr><td>    Pass: 重启</td></tr>
+<tr><td>  【执行操作】创建1000分机</td></tr>
+<tr><td>  【执行操作】创建FXS分机1001</td></tr>
+<tr><td>  【执行操作】批量创建分机1100-1109</td></tr>
+<tr><td>  【执行操作】SIP分机1000拨打SIP分机1001，通话</td></tr>
+<tr><td>    Pass: 1000分机注册</td></tr>
+<tr><td>    Pass: 1001分机注册</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】导出分机列表</td></tr>
+<tr><td>  【执行操作】删除1000分机</td></tr>
+<tr><td>  【执行操作】删除所有分机</td></tr>
+<tr><td>  【执行操作】导入分机列表</td></tr>
+<tr><td>    Pass: 1000分机注册</td></tr>
+<tr><td>    Pass: 1001分机注册</td></tr>
+<tr><td>    Pass: 导入分机列表</td></tr>
+<tr><td>  【执行操作】通过PSTN外线B设备2000拨打A设备1000</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】添加分机组extgroup1</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_NewTrunkTest</td></tr>
+<tr><td>  【执行操作】添加SIPTrunk</td></tr>
+<tr><td>  【执行操作】添加IAXTrunk</td></tr>
+<tr><td>  【执行操作】添加SPX</td></tr>
+<tr><td>  【执行操作】添加SPS</td></tr>
+<tr><td>    Pass: 重启</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器_NewTrunk</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_CallFeatureTest</td></tr>
+<tr><td>  【执行操作】添加RingGroup</td></tr>
+<tr><td>  【执行操作】添加Queue</td></tr>
+<tr><td>  【执行操作】添加conference</td></tr>
+<tr><td>  【执行操作】添加pickupGroup</td></tr>
+<tr><td>  【执行操作】添加paging_Intercom</td></tr>
+<tr><td>  【执行操作】添加callback</td></tr>
+<tr><td>  【执行操作】添加PINList</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器_CallFeatureTest</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_StorageTest</td></tr>
+<tr><td>  【执行操作】SD/HD/USB检测</td></tr>
+<tr><td>  【执行操作】挂载网络磁盘sharetest1</td></tr>
+<tr><td>  【执行操作】勾选Enable File Sharing</td></tr>
+<tr><td>  【执行操作】Storage Locations中CDR、Recordings和Logs下拉选择TF/SD卡,Voicemail&One Touch Recordings下拉选择sharetest1</td></tr>
+<tr><td>  【执行操作】Record Trunks全选所有Trunk、Record Extensions全选所有分机</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器_StorageTest</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_OutboundRoutes</td></tr>
+<tr><td>    Pass: 1000分机注册</td></tr>
+<tr><td>  【执行操作】设置Time Conditions</td></tr>
+<tr><td>    Pass: TimeConditions名称错误</td></tr>
+<tr><td>  【执行操作】设置Holiday</td></tr>
+<tr><td>    Pass: TimeConditions名称错误</td></tr>
+<tr><td>  【执行操作】创建呼出路由</td></tr>
+<tr><td>  【执行操作】创建Disa</td></tr>
+<tr><td>  【执行操作】创建IVR</td></tr>
+<tr><td>  【执行操作】Sip外线呼出 1000打 903000</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a></td></tr>
+<tr><td>  【执行操作】Sip外线呼出失败1001打903000</td></tr>
+<tr><td>  【执行操作】IAX外线呼出1000打903000</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a></td></tr>
+<tr><td>  【执行操作】SPS外线呼出1000打902000</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a></td></tr>
+<tr><td>  【执行操作】SPX外线呼出1000打902000</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a></td></tr>
+<tr><td>  【执行操作】PSTN外线呼出1000打903000</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a></td></tr>
+<tr><td>  【执行操作】BRI外线呼出1000打903000</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a></td></tr>
+<tr><td>  【执行操作】E1外线呼出1000打903000</td></tr>
+<tr><td>  【执行操作】GSM外线呼出1000打903000</td></tr>
+<tr><td>  【执行操作】呼出路由设置Pinlist</td></tr>
+<tr><td>  【执行操作】PinList外线呼出失败1000打903000</td></tr>
+<tr><td>    Pass: 外线呼出进入pin1List</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a></td></tr>
+<tr><td>  【执行操作】设置呼出路由无Pinlist</td></tr>
+<tr><td>  【执行操作】设置呼出路由无Pinlist 1000拨打903000</td></tr>
+<tr><td>  【执行操作】登录1000分机判断路由是否存在</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器_OutboundRoutes</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_InboundRoutesTest</td></tr>
+<tr><td>  【执行操作】设置Email</td></tr>
+<tr><td>  【执行操作】创建呼入路由</td></tr>
+<tr><td>  【执行操作】注册测试分机</td></tr>
+<tr><td>    Pass: 1100分机注册</td></tr>
+<tr><td>    Pass: 1101分机注册</td></tr>
+<tr><td>    Pass: 1102分机注册</td></tr>
+<tr><td>  【执行操作】设备3通过sip外线呼入到设备1，听到IVR提示音后，按0</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】设备3通过iax外线呼入到设备1，听到IVR的提示音后，按1</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】设备2通过sps外线呼入到设备1，听到IVR的提示音后，按2</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】A拨打90+分机号码（设备3的分机），SPX通话</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】A拨打90+分机号码（设备3的分机），GSM通话</td></tr>
+<tr><td>  【执行操作】A拨打90+分机号码（设备3的分机），PSTN通话</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a></td></tr>
+<tr><td>  【执行操作】A拨打90+分机号码（设备3的分机），E1通话</td></tr>
+<tr><td>  【执行操作】编辑呼入路由,设置DID</td></tr>
+<tr><td>  【执行操作】设备2通过sps外线呼入到设备（呼出前缀后+分机B）</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器InboundRoutesTest</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备FileShare_CDR</td></tr>
+<tr><td>    Pass: 1100分机注册</td></tr>
+<tr><td>    Pass: 1101分机注册</td></tr>
+<tr><td>  【执行操作】删除一行CDR</td></tr>
+<tr><td>  【执行操作】下载所有CDR</td></tr>
+<tr><td>  【执行操作】下载Recording</td></tr>
+<tr><td>    Pass: PlayRecord CallFrom</td></tr>
+<tr><td>    Pass: PlayRecord CallTo</td></tr>
+<tr><td>    Pass: 从分机A 1100播放录音</td></tr>
+<tr><td>  【执行操作】点击CDR中Recording Options中为蓝色的Downloader图标</td></tr>
+<tr><td>    Pass: 分机B:1101进入录音</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】登录1000分机网页查看最新的CDR</td></tr>
+<tr><td>    Pass: CDR呼叫方</td></tr>
+<tr><td>    Pass: CDR被叫方</td></tr>
+<tr><td>  【执行操作】返回admin用户下载Recording Options</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器FileShare_CDR</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备</td></tr>
+<tr><td>  【执行操作】编辑inrouter，Destination设置到Conference，meet1</td></tr>
+<tr><td>  【执行操作】设备A 1000 call (bri) B 2000</td></tr>
+<tr><td>  【执行操作】分机2000通过bri线路呼入到设备1的1000</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】删除AutoCLIP记录</td></tr>
+<tr><td>  【执行操作】设备A 1000 call (bri) B 2000呼入到会议室meet1</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备PagingFunction</td></tr>
+<tr><td>    Pass: 1000分机注册</td></tr>
+<tr><td>    Pass: 1100分机注册</td></tr>
+<tr><td>    Pass: 1101分机注册</td></tr>
+<tr><td>    Pass: 1102分机注册</td></tr>
+<tr><td>  【执行操作】分机B(1101)拨打6300</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】添加黑名单test1，分机2000通过sps线路呼入到设备1，呼入失败</td></tr>
+<tr><td>    Pass: 黑名单添加错误</td></tr>
+<tr><td>    Pass: 通话进入黑名单列表</td></tr>
+<tr><td>  【执行操作】导出黑名单</td></tr>
+<tr><td>  【执行操作】删除黑名单，分机2000通过sps线路呼入到设备1，呼入成功</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】点击“Import”，选择之前导出的文件导入</td></tr>
+<tr><td>    Pass: 导入黑名单</td></tr>
+<tr><td>  【执行操作】添加白名单test2，分机2000通过sps线路呼入到设备1，呼入成功</td></tr>
+<tr><td>    Pass: 白名单添加错误</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】删除白名单，分机2000通过sps线路呼入到设备1，呼入失败</td></tr>
+<tr><td>    Pass: 通话进入黑名单列表</td></tr>
+<tr><td>  【执行操作】导入白名单</td></tr>
+<tr><td>    Pass: 导入白名单</td></tr>
+<tr><td>  【执行操作】批量删除黑名单</td></tr>
+<tr><td>    Pass: 黑名单添加错误</td></tr>
+<tr><td>  【执行操作】批量删除白名单</td></tr>
+<tr><td>    Pass: 白名单添加错误</td></tr>
+<tr><td>  【执行操作】登录1100分机页面创建黑名单test1</td></tr>
+<tr><td>    Pass: 进入黑名单列表</td></tr>
+<tr><td>  【执行操作】1100分机页面，删除黑名单test1，分机2000通过sps呼入到设备1，呼入成功</td></tr>
+<tr><td>  【执行操作】1100分机页面，点击“Import”，选择之前导出黑名单的文件导入</td></tr>
+<tr><td>    Pass: 分机页面导入黑名单</td></tr>
+<tr><td>  【执行操作】1100分机页面，删除黑名单test1，分机2000通过sps呼入到设备1，呼入成功</td></tr>
+<tr><td>  【执行操作】1100分机页面，删除白名单，分机2000通过sps呼入到设备1，呼入失败</td></tr>
+<tr><td>    Pass: 进入黑名单列表</td></tr>
+<tr><td>  【执行操作】1100分机页面，导入白名单</td></tr>
+<tr><td>  【执行操作】1100分机页面，批量删除黑名单</td></tr>
+<tr><td>  【执行操作】1100分机页面，批量删除白名单</td></tr>
+<tr><td>  【执行操作】1100分机页面，勾选OnlyWhitelist，分机2000通过sps呼入到设备1，呼入失败</td></tr>
+<tr><td>    Pass: 进入黑名单列表</td></tr>
+<tr><td>  【执行操作】1100分机页面，取消勾选OnlyWhitelist，分机2000通过sps呼入到设备1，呼入成功</td></tr>
+<tr><td>  【执行操作】添加快速拨号，分机1000拨打*991</td></tr>
+<tr><td>    Pass: 添加speed_dial_name</td></tr>
+<tr><td>    Pass: 添加speed_dial_phoneNumber</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a></td></tr>
+<tr><td>  【执行操作】导出快速拨号列表</td></tr>
+<tr><td>  【执行操作】删除快速拨号列表第一条，分机1000，拨打*991</td></tr>
+<tr><td>  【执行操作】导入快速拨号列表</td></tr>
+<tr><td>  【执行操作】批量删除快速拨号列表</td></tr>
+<tr><td>    Pass: 添加speed_dial_name</td></tr>
+<tr><td>    Pass: 添加speed_dial_phoneNumber</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器PagingFunction</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备VoicePrompts</td></tr>
+<tr><td>    Pass: 1100分机注册</td></tr>
+<tr><td>    Pass: 1101分机注册</td></tr>
+<tr><td>    Pass: 1102分机注册</td></tr>
+<tr><td>  【执行操作】Default选择上传的一个提示音</td></tr>
+<tr><td>    Pass: 提示音更换</td></tr>
+<tr><td>  【执行操作】选择Music on Hold提示音列表的第一个提示音，点击“Play”在1100播放</td></tr>
+<tr><td>    Pass: 等待音乐播放</td></tr>
+<tr><td>  【执行操作】删除Music on Hold提示音列表的第一个提示音</td></tr>
+<tr><td>  【执行操作】创建一个新的playlist</td></tr>
+<tr><td>    Pass: play1新增的等待提示音列表为空</td></tr>
+<tr><td>  【执行操作】新的playlist上传音乐molihua.wav</td></tr>
+<tr><td>    Pass: play1等待音乐播放</td></tr>
+<tr><td>  【执行操作】Voice Prompts->Prompt Preference中的Music on Hold选择play1,分机1100拨打6400</td></tr>
+<tr><td>    Pass: 播放play1中的xxx提示音</td></tr>
+<tr><td>  【执行操作】全选所有提示音，点击“Delete”</td></tr>
+<tr><td>  【执行操作】录一个新的录音作为提示音</td></tr>
+<tr><td>    Pass: RecordFile 开始录音</td></tr>
+<tr><td>    Pass: 自定义提示音生成</td></tr>
+<tr><td>  【执行操作】上传一个音乐作为提示音</td></tr>
+<tr><td>    Pass: custom Prompts音乐播放</td></tr>
+<tr><td>  【执行操作】上传一个音乐作为提示音</td></tr>
+<tr><td>    Pass: custom record重新录音</td></tr>
+<tr><td>  【执行操作】下载自定义提示音</td></tr>
+<tr><td>  【执行操作】删除第一个自定义提示音</td></tr>
+<tr><td>  【执行操作】删除全部自定义提示音</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器_VoicePrompts</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备</td></tr>
+<tr><td>    Pass: 1100分机注册</td></tr>
+<tr><td>    Pass: 1101分机注册</td></tr>
+<tr><td>    Pass: 1102分机注册</td></tr>
+<tr><td>  【执行操作】Transfer：分机A打给分机B，通过过程中，A拨打*3C</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】Transfer：分机A打给分机B，通过过程中，A拨打*03C</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】CallPickup：分机A打给C，分机C响铃中，分机B拨打*04C截答</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】CallPickup：分机C打给分机B，分机B响铃中，分机A拨打*4截答</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测错误</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】CallParking：分机A打给分机B，通话过程中，A拨打*6，15s后，分机A拨打6900</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>  【执行操作】CallParking：分机A打给分机B，通话过程中，分机A拨打*066950，15s后，分机A拨打6950</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备</td></tr>
+<tr><td>    Pass: 1100分机注册</td></tr>
+<tr><td>    Pass: 1101分机注册</td></tr>
+<tr><td>    Pass: 1102分机注册</td></tr>
+<tr><td>  【执行操作】添加紧急呼叫号码</td></tr>
+<tr><td>  【执行操作】分机C通过PSTN线路呼出，通话中。分机1100直接拨打紧急号码2001</td></tr>
+<tr><td>    Pass: 进入紧急呼叫</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    Pass: CDR被叫方检测</td></tr>
+<tr><td>    Pass: CDR_Status检测</td></tr>
+<tr><td>    Pass: CDR呼叫方检测</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a></td></tr>
+<tr><td>  【执行操作】删除紧急号码</td></tr>
+<tr><td>  【执行操作】批量删除紧急号码</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备</td></tr>
+<tr><td>  【执行操作】删除单个IVR</td></tr>
+<tr><td>  【执行操作】批量删除IVR</td></tr>
+<tr><td>  【执行操作】删除单个ringGroup</td></tr>
+<tr><td>  【执行操作】批量删除ringGroup</td></tr>
+<tr><td>  【执行操作】单个删除Queue</td></tr>
+<tr><td>  【执行操作】批量删除Queue</td></tr>
+<tr><td>  【执行操作】删除单个Conference</td></tr>
+<tr><td>  【执行操作】批量删除Conference</td></tr>
+<tr><td>  【执行操作】删除单个PinckupGruop</td></tr>
+<tr><td>  【执行操作】批量删除PinckupGruop</td></tr>
+<tr><td>  【执行操作】删除单个PagingIntercom</td></tr>
+<tr><td>  【执行操作】批量删除PagingIntercom</td></tr>
+<tr><td>  【执行操作】删除单个Callback</td></tr>
+<tr><td>  【执行操作】批量删除CallBack</td></tr>
+<tr><td>  【执行操作】删除单个Disa</td></tr>
+<tr><td>  【执行操作】批量删除disa1</td></tr>
+<tr><td>  【执行操作】删除单个PINList</td></tr>
+<tr><td>  【执行操作】批量删除Pin1</td></tr>
+<tr><td>  【执行操作】删除单个OutboundRoutes</td></tr>
+<tr><td>  【执行操作】批量删除OutboundRoutes</td></tr>
+<tr><td>  【执行操作】删除单个inboundRoutes</td></tr>
+<tr><td>  【执行操作】批量删除inboundRoutes</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_Network</td></tr>
+<tr><td>  【执行操作】修改网络设置</td></tr>
+<tr><td>    Pass: 重启</td></tr>
+<tr><td>  【执行操作】从wan口IP登录</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_Security</td></tr>
+<tr><td>  【执行操作】网页访问协议设置HTTP，开启ssh端口22</td></tr>
+<tr><td>  【执行操作】连接SSH</td></tr>
+<tr><td>    Pass: 连接SSH</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_UserPermission</td></tr>
+<tr><td>  【执行操作】添加UserPermession,admin权限</td></tr>
+<tr><td>    Pass: 新添加的User</td></tr>
+<tr><td>    Pass: 新添加的Role</td></tr>
+<tr><td>  【执行操作】登录分机A 1100的页面，检查主菜单内所有勾选功能</td></tr>
+<tr><td>  【执行操作】User设置为分机B 1101，Set Privilege As为Custom，网页设置项默认未勾选，勾选PBX、Auto Provisioning</td></tr>
+<tr><td>  【执行操作】登录分机A 1101的页面，检查主菜单内所有勾选功能</td></tr>
+<tr><td>    Pass: Setting界面只有PBX</td></tr>
+<tr><td>    Pass: Setting界面只有PBX</td></tr>
+<tr><td>  【执行操作】选择User为分机A的数据，点击“Delete”图标，点击yes</td></tr>
+<tr><td>  【执行操作】登录分机A 1101的页面，检查主菜单内只有ME功能</td></tr>
+<tr><td>  【执行操作】勾选全部UserPermission,删除</td></tr>
+<tr><td>    Pass: 全部UserPermission,删除</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_DateTime</td></tr>
+<tr><td>  【执行操作】设置Time Zone为8 China (Beijing)</td></tr>
+<tr><td>  【执行操作】分机A打给分机B，通话10s</td></tr>
+<tr><td>    Pass: 1100分机注册</td></tr>
+<tr><td>    Pass: 1101分机注册</td></tr>
+<tr><td>    <a href="file:///F:\pic\CDR呼叫时间检测 【预期： 实际：2017-08-24 10】.jpg" target="_blank">Error: CDR呼叫时间检测 【预期： 实际：2017-08-24 10】</a></td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_EventCenter</td></tr>
+<tr><td>    Pass: 1100分机注册</td></tr>
+<tr><td>  【执行操作】Add Contact</td></tr>
+<tr><td>    Pass: 事件通知分机号</td></tr>
+<tr><td>    Pass: 事件通知方式</td></tr>
+<tr><td>  【执行操作】执行的操作</td></tr>
+<tr><td>  【执行操作】分机1100响铃接听</td></tr>
+<tr><td>    Pass: 分机1100接听</td></tr>
+<tr><td>  【执行操作】查看Event log</td></tr>
+<tr><td>  【执行操作】删除Notification列表</td></tr>
+<tr><td>  【执行操作】删除Notification分机1100不响铃</td></tr>
+<tr><td>    Pass: 分机1100未接听</td></tr>
+<tr><td>  【执行操作】删除Notification后查看Event log</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+<tr><td>【测试类场景初始化】打开游览器并登录设备_Maintain</td></tr>
+<tr><td>  【执行操作】添加备份文件</td></tr>
+<tr><td>  【执行操作】下载备份包</td></tr>
+<tr><td>  【执行操作】删除备份文件</td></tr>
+<tr><td>  【执行操作】点击“Upload”，选择刚下载的备份包，点击“Upload”</td></tr>
+<tr><td>  【执行操作】设置BackupSchedule</td></tr>
+<tr><td>  【执行操作】选择当前日期的系前一天的系统日志,删除</td></tr>
+<tr><td>  【执行操作】下载全部日志</td></tr>
+<tr><td>  【执行操作】删除全部系统日志</td></tr>
+<tr><td>  【执行操作】添加一个分机，检测操作日志</td></tr>
+<tr><td>    Pass: 操作日志User</td></tr>
+<tr><td>【测试类场景恢复】关闭游览器</td></tr>
+</table>

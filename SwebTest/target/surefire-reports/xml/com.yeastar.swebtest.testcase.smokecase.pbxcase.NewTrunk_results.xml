@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="4"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="77.431">
+  <properties />
+  
+  
+            <testcase name="A_AddTrunk" time="22.277" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" />
+                <testcase name="D_AddSPS" time="16.821" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" />
+                <testcase name="B_AddTrunkIAXTrunk" time="18.453" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" />
+                <testcase name="C_AddSPX" time="19.880" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" />
+      
+</testsuite>

@@ -2,7 +2,7 @@ package com.yeastar.swebtest.testcase.extendcase;
 
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.pobject.PageDeskTop;
-import com.yeastar.swebtest.pobject.PageMeSetting;
+//import com.yeastar.swebtest.pobject.PageMeSetting;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -15,36 +15,29 @@ import java.util.Random;
  * Linkus分机批量创建头像
  */
 public class LinkusAvatarTest extends SwebDriver {
-    static PageMeSetting pageMeSetting = new PageMeSetting();
+//    static PageMeSetting pageMeSetting = new PageMeSetting();
     static PageDeskTop pageDeskTop = new PageDeskTop();
 
     public static void changeInformation(String path, String name, String email, String mobile) {
-        pageDeskTop.mesetting.click();
+//        pageDeskTop.mesetting.click();
         //pageMeSetting.name.setValue(name);
         //pageMeSetting.email.setValue(email);
         //pageMeSetting.mobile.setValue(mobile);
-        pageMeSetting.clicktochange.click();
+//        pageMeSetting.clicktochange.click();
+
         try {
             Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            Runtime.getRuntime().exec("C:\\Users\\GaGa\\Desktop\\123.exe "+path);
+
+            Runtime.getRuntime().exec("C:\\Users\\Yeastar\\Desktop\\Import.exe "+path);
+
+            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        try {
-            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        pageMeSetting.save.click();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        pageMeSetting.save.click();
     }
     public static String getRandomString(int length) { //length表示生成字符串的长度
         String base = "yeastarYEASTAR6205";

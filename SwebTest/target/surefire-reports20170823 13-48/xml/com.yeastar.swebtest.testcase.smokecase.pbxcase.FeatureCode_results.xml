@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="6"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="372.708">
+  <properties />
+  
+  
+            <testcase name="I_CallPickup" time="49.019" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" />
+                <testcase name="F_Transfer" time="66.088" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" />
+                <testcase name="G_Transfer" time="59.370" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" />
+                <testcase name="H_CallPickup" time="41.448" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" />
+                <testcase name="J_CallParking" time="76.064" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" />
+                <testcase name="K_CallParking" time="80.719" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode" />
+      
+</testsuite>

@@ -9,6 +9,17 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class Add_Callback {
+    public String destination_Extension = "e";
+    public String destination_Voicemail = "v";
+    public String destination_IVR = "i";
+    public String destination_RingGroup = "r";
+    public String destination_Queue = "q";
+    public String destination_Conference = "c";
+    public String destination_Disa = "d";
+
+    public String id_destinationNumber = "st-callback-destination";
+    public String id_destinationType = "st-callback-desttype";
+
     public SelenideElement name = $(By.id("st-callback-name-inputEl"));
     public SelenideElement callbackThrough = $(By.id("st-callback-callbacktrunk-trigger-picker"));
     public SelenideElement delayBeforeCallback = $(By.id("st-callback-delay-inputEl"));
@@ -16,7 +27,7 @@ public class Add_Callback {
     public SelenideElement prepend = $(By.id("st-callback-prepend-inputEl"));
     public SelenideElement destination = $(By.id("st-callback-desttype-trigger-picker"));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'callback-edit-')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'callback-edit-')]//span[text()='Cancel']"));
 
 }

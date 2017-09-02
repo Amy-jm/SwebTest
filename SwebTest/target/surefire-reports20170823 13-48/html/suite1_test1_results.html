@@ -1,0 +1,2892 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
+<head>
+  <title>Test Results Report - pbxcore</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="description" content="TestNG unit test results." />
+  <link href="reportng.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="reportng.js"></script>
+</head>
+<body>
+<h1>pbxcore</h1>
+<p>
+  Test duration: 4338.773s
+</p>
+
+
+
+  <table class="resultsTable">
+    <tr><th colspan="3" class="header failed">Failed Tests</th></tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  X_AddSpeedDial
+      </td>
+  <td class="duration">
+    72.985s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加快速拨号，分机1000拨打*991<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 添加speed_dial_name<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 添加speed_dial_phoneNumber<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-0', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</b></a><br />
+    <div class="stackTrace" id="exception-0">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction.X_AddSpeedDial(CallFunction.java:379)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  B_CallEmergencyNumber
+      </td>
+  <td class="duration">
+    90.068s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】分机C通过PSTN线路呼出，通话中。分机1100直接拨打紧急号码2001<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 进入紧急呼叫<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-1', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</b></a><br />
+    <div class="stackTrace" id="exception-1">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:299)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest.B_CallEmergencyNumber(EmergencyNumberTest.java:77)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  I_CallPstn
+      </td>
+  <td class="duration">
+    48.553s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】A拨打90+分机号码（设备3的分机），PSTN通话<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-2', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</b></a><br />
+    <div class="stackTrace" id="exception-2">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.I_CallPstn(InboundRoutes.java:231)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  E_SetBriTrunk
+      </td>
+  <td class="duration">
+    146.564s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp;&nbsp;&nbsp; Pass: 重启<br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-3', 'block')" title="Click to expand/collapse"><b>java.lang.NullPointerException</b></a><br />
+    <div class="stackTrace" id="exception-3">
+              javax.imageio.ImageIO.write(ImageIO.java:1538)<br />
+              com.yeastar.swebtest.tools.ScreenShot.screenShotAsFile(ScreenShot.java:48)<br />
+              com.yeastar.swebtest.tools.ScreenShot.takeScreenshotByAll(ScreenShot.java:38)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1083)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:210)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk.E_SetBriTrunk(NewTrunk.java:85)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  G_CallSip
+      </td>
+  <td class="duration">
+    42.612s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】Sip外线呼出 1000打 903000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-4', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</b></a><br />
+    <div class="stackTrace" id="exception-4">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.G_CallSip(OutboundRoutes.java:191)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  I_CallIax
+      </td>
+  <td class="duration">
+    38.853s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】IAX外线呼出1000打903000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-5', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</b></a><br />
+    <div class="stackTrace" id="exception-5">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.I_CallIax(OutboundRoutes.java:223)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  J_CallSps
+      </td>
+  <td class="duration">
+    36.867s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】SPS外线呼出1000打902000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-6', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</b></a><br />
+    <div class="stackTrace" id="exception-6">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.J_CallSps(OutboundRoutes.java:240)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  K_CallSpx
+      </td>
+  <td class="duration">
+    39.401s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】SPX外线呼出1000打902000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-7', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</b></a><br />
+    <div class="stackTrace" id="exception-7">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.K_CallSpx(OutboundRoutes.java:259)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  L_CallPstn
+      </td>
+  <td class="duration">
+    41.463s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】PSTN外线呼出1000打903000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-8', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</b></a><br />
+    <div class="stackTrace" id="exception-8">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.L_CallPstn(OutboundRoutes.java:278)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  M_CallBri
+      </td>
+  <td class="duration">
+    46.376s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】BRI外线呼出1000打903000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-9', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</b></a><br />
+    <div class="stackTrace" id="exception-9">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.M_CallBri(OutboundRoutes.java:295)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  Q_PinListCall
+      </td>
+  <td class="duration">
+    34.584s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】PinList外线呼出失败1000打903000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 外线呼出进入pin1List<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; <a href="file:///F:\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a><br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-10', 'block')" title="Click to expand/collapse"><b>java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</b></a><br />
+    <div class="stackTrace" id="exception-10">
+              com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)<br />
+              com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)<br />
+              com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:290)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.Q_PinListCall(OutboundRoutes.java:354)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                </div>
+      </td>
+</tr>
+      </table>
+
+
+  <table class="resultsTable">
+    <tr><th colspan="3" class="header passed">Passed Tests</th></tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.CheckToTest</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  CleanExtensions
+      </td>
+  <td class="duration">
+    184.475s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        【测试类场景初始化】清空分机<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.CallControl</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_AutoCLIP
+      </td>
+  <td class="duration">
+    71.887s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】编辑inrouter，Destination设置到Conference，meet1<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_CallBri
+      </td>
+  <td class="duration">
+    26.771s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设备A 1000 call (bri) B 2000<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_CallBri
+      </td>
+  <td class="duration">
+    24.180s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】分机2000通过bri线路呼入到设备1的1000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_DeleteViewAutoCLIP
+      </td>
+  <td class="duration">
+    11.845s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除AutoCLIP记录<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_CallBri
+      </td>
+  <td class="duration">
+    11.638s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设备A 1000 call (bri) B 2000呼入到会议室meet1<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_RingGroup
+      </td>
+  <td class="duration">
+    21.198s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加RingGroup<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_Queue
+      </td>
+  <td class="duration">
+    14.043s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加Queue<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_Conference
+      </td>
+  <td class="duration">
+    6.295s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加conference<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_PickupGroup
+      </td>
+  <td class="duration">
+    16.349s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加pickupGroup<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_PagingIntercom
+      </td>
+  <td class="duration">
+    10.942s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加paging_Intercom<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_CallBack
+      </td>
+  <td class="duration">
+    18.966s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加callback<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_PINList
+      </td>
+  <td class="duration">
+    14.081s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加PINList<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_PagingIntercom
+      </td>
+  <td class="duration">
+    42.523s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】分机B(1101)拨打6300<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_AddBlacklist
+      </td>
+  <td class="duration">
+    51.763s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加黑名单test1，分机2000通过sps线路呼入到设备1，呼入失败<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 黑名单添加错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 通话进入黑名单列表<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_ExportBlacklist
+      </td>
+  <td class="duration">
+    1.084s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】导出黑名单<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_ImportBlacklist
+      </td>
+  <td class="duration">
+    0.000s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】点击“Import”，选择之前导出的文件导入<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_AddWhitelist
+      </td>
+  <td class="duration">
+    58.695s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加白名单test2，分机2000通过sps线路呼入到设备1，呼入成功<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 白名单添加错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  G_ExportWhitelist
+      </td>
+  <td class="duration">
+    0.758s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】导出白名单<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  I_ImportWhitelist
+      </td>
+  <td class="duration">
+    0.000s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】导入白名单<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  J_DelAllBlacklist
+      </td>
+  <td class="duration">
+    14.771s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除黑名单<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 黑名单添加错误<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  K_DelAllWhitelist
+      </td>
+  <td class="duration">
+    22.607s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除白名单<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 白名单添加错误<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  L_ExtensionPage
+      </td>
+  <td class="duration">
+    40.173s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】登录1100分机页面创建黑名单Metest<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  M_ExtensionExport
+      </td>
+  <td class="duration">
+    0.211s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面导出黑名单<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  N_DeleteTest1Sps
+      </td>
+  <td class="duration">
+    21.540s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，删除黑名单Metest，分机2000通过sps呼入到设备1，呼入成功<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  O_ExtensionImport
+      </td>
+  <td class="duration">
+    13.368s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，导出白名单<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  P_ExtensionWhitelist
+      </td>
+  <td class="duration">
+    40.230s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，删除黑名单Metest，分机2000通过sps呼入到设备1，呼入成功<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  Q_ExtensionExport
+      </td>
+  <td class="duration">
+    0.197s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，导出白名单<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  R_WhiteTest1Delete
+      </td>
+  <td class="duration">
+    12.394s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，删除白名单，分机2000通过sps呼入到设备1，呼入失败<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 进入黑名单列表<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  S_WhiteImport
+      </td>
+  <td class="duration">
+    0.332s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，导出白名单<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  T_BlacklistDeleteAll
+      </td>
+  <td class="duration">
+    22.271s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，批量删除黑名单<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  U_WhitelistDeleteAll
+      </td>
+  <td class="duration">
+    22.858s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，批量删除白名单<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  V_OnlyWhitelistCheck
+      </td>
+  <td class="duration">
+    8.423s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，勾选OnlyWhitelist，分机2000通过sps呼入到设备1，呼入失败<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 进入黑名单列表<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  W_OnlyWhitelistUnCheck
+      </td>
+  <td class="duration">
+    6.837s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】1100分机页面，取消勾选OnlyWhitelist，分机2000通过sps呼入到设备1，呼入成功<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  Y_ExportSpeedDial
+      </td>
+  <td class="duration">
+    0.666s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】导出快速拨号列表<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  Z_DeleteSpeedDial
+      </td>
+  <td class="duration">
+    42.564s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除快速拨号列表第一条，分机1000，拨打*991<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  a_ImportSpeedDial
+      </td>
+  <td class="duration">
+    0.230s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】导入快速拨号列表<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  b_DeleteAllSpeedDial
+      </td>
+  <td class="duration">
+    30.869s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除快速拨号列表<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 添加speed_dial_name<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 添加speed_dial_phoneNumber<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_IVR
+      </td>
+  <td class="duration">
+    12.412s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个IVR<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_IVR
+      </td>
+  <td class="duration">
+    26.250s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除IVR<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_RingGroup
+      </td>
+  <td class="duration">
+    9.013s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个ringGroup<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_RingGroup
+      </td>
+  <td class="duration">
+    33.175s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除ringGroup<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_Queue
+      </td>
+  <td class="duration">
+    8.867s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】单个删除Queue<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_Queue
+      </td>
+  <td class="duration">
+    37.583s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除Queue<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  G_Conference
+      </td>
+  <td class="duration">
+    8.933s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个Conference<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  H_Conferene
+      </td>
+  <td class="duration">
+    17.100s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除Conference<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  I_PickupGroup
+      </td>
+  <td class="duration">
+    8.961s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个PinckupGruop<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  J_PickupGroup
+      </td>
+  <td class="duration">
+    37.900s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除PinckupGruop<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  K_PagingIntercom
+      </td>
+  <td class="duration">
+    8.896s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个PagingIntercom<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  L_PagingIntercom
+      </td>
+  <td class="duration">
+    19.778s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除PagingIntercom<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  M_CallBack
+      </td>
+  <td class="duration">
+    9.578s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个Callback<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  N_CallBack
+      </td>
+  <td class="duration">
+    31.485s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除CallBack<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  O_Disa
+      </td>
+  <td class="duration">
+    8.914s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个Disa<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  P_Disa
+      </td>
+  <td class="duration">
+    43.241s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除disa1<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  R_PINList
+      </td>
+  <td class="duration">
+    9.066s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个PINList<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  S_PINList
+      </td>
+  <td class="duration">
+    23.644s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除Pin1<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  T_OutboundRoutes
+      </td>
+  <td class="duration">
+    11.073s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个OutboundRoutes<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  U_OutboundRoutes
+      </td>
+  <td class="duration">
+    29.037s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除OutboundRoutes<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  V_InboundRoutes
+      </td>
+  <td class="duration">
+    8.930s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除单个inboundRoutes<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  W_InboundRoutes
+      </td>
+  <td class="duration">
+    48.496s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除inboundRoutes<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_addEmergencyNumber
+      </td>
+  <td class="duration">
+    37.125s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加紧急呼叫号码<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_DeleteEmergencyNumber
+      </td>
+  <td class="duration">
+    45.035s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除紧急号码<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_DeleteAllEmergencyNumber
+      </td>
+  <td class="duration">
+    53.770s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量删除紧急号码<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_SettingSystemTime
+      </td>
+  <td class="duration">
+    129.098s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设置系统时间为9点整<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 重启<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_CreateExtension
+      </td>
+  <td class="duration">
+    19.574s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】创建1000分机<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_CreateFxsExtension
+      </td>
+  <td class="duration">
+    15.548s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】创建FXS分机1001<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_CreateBulkExtensions
+      </td>
+  <td class="duration">
+    24.838s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量创建分机1100-1109<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_RegisterExtension
+      </td>
+  <td class="duration">
+    64.869s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】SIP分机1000拨打SIP分机1001，通话<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1001分机注册<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_ExportExtensions
+      </td>
+  <td class="duration">
+    0.945s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】导出分机列表<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  G_DelExtension
+      </td>
+  <td class="duration">
+    0.000s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除1000分机<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  H_DelExteiosns
+      </td>
+  <td class="duration">
+    0.000s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除所有分机<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  J_PstnCall
+      </td>
+  <td class="duration">
+    52.014s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】通过PSTN外线B设备2000拨打A设备1000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  K_ExtensionGroupSetting
+      </td>
+  <td class="duration">
+    32.282s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加分机组extgroup1<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  F_Transfer
+      </td>
+  <td class="duration">
+    66.088s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】Transfer：分机A打给分机B，通过过程中，A拨打*3C<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  G_Transfer
+      </td>
+  <td class="duration">
+    59.370s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】Transfer：分机A打给分机B，通过过程中，A拨打*03C<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  H_CallPickup
+      </td>
+  <td class="duration">
+    41.448s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】CallPickup：分机A打给C，分机C响铃中，分机B拨打*04C截答<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  I_CallPickup
+      </td>
+  <td class="duration">
+    49.019s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】CallPickup：分机C打给分机B，分机B响铃中，分机A拨打*4截答<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  J_CallParking
+      </td>
+  <td class="duration">
+    76.064s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】CallParking：分机A打给分机B，通话过程中，A拨打*6，15s后，分机A拨打6900<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  K_CallParking
+      </td>
+  <td class="duration">
+    80.719s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】CallParking：分机A打给分机B，通话过程中，分机A拨打*066950，15s后，分机A拨打6950<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_FileShare
+      </td>
+  <td class="duration">
+    0.000s
+  </td>
+  <td class="result">
+        
+    
+        
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_DelCdr
+      </td>
+  <td class="duration">
+    11.471s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除一行CDR<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_DownloadCDR
+      </td>
+  <td class="duration">
+    0.637s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】下载所有CDR<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_Recording
+      </td>
+  <td class="duration">
+    0.737s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】下载Recording<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_RecordingPlay
+      </td>
+  <td class="duration">
+    39.844s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp;&nbsp;&nbsp; Pass: PlayRecord CallFrom<br />
+                                &nbsp;&nbsp;&nbsp; Pass: PlayRecord CallTo<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 从分机A 1100播放录音<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_Downloader
+      </td>
+  <td class="duration">
+    23.935s
+  </td>
+  <td class="result">
+        
+    
+        
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  G_DeleteallCDR
+      </td>
+  <td class="duration">
+    0.457s
+  </td>
+  <td class="result">
+        
+    
+        
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  H_PromprPreference
+      </td>
+  <td class="duration">
+    69.002s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】点击CDR中Recording Options中为蓝色的Downloader图标<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 分机B:1101进入录音<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  I_Me_CDRRecording
+      </td>
+  <td class="duration">
+    30.706s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】登录1000分机网页查看最新的CDR<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  J_DownloaderPrompt
+      </td>
+  <td class="duration">
+    31.504s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】返回admin用户下载Recording Options<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  K_DeleteSharetest
+      </td>
+  <td class="duration">
+    23.665s
+  </td>
+  <td class="result">
+        
+    
+        
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_EmailSettings
+      </td>
+  <td class="duration">
+    11.164s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设置Email<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_CreateInboundRoutes
+      </td>
+  <td class="duration">
+    78.533s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】创建呼入路由<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_RegisterExtensions
+      </td>
+  <td class="duration">
+    19.067s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】注册测试分机<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1101分机注册<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1102分机注册<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_CallSip
+      </td>
+  <td class="duration">
+    46.930s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设备3通过sip外线呼入到设备1，听到IVR提示音后，按0<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_CallIax
+      </td>
+  <td class="duration">
+    44.934s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设备3通过iax外线呼入到设备1，听到IVR的提示音后，按1<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_CallSps
+      </td>
+  <td class="duration">
+    88.644s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设备2通过sps外线呼入到设备1，听到IVR的提示音后，按2<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  G_CallSpx
+      </td>
+  <td class="duration">
+    48.679s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】A拨打90+分机号码（设备3的分机），SPX通话<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  H_CallGsm
+      </td>
+  <td class="duration">
+    0.000s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】A拨打90+分机号码（设备3的分机），GSM通话<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  J_CallE1
+      </td>
+  <td class="duration">
+    0.000s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】A拨打90+分机号码（设备3的分机），E1通话<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  K_SetDidSps
+      </td>
+  <td class="duration">
+    31.832s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】编辑呼入路由,设置DID<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  L_CallDidSps
+      </td>
+  <td class="duration">
+    30.214s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设备2通过sps外线呼入到设备（呼出前缀后+分机B）<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_AddTrunk
+      </td>
+  <td class="duration">
+    20.151s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加SIPTrunk<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_AddTrunkIAXTrunk
+      </td>
+  <td class="duration">
+    15.528s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加IAXTrunk<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_AddSPX
+      </td>
+  <td class="duration">
+    15.545s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加SPX<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_AddSPS
+      </td>
+  <td class="duration">
+    15.284s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加SPS<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_TimeCondition
+      </td>
+  <td class="duration">
+    7.244s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设置Time Conditions<br />
+                                &nbsp;&nbsp;&nbsp; Pass: TimeConditions名称错误<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_Holiday
+      </td>
+  <td class="duration">
+    3.026s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设置Holiday<br />
+                                &nbsp;&nbsp;&nbsp; Pass: TimeConditions名称错误<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_CreateOutRoutes
+      </td>
+  <td class="duration">
+    43.656s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】创建呼出路由<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_CreateDISA
+      </td>
+  <td class="duration">
+    18.933s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】创建Disa<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_CreateIVR
+      </td>
+  <td class="duration">
+    44.281s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】创建IVR<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  H_CallFail
+      </td>
+  <td class="duration">
+    15.001s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】Sip外线呼出失败1001打903000<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  N_CallE1
+      </td>
+  <td class="duration">
+    0.000s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】E1外线呼出1000打903000<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  O_CallGsm
+      </td>
+  <td class="duration">
+    0.001s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】GSM外线呼出1000打903000<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  P_PinList
+      </td>
+  <td class="duration">
+    18.076s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】呼出路由设置Pinlist<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  R_PWD_None
+      </td>
+  <td class="duration">
+    13.029s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设置呼出路由无Pinlist<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  S_PinListCall
+      </td>
+  <td class="duration">
+    23.114s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设置呼出路由无Pinlist 1000拨打903000<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  T_RoutePermission
+      </td>
+  <td class="duration">
+    27.228s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】登录1000分机判断路由是否存在<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_JudgeStorage
+      </td>
+  <td class="duration">
+    12.455s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】SD/HD/USB检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_AddNetworkDrive
+      </td>
+  <td class="duration">
+    12.491s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】挂载网络磁盘sharetest1<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_SetFileShare
+      </td>
+  <td class="duration">
+    0.313s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】勾选Enable File Sharing<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_StorageLocations
+      </td>
+  <td class="duration">
+    4.290s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】Storage Locations中CDR、Recordings和Logs下拉选择TF/SD卡,Voicemail&One Touch Recordings下拉选择sharetest1<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_Recording_Settings
+      </td>
+  <td class="duration">
+    22.663s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】Record Trunks全选所有Trunk、Record Extensions全选所有分机<br />
+                  </div>
+    
+
+      </td>
+</tr>
+      </table>
+  
+</body>
+</html>

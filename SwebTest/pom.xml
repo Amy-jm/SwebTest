@@ -16,8 +16,8 @@
                 <version>2.17</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>suite/syscore.xml</suiteXmlFile>
                         <suiteXmlFile>suite/pbxcore.xml</suiteXmlFile>
+                        <!--<suiteXmlFile>suite/syscore.xml</suiteXmlFile>-->
                     </suiteXmlFiles>
                     <properties>
                         <!-- No TestNG listeners
@@ -139,6 +139,13 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/ch.ethz.ganymed/ganymed-ssh2 -->
+        <dependency>
+            <groupId>ch.ethz.ganymed</groupId>
+            <artifactId>ganymed-ssh2</artifactId>
+            <version>262</version>
+        </dependency>
+
     </dependencies>
 
 </project>

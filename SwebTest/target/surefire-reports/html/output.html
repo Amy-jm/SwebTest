@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
+<head>
+  <title>Test Results Report - Log Output</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="description" content="TestNG unit test results." />
+  <link href="reportng.css" rel="stylesheet" type="text/css" />
+  </head>
+<body>
+  <h1>Log Output</h1>
+  <p>
+    Combined output from all calls to the log methods of the <a href="http://testng.org/javadocs/org/testng/Reporter.html">TestNG Reporter</a>.    
+  </p>
+
+  <div id="log">
+                  【测试类场景初始化】打开游览器并登录设备_ExtensionTest<br />
+                        &nbsp; 【执行操作】设置系统时间为00点整<br />
+                        &nbsp;&nbsp;&nbsp; Pass: waitReboot重启<br />
+                        &nbsp; 【执行操作】创建1000分机<br />
+                        &nbsp; 【执行操作】创建FXS分机1001<br />
+                        &nbsp; 【执行操作】批量创建分机1100-1109<br />
+                        &nbsp; 【执行操作】SIP分机1000拨打SIP分机1001，通话<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1001分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp; 【执行操作】导出分机列表<br />
+                        &nbsp; 【执行操作】删除1000分机<br />
+                        &nbsp; 【执行操作】删除所有分机<br />
+                        &nbsp; 【执行操作】导入分机列表<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1001分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 导入分机列表<br />
+                        &nbsp; 【执行操作】通过PSTN外线B设备2000拨打A设备1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp; 【执行操作】添加分机组extgroup1<br />
+                        【测试类场景恢复】关闭游览器<br />
+                        【测试类场景初始化】打开游览器并登录设备_NewTrunkTest<br />
+                        &nbsp; 【执行操作】添加SIPTrunk<br />
+                        &nbsp; 【执行操作】添加IAXTrunk<br />
+                        &nbsp; 【执行操作】添加SPX<br />
+                        &nbsp; 【执行操作】添加SPS<br />
+                        【测试类场景恢复】关闭游览器_NewTrunk<br />
+                        【测试类场景初始化】打开游览器并登录设备_CallFeatureTest<br />
+                        &nbsp; 【执行操作】添加RingGroup<br />
+                        &nbsp; 【执行操作】添加Queue<br />
+                        &nbsp; 【执行操作】添加conference<br />
+                        &nbsp; 【执行操作】添加pickupGroup<br />
+                        &nbsp; 【执行操作】添加paging_Intercom<br />
+                        &nbsp; 【执行操作】添加callback<br />
+                        &nbsp; 【执行操作】添加PINList<br />
+                        【测试类场景恢复】关闭游览器_CallFeatureTest<br />
+                        【测试类场景初始化】打开游览器并登录设备_StorageTest<br />
+                        &nbsp; 【执行操作】SD/HD/USB检测<br />
+                        &nbsp; 【执行操作】挂载网络磁盘sharetest1<br />
+                        &nbsp; 【执行操作】勾选Enable File Sharing<br />
+                        &nbsp; 【执行操作】Storage Locations中CDR、Recordings和Logs下拉选择TF/SD卡,Voicemail&One Touch Recordings下拉选择sharetest1<br />
+                        &nbsp; 【执行操作】Record Trunks全选所有Trunk、Record Extensions全选所有分机<br />
+                        【测试类场景恢复】关闭游览器_StorageTest<br />
+            </div>
+
+</body>
+</html>

@@ -16,4 +16,5 @@ public class UserAccount {
     public String type;
     public String uriHead;
     public int status;
+    public int pos;
 }

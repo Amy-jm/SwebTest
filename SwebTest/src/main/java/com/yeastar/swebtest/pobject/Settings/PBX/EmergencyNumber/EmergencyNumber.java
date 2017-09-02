@@ -9,12 +9,23 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/28.
  */
 public class EmergencyNumber {
+
+    public int gridColumn_EmergencyNumber = 1;
+    public int gridColumn_Trunk = 2;
+    public int gridColumn_Extension = 3;
+    public int gridColumn_Notification = 4;
+
+    public int gridEdit = 0;
+    public int gridDelete = 1;
+
+    public String grid = "Ext.getCmp('control-panel').down('emergencylist').down('tableview')";
+    public String grid_Mask = "Ext.getCmp('control-panel').down('emergencylist').down('loadmask')";
     /**
      * 功能按钮
      */
 
-    public SelenideElement add = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Add\"]"));
-    public SelenideElement delete = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Delete\"]"));
+    public SelenideElement add = $(By.xpath(".//div[starts-with(@id,'emergency-')]//span[text()='Add']"));
+    public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,'emergency-')]//span[text()='Delete']"));
 
     /**
      * 删除功能
@@ -25,13 +36,13 @@ public class EmergencyNumber {
     /**
      * 页码功能
      */
-    public SelenideElement firstPage = $(By.xpath(".//*[@data-qtip='First Page']"));
-    public SelenideElement previousPage = $(By.xpath(".//*[@data-qtip='Previous Page']"));
-    public SelenideElement nextPage = $(By.xpath(".//*[@data-qtip='Next Page']"));
-    public SelenideElement lastPage = $(By.xpath(".//*[@data-qtip='Last Page']"));
-    public SelenideElement refresh = $(By.xpath(".//*[@data-qtip='Refresh']"));
-    public SelenideElement gotoinput = $(By.name("gotoinput"));
-    public SelenideElement go = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-toolbar-small\") and text()=\"Go\"]"));
+    public SelenideElement firstPage = $(By.xpath(".//div[starts-with(@id,'emergency')]//a[@data-qtip='First Page']"));
+    public SelenideElement previousPage = $(By.xpath(".//div[starts-with(@id,'emergency')]//a[@data-qtip='Previous Page']"));
+    public SelenideElement nextPage = $(By.xpath(".//div[starts-with(@id,'emergency')]//a[@data-qtip='Next Page']"));
+    public SelenideElement lastPage = $(By.xpath(".//div[starts-with(@id,'emergency')]//a[@data-qtip='Last Page']"));
+    public SelenideElement refresh = $(By.xpath(".//div[starts-with(@id,'emergency')]//a[@data-qtip='Refresh']"));
+    public SelenideElement gotoinput = $(By.xpath(".//div[starts-with(@id,'emergency')]//input[@name='gotoinput']"));
+    public SelenideElement go = $(By.xpath(".//div[starts-with(@id,'emergency')]//span[text()='Go']"));
     public SelenideElement selectPage = $(By.id(".//*[(@data-ref='bodyEl') and (@role='presentation')]"));
 
 

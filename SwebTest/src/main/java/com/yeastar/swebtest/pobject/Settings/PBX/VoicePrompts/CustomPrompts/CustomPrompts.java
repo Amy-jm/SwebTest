@@ -9,10 +9,34 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class CustomPrompts {
-    public SelenideElement recordNew = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Record New\"]"));
-    public SelenideElement upload = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Upload\"]"));
-    public SelenideElement delete = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Delete\"]"));
 
+    public int gridcolumn_Name = 1;
+    public int gridRecord = 0;
+    public int gridPlay = 1;
+    public int gridDownload = 2;
+    public int gridDelete = 3 ;
+    public String grid = "Ext.getCmp('control-panel').down('customprompt').down('tableview')";
+    public String grid_Mask = "Ext.getCmp('control-panel').down('customprompt').down('loadmask')";
+
+
+    public SelenideElement customPrompts = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Custom Prompts\"]"));
+
+    public SelenideElement recordNew = $(By.xpath(".//div[starts-with(@id,'customprompt-')]//span[text()='Record New']"));
+    public SelenideElement upload = $(By.xpath(".//div[starts-with(@id,'customprompt-')]//span[text()='Upload']"));
+    public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,'customprompt-')]//span[text()='Delete']"));
+
+    /**
+     * play
+     */
+    public SelenideElement name = $(By.id("st-cp-name-inputEl"));
+    public SelenideElement palyToExtension = $(By.id("st-moh-extension-trigger-picker"));
+    public SelenideElement play = $(By.xpath(".//div[starts-with(@id,'customprompt-play-')]//span[text()='Play']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'customprompt-play-')]//span[text()='Cancel']"));
+    public String  plauToExtension = "st-cp-extension";
+
+
+    public SelenideElement record_play = $(By.xpath(".//div[starts-with(@id,'customprompt-record-')]//span[text()='Record']"));
+    public SelenideElement record_cancel = $(By.xpath(".//div[starts-with(@id,'customprompt-record-')]//span[text()='Cancel']"));
     /**
      * 删除功能
      */
@@ -22,13 +46,13 @@ public class CustomPrompts {
     /**
      * 页码功能
      */
-    public SelenideElement firstPage = $(By.xpath(".//*[@data-qtip='First Page']"));
-    public SelenideElement previousPage = $(By.xpath(".//*[@data-qtip='Previous Page']"));
-    public SelenideElement nextPage = $(By.xpath(".//*[@data-qtip='Next Page']"));
-    public SelenideElement lastPage = $(By.xpath(".//*[@data-qtip='Last Page']"));
-    public SelenideElement refresh = $(By.xpath(".//*[@data-qtip='Refresh']"));
-    public SelenideElement gotoinput = $(By.name("gotoinput"));
-    public SelenideElement go = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-toolbar-small\") and text()=\"Go\"]"));
+    public SelenideElement firstPage = $(By.xpath(".//div[starts-with(@id,'customprompt')]//a[@data-qtip='First Page']"));
+    public SelenideElement previousPage = $(By.xpath(".//div[starts-with(@id,'customprompt')]//a[@data-qtip='Previous Page']"));
+    public SelenideElement nextPage = $(By.xpath(".//div[starts-with(@id,'customprompt')]//a[@data-qtip='Next Page']"));
+    public SelenideElement lastPage = $(By.xpath(".//div[starts-with(@id,'customprompt')]//a[@data-qtip='Last Page']"));
+    public SelenideElement refresh = $(By.xpath(".//div[starts-with(@id,'customprompt')]//a[@data-qtip='Refresh']"));
+    public SelenideElement gotoinput = $(By.xpath(".//div[starts-with(@id,'customprompt')]//input[@name='gotoinput']"));
+    public SelenideElement go = $(By.xpath(".//div[starts-with(@id,'customprompt')]//span[text()='Go']"));
     public SelenideElement selectPage = $(By.id(".//*[(@data-ref='bodyEl') and (@role='presentation')]"));
 
 }

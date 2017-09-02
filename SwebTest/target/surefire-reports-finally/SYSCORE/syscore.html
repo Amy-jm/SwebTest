@@ -1,0 +1,446 @@
+<html>
+<head>
+<title>TestNG:  syscore</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>syscore</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>29/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Wed Aug 30 11:15:42 CST 2017</td>
+</tr>
+<tr><td>Total time:</td><td>804 seconds (804838 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter.A_AddContact()'><b>A_AddContact</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter<br/>
+<a href="#Output-14732425" onClick='toggleBox("Output-14732425", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-14732425" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-14732425">
+  【执行操作】Add Contact<br/>
+    Pass: 事件通知分机号<br/>
+    Pass: 事件通知方式<br/>
+</div>
+</td>
+<td></td>
+<td>18</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter@bdb19</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission.A_AddUserPermissionAdmin()'><b>A_AddUserPermissionAdmin</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission<br/>
+<a href="#Output-1682505" onClick='toggleBox("Output-1682505", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1682505" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1682505">
+  【执行操作】添加UserPermession,admin权限<br/>
+    Pass: 新添加的User<br/>
+    Pass: 新添加的Role<br/>
+</div>
+</td>
+<td></td>
+<td>21</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@9a3d1d</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.A_BackupRestore()'><b>A_BackupRestore</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Maintain<br/>
+<a href="#Output-33142114" onClick='toggleBox("Output-33142114", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-33142114" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-33142114">
+  【执行操作】添加备份文件<br/>
+</div>
+</td>
+<td></td>
+<td>15</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@556333</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Network.A_DualSetting()'><b>A_DualSetting</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Network<br/>
+<a href="#Output-32624336" onClick='toggleBox("Output-32624336", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-32624336" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-32624336">
+  【执行操作】修改网络设置<br/>
+    Pass: waitReboot重启<br/>
+</div>
+</td>
+<td></td>
+<td>115</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Network@80503</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.DateTime.A_SetTimeZone()'><b>A_SetTimeZone</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.DateTime<br/>
+<a href="#Output-12441543" onClick='toggleBox("Output-12441543", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-12441543" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-12441543">
+  【执行操作】设置Time Zone为8 China (Beijing)<br/>
+    Pass: waitReboot重启<br/>
+</div>
+</td>
+<td></td>
+<td>125</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.DateTime@6be70a</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.DateTime.B_CallTest()'><b>B_CallTest</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.DateTime<br/>
+<a href="#Output-4213594" onClick='toggleBox("Output-4213594", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-4213594" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-4213594">
+  【执行操作】分机A打给分机B，通话10s<br/>
+    Pass: 1100分机注册<br/>
+    Pass: 1101分机注册<br/>
+    Pass: CDR呼叫时间检测<br/>
+    Pass: CDR呼叫方检测<br/>
+    Pass: CDR被叫方检测<br/>
+    Pass: CDR_Status检测<br/>
+</div>
+</td>
+<td></td>
+<td>45</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.DateTime@6be70a</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission.B_CheckUserPermisson()'><b>B_CheckUserPermisson</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission<br/>
+<a href="#Output-21303615" onClick='toggleBox("Output-21303615", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-21303615" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-21303615">
+  【执行操作】登录分机A 1100的页面，检查主菜单内所有勾选功能<br/>
+</div>
+</td>
+<td></td>
+<td>4</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@9a3d1d</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.B_DownloadBackUptar()'><b>B_DownloadBackUptar</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Maintain<br/>
+<a href="#Output-15056796" onClick='toggleBox("Output-15056796", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-15056796" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-15056796">
+  【执行操作】下载备份包<br/>
+</div>
+</td>
+<td></td>
+<td>6</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@556333</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Network.B_DualSetting()'><b>B_DualSetting</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Network<br/>
+<a href="#Output-11690872" onClick='toggleBox("Output-11690872", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-11690872" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-11690872">
+  【执行操作】从wan口IP登录<br/>
+</div>
+</td>
+<td></td>
+<td>26</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Network@80503</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter.B_EventSettings()'><b>B_EventSettings</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter<br/>
+<a href="#Output-15373476" onClick='toggleBox("Output-15373476", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-15373476" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-15373476">
+  【执行操作】执行的操作<br/>
+</div>
+</td>
+<td></td>
+<td>6</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter@bdb19</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Security.B_SetService()'><b>B_SetService</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Security<br/>
+<a href="#Output-20760245" onClick='toggleBox("Output-20760245", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-20760245" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-20760245">
+  【执行操作】网页访问协议设置HTTP，开启ssh端口22<br/>
+</div>
+</td>
+<td></td>
+<td>17</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Security@1553d26</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission.C_AddUserPermissionCustom()'><b>C_AddUserPermissionCustom</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission<br/>
+<a href="#Output-3779115" onClick='toggleBox("Output-3779115", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-3779115" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-3779115">
+  【执行操作】User设置为分机B 1101，Set Privilege As为Custom，网页设置项默认未勾选，勾选PBX、Auto Provisioning<br/>
+</div>
+</td>
+<td></td>
+<td>38</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@9a3d1d</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter.C_Answer()'><b>C_Answer</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter<br/>
+<a href="#Output-25846339" onClick='toggleBox("Output-25846339", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-25846339" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-25846339">
+  【执行操作】分机1100响铃接听<br/>
+    Pass: 分机1100接听<br/>
+</div>
+</td>
+<td></td>
+<td>25</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter@bdb19</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Security.C_ConnectToSSH()'><b>C_ConnectToSSH</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Security<br/>
+<a href="#Output-17730731" onClick='toggleBox("Output-17730731", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-17730731" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-17730731">
+  【执行操作】连接SSH<br/>
+    Pass: 连接SSH<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Security@1553d26</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter.D_CheckEventLog()'><b>D_CheckEventLog</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter<br/>
+<a href="#Output-13837045" onClick='toggleBox("Output-13837045", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-13837045" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-13837045">
+  【执行操作】查看Event log<br/>
+</div>
+</td>
+<td></td>
+<td>12</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter@bdb19</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission.D_CheckUserPerssion()'><b>D_CheckUserPerssion</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission<br/>
+<a href="#Output-15641705" onClick='toggleBox("Output-15641705", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-15641705" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-15641705">
+  【执行操作】登录分机A 1101的页面，检查主菜单内所有勾选功能<br/>
+    Pass: Setting界面只有PBX<br/>
+    Pass: Setting界面只有PBX<br/>
+</div>
+</td>
+<td></td>
+<td>6</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@9a3d1d</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission.E_Delete()'><b>E_Delete</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission<br/>
+<a href="#Output-22694637" onClick='toggleBox("Output-22694637", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-22694637" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-22694637">
+  【执行操作】选择User为分机A的数据，点击“Delete”图标，点击yes<br/>
+</div>
+</td>
+<td></td>
+<td>12</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@9a3d1d</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.E_DeleteBackUp()'><b>E_DeleteBackUp</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Maintain<br/>
+<a href="#Output-23218037" onClick='toggleBox("Output-23218037", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-23218037" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-23218037">
+  【执行操作】删除备份文件<br/>
+</div>
+</td>
+<td></td>
+<td>17</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@556333</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter.E_DeleteNotification()'><b>E_DeleteNotification</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter<br/>
+<a href="#Output-19535891" onClick='toggleBox("Output-19535891", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-19535891" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-19535891">
+  【执行操作】删除Notification列表<br/>
+</div>
+</td>
+<td></td>
+<td>8</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter@bdb19</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter.F_CheckLog()'><b>F_CheckLog</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter<br/>
+<a href="#Output-28318221" onClick='toggleBox("Output-28318221", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-28318221" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-28318221">
+  【执行操作】删除Notification分机1100不响铃<br/>
+    Pass: 分机1100未接听<br/>
+</div>
+</td>
+<td></td>
+<td>24</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter@bdb19</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission.F_CheckUserPerssion()'><b>F_CheckUserPerssion</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission<br/>
+<a href="#Output-6085327" onClick='toggleBox("Output-6085327", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-6085327" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-6085327">
+  【执行操作】登录分机A 1101的页面，检查主菜单内只有ME功能<br/>
+</div>
+</td>
+<td></td>
+<td>4</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@9a3d1d</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.F_UploadBackUp()'><b>F_UploadBackUp</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Maintain<br/>
+<a href="#Output-32607793" onClick='toggleBox("Output-32607793", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-32607793" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-32607793">
+  【执行操作】点击“Upload”，选择刚下载的备份包，点击“Upload”<br/>
+</div>
+</td>
+<td></td>
+<td>0</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@556333</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter.G_CheckLog()'><b>G_CheckLog</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter<br/>
+<a href="#Output-32363748" onClick='toggleBox("Output-32363748", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-32363748" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-32363748">
+  【执行操作】删除Notification后查看Event log<br/>
+</div>
+</td>
+<td></td>
+<td>13</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter@bdb19</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission.G_DeleteAll()'><b>G_DeleteAll</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission<br/>
+<a href="#Output-6990838" onClick='toggleBox("Output-6990838", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-6990838" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-6990838">
+  【执行操作】勾选全部UserPermission,删除<br/>
+    Pass: 全部UserPermission,删除<br/>
+</div>
+</td>
+<td></td>
+<td>12</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@9a3d1d</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.H_BackupSchedule()'><b>H_BackupSchedule</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Maintain<br/>
+<a href="#Output-15536872" onClick='toggleBox("Output-15536872", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-15536872" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-15536872">
+  【执行操作】设置BackupSchedule<br/>
+</div>
+</td>
+<td></td>
+<td>7</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@556333</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.L_DeleteSystemLog()'><b>L_DeleteSystemLog</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Maintain<br/>
+<a href="#Output-23149285" onClick='toggleBox("Output-23149285", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-23149285" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-23149285">
+  【执行操作】选择当前日期的系前一天的系统日志,删除<br/>
+</div>
+</td>
+<td></td>
+<td>11</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@556333</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.M_DownloadSystemLog()'><b>M_DownloadSystemLog</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Maintain<br/>
+<a href="#Output-17278143" onClick='toggleBox("Output-17278143", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-17278143" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-17278143">
+  【执行操作】下载全部日志<br/>
+</div>
+</td>
+<td></td>
+<td>7</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@556333</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.N_DeleteAllSystemLog()'><b>N_DeleteAllSystemLog</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Maintain<br/>
+<a href="#Output-17607728" onClick='toggleBox("Output-17607728", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-17607728" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-17607728">
+  【执行操作】删除全部系统日志<br/>
+</div>
+</td>
+<td></td>
+<td>7</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@556333</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.O_OperateLog()'><b>O_OperateLog</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.syscase.Maintain<br/>
+<a href="#Output-21639600" onClick='toggleBox("Output-21639600", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-21639600" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-21639600">
+  【执行操作】添加一个分机，检测操作日志<br/>
+    Pass: 操作日志User<br/>
+</div>
+</td>
+<td></td>
+<td>28</td>
+<td>com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@556333</td></tr>
+</table><p>
+</body>
+</html>

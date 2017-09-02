@@ -16,18 +16,18 @@ public class Add_Time_Condition {
     public SelenideElement endhour  = $(By.name("endhour"));
     public SelenideElement endminu  = $(By.name("endminu"));
 
-    public SelenideElement all  = $(By.name("cc-tc-weekall-displayEl"));
-    public SelenideElement sunday  = $(By.name("cc-tc-sun-displayEl"));
-    public SelenideElement monday  = $(By.name("cc-tc-mon-displayEl"));
-    public SelenideElement tuesday  = $(By.name("cc-tc-tue-displayEl"));
-    public SelenideElement wednesday  = $(By.name("cc-tc-wen-displayEl"));
-    public SelenideElement thursday  = $(By.name("cc-tc-thu-displayEl"));
-    public SelenideElement friday  = $(By.name("cc-tc-fri-displayEl"));
-    public SelenideElement saturday  = $(By.name("cc-tc-sat-displayEl"));
+    public SelenideElement all  = $(By.id("cc-tc-weekall-displayEl"));
+    public SelenideElement sunday  = $(By.id("cc-tc-sun-displayEl"));
+    public SelenideElement monday  = $(By.id("cc-tc-mon-displayEl"));
+    public SelenideElement tuesday  = $(By.id("cc-tc-tue-displayEl"));
+    public SelenideElement wednesday  = $(By.id("cc-tc-wen-displayEl"));
+    public SelenideElement thursday  = $(By.id("cc-tc-thu-displayEl"));
+    public SelenideElement friday  = $(By.id("cc-tc-fri-displayEl"));
+    public SelenideElement saturday  = $(By.id("cc-tc-sat-displayEl"));
 
     public SelenideElement advancedOptions = $(By.id("cc-tc-enablemonth-displayEl"));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'timecondition-edit-')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'timecondition-edit-')]//span[text()='Cancel']"));
 
 }

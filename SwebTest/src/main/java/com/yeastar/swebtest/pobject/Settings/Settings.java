@@ -70,4 +70,10 @@ public class Settings {
     public SelenideElement eventSettings_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Event Settings\"]"));
     public SelenideElement eventLog_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Event Log\"]"));
 
+    /**
+     * 最小化，最大化，关闭
+     */
+    public SelenideElement minimize = $(By.xpath(".//div[starts-with(@class,\"x-tool-img x-tool-minimize\")]"));
+    public SelenideElement maximize = $(By.xpath(".//div[starts-with(@class,\"x-tool-img x-tool-maximize\")]"));
+    public SelenideElement close = $(By.xpath(".//div[starts-with(@class,\"x-tool-img x-tool-close\")]"));
 }

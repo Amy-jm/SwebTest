@@ -9,6 +9,16 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/30.
  */
 public class OperationLog {
+
+    public String grid = "Ext.getCmp('maintance').down('operationlog').down('tableview')";
+    public String gridLoading = "Ext.getCmp('maintance').down('operationlog').down('loadmask')";
+    public int gridColumn_Time = 0;
+    public int gridColumn_User = 1;
+    public int gridColumn_IP = 2;
+    public int gridColumn_Operation = 3;
+    public int gridColumn_Details =4;
+    public int gridDetails  =0;
+
     public SelenideElement user = $(By.id("mt-ol-username-trigger-picker"));
     public SelenideElement IPAddress = $(By.id("mt-ol-ipaddress-inputEl"));
     public SelenideElement time_start = $(By.id("mt-ol-startdate-inputEl"));

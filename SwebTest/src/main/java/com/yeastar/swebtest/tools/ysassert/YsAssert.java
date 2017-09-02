@@ -586,7 +586,11 @@ public class YsAssert extends org.testng.Assert {
         }
 
         //return formatted + ASSERT_LEFT + expected + ASSERT_MIDDLE + actual + ASSERT_RIGHT;
-        return formatted + "【预期：" + expected + " 实际：" + actual + "】";
+        String exp= String.valueOf(expected).replace("<","[");
+        exp = exp.replace(">","]");
+        String act= String.valueOf(actual).replace("<","[");
+        act = act.replace(">","]");
+        return formatted + "【预期：" + exp + " 实际：" + act + "】";
     }
 
     /**

@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <title>TestNG reports</title>
+
+    <link type="text/css" href="testng-reports.css" rel="stylesheet" />  
+    <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="testng-reports.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      var suiteTableInitFunctions = new Array();
+      var suiteTableData = new Array();
+    </script>
+    <!--
+      <script type="text/javascript" src="jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+     -->
+  </head>
+
+  <body>
+    <div class="top-banner-root">
+      <span class="top-banner-title-font">Test results</span>
+      <br/>
+      <span class="top-banner-font-1">1 suite, 3 failed tests</span>
+    </div> <!-- top-banner-root -->
+    <div class="navigator-root">
+      <div class="navigator-suite-header">
+        <span>All suites</span>
+        <a href="#" class="collapse-all-link" title="Collapse/expand all the suites">
+          <img class="collapse-all-icon" src="collapseall.gif">
+          </img> <!-- collapse-all-icon -->
+        </a> <!-- collapse-all-link -->
+      </div> <!-- navigator-suite-header -->
+      <div class="suite">
+        <div class="rounded-window">
+          <div class="suite-header light-rounded-window-top">
+            <a href="#" class="navigator-link" panel-name="suite-PBXCORE">
+              <span class="suite-name border-failed">PBXCORE</span>
+            </a> <!-- navigator-link -->
+          </div> <!-- suite-header light-rounded-window-top -->
+          <div class="navigator-suite-content">
+            <div class="suite-section-title">
+              <span>Info</span>
+            </div> <!-- suite-section-title -->
+            <div class="suite-section-content">
+              <ul>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="test-xml-PBXCORE">
+                    <span>F:\MyProject\0GitProject\swebtest\SwebTest\suite\pbxcore.xml</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="testlist-PBXCORE">
+                    <span class="test-stats">1 test</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="group-PBXCORE">
+                    <span>0 groups</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="times-PBXCORE">
+                    <span>Times</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="reporter-PBXCORE">
+                    <span>Reporter output</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="ignored-methods-PBXCORE">
+                    <span>Ignored methods</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="chronological-PBXCORE">
+                    <span>Chronological view</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+              </ul>
+            </div> <!-- suite-section-content -->
+            <div class="result-section">
+              <div class="suite-section-title">
+                <span>Results</span>
+              </div> <!-- suite-section-title -->
+              <div class="suite-section-content">
+                <ul>
+                  <li>
+                    <span class="method-stats">27 methods, 3 failed,   24 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-PBXCORE" class="hide-methods failed suite-PBXCORE"> (hide)</a> <!-- hide-methods failed suite-PBXCORE -->
+                      <a href="#" panel-name="suite-PBXCORE" class="show-methods failed suite-PBXCORE"> (show)</a> <!-- show-methods failed suite-PBXCORE -->
+                    </span>
+                    <div class="method-list-content failed suite-PBXCORE">
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" hash-for-method="C_SetFileShare">C_SetFileShare</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" hash-for-method="D_StorageLocations">D_StorageLocations</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" hash-for-method="E_Recording_Settings">E_Recording_Settings</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content failed suite-PBXCORE -->
+                  </li>
+                  <li>
+                    <span class="method-list-title passed">Passed methods</span>
+                    <span class="show-or-hide-methods passed">
+                      <a href="#" panel-name="suite-PBXCORE" class="hide-methods passed suite-PBXCORE"> (hide)</a> <!-- hide-methods passed suite-PBXCORE -->
+                      <a href="#" panel-name="suite-PBXCORE" class="show-methods passed suite-PBXCORE"> (show)</a> <!-- show-methods passed suite-PBXCORE -->
+                    </span>
+                    <div class="method-list-content passed suite-PBXCORE">
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" hash-for-method="A_AddTrunk">A_AddTrunk</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" hash-for-method="A_JudgeStorage">A_JudgeStorage</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" hash-for-method="A_RingGroup">A_RingGroup</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="A_SettingSystemTime">A_SettingSystemTime</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" hash-for-method="B_AddNetworkDrive">B_AddNetworkDrive</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" hash-for-method="B_AddTrunkIAXTrunk">B_AddTrunkIAXTrunk</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="B_CreateExtension">B_CreateExtension</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" hash-for-method="B_Queue">B_Queue</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" hash-for-method="C_AddSPX">C_AddSPX</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" hash-for-method="C_Conference">C_Conference</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="C_CreateFxsExtension">C_CreateFxsExtension</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" hash-for-method="D_AddSPS">D_AddSPS</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="D_CreateBulkExtensions">D_CreateBulkExtensions</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" hash-for-method="D_PickupGroup">D_PickupGroup</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" hash-for-method="E_PagingIntercom">E_PagingIntercom</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="E_RegisterExtension">E_RegisterExtension</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" hash-for-method="F_CallBack">F_CallBack</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="F_ExportExtensions">F_ExportExtensions</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" hash-for-method="F_PINList">F_PINList</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="G_DelExtension">G_DelExtension</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="H_DelExteiosns">H_DelExteiosns</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="I_ImportExtension">I_ImportExtension</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="J_PstnCall">J_PstnCall</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-PBXCORE" title="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" hash-for-method="K_ExtensionGroupSetting">K_ExtensionGroupSetting</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content passed suite-PBXCORE -->
+                  </li>
+                </ul>
+              </div> <!-- suite-section-content -->
+            </div> <!-- result-section -->
+          </div> <!-- navigator-suite-content -->
+        </div> <!-- rounded-window -->
+      </div> <!-- suite -->
+    </div> <!-- navigator-root -->
+    <div class="wrapper">
+      <div class="main-panel-root">
+        <div panel-name="suite-PBXCORE" class="panel PBXCORE">
+          <div class="suite-PBXCORE-class-failed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="failed.png"/>
+              <span class="class-name">com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="C_SetFileShare">
+                  </a> <!-- C_SetFileShare -->
+                  <span class="method-name">C_SetFileShare</span>
+                  <div class="stack-trace">Element not found {By.xpath: .//span[starts-with(@class,&quot;x-tab-inner x-tab-inner-default&quot;) and text()=&quot;File Share&quot;]}
+Expected: exist
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327717514.0.png
+Timeout: 10 s.
+Caused by: WebDriverException: unknown error: Element &lt;span id=&quot;tab-1137-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (685, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.C_SetFileShare(Storage.java:49)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element &lt;span id=&quot;tab-1137-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (685, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 27 milliseconds
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Yeastar-PC&apos;, ip: &apos;192.168.7.14&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;x86&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	... 30 more
+... Removed 30 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="D_StorageLocations">
+                  </a> <!-- D_StorageLocations -->
+                  <span class="method-name">D_StorageLocations</span>
+                  <div class="stack-trace">Element not found {By.xpath: .//span[starts-with(@class,&quot;x-tab-inner x-tab-inner-default&quot;) and text()=&quot;Preference&quot;]}
+Expected: exist
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327727956.1.png
+Timeout: 10 s.
+Caused by: WebDriverException: unknown error: Element &lt;span id=&quot;tab-1135-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (439, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.D_StorageLocations(Storage.java:56)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element &lt;span id=&quot;tab-1135-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (439, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 35 milliseconds
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Yeastar-PC&apos;, ip: &apos;192.168.7.14&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;x86&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	... 30 more
+... Removed 30 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="E_Recording_Settings">
+                  </a> <!-- E_Recording_Settings -->
+                  <span class="method-name">E_Recording_Settings</span>
+                  <div class="stack-trace">Element not found {By.xpath: .//a[starts-with(@class,&quot;cp-link-before&quot;) and text()=&quot;Recording Settings&quot;]}
+Expected: exist
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327739397.2.png
+Timeout: 10 s.
+Caused by: WebDriverException: unknown error: Element &lt;a class=&quot;cp-link-before&quot; href=&quot;javascript:void(0)&quot; data-tabindex-value=&quot;none&quot; tabindex=&quot;-1&quot; data-tabindex-counter=&quot;2&quot;&gt;...&lt;/a&gt; is not clickable at point (467, 213). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.E_Recording_Settings(Storage.java:74)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element &lt;a class=&quot;cp-link-before&quot; href=&quot;javascript:void(0)&quot; data-tabindex-value=&quot;none&quot; tabindex=&quot;-1&quot; data-tabindex-counter=&quot;2&quot;&gt;...&lt;/a&gt; is not clickable at point (467, 213). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 25 milliseconds
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Yeastar-PC&apos;, ip: &apos;192.168.7.14&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;x86&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	... 30 more
+... Removed 30 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-PBXCORE-class-failed -->
+          <div class="suite-PBXCORE-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="A_SettingSystemTime">
+                  </a> <!-- A_SettingSystemTime -->
+                  <span class="method-name">A_SettingSystemTime</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="B_CreateExtension">
+                  </a> <!-- B_CreateExtension -->
+                  <span class="method-name">B_CreateExtension</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="C_CreateFxsExtension">
+                  </a> <!-- C_CreateFxsExtension -->
+                  <span class="method-name">C_CreateFxsExtension</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="D_CreateBulkExtensions">
+                  </a> <!-- D_CreateBulkExtensions -->
+                  <span class="method-name">D_CreateBulkExtensions</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="E_RegisterExtension">
+                  </a> <!-- E_RegisterExtension -->
+                  <span class="method-name">E_RegisterExtension</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="F_ExportExtensions">
+                  </a> <!-- F_ExportExtensions -->
+                  <span class="method-name">F_ExportExtensions</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="G_DelExtension">
+                  </a> <!-- G_DelExtension -->
+                  <span class="method-name">G_DelExtension</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="H_DelExteiosns">
+                  </a> <!-- H_DelExteiosns -->
+                  <span class="method-name">H_DelExteiosns</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="I_ImportExtension">
+                  </a> <!-- I_ImportExtension -->
+                  <span class="method-name">I_ImportExtension</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="J_PstnCall">
+                  </a> <!-- J_PstnCall -->
+                  <span class="method-name">J_PstnCall</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="K_ExtensionGroupSetting">
+                  </a> <!-- K_ExtensionGroupSetting -->
+                  <span class="method-name">K_ExtensionGroupSetting</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-PBXCORE-class-passed -->
+          <div class="suite-PBXCORE-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="A_RingGroup">
+                  </a> <!-- A_RingGroup -->
+                  <span class="method-name">A_RingGroup</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="B_Queue">
+                  </a> <!-- B_Queue -->
+                  <span class="method-name">B_Queue</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="C_Conference">
+                  </a> <!-- C_Conference -->
+                  <span class="method-name">C_Conference</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="D_PickupGroup">
+                  </a> <!-- D_PickupGroup -->
+                  <span class="method-name">D_PickupGroup</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="E_PagingIntercom">
+                  </a> <!-- E_PagingIntercom -->
+                  <span class="method-name">E_PagingIntercom</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="F_CallBack">
+                  </a> <!-- F_CallBack -->
+                  <span class="method-name">F_CallBack</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="F_PINList">
+                  </a> <!-- F_PINList -->
+                  <span class="method-name">F_PINList</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-PBXCORE-class-passed -->
+          <div class="suite-PBXCORE-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="A_AddTrunk">
+                  </a> <!-- A_AddTrunk -->
+                  <span class="method-name">A_AddTrunk</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="B_AddTrunkIAXTrunk">
+                  </a> <!-- B_AddTrunkIAXTrunk -->
+                  <span class="method-name">B_AddTrunkIAXTrunk</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="C_AddSPX">
+                  </a> <!-- C_AddSPX -->
+                  <span class="method-name">C_AddSPX</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="D_AddSPS">
+                  </a> <!-- D_AddSPS -->
+                  <span class="method-name">D_AddSPS</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-PBXCORE-class-passed -->
+          <div class="suite-PBXCORE-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="A_JudgeStorage">
+                  </a> <!-- A_JudgeStorage -->
+                  <span class="method-name">A_JudgeStorage</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="B_AddNetworkDrive">
+                  </a> <!-- B_AddNetworkDrive -->
+                  <span class="method-name">B_AddNetworkDrive</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-PBXCORE-class-passed -->
+        </div> <!-- panel PBXCORE -->
+        <div panel-name="test-xml-PBXCORE" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">F:\MyProject\0GitProject\swebtest\SwebTest\suite\pbxcore.xml</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE suite SYSTEM &quot;http://testng.org/testng-1.0.dtd&quot;&gt;
+&lt;suite guice-stage=&quot;DEVELOPMENT&quot; verbose=&quot;0&quot; name=&quot;PBXCORE&quot;&gt;
+  &lt;test name=&quot;pbxcore&quot;&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension&quot;/&gt;
+      &lt;class name=&quot;com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk&quot;/&gt;
+      &lt;class name=&quot;com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature&quot;/&gt;
+      &lt;class name=&quot;com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- pbxcore --&gt;
+&lt;/suite&gt; &lt;!-- PBXCORE --&gt;
+            </pre>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="testlist-PBXCORE" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Tests for PBXCORE</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <ul>
+              <li>
+                <span class="test-name">pbxcore (4 classes)</span>
+              </li>
+            </ul>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="group-PBXCORE" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Groups for PBXCORE</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="times-PBXCORE" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Times for PBXCORE</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="times-div">
+              <script type="text/javascript">
+suiteTableInitFunctions.push('tableData_PBXCORE');
+function tableData_PBXCORE() {
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Number');
+data.addColumn('string', 'Method');
+data.addColumn('string', 'Class');
+data.addColumn('number', 'Time (ms)');
+data.addRows(27);
+data.setCell(0, 0, 0)
+data.setCell(0, 1, 'A_SettingSystemTime')
+data.setCell(0, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(0, 3, 130646);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'E_RegisterExtension')
+data.setCell(1, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(1, 3, 65114);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'J_PstnCall')
+data.setCell(2, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(2, 3, 46702);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'I_ImportExtension')
+data.setCell(3, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(3, 3, 35735);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'K_ExtensionGroupSetting')
+data.setCell(4, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(4, 3, 32179);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'D_CreateBulkExtensions')
+data.setCell(5, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(5, 3, 25274);
+data.setCell(6, 0, 6)
+data.setCell(6, 1, 'A_AddTrunk')
+data.setCell(6, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk')
+data.setCell(6, 3, 22277);
+data.setCell(7, 0, 7)
+data.setCell(7, 1, 'A_RingGroup')
+data.setCell(7, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature')
+data.setCell(7, 3, 21422);
+data.setCell(8, 0, 8)
+data.setCell(8, 1, 'B_CreateExtension')
+data.setCell(8, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(8, 3, 20557);
+data.setCell(9, 0, 9)
+data.setCell(9, 1, 'F_CallBack')
+data.setCell(9, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature')
+data.setCell(9, 3, 20376);
+data.setCell(10, 0, 10)
+data.setCell(10, 1, 'C_AddSPX')
+data.setCell(10, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk')
+data.setCell(10, 3, 19880);
+data.setCell(11, 0, 11)
+data.setCell(11, 1, 'B_AddTrunkIAXTrunk')
+data.setCell(11, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk')
+data.setCell(11, 3, 18453);
+data.setCell(12, 0, 12)
+data.setCell(12, 1, 'C_CreateFxsExtension')
+data.setCell(12, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(12, 3, 17370);
+data.setCell(13, 0, 13)
+data.setCell(13, 1, 'D_AddSPS')
+data.setCell(13, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk')
+data.setCell(13, 3, 16821);
+data.setCell(14, 0, 14)
+data.setCell(14, 1, 'D_PickupGroup')
+data.setCell(14, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature')
+data.setCell(14, 3, 16297);
+data.setCell(15, 0, 15)
+data.setCell(15, 1, 'B_Queue')
+data.setCell(15, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature')
+data.setCell(15, 3, 15652);
+data.setCell(16, 0, 16)
+data.setCell(16, 1, 'F_PINList')
+data.setCell(16, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature')
+data.setCell(16, 3, 15480);
+data.setCell(17, 0, 17)
+data.setCell(17, 1, 'B_AddNetworkDrive')
+data.setCell(17, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage')
+data.setCell(17, 3, 13864);
+data.setCell(18, 0, 18)
+data.setCell(18, 1, 'A_JudgeStorage')
+data.setCell(18, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage')
+data.setCell(18, 3, 13002);
+data.setCell(19, 0, 19)
+data.setCell(19, 1, 'E_PagingIntercom')
+data.setCell(19, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature')
+data.setCell(19, 3, 12483);
+data.setCell(20, 0, 20)
+data.setCell(20, 1, 'G_DelExtension')
+data.setCell(20, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(20, 3, 11669);
+data.setCell(21, 0, 21)
+data.setCell(21, 1, 'E_Recording_Settings')
+data.setCell(21, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage')
+data.setCell(21, 3, 11423);
+data.setCell(22, 0, 22)
+data.setCell(22, 1, 'H_DelExteiosns')
+data.setCell(22, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(22, 3, 10747);
+data.setCell(23, 0, 23)
+data.setCell(23, 1, 'C_SetFileShare')
+data.setCell(23, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage')
+data.setCell(23, 3, 10486);
+data.setCell(24, 0, 24)
+data.setCell(24, 1, 'D_StorageLocations')
+data.setCell(24, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage')
+data.setCell(24, 3, 10379);
+data.setCell(25, 0, 25)
+data.setCell(25, 1, 'C_Conference')
+data.setCell(25, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature')
+data.setCell(25, 3, 6262);
+data.setCell(26, 0, 26)
+data.setCell(26, 1, 'F_ExportExtensions')
+data.setCell(26, 2, 'com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension')
+data.setCell(26, 3, 3922);
+window.suiteTableData['PBXCORE']= { tableData: data, tableDiv: 'times-div-PBXCORE'}
+return data;
+}
+              </script>
+              <span class="suite-total-time">Total running time: 10 minutes</span>
+              <div id="times-div-PBXCORE">
+              </div> <!-- times-div-PBXCORE -->
+            </div> <!-- times-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="reporter-PBXCORE" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Reporter output for PBXCORE</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">I_ImportExtension</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】导入分机列表</span>
+                <span class="reporter-method-output">    Pass: 1000分机注册</span>
+                <span class="reporter-method-output">    Pass: 1001分机注册</span>
+                <span class="reporter-method-output">    Pass: 导入分机列表</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">H_DelExteiosns</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】删除所有分机</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">C_CreateFxsExtension</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】创建FXS分机1001</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">B_CreateExtension</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】创建1000分机</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">F_ExportExtensions</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】导出分机列表</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">E_PagingIntercom</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加paging_Intercom</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">C_Conference</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加conference</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">J_PstnCall</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】通过PSTN外线B设备2000拨打A设备1000</span>
+                <span class="reporter-method-output">    Pass: CDR呼叫方检测</span>
+                <span class="reporter-method-output">    Pass: CDR被叫方检测错误</span>
+                <span class="reporter-method-output">    Pass: CDR_Status检测</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">G_DelExtension</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】删除1000分机</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">F_PINList</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加PINList</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">B_Queue</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加Queue</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">D_PickupGroup</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加pickupGroup</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">A_JudgeStorage</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】SD/HD/USB检测</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">E_RegisterExtension</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】SIP分机1000拨打SIP分机1001，通话</span>
+                <span class="reporter-method-output">    Pass: 1000分机注册</span>
+                <span class="reporter-method-output">    Pass: 1001分机注册</span>
+                <span class="reporter-method-output">    Pass: CDR呼叫方检测</span>
+                <span class="reporter-method-output">    Pass: CDR被叫方检测错误</span>
+                <span class="reporter-method-output">    Pass: CDR_Status检测</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">F_CallBack</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加callback</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">A_SettingSystemTime</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】设置系统时间为00点整</span>
+                <span class="reporter-method-output">    Pass: waitReboot重启</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">A_AddTrunk</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加SIPTrunk</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">D_AddSPS</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加SPS</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">B_AddNetworkDrive</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】挂载网络磁盘sharetest1</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">D_CreateBulkExtensions</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】批量创建分机1100-1109</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">A_RingGroup</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加RingGroup</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">B_AddTrunkIAXTrunk</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加IAXTrunk</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">C_AddSPX</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加SPX</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">K_ExtensionGroupSetting</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】添加分机组extgroup1</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">E_Recording_Settings</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】Record Trunks全选所有Trunk、Record Extensions全选所有分机</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">C_SetFileShare</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】勾选Enable File Sharing</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">D_StorageLocations</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">  【执行操作】Storage Locations中CDR、Recordings和Logs下拉选择TF/SD卡,Voicemail&One Touch Recordings下拉选择sharetest1</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="ignored-methods-PBXCORE" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">0 ignored methods</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="chronological-PBXCORE" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Methods in chronological order</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension</div> <!-- chronological-class-name -->
+              <div class="configuration-class before">
+                <span class="method-name">BeforeClass</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- configuration-class before -->
+              <div class="test-method">
+                <span class="method-name">A_SettingSystemTime</span>
+                <span class="method-start">20055 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">B_CreateExtension</span>
+                <span class="method-start">150703 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">C_CreateFxsExtension</span>
+                <span class="method-start">171260 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">D_CreateBulkExtensions</span>
+                <span class="method-start">188630 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">E_RegisterExtension</span>
+                <span class="method-start">213904 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">F_ExportExtensions</span>
+                <span class="method-start">279018 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">G_DelExtension</span>
+                <span class="method-start">282940 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">H_DelExteiosns</span>
+                <span class="method-start">294609 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">I_ImportExtension</span>
+                <span class="method-start">305357 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">J_PstnCall</span>
+                <span class="method-start">341093 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">K_ExtensionGroupSetting</span>
+                <span class="method-start">387796 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-class after">
+                <span class="method-name">AfterClass</span>
+                <span class="method-start">419975 ms</span>
+              </div> <!-- configuration-class after -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk</div> <!-- chronological-class-name -->
+              <div class="configuration-class before">
+                <span class="method-name">BeforeClass</span>
+                <span class="method-start">432457 ms</span>
+              </div> <!-- configuration-class before -->
+              <div class="test-method">
+                <span class="method-name">A_AddTrunk</span>
+                <span class="method-start">451172 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">B_AddTrunkIAXTrunk</span>
+                <span class="method-start">473450 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">C_AddSPX</span>
+                <span class="method-start">491904 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">D_AddSPS</span>
+                <span class="method-start">511785 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-class after">
+                <span class="method-name">AfterClass</span>
+                <span class="method-start">528606 ms</span>
+              </div> <!-- configuration-class after -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature</div> <!-- chronological-class-name -->
+              <div class="configuration-class before">
+                <span class="method-name">BeforeClass</span>
+                <span class="method-start">544425 ms</span>
+              </div> <!-- configuration-class before -->
+              <div class="test-method">
+                <span class="method-name">A_RingGroup</span>
+                <span class="method-start">562900 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">B_Queue</span>
+                <span class="method-start">584323 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">C_Conference</span>
+                <span class="method-start">599975 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">D_PickupGroup</span>
+                <span class="method-start">606237 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">E_PagingIntercom</span>
+                <span class="method-start">622535 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">F_CallBack</span>
+                <span class="method-start">635018 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">F_PINList</span>
+                <span class="method-start">655394 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-class after">
+                <span class="method-name">AfterClass</span>
+                <span class="method-start">670874 ms</span>
+              </div> <!-- configuration-class after -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage</div> <!-- chronological-class-name -->
+              <div class="configuration-class before">
+                <span class="method-name">BeforeClass</span>
+                <span class="method-start">691751 ms</span>
+              </div> <!-- configuration-class before -->
+              <div class="test-method">
+                <span class="method-name">A_JudgeStorage</span>
+                <span class="method-start">710444 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">B_AddNetworkDrive</span>
+                <span class="method-start">723448 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">C_SetFileShare</span>
+                <span class="method-start">737314 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">D_StorageLocations</span>
+                <span class="method-start">747806 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">E_Recording_Settings</span>
+                <span class="method-start">758185 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-class after">
+                <span class="method-name">AfterClass</span>
+                <span class="method-start">769608 ms</span>
+              </div> <!-- configuration-class after -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+      </div> <!-- main-panel-root -->
+    </div> <!-- wrapper -->
+  </body>
+</html>

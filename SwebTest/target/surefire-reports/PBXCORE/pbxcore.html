@@ -1,0 +1,702 @@
+<html>
+<head>
+<title>TestNG:  pbxcore</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>pbxcore</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>24/3/0</td>
+</tr><tr>
+<td>Started on:</td><td>Sat Sep 02 12:36:10 CST 2017</td>
+</tr>
+<tr><td>Total time:</td><td>790 seconds (790451 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.C_SetFileShare()'><b>C_SetFileShare</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage<br/>
+<a href="#Output-7991538" onClick='toggleBox("Output-7991538", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-7991538" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-7991538">
+  【执行操作】勾选Enable File Sharing<br/>
+</div>
+</td>
+<td><div><pre>Element not found {By.xpath: .//span[starts-with(@class,&quot;x-tab-inner x-tab-inner-default&quot;) and text()=&quot;File Share&quot;]}
+Expected: exist
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327717514.0.png
+Timeout: 10 s.
+Caused by: WebDriverException: unknown error: Element &lt;span id=&quot;tab-1137-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (685, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.C_SetFileShare(Storage.java:49)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element &lt;span id=&quot;tab-1137-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (685, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 27 milliseconds
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Yeastar-PC&apos;, ip: &apos;192.168.7.14&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;x86&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	... 30 more
+... Removed 30 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace7991538", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace7991538'><pre>Element not found {By.xpath: .//span[starts-with(@class,&quot;x-tab-inner x-tab-inner-default&quot;) and text()=&quot;File Share&quot;]}
+Expected: exist
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327717514.0.png
+Timeout: 10 s.
+Caused by: WebDriverException: unknown error: Element &lt;span id=&quot;tab-1137-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (685, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.C_SetFileShare(Storage.java:49)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element &lt;span id=&quot;tab-1137-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (685, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 27 milliseconds
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Yeastar-PC&apos;, ip: &apos;192.168.7.14&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;x86&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
+	at sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	... 30 more
+</pre></div></td>
+<td>10</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.D_StorageLocations()'><b>D_StorageLocations</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage<br/>
+<a href="#Output-22308191" onClick='toggleBox("Output-22308191", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-22308191" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-22308191">
+  【执行操作】Storage Locations中CDR、Recordings和Logs下拉选择TF/SD卡,Voicemail&One Touch Recordings下拉选择sharetest1<br/>
+</div>
+</td>
+<td><div><pre>Element not found {By.xpath: .//span[starts-with(@class,&quot;x-tab-inner x-tab-inner-default&quot;) and text()=&quot;Preference&quot;]}
+Expected: exist
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327727956.1.png
+Timeout: 10 s.
+Caused by: WebDriverException: unknown error: Element &lt;span id=&quot;tab-1135-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (439, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.D_StorageLocations(Storage.java:56)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element &lt;span id=&quot;tab-1135-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (439, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 35 milliseconds
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Yeastar-PC&apos;, ip: &apos;192.168.7.14&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;x86&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	... 30 more
+... Removed 30 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace22308191", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace22308191'><pre>Element not found {By.xpath: .//span[starts-with(@class,&quot;x-tab-inner x-tab-inner-default&quot;) and text()=&quot;Preference&quot;]}
+Expected: exist
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327727956.1.png
+Timeout: 10 s.
+Caused by: WebDriverException: unknown error: Element &lt;span id=&quot;tab-1135-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (439, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.D_StorageLocations(Storage.java:56)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element &lt;span id=&quot;tab-1135-btnInnerEl&quot; data-ref=&quot;btnInnerEl&quot; unselectable=&quot;on&quot; class=&quot;x-tab-inner x-tab-inner-default&quot;&gt;...&lt;/span&gt; is not clickable at point (439, 163). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 35 milliseconds
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Yeastar-PC&apos;, ip: &apos;192.168.7.14&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;x86&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
+	at sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	... 30 more
+</pre></div></td>
+<td>10</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.E_Recording_Settings()'><b>E_Recording_Settings</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage<br/>
+<a href="#Output-15550190" onClick='toggleBox("Output-15550190", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-15550190" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-15550190">
+  【执行操作】Record Trunks全选所有Trunk、Record Extensions全选所有分机<br/>
+</div>
+</td>
+<td><div><pre>Element not found {By.xpath: .//a[starts-with(@class,&quot;cp-link-before&quot;) and text()=&quot;Recording Settings&quot;]}
+Expected: exist
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327739397.2.png
+Timeout: 10 s.
+Caused by: WebDriverException: unknown error: Element &lt;a class=&quot;cp-link-before&quot; href=&quot;javascript:void(0)&quot; data-tabindex-value=&quot;none&quot; tabindex=&quot;-1&quot; data-tabindex-counter=&quot;2&quot;&gt;...&lt;/a&gt; is not clickable at point (467, 213). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.E_Recording_Settings(Storage.java:74)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element &lt;a class=&quot;cp-link-before&quot; href=&quot;javascript:void(0)&quot; data-tabindex-value=&quot;none&quot; tabindex=&quot;-1&quot; data-tabindex-counter=&quot;2&quot;&gt;...&lt;/a&gt; is not clickable at point (467, 213). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 25 milliseconds
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Yeastar-PC&apos;, ip: &apos;192.168.7.14&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;x86&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	... 30 more
+... Removed 30 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace15550190", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace15550190'><pre>Element not found {By.xpath: .//a[starts-with(@class,&quot;cp-link-before&quot;) and text()=&quot;Recording Settings&quot;]}
+Expected: exist
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327739397.2.png
+Timeout: 10 s.
+Caused by: WebDriverException: unknown error: Element &lt;a class=&quot;cp-link-before&quot; href=&quot;javascript:void(0)&quot; data-tabindex-value=&quot;none&quot; tabindex=&quot;-1&quot; data-tabindex-counter=&quot;2&quot;&gt;...&lt;/a&gt; is not clickable at point (467, 213). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.E_Recording_Settings(Storage.java:74)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element &lt;a class=&quot;cp-link-before&quot; href=&quot;javascript:void(0)&quot; data-tabindex-value=&quot;none&quot; tabindex=&quot;-1&quot; data-tabindex-counter=&quot;2&quot;&gt;...&lt;/a&gt; is not clickable at point (467, 213). Other element would receive the click: &lt;div role=&quot;presentation&quot; class=&quot;x-mask x-border-box&quot; style=&quot;height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;&quot; id=&quot;ext-element-33&quot;&gt;&lt;/div&gt;
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 25 milliseconds
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Yeastar-PC&apos;, ip: &apos;192.168.7.14&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;x86&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
+	at sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	... 30 more
+</pre></div></td>
+<td>11</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk.A_AddTrunk()'><b>A_AddTrunk</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk<br/>
+<a href="#Output-8548193" onClick='toggleBox("Output-8548193", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-8548193" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-8548193">
+  【执行操作】添加SIPTrunk<br/>
+</div>
+</td>
+<td></td>
+<td>22</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.A_JudgeStorage()'><b>A_JudgeStorage</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage<br/>
+<a href="#Output-32225397" onClick='toggleBox("Output-32225397", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-32225397" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-32225397">
+  【执行操作】SD/HD/USB检测<br/>
+</div>
+</td>
+<td></td>
+<td>13</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature.A_RingGroup()'><b>A_RingGroup</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature<br/>
+<a href="#Output-11612042" onClick='toggleBox("Output-11612042", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-11612042" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-11612042">
+  【执行操作】添加RingGroup<br/>
+</div>
+</td>
+<td></td>
+<td>21</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.A_SettingSystemTime()'><b>A_SettingSystemTime</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-32277839" onClick='toggleBox("Output-32277839", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-32277839" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-32277839">
+  【执行操作】设置系统时间为00点整<br/>
+    Pass: waitReboot重启<br/>
+</div>
+</td>
+<td></td>
+<td>130</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.B_AddNetworkDrive()'><b>B_AddNetworkDrive</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage<br/>
+<a href="#Output-2294614" onClick='toggleBox("Output-2294614", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-2294614" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-2294614">
+  【执行操作】挂载网络磁盘sharetest1<br/>
+</div>
+</td>
+<td></td>
+<td>13</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk.B_AddTrunkIAXTrunk()'><b>B_AddTrunkIAXTrunk</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk<br/>
+<a href="#Output-1569259" onClick='toggleBox("Output-1569259", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1569259" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1569259">
+  【执行操作】添加IAXTrunk<br/>
+</div>
+</td>
+<td></td>
+<td>18</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.B_CreateExtension()'><b>B_CreateExtension</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-25790849" onClick='toggleBox("Output-25790849", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-25790849" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-25790849">
+  【执行操作】创建1000分机<br/>
+</div>
+</td>
+<td></td>
+<td>20</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature.B_Queue()'><b>B_Queue</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature<br/>
+<a href="#Output-24433514" onClick='toggleBox("Output-24433514", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-24433514" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-24433514">
+  【执行操作】添加Queue<br/>
+</div>
+</td>
+<td></td>
+<td>15</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk.C_AddSPX()'><b>C_AddSPX</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk<br/>
+<a href="#Output-5581227" onClick='toggleBox("Output-5581227", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-5581227" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-5581227">
+  【执行操作】添加SPX<br/>
+</div>
+</td>
+<td></td>
+<td>19</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature.C_Conference()'><b>C_Conference</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature<br/>
+<a href="#Output-28748602" onClick='toggleBox("Output-28748602", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-28748602" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-28748602">
+  【执行操作】添加conference<br/>
+</div>
+</td>
+<td></td>
+<td>6</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.C_CreateFxsExtension()'><b>C_CreateFxsExtension</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-32107438" onClick='toggleBox("Output-32107438", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-32107438" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-32107438">
+  【执行操作】创建FXS分机1001<br/>
+</div>
+</td>
+<td></td>
+<td>17</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk.D_AddSPS()'><b>D_AddSPS</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk<br/>
+<a href="#Output-11218248" onClick='toggleBox("Output-11218248", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-11218248" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-11218248">
+  【执行操作】添加SPS<br/>
+</div>
+</td>
+<td></td>
+<td>16</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.D_CreateBulkExtensions()'><b>D_CreateBulkExtensions</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-26652334" onClick='toggleBox("Output-26652334", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-26652334" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-26652334">
+  【执行操作】批量创建分机1100-1109<br/>
+</div>
+</td>
+<td></td>
+<td>25</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature.D_PickupGroup()'><b>D_PickupGroup</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature<br/>
+<a href="#Output-20686693" onClick='toggleBox("Output-20686693", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-20686693" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-20686693">
+  【执行操作】添加pickupGroup<br/>
+</div>
+</td>
+<td></td>
+<td>16</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature.E_PagingIntercom()'><b>E_PagingIntercom</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature<br/>
+<a href="#Output-1391518" onClick='toggleBox("Output-1391518", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1391518" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1391518">
+  【执行操作】添加paging_Intercom<br/>
+</div>
+</td>
+<td></td>
+<td>12</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.E_RegisterExtension()'><b>E_RegisterExtension</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-17149466" onClick='toggleBox("Output-17149466", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-17149466" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-17149466">
+  【执行操作】SIP分机1000拨打SIP分机1001，通话<br/>
+    Pass: 1000分机注册<br/>
+    Pass: 1001分机注册<br/>
+    Pass: CDR呼叫方检测<br/>
+    Pass: CDR被叫方检测错误<br/>
+    Pass: CDR_Status检测<br/>
+</div>
+</td>
+<td></td>
+<td>65</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature.F_CallBack()'><b>F_CallBack</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature<br/>
+<a href="#Output-21250907" onClick='toggleBox("Output-21250907", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-21250907" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-21250907">
+  【执行操作】添加callback<br/>
+</div>
+</td>
+<td></td>
+<td>20</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.F_ExportExtensions()'><b>F_ExportExtensions</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-25287690" onClick='toggleBox("Output-25287690", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-25287690" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-25287690">
+  【执行操作】导出分机列表<br/>
+</div>
+</td>
+<td></td>
+<td>3</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature.F_PINList()'><b>F_PINList</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature<br/>
+<a href="#Output-30375250" onClick='toggleBox("Output-30375250", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-30375250" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-30375250">
+  【执行操作】添加PINList<br/>
+</div>
+</td>
+<td></td>
+<td>15</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.G_DelExtension()'><b>G_DelExtension</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-480351" onClick='toggleBox("Output-480351", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-480351" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-480351">
+  【执行操作】删除1000分机<br/>
+</div>
+</td>
+<td></td>
+<td>11</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.H_DelExteiosns()'><b>H_DelExteiosns</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-6003038" onClick='toggleBox("Output-6003038", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-6003038" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-6003038">
+  【执行操作】删除所有分机<br/>
+</div>
+</td>
+<td></td>
+<td>10</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.I_ImportExtension()'><b>I_ImportExtension</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-12228153" onClick='toggleBox("Output-12228153", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-12228153" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-12228153">
+  【执行操作】导入分机列表<br/>
+    Pass: 1000分机注册<br/>
+    Pass: 1001分机注册<br/>
+    Pass: 导入分机列表<br/>
+</div>
+</td>
+<td></td>
+<td>35</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.J_PstnCall()'><b>J_PstnCall</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-6968633" onClick='toggleBox("Output-6968633", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-6968633" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-6968633">
+  【执行操作】通过PSTN外线B设备2000拨打A设备1000<br/>
+    Pass: CDR呼叫方检测<br/>
+    Pass: CDR被叫方检测错误<br/>
+    Pass: CDR_Status检测<br/>
+</div>
+</td>
+<td></td>
+<td>46</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+<tr>
+<td title='com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.K_ExtensionGroupSetting()'><b>K_ExtensionGroupSetting</b><br>Test class: com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension<br/>
+<a href="#Output-14363172" onClick='toggleBox("Output-14363172", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-14363172" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-14363172">
+  【执行操作】添加分机组extgroup1<br/>
+</div>
+</td>
+<td></td>
+<td>32</td>
+<td>com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163</td></tr>
+</table><p>
+</body>
+</html>

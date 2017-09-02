@@ -9,6 +9,6 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/28.
  */
 public class CallFeatures {
-    public SelenideElement more = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-toolbar-small\") and text()=\"More\"]"));
-    public SelenideElement back = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-toolbar-small\") and text()=\"Back\"]"));
+    public SelenideElement more = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[text()='More']"));
+    public SelenideElement back = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[text()='Back']"));
 }

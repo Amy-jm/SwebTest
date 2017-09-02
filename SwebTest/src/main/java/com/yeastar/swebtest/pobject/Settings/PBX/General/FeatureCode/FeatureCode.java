@@ -116,7 +116,7 @@ public class FeatureCode {
     public SelenideElement barge_in = $(By.id("st-feature-bargespy-inputEl"));
 
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'featurecode-')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'featurecode-')]//span[text()='Cancel']"));
 
 }

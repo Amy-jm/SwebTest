@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="10"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="339.134">
+  <properties />
+  
+  
+            <testcase name="A_SettingSystemTime" time="132.128" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+                <testcase name="E_RegisterExtension" time="64.403" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+                <testcase name="F_ExportExtensions" time="0.936" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+                <testcase name="K_ExtensionGroupSetting" time="32.152" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+                <testcase name="J_PstnCall" time="50.238" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+                <testcase name="D_CreateBulkExtensions" time="24.833" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+                <testcase name="H_DelExteiosns" time="0.000" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+                <testcase name="B_CreateExtension" time="18.797" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+                <testcase name="G_DelExtension" time="0.000" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+                <testcase name="C_CreateFxsExtension" time="15.647" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension.Extension" />
+      
+</testsuite>

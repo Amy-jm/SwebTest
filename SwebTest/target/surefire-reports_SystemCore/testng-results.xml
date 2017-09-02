@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="22" passed="22">
+  <reporter-output>
+    <line>
+      <![CDATA[【测试类场景初始化】打开游览器并登录设备_Network]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】修改网络设置]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】从wan口IP登录]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景恢复】关闭游览器]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景初始化】打开游览器并登录设备_Network]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】网页访问协议设置HTTP，开启ssh端口22]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】连接SSH]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: 连接SSH]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景恢复】关闭游览器]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景初始化】打开游览器并登录设备_Network]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】添加UserPermession,admin权限]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: 新添加的User]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: 新添加的Role]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】登录分机A 1100的页面，检查主菜单内所有勾选功能]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】User设置为分机B 1101，Set Privilege As为Custom，网页设置项默认未勾选，勾选PBX、Auto Provisioning]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】登录分机A 1101的页面，检查主菜单内所有勾选功能]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: Setting界面只有PBX]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: Setting界面只有PBX]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】选择User为分机A的数据，点击“Delete”图标，点击yes]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】登录分机A 1101的页面，检查主菜单内只有ME功能]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】勾选全部UserPermission,删除]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: 全部UserPermission,删除]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景恢复】关闭游览器]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景初始化】打开游览器并登录设备_Network]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】设置Time Zone为8 China (Beijing)]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】分机A打给分机B，通话10s]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: 1100分机注册]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: 1101分机注册]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: CDR呼叫时间检测]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: CDR呼叫方检测]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: CDR被叫方检测]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: CDR_Status检测]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景恢复】关闭游览器]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景初始化】打开游览器并登录设备_Maintain]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】添加备份文件]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】下载备份包]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】删除备份文件]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】点击“Upload”，选择刚下载的备份包，点击“Upload”]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】设置BackupSchedule]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】选择当前日期的系前一天的系统日志,删除]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】下载全部日志]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】删除全部系统日志]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】添加一个分机，检测操作日志]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: 操作日志User]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景恢复】关闭游览器]]>
+    </line>
+  </reporter-output>
+  <suite name="SYSCORE" duration-ms="550907" started-at="2017-08-20T10:44:39Z" finished-at="2017-08-20T10:53:50Z">
+    <groups>
+    </groups>
+    <test name="syscore" duration-ms="550907" started-at="2017-08-20T10:44:39Z" finished-at="2017-08-20T10:53:50Z">
+      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime">
+        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.DateTime@1fffcd7]" name="BeforeClass" is-config="true" duration-ms="7606" started-at="2017-08-20T18:48:48Z" finished-at="2017-08-20T18:48:56Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景初始化】打开游览器并登录设备_Network]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- BeforeClass -->
+        <test-method status="PASS" signature="A_SetTimeZone()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.DateTime@1fffcd7]" name="A_SetTimeZone" duration-ms="117344" started-at="2017-08-20T18:48:56Z" finished-at="2017-08-20T18:50:53Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】设置Time Zone为8 China (Beijing)]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- A_SetTimeZone -->
+        <test-method status="PASS" signature="B_CallTest()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.DateTime@1fffcd7]" name="B_CallTest" duration-ms="45381" started-at="2017-08-20T18:50:53Z" finished-at="2017-08-20T18:51:39Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】分机A打给分机B，通话10s]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: 1100分机注册]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: 1101分机注册]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: CDR呼叫时间检测]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: CDR呼叫方检测]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: CDR被叫方检测]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: CDR_Status检测]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- B_CallTest -->
+        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.DateTime@1fffcd7]" name="AfterClass" is-config="true" duration-ms="17073" started-at="2017-08-20T18:51:39Z" finished-at="2017-08-20T18:51:56Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景恢复】关闭游览器]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- AfterClass -->
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.DateTime -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission">
+        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="BeforeClass" is-config="true" duration-ms="7922" started-at="2017-08-20T18:46:49Z" finished-at="2017-08-20T18:46:57Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景初始化】打开游览器并登录设备_Network]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- BeforeClass -->
+        <test-method status="PASS" signature="CaseName()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="CaseName" is-config="true" duration-ms="1500" started-at="2017-08-20T18:46:57Z" finished-at="2017-08-20T18:46:58Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CaseName -->
+        <test-method status="PASS" signature="A_AddUserPermissionAdmin()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="A_AddUserPermissionAdmin" duration-ms="21574" started-at="2017-08-20T18:46:58Z" finished-at="2017-08-20T18:47:20Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】添加UserPermession,admin权限]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: 新添加的User]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: 新添加的Role]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- A_AddUserPermissionAdmin -->
+        <test-method status="PASS" signature="B_CheckUserPermisson()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="B_CheckUserPermisson" duration-ms="3655" started-at="2017-08-20T18:47:20Z" finished-at="2017-08-20T18:47:24Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】登录分机A 1100的页面，检查主菜单内所有勾选功能]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- B_CheckUserPermisson -->
+        <test-method status="PASS" signature="C_AddUserPermissionCustom()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="C_AddUserPermissionCustom" duration-ms="36709" started-at="2017-08-20T18:47:24Z" finished-at="2017-08-20T18:48:00Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】User设置为分机B 1101，Set Privilege As为Custom，网页设置项默认未勾选，勾选PBX、Auto Provisioning]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- C_AddUserPermissionCustom -->
+        <test-method status="PASS" signature="D_CheckUserPerssion()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="D_CheckUserPerssion" duration-ms="5772" started-at="2017-08-20T18:48:00Z" finished-at="2017-08-20T18:48:06Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】登录分机A 1101的页面，检查主菜单内所有勾选功能]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: Setting界面只有PBX]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: Setting界面只有PBX]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- D_CheckUserPerssion -->
+        <test-method status="PASS" signature="E_Delete()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="E_Delete" duration-ms="10885" started-at="2017-08-20T18:48:06Z" finished-at="2017-08-20T18:48:17Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】选择User为分机A的数据，点击“Delete”图标，点击yes]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- E_Delete -->
+        <test-method status="PASS" signature="F_CheckUserPerssion()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="F_CheckUserPerssion" duration-ms="3064" started-at="2017-08-20T18:48:17Z" finished-at="2017-08-20T18:48:20Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】登录分机A 1101的页面，检查主菜单内只有ME功能]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- F_CheckUserPerssion -->
+        <test-method status="PASS" signature="G_DeleteAll()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="G_DeleteAll" duration-ms="11304" started-at="2017-08-20T18:48:20Z" finished-at="2017-08-20T18:48:31Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】勾选全部UserPermission,删除]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: 全部UserPermission,删除]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- G_DeleteAll -->
+        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission@bbfa04]" name="AfterClass" is-config="true" duration-ms="17077" started-at="2017-08-20T18:48:31Z" finished-at="2017-08-20T18:48:48Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景恢复】关闭游览器]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- AfterClass -->
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Maintain">
+        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="BeforeClass" is-config="true" duration-ms="8150" started-at="2017-08-20T18:51:56Z" finished-at="2017-08-20T18:52:04Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景初始化】打开游览器并登录设备_Maintain]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- BeforeClass -->
+        <test-method status="PASS" signature="A_BackupRestore()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="A_BackupRestore" duration-ms="15461" started-at="2017-08-20T18:52:04Z" finished-at="2017-08-20T18:52:19Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】添加备份文件]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- A_BackupRestore -->
+        <test-method status="PASS" signature="B_DownloadBackUptar()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="B_DownloadBackUptar" duration-ms="6075" started-at="2017-08-20T18:52:19Z" finished-at="2017-08-20T18:52:25Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】下载备份包]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- B_DownloadBackUptar -->
+        <test-method status="PASS" signature="E_DeleteBackUp()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="E_DeleteBackUp" duration-ms="17137" started-at="2017-08-20T18:52:25Z" finished-at="2017-08-20T18:52:43Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】删除备份文件]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- E_DeleteBackUp -->
+        <test-method status="PASS" signature="F_UploadBackUp()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="F_UploadBackUp" duration-ms="1" started-at="2017-08-20T18:52:43Z" finished-at="2017-08-20T18:52:43Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】点击“Upload”，选择刚下载的备份包，点击“Upload”]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- F_UploadBackUp -->
+        <test-method status="PASS" signature="H_BackupSchedule()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="H_BackupSchedule" duration-ms="7460" started-at="2017-08-20T18:52:43Z" finished-at="2017-08-20T18:52:50Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】设置BackupSchedule]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- H_BackupSchedule -->
+        <test-method status="PASS" signature="L_DeleteSystemLog()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="L_DeleteSystemLog" duration-ms="1342" started-at="2017-08-20T18:52:50Z" finished-at="2017-08-20T18:52:51Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】选择当前日期的系前一天的系统日志,删除]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- L_DeleteSystemLog -->
+        <test-method status="PASS" signature="M_DownloadSystemLog()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="M_DownloadSystemLog" duration-ms="6318" started-at="2017-08-20T18:52:51Z" finished-at="2017-08-20T18:52:58Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】下载全部日志]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- M_DownloadSystemLog -->
+        <test-method status="PASS" signature="N_DeleteAllSystemLog()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="N_DeleteAllSystemLog" duration-ms="7231" started-at="2017-08-20T18:52:58Z" finished-at="2017-08-20T18:53:05Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】删除全部系统日志]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- N_DeleteAllSystemLog -->
+        <test-method status="PASS" signature="O_OperateLog()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="O_OperateLog" duration-ms="27917" started-at="2017-08-20T18:53:05Z" finished-at="2017-08-20T18:53:33Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】添加一个分机，检测操作日志]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: 操作日志User]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- O_OperateLog -->
+        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Maintain@1ef45e3]" name="AfterClass" is-config="true" duration-ms="17264" started-at="2017-08-20T18:53:33Z" finished-at="2017-08-20T18:53:50Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景恢复】关闭游览器]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- AfterClass -->
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.Maintain -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Network">
+        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Network@1deb50e]" name="BeforeClass" is-config="true" duration-ms="17434" started-at="2017-08-20T18:44:39Z" finished-at="2017-08-20T18:44:57Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景初始化】打开游览器并登录设备_Network]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- BeforeClass -->
+        <test-method status="PASS" signature="A_DualSetting()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Network@1deb50e]" name="A_DualSetting" duration-ms="9572" started-at="2017-08-20T18:44:57Z" finished-at="2017-08-20T18:45:06Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】修改网络设置]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- A_DualSetting -->
+        <test-method status="PASS" signature="B_DualSetting()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Network@1deb50e]" name="B_DualSetting" duration-ms="24742" started-at="2017-08-20T18:45:06Z" finished-at="2017-08-20T18:45:31Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】从wan口IP登录]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- B_DualSetting -->
+        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Network@1deb50e]" name="AfterClass" is-config="true" duration-ms="16956" started-at="2017-08-20T18:45:31Z" finished-at="2017-08-20T18:45:48Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景恢复】关闭游览器]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- AfterClass -->
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.Network -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Security">
+        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Security@19963d8]" name="BeforeClass" is-config="true" duration-ms="23942" started-at="2017-08-20T18:45:48Z" finished-at="2017-08-20T18:46:12Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景初始化】打开游览器并登录设备_Network]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- BeforeClass -->
+        <test-method status="PASS" signature="B_SetService()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Security@19963d8]" name="B_SetService" duration-ms="14126" started-at="2017-08-20T18:46:12Z" finished-at="2017-08-20T18:46:26Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】网页访问协议设置HTTP，开启ssh端口22]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- B_SetService -->
+        <test-method status="PASS" signature="C_ConnectToSSH()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Security@19963d8]" name="C_ConnectToSSH" duration-ms="5584" started-at="2017-08-20T18:46:26Z" finished-at="2017-08-20T18:46:32Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】连接SSH]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: 连接SSH]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- C_ConnectToSSH -->
+        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.syscase.Security@19963d8]" name="AfterClass" is-config="true" duration-ms="17304" started-at="2017-08-20T18:46:32Z" finished-at="2017-08-20T18:46:49Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景恢复】关闭游览器]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- AfterClass -->
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.Security -->
+    </test> <!-- syscore -->
+  </suite> <!-- SYSCORE -->
+</testng-results>

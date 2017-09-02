@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class Add_Contact {
     public SelenideElement chooseContact = $(By.id("st-ec-extensionid-inputEl"));
+    public String chooseContact_id = "st-ec-extensionid";
     /**
      * Notification Method
      */

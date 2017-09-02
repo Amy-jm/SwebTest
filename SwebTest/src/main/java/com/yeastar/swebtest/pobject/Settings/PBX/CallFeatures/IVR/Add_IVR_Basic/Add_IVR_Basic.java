@@ -9,6 +9,9 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class Add_IVR_Basic {
+
+    public SelenideElement basic = $(By.xpath(".//div[starts-with(@id,'ivr-edit-')]//span[text()='Basic']"));
+
     public SelenideElement number = $(By.id("st-ivr-number-inputEl"));
     public SelenideElement name = $(By.id("st-ivr-name-inputEl"));
     public SelenideElement prompt = $(By.id("st-ivr-prompt0-trigger-picker"));
@@ -19,7 +22,7 @@ public class Add_IVR_Basic {
     public SelenideElement dialOutboundRoutes = $(By.id("st-ivr-enableoutrouter-displayEl"));
     public SelenideElement dialtoCheckVoicemail = $(By.name("enablecheckvoicemail"));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'ivr-edit-')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'ivr-edit-')]//span[text()='Cancel']"));
 
 }

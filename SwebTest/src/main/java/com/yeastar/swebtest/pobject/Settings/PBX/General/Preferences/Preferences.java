@@ -45,8 +45,8 @@ public class Preferences {
     public SelenideElement queueExtensions_start = $(By.id("st-general-queuestart-inputEl"));
     public SelenideElement queueExtensions_end = $(By.id("st-general-queueend-inputEl"));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'preference-')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'preference-')]//span[text()='Cancel']"));
 
 
 }

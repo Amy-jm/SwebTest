@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="syscore"
+           tests="2"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="171.569">
+  <properties />
+  
+  
+            <testcase name="B_CallTest" time="45.884" classname="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime" />
+                <testcase name="A_SetTimeZone" time="125.685" classname="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime" />
+      
+</testsuite>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [PBXCORE]">
+  <test name="pbxcore(failed)">
+    <classes>
+      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension">
+        <methods>
+          <include name="AfterClass"/>
+          <include name="BeforeClass"/>
+        </methods>
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature">
+        <methods>
+          <include name="BeforeClass"/>
+          <include name="AfterClass"/>
+        </methods>
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk">
+        <methods>
+          <include name="AfterClass"/>
+          <include name="BeforeClass"/>
+        </methods>
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage">
+        <methods>
+          <include name="BeforeClass"/>
+          <include name="AfterClass"/>
+          <include name="C_SetFileShare"/>
+          <include name="D_StorageLocations"/>
+          <include name="E_Recording_Settings"/>
+        </methods>
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage -->
+    </classes>
+  </test> <!-- pbxcore(failed) -->
+</suite> <!-- Failed suite [PBXCORE] -->

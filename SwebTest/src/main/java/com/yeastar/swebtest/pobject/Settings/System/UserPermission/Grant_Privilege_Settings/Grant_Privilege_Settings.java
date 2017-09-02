@@ -9,6 +9,12 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/30.
  */
 public class Grant_Privilege_Settings {
+    public String privilegeAs_Administrator = "admin";
+    public String privilegeAs_Custom = "custom";
+
+    public String setPrivilegeAs_id = "st-up-type";
+    public String user_id = "st-up-id";
+
     public SelenideElement grant_Privilege_Settings = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Settings\"]"));
 
     public SelenideElement user = $(By.id("st-up-id-inputEl"));
@@ -19,6 +25,7 @@ public class Grant_Privilege_Settings {
     /**
      * PBX
      */
+    public String pbxCheck_id = "st-up-pbx";
     public SelenideElement PBX = $(By.id("st-up-pbx-boxLabelEl"));
 
     public SelenideElement extensions = $(By.id("st-up-extensions-boxLabelEl"));
@@ -33,6 +40,7 @@ public class Grant_Privilege_Settings {
     /**
      * System
      */
+    public String systemCheck_id = "st-up-system";
     public SelenideElement system = $(By.id("st-up-system-boxLabelEl"));
 
     public SelenideElement network = $(By.id("st-up-networksettings-boxLabelEl"));
@@ -45,15 +53,17 @@ public class Grant_Privilege_Settings {
     /**
      * Event Center
      */
+    public String EventCenterCheck_id = "st-up-eventcenter";
     public SelenideElement eventCenter = $(By.id("st-up-eventcenter-boxLabelEl"));
 
     public SelenideElement eventSettings = $(By.id("st-up-eventsettings-boxLabelEl"));
     public SelenideElement eventLog = $(By.id("st-up-eventlog-boxLabelEl"));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
-
-
+//    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
+//    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+//
+public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'userpermission')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'userpermission')]//span[text()='Cancel']"));
 
 
 

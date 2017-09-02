@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
+<head>
+  <title>Test Results Report - pbxcore</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="description" content="TestNG unit test results." />
+  <link href="reportng.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="reportng.js"></script>
+</head>
+<body>
+<h1>pbxcore</h1>
+<p>
+  Test duration: 790.409s
+</p>
+
+
+
+  <table class="resultsTable">
+    <tr><th colspan="3" class="header failed">Failed Tests</th></tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  C_SetFileShare
+      </td>
+  <td class="duration">
+    10.486s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】勾选Enable File Sharing<br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-0', 'block')" title="Click to expand/collapse"><b>Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="File Share"]}<br/>
+Expected: exist<br/>
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327717514.0.png<br/>
+Timeout: 10 s.<br/>
+Caused by: WebDriverException: unknown error: Element <span id="tab-1137-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (685, 163). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div></b></a><br />
+    <div class="stackTrace" id="exception-0">
+              com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)<br />
+              com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)<br />
+              com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)<br />
+              com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)<br />
+              com.sun.proxy.$Proxy4.click(Unknown Source)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.C_SetFileShare(Storage.java:49)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                    <b>Caused by: </b> <a href="javascript:toggleElement('exception-1', 'block')" title="Click to expand/collapse">org.openqa.selenium.WebDriverException: unknown error: Element <span id="tab-1137-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (685, 163). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div><br/>
+&nbsp; (Session info: chrome=57.0.2987.133)<br/>
+&nbsp; (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)<br/>
+Command duration or timeout: 27 milliseconds<br/>
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'<br/>
+System info: host: 'Yeastar-PC', ip: '192.168.7.14', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_121'<br/>
+Driver info: org.openqa.selenium.chrome.ChromeDriver<br/>
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]<br/>
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b</a><br />
+        <div class="stackTrace" id="exception-1">
+                      sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)<br />
+                      sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br />
+                      java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br />
+                      org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)<br />
+                      org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)<br />
+                      org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)<br />
+                      org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)<br />
+                      com.codeborne.selenide.commands.Click.click(Click.java:22)<br />
+                      com.codeborne.selenide.commands.Click.execute(Click.java:14)<br />
+                      com.codeborne.selenide.commands.Click.execute(Click.java:11)<br />
+                      com.codeborne.selenide.commands.Commands.execute(Commands.java:140)<br />
+                      com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)<br />
+                      com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)<br />
+                      com.sun.proxy.$Proxy4.click(Unknown Source)<br />
+                      com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.C_SetFileShare(Storage.java:49)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+                      sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+                      java.lang.reflect.Method.invoke(Method.java:498)<br />
+                      org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+                      org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+                      org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+                      org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+                      org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+                      org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+                      org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+                      org.testng.TestRunner.run(TestRunner.java:624)<br />
+                      org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+                      org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+                      org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+                      org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+                      org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+                      org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+                      org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+                      org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+                      org.testng.TestNG.run(TestNG.java:1048)<br />
+                      org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+                      org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+                      org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+                      org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+                      org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+                      org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                  </div>
+          </div>
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_StorageLocations
+      </td>
+  <td class="duration">
+    10.379s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】Storage Locations中CDR、Recordings和Logs下拉选择TF/SD卡,Voicemail&One Touch Recordings下拉选择sharetest1<br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-2', 'block')" title="Click to expand/collapse"><b>Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="Preference"]}<br/>
+Expected: exist<br/>
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327727956.1.png<br/>
+Timeout: 10 s.<br/>
+Caused by: WebDriverException: unknown error: Element <span id="tab-1135-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (439, 163). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div></b></a><br />
+    <div class="stackTrace" id="exception-2">
+              com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)<br />
+              com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)<br />
+              com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)<br />
+              com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)<br />
+              com.sun.proxy.$Proxy4.click(Unknown Source)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.D_StorageLocations(Storage.java:56)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                    <b>Caused by: </b> <a href="javascript:toggleElement('exception-3', 'block')" title="Click to expand/collapse">org.openqa.selenium.WebDriverException: unknown error: Element <span id="tab-1135-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (439, 163). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div><br/>
+&nbsp; (Session info: chrome=57.0.2987.133)<br/>
+&nbsp; (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)<br/>
+Command duration or timeout: 35 milliseconds<br/>
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'<br/>
+System info: host: 'Yeastar-PC', ip: '192.168.7.14', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_121'<br/>
+Driver info: org.openqa.selenium.chrome.ChromeDriver<br/>
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]<br/>
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b</a><br />
+        <div class="stackTrace" id="exception-3">
+                      sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)<br />
+                      sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br />
+                      java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br />
+                      org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)<br />
+                      org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)<br />
+                      org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)<br />
+                      org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)<br />
+                      com.codeborne.selenide.commands.Click.click(Click.java:22)<br />
+                      com.codeborne.selenide.commands.Click.execute(Click.java:14)<br />
+                      com.codeborne.selenide.commands.Click.execute(Click.java:11)<br />
+                      com.codeborne.selenide.commands.Commands.execute(Commands.java:140)<br />
+                      com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)<br />
+                      com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)<br />
+                      com.sun.proxy.$Proxy4.click(Unknown Source)<br />
+                      com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.D_StorageLocations(Storage.java:56)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+                      sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+                      java.lang.reflect.Method.invoke(Method.java:498)<br />
+                      org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+                      org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+                      org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+                      org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+                      org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+                      org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+                      org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+                      org.testng.TestRunner.run(TestRunner.java:624)<br />
+                      org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+                      org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+                      org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+                      org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+                      org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+                      org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+                      org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+                      org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+                      org.testng.TestNG.run(TestNG.java:1048)<br />
+                      org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+                      org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+                      org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+                      org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+                      org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+                      org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                  </div>
+          </div>
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_Recording_Settings
+      </td>
+  <td class="duration">
+    11.423s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】Record Trunks全选所有Trunk、Record Extensions全选所有分机<br />
+                  </div>
+    
+
+        <a href="javascript:toggleElement('exception-4', 'block')" title="Click to expand/collapse"><b>Element not found {By.xpath: .//a[starts-with(@class,"cp-link-before") and text()="Recording Settings"]}<br/>
+Expected: exist<br/>
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327739397.2.png<br/>
+Timeout: 10 s.<br/>
+Caused by: WebDriverException: unknown error: Element <a class="cp-link-before" href="javascript:void(0)" data-tabindex-value="none" tabindex="-1" data-tabindex-counter="2">...</a> is not clickable at point (467, 213). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div></b></a><br />
+    <div class="stackTrace" id="exception-4">
+              com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)<br />
+              com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)<br />
+              com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)<br />
+              com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)<br />
+              com.sun.proxy.$Proxy4.click(Unknown Source)<br />
+              com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.E_Recording_Settings(Storage.java:74)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+              java.lang.reflect.Method.invoke(Method.java:498)<br />
+              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+              org.testng.TestRunner.run(TestRunner.java:624)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+              org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+              org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+              org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+              org.testng.TestNG.run(TestNG.java:1048)<br />
+              org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+              org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+              org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+              org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                    <b>Caused by: </b> <a href="javascript:toggleElement('exception-5', 'block')" title="Click to expand/collapse">org.openqa.selenium.WebDriverException: unknown error: Element <a class="cp-link-before" href="javascript:void(0)" data-tabindex-value="none" tabindex="-1" data-tabindex-counter="2">...</a> is not clickable at point (467, 213). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div><br/>
+&nbsp; (Session info: chrome=57.0.2987.133)<br/>
+&nbsp; (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)<br/>
+Command duration or timeout: 25 milliseconds<br/>
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'<br/>
+System info: host: 'Yeastar-PC', ip: '192.168.7.14', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_121'<br/>
+Driver info: org.openqa.selenium.chrome.ChromeDriver<br/>
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]<br/>
+Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b</a><br />
+        <div class="stackTrace" id="exception-5">
+                      sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)<br />
+                      sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br />
+                      java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br />
+                      org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)<br />
+                      org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)<br />
+                      org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)<br />
+                      org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)<br />
+                      com.codeborne.selenide.commands.Click.click(Click.java:22)<br />
+                      com.codeborne.selenide.commands.Click.execute(Click.java:14)<br />
+                      com.codeborne.selenide.commands.Click.execute(Click.java:11)<br />
+                      com.codeborne.selenide.commands.Commands.execute(Commands.java:140)<br />
+                      com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)<br />
+                      com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)<br />
+                      com.sun.proxy.$Proxy4.click(Unknown Source)<br />
+                      com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.E_Recording_Settings(Storage.java:74)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+                      sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+                      java.lang.reflect.Method.invoke(Method.java:498)<br />
+                      org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)<br />
+                      org.testng.internal.Invoker.invokeMethod(Invoker.java:639)<br />
+                      org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)<br />
+                      org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)<br />
+                      org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)<br />
+                      org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)<br />
+                      org.testng.TestRunner.privateRun(TestRunner.java:774)<br />
+                      org.testng.TestRunner.run(TestRunner.java:624)<br />
+                      org.testng.SuiteRunner.runTest(SuiteRunner.java:359)<br />
+                      org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)<br />
+                      org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)<br />
+                      org.testng.SuiteRunner.run(SuiteRunner.java:261)<br />
+                      org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+                      org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+                      org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)<br />
+                      org.testng.TestNG.runSuitesLocally(TestNG.java:1140)<br />
+                      org.testng.TestNG.run(TestNG.java:1048)<br />
+                      org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)<br />
+                      org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)<br />
+                      org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)<br />
+                      org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)<br />
+                      org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)<br />
+                      org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)<br />
+                  </div>
+          </div>
+      </td>
+</tr>
+      </table>
+
+
+  <table class="resultsTable">
+    <tr><th colspan="3" class="header passed">Passed Tests</th></tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_RingGroup
+      </td>
+  <td class="duration">
+    21.422s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加RingGroup<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_Queue
+      </td>
+  <td class="duration">
+    15.652s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加Queue<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_Conference
+      </td>
+  <td class="duration">
+    6.262s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加conference<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_PickupGroup
+      </td>
+  <td class="duration">
+    16.297s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加pickupGroup<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_PagingIntercom
+      </td>
+  <td class="duration">
+    12.483s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加paging_Intercom<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_CallBack
+      </td>
+  <td class="duration">
+    20.376s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加callback<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_PINList
+      </td>
+  <td class="duration">
+    15.480s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加PINList<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_SettingSystemTime
+      </td>
+  <td class="duration">
+    130.646s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】设置系统时间为00点整<br />
+                                &nbsp;&nbsp;&nbsp; Pass: waitReboot重启<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_CreateExtension
+      </td>
+  <td class="duration">
+    20.557s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】创建1000分机<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_CreateFxsExtension
+      </td>
+  <td class="duration">
+    17.370s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】创建FXS分机1001<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_CreateBulkExtensions
+      </td>
+  <td class="duration">
+    25.274s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】批量创建分机1100-1109<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  E_RegisterExtension
+      </td>
+  <td class="duration">
+    65.114s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】SIP分机1000拨打SIP分机1001，通话<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1001分机注册<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  F_ExportExtensions
+      </td>
+  <td class="duration">
+    3.922s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】导出分机列表<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  G_DelExtension
+      </td>
+  <td class="duration">
+    11.669s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除1000分机<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  H_DelExteiosns
+      </td>
+  <td class="duration">
+    10.747s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】删除所有分机<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  I_ImportExtension
+      </td>
+  <td class="duration">
+    35.735s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】导入分机列表<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 1001分机注册<br />
+                                &nbsp;&nbsp;&nbsp; Pass: 导入分机列表<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  J_PstnCall
+      </td>
+  <td class="duration">
+    46.702s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】通过PSTN外线B设备2000拨打A设备1000<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测错误<br />
+                                &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  K_ExtensionGroupSetting
+      </td>
+  <td class="duration">
+    32.179s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加分机组extgroup1<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_AddTrunk
+      </td>
+  <td class="duration">
+    22.277s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加SIPTrunk<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_AddTrunkIAXTrunk
+      </td>
+  <td class="duration">
+    18.453s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加IAXTrunk<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  C_AddSPX
+      </td>
+  <td class="duration">
+    19.880s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加SPX<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  D_AddSPS
+      </td>
+  <td class="duration">
+    16.821s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】添加SPS<br />
+                  </div>
+    
+
+      </td>
+</tr>
+          <tr>
+        <td colspan="3" class="group">com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage</td>
+      </tr>
+            
+<tr>
+  <td class="method">
+                  A_JudgeStorage
+      </td>
+  <td class="duration">
+    13.002s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】SD/HD/USB检测<br />
+                  </div>
+    
+
+      </td>
+</tr>
+<tr>
+  <td class="method">
+                  B_AddNetworkDrive
+      </td>
+  <td class="duration">
+    13.864s
+  </td>
+  <td class="result">
+        
+    
+            <div class="testOutput">
+                        &nbsp; 【执行操作】挂载网络磁盘sharetest1<br />
+                  </div>
+    
+
+      </td>
+</tr>
+      </table>
+  
+</body>
+</html>

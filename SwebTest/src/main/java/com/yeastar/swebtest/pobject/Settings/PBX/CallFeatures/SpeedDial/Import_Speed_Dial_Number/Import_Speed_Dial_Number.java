@@ -10,8 +10,10 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class Import_Speed_Dial_Number {
     public SelenideElement extensionFile = $(By.id("st-speeddial-filename-inputEl"));
-    public SelenideElement browse = $(By.id("st-speeddial-filename-button-fileInputEl"));
-    public SelenideElement Import = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Import\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-small\") and text()=\"Cancel\"]"));
+    public SelenideElement browse = $(By.id("st-speeddial-filename-trigger-filebutton"));
+    public SelenideElement Import = $(By.xpath(".//div[starts-with(@id,'speeddial-import')]//span[text()='Import']"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'speeddial-import-')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'speeddial-import-')]//span[text()='Cancel']"));
+    public SelenideElement ImportOK = $(By.xpath(".//div[starts-with(@id,\"messagebox\")]//span[text()=\"OK\"]"));
 
 }

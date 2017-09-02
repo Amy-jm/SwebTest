@@ -11,4 +11,22 @@ import static com.codeborne.selenide.Selenide.$;
 public class EventSetting {
     public SelenideElement eventSetting = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Event Settings\"]"));
 
+    public String EventSetting_Record  = "record";
+    public String EventSetting_Noticication = "notification";
+//    String EventSetting
+
+    public  int Record_ModifyAdministratorPassword = 0;
+    public  int Record_UserLoginSuccess = 1;
+    public int Record_UserLoginFailed = 2;
+    public int Rescord_Lockout = 3;
+
+
+    public int Notification_ModifyAdministratorPassword = 0;
+    public int Notification_UserLoginSuccess = 1;
+    public int Notification_UserLoginFailed = 2;
+    public int Notification_Lockout = 3;
+
+
+
+
 }

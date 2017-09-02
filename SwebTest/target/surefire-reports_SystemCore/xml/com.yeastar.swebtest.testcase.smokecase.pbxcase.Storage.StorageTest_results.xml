@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="5"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="28.545">
+  <properties />
+  
+  
+            <testcase name="C_SetFileShare" time="1.368" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.StorageTest" />
+                <testcase name="E_Recording_Settings" time="8.517" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.StorageTest" />
+                <testcase name="B_AddNetworkDrive" time="0.864" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.StorageTest" />
+                <testcase name="D_StorageLocations" time="4.423" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.StorageTest" />
+                <testcase name="A_JudgeStorage" time="13.373" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.StorageTest" />
+      
+</testsuite>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="22"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="452.953">
+  <properties />
+  
+  
+            <testcase name="R_PINList" time="8.924" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="S_PINList" time="23.269" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="V_InboundRoutes" time="8.989" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="U_OutboundRoutes" time="29.135" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="O_Disa" time="8.935" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="M_CallBack" time="9.261" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="F_Queue" time="37.668" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="H_Conferene" time="17.052" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="T_OutboundRoutes" time="10.938" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="P_Disa" time="42.999" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="I_PickupGroup" time="8.942" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="K_PagingIntercom" time="8.929" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="L_PagingIntercom" time="20.710" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="N_CallBack" time="31.592" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="E_Queue" time="9.364" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="G_Conference" time="9.042" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="A_IVR" time="11.998" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="C_RingGroup" time="8.914" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="B_IVR" time="27.379" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="J_PickupGroup" time="38.041" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="D_RingGroup" time="32.305" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+                <testcase name="W_InboundRoutes" time="48.567" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll" />
+      
+</testsuite>

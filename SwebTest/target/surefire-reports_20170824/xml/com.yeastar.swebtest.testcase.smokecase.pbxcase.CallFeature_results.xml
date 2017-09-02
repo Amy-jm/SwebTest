@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="7"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="103.182">
+  <properties />
+  
+  
+            <testcase name="F_PINList" time="14.187" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="A_RingGroup" time="21.744" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="D_PickupGroup" time="16.335" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="E_PagingIntercom" time="11.116" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="C_Conference" time="6.619" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="B_Queue" time="14.157" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="F_CallBack" time="19.024" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+      
+</testsuite>

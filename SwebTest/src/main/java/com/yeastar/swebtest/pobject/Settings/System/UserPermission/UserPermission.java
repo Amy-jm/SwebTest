@@ -9,6 +9,17 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class UserPermission {
+    public String grid = "Ext.getCmp('control-panel').down('userpermission').down('tableview')";
+    public String gridLoading = "Ext.getCmp('control-panel').down('userpermission').down('loadmask')";
+
+    public int gridColumn_Checked  = 0;
+    public int gridColumn_User = 1;
+    public int gridColumn_Role = 2;
+    public int gridColumnEdit = 0;
+    public int gridColumnDelete = 1;
+
+
+
     /**
      * 功能按钮
      */

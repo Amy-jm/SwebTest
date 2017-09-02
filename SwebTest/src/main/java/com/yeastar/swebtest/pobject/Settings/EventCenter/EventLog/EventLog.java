@@ -9,6 +9,14 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/30.
  */
 public class EventLog {
+
+    public String grid = "Ext.getCmp('control-panel').down('eventlog')";
+    public String gridLoading = "Ext.getCmp('control-panel').down('eventlog').down('loadmask')";
+    public int gridColumn_Time = 0;
+    public int gridColumn_Type = 1;
+    public int gridColumn_EventName = 2;
+    public int gridColumn_EventMessage = 3;
+
     public SelenideElement eventType = $(By.id("st-el-eventtype-trigger-picker"));
     public SelenideElement eventName = $(By.id("st-el-eventname-trigger-picker"));
     public SelenideElement time_start = $(By.id("st-el-startdate-inputEl"));

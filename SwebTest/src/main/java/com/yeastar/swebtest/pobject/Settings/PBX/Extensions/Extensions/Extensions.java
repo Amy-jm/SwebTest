@@ -19,33 +19,49 @@ public class Extensions {
     /**
      * Extensions表格
      */
-    public String grid_extensions = "Ext.getCmp('control-panel').down('extension')";
-    public int gridCheck = 0; //仅搜索.x-grid-row-checker
+
+    public String mask_added_id = "return Ext.query('#control-panel #control-panel-body .x-mask')[1].id";
+
+    public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
     public int gridcolumn_Extensions = 3;
     public int gridcolumn_Name = 4;
     public int gridcolumn_Type = 5;
     public int gridcolumn_Port = 6;
+
     public int gridEdit = 0; //仅搜索img
     public int gridDelete = 1; //仅搜索img
 
-    public void GridExtensions(int row, int column) {
-        String two = executeJs("return Ext.getCmp('control-panel').down('extension').down(\"actioncolumn\").id");
+    public void GridExtensions(int row, int column) throws InterruptedException {
+        String two = (String)executeJs("return Ext.getCmp('control-panel').down('extension').down(\"actioncolumn\").id");
         //String three = executeJs("return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('extension').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent");
     }
-
+    public String grid = "Ext.getCmp('control-panel').down('extension')";
+    public String grid_Mask = "Ext.getCmp('control-panel').down('extension').down('loadmask')";
+    public String grid_status = "Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview')";
+    public String grid_CDR = "Ext.getCmp('cdr-record').down('grid').down('tableview')";
+    public String grid_CDR_Mask = "Ext.getCmp('cdr-record').down('grid').down('loadmask')";
+    public String grid_extension_all_select = "Ext.query('#'+Ext.getCmp('control-panel').down('extension').down('headercontainer').id + ' div div div div')[0].click()";
+    public String grid_extensionGroup_allSelect = "Ext.query('#'+Ext.getCmp('control-panel').down('extensiongroup').down('headercontainer').id + ' div div div div')[0].click()";
     /**
      * 功能按钮
      */
 
-    public SelenideElement add = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Add\"]"));
-    public SelenideElement bulkAdd = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Bulk Add\"]"));
-    public SelenideElement edit = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Edit\"]"));
-    public SelenideElement delete = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Delete\"]"));
-    public SelenideElement Import = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Import\"]"));
-    public SelenideElement export = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Export\"]"));
+    public SelenideElement add = $(By.xpath(".//div[starts-with(@id,'extension')]//span[text()='Add']"));
+    public SelenideElement bulkAdd = $(By.xpath(".//div[starts-with(@id,'extension')]//span[text()='Bulk Add']"));
+    public SelenideElement edit = $(By.xpath(".//div[starts-with(@id,'extension')]//span[text()='Edit']"));
+    public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,'extension')]//span[text()='Delete']"));
+    public SelenideElement Import = $(By.xpath(".//div[starts-with(@id,'extension')]//span[text()='Import']"));
+    public SelenideElement export = $(By.xpath(".//div[starts-with(@id,'extension')]//span[text()='Export']"));
+    public SelenideElement ImportExtension_Input = $(By.id("st-exten-filename-inputEl"));
+    public SelenideElement ImportExtension_Browse = $(By.id("st-exten-filename-trigger-filebutton"));
+    public SelenideElement ImortExtension_Import = $(By.xpath(".//div[starts-with(@id,'extension-import')]//span[text()='Import']"));
+    public SelenideElement ImortExtension_Cancel = $(By.xpath(".//div[starts-with(@id,'extension-import')]//span[text()='Cancel']"));
+    public SelenideElement ImportExtensionOK = $(By.xpath(".//div[starts-with(@id,\"messagebox\")]//span[text()=\"OK\"]"));
 
     public SelenideElement search_Text = $(By.xpath(".//*[@placeholder='Extension,Name,Type']"));
     public SelenideElement search_Button = $(By.xpath(".//*[@src='images/search.png']"));
+
+
     /**
      * 删除功能
      */
@@ -55,15 +71,14 @@ public class Extensions {
     /**
      * 页码功能
      */
-    public SelenideElement firstPage = $(By.xpath(".//*[@data-qtip='First Page']"));
-    public SelenideElement previousPage = $(By.xpath(".//*[@data-qtip='Previous Page']"));
-    public SelenideElement nextPage = $(By.xpath(".//*[@data-qtip='Next Page']"));
-    public SelenideElement lastPage = $(By.xpath(".//*[@data-qtip='Last Page']"));
-    public SelenideElement refresh = $(By.xpath(".//*[@data-qtip='Refresh']"));
-    public SelenideElement gotoinput = $(By.name("gotoinput"));
-    public SelenideElement go = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-toolbar-small\") and text()=\"Go\"]"));
+    public SelenideElement firstPage = $(By.xpath(".//div[starts-with(@id,'extension')]//a[@data-qtip='First Page']"));
+    public SelenideElement previousPage = $(By.xpath(".//div[starts-with(@id,'extension')]//a[@data-qtip='Previous Page']"));
+    public SelenideElement nextPage = $(By.xpath(".//div[starts-with(@id,'extension')]//a[@data-qtip='Next Page']"));
+    public SelenideElement lastPage = $(By.xpath(".//div[starts-with(@id,'extension')]//a[@data-qtip='Last Page']"));
+    public SelenideElement refresh = $(By.xpath(".//div[starts-with(@id,'extension')]//a[@data-qtip='Refresh']"));
+    public SelenideElement gotoinput = $(By.xpath(".//div[starts-with(@id,'extension')]//input[@name='gotoinput']"));
+    public SelenideElement go = $(By.xpath(".//div[starts-with(@id,'extension')]//span[text()='Go']"));
     public SelenideElement selectPage = $(By.id(".//*[(@data-ref='bodyEl') and (@role='presentation')]"));
-
 
 
 }

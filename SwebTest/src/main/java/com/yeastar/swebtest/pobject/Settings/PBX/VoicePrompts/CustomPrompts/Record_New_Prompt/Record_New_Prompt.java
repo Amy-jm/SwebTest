@@ -11,8 +11,10 @@ import static com.codeborne.selenide.Selenide.$;
 public class Record_New_Prompt {
     public SelenideElement name = $(By.id("st-cp-name-inputEl"));
     public SelenideElement extension = $(By.id("st-cp-extension-inputEl"));
+    public SelenideElement record = $(By.xpath(".//div[starts-with(@id,'customprompt-record-')]//span[text()='Record']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'customprompt-record-')]//span[text()='Cancel']"));
 
-    public SelenideElement record = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Record\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+
+    public String recordExtension = "st-cp-extension";
 
 }

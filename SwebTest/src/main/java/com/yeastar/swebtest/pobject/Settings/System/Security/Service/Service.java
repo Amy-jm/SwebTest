@@ -14,11 +14,16 @@ public class Service {
     public SelenideElement autoLogoutTime = $(By.name("webexpiretime"));
     public SelenideElement loginMode_extension = $(By.id("loginmode-ext-displayEl"));
     public SelenideElement loginMode_email = $(By.id("loginmode-eml-displayEl"));
-    public SelenideElement protocol = $(By.id("st-service-webprotocol-trigger-picker"));
+    public SelenideElement protocol_picker = $(By.id("st-service-webprotocol-trigger-picker"));
+    public String protocol_id = "st-service-webprotocol";
+    public String HTTPS = "https";
+    public String HTTP= "http";
     public SelenideElement port = $(By.id("st-service-webport-inputEl"));
     public SelenideElement redirectfromport80 = $(By.id("st-service-redirecturl-displayEl"));
     public SelenideElement certificate = $(By.id("st-service-httpscert-trigger-picker"));
     public SelenideElement enableSSH_check = $(By.id("st-service-enablessh-displayEl"));
+    public String enableSSH_check_id = "st-service-enablessh";
+
     public SelenideElement enableSSH = $(By.id("st-service-sshport-inputEl"));
     public SelenideElement enableFTP_check = $(By.id("st-service-enableftp-displayEl"));
     public SelenideElement enableFTP = $(By.id("st-service-ftpport-inputEl"));
@@ -30,12 +35,16 @@ public class Service {
     public SelenideElement enableSIPTLS_check = $(By.id("st-service-enabletls-displayEl"));
     public SelenideElement enableSIPTLS = $(By.id("st-service-tlsport-inputEl"));
     public SelenideElement enableDHCPServer = $(By.id("st-service-enable-displayEl"));
-    public SelenideElement enableAMI = $(By.id("st-service-enableami-displayEl"));
+    public String enableAMI_id = "st-service-enableami";
+    public SelenideElement enableAMI_Name = $(By.id("st-service-username-inputEl"));
+    public SelenideElement enableAMI_Password = $(By.id("st-service-password-inputEl"));
+    public SelenideElement enableAMI_Permitted = $(By.xpath(".//div[starts-with(@id,'panel')]//input[starts-with(@id,'ipaddrpermit')]"));
+    public SelenideElement enableAMI_Subnet = $(By.xpath(".//div[starts-with(@id,'panel')]//input[starts-with(@id,'maskpermit')]"));
 
+    public SelenideElement secure_OK = $(By.xpath(".//div[starts-with(@id,'messagebox')]//span[text()='OK']"));
 
-
-
-
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'service')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'service')]//span[text()='Cancel']"));
 
 
 

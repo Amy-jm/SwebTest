@@ -1,9 +1,12 @@
 package com.yeastar.swebtest.pobject.Settings.PBX.Extensions.Extensions.Add_Bulk_Extensions.Add_Bulk_Extensions_Basic;
 
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.swebtest.driver.SwebDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.switchTo;
 
 /**
  * Created by Yeastar on 2017/6/28.
@@ -23,6 +26,8 @@ public class Add_Bulk_Extensions_Basic {
     public SelenideElement startExtension = $(By.id("startextension-inputEl"));
     public SelenideElement createNumber = $(By.id("createnumber-inputEl"));
     public SelenideElement registrationPassword_button = $(By.id("regpasstype-trigger-picker"));
+    public SelenideElement registerationFixPassword = $(By.id("regpassprefix-inputEl"));
+    public SelenideElement registrationPassword_input =  $(By.id("regpasstype-inputEl"));
     public SelenideElement userPasswrod_button = $(By.id("loginpasstype-trigger-picker"));
     public SelenideElement prefixPassword = $(By.id("loginpassprefix-inputEl"));
     public SelenideElement concurrentRegistrations = $(By.id("mulmaxregistrations-inputEl"));

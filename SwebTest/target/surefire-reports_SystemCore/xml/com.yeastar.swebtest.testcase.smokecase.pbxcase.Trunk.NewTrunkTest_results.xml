@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="32.349">
+  <properties />
+  
+  
+            <testcase name="A_AddTrunk" time="32.349" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Trunk.NewTrunkTest" />
+      
+</testsuite>

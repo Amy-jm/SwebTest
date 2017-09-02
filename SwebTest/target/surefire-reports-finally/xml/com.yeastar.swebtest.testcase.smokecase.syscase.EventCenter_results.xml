@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="syscore"
+           tests="7"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="109.139">
+  <properties />
+  
+  
+            <testcase name="C_Answer" time="25.641" classname="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter" />
+                <testcase name="G_CheckLog" time="13.077" classname="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter" />
+                <testcase name="B_EventSettings" time="6.398" classname="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter" />
+                <testcase name="D_CheckEventLog" time="12.896" classname="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter" />
+                <testcase name="A_AddContact" time="18.487" classname="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter" />
+                <testcase name="E_DeleteNotification" time="8.323" classname="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter" />
+                <testcase name="F_CheckLog" time="24.317" classname="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter" />
+      
+</testsuite>

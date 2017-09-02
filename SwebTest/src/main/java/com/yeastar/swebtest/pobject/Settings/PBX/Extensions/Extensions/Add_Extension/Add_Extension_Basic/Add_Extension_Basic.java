@@ -20,6 +20,8 @@ public class Add_Extension_Basic {
     public SelenideElement SIP = $(By.id("type-sip-displayEl"));
     public SelenideElement IAX = $(By.id("type-iax-displayEl"));
     public SelenideElement FXS = $(By.id("type-fxs-displayEl"));
+    public SelenideElement FXS_port_picker = $(By.id("pbxport-trigger-picker"));
+    public SelenideElement FXS_port = $(By.id("pbxport-inputEl"));
     public SelenideElement extensions = $(By.id("username-inputEl"));
     public SelenideElement callerID = $(By.id("callerid-inputEl"));
     public SelenideElement registrationName = $(By.id("registername-inputEl"));
@@ -35,8 +37,9 @@ public class Add_Extension_Basic {
     public SelenideElement mobileNumber = $(By.id("mobile-inputEl"));
     public SelenideElement promptLanguage_button = $(By.id("language-trigger-picker"));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'extension-edit')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'extension-edit')]//span[text()='Cancel']"));
+
 
 
 

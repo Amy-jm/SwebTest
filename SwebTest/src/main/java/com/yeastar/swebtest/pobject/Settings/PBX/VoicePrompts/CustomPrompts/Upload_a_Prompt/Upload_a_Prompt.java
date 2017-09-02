@@ -10,8 +10,8 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class Upload_a_Prompt {
     public SelenideElement file = $(By.id("st-cp-choosefile-inputEl"));
-    public SelenideElement broese = $(By.id("st-cp-choosefile-button-fileInputEl"));
-    public SelenideElement upload = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Upload\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement broese = $(By.id("st-cp-choosefile-trigger-filebutton"));
+    public SelenideElement upload = $(By.xpath(".//div[starts-with(@id,'customprompt-upload-')]//span[text()='Upload']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'customprompt-upload-')]//span[text()='Cancel']"));
 
 }

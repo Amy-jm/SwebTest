@@ -96,6 +96,7 @@ public class Reporter  {
 
     public static void infoExec(String message) {
         String tmpname = "【执行操作】";
+        System.out.println("执行操作:"+message);
         reporterOut(tmpname,message,2);
     }
 

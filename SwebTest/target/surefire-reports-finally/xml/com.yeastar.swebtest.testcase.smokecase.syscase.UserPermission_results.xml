@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="syscore"
+           tests="7"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="100.167">
+  <properties />
+  
+  
+            <testcase name="D_CheckUserPerssion" time="6.642" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="A_AddUserPermissionAdmin" time="21.856" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="C_AddUserPermissionCustom" time="38.123" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="F_CheckUserPerssion" time="4.211" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="G_DeleteAll" time="12.355" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="E_Delete" time="12.220" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="B_CheckUserPermisson" time="4.760" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+      
+</testsuite>

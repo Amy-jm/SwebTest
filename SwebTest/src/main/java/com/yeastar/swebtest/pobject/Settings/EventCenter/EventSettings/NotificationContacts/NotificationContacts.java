@@ -9,6 +9,14 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/30.
  */
 public class NotificationContacts {
+    public String grid = "Ext.getCmp('control-panel').down('contact').down('tableview')";
+    public String gridLoading = "Ext.getCmp('control-panel').down('contact').down('loadmask')";
+
+    public int gridColumn_Name = 1;
+    public int gridColumn_NotificationMethod = 2;
+    public int gridColumnEdit= 0;
+    public int gridColumnDelete= 1;
+
     public SelenideElement notificationContacts = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Notification Contacts\"]"));
 
 

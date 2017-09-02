@@ -9,6 +9,8 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class PromptPreference {
+    public SelenideElement promptPreference = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Prompt Preference\"]"));
+
     public SelenideElement musicOnHold = $(By.id("st-pp-musiconhold-trigger-picker"));
     public SelenideElement playCallForwardingPrompt = $(By.id("st-pp-followmepromptenable-displayEl"));
     public SelenideElement musiconHoldforCallForwarding = $(By.id("st-pp-followmeprompttone-trigger-picker"));
@@ -19,7 +21,9 @@ public class PromptPreference {
     public SelenideElement oneTouchRecordingStartPrompt = $(By.id("st-pp-monitorstart-trigger-picker"));
     public SelenideElement oneTouchRecordingEndPrompt = $(By.id("st-pp-monitorend-trigger-picker"));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'promptpreference-')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'promptpreference-')]//span[text()='Cancel']"));
+
+    public String MusicOnHoldId = "st-pp-musiconhold";
 
 }

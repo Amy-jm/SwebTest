@@ -9,6 +9,9 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/28.
  */
 public class Add_VoIP_Trunk_Basic {
+    public int  VoipTrunk = 1;
+    public int  PeerToPeer = 2;
+
 
     public SelenideElement basic = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Basic\"]"));
 
@@ -16,7 +19,7 @@ public class Add_VoIP_Trunk_Basic {
     public SelenideElement protocol = $(By.id("type-inputEl"));
     public SelenideElement providerName = $(By.id("trunkname-inputEl"));
     public SelenideElement hostname = $(By.id("hostname-inputEl"));
-    public SelenideElement hostnameIP = $(By.id("hostport-inputEl"));
+    public SelenideElement hostnamePort = $(By.id("hostport-inputEl"));
     public SelenideElement domain = $(By.id("fromdomain-inputEl"));
     public SelenideElement username = $(By.id("username-inputEl"));
     public SelenideElement authenticationName = $(By.id("ysauth-inputEl"));

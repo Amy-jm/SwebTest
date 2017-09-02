@@ -1,0 +1,179 @@
+-------------------------------------------------------------------------------
+Test set: TestSuite
+-------------------------------------------------------------------------------
+Tests run: 175, Failures: 14, Errors: 0, Skipped: 0, Time elapsed: 5,415.254 sec <<< FAILURE! - in TestSuite
+E_SetBriTrunk(com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk)  Time elapsed: 150.904 sec  <<< FAILURE!
+com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//div[starts-with(@id,'treepanel')]//span[text()='Trunks']}
+Expected: visible
+	at sun.reflect.GeneratedConstructorAccessor13.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:500)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+	at com.codeborne.selenide.impl.WebElementSelector.findElement(WebElementSelector.java:28)
+	at com.codeborne.selenide.impl.ElementFinder.getWebElement(ElementFinder.java:56)
+	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:44)
+	at com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk.E_SetBriTrunk(NewTrunk.java:83)
+
+G_CallSip(com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes)  Time elapsed: 44.79 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:285)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.G_CallSip(OutboundRoutes.java:191)
+
+I_CallIax(com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes)  Time elapsed: 38.783 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:285)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.I_CallIax(OutboundRoutes.java:223)
+
+J_CallSps(com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes)  Time elapsed: 44.557 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:285)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.J_CallSps(OutboundRoutes.java:240)
+
+K_CallSpx(com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes)  Time elapsed: 39.364 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:285)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.K_CallSpx(OutboundRoutes.java:259)
+
+L_CallPstn(com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes)  Time elapsed: 48.956 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:285)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.L_CallPstn(OutboundRoutes.java:278)
+
+M_CallBri(com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes)  Time elapsed: 46.46 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:285)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.M_CallBri(OutboundRoutes.java:295)
+
+Q_PinListCall(com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes)  Time elapsed: 34.548 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:285)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.Q_PinListCall(OutboundRoutes.java:354)
+
+I_CallPstn(com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes)  Time elapsed: 48.454 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:285)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.I_CallPstn(InboundRoutes.java:231)
+
+X_AddSpeedDial(com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction)  Time elapsed: 69.202 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:285)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFunction.X_AddSpeedDial(CallFunction.java:426)
+
+B_CallEmergencyNumber(com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest)  Time elapsed: 90.171 sec  <<< FAILURE!
+java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:294)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest.B_CallEmergencyNumber(EmergencyNumberTest.java:77)
+
+A_SetTimeZone(com.yeastar.swebtest.testcase.smokecase.syscase.DateTime)  Time elapsed: 27.687 sec  <<< FAILURE!
+com.codeborne.selenide.ex.ElementNotFound: Element not found {By.id: login-username-inputEl}
+Expected: visible
+	at sun.reflect.GeneratedConstructorAccessor26.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:413)
+	at org.openqa.selenium.By$ById.findElement(By.java:218)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+	at com.codeborne.selenide.impl.WebElementSelector.findElement(WebElementSelector.java:28)
+	at com.codeborne.selenide.impl.ElementFinder.getWebElement(ElementFinder.java:56)
+	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:44)
+	at com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+	at com.codeborne.selenide.commands.SetValue.execute(SetValue.java:20)
+	at com.codeborne.selenide.commands.SetValue.execute(SetValue.java:13)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.setValue(Unknown Source)
+	at com.yeastar.swebtest.driver.SwebDriver.login(SwebDriver.java:112)
+	at com.yeastar.swebtest.driver.SwebDriver.login(SwebDriver.java:95)
+	at com.yeastar.swebtest.testcase.smokecase.syscase.DateTime.A_SetTimeZone(DateTime.java:58)
+
+B_CallTest(com.yeastar.swebtest.testcase.smokecase.syscase.DateTime)  Time elapsed: 40.926 sec  <<< FAILURE!
+java.lang.AssertionError: CDR呼叫时间检测 【预期： 实际：2017-08-24 10】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:302)
+	at com.yeastar.swebtest.testcase.smokecase.syscase.DateTime.B_CallTest(DateTime.java:82)
+
+O_OperateLog(com.yeastar.swebtest.testcase.smokecase.syscase.Maintain)  Time elapsed: 30.057 sec  <<< FAILURE!
+java.lang.NullPointerException: null
+	at javax.imageio.ImageIO.write(ImageIO.java:1538)
+	at com.yeastar.swebtest.tools.ScreenShot.screenShotAsFile(ScreenShot.java:48)
+	at com.yeastar.swebtest.tools.ScreenShot.takeScreenshotByAll(ScreenShot.java:38)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1083)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:210)
+	at com.yeastar.swebtest.testcase.smokecase.syscase.Maintain.O_OperateLog(Maintain.java:194)
+

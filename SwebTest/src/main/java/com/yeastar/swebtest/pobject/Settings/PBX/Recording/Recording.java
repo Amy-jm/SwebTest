@@ -17,16 +17,24 @@ public class Recording {
     /**
      * Record Trunks
      */
+    public SelenideElement recordTrunks = $(By.id("st-recording-allowtrunks-containerEl"));
+
+//    public SelenideElement rt_AddAllToSelect = $(By.xpath(".//div[starts-with(@id,'st-recording-allowtrunks-bodyEl')]//span[data-qtip()='Add All to Selected']"));
+    public SelenideElement rt_AddAllToSelect = $(By.xpath(".//div[starts-with(@id,'st-recording-allowtrunks-innerCt')]//a[@data-qtip='Add All to Selected']"));
 
     /**
      * Record Extensions
      */
+    public SelenideElement recordExtensions = $(By.id("st-recording-allowextensions-containerEl"));
+    public SelenideElement re_AddAllToSelect = $(By.xpath(".//div[starts-with(@id,'st-recording-allowextensions-innerCt')]//a[@data-qtip='Add All to Selected']"));
 
     /**
      * Record Conferences
      */
+    public SelenideElement recordConferences = $(By.id("st-recording-allowconferences-containerEl"));
+    public SelenideElement rc_AddAllToSelect = $(By.xpath(".//div[starts-with(@id,'st-recording-allowconferences-innerCt')]//span[data-qtip()='Add All to Selected']"));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'recordinglist-')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'recordinglist-')]//span[text()='Cancel']"));
 
 }
