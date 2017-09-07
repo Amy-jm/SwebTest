@@ -23,6 +23,7 @@ public class CallFeature {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
     }
     @Test
     public void A_RingGroup() throws InterruptedException {
@@ -73,9 +74,11 @@ public class CallFeature {
     @Test
     public void F_CallBack() throws InterruptedException {
         Reporter.infoExec("添加callback");
+//        pageDeskTop.settings.click();
+//        settings.callFeatures_panel.click();
         callFeatures.more.click();
         callback.callback.click();
-        m_callFeature.addCallBack("callback1",add_callback.destination_Extension,"");
+        m_callFeature.addCallBack("callback1",add_callback.destination_Extension,"1100");
 
         //assert
 
@@ -93,11 +96,9 @@ public class CallFeature {
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(10000);
         Reporter.infoAfterClass("关闭游览器_CallFeatureTest"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(10000);
     }
 
 }

@@ -27,6 +27,7 @@ public class Security {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
     }
     @Test
     public void B_SetService() {

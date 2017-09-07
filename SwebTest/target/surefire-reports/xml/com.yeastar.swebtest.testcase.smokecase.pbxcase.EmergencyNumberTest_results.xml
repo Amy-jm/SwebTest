@@ -4,19 +4,20 @@
            failures="1"
            errors="0"
            skipped="0"
-           time="196.020">
+           time="207.309">
   <properties />
-            <testcase name="B_CallEmergencyNumber" time="61.222" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest">
+            <testcase name="B_CallEmergencyNumber" time="65.910" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest">
                 <failure type="java.lang.AssertionError"
-                  message="进入紧急呼叫 【预期：true 实际：false】"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：1100dial2001 [Emergency]】"
               >
-<![CDATA[java.lang.AssertionError: 进入紧急呼叫 【预期：true 实际：false】
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：1100dial2001 [Emergency]】
   com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
   com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
   com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
   com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:333)
-  com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest.B_CallEmergencyNumber(EmergencyNumberTest.java:73)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:332)
+  com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest.B_CallEmergencyNumber(EmergencyNumberTest.java:75)
   sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
   sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
   sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -50,8 +51,8 @@
           </testcase>
   
   
-            <testcase name="D_DeleteAllEmergencyNumber" time="52.499" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" />
-                <testcase name="C_DeleteEmergencyNumber" time="44.892" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" />
-                <testcase name="A_addEmergencyNumber" time="37.407" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" />
+            <testcase name="C_DeleteEmergencyNumber" time="45.205" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" />
+                <testcase name="A_addEmergencyNumber" time="40.459" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" />
+                <testcase name="D_DeleteAllEmergencyNumber" time="55.735" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest" />
       
 </testsuite>

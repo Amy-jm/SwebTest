@@ -29,6 +29,8 @@ public class Extension extends SwebDriver {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
+
 
         //在pjsip中创建分机
         pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
@@ -79,6 +81,7 @@ public class Extension extends SwebDriver {
         settings.extensions_panel.click();
         m_extension.changeExtensionDisplaying(100);
         m_extension.addSipExtension(1000,"Yeastar202");
+
         Number lineAfterAdd = (Number) gridLineNum(extensions.grid);
         String actual = (String) gridContent(extensions.grid,lineAfterAdd.intValue(),extensions.gridcolumn_Extensions);
         Thread.sleep(500);
@@ -125,7 +128,7 @@ public class Extension extends SwebDriver {
         pjsip.Pj_Make_Call_Auto_Answer(1001,1000, DEVICE_IP_LAN,true);
         Thread.sleep(10000);
         pjsip.Pj_hangupCall(1001,1000);
-        m_extension.checkCDR(1001,1000,"Answered");
+        m_extension.checkCDR("1001 <1001>","1000 <1000>","Answered");
     }
 
     @Test
@@ -178,7 +181,7 @@ public class Extension extends SwebDriver {
         ys_waitingTime(2000);
         System.out.println(extensions.ImortExtension_Import.isDisplayed());
         extensions.ImortExtension_Import.click();
-        ys_waitingTime(5000);
+
         extensions.ImportExtensionOK.click();
         ys_waitingTime(5000);
 
@@ -197,7 +200,7 @@ public class Extension extends SwebDriver {
         pjsip.Pj_Make_Call_Auto_Answer(2000,1000,"6",DEVICE_ASSIST_2,true);
         ys_waitingTime(10000);
         pjsip.Pj_hangupCall(2000,1000);
-        m_extension.checkCDR(1001,1000,"Answered");
+        m_extension.checkCDR("1001 <1001>","1000 <1000>","Answered");
     }
     @Test
     public void K_ExtensionGroupSetting() throws InterruptedException {

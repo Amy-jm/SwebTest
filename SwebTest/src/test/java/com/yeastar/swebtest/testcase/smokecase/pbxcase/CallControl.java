@@ -26,6 +26,7 @@ public class CallControl {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
         if(!Single_Device_Test){
             pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",5060,1);
             pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",5060,-1);
@@ -54,7 +55,7 @@ public class CallControl {
         gridClick(inboundRoutes.grid,1,inboundRoutes.gridEdit);
         ys_waitingMask();
 //        add_inbound_route.SetTimeConditionTableviewDestination(1,2,add_inbound_route.s_conference);
-        add_inbound_route.SetDestination(add_inbound_route.s_conference,"meet1");
+        add_inbound_route.SetDestination(add_inbound_route.s_conference,"name","meet1");
         Thread.sleep(3000);
         add_inbound_route.save.click();
 
@@ -112,7 +113,7 @@ public class CallControl {
         pjsip.Pj_Make_Call_Auto_Answer(2000,2000,"77",DEVICE_ASSIST_2);
         Thread.sleep(5000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(2000,1000,"Answered");
+        m_extension.checkCDR("2000 <2000>","1000 <1000>" ,"Answered");
     }
 
     @Test

@@ -5,6 +5,7 @@ import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static com.yeastar.swebtest.driver.Config.*;
@@ -26,7 +27,7 @@ public class VoicePrompts {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
-
+        m_extension.showCDRClounm();
         pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
         pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",5060,4);
         pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",5060,5);
@@ -34,6 +35,10 @@ public class VoicePrompts {
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1102, DEVICE_IP_LAN);
+    }
+    @BeforeMethod
+    public void waitTimeBeforeMethod() {
+        ys_waitingTime(1000);
     }
     @Test
     public void A_SystemPrompt() throws InterruptedException {
@@ -49,7 +54,7 @@ public class VoicePrompts {
         systemPrompt.upload.click();
 
         ys_waitingTime(10000);
-        gridCheck(systemPrompt.grid,Integer.valueOf(String.valueOf(gridLineNum(systemPrompt.grid))),systemPrompt.gridColumn_Default);
+        gridCheck(systemPrompt.grid,Integer.valueOf(String.valueOf(gridLineNum(systemPrompt.grid))),systemPrompt.Default);
         systemPrompt.save.click();
         ys_apply();
         tcpSocket.connectToDevice();
@@ -111,14 +116,18 @@ public class VoicePrompts {
         musicOnHold.createNewPlaylist.click();
         m_voicePrompts.addMOHPlaylist("play1",add_moh_playlist.playlistOrder_Random);
         ys_apply();
+        String plist =musicOnHold.chooseMOHPlaylist_input.getValue();
         String gridLine = String.valueOf(gridLineNum(musicOnHold.grid)) ;
-        System.out.println("play1 line+"+gridLine);
+        System.out.println("play1 line="+gridLine+" "+plist);
+        YsAssert.assertEquals(plist,"play1","play1未自动显示");
         YsAssert.assertEquals(gridLine,"0","play1新增的等待提示音列表为空");
     }
     @Test
     public void E_UploadMusicOnHold(){
         //上传提示音为xxx
         Reporter.infoExec("新的playlist上传音乐molihua.wav");
+        executeJs("Ext.getCmp('st-moh-choosefolder').setValue('play1')");
+        ys_waitingTime(3000);
         musicOnHold.browse.click();
         ys_waitingTime(2000);
         importFile(EXPORT_PATH +"molihua.wav");
@@ -158,7 +167,7 @@ public class VoicePrompts {
         boolean tcpInfo = tcpSocket.getAsteriskInfo("Language: zh",50);
         tcpSocket.closeTcpSocket();
         pjsip.Pj_Hangup_All();
-        YsAssert.assertEquals(tcpInfo,true,"播放play1中的xxx提示音");
+        YsAssert.assertEquals(tcpInfo,true,"播放play1中的xx提示音");
     }
 
     @Test
@@ -174,9 +183,11 @@ public class VoicePrompts {
         }
         musicOnHold.musicOnHold.click();
         ys_waitingLoading(musicOnHold.grid_Mask);
-        gridSeleteAll(musicOnHold.grid);
-        musicOnHold.delete.click();
-        musicOnHold.delete_yes.click();
+        if(!String.valueOf(gridLineNum(musicOnHold.grid)).equals("0")){
+            gridSeleteAll(musicOnHold.grid);
+            musicOnHold.deleteHoldFiles.click();
+            musicOnHold.delete_yes.click();
+        }
     }
 
     @Test
@@ -241,25 +252,54 @@ public class VoicePrompts {
         YsAssert.assertEquals(tcpInfo,true,"custom record重新录音");
     }
     @Test
-    public void K_DownloadCustom() throws InterruptedException {
+    public void K_DownloadCustom(){
         Reporter.infoExec("下载自定义提示音");
         gridClick(customPrompts.grid,1,customPrompts.gridDownload);
     }
     @Test
-    public void L_DeleteCustom() throws InterruptedException {
+    public void L_DeleteCustom()  {
         Reporter.infoExec("删除第一个自定义提示音");
         gridClick(customPrompts.grid,1,customPrompts.gridDelete);
         customPrompts.delete_yes.click();
 
     }
     @Test
-    public void M_DeleteAllCustom() throws InterruptedException {
+    public void M_DeleteAllCustom() {
         Reporter.infoExec("删除全部自定义提示音");
-        gridSeleteAll(customPrompts.grid);
-        customPrompts.delete.click();
-        customPrompts.delete_yes.click();
-        gridCheckDeleteAll(customPrompts.grid);
+        if(!String.valueOf(gridLineNum(customPrompts.grid)).equals("0")){
+            gridSeleteAll(customPrompts.grid);
+            customPrompts.delete.click();
+            customPrompts.delete_yes.click();
+            gridCheckDeleteAll(customPrompts.grid);
+            ys_apply();
+        }
+
+    }
+    @Test
+    public void Z_Recover() throws InterruptedException {
+        if(Single_Device_Test){
+            pageDeskTop.settings.click();
+            settings.voicePrompts_panel.click();
+        }
+        musicOnHold.musicOnHold.click();
+        ys_waitingTime(3000);
+        executeJs("Ext.getCmp('st-moh-choosefolder').setValue('play1')");
+        ys_waitingTime(3000);
+        if(musicOnHold.chooseMOHPlaylist_input.getValue().equals("play1")){
+            musicOnHold.delete.click();
+            musicOnHold.delete_yes.click();
+        }
+        systemPrompt.systemPrompt.click();
+        ys_waitingTime(2000);
+        gridCheck(systemPrompt.grid,1,systemPrompt.Default);
+        systemPrompt.save.click();
         ys_apply();
+        if(Integer.valueOf(String.valueOf(gridLineNum(systemPrompt.grid))) >1){
+            gridClick(systemPrompt.grid,2,systemPrompt.gridDelete);
+            systemPrompt.delete_yes.click();
+        }
+
+
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {

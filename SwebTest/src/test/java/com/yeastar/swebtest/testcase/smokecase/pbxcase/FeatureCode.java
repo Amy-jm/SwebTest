@@ -27,6 +27,7 @@ public class FeatureCode {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
         pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
         pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",5060,4);
         pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",5060,5);
@@ -46,8 +47,8 @@ public class FeatureCode {
         pjsip.Pj_Send_Dtmf(1100,"*","3","1","1","0","2");
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(1100,1102,"Answered");
-        m_extension.checkCDR(1100,1101,"Answered",2);
+        m_extension.checkCDR("1100 <1100>","1102 <1102>","Answered");
+        m_extension.checkCDR("1100 <1100>","1101 <1101>","Answered",2);
 
 
     }
@@ -63,7 +64,7 @@ public class FeatureCode {
         String caller_status = String.valueOf(gridExtensonStatus(extensions.grid_status,5,0));
         YsAssert.assertEquals(caller_status,"Busy");
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(1100,1101,"Answered",2);
+        m_extension.checkCDR("1100 <1100>","1101 <1101>","Answered",2);
         m_extension.checkCDR("1101 <1101>","1102 <1102(from 1100)>","Answered");
 
     }
@@ -76,7 +77,7 @@ public class FeatureCode {
         pjsip.Pj_Make_Call_Auto_Answer(1101,"*041102", DEVICE_IP_LAN);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(1100,1102,"No Answer",2);
+        m_extension.checkCDR("1100 <1100>","1102 <1102>","No Answer",2);
         m_extension.checkCDR("1100 <1100>","1101 <1101(pickup 1102)>","Answered");
 
     }
@@ -89,7 +90,7 @@ public class FeatureCode {
         pjsip.Pj_Make_Call_Auto_Answer(1100,"*4", DEVICE_IP_LAN);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(1102,1101,"No Answer",2);
+        m_extension.checkCDR("1102 <1102>","1101 <1101>","No Answer",2);
         m_extension.checkCDR("1102 <1102>","1100 <1100(pickup 1101)>","Answered");
 
     }

@@ -3,19 +3,6 @@
 <suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [SYSCORE]">
   <test name="syscore(failed)">
     <classes>
-      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Security">
-        <methods>
-          <include name="B_SetService"/>
-          <include name="AfterClass"/>
-          <include name="BeforeClass"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.Security -->
-      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime">
-        <methods>
-          <include name="BeforeClass"/>
-          <include name="AfterClass"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.DateTime -->
       <class name="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission">
         <methods>
           <include name="CaseName"/>
@@ -23,25 +10,31 @@
           <include name="AfterClass"/>
         </methods>
       </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter">
+        <methods>
+          <include name="AfterClass"/>
+          <include name="BeforeClass"/>
+        </methods>
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime">
+        <methods>
+          <include name="BeforeClass"/>
+          <include name="AfterClass"/>
+        </methods>
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.DateTime -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Security">
+        <methods>
+          <include name="AfterClass"/>
+          <include name="BeforeClass"/>
+        </methods>
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.Security -->
       <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Maintain">
         <methods>
+          <include name="Z_RecoverHttps"/>
           <include name="AfterClass"/>
           <include name="BeforeClass"/>
         </methods>
       </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.Maintain -->
-      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Network">
-        <methods>
-          <include name="AfterClass"/>
-          <include name="BeforeClass"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.Network -->
-      <class name="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter">
-        <methods>
-          <include name="AfterClass"/>
-          <include name="C_Answer"/>
-          <include name="BeforeClass"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter -->
     </classes>
   </test> <!-- syscore(failed) -->
 </suite> <!-- Failed suite [SYSCORE] -->

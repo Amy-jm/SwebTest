@@ -216,7 +216,7 @@ public class YS_Trunk {
 //                break;
 //            }
 //        }
-        int row= gridFindRowByColumn(pbxMonitor.grid_Trunks,pbxMonitor.gridTrunks_Name,trunkName,ascendingOrder);
+        int row= gridFindRowByColumn(pbxMonitor.grid_Trunks,pbxMonitor.gridTrunks_Name,trunkName,sort_ascendingOrder);
         String status= gridExtensonStatus(pbxMonitor.grid_Trunks,row,pbxMonitor.gridTrunks_Status);
         YsAssert.assertNotEquals(status,"Registration failed",trunkName+"注册失败");
     }

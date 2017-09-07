@@ -16,11 +16,7 @@ public class YS_Storage {
     public void  isExistStorage(String storage) throws InterruptedException {
         preference.save.shouldBe(Condition.exist);
         ys_waitingLoading(preference.grid_Mask);
-//        while(true){
-//            Thread.sleep(50);
-//            if(executeJs("return Ext.query('#'+Ext.getCmp('control-panel').down('storagepreference').down('loadmask').id)[0].style.display").equals("none"))
-//                break;
-//        }
+
         if(PRODUCT.equals(S300)){
             if(storage.equals("SD") || storage.equals("TF")){
                 String SDTF=String.valueOf(gridContent(preference.grid,preference.gridColumn_Usage,3)) ;
@@ -89,8 +85,11 @@ public class YS_Storage {
         String lineNum = String.valueOf(gridLineNum(preference.grid));
         String NetworkName=String.valueOf(gridContent(preference.grid,Integer.valueOf(lineNum),preference.gridColumn_Name));
         String Type =String.valueOf(gridContent(preference.grid,Integer.valueOf(lineNum),preference.gridColumn_Type));
+        String Status = String.valueOf(gridContent(preference.grid,Integer.valueOf(lineNum),preference.gridColumn_Usage));
+
         YsAssert.assertEquals(NetworkName,name);
         YsAssert.assertEquals(Type,"NETDISK");
+        YsAssert.assertInclude(Status,"%");
     }
 
     /**

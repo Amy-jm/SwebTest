@@ -11,7 +11,8 @@ import static com.codeborne.selenide.Selenide.$;
 public class FileShare {
     public SelenideElement fileShare = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"File Share\"]"));
 
-    public SelenideElement enableFileSharing = $(By.id("st-share-enable-displayEl"));
+    public SelenideElement enableFileSharing = $(By.id("st-share-enable"));
+    public String enableFileSharing_id = "st-share-enable";
     public SelenideElement enableFTPFileSharing = $(By.id("st-share-enableftp-displayEl"));
     public SelenideElement allowtochangesharedfiles = $(By.id("st-share-enabledelete-displayEl"));
     public SelenideElement sharedFileName = $(By.id("st-share-sharename-inputEl"));

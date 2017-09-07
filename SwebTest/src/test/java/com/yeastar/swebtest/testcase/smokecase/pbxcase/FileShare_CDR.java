@@ -26,7 +26,7 @@ public class FileShare_CDR {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
-
+        m_extension.showCDRClounm();
         pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
         pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",5060,4);
 
@@ -159,7 +159,7 @@ public class FileShare_CDR {
         pjsip.Pj_Hangup_All();
 
         YsAssert.assertEquals(tcpInfo,true,"分机B:1101进入录音");
-        m_extension.checkCDR(1100,1101,"Answered");
+        m_extension.checkCDR("1100 <1100>","1101 <1101>","Answered");
 //        mySettings.close.click();
 //        pageDeskTop.boxSettings.shouldBe(Condition.disappear);
     }
@@ -187,9 +187,9 @@ public class FileShare_CDR {
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.CDRandRecording.click();
-        Thread.sleep(2000);
+
         gridClick(cdRandRecordings.grid,1,cdRandRecordings.gridDownload);
-        Thread.sleep(2000);
+
         gridClick(cdRandRecordings.grid,1,cdRandRecordings.gridDeleteRecord);
         cdRandRecordings.delete_yes.click();
         //断言图标变为灰色

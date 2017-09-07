@@ -1,5 +1,6 @@
 package com.yeastar.swebtest.pobject.CDRandRecordings;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
@@ -19,7 +20,11 @@ public class CDRandRecordings {
     public int gridColumn_CallDuration = 3;
     public int gridColumn_TalkFuration = 4;
     public int gridColumn_Status = 5;
-    public int gridColumn_Cost = 6;
+    public int gridColumn_SourceTrunk = 6;
+    public int gridColumn_DestinationTrunk = 7;
+    public int gridColumn_CommunicationTrunk = 8;
+    public int gridColumn_PinCode = 9;
+
 
     public int gridPlay = 0; //仅搜索img
     public int gridDownload = 1; //仅搜索img
@@ -71,6 +76,9 @@ public class CDRandRecordings {
     public SelenideElement gotoinput = $(By.name("gotoinput"));
     public SelenideElement go = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-toolbar-small\") and text()=\"Go\"]"));
     public SelenideElement selectPage = $(By.id(".//*[(@data-ref='bodyEl') and (@role='presentation')]"));
+    public SelenideElement maxWindows = $(By.xpath(".//div[@id='cdr-record_header-innerCt']//div[@class='x-tool-img x-tool-maximize']"));
+    public SelenideElement minWindows = $(By.xpath(".//div[@id='cdr-record_header-innerCt']//div[@class='x-tool-img x-tool-restore']"));
+    public SelenideElement closeWindows = $(By.xpath(".//div[@id='cdr-record_header-innerCt']//div[@class='x-tool-img x-tool-close']"));
 
 
 

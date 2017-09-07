@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class Time_Conditions {
     public String grid = "Ext.getCmp('control-panel').down('timecondition')";
+    public String gridLoading = "Ext.getCmp('control-panel').down('timecondition').down('loadmask')";
     public int gridcolumn_Name =1;
     public int gridcolumn_Time = 2;
     public int gridcolumn_Dayofweek = 3;

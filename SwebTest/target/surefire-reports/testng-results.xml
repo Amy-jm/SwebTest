@@ -1,651 +1,1217 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="3" total="27" passed="24">
+<testng-results skipped="0" failed="14" total="30" passed="16">
   <reporter-output>
     <line>
-      <![CDATA[【测试类场景初始化】打开游览器并登录设备_ExtensionTest]]>
-    </line>
-    <line>
-      <![CDATA[  【执行操作】设置系统时间为00点整]]>
-    </line>
-    <line>
-      <![CDATA[    Pass: waitReboot重启]]>
-    </line>
-    <line>
-      <![CDATA[  【执行操作】创建1000分机]]>
-    </line>
-    <line>
-      <![CDATA[  【执行操作】创建FXS分机1001]]>
-    </line>
-    <line>
-      <![CDATA[  【执行操作】批量创建分机1100-1109]]>
-    </line>
-    <line>
-      <![CDATA[  【执行操作】SIP分机1000拨打SIP分机1001，通话]]>
+      <![CDATA[【测试类场景初始化】打开游览器并登录设备_OutboundRoutes]]>
     </line>
     <line>
       <![CDATA[    Pass: 1000分机注册]]>
     </line>
     <line>
-      <![CDATA[    Pass: 1001分机注册]]>
+      <![CDATA[  【执行操作】设置Time Conditions]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: TimeConditions名称错误]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】设置Holiday]]>
+    </line>
+    <line>
+      <![CDATA[    Pass: TimeConditions名称错误]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】创建呼出路由]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】创建Disa]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】创建IVR]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】SipTrunk外线呼出 1000打 903000]]>
     </line>
     <line>
       <![CDATA[    Pass: CDR呼叫方检测]]>
     </line>
     <line>
-      <![CDATA[    Pass: CDR被叫方检测错误]]>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a>]]>
     </line>
     <line>
-      <![CDATA[    Pass: CDR_Status检测]]>
+      <![CDATA[  【执行操作】SipTrunk外线呼出失败1001打903000]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】导出分机列表]]>
-    </line>
-    <line>
-      <![CDATA[  【执行操作】删除1000分机]]>
-    </line>
-    <line>
-      <![CDATA[  【执行操作】删除所有分机]]>
-    </line>
-    <line>
-      <![CDATA[  【执行操作】导入分机列表]]>
-    </line>
-    <line>
-      <![CDATA[    Pass: 1000分机注册]]>
-    </line>
-    <line>
-      <![CDATA[    Pass: 1001分机注册]]>
-    </line>
-    <line>
-      <![CDATA[    Pass: 导入分机列表]]>
-    </line>
-    <line>
-      <![CDATA[  【执行操作】通过PSTN外线B设备2000拨打A设备1000]]>
+      <![CDATA[  【执行操作】IAXTrunk外线呼出1000打903000]]>
     </line>
     <line>
       <![CDATA[    Pass: CDR呼叫方检测]]>
     </line>
     <line>
-      <![CDATA[    Pass: CDR被叫方检测错误]]>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a>]]>
     </line>
     <line>
-      <![CDATA[    Pass: CDR_Status检测]]>
+      <![CDATA[  【执行操作】SPS外线呼出1000打902000]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加分机组extgroup1]]>
+      <![CDATA[    Pass: CDR呼叫方检测]]>
     </line>
     <line>
-      <![CDATA[【测试类场景恢复】关闭游览器]]>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：902000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：903000 [903000]】</a>]]>
     </line>
     <line>
-      <![CDATA[【测试类场景初始化】打开游览器并登录设备_NewTrunkTest]]>
+      <![CDATA[  【执行操作】SPX外线呼出1000打902000]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加SIPTrunk]]>
+      <![CDATA[    Pass: CDR呼叫方检测]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加IAXTrunk]]>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a>]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加SPX]]>
+      <![CDATA[  【执行操作】PSTN外线呼出1000打902000]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加SPS]]>
+      <![CDATA[    Pass: CDR呼叫方检测]]>
     </line>
     <line>
-      <![CDATA[【测试类场景恢复】关闭游览器_NewTrunk]]>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a>]]>
     </line>
     <line>
-      <![CDATA[【测试类场景初始化】打开游览器并登录设备_CallFeatureTest]]>
+      <![CDATA[  【执行操作】BRI外线呼出1000打902000]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加RingGroup]]>
+      <![CDATA[    Pass: CDR呼叫方检测]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加Queue]]>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a>]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加conference]]>
+      <![CDATA[  【执行操作】呼出路由设置Pinlist]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加pickupGroup]]>
+      <![CDATA[  【执行操作】PinList外线呼出1000打903000]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加paging_Intercom]]>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\外线呼出进入pin1List 【预期：true 实际：false】.jpg" target="_blank">Error: 外线呼出进入pin1List 【预期：true 实际：false】</a>]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加callback]]>
+      <![CDATA[  【执行操作】设置呼出路由无Pinlist]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】添加PINList]]>
+      <![CDATA[  【执行操作】设置呼出路由无Pinlist 1000拨打903000]]>
     </line>
     <line>
-      <![CDATA[【测试类场景恢复】关闭游览器_CallFeatureTest]]>
+      <![CDATA[  【执行操作】登录1000分机判断路由是否存在]]>
     </line>
     <line>
-      <![CDATA[【测试类场景初始化】打开游览器并登录设备_StorageTest]]>
+      <![CDATA[【测试类场景恢复】关闭游览器_OutboundRoutes]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】SD/HD/USB检测]]>
+      <![CDATA[【测试类场景初始化】打开游览器并登录设备_InboundRoutesTest]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】挂载网络磁盘sharetest1]]>
+      <![CDATA[  【执行操作】创建呼入路由]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】勾选Enable File Sharing]]>
+      <![CDATA[  【执行操作】注册测试分机]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】Storage Locations中CDR、Recordings和Logs下拉选择TF/SD卡,Voicemail&One Touch Recordings下拉选择sharetest1]]>
+      <![CDATA[    Pass: 1100分机注册]]>
     </line>
     <line>
-      <![CDATA[  【执行操作】Record Trunks全选所有Trunk、Record Extensions全选所有分机]]>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\1101分机注册 【预期：Registered 实际：Unavailable】.jpg" target="_blank">Error: 1101分机注册 【预期：Registered 实际：Unavailable】</a>]]>
     </line>
     <line>
-      <![CDATA[【测试类场景恢复】关闭游览器_StorageTest]]>
+      <![CDATA[  【执行操作】设备3通过sip外线呼入到设备1，听到IVR提示音后，按0]]>
+    </line>
+    <line>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】</a>]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】设备3通过iax外线呼入到设备1，听到IVR的提示音后，按1]]>
+    </line>
+    <line>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】</a>]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】设备2通过sps外线呼入到设备1，听到IVR的提示音后，按2]]>
+    </line>
+    <line>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a>]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】A拨打90+分机号码（设备3的分机），SPX通话]]>
+    </line>
+    <line>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a>]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】A拨打90+分机号码（设备3的分机），PSTN通话]]>
+    </line>
+    <line>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a>]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】编辑呼入路由,设置DID]]>
+    </line>
+    <line>
+      <![CDATA[  【执行操作】设备2通过sps外线呼入到设备（呼出前缀后+分机B）]]>
+    </line>
+    <line>
+      <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a>]]>
+    </line>
+    <line>
+      <![CDATA[【测试类场景恢复】关闭游览器InboundRoutesTest]]>
     </line>
   </reporter-output>
-  <suite name="PBXCORE" duration-ms="790451" started-at="2017-09-02T04:36:10Z" finished-at="2017-09-02T04:49:20Z">
+  <suite name="PBXCORE" duration-ms="1234842" started-at="2017-09-07T07:17:53Z" finished-at="2017-09-07T07:38:28Z">
     <groups>
     </groups>
-    <test name="pbxcore" duration-ms="790451" started-at="2017-09-02T04:36:10Z" finished-at="2017-09-02T04:49:20Z">
-      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage">
-        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598]" name="BeforeClass" is-config="true" duration-ms="18693" started-at="2017-09-02T12:47:41Z" finished-at="2017-09-02T12:48:00Z">
+    <test name="pbxcore" duration-ms="1234842" started-at="2017-09-07T07:17:53Z" finished-at="2017-09-07T07:38:28Z">
+      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes">
+        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="BeforeClass" is-config="true" duration-ms="28666" started-at="2017-09-07T15:17:53Z" finished-at="2017-09-07T15:18:21Z">
           <reporter-output>
             <line>
-              <![CDATA[【测试类场景初始化】打开游览器并登录设备_StorageTest]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- BeforeClass -->
-        <test-method status="PASS" signature="A_JudgeStorage()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598]" name="A_JudgeStorage" duration-ms="13002" started-at="2017-09-02T12:48:00Z" finished-at="2017-09-02T12:48:13Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】SD/HD/USB检测]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- A_JudgeStorage -->
-        <test-method status="PASS" signature="B_AddNetworkDrive()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598]" name="B_AddNetworkDrive" duration-ms="13864" started-at="2017-09-02T12:48:13Z" finished-at="2017-09-02T12:48:27Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】挂载网络磁盘sharetest1]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- B_AddNetworkDrive -->
-        <test-method status="FAIL" signature="C_SetFileShare()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598]" name="C_SetFileShare" duration-ms="10486" started-at="2017-09-02T12:48:27Z" finished-at="2017-09-02T12:48:37Z">
-          <exception class="com.codeborne.selenide.ex.ElementNotFound">
-            <message>
-              <![CDATA[Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="File Share"]}
-Expected: exist]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="File Share"]}
-Expected: exist
-Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327717514.0.png
-Timeout: 10 s.
-Caused by: WebDriverException: unknown error: Element <span id="tab-1137-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (685, 163). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div>
-	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
-	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
-	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
-	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
-	at com.sun.proxy.$Proxy4.click(Unknown Source)
-	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.C_SetFileShare(Storage.java:49)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
-	at org.testng.TestRunner.privateRun(TestRunner.java:774)
-	at org.testng.TestRunner.run(TestRunner.java:624)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
-	at org.testng.TestNG.run(TestNG.java:1048)
-	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
-	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
-	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
-	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
-Caused by: org.openqa.selenium.WebDriverException: unknown error: Element <span id="tab-1137-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (685, 163). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div>
-  (Session info: chrome=57.0.2987.133)
-  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 27 milliseconds
-Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
-System info: host: 'Yeastar-PC', ip: '192.168.7.14', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_121'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
-Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
-	at sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
-	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
-	at com.codeborne.selenide.commands.Click.click(Click.java:22)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
-	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
-	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
-	... 30 more
-]]>
-            </full-stacktrace>
-          </exception> <!-- com.codeborne.selenide.ex.ElementNotFound -->
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】勾选Enable File Sharing]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- C_SetFileShare -->
-        <test-method status="FAIL" signature="D_StorageLocations()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598]" name="D_StorageLocations" duration-ms="10379" started-at="2017-09-02T12:48:37Z" finished-at="2017-09-02T12:48:48Z">
-          <exception class="com.codeborne.selenide.ex.ElementNotFound">
-            <message>
-              <![CDATA[Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="Preference"]}
-Expected: exist]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="Preference"]}
-Expected: exist
-Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327727956.1.png
-Timeout: 10 s.
-Caused by: WebDriverException: unknown error: Element <span id="tab-1135-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (439, 163). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div>
-	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
-	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
-	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
-	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
-	at com.sun.proxy.$Proxy4.click(Unknown Source)
-	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.D_StorageLocations(Storage.java:56)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
-	at org.testng.TestRunner.privateRun(TestRunner.java:774)
-	at org.testng.TestRunner.run(TestRunner.java:624)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
-	at org.testng.TestNG.run(TestNG.java:1048)
-	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
-	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
-	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
-	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
-Caused by: org.openqa.selenium.WebDriverException: unknown error: Element <span id="tab-1135-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (439, 163). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div>
-  (Session info: chrome=57.0.2987.133)
-  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 35 milliseconds
-Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
-System info: host: 'Yeastar-PC', ip: '192.168.7.14', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_121'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
-Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
-	at sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
-	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
-	at com.codeborne.selenide.commands.Click.click(Click.java:22)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
-	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
-	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
-	... 30 more
-]]>
-            </full-stacktrace>
-          </exception> <!-- com.codeborne.selenide.ex.ElementNotFound -->
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】Storage Locations中CDR、Recordings和Logs下拉选择TF/SD卡,Voicemail&One Touch Recordings下拉选择sharetest1]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- D_StorageLocations -->
-        <test-method status="FAIL" signature="E_Recording_Settings()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598]" name="E_Recording_Settings" duration-ms="11423" started-at="2017-09-02T12:48:48Z" finished-at="2017-09-02T12:48:59Z">
-          <exception class="com.codeborne.selenide.ex.ElementNotFound">
-            <message>
-              <![CDATA[Element not found {By.xpath: .//a[starts-with(@class,"cp-link-before") and text()="Recording Settings"]}
-Expected: exist]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[Element not found {By.xpath: .//a[starts-with(@class,"cp-link-before") and text()="Recording Settings"]}
-Expected: exist
-Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504327739397.2.png
-Timeout: 10 s.
-Caused by: WebDriverException: unknown error: Element <a class="cp-link-before" href="javascript:void(0)" data-tabindex-value="none" tabindex="-1" data-tabindex-counter="2">...</a> is not clickable at point (467, 213). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div>
-	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
-	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
-	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
-	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
-	at com.sun.proxy.$Proxy4.click(Unknown Source)
-	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.E_Recording_Settings(Storage.java:74)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
-	at org.testng.TestRunner.privateRun(TestRunner.java:774)
-	at org.testng.TestRunner.run(TestRunner.java:624)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
-	at org.testng.TestNG.run(TestNG.java:1048)
-	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
-	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
-	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
-	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
-Caused by: org.openqa.selenium.WebDriverException: unknown error: Element <a class="cp-link-before" href="javascript:void(0)" data-tabindex-value="none" tabindex="-1" data-tabindex-counter="2">...</a> is not clickable at point (467, 213). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 768px; width: 1424px; z-index: 28996; right: auto; left: 0px; top: 0px;" id="ext-element-33"></div>
-  (Session info: chrome=57.0.2987.133)
-  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 25 milliseconds
-Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
-System info: host: 'Yeastar-PC', ip: '192.168.7.14', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_121'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir14048_24027}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
-Session ID: 1e13508e5aaaa8accc4f1c2fea144b6b
-	at sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
-	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
-	at com.codeborne.selenide.commands.Click.click(Click.java:22)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
-	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
-	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
-	... 30 more
-]]>
-            </full-stacktrace>
-          </exception> <!-- com.codeborne.selenide.ex.ElementNotFound -->
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】Record Trunks全选所有Trunk、Record Extensions全选所有分机]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- E_Recording_Settings -->
-        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage@16f6598]" name="AfterClass" is-config="true" duration-ms="20831" started-at="2017-09-02T12:48:59Z" finished-at="2017-09-02T12:49:20Z">
-          <reporter-output>
-            <line>
-              <![CDATA[【测试类场景恢复】关闭游览器_StorageTest]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- AfterClass -->
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage -->
-      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature">
-        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542]" name="BeforeClass" is-config="true" duration-ms="18475" started-at="2017-09-02T12:45:14Z" finished-at="2017-09-02T12:45:32Z">
-          <reporter-output>
-            <line>
-              <![CDATA[【测试类场景初始化】打开游览器并登录设备_CallFeatureTest]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- BeforeClass -->
-        <test-method status="PASS" signature="A_RingGroup()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542]" name="A_RingGroup" duration-ms="21422" started-at="2017-09-02T12:45:32Z" finished-at="2017-09-02T12:45:54Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】添加RingGroup]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- A_RingGroup -->
-        <test-method status="PASS" signature="B_Queue()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542]" name="B_Queue" duration-ms="15652" started-at="2017-09-02T12:45:54Z" finished-at="2017-09-02T12:46:10Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】添加Queue]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- B_Queue -->
-        <test-method status="PASS" signature="C_Conference()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542]" name="C_Conference" duration-ms="6262" started-at="2017-09-02T12:46:10Z" finished-at="2017-09-02T12:46:16Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】添加conference]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- C_Conference -->
-        <test-method status="PASS" signature="D_PickupGroup()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542]" name="D_PickupGroup" duration-ms="16297" started-at="2017-09-02T12:46:16Z" finished-at="2017-09-02T12:46:32Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】添加pickupGroup]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- D_PickupGroup -->
-        <test-method status="PASS" signature="E_PagingIntercom()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542]" name="E_PagingIntercom" duration-ms="12483" started-at="2017-09-02T12:46:32Z" finished-at="2017-09-02T12:46:45Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】添加paging_Intercom]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- E_PagingIntercom -->
-        <test-method status="PASS" signature="F_CallBack()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542]" name="F_CallBack" duration-ms="20376" started-at="2017-09-02T12:46:45Z" finished-at="2017-09-02T12:47:05Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】添加callback]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- F_CallBack -->
-        <test-method status="PASS" signature="F_PINList()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542]" name="F_PINList" duration-ms="15480" started-at="2017-09-02T12:47:05Z" finished-at="2017-09-02T12:47:20Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】添加PINList]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- F_PINList -->
-        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature@1c0542]" name="AfterClass" is-config="true" duration-ms="20877" started-at="2017-09-02T12:47:20Z" finished-at="2017-09-02T12:47:41Z">
-          <reporter-output>
-            <line>
-              <![CDATA[【测试类场景恢复】关闭游览器_CallFeatureTest]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- AfterClass -->
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature -->
-      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension">
-        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="BeforeClass" is-config="true" duration-ms="20050" started-at="2017-09-02T12:36:10Z" finished-at="2017-09-02T12:36:30Z">
-          <reporter-output>
-            <line>
-              <![CDATA[【测试类场景初始化】打开游览器并登录设备_ExtensionTest]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- BeforeClass -->
-        <test-method status="PASS" signature="A_SettingSystemTime()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="A_SettingSystemTime" duration-ms="130646" started-at="2017-09-02T12:36:30Z" finished-at="2017-09-02T12:38:40Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】设置系统时间为00点整]]>
-            </line>
-            <line>
-              <![CDATA[    Pass: waitReboot重启]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- A_SettingSystemTime -->
-        <test-method status="PASS" signature="B_CreateExtension()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="B_CreateExtension" duration-ms="20557" started-at="2017-09-02T12:38:40Z" finished-at="2017-09-02T12:39:01Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】创建1000分机]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- B_CreateExtension -->
-        <test-method status="PASS" signature="C_CreateFxsExtension()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="C_CreateFxsExtension" duration-ms="17370" started-at="2017-09-02T12:39:01Z" finished-at="2017-09-02T12:39:18Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】创建FXS分机1001]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- C_CreateFxsExtension -->
-        <test-method status="PASS" signature="D_CreateBulkExtensions()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="D_CreateBulkExtensions" duration-ms="25274" started-at="2017-09-02T12:39:18Z" finished-at="2017-09-02T12:39:43Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】批量创建分机1100-1109]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- D_CreateBulkExtensions -->
-        <test-method status="PASS" signature="E_RegisterExtension()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="E_RegisterExtension" duration-ms="65114" started-at="2017-09-02T12:39:43Z" finished-at="2017-09-02T12:40:49Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】SIP分机1000拨打SIP分机1001，通话]]>
+              <![CDATA[【测试类场景初始化】打开游览器并登录设备_OutboundRoutes]]>
             </line>
             <line>
               <![CDATA[    Pass: 1000分机注册]]>
             </line>
+          </reporter-output>
+        </test-method> <!-- BeforeClass -->
+        <test-method status="PASS" signature="InitOutboundRoutes()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="InitOutboundRoutes" is-config="true" duration-ms="31599" started-at="2017-09-07T15:18:21Z" finished-at="2017-09-07T15:18:53Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitOutboundRoutes -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1001" started-at="2017-09-07T15:18:53Z" finished-at="2017-09-07T15:18:54Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="A_TimeCondition()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="A_TimeCondition" duration-ms="11863" started-at="2017-09-07T15:18:54Z" finished-at="2017-09-07T15:19:06Z">
+          <reporter-output>
             <line>
-              <![CDATA[    Pass: 1001分机注册]]>
+              <![CDATA[  【执行操作】设置Time Conditions]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: TimeConditions名称错误]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- A_TimeCondition -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:19:06Z" finished-at="2017-09-07T15:19:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="B_Holiday()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="B_Holiday" duration-ms="3141" started-at="2017-09-07T15:19:07Z" finished-at="2017-09-07T15:19:10Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】设置Holiday]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: TimeConditions名称错误]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- B_Holiday -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1001" started-at="2017-09-07T15:19:10Z" finished-at="2017-09-07T15:19:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="C_CreateOutRoutes()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="C_CreateOutRoutes" duration-ms="46989" started-at="2017-09-07T15:19:11Z" finished-at="2017-09-07T15:19:58Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】创建呼出路由]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- C_CreateOutRoutes -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:19:58Z" finished-at="2017-09-07T15:19:59Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="D_CreateDISA()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="D_CreateDISA" duration-ms="18963" started-at="2017-09-07T15:19:59Z" finished-at="2017-09-07T15:20:18Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】创建Disa]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- D_CreateDISA -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:20:18Z" finished-at="2017-09-07T15:20:19Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="E_CreateIVR()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="E_CreateIVR" duration-ms="52108" started-at="2017-09-07T15:20:19Z" finished-at="2017-09-07T15:21:11Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】创建IVR]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- E_CreateIVR -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:21:11Z" finished-at="2017-09-07T15:21:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="G_CallSip()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="G_CallSip" duration-ms="38600" started-at="2017-09-07T15:21:12Z" finished-at="2017-09-07T15:21:51Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR被叫方检测 【预期：903000 实际：903000 [903000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.G_CallSip(OutboundRoutes.java:208)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】SipTrunk外线呼出 1000打 903000]]>
             </line>
             <line>
               <![CDATA[    Pass: CDR呼叫方检测]]>
             </line>
             <line>
-              <![CDATA[    Pass: CDR被叫方检测错误]]>
-            </line>
-            <line>
-              <![CDATA[    Pass: CDR_Status检测]]>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a>]]>
             </line>
           </reporter-output>
-        </test-method> <!-- E_RegisterExtension -->
-        <test-method status="PASS" signature="F_ExportExtensions()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="F_ExportExtensions" duration-ms="3922" started-at="2017-09-02T12:40:49Z" finished-at="2017-09-02T12:40:53Z">
+        </test-method> <!-- G_CallSip -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:21:51Z" finished-at="2017-09-07T15:21:52Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="H_CallFail()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="H_CallFail" duration-ms="15001" started-at="2017-09-07T15:21:52Z" finished-at="2017-09-07T15:22:07Z">
           <reporter-output>
             <line>
-              <![CDATA[  【执行操作】导出分机列表]]>
+              <![CDATA[  【执行操作】SipTrunk外线呼出失败1001打903000]]>
             </line>
           </reporter-output>
-        </test-method> <!-- F_ExportExtensions -->
-        <test-method status="PASS" signature="G_DelExtension()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="G_DelExtension" duration-ms="11669" started-at="2017-09-02T12:40:53Z" finished-at="2017-09-02T12:41:04Z">
+        </test-method> <!-- H_CallFail -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:22:07Z" finished-at="2017-09-07T15:22:08Z">
           <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】删除1000分机]]>
-            </line>
           </reporter-output>
-        </test-method> <!-- G_DelExtension -->
-        <test-method status="PASS" signature="H_DelExteiosns()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="H_DelExteiosns" duration-ms="10747" started-at="2017-09-02T12:41:04Z" finished-at="2017-09-02T12:41:15Z">
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="I_CallIax()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="I_CallIax" duration-ms="38470" started-at="2017-09-07T15:22:08Z" finished-at="2017-09-07T15:22:46Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR被叫方检测 【预期：903000 实际：903000 [903000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.I_CallIax(OutboundRoutes.java:233)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
             <line>
-              <![CDATA[  【执行操作】删除所有分机]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- H_DelExteiosns -->
-        <test-method status="PASS" signature="I_ImportExtension()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="I_ImportExtension" duration-ms="35735" started-at="2017-09-02T12:41:15Z" finished-at="2017-09-02T12:41:51Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】导入分机列表]]>
-            </line>
-            <line>
-              <![CDATA[    Pass: 1000分机注册]]>
-            </line>
-            <line>
-              <![CDATA[    Pass: 1001分机注册]]>
-            </line>
-            <line>
-              <![CDATA[    Pass: 导入分机列表]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- I_ImportExtension -->
-        <test-method status="PASS" signature="J_PstnCall()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="J_PstnCall" duration-ms="46702" started-at="2017-09-02T12:41:51Z" finished-at="2017-09-02T12:42:37Z">
-          <reporter-output>
-            <line>
-              <![CDATA[  【执行操作】通过PSTN外线B设备2000拨打A设备1000]]>
+              <![CDATA[  【执行操作】IAXTrunk外线呼出1000打903000]]>
             </line>
             <line>
               <![CDATA[    Pass: CDR呼叫方检测]]>
             </line>
             <line>
-              <![CDATA[    Pass: CDR被叫方检测错误]]>
-            </line>
-            <line>
-              <![CDATA[    Pass: CDR_Status检测]]>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a>]]>
             </line>
           </reporter-output>
-        </test-method> <!-- J_PstnCall -->
-        <test-method status="PASS" signature="K_ExtensionGroupSetting()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="K_ExtensionGroupSetting" duration-ms="32179" started-at="2017-09-02T12:42:37Z" finished-at="2017-09-02T12:43:10Z">
+        </test-method> <!-- I_CallIax -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1001" started-at="2017-09-07T15:22:46Z" finished-at="2017-09-07T15:22:47Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="J_CallSps()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="J_CallSps" duration-ms="49004" started-at="2017-09-07T15:22:47Z" finished-at="2017-09-07T15:23:36Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR被叫方检测 【预期：902000 实际：903000 [903000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.J_CallSps(OutboundRoutes.java:250)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
             <line>
-              <![CDATA[  【执行操作】添加分机组extgroup1]]>
+              <![CDATA[  【执行操作】SPS外线呼出1000打902000]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: CDR呼叫方检测]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：902000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：903000 [903000]】</a>]]>
             </line>
           </reporter-output>
-        </test-method> <!-- K_ExtensionGroupSetting -->
-        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension@aac163]" name="AfterClass" is-config="true" duration-ms="12477" started-at="2017-09-02T12:43:10Z" finished-at="2017-09-02T12:43:22Z">
+        </test-method> <!-- J_CallSps -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:23:36Z" finished-at="2017-09-07T15:23:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="K_CallSpx()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="K_CallSpx" duration-ms="41511" started-at="2017-09-07T15:23:37Z" finished-at="2017-09-07T15:24:19Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR被叫方检测 【预期：902000 实际：902000 [902000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.K_CallSpx(OutboundRoutes.java:267)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
             <line>
-              <![CDATA[【测试类场景恢复】关闭游览器]]>
+              <![CDATA[  【执行操作】SPX外线呼出1000打902000]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: CDR呼叫方检测]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- K_CallSpx -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1001" started-at="2017-09-07T15:24:19Z" finished-at="2017-09-07T15:24:20Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="L_CallPstn()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="L_CallPstn" duration-ms="41007" started-at="2017-09-07T15:24:20Z" finished-at="2017-09-07T15:25:01Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR被叫方检测 【预期：903000 实际：903000 [903000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.L_CallPstn(OutboundRoutes.java:285)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】PSTN外线呼出1000打902000]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: CDR呼叫方检测]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- L_CallPstn -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:25:01Z" finished-at="2017-09-07T15:25:02Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="M_CallBri()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="M_CallBri" duration-ms="48396" started-at="2017-09-07T15:25:02Z" finished-at="2017-09-07T15:25:50Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR被叫方检测 【预期：902000 实际：902000 [902000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.M_CallBri(OutboundRoutes.java:306)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】BRI外线呼出1000打902000]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: CDR呼叫方检测]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- M_CallBri -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1001" started-at="2017-09-07T15:25:50Z" finished-at="2017-09-07T15:25:51Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="N_CallE1()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="N_CallE1" duration-ms="0" started-at="2017-09-07T15:25:51Z" finished-at="2017-09-07T15:25:51Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- N_CallE1 -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:25:51Z" finished-at="2017-09-07T15:25:52Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="O_CallGsm()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="O_CallGsm" duration-ms="0" started-at="2017-09-07T15:25:52Z" finished-at="2017-09-07T15:25:52Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- O_CallGsm -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:25:52Z" finished-at="2017-09-07T15:25:53Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="P_PinList()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="P_PinList" duration-ms="18977" started-at="2017-09-07T15:25:53Z" finished-at="2017-09-07T15:26:12Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】呼出路由设置Pinlist]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- P_PinList -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:26:12Z" finished-at="2017-09-07T15:26:13Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="Q_PinListCall()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="Q_PinListCall" duration-ms="72374" started-at="2017-09-07T15:26:13Z" finished-at="2017-09-07T15:27:25Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[外线呼出进入pin1List 【预期：true 实际：false】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: 外线呼出进入pin1List 【预期：true 实际：false】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:333)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.Q_PinListCall(OutboundRoutes.java:384)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】PinList外线呼出1000打903000]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\外线呼出进入pin1List 【预期：true 实际：false】.jpg" target="_blank">Error: 外线呼出进入pin1List 【预期：true 实际：false】</a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- Q_PinListCall -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:27:25Z" finished-at="2017-09-07T15:27:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="R_PWD_None()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="R_PWD_None" duration-ms="13071" started-at="2017-09-07T15:27:26Z" finished-at="2017-09-07T15:27:40Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】设置呼出路由无Pinlist]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- R_PWD_None -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:27:40Z" finished-at="2017-09-07T15:27:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="S_PinListCall()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="S_PinListCall" duration-ms="23037" started-at="2017-09-07T15:27:41Z" finished-at="2017-09-07T15:28:04Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】设置呼出路由无Pinlist 1000拨打903000]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- S_PinListCall -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:28:04Z" finished-at="2017-09-07T15:28:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="T_RoutePermission()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="T_RoutePermission" duration-ms="32748" started-at="2017-09-07T15:28:05Z" finished-at="2017-09-07T15:28:37Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】登录1000分机判断路由是否存在]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- T_RoutePermission -->
+        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes@4bee09]" name="AfterClass" is-config="true" duration-ms="23105" started-at="2017-09-07T15:28:37Z" finished-at="2017-09-07T15:29:00Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景恢复】关闭游览器_OutboundRoutes]]>
             </line>
           </reporter-output>
         </test-method> <!-- AfterClass -->
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension -->
-      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk">
-        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6]" name="BeforeClass" is-config="true" duration-ms="18715" started-at="2017-09-02T12:43:22Z" finished-at="2017-09-02T12:43:41Z">
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes -->
+      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes">
+        <test-method status="PASS" signature="BeforeClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="BeforeClass" is-config="true" duration-ms="24110" started-at="2017-09-07T15:29:00Z" finished-at="2017-09-07T15:29:25Z">
           <reporter-output>
             <line>
-              <![CDATA[【测试类场景初始化】打开游览器并登录设备_NewTrunkTest]]>
+              <![CDATA[【测试类场景初始化】打开游览器并登录设备_InboundRoutesTest]]>
             </line>
           </reporter-output>
         </test-method> <!-- BeforeClass -->
-        <test-method status="PASS" signature="A_AddTrunk()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6]" name="A_AddTrunk" duration-ms="22277" started-at="2017-09-02T12:43:41Z" finished-at="2017-09-02T12:44:03Z">
+        <test-method status="PASS" signature="InitInboundRoutes()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="InitInboundRoutes" is-config="true" duration-ms="9595" started-at="2017-09-07T15:29:25Z" finished-at="2017-09-07T15:29:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitInboundRoutes -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:29:34Z" finished-at="2017-09-07T15:29:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="B_CreateInboundRoutes()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="B_CreateInboundRoutes" duration-ms="81207" started-at="2017-09-07T15:29:35Z" finished-at="2017-09-07T15:30:56Z">
           <reporter-output>
             <line>
-              <![CDATA[  【执行操作】添加SIPTrunk]]>
+              <![CDATA[  【执行操作】创建呼入路由]]>
             </line>
           </reporter-output>
-        </test-method> <!-- A_AddTrunk -->
-        <test-method status="PASS" signature="B_AddTrunkIAXTrunk()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6]" name="B_AddTrunkIAXTrunk" duration-ms="18453" started-at="2017-09-02T12:44:03Z" finished-at="2017-09-02T12:44:21Z">
+        </test-method> <!-- B_CreateInboundRoutes -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1001" started-at="2017-09-07T15:30:56Z" finished-at="2017-09-07T15:30:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="C_RegisterExtensions()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="C_RegisterExtensions" duration-ms="43593" started-at="2017-09-07T15:30:57Z" finished-at="2017-09-07T15:31:41Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[1101分机注册 【预期：Registered 实际：Unavailable】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: 1101分机注册 【预期：Registered 实际：Unavailable】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Register_Account(PjsipApp.java:113)
+	at com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Register_Account(PjsipApp.java:163)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.C_RegisterExtensions(InboundRoutes.java:118)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
             <line>
-              <![CDATA[  【执行操作】添加IAXTrunk]]>
+              <![CDATA[  【执行操作】注册测试分机]]>
+            </line>
+            <line>
+              <![CDATA[    Pass: 1100分机注册]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\1101分机注册 【预期：Registered 实际：Unavailable】.jpg" target="_blank">Error: 1101分机注册 【预期：Registered 实际：Unavailable】</a>]]>
             </line>
           </reporter-output>
-        </test-method> <!-- B_AddTrunkIAXTrunk -->
-        <test-method status="PASS" signature="C_AddSPX()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6]" name="C_AddSPX" duration-ms="19880" started-at="2017-09-02T12:44:21Z" finished-at="2017-09-02T12:44:41Z">
+        </test-method> <!-- C_RegisterExtensions -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:31:41Z" finished-at="2017-09-07T15:31:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="D_CallSip()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="D_CallSip" duration-ms="47125" started-at="2017-09-07T15:31:42Z" finished-at="2017-09-07T15:32:29Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.D_CallSip(InboundRoutes.java:145)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
             <line>
-              <![CDATA[  【执行操作】添加SPX]]>
+              <![CDATA[  【执行操作】设备3通过sip外线呼入到设备1，听到IVR提示音后，按0]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】</a>]]>
             </line>
           </reporter-output>
-        </test-method> <!-- C_AddSPX -->
-        <test-method status="PASS" signature="D_AddSPS()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6]" name="D_AddSPS" duration-ms="16821" started-at="2017-09-02T12:44:41Z" finished-at="2017-09-02T12:44:58Z">
+        </test-method> <!-- D_CallSip -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:32:29Z" finished-at="2017-09-07T15:32:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="E_CallIax()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="E_CallIax" duration-ms="37894" started-at="2017-09-07T15:32:30Z" finished-at="2017-09-07T15:33:08Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.E_CallIax(InboundRoutes.java:162)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
             <line>
-              <![CDATA[  【执行操作】添加SPS]]>
+              <![CDATA[  【执行操作】设备3通过iax外线呼入到设备1，听到IVR的提示音后，按1]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】</a>]]>
             </line>
           </reporter-output>
-        </test-method> <!-- D_AddSPS -->
-        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk@17030a6]" name="AfterClass" is-config="true" duration-ms="15819" started-at="2017-09-02T12:44:58Z" finished-at="2017-09-02T12:45:14Z">
+        </test-method> <!-- E_CallIax -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:33:08Z" finished-at="2017-09-07T15:33:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="F_CallSps()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="F_CallSps" duration-ms="56852" started-at="2017-09-07T15:33:09Z" finished-at="2017-09-07T15:34:06Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.F_CallSps(InboundRoutes.java:187)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
             <line>
-              <![CDATA[【测试类场景恢复】关闭游览器_NewTrunk]]>
+              <![CDATA[  【执行操作】设备2通过sps外线呼入到设备1，听到IVR的提示音后，按2]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- F_CallSps -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1001" started-at="2017-09-07T15:34:06Z" finished-at="2017-09-07T15:34:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="G_CallSpx()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="G_CallSpx" duration-ms="46787" started-at="2017-09-07T15:34:07Z" finished-at="2017-09-07T15:34:54Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.G_CallSpx(InboundRoutes.java:212)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】A拨打90+分机号码（设备3的分机），SPX通话]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- G_CallSpx -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:34:54Z" finished-at="2017-09-07T15:34:55Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="H_CallGsm()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="H_CallGsm" duration-ms="0" started-at="2017-09-07T15:34:55Z" finished-at="2017-09-07T15:34:55Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- H_CallGsm -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1001" started-at="2017-09-07T15:34:55Z" finished-at="2017-09-07T15:34:56Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="I_CallPstn()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="I_CallPstn" duration-ms="48939" started-at="2017-09-07T15:34:56Z" finished-at="2017-09-07T15:35:45Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.I_CallPstn(InboundRoutes.java:258)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】A拨打90+分机号码（设备3的分机），PSTN通话]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- I_CallPstn -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1001" started-at="2017-09-07T15:35:45Z" finished-at="2017-09-07T15:35:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1006" started-at="2017-09-07T15:35:46Z" finished-at="2017-09-07T15:35:47Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="PASS" signature="J_CallE1()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="J_CallE1" duration-ms="0" started-at="2017-09-07T15:35:46Z" finished-at="2017-09-07T15:35:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- J_CallE1 -->
+        <test-method status="PASS" signature="K_SetDidSps()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="K_SetDidSps" duration-ms="34197" started-at="2017-09-07T15:35:47Z" finished-at="2017-09-07T15:36:21Z">
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】编辑呼入路由,设置DID]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- K_SetDidSps -->
+        <test-method status="PASS" signature="waitMethod()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="waitMethod" is-config="true" duration-ms="1000" started-at="2017-09-07T15:36:21Z" finished-at="2017-09-07T15:36:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- waitMethod -->
+        <test-method status="FAIL" signature="L_CallDidSps()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="L_CallDidSps" duration-ms="102760" started-at="2017-09-07T15:36:22Z" finished-at="2017-09-07T15:38:05Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.L_CallDidSps(InboundRoutes.java:326)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[  【执行操作】设备2通过sps外线呼入到设备（呼出前缀后+分机B）]]>
+            </line>
+            <line>
+              <![CDATA[    <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- L_CallDidSps -->
+        <test-method status="PASS" signature="AfterClass()[pri:0, instance:com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes@16c48ac]" name="AfterClass" is-config="true" duration-ms="23110" started-at="2017-09-07T15:38:05Z" finished-at="2017-09-07T15:38:28Z">
+          <reporter-output>
+            <line>
+              <![CDATA[【测试类场景恢复】关闭游览器InboundRoutesTest]]>
             </line>
           </reporter-output>
         </test-method> <!-- AfterClass -->
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk -->
+      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes -->
     </test> <!-- pbxcore -->
   </suite> <!-- PBXCORE -->
 </testng-results>

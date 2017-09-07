@@ -35,10 +35,8 @@ public class CheckToTest extends SwebDriver {
         if(pageDeskTop.apply.isDisplayed()) {
             ys_apply();
         }
-
-
+        Single_Init = false;
         quitDriver();
-        Thread.sleep(5000);
     }
 
     public static void deleteAllExtensions() throws InterruptedException {

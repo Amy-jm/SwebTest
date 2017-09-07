@@ -21,13 +21,16 @@ public class MusicOnHold {
     public SelenideElement musicOnHold = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Music on Hold\"]"));
 
     public SelenideElement createNewPlaylist = $(By.id("st-moh-createfolder-btnInnerEl"));
-    public SelenideElement chooseMOHPlaylist = $(By.id("st-moh-choosefolder-trigger-picker"));
+    public String chooseMOHPlaylist_id  = "st-moh-choosefolder";
+    public SelenideElement chooseMOHPlaylist_picker = $(By.id("st-moh-choosefolder-trigger-picker"));
+    public SelenideElement chooseMOHPlaylist_input = $(By.id("st-moh-choosefolder-inputEl"));
     public SelenideElement chooseMOHPlaylist_edit = $(By.id("st-moh-editfolder"));
     public SelenideElement chooseMOHPlaylist_delete = $(By.id("st-moh-delfolder"));
     public SelenideElement uploadNewMusic = $(By.id("st-moh-mohfile-inputEl"));
     public SelenideElement browse = $(By.id("st-moh-mohfile-trigger-filebutton"));
     public SelenideElement upload = $(By.id("st-moh-upload-btnInnerEl"));
-    public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,'mohfiles-')]//span[text()='Delete']"));
+    public SelenideElement delete = $(By.id("st-moh-delfolder"));
+    public SelenideElement deleteHoldFiles = $(By.xpath(".//div[starts-with(@id,'mohfiles')]//span[(text()=\"Delete\") and starts-with(@id,'button')]"));
 
 
     public SelenideElement playPrompt_PlayToExtension = $(By.id("st-moh-extension"));

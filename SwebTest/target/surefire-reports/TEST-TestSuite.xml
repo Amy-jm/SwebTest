@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestSuite" time="644.47" tests="27" errors="0" skipped="0" failures="3">
+<testsuite name="TestSuite" time="1,064.623" tests="30" errors="0" skipped="0" failures="14">
   <properties>
-    <property name="idea.version" value="2017.1.1"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin"/>
     <property name="java.vm.version" value="25.121-b13"/>
@@ -27,9 +26,9 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 7"/>
-    <property name="classworlds.conf" value="D:\JetBrains\IntelliJ IDEA 2017.1.1\plugins\maven\lib\maven3\bin\m2.conf"/>
+    <property name="classworlds.conf" value="D:\apache-maven-3.3.9\bin\..\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="GBK"/>
-    <property name="java.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Perl\site\bin;C:\Perl\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;D:\Qt\Qt5.5.1\5.5\mingw492_32\bin;D:\Microsoft SQL Server\120\Tools\Binn\;D:\Microsoft SQL Server\120\DTS\Binn\;D:\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\ManagementStudio\;D:\Microsoft SQL ServerX86\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;D:\UltarEdit;C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin;D:\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin;C:\windows\system32;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;D:\Microsoft SQL Server\110\Tools\Binn\;C:\Users\Yeastar\.dnx\bin;."/>
+    <property name="java.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\apache-maven-3.3.9\bin;C:\Perl\site\bin;C:\Perl\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;D:\Qt\Qt5.5.1\5.5\mingw492_32\bin;D:\Microsoft SQL Server\120\Tools\Binn\;D:\Microsoft SQL Server\120\DTS\Binn\;D:\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\ManagementStudio\;D:\Microsoft SQL ServerX86\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;D:\UltarEdit;C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin;D:\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin;C:\windows\system32;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;D:\Microsoft SQL Server\110\Tools\Binn\;C:\Users\Yeastar\.dnx\bin;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
@@ -38,120 +37,3211 @@
     <property name="user.timezone" value="Asia/Shanghai"/>
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
     <property name="java.specification.version" value="1.8"/>
-    <property name="file.encoding" value="UTF-8"/>
+    <property name="file.encoding" value="GBK"/>
     <property name="user.name" value="Yeastar"/>
-    <property name="java.class.path" value="D:\JetBrains\IntelliJ IDEA 2017.1.1\plugins\maven\lib\maven3\boot\plexus-classworlds-2.5.2.jar;D:\JetBrains\IntelliJ IDEA 2017.1.1\lib\idea_rt.jar"/>
+    <property name="java.class.path" value="D:\apache-maven-3.3.9\bin\..\boot\plexus-classworlds-2.5.2.jar"/>
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="32"/>
     <property name="java.home" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre"/>
-    <property name="sun.java.command" value="org.codehaus.classworlds.Launcher -Didea.version=2017.1.1 test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="zh"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
-    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
     <property name="java.version" value="1.8.0_121"/>
     <property name="java.ext.dirs" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
     <property name="sun.boot.class.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\resources.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\rt.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\sunrsasign.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\jsse.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\jce.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\charsets.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\jfr.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\classes"/>
+    <property name="sun.stderr.encoding" value="ms936"/>
     <property name="java.vendor" value="Oracle Corporation"/>
-    <property name="maven.home" value="D:\JetBrains\IntelliJ IDEA 2017.1.1\plugins\maven\lib\maven3"/>
+    <property name="maven.home" value="D:\apache-maven-3.3.9\bin\.."/>
     <property name="file.separator" value="\"/>
     <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.stdout.encoding" value="ms936"/>
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
   </properties>
-  <testcase name="A_SettingSystemTime" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="130.648"/>
-  <testcase name="B_CreateExtension" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="20.55"/>
-  <testcase name="C_CreateFxsExtension" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="17.37"/>
-  <testcase name="D_CreateBulkExtensions" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="25.273"/>
-  <testcase name="E_RegisterExtension" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="65.118"/>
-  <testcase name="F_ExportExtensions" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="3.918"/>
-  <testcase name="G_DelExtension" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="11.67"/>
-  <testcase name="H_DelExteiosns" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="10.744"/>
-  <testcase name="I_ImportExtension" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="35.739"/>
-  <testcase name="J_PstnCall" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="46.701"/>
-  <testcase name="K_ExtensionGroupSetting" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension" time="32.176"/>
-  <testcase name="A_AddTrunk" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" time="22.279"/>
-  <testcase name="B_AddTrunkIAXTrunk" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" time="18.454"/>
-  <testcase name="C_AddSPX" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" time="19.88"/>
-  <testcase name="D_AddSPS" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.NewTrunk" time="16.82"/>
-  <testcase name="A_RingGroup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="21.424"/>
-  <testcase name="B_Queue" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="15.65"/>
-  <testcase name="C_Conference" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="6.262"/>
-  <testcase name="D_PickupGroup" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="16.297"/>
-  <testcase name="E_PagingIntercom" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="12.483"/>
-  <testcase name="F_CallBack" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="20.378"/>
-  <testcase name="F_PINList" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" time="15.478"/>
-  <testcase name="A_JudgeStorage" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="13"/>
-  <testcase name="B_AddNetworkDrive" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="13.868"/>
-  <testcase name="C_SetFileShare" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="10.49">
-    <failure message="Element not found {By.xpath: .//span[starts-with(@class,&quot;x-tab-inner x-tab-inner-default&quot;) and text()=&quot;File Share&quot;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="File Share"]}
-Expected: exist
-	at sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
-	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
-	at com.codeborne.selenide.commands.Click.click(Click.java:22)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
-	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
-	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
-	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
-	at com.sun.proxy.$Proxy4.click(Unknown Source)
-	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.C_SetFileShare(Storage.java:49)
+  <testcase name="A_TimeCondition" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="11.863"/>
+  <testcase name="B_Holiday" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="3.141"/>
+  <testcase name="C_CreateOutRoutes" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="46.99"/>
+  <testcase name="D_CreateDISA" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="18.963"/>
+  <testcase name="E_CreateIVR" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="52.108"/>
+  <testcase name="G_CallSip" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="38.605">
+    <failure message="CDR被叫方检测 【预期：903000 实际：903000 [903000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.G_CallSip(OutboundRoutes.java:208)
 </failure>
-    <system-out><![CDATA[ִ�в���:��ѡEnable File Sharing
+    <system-out><![CDATA[执行操作:SipTrunk外线呼出 1000打 903000
+find this 1000 IP:192.168.11.195
+find this 3000 IP:192.168.11.196
+uri/./..........sip:903000@192.168.11.195  0
+CallstateCallBack callid:0 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback"3030" <sip:3030@192.168.11.196>callid:1accid:1accounts.size()：3
+bbbbbbbbbbbbbbbbbbbbbbbb+3000 0
+CallstateCallBack callid:1 accId:1 code:4
+CallstateCallBack : username :3000
+CallstateCallBack callid:1 accId:1 code:5
+CallstateCallBack : username :3000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:0 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:0 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:0 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:1 accId:1 code:6
+CallstateCallBack : username :3000
 ]]></system-out>
   </testcase>
-  <testcase name="D_StorageLocations" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="10.378">
-    <failure message="Element not found {By.xpath: .//span[starts-with(@class,&quot;x-tab-inner x-tab-inner-default&quot;) and text()=&quot;Preference&quot;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="Preference"]}
-Expected: exist
-	at sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
-	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
-	at com.codeborne.selenide.commands.Click.click(Click.java:22)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
-	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
-	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
-	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
-	at com.sun.proxy.$Proxy4.click(Unknown Source)
-	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.D_StorageLocations(Storage.java:56)
+  <testcase name="H_CallFail" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="15.001"/>
+  <testcase name="I_CallIax" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="38.471">
+    <failure message="CDR被叫方检测 【预期：903000 实际：903000 [903000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.I_CallIax(OutboundRoutes.java:233)
 </failure>
-    <system-out><![CDATA[ִ�в���:Storage Locations��CDR��Recordings��Logs����ѡ��TF/SD��,Voicemail&One Touch Recordings����ѡ��sharetest1
+    <system-out><![CDATA[执行操作:IAXTrunk外线呼出1000打903000
+find this 1000 IP:192.168.11.195
+find this 3000 IP:192.168.11.196
+uri/./..........sip:903000@192.168.11.195  0
+CallstateCallBack callid:2 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback"3034" <sip:3034@192.168.11.196>callid:3accid:1accounts.size()：3
+bbbbbbbbbbbbbbbbbbbbbbbb+3000 2
+CallstateCallBack callid:3 accId:1 code:4
+CallstateCallBack : username :3000
+CallstateCallBack callid:3 accId:1 code:5
+CallstateCallBack : username :3000
+CallstateCallBack callid:2 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:2 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:3 accId:1 code:6
+CallstateCallBack : username :3000
+CallstateCallBack callid:2 accId:0 code:6
+CallstateCallBack : username :1000
 ]]></system-out>
   </testcase>
-  <testcase name="E_Recording_Settings" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage" time="11.422">
-    <failure message="Element not found {By.xpath: .//a[starts-with(@class,&quot;cp-link-before&quot;) and text()=&quot;Recording Settings&quot;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//a[starts-with(@class,"cp-link-before") and text()="Recording Settings"]}
-Expected: exist
-	at sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
-	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
-	at com.codeborne.selenide.commands.Click.click(Click.java:22)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
-	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
-	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
-	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
-	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
-	at com.sun.proxy.$Proxy4.click(Unknown Source)
-	at com.yeastar.swebtest.testcase.smokecase.pbxcase.Storage.E_Recording_Settings(Storage.java:74)
+  <testcase name="J_CallSps" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="49.005">
+    <failure message="CDR被叫方检测 【预期：902000 实际：903000 [903000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.J_CallSps(OutboundRoutes.java:250)
 </failure>
-    <system-out><![CDATA[ִ�в���:Record Trunksȫѡ����Trunk��Record Extensionsȫѡ���зֻ�
+    <system-out><![CDATA[执行操作:SPS外线呼出1000打902000
+find this 1000 IP:192.168.11.195
+find this 2000 IP:192.168.11.197
+uri/./..........sip:902000@192.168.11.195  0
+CallstateCallBack callid:4 accId:0 code:1
+CallstateCallBack : username :1000
+CallstateCallBack callid:4 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:4 accId:0 code:5
+CallstateCallBack : username :1000
+CallstateCallBack callid:4 accId:0 code:6
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+  </testcase>
+  <testcase name="K_CallSpx" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="41.511">
+    <failure message="CDR被叫方检测 【预期：902000 实际：902000 [902000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.K_CallSpx(OutboundRoutes.java:267)
+</failure>
+    <system-out><![CDATA[执行操作:SPX外线呼出1000打902000
+find this 1000 IP:192.168.11.195
+find this 2000 IP:192.168.11.197
+uri/./..........sip:902000@192.168.11.195  0
+CallstateCallBack callid:5 accId:0 code:1
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:5 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:5 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:5 accId:0 code:6
+CallstateCallBack : username :1000
+]]></system-out>
+  </testcase>
+  <testcase name="L_CallPstn" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="41.007">
+    <failure message="CDR被叫方检测 【预期：903000 实际：903000 [903000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR被叫方检测 【预期：903000 实际：903000 [903000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.L_CallPstn(OutboundRoutes.java:285)
+</failure>
+    <system-out><![CDATA[执行操作:PSTN外线呼出1000打902000
+find this 1000 IP:192.168.11.195
+find this 3000 IP:192.168.11.196
+uri/./..........sip:903000@192.168.11.195  0
+CallstateCallBack callid:6 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback<sip:1000@192.168.11.197>callid:7accid:2accounts.size()：3
+bbbbbbbbbbbbbbbbbbbbbbbb+2000 5
+CallstateCallBack callid:7 accId:2 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:7 accId:2 code:5
+CallstateCallBack : username :2000
+CallstateCallBack callid:6 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:6 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:6 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:7 accId:2 code:6
+CallstateCallBack : username :2000
+]]></system-out>
+  </testcase>
+  <testcase name="M_CallBri" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="48.396">
+    <failure message="CDR被叫方检测 【预期：902000 实际：902000 [902000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR被叫方检测 【预期：902000 实际：902000 [902000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:245)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:237)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.M_CallBri(OutboundRoutes.java:306)
+</failure>
+    <system-out><![CDATA[执行操作:BRI外线呼出1000打902000
+find this 1000 IP:192.168.11.195
+find this 2000 IP:192.168.11.197
+uri/./..........sip:902000@192.168.11.195  0
+CallstateCallBack callid:8 accId:0 code:1
+CallstateCallBack : username :1000
+CallstateCallBack callid:8 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:8 accId:0 code:5
+CallstateCallBack : username :1000
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:8 accId:0 code:6
+CallstateCallBack : username :1000
+]]></system-out>
+  </testcase>
+  <testcase name="N_CallE1" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="0.001"/>
+  <testcase name="O_CallGsm" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="0"/>
+  <testcase name="P_PinList" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="18.977"/>
+  <testcase name="Q_PinListCall" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="72.374">
+    <failure message="外线呼出进入pin1List 【预期：true 实际：false】" type="java.lang.AssertionError">java.lang.AssertionError: 外线呼出进入pin1List 【预期：true 实际：false】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:333)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.Q_PinListCall(OutboundRoutes.java:384)
+</failure>
+    <system-out><![CDATA[执行操作:PinList外线呼出1000打903000
+find this 1000 IP:192.168.11.195
+find this 3000 IP:192.168.11.196
+uri/./..........sip:903000@192.168.11.195  0
+CallstateCallBack callid:9 accId:0 code:1
+CallstateCallBack : username :1000
+In getAsteriskInfo
+接收服务器的信息1：Asterisk Call Manager/2.8.0 time:0
+接收服务器的信息1：Response: Success time:0
+接收服务器的信息1：Message: Authentication accepted time:0
+接收服务器的信息1： time:0
+接收服务器的信息1：Event: FullyBooted time:0
+接收服务器的信息1：Privilege: system,all time:0
+接收服务器的信息1：Status: Fully Booted time:0
+接收服务器的信息1： time:0
+接收服务器的信息1：Event: Newchannel time:0
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 1 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 1 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: YsWalkContext time:1
+接收服务器的信息1：AppData: blacklist-outbound,3000,1,1000,outbound time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 2 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: NoOp time:1
+接收服务器的信息1：AppData: No Pinset time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 3 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: Set time:1
+接收服务器的信息1：AppData: ORGINEXTEN=903000 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+incomingcallback"3034" <sip:3034@192.168.11.196>callid:10accid:1accounts.size()：3
+bbbbbbbbbbbbbbbbbbbbbbbb+3000 9
+CallstateCallBack callid:10 accId:1 code:4
+CallstateCallBack : username :3000
+接收服务器的信息1：Priority: 4 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+CallstateCallBack callid:10 accId:1 code:5
+CallstateCallBack : username :3000
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: Set time:1
+接收服务器的信息1：AppData: ORGINROUTE=outrouter1 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+CallstateCallBack callid:9 accId:0 code:4
+CallstateCallBack : username :1000
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+CallstateCallBack callid:9 accId:0 code:5
+CallstateCallBack : username :1000
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 5 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: Set time:1
+接收服务器的信息1：AppData: ORGINCONTEXT=DLPN_DialPlan1000 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 6 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: Set time:1
+接收服务器的信息1：AppData: MRMEMORYHUNT=yes time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 7 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: GetNextOutRouter time:1
+接收服务器的信息1：AppData: outrouter1,903000 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 8 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: GotoIfTime time:1
+接收服务器的信息1：AppData: 00:00-18:00,sun&mon&tue&wed&thu&fri&sat,*,*?a1 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 11 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: AdjustTrunk time:1
+接收服务器的信息1：AppData: outrouter1,6,trunk-SIPTrunk-endpoint,trunk-iax-IAXTrunk,trunk-SPS-endpoint,trunk-iax-SPX,trunk_FXO2-7,trunk_BRI2-1 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: DLPN_DialPlan1000 time:1
+接收服务器的信息1：Exten: 903000 time:1
+接收服务器的信息1：Priority: 12 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: 903000 time:1
+接收服务器的信息1：Application: Macro time:1
+接收服务器的信息1：AppData: trunkdial-failover-0.3,6,,3000,trunk-iax-IAXTrunk,trunk-SPS-endpoint,trunk-iax-SPX,trunk_FXO2-7,trunk_BRI2-1,trunk-SIPTrunk-endpoint time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:1
+接收服务器的信息1：Exten: s time:1
+接收服务器的信息1：Priority: 1 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: s time:1
+接收服务器的信息1：Application: NoOp time:1
+接收服务器的信息1：AppData: do call out time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:1
+接收服务器的信息1：Exten: s time:1
+接收服务器的信息1：Priority: 2 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: s time:1
+接收服务器的信息1：Application: GotoIf time:1
+接收服务器的信息1：AppData: 0?5:3 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:1
+接收服务器的信息1：Exten: s time:1
+接收服务器的信息1：Priority: 3 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: s time:1
+接收服务器的信息1：Application: GotoIf time:1
+接收服务器的信息1：AppData: 0?4:5 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:1
+接收服务器的信息1：CallerIDNum: 1000 time:1
+接收服务器的信息1：CallerIDName: 1000 time:1
+接收服务器的信息1：ConnectedLineNum: <unknown> time:1
+接收服务器的信息1：ConnectedLineName: <unknown> time:1
+接收服务器的信息1：Language: en time:1
+接收服务器的信息1：AccountCode:  time:1
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:1
+接收服务器的信息1：Exten: s time:1
+接收服务器的信息1：Priority: 5 time:1
+接收服务器的信息1：Uniqueid: 1504772844.17 time:1
+接收服务器的信息1：Linkedid: 1504772844.17 time:1
+接收服务器的信息1：Extension: s time:1
+接收服务器的信息1：Application: Set time:1
+接收服务器的信息1：AppData: TCOUNT=4 time:1
+接收服务器的信息1： time:1
+接收服务器的信息1：Event: Newexten time:1
+接收服务器的信息1：Privilege: call,all time:1
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:1
+接收服务器的信息1：ChannelState: 4 time:1
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: s time:2
+接收服务器的信息1：Priority: 6 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: s time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: CDR(userfield)=Outbound time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: s time:2
+接收服务器的信息1：Priority: 7 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: s time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: CDR(extfield4)=192.168.11.194 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: s time:2
+接收服务器的信息1：Priority: 8 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: s time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: OLDCALLERID=1000 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: s time:2
+接收服务器的信息1：Priority: 9 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: s time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: TOUCH_MONITOR=1000-3000 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: s time:2
+接收服务器的信息1：Priority: 10 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: s time:2
+接收服务器的信息1：Application: NoOp time:2
+接收服务器的信息1：AppData:  time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: s time:2
+接收服务器的信息1：Priority: 11 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: s time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: TIMEOUT(absolute)=6000 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: s time:2
+接收服务器的信息1：Priority: 12 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: s time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: DLSTAT=UNKNOW} time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: s time:2
+接收服务器的信息1：Priority: 13 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: s time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: 6>0?1-dial,1 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: 0?nextrouter,1 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 2 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: ?1-dial,5:1-dial,3 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 3 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: 0?setdod,1:setdodname,1 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: setdodname time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: setdodname time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: 0?setdod,3:1-dial,4 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 4 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: 0?setdodnum,1:1-dial,5 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 5 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: OUTDIALOPT=tTKkWwXxb(add_diversion,add_diversion,1) time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 6 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: FAXOPT(gateway)=no time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 7 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: NoOp time:2
+接收服务器的信息1：AppData: NO CLIP time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 8 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: PJSIP_TRUNK= time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 9 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: YSGSM_TRUNK= time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 10 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: Set time:2
+接收服务器的信息1：AppData: DIALSTRING=IAX2/trunk-iax-IAXTrunk/3000 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 11 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: 0?sys-dial,1 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 12 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: ExecIf time:2
+接收服务器的信息1：AppData: 1?SetGlobal(LastTrunkOfoutrouter1=trunk-iax-IAXTrunk):Noop(Not Mrmemory Hunt) time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 13 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: ExecIf time:2
+接收服务器的信息1：AppData: 0?Set(JITTERBUFFER(disabled)=):NoOp(No Jitter Buffer) time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 14 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: ExecIf time:2
+接收服务器的信息1：AppData: 0?Set(JITTERBUFFER(disabled)=):NoOp(No Jitter Buffer) time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 15 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: 0?1-dial,16:1-dial,18 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 18 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: 0?forking:outbound-dial time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 20 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 1-dial time:2
+接收服务器的信息1：Application: Dial time:2
+接收服务器的信息1：AppData: IAX2/trunk-iax-IAXTrunk/3000,,tTKkWwXxb(add_diversion,add_diversion,1) time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newchannel time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 0 time:2
+接收服务器的信息1：ChannelStateDesc: Down time:2
+接收服务器的信息1：CallerIDNum: <unknown> time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: default time:2
+接收服务器的信息1：Exten: s time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 0 time:2
+接收服务器的信息1：ChannelStateDesc: Down time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context:  time:2
+接收服务器的信息1：Exten: 903000 time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 903000 time:2
+接收服务器的信息1：Application: AppDial time:2
+接收服务器的信息1：AppData: (Outgoing Line) time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: NewCallerid time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 0 time:2
+接收服务器的信息1：ChannelStateDesc: Down time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context:  time:2
+接收服务器的信息1：Exten: 903000 time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：CID-CallingPres: 0 (Presentation Allowed, Not Screened) time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: NewConnectedLine time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 0 time:2
+接收服务器的信息1：ChannelStateDesc: Down time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context:  time:2
+接收服务器的信息1：Exten: 903000 time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 0 time:2
+接收服务器的信息1：ChannelStateDesc: Down time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: add_diversion time:2
+接收服务器的信息1：Exten: add_diversion time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: add_diversion time:2
+接收服务器的信息1：Application: GotoIf time:2
+接收服务器的信息1：AppData: 0?2:3 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 0 time:2
+接收服务器的信息1：ChannelStateDesc: Down time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: add_diversion time:2
+接收服务器的信息1：Exten: add_diversion time:2
+接收服务器的信息1：Priority: 3 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: add_diversion time:2
+接收服务器的信息1：Application: NoOp time:2
+接收服务器的信息1：AppData: end add diversion time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newstate time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 5 time:2
+接收服务器的信息1：ChannelStateDesc: Ringing time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: callin_trunk_IAXTrunk time:2
+接收服务器的信息1：Exten: 903000 time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 5 time:2
+接收服务器的信息1：ChannelStateDesc: Ringing time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: callin_trunk_IAXTrunk time:2
+接收服务器的信息1：Exten: 903000 time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension: 903000 time:2
+接收服务器的信息1：Application: AppDial time:2
+接收服务器的信息1：AppData: (Outgoing Line) time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: DeviceStateChange time:2
+接收服务器的信息1：Privilege: devicechange,all time:2
+接收服务器的信息1：Device: IAX2/trunk-iax-IAXTrunk time:2
+接收服务器的信息1：State: RINGING time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: DialBegin time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 20 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：DestChannel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：DestChannelState: 5 time:2
+接收服务器的信息1：DestChannelStateDesc: Ringing time:2
+接收服务器的信息1：DestCallerIDNum: 903000 time:2
+接收服务器的信息1：DestCallerIDName: <unknown> time:2
+接收服务器的信息1：DestConnectedLineNum: 1000 time:2
+接收服务器的信息1：DestConnectedLineName: 1000 time:2
+接收服务器的信息1：DestLanguage: en time:2
+接收服务器的信息1：DestAccountCode:  time:2
+接收服务器的信息1：DestContext: callin_trunk_IAXTrunk time:2
+接收服务器的信息1：DestExten: 903000 time:2
+接收服务器的信息1：DestPriority: 1 time:2
+接收服务器的信息1：DestUniqueid: 1504772844.18 time:2
+接收服务器的信息1：DestLinkedid: 1504772844.17 time:2
+接收服务器的信息1：ConfID:  time:2
+接收服务器的信息1：DialString: trunk-iax-IAXTrunk/3000 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: ExtensionStatus time:2
+接收服务器的信息1：Privilege: extenstatus,all time:2
+接收服务器的信息1：Exten: IAXTrunk time:2
+接收服务器的信息1：Context: default time:2
+接收服务器的信息1：Hint: IAX2/trunk-iax-IAXTrunk time:2
+接收服务器的信息1：Status: 8 time:2
+接收服务器的信息1：StatusText: Ringing time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newstate time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 6 time:2
+接收服务器的信息1：ChannelStateDesc: Up time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: callin_trunk_IAXTrunk time:2
+接收服务器的信息1：Exten: 903000 time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: DeviceStateChange time:2
+接收服务器的信息1：Privilege: devicechange,all time:2
+接收服务器的信息1：Device: IAX2/trunk-iax-IAXTrunk time:2
+接收服务器的信息1：State: INUSE time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: ExtensionStatus time:2
+接收服务器的信息1：Privilege: extenstatus,all time:2
+接收服务器的信息1：Exten: IAXTrunk time:2
+接收服务器的信息1：Context: default time:2
+接收服务器的信息1：Hint: IAX2/trunk-iax-IAXTrunk time:2
+接收服务器的信息1：Status: 1 time:2
+接收服务器的信息1：StatusText: InUse time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: DialEnd time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 4 time:2
+接收服务器的信息1：ChannelStateDesc: Ring time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 20 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：DestChannel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：DestChannelState: 6 time:2
+接收服务器的信息1：DestChannelStateDesc: Up time:2
+接收服务器的信息1：DestCallerIDNum: 903000 time:2
+接收服务器的信息1：DestCallerIDName: <unknown> time:2
+接收服务器的信息1：DestConnectedLineNum: 1000 time:2
+接收服务器的信息1：DestConnectedLineName: 1000 time:2
+接收服务器的信息1：DestLanguage: en time:2
+接收服务器的信息1：DestAccountCode:  time:2
+接收服务器的信息1：DestContext: callin_trunk_IAXTrunk time:2
+接收服务器的信息1：DestExten:  time:2
+接收服务器的信息1：DestPriority: 1 time:2
+接收服务器的信息1：DestUniqueid: 1504772844.18 time:2
+接收服务器的信息1：DestLinkedid: 1504772844.17 time:2
+接收服务器的信息1：DialStatus: ANSWER time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newstate time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 6 time:2
+接收服务器的信息1：ChannelStateDesc: Up time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 20 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: DeviceStateChange time:2
+接收服务器的信息1：Privilege: devicechange,all time:2
+接收服务器的信息1：Device: PJSIP/1000 time:2
+接收服务器的信息1：State: INUSE time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: ExtensionStatus time:2
+接收服务器的信息1：Privilege: extenstatus,all time:2
+接收服务器的信息1：Exten: 1000 time:2
+接收服务器的信息1：Context: extensions-hintcontext time:2
+接收服务器的信息1：Hint: PJSIP/1000 time:2
+接收服务器的信息1：Status: 1 time:2
+接收服务器的信息1：StatusText: InUse time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: ExtensionStatus time:2
+接收服务器的信息1：Privilege: extenstatus,all time:2
+接收服务器的信息1：Exten: 1000 time:2
+接收服务器的信息1：Context: default time:2
+接收服务器的信息1：Hint: PJSIP/1000 time:2
+接收服务器的信息1：Status: 1 time:2
+接收服务器的信息1：StatusText: InUse time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: BridgeCreate time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：BridgeUniqueid: 61681a99-4684-439f-96cd-07acdd1f48b6 time:2
+接收服务器的信息1：BridgeType: basic time:2
+接收服务器的信息1：BridgeTechnology: simple_bridge time:2
+接收服务器的信息1：BridgeCreator: <unknown> time:2
+接收服务器的信息1：BridgeName: <unknown> time:2
+接收服务器的信息1：BridgeNumChannels: 0 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Newexten time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 6 time:2
+接收服务器的信息1：ChannelStateDesc: Up time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: callin_trunk_IAXTrunk time:2
+接收服务器的信息1：Exten:  time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1：Extension:  time:2
+接收服务器的信息1：Application: AppDial time:2
+接收服务器的信息1：AppData: (Outgoing Line) time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: BridgeEnter time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：BridgeUniqueid: 61681a99-4684-439f-96cd-07acdd1f48b6 time:2
+接收服务器的信息1：BridgeType: basic time:2
+接收服务器的信息1：BridgeTechnology: simple_bridge time:2
+接收服务器的信息1：BridgeCreator: <unknown> time:2
+接收服务器的信息1：BridgeName: <unknown> time:2
+接收服务器的信息1：BridgeNumChannels: 1 time:2
+接收服务器的信息1：Channel: IAX2/trunk-iax-IAXTrunk-11517 time:2
+接收服务器的信息1：ChannelState: 6 time:2
+接收服务器的信息1：ChannelStateDesc: Up time:2
+接收服务器的信息1：CallerIDNum: 903000 time:2
+接收服务器的信息1：CallerIDName: <unknown> time:2
+接收服务器的信息1：ConnectedLineNum: 1000 time:2
+接收服务器的信息1：ConnectedLineName: 1000 time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: callin_trunk_IAXTrunk time:2
+接收服务器的信息1：Exten:  time:2
+接收服务器的信息1：Priority: 1 time:2
+接收服务器的信息1：Uniqueid: 1504772844.18 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: BridgeEnter time:2
+接收服务器的信息1：Privilege: call,all time:2
+接收服务器的信息1：BridgeUniqueid: 61681a99-4684-439f-96cd-07acdd1f48b6 time:2
+接收服务器的信息1：BridgeType: basic time:2
+接收服务器的信息1：BridgeTechnology: simple_bridge time:2
+接收服务器的信息1：BridgeCreator: <unknown> time:2
+接收服务器的信息1：BridgeName: <unknown> time:2
+接收服务器的信息1：BridgeNumChannels: 2 time:2
+接收服务器的信息1：Channel: PJSIP/1000-00000008 time:2
+接收服务器的信息1：ChannelState: 6 time:2
+接收服务器的信息1：ChannelStateDesc: Up time:2
+接收服务器的信息1：CallerIDNum: 1000 time:2
+接收服务器的信息1：CallerIDName: 1000 time:2
+接收服务器的信息1：ConnectedLineNum: <unknown> time:2
+接收服务器的信息1：ConnectedLineName: <unknown> time:2
+接收服务器的信息1：Language: en time:2
+接收服务器的信息1：AccountCode:  time:2
+接收服务器的信息1：Context: macro-trunkdial-failover-0.3 time:2
+接收服务器的信息1：Exten: 1-dial time:2
+接收服务器的信息1：Priority: 20 time:2
+接收服务器的信息1：Uniqueid: 1504772844.17 time:2
+接收服务器的信息1：Linkedid: 1504772844.17 time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Registry time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：ChannelType: IAX2 time:2
+接收服务器的信息1：Username: 3034 time:2
+接收服务器的信息1：Domain: 192.168.11.196:4569 time:2
+接收服务器的信息1：Status: Registered time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 1 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 2 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 4 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 5 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 7 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 8 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 10 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 11 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 13 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 14 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 16 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 17 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 19 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 20 time:2
+接收服务器的信息1：Alarm: Red Alarm time:2
+接收服务器的信息1： time:2
+接收服务器的信息1：Event: Alarm time:2
+接收服务器的信息1：Privilege: system,all time:2
+接收服务器的信息1：DAHDIChannel: 22 time:2
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 23 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 28 time:3
+接收服务器的信息1：Alarm: Yellow Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 29 time:3
+接收服务器的信息1：Alarm: Yellow Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 31 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 32 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 34 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 35 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 37 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 38 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 40 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 41 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: Alarm time:3
+接收服务器的信息1：Privilege: system,all time:3
+接收服务器的信息1：DAHDIChannel: 44 time:3
+接收服务器的信息1：Alarm: Red Alarm time:3
+接收服务器的信息1： time:3
+接收服务器的信息1：Event: ContactStatus time:3
+接收服务器的信息1：Privilege: system,all time:5
+接收服务器的信息1：URI: sip:485e2ece@192.168.11.197:5060;transport=udp time:5
+接收服务器的信息1：ContactStatus: Unreachable time:5
+接收服务器的信息1：AOR: trunk-SPS-aor time:5
+接收服务器的信息1：EndpointName: trunk-SPS-endpoint time:5
+接收服务器的信息1：RoundtripUsec: 0 time:5
+接收服务器的信息1： time:5
+接收服务器的信息1：Event: ContactStatus time:5
+接收服务器的信息1：Privilege: system,all time:5
+接收服务器的信息1：URI: sip:485e2ece@192.168.11.197:5060;transport=udp time:5
+接收服务器的信息1：ContactStatus: Unreachable time:5
+接收服务器的信息1：AOR: trunk-SPS-aor time:5
+接收服务器的信息1：EndpointName: trunk-SPS-endpoint time:5
+接收服务器的信息1：RoundtripUsec: 0 time:5
+接收服务器的信息1： time:5
+接收服务器的信息1：Event: MessageWaiting time:5
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1000@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1001@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1100@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1101@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1102@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1103@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1104@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1105@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1106@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1107@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1108@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: MessageWaiting time:7
+接收服务器的信息1：Privilege: call,all time:7
+接收服务器的信息1：Mailbox: 1109@interdirectory time:7
+接收服务器的信息1：Waiting: 0 time:7
+接收服务器的信息1：New: 0 time:7
+接收服务器的信息1：Old: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1000 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1000 time:7
+接收服务器的信息1：Status: 1 time:7
+接收服务器的信息1：StatusText: InUse time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1001 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1001 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1100 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1100 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1101 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1101 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1102 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1102 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1103 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1103 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1104 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1104 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1105 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1105 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1106 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1106 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1107 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1107 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1108 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1108 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1109 time:7
+接收服务器的信息1：Context: extensions-hintcontext time:7
+接收服务器的信息1：Hint: PJSIP/1109 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1000 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1000 time:7
+接收服务器的信息1：Status: 1 time:7
+接收服务器的信息1：StatusText: InUse time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1001 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1001&DAHDI/45 time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1100 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1100 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1101 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1101 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1102 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1102 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: QueueMemberStatus time:7
+接收服务器的信息1：Privilege: agent,all time:7
+接收服务器的信息1：Queue: queue-6700 time:7
+接收服务器的信息1：MemberName: 1101 time:7
+接收服务器的信息1：Ringinuse: 1 time:7
+接收服务器的信息1：Penalty: 0 time:7
+接收服务器的信息1：Interface: Local/1101@only-dialextension-q6700 time:7
+接收服务器的信息1：StateInterface: hint:1101@default time:7
+接收服务器的信息1：CallsTaken: 0 time:7
+接收服务器的信息1：Membership: static time:7
+接收服务器的信息1：LastCall: 0 time:7
+接收服务器的信息1：Status: 5 time:7
+接收服务器的信息1：Paused: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: QueueMemberStatus time:7
+接收服务器的信息1：Privilege: agent,all time:7
+接收服务器的信息1：Queue: queue-6700 time:7
+接收服务器的信息1：MemberName: 1102 time:7
+接收服务器的信息1：Ringinuse: 1 time:7
+接收服务器的信息1：Penalty: 0 time:7
+接收服务器的信息1：Interface: Local/1102@only-dialextension-q6700 time:7
+接收服务器的信息1：StateInterface: hint:1102@default time:7
+接收服务器的信息1：CallsTaken: 0 time:7
+接收服务器的信息1：Membership: static time:7
+接收服务器的信息1：LastCall: 0 time:7
+接收服务器的信息1：Status: 5 time:7
+接收服务器的信息1：Paused: 0 time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1103 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1103 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1104 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1104 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1105 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1105 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1106 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1106 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1107 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1107 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1108 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1108 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 1109 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/1109 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: SIPTrunk time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/trunk-SIPTrunk-endpoint time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: IAXTrunk time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: IAX2/trunk-iax-IAXTrunk time:7
+接收服务器的信息1：Status: 1 time:7
+接收服务器的信息1：StatusText: InUse time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: SPX time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: IAX2/trunk-iax-SPX time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: SPS time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: PJSIP/trunk-SPS-endpoint time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: FXO2-7 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/43 time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: FXO2-8 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/44 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI1-1 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/1 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI1-2 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/4 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI1-3 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/7 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI1-4 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/10 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI1-5 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/13 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI1-6 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/16 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI1-7 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/19 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI1-8 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/22 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI2-1 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/25 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI2-2 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/28 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI2-3 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/31 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI2-4 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/34 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI2-5 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/37 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: BRI2-6 time:7
+接收服务器的信息1：Context: default time:7
+接收服务器的信息1：Hint: DAHDI/40 time:7
+接收服务器的信息1：Status: 4 time:7
+接收服务器的信息1：StatusText: Unavailable time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6900 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6900@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6901 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6901@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6902 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6902@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6903 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6903@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6904 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6904@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6905 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6905@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6906 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6906@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6907 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6907@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6908 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6908@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6909 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6909@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6910 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6910@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6911 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6911@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6912 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6912@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6913 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6913@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6914 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6914@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6915 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6915@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:7
+接收服务器的信息1：Privilege: extenstatus,all time:7
+接收服务器的信息1：Exten: 6916 time:7
+接收服务器的信息1：Context: park-hints time:7
+接收服务器的信息1：Hint: park:6916@parkedcalls time:7
+接收服务器的信息1：Status: 0 time:7
+接收服务器的信息1：StatusText: Idle time:7
+接收服务器的信息1： time:7
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6917 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6917@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6918 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6918@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6919 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6919@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6920 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6920@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6921 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6921@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6922 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6922@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6923 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6923@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6924 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6924@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6925 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6925@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6926 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6926@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6927 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6927@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6928 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6928@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6929 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6929@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6930 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6930@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6931 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6931@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6932 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6932@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6933 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6933@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6934 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6934@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6935 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6935@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6936 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6936@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6937 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6937@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6938 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6938@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6939 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6939@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6940 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6940@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6941 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6941@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6942 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6942@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6943 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6943@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6944 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6944@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6945 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6945@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6946 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6946@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6947 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6947@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6948 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6948@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6949 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6949@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6950 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6950@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6951 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6951@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6952 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6952@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6953 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6953@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6954 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6954@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6955 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6955@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6956 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6956@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6957 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6957@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6958 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6958@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6959 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6959@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6960 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6960@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6961 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6961@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6962 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6962@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6963 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6963@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6964 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6964@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6965 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6965@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6966 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6966@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6967 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6967@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6968 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6968@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6969 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6969@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6970 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6970@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6971 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6971@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6972 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6972@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6973 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6973@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6974 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6974@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6975 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6975@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6976 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6976@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6977 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6977@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6978 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6978@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6979 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6979@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6980 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6980@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6981 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6981@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6982 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6982@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6983 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6983@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6984 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6984@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6985 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6985@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6986 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6986@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6987 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6987@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6988 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6988@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6989 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6989@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6990 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6990@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6991 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6991@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6992 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6992@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6993 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6993@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6994 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6994@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6995 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6995@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6996 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6996@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6997 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6997@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6998 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6998@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6999 time:8
+接收服务器的信息1：Context: park-hints time:8
+接收服务器的信息1：Hint: park:6999@parkedcalls time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: trunk_FXO2-7 time:8
+接收服务器的信息1：Context: default time:8
+接收服务器的信息1：Hint: DAHDI/43 time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: trunk_FXO2-8 time:8
+接收服务器的信息1：Context: default time:8
+接收服务器的信息1：Hint: DAHDI/44 time:8
+接收服务器的信息1：Status: 4 time:8
+接收服务器的信息1：StatusText: Unavailable time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 1*# time:8
+接收服务器的信息1：Context: default time:8
+接收服务器的信息1：Hint: DAHDI/46 time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 2*# time:8
+接收服务器的信息1：Context: default time:8
+接收服务器的信息1：Hint: DAHDI/47 time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 3*# time:8
+接收服务器的信息1：Context: default time:8
+接收服务器的信息1：Hint: DAHDI/48 time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 4*# time:8
+接收服务器的信息1：Context: default time:8
+接收服务器的信息1：Hint: DAHDI/49 time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 5*# time:8
+接收服务器的信息1：Context: default time:8
+接收服务器的信息1：Hint: DAHDI/50 time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 6*# time:8
+接收服务器的信息1：Context: default time:8
+接收服务器的信息1：Hint: DAHDI/51 time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: ExtensionStatus time:8
+接收服务器的信息1：Privilege: extenstatus,all time:8
+接收服务器的信息1：Exten: 7*# time:8
+接收服务器的信息1：Context: default time:8
+接收服务器的信息1：Hint: DAHDI/52 time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1：StatusText: Idle time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: Reload time:8
+接收服务器的信息1：Privilege: system,all time:8
+接收服务器的信息1：Module: All time:8
+接收服务器的信息1：Status: 0 time:8
+接收服务器的信息1： time:8
+接收服务器的信息1：Event: Registry time:8
+接收服务器的信息1：Privilege: system,all time:10
+接收服务器的信息1：ChannelType: PJSIP time:10
+接收服务器的信息1：Username: sip:3030@192.168.11.196:5060 time:10
+接收服务器的信息1：Domain: sip:192.168.11.196:5060;transport=udp time:10
+接收服务器的信息1：Status: Registered time:10
+接收服务器的信息1： time:10
+TcpSocket end...
+Q_PinListCall TcpSocket return: false
+find this 1000 IP:192.168.11.195
+callId: 9send dtmf :1 num:
+send dtmf end ...
+DtmfCallBack id:10dtmf:49
+callId: 9send dtmf :2 num:
+send dtmf end ...
+DtmfCallBack id:10dtmf:50
+callId: 9send dtmf :3 num:
+send dtmf end ...
+DtmfCallBack id:10dtmf:51
+CallstateCallBack callid:10 accId:1 code:6
+CallstateCallBack : username :3000
+CallstateCallBack callid:9 accId:0 code:6
+CallstateCallBack : username :1000
+]]></system-out>
+    <system-err><![CDATA[java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:284)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.fill(BufferedReader.java:161)
+	at java.io.BufferedReader.readLine(BufferedReader.java:324)
+	at java.io.BufferedReader.readLine(BufferedReader.java:389)
+	at com.yeastar.swebtest.tools.TcpSocket.TcpSocket.getAsteriskInfo(TcpSocket.java:180)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes.Q_PinListCall(OutboundRoutes.java:377)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]></system-err>
+  </testcase>
+  <testcase name="R_PWD_None" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="13.071"/>
+  <testcase name="S_PinListCall" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="23.037"/>
+  <testcase name="T_RoutePermission" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes" time="32.748"/>
+  <testcase name="B_CreateInboundRoutes" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="81.207"/>
+  <testcase name="C_RegisterExtensions" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="43.593">
+    <failure message="1101分机注册 【预期：Registered 实际：Unavailable】" type="java.lang.AssertionError">java.lang.AssertionError: 1101分机注册 【预期：Registered 实际：Unavailable】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Register_Account(PjsipApp.java:113)
+	at com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Register_Account(PjsipApp.java:163)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.C_RegisterExtensions(InboundRoutes.java:118)
+</failure>
+    <system-out><![CDATA[执行操作:注册测试分机
+find this 1100 IP:
+sip::::::.......sip:1100@192.168.11.195:5060.......0
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+find this 1101 IP:
+sip::::::.......sip:1101@192.168.11.195:5060.......1
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+  </testcase>
+  <testcase name="D_CallSip" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="47.125">
+    <failure message="CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.D_CallSip(InboundRoutes.java:145)
+</failure>
+    <system-out><![CDATA[执行操作:设备3通过sip外线呼入到设备1，听到IVR提示音后，按0
+find this 3000 IP:
+find this 3030 IP:
+uri: sip:3030@192.168.11.196:5060
+Call id... -1
+find this 3000 IP:
+callId: -1send dtmf :0 num:
+find this 1100 IP:192.168.11.195
+Answer Call  -1  1100
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+  </testcase>
+  <testcase name="E_CallIax" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="37.894">
+    <failure message="CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.E_CallIax(InboundRoutes.java:162)
+</failure>
+    <system-out><![CDATA[执行操作:设备3通过iax外线呼入到设备1，听到IVR的提示音后，按1
+find this 3000 IP:
+find this 3034 IP:
+uri: sip:3034@192.168.11.196:5060
+Call id... -1
+find this 3000 IP:
+callId: -1send dtmf :1 num:
+DTMF send suc -1
+]]></system-out>
+  </testcase>
+  <testcase name="F_CallSps" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="56.852">
+    <failure message="CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.F_CallSps(InboundRoutes.java:187)
+</failure>
+    <system-out><![CDATA[执行操作:设备2通过sps外线呼入到设备1，听到IVR的提示音后，按2
+find this 2000 IP:
+find this 9999 IP:
+uri: sip:9999@192.168.11.197:5060
+Call id... -1
+find this 2000 IP:
+callId: -1send dtmf :2 num:
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+actualStatus Unavailable
+find this 1100 IP:192.168.11.195
+Answer Call  -1  1100
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+  </testcase>
+  <testcase name="G_CallSpx" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="46.787">
+    <failure message="CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.G_CallSpx(InboundRoutes.java:212)
+</failure>
+    <system-out><![CDATA[执行操作:A拨打90+分机号码（设备3的分机），SPX通话
+find this 2000 IP:
+find this 8888 IP:
+uri: sip:8888@192.168.11.197:5060
+Call id... -1
+find this 2000 IP:
+callId: -1send dtmf :3 num:
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+find this 1101 IP:192.168.11.195
+Answer Call  -1  1101
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[5].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+  </testcase>
+  <testcase name="H_CallGsm" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="0"/>
+  <testcase name="I_CallPstn" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="48.939">
+    <failure message="CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.I_CallPstn(InboundRoutes.java:258)
+</failure>
+    <system-out><![CDATA[执行操作:A拨打90+分机号码（设备3的分机），PSTN通话
+find this 2000 IP:
+find this 2010 IP:
+uri: sip:2010@192.168.11.197:5060
+Call id... -1
+find this 2000 IP:
+callId: -1send dtmf :5 num:
+find this 2000 IP:
+callId: -1send dtmf :9 num:
+callId: -1send dtmf :0 num:
+callId: -1send dtmf :3 num:
+callId: -1send dtmf :0 num:
+callId: -1send dtmf :0 num:
+callId: -1send dtmf :0 num:
+find this 3000 IP:
+Answer Call  -1  3000
+]]></system-out>
+  </testcase>
+  <testcase name="J_CallE1" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="0"/>
+  <testcase name="K_SetDidSps" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="34.197"/>
+  <testcase name="L_CallDidSps" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes" time="102.76">
+    <failure message="CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:244)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:234)
+	at com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes.L_CallDidSps(InboundRoutes.java:326)
+</failure>
+    <system-out><![CDATA[执行操作:设备2通过sps外线呼入到设备（呼出前缀后+分机B）
+find this 2000 IP:
+uri/./..........sip:992000@192.168.11.197  -1
+gridExtensonStatus..+ return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[4].id + ' tr td div div')[0].getAttribute('data-qtip')
 ]]></system-out>
   </testcase>
 </testsuite>

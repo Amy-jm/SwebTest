@@ -4,11 +4,11 @@
            failures="0"
            errors="0"
            skipped="0"
-           time="171.569">
+           time="172.127">
   <properties />
   
   
-            <testcase name="B_CallTest" time="45.884" classname="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime" />
-                <testcase name="A_SetTimeZone" time="125.685" classname="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime" />
+            <testcase name="A_SetTimeZone" time="125.923" classname="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime" />
+                <testcase name="B_CallTest" time="46.204" classname="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime" />
       
 </testsuite>

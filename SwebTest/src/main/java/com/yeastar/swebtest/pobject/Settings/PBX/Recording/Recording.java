@@ -11,6 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class Recording {
     public SelenideElement storageLocations = $(By.xpath(".//span[starts-with(@class,\"cp-link-before\") and text()=\"Storage Locations\"]"));
 
+    public String enableInternslCallRecord = "st-recording-enableinternalrecord";
     public SelenideElement internalCallBeingRecordedPrompt = $(By.id("st-recording-internalprompt-trigger-picker"));
     public SelenideElement callsBeingRecordedPrompt = $(By.id("st-recording-externalprompt-trigger-picker"));
 

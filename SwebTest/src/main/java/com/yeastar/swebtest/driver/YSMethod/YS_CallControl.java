@@ -51,14 +51,8 @@ public class YS_CallControl {
             add_time_condition.advancedOptions.click();
         add_time_condition.save.click();
         pageDeskTop.apply.click();
-//        String linenum = String.valueOf(gridLineNum(time_conditions.grid)) ;
-        YsAssert.assertEquals(String.valueOf(gridContent(time_conditions.grid,1,time_conditions.gridcolumn_Name)),
-                name,
-                "TimeConditions名称错误");
-//        YsAssert.assertEquals(String.valueOf(gridContent(time_conditions.grid,1,time_conditions.gridcolumn_Name)),
-//                name,
-//                "TimeConditions名称错误");
-
+        ys_waitingLoading(time_conditions.gridLoading);
+        YsAssert.assertEquals(String.valueOf(gridContent(time_conditions.grid,1,time_conditions.gridcolumn_Name)),name,"TimeConditions名称错误");
     }
 
     /**

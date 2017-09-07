@@ -3,6 +3,7 @@ package com.yeastar.swebtest.testcase.smokecase.syscase;
 import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import cucumber.api.java.ro.Si;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -31,6 +32,7 @@ public class Maintain {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
     }
     @Test
     public void A_BackupRestore() {
@@ -42,7 +44,7 @@ public class Maintain {
         create_new_backup_file.fileName.setValue("FileName");
         create_new_backup_file.save.click();
 
-        backUpRow= gridFindRowByColumn(backupandRestore.grid,backupandRestore.gridColumn_Name,"FileName_Local.bak",ascendingOrder);
+        backUpRow= gridFindRowByColumn(backupandRestore.grid,backupandRestore.gridColumn_Name,"FileName_Local.bak",sort_ascendingOrder);
 
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
@@ -56,7 +58,7 @@ public class Maintain {
         Reporter.infoExec("下载备份包"); //执行操作
         gridClick(backupandRestore.grid,backUpRow,backupandRestore.gridDownload);
     }
-//    @Test
+
     public void C_Reset() {
         Reporter.infoExec("点击“Reset”，弹出的Reset页面的Verification Code输入图片的验证码，点击“Reset”"); //执行操作
 //      1）设备重置，网页上出现重启进度页面。重启后，设备恢复出厂设置
@@ -70,7 +72,7 @@ public class Maintain {
         reset.resetInputCode.setValue(resetcode);
         reset.startReset.click();
     }
-//    @Test
+
     public void D_Restore() {
         Reporter.infoExec("导入备份文件"); //执行操作
         if(Single_Device_Test){
@@ -193,6 +195,33 @@ public class Maintain {
         YsAssert.assertEquals(user,"admin","操作日志User");
 //        YsAssert.assertEquals(operation,"Extensions: Add");
         YsAssert.assertInclude(detials,"Extension: 4000");
+    }
+    @Test
+    public void Z_RecoverHttps() {
+        Reporter.infoExec("网页URL恢复成Https"); //执行操作
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        if(Single_Device_Test){
+            settings.extensions_panel.click();
+        }
+        ys_waitingLoading(extensions.grid_Mask);
+        setPageShowNum(extensions.grid,100);
+        ys_waitingLoading(extensions.grid_Mask);
+        int row= gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Extensions,"4000",sort_descendingOrder);
+        if(row!=0){
+            gridClick(extensions.grid,row,extensions.gridDelete);
+            extensions.delete_yes.click();
+        }
+
+
+        settings.system_tree.doubleClick();
+//        settings.security_panel.click();
+        settings.security_tree.click();
+        service.service.click();
+        ys_waitingTime(6666);
+        setCombobox(service.protocol_id,service.HTTPS);
+        service.save.click();
+
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {

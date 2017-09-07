@@ -4,11 +4,11 @@
            failures="0"
            errors="0"
            skipped="0"
-           time="139.767">
+           time="41.877">
   <properties />
   
   
-            <testcase name="B_DualSetting" time="25.373" classname="com.yeastar.swebtest.testcase.smokecase.syscase.Network" />
-                <testcase name="A_DualSetting" time="114.394" classname="com.yeastar.swebtest.testcase.smokecase.syscase.Network" />
+            <testcase name="A_DualSetting" time="8.721" classname="com.yeastar.swebtest.testcase.smokecase.syscase.Network" />
+                <testcase name="B_DualSetting" time="33.156" classname="com.yeastar.swebtest.testcase.smokecase.syscase.Network" />
       
 </testsuite>

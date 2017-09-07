@@ -22,13 +22,29 @@ public class InboundRoutes {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
 
+    }
+    @BeforeClass
+    public void InitInboundRoutes() {
+        if(Single_Init){
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+            inboundRoutes.inboundRoutes.click();
+            ys_waitingLoading(inboundRoutes.gridLoading);
+            if(Integer.parseInt(String.valueOf(gridLineNum(inboundRoutes.grid))) != 0){
+                gridSeleteAll(inboundRoutes.grid);
+                inboundRoutes.delete.click();
+                inboundRoutes.delete_yes.click();
+            }
+            closeSetting();
+        }
     }
     @BeforeMethod
     public void waitMethod(){
         ys_waitingTime(1000);
     }
-    @Test
+//    @Test
     public void A_EmailSettings() throws InterruptedException {
         Reporter.infoExec("设置Email");
         pageDeskTop.settings.click();
@@ -42,27 +58,15 @@ public class InboundRoutes {
         ys_waitingMask();
         ys_apply();
 //        email.test.click();
-//        while (true){
-//            if(executeJs("return Ext.get('ys-waiting').dom.style.display").equals("none") ){
-//                break;
-//            }
-//            Thread.sleep(50);
-//        }
-
 //        YsAssert.assertEquals(email.SMTP.text(),"smtp.sina.com");
 //        YsAssert.assertEquals(email.POP3.text(),"pop.sina.com");
     }
     @Test
     public void B_CreateInboundRoutes() throws InterruptedException {
         Reporter.infoExec("创建呼入路由");
-        if(Single_Device_Test){
-            pageDeskTop.settings.click();
-            settings.callControl_panel.click();
-        }else{
-            settings.PBX_tree.doubleClick();
-            settings.callControl_tree.click();
-        }
 
+        pageDeskTop.settings.click();
+        settings.callControl_panel.click();
         inboundRoutes.inboundRoutes.click();
         ys_waitingLoading(inboundRoutes.gridLoading);
 
@@ -131,7 +135,7 @@ public class InboundRoutes {
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
         ys_waitingTime(5000);
-        m_extension.checkCDR(3000,1100,"Answered");
+        m_extension.checkCDR("3000 <3000>","1100 <6500(1100)>","Answered",SIPTrunk,"",communication_inbound);
 
     }
     @Test
@@ -148,7 +152,7 @@ public class InboundRoutes {
         System.out.println("DTMF send suc "+pjsip.Pj_Send_Dtmf(3000,"1"));;
         Thread.sleep(20000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(3000,6500,"Voicemail");
+        m_extension.checkCDR("3000","6500(1100) <6500(1100)>","Voicemail");
     }
     @Test
     public void F_CallSps() throws InterruptedException {
@@ -165,7 +169,7 @@ public class InboundRoutes {
         pjsip.Pj_Make_Call_No_Answer(2000,9999,DEVICE_ASSIST_2);
         ys_waitingTime(3000);
         pjsip.Pj_Send_Dtmf(2000,"2");
-        ys_waitingTime(50000);
+        ys_waitingTime(15000);
         String actualStatusRinging = String.valueOf(gridExtensonStatus(extensions.grid_status,4,0));
         System.out.println("actualStatus " + actualStatusRinging);
         pjsip.Pj_Answer_Call(1100,true);
@@ -173,7 +177,7 @@ public class InboundRoutes {
         String actualStatusRegistered = String.valueOf(gridExtensonStatus(extensions.grid_status,4,0));
 
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(2000,1100,"Answered");
+        m_extension.checkCDR("2000 <2000>","1100 <6200(1100)>","Answered");
 //        YsAssert.assertEquals(actualStatusRinging,"Ringing");
         YsAssert.assertEquals(actualStatusRegistered,"Registered");
     }
@@ -198,12 +202,15 @@ public class InboundRoutes {
         ys_waitingTime(5000);
         String actualStatusRegistered = String.valueOf(gridExtensonStatus(extensions.grid_status,5,0));
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(2000,1101,"Answered");
+        m_extension.checkCDR("2000 <2000>","1101 <1101>","Answered");
 //        YsAssert.assertEquals(actualStatusRinging,"Ringing");
         YsAssert.assertEquals(actualStatusRegistered,"Registered");
     }
-//    @Test
+    @Test
     public void H_CallGsm() throws InterruptedException {
+        if(GSM.equals("null")){
+            return;
+        }
         Reporter.infoExec("A拨打90+分机号码（设备3的分机），GSM通话");
         if(Single_Device_Test){
             pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",5060,-1);
@@ -243,17 +250,20 @@ public class InboundRoutes {
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2000 <2000>","903000","Answered");
     }
-//    @Test
+    @Test
     public void J_CallE1() throws InterruptedException {
+        if(E1.equals("null")){
+            return;
+        }
         Reporter.infoExec("A拨打90+分机号码（设备3的分机），E1通话");
         if(Single_Device_Test){
             pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",5060,-1);
-            pjsip.Pj_CreateAccount(7777,"Yeastar202","UDP",5060,-1);
             pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
             pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }
-        pjsip.Pj_Make_Call_No_Answer(2000,"7777",DEVICE_ASSIST_2);
+        pjsip.Pj_Make_Call_No_Answer(2000,"5555",DEVICE_ASSIST_2);
+        ys_waitingTime(2000);
         pjsip.Pj_Send_Dtmf(2000,"6");
         ys_waitingTime(10000);
         pjsip.Pj_Answer_Call(2000,true);
@@ -261,7 +271,7 @@ public class InboundRoutes {
         pjsip.Pj_Answer_Call(1100,true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(2000,1100,"Answered");
+        m_extension.checkCDR("callback2000","1100 <1100>","Answered");
     }
     @Test
     public void K_SetDidSps() throws InterruptedException {
@@ -301,22 +311,21 @@ public class InboundRoutes {
             pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }
-//        pjsip.Pj_Make_Call_No_Answer(2000,"992000",DEVICE_ASSIST_2);
+
         pjsip.Pj_Make_Call_Auto_Answer(2000,"992000",DEVICE_ASSIST_2);
-//        pjsip.Pj_Answer_Call(1100,true);
         ys_waitingTime(10000);
         String actualStatusRegistered = String.valueOf(gridExtensonStatus(extensions.grid_status,4,0));
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(2000,1100,"Answered");
+        m_extension.checkCDR("2000 <2000>","1100 <1100>","Answered");
 //        YsAssert.assertEquals(actualStatusRinging,"Ringing");
         YsAssert.assertEquals(actualStatusRegistered,"Registered");
     }
 
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(10000);
+        Thread.sleep(5000);
         Reporter.infoAfterClass("关闭游览器InboundRoutesTest"); //执行操作
-        pjsip.Pj_Unregister_Accounts();
+        pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
         quitDriver();

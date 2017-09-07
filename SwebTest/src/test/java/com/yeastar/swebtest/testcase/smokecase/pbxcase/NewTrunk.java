@@ -20,6 +20,7 @@ public class NewTrunk extends SwebDriver {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
     }
 
     @Test
@@ -28,25 +29,25 @@ public class NewTrunk extends SwebDriver {
         pageDeskTop.settings.click();
         settings.trunks_panel.click();
         setPageShowNum(trunks.grid,100);
-        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,"SIPTrunk",DEVICE_ASSIST_1,"",DEVICE_ASSIST_1
+        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,SIPTrunk,DEVICE_ASSIST_1,"",DEVICE_ASSIST_1
                 ,"3030","3030","3030","Yeastar202");
     }
     @Test
     public void B_AddTrunkIAXTrunk() throws InterruptedException {
         Reporter.infoExec("添加IAXTrunk");
-        m_trunks.addTrunk("IAX",add_voIP_trunk_basic.VoipTrunk,"IAXTrunk",DEVICE_ASSIST_1,"","",
+        m_trunks.addTrunk("IAX",add_voIP_trunk_basic.VoipTrunk,IAXTrunk,DEVICE_ASSIST_1,"","",
                 "3034","","","Yeastar202");
     }
     @Test
     public void C_AddSPX() throws InterruptedException {
         Reporter.infoExec("添加SPX");
-        m_trunks.addTrunk("IAX",add_voIP_trunk_basic.PeerToPeer,"SPX",DEVICE_ASSIST_2,"",DEVICE_ASSIST_2,
+        m_trunks.addTrunk("IAX",add_voIP_trunk_basic.PeerToPeer,SPX,DEVICE_ASSIST_2,"",DEVICE_ASSIST_2,
                 "","","","");
     }
     @Test
     public void D_AddSPS() throws InterruptedException {
         Reporter.infoExec("添加SPS");
-        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.PeerToPeer,"SPS",DEVICE_ASSIST_2,"",DEVICE_ASSIST_2,
+        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.PeerToPeer,SPS,DEVICE_ASSIST_2,"",DEVICE_ASSIST_2,
                 "","","","");
     }
     //改成辅助设备设置成network模式，减少测试时间

@@ -25,6 +25,7 @@ public class Network {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
     }
 
     @Test
@@ -36,16 +37,20 @@ public class Network {
         pageDeskTop.settings.click();
         settings.network_panel.click();
         ys_waitingTime(5000);
-        System.out.println("Ext.getCmp('"+basicSettings.mode+"').setValue('"+basicSettings.mode_Dual+"')");
-        executeJs("Ext.getCmp('"+basicSettings.mode+"').setValue('"+basicSettings.mode_Dual+"')");
+        boolean reboot = false;
+        System.out.println("sssssssss " +basicSettings.mode_input.getValue());
+        if(!basicSettings.mode_input.getValue().equals("Dual")){
+            executeJs("Ext.getCmp('"+basicSettings.mode+"').setValue('"+basicSettings.mode_Dual+"')");
+            reboot = true;
+        }
+
 
         System.out.println("Ext.get("+basicSettings.w_staticIPAddress_id+").dom.click()");
         executeJs("Ext.get("+basicSettings.l_staticIPAddress_id+").dom.click()");
         executeJs("Ext.get("+basicSettings.w_staticIPAddress_id+").dom.click()");
 
-        boolean reboot = false;
-        System.out.println("aa "+basicSettings.w_IPAddress.getValue()+basicSettings.w_subnetMask.getValue()
-       +basicSettings.w_gateway.getValue() );
+
+        System.out.println("network info :"+basicSettings.w_IPAddress.getValue()+basicSettings.w_subnetMask.getValue()+basicSettings.w_gateway.getValue() );
         if(!basicSettings.w_IPAddress.getValue().equals(DEVICE_IP_WAN)){
             reboot = true;
             basicSettings.w_IPAddress.setValue(DEVICE_IP_WAN);
@@ -64,6 +69,7 @@ public class Network {
         }
         basicSettings.save.click();
         if(reboot){
+            System.out.println("ready to reboot");
             pageDeskTop.reboot_Yes.click();
             waitReboot();
         }
@@ -82,7 +88,7 @@ public class Network {
             YsAssert.assertEquals(String.valueOf(webDriver.getCurrentUrl()),DEVICE_IP_WAN);
         }
         initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
-        login(LOGIN_USERNAME,LOGIN_PASSWORD,"english");
+        login(LOGIN_USERNAME,LOGIN_PASSWORD);
         if(!webDriver.getCurrentUrl().contains(DEVICE_IP_LAN)){
             YsAssert.assertEquals(String.valueOf(webDriver.getCurrentUrl()),DEVICE_IP_LAN);
         }

@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite name="pbxcore"
            tests="11"
-           failures="2"
+           failures="1"
            errors="0"
            skipped="0"
-           time="213.567">
+           time="253.126">
   <properties />
-            <testcase name="H_PromprPreference" time="59.620" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR">
-                <failure type="java.lang.AssertionError"
-                  message="分机B:1101进入录音 【预期：true 实际：false】"
+            <testcase name="J_DownloaderPrompt" time="37.738" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR">
+                <failure type="com.codeborne.selenide.ex.ElementNotFound"
+                  message="Element not found {By.xpath: .//div[starts-with(@id,'messagebox-')]//span[text()='Yes']}
+Expected: visible"
               >
-<![CDATA[java.lang.AssertionError: 分机B:1101进入录音 【预期：true 实际：false】
-  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:333)
-  com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR.H_PromprPreference(FileShare_CDR.java:161)
+<![CDATA[Element not found {By.xpath: .//div[starts-with(@id,'messagebox-')]//span[text()='Yes']}
+Expected: visible
+Screenshot: file:/F:/MyProject/0GitProject/swebtest/SwebTest/build/reports/tests/1504668487831.0.png
+Timeout: 10 s.
+Caused by: NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":".//div[starts-with(@id,'messagebox-')]//span[text()='Yes']"}
+  com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+  com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+  com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:59)
+  com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR.J_DownloaderPrompt(FileShare_CDR.java:194)
   sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
   sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
   sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -44,21 +54,38 @@
   org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
   org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
   org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
-]]>
-      </failure>
-
-          </testcase>
-            <testcase name="E_RecordingPlay" time="39.707" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR">
-                <failure type="java.lang.AssertionError"
-                  message="从分机A 1100播放录音 【预期：true 实际：false】"
-              >
-<![CDATA[java.lang.AssertionError: 从分机A 1100播放录音 【预期：true 实际：false】
-  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:333)
-  com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR.E_RecordingPlay(FileShare_CDR.java:93)
+Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":".//div[starts-with(@id,'messagebox-')]//span[text()='Yes']"}
+  (Session info: chrome=57.0.2987.133)
+  (Driver info: chromedriver=2.29.461591 (62ebf098771772160f391d75e589dc567915b233),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 10 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Yeastar-PC', ip: '192.168.11.194', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_121'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.29.461591 (62ebf098771772160f391d75e589dc567915b233), userDataDir=C:\Users\Yeastar\AppData\Local\Temp\scoped_dir6708_1493}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=57.0.2987.133, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: 4b7eb7bafde2b800d6a1a23b43fc6b78
+*** Element info: {Using=xpath, value=.//div[starts-with(@id,'messagebox-')]//span[text()='Yes']}
+  sun.reflect.GeneratedConstructorAccessor18.newInstance(Unknown Source)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+  org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:500)
+  org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+  org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+  com.codeborne.selenide.impl.WebElementSelector.findElement(WebElementSelector.java:28)
+  com.codeborne.selenide.impl.ElementFinder.getWebElement(ElementFinder.java:56)
+  com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:44)
+  com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR.J_DownloaderPrompt(FileShare_CDR.java:194)
   sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
   sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
   sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -92,14 +119,15 @@
           </testcase>
   
   
-            <testcase name="G_DeleteallCDR" time="0.180" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
-                <testcase name="B_DelCdr" time="11.389" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
-                <testcase name="K_DeleteSharetest" time="23.001" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
-                <testcase name="C_DownloadCDR" time="0.241" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
-                <testcase name="D_Recording" time="0.456" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
-                <testcase name="I_Me_CDRRecording" time="28.941" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
-                <testcase name="F_Downloader" time="21.105" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
-                <testcase name="A_FileShare" time="0.001" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
-                <testcase name="J_DownloaderPrompt" time="28.926" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+            <testcase name="D_Recording" time="1.499" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+                <testcase name="A_FileShare" time="0.000" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+                <testcase name="G_DeleteallCDR" time="0.192" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+                <testcase name="H_PromprPreference" time="75.642" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+                <testcase name="I_Me_CDRRecording" time="36.644" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+                <testcase name="F_Downloader" time="22.223" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+                <testcase name="C_DownloadCDR" time="0.221" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+                <testcase name="K_DeleteSharetest" time="23.422" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+                <testcase name="B_DelCdr" time="12.846" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
+                <testcase name="E_RecordingPlay" time="42.699" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.FileShare_CDR" />
       
 </testsuite>

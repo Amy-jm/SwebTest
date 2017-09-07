@@ -26,7 +26,7 @@ public class EventCenter {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
-
+        m_extension.showCDRClounm();
         pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",3);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
     }

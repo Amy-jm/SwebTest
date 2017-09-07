@@ -85,6 +85,7 @@ public class SwebDriver extends Config {
 
     public static void quitDriver() {
         webDriver.quit();
+        ys_waitingTime(1000);
     }
     /**
      * 登录S系列设备，默认语言为英文
@@ -179,9 +180,9 @@ public class SwebDriver extends Config {
     }
 
     public static void gridCheck(String gridname, int row, int column) throws InterruptedException {
-//        System.out.println("Ext.query('#'+Ext.query('#'+" +
-//                gridname + ".id + ' [data-recordindex]')" +
-//                "[" + row + "].id + ' tr td .input')[" + column + "].click()");
+        System.out.println("Ext.query('#'+Ext.query('#'+" +
+                gridname + ".id + ' [data-recordindex]')" +
+                "[" + row + "].id + ' tr td .input')[" + column + "].click()");
 //        executeJs("Ext.query('#'+Ext.query('#'+" +
 //                gridname + ".id + ' [data-recordindex]')" +
 //                "[" + --row + "].id + ' tr td .x-grid-row-checker')[" + column + "].click()");
@@ -191,7 +192,7 @@ public class SwebDriver extends Config {
     }
 
     public static void gridSeleteAll(String gridname) {
-        ys_waitingTime(5000);
+        ys_waitingTime(2500);
         executeJs(gridname+".getSelectionModel().selectAll()");
     }
     public static void gridCheckDeleteAll(String gridname){
@@ -248,7 +249,7 @@ public class SwebDriver extends Config {
     public static int gridFindRowByColumn(String grid,int column, String providerName,int sort){
         String lineNum = String.valueOf(gridLineNum(grid));
         int row=0;
-        if(sort == ascendingOrder){
+        if(sort ==sort_ascendingOrder){
             for(row = 1 ; row<=Integer.parseInt(lineNum) ; row++){
                 String actTrunkName = String.valueOf(gridContent(grid,row,column));
                 if(actTrunkName.equals(providerName)){
@@ -265,7 +266,7 @@ public class SwebDriver extends Config {
                 }
             }
         }
-        System.out.println("row-------- "+row);
+        System.out.println("gridFindRowByColumn= "+row);
         return row;
     }
 
@@ -305,6 +306,7 @@ public class SwebDriver extends Config {
 
         Id = Id.substring(0,Id.length()-1);
         listSetValue(listname,Id);
+        ys_waitingTime(3000);
     }
     //Ext.getCmp('listnameID').getStore().getAt(index).data
     public static Object listGetId(String listname, String recordname, String value) {
@@ -509,6 +511,15 @@ public class SwebDriver extends Config {
         try {
             Thread.sleep(500);
             executeJs("Ext.get(Ext.query('#pbxmonitor_header-targetEl'+ ' .x-tool-close')[0].id).dom.click()");
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void closeCDREditListOptions(){
+        try {
+            Thread.sleep(500);
+            executeJs("Ext.get(Ext.query('#'+Ext.getCmp(\"cdr-record\").down('cdrandrecord-edit').down('header').id + ' .x-tool-close')[0].id).dom.click()");
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();

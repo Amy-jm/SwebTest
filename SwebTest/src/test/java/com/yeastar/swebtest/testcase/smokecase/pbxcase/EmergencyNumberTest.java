@@ -26,6 +26,7 @@ public class EmergencyNumberTest {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
 
         pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
         pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",5060,4);
@@ -97,7 +98,7 @@ public class EmergencyNumberTest {
         pageDeskTop.settingShortcut.click();
         ys_waitingTime(2000);
         m_emergencyNumber.addEmergencyNumber(1001,FXO_1,1001);
-        m_emergencyNumber.addEmergencyNumber(1100,FXO_2,1100);
+        m_emergencyNumber.addEmergencyNumber(1100,BRI_2,1100);
         m_emergencyNumber.addEmergencyNumber(1101,BRI_1,1101);
 
         gridSeleteAll(emergencyNumber.grid);

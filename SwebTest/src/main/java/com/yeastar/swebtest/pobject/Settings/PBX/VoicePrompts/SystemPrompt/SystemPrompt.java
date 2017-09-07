@@ -12,7 +12,7 @@ public class SystemPrompt {
     public String grid = "Ext.getCmp('control-panel').down('systemprompt').down('grid')";
     public String gridLoading = "Ext.getCmp('control-panel').down('systemprompt').down('grid').down('loadmask')";
 
-    public int gridColumn_Default = 0;
+    public int Default = 0;
     public int gridColumn_Language = 1;
     public int gridDelete = 0;
 
@@ -26,5 +26,11 @@ public class SystemPrompt {
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'systemprompt-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'systemprompt-')]//span[text()='Cancel']"));
+
+    /**
+     * 删除功能
+     */
+    public SelenideElement delete_yes = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-small\") and text()=\"Yes\"]"));
+    public SelenideElement delete_no = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-small\") and text()=\"No\"]"));
 
 }

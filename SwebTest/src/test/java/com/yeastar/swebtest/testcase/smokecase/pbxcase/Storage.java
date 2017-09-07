@@ -2,6 +2,7 @@ package com.yeastar.swebtest.testcase.smokecase.pbxcase;
 
 import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.tools.reporter.Reporter;
+import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -24,11 +25,22 @@ public class Storage {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
     }
-    @Test
-    public void CaseName() {
-        Reporter.infoExec("执行的操作"); //执行操作
-
+    @BeforeClass
+    public void InitStorage() {
+        pageDeskTop.settings.click();
+        settings.storage_panel.click();
+        ys_waitingTime(5000);
+        executeJs("Ext.getCmp('st-storage-slotvm').setValue('"+preference.local_CDR +"')");
+        int row = gridFindRowByColumn(preference.grid,preference.gridColumn_Name,"sharetest1",sort_descendingOrder);
+        if(row != 0){
+            gridClick(preference.grid,row,preference.gridUnmountNetDisk);
+            preference.Unmount_NetDisk_Yes.click();
+            preference.Unmount_NetDisk_OK.click();
+            ys_waitingLoading(preference.grid_Mask);
+        }
+        closeSetting();
     }
     @Test
     public void A_JudgeStorage() throws InterruptedException {
@@ -42,16 +54,23 @@ public class Storage {
 
     @Test
     public void B_AddNetworkDrive() throws InterruptedException {
+        if(Single_Device_Test){
+            pageDeskTop.settings.click();
+            settings.storage_panel.click();
+        }
         Reporter.infoExec("挂载网络磁盘sharetest1");
-
         m_storage.AddNetworkDrive(NETWORK_DEVICE_NAME,NETWORK_DEVICE_IP,NETWORK_DEVICE_SHARE_NAME,"","");
     }
 
     @Test
     public void C_SetFileShare(){
         Reporter.infoExec("勾选Enable File Sharing");
+        if(Single_Device_Test){
+            pageDeskTop.settings.click();
+            settings.storage_panel.click();
+        }
         fileShare.fileShare.click();
-        fileShare.enableFileSharing.click();
+        executeJs("Ext.getCmp('st-share-enable').setValue('true')");
         fileShare.save.click();
     }
     @Test
@@ -83,6 +102,7 @@ public class Storage {
         Thread.sleep(1000);
         recording.save.click();
         Thread.sleep(1000);
+        executeJs("Ext.getCmp('"+recording.enableInternslCallRecord+"').setValue('true')");
         ys_apply();
     }
     @AfterClass

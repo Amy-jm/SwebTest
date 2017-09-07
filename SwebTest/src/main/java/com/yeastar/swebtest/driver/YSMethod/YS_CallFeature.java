@@ -2,8 +2,6 @@ package com.yeastar.swebtest.driver.YSMethod;
 
 import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
-import gherkin.lexer.Th;
-import org.omg.PortableServer.THREAD_POLICY_ID;
 
 import java.util.ArrayList;
 
@@ -167,9 +165,7 @@ public class YS_CallFeature {
         Thread.sleep(10000);
         add_callback.name.setValue(name);
         //Extension-->e  Voip-->v  以此类推
-
         if(!destension.isEmpty()){
-            System.out.println("Ext.getCmp('"+add_callback.id_destinationType+"').setValue('"+destension+"')");
             executeJs("Ext.getCmp('"+add_callback.id_destinationType+"').setValue('"+destension+"')");
         }
 
@@ -225,7 +221,7 @@ public class YS_CallFeature {
             outboundList.add(item);
         }
         Thread.sleep(10000);
-        listSelect(add_disa.list,disaList,outboundList);
+        listSelect(add_disa.list, nameList,outboundList);
         add_disa.save.click();
 
         ys_waitingLoading(disa.grid_Mask);
@@ -240,7 +236,8 @@ public class YS_CallFeature {
         add_pin_list.save.click();
 
         ys_waitingLoading(pinList.grid_Mask);
-        String actualName = (String) gridContent(pinList.grid,Integer.parseInt(String.valueOf(gridLineNum(pinList.grid))),pinList.gridcolumn_Name);
+        int row= gridFindRowByColumn(pinList.grid,pinList.gridcolumn_Name,name,sort_ascendingOrder);
+        String actualName = (String) gridContent(pinList.grid,row,pinList.gridcolumn_Name);
         YsAssert.assertEquals(actualName,name);
     }
 

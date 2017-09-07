@@ -29,6 +29,7 @@ public class CallFunction {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
+        m_extension.showCDRClounm();
 
         pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
         pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",3);
@@ -68,9 +69,15 @@ public class CallFunction {
         add_outbound_routes.mt_RemoveAllFromSelected.click();
         ArrayList<String> selectTrunk = new ArrayList<>();
         selectTrunk.add("SPS");
-
         listSelect(add_outbound_routes.list_Trunk,trunkList,selectTrunk);
         add_outbound_routes.save.click();
+
+        inboundRoutes.inboundRoutes.click();
+        ys_waitingLoading(inboundRoutes.gridLoading);
+        gridClick(inboundRoutes.grid,Integer.parseInt(String.valueOf(gridLineNum(inboundRoutes.grid))),inboundRoutes.gridEdit);
+        ys_waitingMask();
+        add_inbound_route.SetDestination(add_inbound_route.s_extensin,extensionList,"1000");
+        add_inbound_route.save.click();
 
         settings.callFeatures_tree.click();
         callFeatures.more.click();
@@ -89,10 +96,9 @@ public class CallFunction {
     }
     @Test
     public void C_ExportBlacklist(){
-        if(Single_Device_Test){
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.settingShortcut.click();
-        }
+
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         Reporter.infoExec("导出黑名单");
         blacklist.export.click();
     }
@@ -114,7 +120,7 @@ public class CallFunction {
         Thread.sleep(10000);
         pjsip.Pj_Hangup_All();
         ys_waitingTime(5000);
-        m_extension.checkCDR("2000 <2000>","6400","Answered");
+        m_extension.checkCDR("2000 <2000>","1000 <1000>","Answered");
     }
     @Test
     public void E_ImportBlacklist(){
@@ -154,9 +160,9 @@ public class CallFunction {
         pjsip.Pj_Make_Call_Auto_Answer(2000,2000,"99",DEVICE_ASSIST_2);
         Thread.sleep(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR(2000,6400,"Answered");
+        m_extension.checkCDR("2000 <2000>","1000 <1000>","Answered");
     }
-//    @Test
+    @Test
     public void G_ExportWhitelist(){
         Reporter.infoExec("导出白名单");
         pageDeskTop.taskBar_Main.click();
@@ -262,10 +268,10 @@ public class CallFunction {
         tcpSocket.connectToDevice();
 //        分机B通过sps呼入到设备1
         pjsip.Pj_Make_Call_Auto_Answer(2000,2000,"99",DEVICE_ASSIST_2,false);
-        boolean tcpInfo= tcpSocket.getAsteriskInfo("conference_6400",20);
+        boolean tcpInfo= tcpSocket.getAsteriskInfo("ANSWER",20);
         tcpSocket.closeTcpSocket();
         pjsip.Pj_Hangup_All();
-        YsAssert.assertEquals(tcpInfo,true);
+        YsAssert.assertEquals(tcpInfo,true,"删除黑名单呼入成功");
     }
     @Test
     public void O_BlacklistImport() throws InterruptedException {
@@ -307,10 +313,10 @@ public class CallFunction {
         //2）分机B通过sps线路呼入到设备1  呼入成功
         tcpSocket.connectToDevice();
         pjsip.Pj_Make_Call_Auto_Answer(2000,2000,"99",DEVICE_ASSIST_2,false);
-        boolean tcpInfo= tcpSocket.getAsteriskInfo("conference_6400",20);//Status: 1 表示分机正在忙
+        boolean tcpInfo= tcpSocket.getAsteriskInfo("ANSWER",20);//Status: 1 表示分机正在忙
         tcpSocket.closeTcpSocket();
         pjsip.Pj_Hangup_All();
-        YsAssert.assertEquals(tcpInfo,true);
+        YsAssert.assertEquals(tcpInfo,true,"删除黑名单呼入成功");
     }
 //    @Test
     public void Q_ExtensionExport(){
@@ -396,9 +402,10 @@ public class CallFunction {
         Reporter.infoExec("1100分机页面，取消勾选OnlyWhitelist，分机2000通过sps呼入到设备1，呼入成功");
         me_whitelist.whitelistOnly.click();
 //        2000 call (sps)992000 -> A
+        ys_me_apply();
         tcpSocket.connectToDevice();
         pjsip.Pj_Make_Call_Auto_Answer(2000,2000,"99",DEVICE_ASSIST_2,false);
-        boolean tcpInfo= tcpSocket.getAsteriskInfo("conferences",20);
+        boolean tcpInfo= tcpSocket.getAsteriskInfo("ANSWER",20);
         tcpSocket.closeTcpSocket();
         pjsip.Pj_Hangup_All();
         YsAssert.assertEquals(tcpInfo,true);

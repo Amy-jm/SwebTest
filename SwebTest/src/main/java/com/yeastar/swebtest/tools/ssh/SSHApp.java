@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import static com.yeastar.swebtest.driver.DataReader.SSH_PORT;
 import static org.apache.log4j.spi.Configurator.NULL;
 
 /**
@@ -32,8 +33,10 @@ public class SSHApp {
         m_UserName = UserName;
         m_Password = Password;
         try {
-            conn = new Connection(HostName);
+            conn = new Connection(HostName,Integer.parseInt(SSH_PORT));
             conn.connect();
+
+
             /* Authenticate.
 			 * If you get an IOException saying something like
 			 * "Authentication method password not supported by the server at this stage."

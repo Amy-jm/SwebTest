@@ -149,36 +149,6 @@ import org.apache.xpath.operations.Operation;
  */
 public class Config extends DataReader {
 
-
-//    public static String EXPORT_PATH = System.getProperty("user.dir")+"\\exportFile\\";
-//    public static String EXPORT_PATH = "C:\\Users\\Yeastar\\Downloads\\";
-//
-//    public static String LOGIN_USERNAME = "admin";
-//    public static String LOGIN_PASSWORD = "password";
-//
-//    public static String SSH_PORT = "22";
-//
-//    public static String USERNAEM_LS = "ls@yf";
-//    public static String USERNAME_SUPPORT = "support";
-//    public static String PASSWORD_SUPPORT = "iyeastar";
-//
-//    public static String DEVICE_IP_LAN = "192.168.7.153";
-//    public static String DEVICE_IP_WAN = "192.168.7.155";
-//    public static String DEVICE_IP_SUBNETMASK = "255.255.255.0";
-//    public static String DEVICE_IP_GATEWAY = "192.168.7.1";
-//    public static String DEVICE_IP_DNS = "192.168.1.1";
-//    public static String DEVICE_PORT = "8088";
-//    public static String DEVICE_ASSIST_1 = "192.168.7.151";
-//    public static String DEVICE_ASSIST_2 = "192.168.7.152";
-//
-//    public static String BRI_1 = "BRI2-1";
-//    public static String BRI_2 = "BRI2-2";
-//    public static String FXS_1 = "3-1";
-//    public static String FXS_2 = "3-2";
-//    public static String FXO_1 = "FXO2-7";
-//    public static String FXO_2 = "FXO2-8";
-//    public static String SYSTEM_PROMPT_LANGUAGE = "Language: zh";
-
     public static long TEST_TIMEOUT = 3000;  //测试过程的时间差
     public static long FINDELEMENT_TIMEOUT = 10000;  //元素查找的时间差
     public static String CHROME = "chrome";
@@ -191,15 +161,21 @@ public class Config extends DataReader {
     public static String S300 ="S300";
     public static String S20P ="S20P";
     public static String S412 = "S412";
-//    public static int PRODUCT = S300;
+
     public static String currentPath = System.getProperty("user.dir")+"\\";
 
     public static boolean Single_Device_Test = false;
 //    public static boolean Single_Device_Test = true;
 
+    public static boolean Single_Init = true;
+
+    //通讯类型定义
+    public static String communication_outRoute = "Outbound";
+    public static String communication_inbound = "Inbound";
+    public static String communication_internal = "Internal";
     //升序降序定义
-    public static int ascendingOrder = 0;
-    public static int descendingOrder=1;
+    public static int sort_ascendingOrder=0;
+    public static int sort_descendingOrder=1;
 
     public static int REGIST_EXTENSION_PWD_INIT = 0;
     public static int REGIST_EXTENSION_PWD_ROM = 1;
@@ -207,7 +183,7 @@ public class Config extends DataReader {
     public static int REGIST_EXTENSION_PWD_FIXEXTS= 3;
 
     public static String extensionList = "username";//"fullname"
-    public static String disaList = "name";
+    public static String nameList = "name";
     public static String trunkList = "trunkname";
 
 

@@ -323,7 +323,7 @@ public class DeleteAll {
         ys_waitingLoading(outboundRoutes.grid_Mask);
 
         ArrayList<String> arrayTrunk = new ArrayList<>();
-        arrayTrunk.add("BRI2-4");
+        arrayTrunk.add(BRI_1);
 
         ArrayList<String> arrayExtension = new ArrayList<>();
         arrayExtension.add("1000");

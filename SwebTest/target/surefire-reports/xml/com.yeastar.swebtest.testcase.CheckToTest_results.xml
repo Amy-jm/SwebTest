@@ -4,10 +4,10 @@
            failures="0"
            errors="0"
            skipped="0"
-           time="244.551">
+           time="295.082">
   <properties />
   
   
-            <testcase name="CleanExtensions" time="244.551" classname="com.yeastar.swebtest.testcase.CheckToTest" />
+            <testcase name="CleanExtensions" time="295.082" classname="com.yeastar.swebtest.testcase.CheckToTest" />
       
 </testsuite>

@@ -4,16 +4,16 @@
            failures="0"
            errors="0"
            skipped="0"
-           time="107.972">
+           time="110.475">
   <properties />
   
   
-            <testcase name="E_PagingIntercom" time="12.483" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
-                <testcase name="C_Conference" time="6.262" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
-                <testcase name="F_PINList" time="15.480" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
-                <testcase name="B_Queue" time="15.652" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
-                <testcase name="D_PickupGroup" time="16.297" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
-                <testcase name="F_CallBack" time="20.376" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
-                <testcase name="A_RingGroup" time="21.422" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+            <testcase name="A_RingGroup" time="21.762" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="E_PagingIntercom" time="12.492" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="C_Conference" time="5.183" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="F_CallBack" time="22.310" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="F_PINList" time="16.995" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="B_Queue" time="15.504" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
+                <testcase name="D_PickupGroup" time="16.229" classname="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature" />
       
 </testsuite>

@@ -13,7 +13,7 @@ import static com.yeastar.swebtest.driver.SwebDriver.*;
  */
 public class Add_Inbound_Route {
 
-    public String s_extensin = "s";
+    public String s_extensin = "e";
     public String s_voicemail = "v";
     public String s_ringGroup = "r";
     public String s_queue = "q";
@@ -63,11 +63,10 @@ public class Add_Inbound_Route {
         executeJs("Ext.getCmp('"+cellId+"').setValue('"+id+"')");
     }
 
-    public void SetDestination(String type, String m_destination) throws InterruptedException {
-        executeJs("Ext.getCmp('"+destinationType+"').setValue('"+s_conference+"')");
-        ArrayList<String > des = new ArrayList<>();
-        des.add(m_destination);
-        String id = String.valueOf(listGetId(destination,"name",m_destination));
+    public void SetDestination(String type,String recordname,String m_destination) throws InterruptedException {
+        executeJs("Ext.getCmp('"+destinationType+"').setValue('"+type+"')");
+
+        String id = String.valueOf(listGetId(destination,recordname,m_destination));
         listSetValue(destination,id);
 
     }

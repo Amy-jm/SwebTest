@@ -29,15 +29,61 @@ public class OutboundRoutes {
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
         mySettings.close.click();
-
+        m_extension.showCDRClounm();
         pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
         pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
         pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
 
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
-//        pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+    }
+    @BeforeClass
+    public void InitOutboundRoutes() {
+        if(Single_Init){
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+            outboundRoutes.outboundRoutes.click();
+            ys_waitingLoading(outboundRoutes.grid_Mask);
+            if(Integer.parseInt(String.valueOf(gridLineNum(outboundRoutes.grid))) != 0) {
+                gridSeleteAll(outboundRoutes.grid);
+                outboundRoutes.delete.click();
+                outboundRoutes.delete_yes.click();
+            }
+            time_conditions.timeConditions.click();
+            timeConditions.timeConditions.click();
+            ys_waitingTime(2000);
+            if(Integer.parseInt(String.valueOf(gridLineNum(time_conditions.grid))) != 0){
+                gridSeleteAll(time_conditions.grid);
+                timeConditions.delete.click();
+                timeConditions.delete_yes.click();
+            }
+            holiday.holiday.click();
+            ys_waitingTime(2000);
+            if(Integer.parseInt(String.valueOf(gridLineNum(holiday.grid))) != 0) {
+                gridSeleteAll(holiday.grid);
+                holiday.delete.click();
+                holiday.delete_yes.click();
+            }
+            settings.callFeatures_tree.click();
+            ivr.IVR.click();
+            ys_waitingLoading(ivr.grid_Mask);
+            if(Integer.parseInt(String.valueOf(gridLineNum(ivr.grid))) != 0) {
+                gridSeleteAll(ivr.grid);
+                ivr.delete.click();
+                ivr.delete_yes.click();
+            }
+            callFeatures.more.click();
+            disa.DISA.click();
+            ys_waitingLoading(disa.grid_Mask);
+//        ys_waitingTime(3000);
+            if(Integer.parseInt(String.valueOf(gridLineNum(disa.grid))) != 0) {
+                gridSeleteAll(disa.grid);
+                disa.delete.click();
+                disa.delete_yes.click();
+            }
+            closeSetting();
+        }
     }
     @BeforeMethod
     public void waitMethod() throws InterruptedException {
@@ -62,17 +108,16 @@ public class OutboundRoutes {
     @Test
     public void C_CreateOutRoutes() throws InterruptedException {
         Reporter.infoExec("创建呼出路由");
-//        if(Single_Device_Test){
-//            pageDeskTop.settings.click();
-//            settings.callControl_panel.click();
-//        }
+        if(Single_Device_Test){
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+        }
         outboundRoutes.outboundRoutes.click();
         ArrayList<String> arrayTrunk = new ArrayList<>();
         arrayTrunk.add("SIPTrunk");
         arrayTrunk.add("IAXTrunk");
         arrayTrunk.add("SPS");
         arrayTrunk.add("SPX");
-
         if(!FXO_1.equals("null")){
             arrayTrunk.add(FXO_1);
         }
@@ -116,15 +161,13 @@ public class OutboundRoutes {
     @Test
     public void E_CreateIVR() throws InterruptedException {
         Reporter.infoExec("创建IVR");
-//        if(Single_Device_Test){
-//            pageDeskTop.settings.click();
-//            settings.callFeatures_panel.click();
-//        }
-
+        if(Single_Device_Test){
+            pageDeskTop.settings.click();
+            settings.callFeatures_panel.click();
+        }
         callFeatures.back.click();
         ivr.IVR.click();
         m_callFeature.addIVR("ivr1");
-
         gridClick(ivr.grid, Integer.parseInt(String.valueOf(gridLineNum(ivr.grid))),ivr.gridEdit);
         add_ivr_keyPressEvent.keyPressEvent.click();
         Thread.sleep(2000);
@@ -153,54 +196,20 @@ public class OutboundRoutes {
         Thread.sleep(500);
         ys_apply();
     }
-//    @Test
-//    public void F_SettingSystemTime() throws InterruptedException {
-//
-////          pageDeskTop.settings.click();
-////          settings.dateTime_panel.click();
-//        Reporter.infoExec("设置系统时间为10点整");
-//        settings.system_tree.doubleClick();
-//
-//        settings.dateTime_tree.click();
-//        dateTime.setUpManually.click();
-//        dateTime.time_hour.setValue("10");
-//        dateTime.time_minute.setValue("00");
-//        dateTime.time_second.setValue("00");
-//        dateTime.save.click();
-//        ys_apply();
-//        if(pageDeskTop.reboot_Yes.isDisplayed()){
-//            pageDeskTop.reboot_Yes.click();
-//            waitReboot();
-//        }else if(pageDeskTop.loginout_OK.isDisplayed()){
-//            pageDeskTop.loginout_OK.click();
-//            ys_waitingTime(10000);
-//        }
-//        login(LOGIN_USERNAME,LOGIN_PASSWORD);
-//    }
 
     @Test
     public void G_CallSip() throws InterruptedException {
-        Reporter.infoExec("Sip外线呼出 1000打 903000");
-        if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
-//            pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        }
-
-
+        Reporter.infoExec("SipTrunk外线呼出 1000打 903000");
         Thread.sleep(5000);
         pjsip.Pj_Make_Call_Auto_Answer(1000,3000,"90", DEVICE_IP_LAN,true);
         Thread.sleep(10000);
-//        pjsip.Pj_hangupCall(1000,3000);
         pjsip.Pj_Hangup_All();
-        Thread.sleep(10000);
-        m_extension.checkCDR("1000 <1000>","903000","Answered");
+        Thread.sleep(2000);
+        m_extension.checkCDR("1000 <1000>","903000","Answered","",SIPTrunk,communication_outRoute);
     }
     @Test
     public void H_CallFail() throws InterruptedException {
-        Reporter.infoExec("Sip外线呼出失败1001打903000");
+        Reporter.infoExec("SipTrunk外线呼出失败1001打903000");
         if(Single_Device_Test){
             pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
             pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
@@ -216,19 +225,12 @@ public class OutboundRoutes {
     }
     @Test
     public void I_CallIax() throws InterruptedException {
-        Reporter.infoExec("IAX外线呼出1000打903000");
-        if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
-        }
-
+        Reporter.infoExec("IAXTrunk外线呼出1000打903000");
         pjsip.Pj_Make_Call_Auto_Answer(1000,3000,"90", DEVICE_IP_LAN,true);
         Thread.sleep(10000);
         pjsip.Pj_Hangup_All();
         Thread.sleep(10000);
-        m_extension.checkCDR("1000 <1000>","903000","Answered");
+        m_extension.checkCDR("1000 <1000>","903000","Answered","",IAXTrunk,communication_outRoute);
     }
     @Test
     public void J_CallSps() throws InterruptedException {
@@ -245,7 +247,7 @@ public class OutboundRoutes {
         pjsip.Pj_Hangup_All();
         Thread.sleep(8000);
 
-        m_extension.checkCDR("1000 <1000>","902000","Answered");
+        m_extension.checkCDR("1000 <1000>","902000","Answered","",SPS,communication_outRoute);
     }
     @Test
     public void K_CallSpx() throws InterruptedException {
@@ -262,13 +264,11 @@ public class OutboundRoutes {
 //        pjsip.Pj_hangupCall(1000,3000);
         pjsip.Pj_Hangup_All();
         Thread.sleep(8000);
-
-
-        m_extension.checkCDR("1000 <1000>","902000","Answered");
+        m_extension.checkCDR("1000 <1000>","902000","Answered","",SPX,communication_outRoute);
     }
     @Test
     public void L_CallPstn() throws InterruptedException {
-        Reporter.infoExec("PSTN外线呼出1000打903000");
+        Reporter.infoExec("PSTN外线呼出1000打902000");
         if(Single_Device_Test){
             pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
             pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
@@ -282,12 +282,15 @@ public class OutboundRoutes {
 //        pjsip.Pj_hangupCall(1000,3000);
         pjsip.Pj_Hangup_All();
         Thread.sleep(10000);
+        m_extension.checkCDR("1000 <1000>","903000","Answered","",FXO_1,communication_outRoute);
 
-        m_extension.checkCDR("1000 <1000>","903000","Answered");
     }
     @Test
     public void M_CallBri() throws InterruptedException {
-        Reporter.infoExec("BRI外线呼出1000打903000");
+        if(BRI_1.equals("null")){
+            return;
+        }
+        Reporter.infoExec("BRI外线呼出1000打902000");
         if(Single_Device_Test){
             pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
             pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
@@ -300,11 +303,15 @@ public class OutboundRoutes {
 //        pjsip.Pj_hangupCall(1000,3000);
         pjsip.Pj_Hangup_All();
         Thread.sleep(10000);
-        m_extension.checkCDR("1000 <1000>","902000","Answered");
+        m_extension.checkCDR("1000 <1000>","902000","Answered","",BRI_1,communication_outRoute);
+
     }
-//    @Test
+    @Test
     public void N_CallE1() throws InterruptedException {
-        Reporter.infoExec("E1外线呼出1000打903000");
+        if(E1.equals("null")){
+           return;
+        }
+        Reporter.infoExec("E1外线呼出1000打902000");
         if(Single_Device_Test){
             pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
             pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
@@ -317,10 +324,14 @@ public class OutboundRoutes {
 //        pjsip.Pj_hangupCall(1000,3000);
         pjsip.Pj_Hangup_All();
         Thread.sleep(10000);
-        m_extension.checkCDR("1000 <1000>","902000","Answered");
+        m_extension.checkCDR("1000 <1000>","902000","Answered","",E1,communication_outRoute);
+
     }
-//    @Test//DEVICE_ASSIST_GSM
+    @Test
     public void O_CallGsm() throws InterruptedException {
+        if(GSM.equals("null")){
+            return;
+        }
         Reporter.infoExec("GSM外线呼出1000打903000");
         if(Single_Device_Test){
             pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
@@ -348,8 +359,6 @@ public class OutboundRoutes {
         outboundRoutes.outboundRoutes.click();
 
         ys_waitingLoading(outboundRoutes.grid_Mask);
-        gridLineNum(outboundRoutes.grid);
-        //Integer.parseInt(String.valueOf(gridLineNum(outboundRoutes.grid)))
         gridClick(outboundRoutes.grid,1,outboundRoutes.gridEdit);
         ys_waitingMask();
         setCombobox(add_outbound_routes.combobox_Password,add_outbound_routes.combobox_Password_Pinset);
@@ -362,16 +371,7 @@ public class OutboundRoutes {
 
     @Test
     public void Q_PinListCall() throws InterruptedException, IOException {
-        Reporter.infoExec("PinList外线呼出失败1000打903000");
-        if (Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
-
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
-        }
-
-        Thread.sleep(5000);
+        Reporter.infoExec("PinList外线呼出1000打903000");
         pjsip.Pj_Make_Call_Auto_Answer(1000,3000,"90", DEVICE_IP_LAN,false);
         tcpSocket.connectToDevice();
         boolean showKeyWord= tcpSocket.getAsteriskInfo("pin",30);
@@ -382,7 +382,8 @@ public class OutboundRoutes {
         Thread.sleep(10000);
         pjsip.Pj_Hangup_All();
         YsAssert.assertEquals(showKeyWord,true,"外线呼出进入pin1List");
-        m_extension.checkCDR("1000 <1000>","903000","Answered");
+        m_extension.checkCDR("1000 <1000>","903000","Answered","",SIPTrunk,communication_outRoute);
+        m_extension.checkCDR_OtherInfo(cdRandRecordings.gridColumn_PinCode,"123",1);
     }
     @Test
     public void R_PWD_None() throws InterruptedException {
@@ -402,16 +403,9 @@ public class OutboundRoutes {
         add_outbound_routes.save.click();
         pageDeskTop.apply.click();
     }
-        @Test
+    @Test
     public void S_PinListCall() throws InterruptedException, IOException {
         Reporter.infoExec("设置呼出路由无Pinlist 1000拨打903000");
-        if (Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
-        }
-
         Thread.sleep(5000);
         pjsip.Pj_Make_Call_Auto_Answer(1000,3000,"90", DEVICE_IP_LAN,false);
         Thread.sleep(10000);

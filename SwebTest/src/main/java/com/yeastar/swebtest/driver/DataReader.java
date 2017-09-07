@@ -59,6 +59,11 @@ public class DataReader {
     public static String DEVICE_ASSIST_GSM = readFromfile("DEVICE_ASSIST_GSM");
     public static String DEVICE_TEST_GSM = readFromfile("DEVICE_TEST_GSM");
 
+    public static String SIPTrunk = readFromfile("SIPTRUNK");
+    public static String IAXTrunk = readFromfile( "IAXTRUNK");
+    public static String SPS = readFromfile("SPS");
+    public static String SPX = readFromfile("SPX");
+
     /**
      * 存储设备
      */

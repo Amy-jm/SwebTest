@@ -4,16 +4,16 @@
            failures="0"
            errors="0"
            skipped="0"
-           time="100.156">
+           time="114.120">
   <properties />
   
   
-            <testcase name="G_DeleteAll" time="12.159" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
-                <testcase name="B_CheckUserPermisson" time="4.636" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
-                <testcase name="A_AddUserPermissionAdmin" time="22.034" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
-                <testcase name="F_CheckUserPerssion" time="4.299" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
-                <testcase name="D_CheckUserPerssion" time="6.893" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
-                <testcase name="E_Delete" time="12.238" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
-                <testcase name="C_AddUserPermissionCustom" time="37.897" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+            <testcase name="D_CheckUserPerssion" time="7.585" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="B_CheckUserPermisson" time="5.417" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="E_Delete" time="13.226" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="F_CheckUserPerssion" time="5.020" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="C_AddUserPermissionCustom" time="44.773" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="A_AddUserPermissionAdmin" time="24.671" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
+                <testcase name="G_DeleteAll" time="13.428" classname="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission" />
       
 </testsuite>
