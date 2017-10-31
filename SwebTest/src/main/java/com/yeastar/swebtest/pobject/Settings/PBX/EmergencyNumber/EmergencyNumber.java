@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class EmergencyNumber {
 
+    public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
     public int gridColumn_EmergencyNumber = 1;
     public int gridColumn_Trunk = 2;
     public int gridColumn_Extension = 3;
@@ -18,7 +19,7 @@ public class EmergencyNumber {
     public int gridEdit = 0;
     public int gridDelete = 1;
 
-    public String grid = "Ext.getCmp('control-panel').down('emergencylist').down('tableview')";
+    public String grid = "Ext.getCmp('control-panel').down('emergencylist')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('emergencylist').down('loadmask')";
     /**
      * 功能按钮

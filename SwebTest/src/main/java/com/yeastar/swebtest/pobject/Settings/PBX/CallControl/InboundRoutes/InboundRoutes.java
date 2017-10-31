@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class InboundRoutes {
 
     public String grid = "Ext.getCmp('control-panel').down('inrouter')";
-    public String gridLoading = "Ext.getCmp('control-panel').down('inrouter').down('loadmask')";
+    public String grid_Mask = "Ext.getCmp('control-panel').down('inrouter').down('loadmask')";
 
     public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
     public int gridcolumn_Name = 1;
@@ -25,7 +25,7 @@ public class InboundRoutes {
     public int gridButtom = 5;
 
 
-    public SelenideElement inboundRoutes = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Inbound Routes\"]"));
+    public SelenideElement inboundRoutes = $(By.xpath(".//div[starts-with(@id,\"callcontrol\")]//span[ text()=\"Inbound Routes\"]"));
 
 
     /**
@@ -33,6 +33,7 @@ public class InboundRoutes {
      */
 
     public SelenideElement add = $(By.xpath(".//div[starts-with(@id,'inrouter-')]//span[text()='Add']"));
+    public SelenideElement Import = $(By.xpath(".//div[starts-with(@id,'inrouter-')]//span[text()='Import']"));
     public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,'inrouter-')]//span[text()='Delete']"));
     public SelenideElement addEnableTimeCondition = $(By.id("st-ir-addtimecondition"));
     /**

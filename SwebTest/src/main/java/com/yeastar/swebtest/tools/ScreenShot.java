@@ -35,7 +35,8 @@ public class ScreenShot extends SwebDriver {
     }
 
     public static void takeScreenshotByAll(String filename) {
-        screenShotAsFile(0, 0, 1920, 1080,filename);
+//        screenShotAsFile(0, 0, 1920, 1080,filename);
+        takeScreenshot(filename);
     }
 
     public static void screenShotAsFile(int x, int y, int width, int height, String fileName) {

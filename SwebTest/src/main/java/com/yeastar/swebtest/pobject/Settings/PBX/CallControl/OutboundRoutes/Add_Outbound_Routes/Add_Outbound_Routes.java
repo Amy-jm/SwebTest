@@ -19,10 +19,11 @@ public class Add_Outbound_Routes {
     public String list_Extension = "st-or-exteninfo";
     public String list_TimeContion1 = "Ext.query('#st-or-timecondition-innerCt'+ ' tr td div')[0].id";
 
-    public String combobox_Password = "st-or-pintype";
-    public String combobox_Password_None = "none";
-    public String combobox_Password_Pinset = "pinset";
-    public String combobox_Password_Singlepin = "singlepin";
+    public String Password = "st-or-pintype";
+    public String Password_None = "none";
+    public String Password_Pinset = "pinset";
+    public String Password_Singlepin = "singlepin";
+    public SelenideElement singlepin_edit=$(By.id("st-or-singlepin-inputEl"));
 
     public String combobox_PinsetPassword = "st-or-pinset";
 
@@ -30,9 +31,9 @@ public class Add_Outbound_Routes {
     public SelenideElement dialPattems = $(By.id("st-ir-adddialpattern"));
 
 
-    public SelenideElement password_button = $(By.id("st-or-pintype-trigger-picker"));
-    public SelenideElement rrmemoryHunt = $(By.id("st-or-adjusttrunk-displayEl"));
-    public SelenideElement Workday = $(By.id("st-or-1-displayEl"));
+//    public SelenideElement password_button = $(By.id("st-or-pintype-trigger-picker"));
+    public String rrmemoryHunt = "st-or-adjusttrunk";
+    public String Workday = "st-or-1";
 
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'outrouter-edit-')]//span[text()='Save']"));

@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/30.
  */
 public class EventSetting {
-    public SelenideElement eventSetting = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Event Settings\"]"));
+    public SelenideElement eventSetting = $(By.xpath(".//div[starts-with(@id,\"eventsetting\")]//span[ text()=\"Event Settings\"]"));
 
     public String EventSetting_Record  = "record";
     public String EventSetting_Noticication = "notification";

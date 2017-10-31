@@ -21,11 +21,12 @@ public class Add_Callback {
     public String id_destinationType = "st-callback-desttype";
 
     public SelenideElement name = $(By.id("st-callback-name-inputEl"));
-    public SelenideElement callbackThrough = $(By.id("st-callback-callbacktrunk-trigger-picker"));
+    public String callbackThrough = "st-callback-callbacktrunk";
     public SelenideElement delayBeforeCallback = $(By.id("st-callback-delay-inputEl"));
     public SelenideElement strip = $(By.id("st-callback-strip-inputEl"));
     public SelenideElement prepend = $(By.id("st-callback-prepend-inputEl"));
-    public SelenideElement destination = $(By.id("st-callback-desttype-trigger-picker"));
+    public String destination = "st-callback-desttype";
+    public String destinationDest = "st-callback-destination";
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'callback-edit-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'callback-edit-')]//span[text()='Cancel']"));

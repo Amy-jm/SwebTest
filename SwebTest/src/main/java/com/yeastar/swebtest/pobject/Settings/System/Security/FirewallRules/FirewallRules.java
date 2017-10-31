@@ -9,12 +9,12 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class FirewallRules {
-    public SelenideElement firewallRules = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Firewall Rules\"]"));
+    public SelenideElement firewallRules = $(By.xpath(".//div[starts-with(@id,'security')]//span[text()='Firewall Rules']"));
 
     public SelenideElement add = $(By.xpath(".//div[starts-with(@id,'security')]//span[text()='Add']"));
-    public SelenideElement enableFirewall = $(By.id("st-fwrules-enable-displayEl"));
-    public SelenideElement disablePing = $(By.id("st-fwrules-disableping-displayEl"));
-    public SelenideElement dropAll = $(By.id("st-fwrules-dropall-displayEl"));
+    public String enableFirewall = ("st-fwrules-enable");
+    public String disablePing = ("st-fwrules-disableping");
+    public String dropAll = ("st-fwrules-dropall");
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'security')]//span[text()='Save']"));
 
 

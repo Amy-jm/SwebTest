@@ -13,7 +13,8 @@ public class Add_VoIP_Trunk {
     public SelenideElement DODName = $(By.id("dodname-inputEl"));
 
 
-    public SelenideElement ensure = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Ensure\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
-
+//    public SelenideElement ensure = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Ensure\"]"));
+//    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement ensure = $(By.xpath(" .//div[starts-with(@id,'trunkdod')]//span[ text()='Ensure']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'trunkdod')]//span[text()='Cancel']"));
 }

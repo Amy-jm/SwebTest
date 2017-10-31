@@ -16,12 +16,13 @@ public class BasicSettings {
 
     public String mode = "st-net-mode";
     public SelenideElement mode_input = $(By.id("st-net-mode-inputEl"));
-    public SelenideElement basicSettings = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Basic Settings\"]"));
+    public SelenideElement basicSettings = $(By.xpath(".//div[starts-with(@id,'network')]//span[ text()='Basic Settings']"));
 
     public SelenideElement hostname = $(By.id("st-net-hostname-inputEl"));
     public SelenideElement mode_picker = $(By.id("st-net-mode-trigger-picker"));
-    public SelenideElement defaultInterface_picker = $(By.id("st-net-gwnic-trigger-picker"));
-    public SelenideElement cellularNetwork_picker = $(By.id("st-net-lteprority-trigger-picker"));
+//    public SelenideElement defaultInterface_picker = $(By.id("st-net-gwnic-trigger-picker"));
+    public String defaultInterface = "st-net-gwnic";
+    public String cellularNetwork_picker = ("st-net-lteprority");
     /**
      * LAN
      */

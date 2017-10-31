@@ -9,114 +9,133 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class FeatureCode {
-    public SelenideElement featureCode = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Feature Code\"]"));
+    public SelenideElement featureCode = $(By.xpath(".//div[starts-with(@id,'general')]//span[ text()='Feature Code']"));
 
     public SelenideElement featureCodeDigitsTimeout = $(By.id("st-feature-digittimeout-inputEl"));
+
+    /**
+     * Reset to Defaults
+     */
+    public String resetToDefaults_check = "st-feature-enbresetfollowme";
+    public SelenideElement resetToDefaults = $(By.id("st-feature-resetfollowme-inputEl"));
     /**
      * Recording
      */
-    public SelenideElement oneTouchRecord_check = $(By.id("st-feature-enbmonitor-displayEl"));
+    public String oneTouchRecord_check = "st-feature-enbmonitor";
     public SelenideElement oneTouchRecord = $(By.id("st-feature-touchmonitor-inputEl"));
     /**
      * Voicemail
      */
-    public SelenideElement checkVoicemail_check = $(By.id("st-feature-enbmonitor-displayEl"));
+    public String checkVoicemail_check = "st-feature-enbmonitor";
     public SelenideElement checkVoicemail = $(By.id("st-feature-extensionvm-inputEl"));
 
-    public SelenideElement voicemailforExtension_check = $(By.id("st-feature-enbvmtoextension-displayEl"));
+    public String voicemailforExtension_check = "st-feature-enbvmtoextension";
     public SelenideElement voicemailforExtension = $(By.id("st-feature-vmtoextension-inputEl"));
 
-    public SelenideElement voicemailMainMenu_check = $(By.id("st-feature-enbvmmenu-displayEl"));
+    public String voicemailMainMenu_check = "st-feature-enbvmmenu";
     public SelenideElement voicemailMainMenu = $(By.id("st-feature-vmmenu-inputEl"));
     /**
      * Transfer
      */
-    public SelenideElement blindTransfer_check = $(By.id("st-feature-enbblindtransfer-displayEl"));
+    public String blindTransfer_check = "st-feature-enbblindtransfer";
     public SelenideElement blindTransfer = $(By.id("st-feature-blindtransfer-inputEl"));
 
-    public SelenideElement attendedTransfer_check = $(By.id("st-feature-enbattendtransfer-displayEl"));
+    public String attendedTransfer_check = "st-feature-enbattendtransfer";
     public SelenideElement attendedTransfer = $(By.id("st-feature-attendtransfer-inputEl"));
     public SelenideElement attendedTransferTimeout = $(By.id("st-feature-attendtransfertimeout-inputEl"));
 
     /**
      * Call Pickup
      */
-    public SelenideElement callPickup_check = $(By.id("st-feature-enbcallpickup-displayEl"));
+    public String callPickup_check = "st-feature-enbcallpickup";
     public SelenideElement callPickup = $(By.id("st-feature-callpickup-inputEl"));
 
-    public SelenideElement extensionPickup_check = $(By.id("st-feature-enbextensionpickup-displayEl"));
+    public String extensionPickup_check = "st-feature-enbextensionpickup";
     public SelenideElement extensionPickup = $(By.id("st-feature-extensionpickup-inputEl"));
     /**
      * Intercom
      */
-    public SelenideElement intercom_check = $(By.id("st-feature-enbintercom-displayEl"));
+    public String intercom_check = "st-feature-enbintercom";
     public SelenideElement intercom = $(By.id("st-feature-intercom-inputEl"));
     /**
      * Call Parking
      */
-    public SelenideElement callParking_check = $(By.id("st-feature-enbcallpark-displayEl"));
+    public String callParking_check = "st-feature-enbcallpark";
     public SelenideElement callParking = $(By.id("st-feature-callpark-inputEl"));
 
-    public SelenideElement directedCallParking_check = $(By.id("st-feature-enbdirectedparkcall-displayEl"));
+    public String directedCallParking_check = "st-feature-enbdirectedparkcall";
     public SelenideElement directedCallParking = $(By.id("st-feature-directedparkcall-inputEl"));
 
     public SelenideElement parkingExtensionRange = $(By.id("st-feature-callparkpos-inputEl"));
     public SelenideElement parkingTimeout = $(By.id("st-feature-callparktime-inputEl"));
 
-    public SelenideElement resettoDefaults_check = $(By.id("st-feature-enbresetfollowme-displayEl"));
+    public String resettoDefaults_check = "st-feature-enbresetfollowme";
     public SelenideElement resettoDefaults = $(By.id("st-feature-resetfollowme-inputEl"));
 
     /**
      * Call Forwarding
      */
-    public SelenideElement enableForwardAllCalls_check = $(By.id("st-feature-enbenablealways-displayEl"));
+    public String enableForwardAllCalls_check = "st-feature-enbenablealways";
     public SelenideElement enableForwardAllCalls = $(By.id("st-feature-enablealways-inputEl"));
 
-    public SelenideElement disableForwardAllCalls_check = $(By.id("st-feature-enbdisablealways-displayEl"));
+    public String disableForwardAllCalls_check = "st-feature-enbdisablealways";
     public SelenideElement disableForwardAllCalls = $(By.id("st-feature-disablealways-inputEl"));
 
-    public SelenideElement enableForwardWhenBusy_check = $(By.id("st-feature-enbenablebusy-displayEl"));
+    public String enableForwardWhenBusy_check = "st-feature-enbenablebusy";
     public SelenideElement enableForwardWhenBusy = $(By.id("st-feature-enablebusy-inputEl"));
 
-    public SelenideElement disableForwardWhenBusy_check = $(By.id("st-feature-enbdisablebusy-displayEl"));
+    public String disableForwardWhenBusy_check = "st-feature-enbdisablebusy";
     public SelenideElement disableForwardWhenBusy = $(By.id("st-feature-disablebusy-inputEl"));
 
-    public SelenideElement enableForwardNoAnswer_check = $(By.id("st-feature-enbenablenoanswer-displayEl"));
+    public String enableForwardNoAnswer_check = "st-feature-enbenablenoanswer";
     public SelenideElement enableForwardNoAnswer = $(By.id("st-feature-enablenoanswer-inputEl"));
 
-    public SelenideElement disableForwardNoAnswer_check = $(By.id("st-feature-enbdisablenoanswer-displayEl"));
+    public String disableForwardNoAnswer_check = "st-feature-enbdisablenoanswer";
     public SelenideElement disableForwardNoAnswer = $(By.id("st-feature-disablenoanswer-inputEl"));
 
     /**
      * DND
      */
-    public SelenideElement enableDoNotDisturb_check = $(By.id("st-feature-enbenablednd-displayEl"));
+    public String enableDoNotDisturb_check = "st-feature-enbenablednd";
     public SelenideElement enableDoNotDisturb = $(By.id("st-feature-enablednd-inputEl"));
 
-    public SelenideElement disableDoNotDisturb_check = $(By.id("st-feature-enbdisablednd-displayEl"));
+    public String disableDoNotDisturb_check = "st-feature-enbdisablednd";
     public SelenideElement disableDoNotDisturb = $(By.id("st-feature-disablednd-inputEl"));
 
     /**
      * Time Condition
      */
-    public SelenideElement timeConditionOverride_check = $(By.id("st-feature-enbforcetime-displayEl"));
+    public String timeConditionOverride_check = "st-feature-enbforcetime";
     public SelenideElement timeConditionOverride = $(By.id("st-feature-forcetime-inputEl"));
-
-    public SelenideElement setExtensionPermission = $(By.xpath(".//span[starts-with(@class,\"cp-link-before\") and text()=\"Set Extension Permission\"]"));
+    public SelenideElement setExtensionPermission = $(By.xpath(".//div[starts-with(@id,'panel')]//a[text()='Set Extension Permission']"));
+    /**
+     * Set Extension Permission
+     */
+    public String list_setExtionsionPermission = "st-feature-extenspermission";
+    public SelenideElement list_save =$(By.xpath(".//div[starts-with(@id,'featurecode-edit')]//span[text()='Save']"));
+    public SelenideElement list_cancel =$(By.xpath(".//div[starts-with(@id,'featurecode-edit')]//span[text()='Cancel']"));
     /**
      * Call Monitor
      */
-    public SelenideElement listen_check = $(By.id("st-feature-enbnormalspy-displayEl"));
+    public String listen_check = "st-feature-enbnormalspy";
     public SelenideElement listen = $(By.id("st-feature-normalspy-inputEl"));
 
-    public SelenideElement whisper_check = $(By.id("st-feature-enbwhisperspy-displayEl"));
+    public String whisper_check = "st-feature-enbwhisperspy";
     public SelenideElement whisper = $(By.id("st-feature-whisperspy-inputEl"));
 
-    public SelenideElement barge_in_check = $(By.id("st-feature-enbbargespy-displayEl"));
+    public String barge_in_check = "st-feature-enbbargespy";
     public SelenideElement barge_in = $(By.id("st-feature-bargespy-inputEl"));
 
+    /**
+     * Multisite Interconnect
+     */
+    public String dialPrefix_check = "st-feature-multisite";
+    public SelenideElement diaPrefix = $(By.id("st-feature-multisite-inputEl"));
 
-    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'featurecode-')]//span[text()='Save']"));
-    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'featurecode-')]//span[text()='Cancel']"));
+
+
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'general')]//div[starts-with(@id,'featurecode')]//span[text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'general')]//div[starts-with(@id,'featurecode')]//span[text()='Cancel']"));
+
 
 }

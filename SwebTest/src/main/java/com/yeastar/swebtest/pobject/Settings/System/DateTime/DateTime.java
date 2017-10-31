@@ -12,9 +12,10 @@ public class DateTime {
 
     public String chinaTime = "UTC+8 Asia/Shanghai";
 
-    public String timeZone_id = "st-time-timezone";
-    public SelenideElement timeZone = $(By.id("st-time-timezone-trigger-picker"));
-    public SelenideElement daylightSavingTime = $(By.id("st-time-enabledst-trigger-picker"));
+    public String timeZone = "st-time-timezone";
+//    public SelenideElement timeZone = $(By.id("st-time-timezone-trigger-picker"));
+    public String daylightSavingTime = ("st-time-enabledst");
+//    public SelenideElement daylightSavingTime = $(By.id("st-time-enabledst-trigger-picker"));
     public SelenideElement synchronizeWithNTPServer = $(By.id("st-time-enablentp-boxLabelEl"));
     public SelenideElement NTPServer = $(By.id("st-time-ntpserver-inputEl"));
     public SelenideElement setUpManually = $(By.id("st-time-enablemanually-boxLabelEl"));

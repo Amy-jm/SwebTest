@@ -22,7 +22,7 @@ public class Conference {
     public String grid = "Ext.getCmp('control-panel').down('conference')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('conference').down('loadmask')";
 
-    public SelenideElement conference = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"Conference\"]"));
+    public SelenideElement conference = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[ text()='Conference']"));
 
     /**
      * 功能按钮

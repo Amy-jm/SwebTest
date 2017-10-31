@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.testcase.smokecase.syscase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
@@ -13,13 +14,13 @@ import static com.yeastar.swebtest.driver.SwebDriver.*;
 /**
  * Created by Yeastar on 2017/8/16.
  */
-public class Network {
+public class Network extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
 
         Reporter.infoBeforeClass("打开游览器并登录设备_Network"); //执行操作
-        initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
-//        initialDriver(CHROME,"https://"+"192.168.7.151"+":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+//        initialDriver(BROWSER,"https://"+"192.168.7.151"+":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
@@ -79,7 +80,7 @@ public class Network {
         Reporter.infoExec("从wan口IP登录"); //执行操作
         quitDriver();
         ys_waitingTime(5000);
-        initialDriver(CHROME,"https://"+ DEVICE_IP_WAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_WAN +":"+DEVICE_PORT+"/");
         pageLogin.username.shouldBe(Condition.exist);
         pageLogin.username.is(Condition.exist);
         System.out.println(webDriver.getCurrentUrl());
@@ -87,7 +88,7 @@ public class Network {
         if(!webDriver.getCurrentUrl().contains(DEVICE_IP_WAN)){
             YsAssert.assertEquals(String.valueOf(webDriver.getCurrentUrl()),DEVICE_IP_WAN);
         }
-        initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         if(!webDriver.getCurrentUrl().contains(DEVICE_IP_LAN)){
             YsAssert.assertEquals(String.valueOf(webDriver.getCurrentUrl()),DEVICE_IP_LAN);

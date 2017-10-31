@@ -17,9 +17,9 @@ public class Email {
     public SelenideElement POP3_Port = $(By.id("st-email-pop3port-inputEl"));
     public SelenideElement SMTPAuthentication = $(By.id("st-email-needauth-trigger-picker"));
     public SelenideElement enableTLS = $(By.id("st-email-usessl-displayEl"));
-    public SelenideElement test = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Test\"]"));
+    public SelenideElement test = $(By.xpath(".//div[starts-with(@id,'emailsettings')]//span[ text()='Test']"));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'emailsettings')]//span[ text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'emailsettings')]//span[ text()='Cancel']"));
 
 }

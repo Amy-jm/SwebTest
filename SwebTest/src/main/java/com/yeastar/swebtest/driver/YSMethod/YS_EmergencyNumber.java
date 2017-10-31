@@ -12,13 +12,13 @@ import static com.yeastar.swebtest.driver.SwebDriver.*;
  */
 public class YS_EmergencyNumber {
 
-    public void addEmergencyNumber(int emergencyNum,String trunkname,int extension) throws InterruptedException {
+    public void addEmergencyNumber(int emergencyNum,String trunkname,int extension) {
         emergencyNumber.add.click();
         add_emergency_number.emergencyNumber.setValue(String.valueOf(emergencyNum));
-        Thread.sleep(2000);
+        ys_waitingTime(2000);
         ArrayList<String> trunk = new ArrayList<>();
         trunk.add(trunkname);
-        listSelect(add_emergency_number.selectTrunk,trunkList,trunk);
+        listSelect(add_emergency_number.trunkSelect,trunkList,trunk);
 
         ArrayList<String> ext = new ArrayList<>();
         ext.add(String.valueOf(extension));
@@ -26,9 +26,8 @@ public class YS_EmergencyNumber {
 
         add_emergency_number.save.click();
         ys_waitingLoading(emergencyNumber.grid_Mask);
-
-        int line = Integer.parseInt(String.valueOf(gridLineNum(emergencyNumber.grid)));
-        String aclname = String.valueOf(gridContent(emergencyNumber.grid,line,emergencyNumber.gridColumn_EmergencyNumber));
+        String aclname = String.valueOf(gridContent(emergencyNumber.grid,gridFindRowByColumn(emergencyNumber.grid,emergencyNumber.gridColumn_EmergencyNumber,String.valueOf(emergencyNum),sort_ascendingOrder)
+                ,emergencyNumber.gridColumn_EmergencyNumber));
         YsAssert.assertEquals(aclname,String.valueOf(emergencyNum));
     }
 }

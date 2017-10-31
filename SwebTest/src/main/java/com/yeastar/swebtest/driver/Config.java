@@ -36,18 +36,20 @@ import com.yeastar.swebtest.pobject.Settings.EventCenter.EventSettings.Notificat
 import com.yeastar.swebtest.pobject.Settings.EventCenter.EventSettings.NotificationContacts.NotificationContacts;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.AutoCLIPRoutes.AutoCLIPRoutes;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.InboundRoutes.Add_Inbound_Route.Add_Inbound_Route;
+import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.InboundRoutes.Import_InboundRoutes.Import_InboundRoutes;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.InboundRoutes.InboundRoutes;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.OutboundRestriction.Add_Outbound_Restriction.Add_Outbound_Restriction;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.OutboundRestriction.OutboundRestriction;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.OutboundRoutes.Add_Outbound_Routes.Add_Outbound_Routes;
+import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.OutboundRoutes.Import_OutboundRoutes.Import_OutboundRoutes;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.OutboundRoutes.OutboundRoutes;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.SLA.Add_SLA_Station.Add_SLA_Station;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.SLA.SLA;
-import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.TimeConditions.Holiday.Add_Holiday.Add_Holiday;
-import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.TimeConditions.Holiday.Holiday;
-import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.TimeConditions.TimeConditions.Add_Time_Condition.Add_Time_Condition;
-import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.TimeConditions.TimeConditions.TimeConditions;
-import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.TimeConditions.Time_Conditions;
+import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.Time_Conditions.Holiday.Add_Holiday.Add_Holiday;
+import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.Time_Conditions.Holiday.Holiday;
+import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.Time_Conditions.TimeConditions.Add_Time_Condition.Add_Time_Condition;
+import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.Time_Conditions.TimeConditions.TimeConditions;
+import com.yeastar.swebtest.pobject.Settings.PBX.CallControl.Time_Conditions.Time_Conditions;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallFeatures.Blacklist_Whitelist.Blacklist.Add_Blacklist.Add_Blacklist;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallFeatures.Blacklist_Whitelist.Blacklist.Blacklist;
 import com.yeastar.swebtest.pobject.Settings.PBX.CallFeatures.Blacklist_Whitelist.Blacklist.Import_Blacklist.Import_Blacklist;
@@ -98,6 +100,28 @@ import com.yeastar.swebtest.pobject.Settings.PBX.Extensions.Extensions.Edit_Sele
 import com.yeastar.swebtest.pobject.Settings.PBX.Extensions.Extensions.Edit_Selected_Extensions.Edit_Selected_Extensions_CallPermission.Edit_Selected_Extensions_CallPermission;
 import com.yeastar.swebtest.pobject.Settings.PBX.Extensions.Extensions.Edit_Selected_Extensions.Edit_Selected_Extensions_Features.Edit_Selected_Extensions_Features;
 import com.yeastar.swebtest.pobject.Settings.PBX.Extensions.Extensions.Import_Extension.Import_Extension;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.FeatureCode.FeatureCode;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.IAX.IAX;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.Preferences.Preferences;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.Advanced.Advanced;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.Codec.Codec;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.General.General;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.JitterBuffer.JitterBuffer;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.NAT.NAT;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.QoS.QoS;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.SIP;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.SessionTimer.SessionTimer;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.TLS.TLS;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.T_38.T_38;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.Voicemail.Voicemail;
+import com.yeastar.swebtest.pobject.Settings.PBX.MultisiteInterconnect.BranchOffice.BranchOffice_AdaptCallerID.BranchOffice_AdaptCallerID;
+import com.yeastar.swebtest.pobject.Settings.PBX.MultisiteInterconnect.BranchOffice.BranchOffice_Advanced.BranchOffice_Advanced;
+import com.yeastar.swebtest.pobject.Settings.PBX.MultisiteInterconnect.BranchOffice.BranchOffice_Basic.Add_Branch_Office.Add_Branch_Office;
+import com.yeastar.swebtest.pobject.Settings.PBX.MultisiteInterconnect.BranchOffice.BranchOffice_Basic.BranchOffice_Basic;
+import com.yeastar.swebtest.pobject.Settings.PBX.MultisiteInterconnect.Headquerter.Headquarter_Basic.Add_HeadquerterBranch_Office.Add_HeadquerterBranch_Office;
+import com.yeastar.swebtest.pobject.Settings.PBX.MultisiteInterconnect.Headquerter.Headquarter_Basic.Headquerter_Basic;
+import com.yeastar.swebtest.pobject.Settings.PBX.MultisiteInterconnect.Headquerter.Headquerter_AdaptCallerID.Headquerter_AdaptCallerID;
+import com.yeastar.swebtest.pobject.Settings.PBX.MultisiteInterconnect.Headquerter.Headquerter_Advanced.Headquerter_Advanced;
 import com.yeastar.swebtest.pobject.Settings.PBX.Recording.Recording;
 import com.yeastar.swebtest.pobject.Settings.PBX.Trunks.Add_VoIP_Trunk.Add_VoIP_Trunk_AdaptCallerID.Add_VoIP_Trunk_AdaptCallerID;
 import com.yeastar.swebtest.pobject.Settings.PBX.Trunks.Add_VoIP_Trunk.Add_VoIP_Trunk_Advanced.Add_VoIP_Trunk_Advanced;
@@ -106,6 +130,7 @@ import com.yeastar.swebtest.pobject.Settings.PBX.Trunks.Add_VoIP_Trunk.Add_VoIP_
 import com.yeastar.swebtest.pobject.Settings.PBX.Trunks.Add_VoIP_Trunk.Add_VoIP_Trunk_DOD.Add_VoIP_Trunk.Add_VoIP_Trunk;
 import com.yeastar.swebtest.pobject.Settings.PBX.Trunks.Add_VoIP_Trunk.Add_VoIP_Trunk_DOD.Add_VoIP_Trunk_DOD;
 import com.yeastar.swebtest.pobject.Settings.PBX.Trunks.Add_VoIP_Trunk.Edit_Bri_Trunk.Edit_Bri_Trunk;
+import com.yeastar.swebtest.pobject.Settings.PBX.Trunks.Import_Trunks.Import_trunks;
 import com.yeastar.swebtest.pobject.Settings.PBX.Trunks.Trunks;
 import com.yeastar.swebtest.pobject.Settings.PBX.VoicePrompts.CustomPrompts.CustomPrompts;
 import com.yeastar.swebtest.pobject.Settings.PBX.VoicePrompts.CustomPrompts.Record_New_Prompt.Record_New_Prompt;
@@ -142,7 +167,6 @@ import com.yeastar.swebtest.pobject.Settings.System.UserPermission.UserPermissio
 import com.yeastar.swebtest.tools.TcpSocket.TcpSocket;
 import com.yeastar.swebtest.tools.pjsip.PjsipApp;
 import com.yeastar.swebtest.tools.ssh.SSHApp;
-import org.apache.xpath.operations.Operation;
 
 /**
  * Created by GaGa on 2017-05-19.
@@ -150,10 +174,11 @@ import org.apache.xpath.operations.Operation;
 public class Config extends DataReader {
 
     public static long TEST_TIMEOUT = 3000;  //测试过程的时间差
-    public static long FINDELEMENT_TIMEOUT = 10000;  //元素查找的时间差
-    public static String CHROME = "chrome";
-    public static String FIREFOX = "firefox";
-    public static String IE = "ie";
+    public static long FINDELEMENT_TIMEOUT = 15000;  //元素查找的时间差
+//    public static String CHROME = "chrome";
+//    public static String FIREFOX = "firefox";
+//    public static String IE = "ie";
+
 
     public static String S20 = "S20";
     public static String S50 = "S50";
@@ -161,18 +186,24 @@ public class Config extends DataReader {
     public static String S300 ="S300";
     public static String S20P ="S20P";
     public static String S412 = "S412";
+    public static String PC = "PC";
+    public static String CLOUD_PBX= "CloudPBX";
 
     public static String currentPath = System.getProperty("user.dir")+"\\";
 
+    public static boolean Single_Init = true;
     public static boolean Single_Device_Test = false;
 //    public static boolean Single_Device_Test = true;
+//    public static boolean Single_Init = false;
 
-    public static boolean Single_Init = true;
 
     //通讯类型定义
     public static String communication_outRoute = "Outbound";
     public static String communication_inbound = "Inbound";
     public static String communication_internal = "Internal";
+    public static String communication_callback = "Callback";
+    public static String communication_transfer = "Transfer";
+
     //升序降序定义
     public static int sort_ascendingOrder=0;
     public static int sort_descendingOrder=1;
@@ -182,11 +213,36 @@ public class Config extends DataReader {
     public static int REGIST_EXTENSION_PWD_FIX= 2;
     public static int REGIST_EXTENSION_PWD_FIXEXTS= 3;
 
+//    下拉框设置选择的属性值
     public static String extensionList = "username";//"fullname"
     public static String nameList = "name";
     public static String trunkList = "trunkname";
+    public static String value ="value";
+
+    public static int INVALID = -1;
+    public static int IDLE = 0;
+    public static int CALLING = 1;
+    public static int RING = 2;
+    public static int TALKING = 3;
+    public static int HUNGUP = 4;
+    public static int TIMEOUT = 5;
 
 
+    public String s_extensin = "e";
+    public String s_extension_range ="E";
+    public String s_hangup = "h";
+    public String s_voicemail = "v";
+    public String s_ringGroup = "r";
+    public String s_queue = "q";
+    public String s_conference = "c";
+    public String s_disa = "d";
+    public String s_callback = "C";
+    public String s_outboundRoute ="o";
+    public String s_faxToMail = "F";
+    public String s_ivr = "i";
+    public String s_selectanOption ="u";
+    public String s_dialByName = "D";
+    public String s_customPrompt = "p";
     /**
      * 初始化对象库的对象
      */
@@ -232,6 +288,7 @@ public class Config extends DataReader {
     public static Add_VoIP_Trunk_Basic add_voIP_trunk_basic = new Add_VoIP_Trunk_Basic();
     public static Add_VoIP_Trunk_Codec add_voIP_trunk_codec = new Add_VoIP_Trunk_Codec();
     public static Edit_Bri_Trunk edit_bri_trunk = new Edit_Bri_Trunk();
+    public static Import_trunks import_trunks = new Import_trunks();
     /**
      * CallFeature
      */
@@ -281,11 +338,13 @@ public class Config extends DataReader {
     public static Add_Outbound_Routes add_outbound_routes = new Add_Outbound_Routes();
     public static SLA sla = new SLA();
     public static Add_SLA_Station add_sla_station = new Add_SLA_Station();
-    public static Time_Conditions time_conditions = new Time_Conditions();
+    public static Time_Conditions time_Conditions = new Time_Conditions();
     public static Holiday holiday = new Holiday();
     public static Add_Holiday add_holiday = new Add_Holiday();
     public static TimeConditions timeConditions = new TimeConditions();
     public static Add_Time_Condition add_time_condition =new Add_Time_Condition();
+    public static Import_InboundRoutes import_inboundRoutes = new Import_InboundRoutes();
+    public static Import_OutboundRoutes import_outboundRoutes = new Import_OutboundRoutes();
 
     /**
      * Recording
@@ -303,6 +362,27 @@ public class Config extends DataReader {
     public static Add_MOH_Playlist add_moh_playlist = new Add_MOH_Playlist();
     public static PromptPreference promptPreference = new PromptPreference();
     public static SystemPrompt systemPrompt = new SystemPrompt();
+
+    /**
+     * General
+     */
+
+    public static FeatureCode featureCode = new FeatureCode();
+    public static IAX iax = new IAX();
+    public static Preferences preferences = new Preferences();
+    public static SIP sip = new SIP();
+    public static Advanced advanced = new Advanced();
+    public static Codec codec = new Codec();
+    public static General general = new General();
+    public static JitterBuffer jitterBuffer = new JitterBuffer();
+    public static NAT nat = new NAT();
+    public static QoS qoS = new QoS();
+    public static SessionTimer sessionTimer = new SessionTimer();
+    public static T_38 t_38 = new T_38();
+    public static TLS tls    = new TLS();
+    public static Voicemail voicemail = new Voicemail();
+
+
     /**
      * Emergency Number
      */
@@ -421,6 +501,18 @@ public class Config extends DataReader {
     public static Me_RoutePermission me_routePermission = new Me_RoutePermission();
 
     /**
+     * Multisite Interconnect
+     */
+    public static BranchOffice_AdaptCallerID branchOffice_adaptCallerID = new BranchOffice_AdaptCallerID();
+    public static BranchOffice_Advanced branchOffice_advanced = new BranchOffice_Advanced();
+    public static Add_Branch_Office add_branch_office = new Add_Branch_Office();
+    public static BranchOffice_Basic branchOffice_basic = new BranchOffice_Basic();
+    public static Add_HeadquerterBranch_Office add_headquerterBranch_office = new Add_HeadquerterBranch_Office();
+    public static Headquerter_Basic headquerter_basic = new Headquerter_Basic();
+    public static Headquerter_AdaptCallerID headquerter_adaptCallerID = new Headquerter_AdaptCallerID();
+    public static Headquerter_Advanced headquerter_advanced = new Headquerter_Advanced();
+
+    /**
     * 方法初始化
     * */
     public static YS_Extension m_extension = new YS_Extension();
@@ -429,4 +521,5 @@ public class Config extends DataReader {
     public static YS_Me m_me = new YS_Me();
     public static Ys_UserPermission m_userPermission = new Ys_UserPermission();
     public static YS_EventCenter m_eventCenter = new YS_EventCenter();
+    public static YS_General m_general = new YS_General();
 }

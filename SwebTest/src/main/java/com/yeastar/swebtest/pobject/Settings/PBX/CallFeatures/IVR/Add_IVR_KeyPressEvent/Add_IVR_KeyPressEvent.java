@@ -36,6 +36,8 @@ public class Add_IVR_KeyPressEvent {
     public String s_press9=  "key9action";
     public String s_pressj = "keysharpaction";
     public String s_pressx = "keystaraction";
+    public String timeout = "timeoutaction";
+    public String invaild = "invalidaction";
 
     public String d_press0 = "key0dest";
     public String d_press1 = "key1dest";
@@ -49,6 +51,8 @@ public class Add_IVR_KeyPressEvent {
     public String d_press9=  "key9dest";
     public String d_pressj = "keysharpdest";
     public String d_pressx = "keystardest";
+    public String d_timeout ="timeoutdest";
+    public String d_invalid = "invaliddest";
 
     public String s_extensin = "e";
     public String s_voicemail = "v";
@@ -61,8 +65,7 @@ public class Add_IVR_KeyPressEvent {
     public String s_customPrompt = "P";
 
 
-    public SelenideElement timeout = $(By.id("timeoutaction-trigger-picker"));
-    public SelenideElement invaild = $(By.id("invalidaction-trigger-picker"));
+
 
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'ivr-edit-')]//span[text()='Save']"));

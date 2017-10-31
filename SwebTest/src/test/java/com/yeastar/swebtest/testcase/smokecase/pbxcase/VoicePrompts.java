@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.testcase.smokecase.pbxcase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
@@ -8,15 +9,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.yeastar.swebtest.driver.Config.*;
-import static com.yeastar.swebtest.driver.Config.mySettings;
-import static com.yeastar.swebtest.driver.Config.pageDeskTop;
-import static com.yeastar.swebtest.driver.SwebDriver.*;
-
 /**
  * Created by Yeastar on 2017/7/25.
  */
-public class VoicePrompts {
+public class VoicePrompts extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
         pjsip.Pj_Init();
@@ -26,7 +22,9 @@ public class VoicePrompts {
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
-        mySettings.close.click();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
         pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
         pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",5060,4);
@@ -59,7 +57,7 @@ public class VoicePrompts {
         ys_apply();
         tcpSocket.connectToDevice();
         pjsip.Pj_Make_Call_Auto_Answer(1100,"6400", DEVICE_IP_LAN);
-        boolean tcpInfo = tcpSocket.getAsteriskInfo(SYSTEM_PROMPT_LANGUAGE,50);
+        boolean tcpInfo = tcpSocket.getAsteriskInfo(SYSTEM_PROMPT_LANGUAGE);
         tcpSocket.closeTcpSocket();
         pjsip.Pj_Hangup_All();
         YsAssert.assertEquals(tcpInfo,true,"提示音更换");
@@ -81,7 +79,7 @@ public class VoicePrompts {
         musicOnHold.musicOnHold.click();
         gridClick(musicOnHold.grid,1,musicOnHold.gridPlay);
         ys_waitingTime(2000);
-        comboboxSelect(musicOnHold.plauToExtension,extensionList,"1100");
+        comboboxSet(musicOnHold.plauToExtension,extensionList,"1100");
         ys_waitingTime(1000);
         tcpSocket.connectToDevice();
         musicOnHold.play.click();
@@ -137,7 +135,7 @@ public class VoicePrompts {
 
         gridClick(musicOnHold.grid,1,musicOnHold.gridPlay);
         ys_waitingTime(2000);
-        comboboxSelect(musicOnHold.plauToExtension,extensionList,"1100");
+        comboboxSet(musicOnHold.plauToExtension,extensionList,"1100");
         ys_waitingTime(1000);
         tcpSocket.connectToDevice();
         musicOnHold.play.click();
@@ -158,13 +156,12 @@ public class VoicePrompts {
             promptPreference.promptPreference.click();
         }
         promptPreference.promptPreference.click();
-        setCombobox(promptPreference.MusicOnHoldId,"play1");
-//        comboboxSelect(promptPreference.MusicOnHoldId,"name","play1");
+        comboboxSelect(promptPreference.MusicOnHold,"play1");
         promptPreference.save.click();
         pageDeskTop.apply.click();
         tcpSocket.connectToDevice();
         pjsip.Pj_Make_Call_Auto_Answer(1100,"6400", DEVICE_IP_LAN);
-        boolean tcpInfo = tcpSocket.getAsteriskInfo("Language: zh",50);
+        boolean tcpInfo = tcpSocket.getAsteriskInfo("Language: zh");
         tcpSocket.closeTcpSocket();
         pjsip.Pj_Hangup_All();
         YsAssert.assertEquals(tcpInfo,true,"播放play1中的xx提示音");
@@ -202,7 +199,7 @@ public class VoicePrompts {
         customPrompts.recordNew.click();
         record_new_prompt.name.setValue("custom1");
         tcpSocket.connectToDevice();
-        comboboxSelect(record_new_prompt.recordExtension,extensionList,"1100");
+        comboboxSet(record_new_prompt.recordExtension,extensionList,"1100");
         record_new_prompt.record.click();
         ys_waitingTime(5000);
         pjsip.Pj_Answer_Call(1100,false);
@@ -227,7 +224,7 @@ public class VoicePrompts {
 
         gridClick(customPrompts.grid,2,customPrompts.gridPlay);
         ys_waitingTime(2000);
-        comboboxSelect(customPrompts.plauToExtension,extensionList,"1100");
+        comboboxSet(customPrompts.playToExtension,extensionList,"1100");
         ys_waitingTime(1000);
         tcpSocket.connectToDevice();
         customPrompts.play.click();
@@ -241,7 +238,7 @@ public class VoicePrompts {
         Reporter.infoExec("上传一个音乐作为提示音");
         gridClick(customPrompts.grid,1,customPrompts.gridRecord);
         ys_waitingTime(2000);
-        comboboxSelect(customPrompts.plauToExtension,extensionList,"1100");
+        comboboxSet(customPrompts.playToExtension,extensionList,"1100");
         ys_waitingTime(1000);
         tcpSocket.connectToDevice();
         customPrompts.record_play.click();

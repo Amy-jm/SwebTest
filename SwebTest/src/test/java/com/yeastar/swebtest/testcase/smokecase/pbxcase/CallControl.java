@@ -1,31 +1,29 @@
 package com.yeastar.swebtest.testcase.smokecase.pbxcase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static com.yeastar.swebtest.driver.Config.*;
-import static com.yeastar.swebtest.driver.Config.mySettings;
-import static com.yeastar.swebtest.driver.Config.pageDeskTop;
-import static com.yeastar.swebtest.driver.SwebDriver.*;
-
 /**
  * Created by Yeastar on 2017/7/24.
  */
-public class CallControl {
+public class CallControl extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
         pjsip.Pj_Init();
         Reporter.infoBeforeClass("打开游览器并登录设备"); //执行操作
-        initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
-        mySettings.close.click();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
         if(!Single_Device_Test){
             pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",5060,1);
@@ -33,9 +31,28 @@ public class CallControl {
             pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }
+    }
+    @BeforeClass
+    public void InitAutoCLIP(){
+        pageDeskTop.settings.click();
+        settings.callControl_panel.click();
+        autoCLIPRoutes.autoCLIPRoutes.click();
+        autoCLIPRoutes.viewAutoCLIPList.click();
+        ys_waitingLoading(autoCLIPRoutes.grid_Mask);
 
+        setPageShowNum(autoCLIPRoutes.grid_Page, 100);
+        while (Integer.parseInt(String.valueOf(gridLineNum(autoCLIPRoutes.grid))) != 0) {
+            gridSeleteAll(autoCLIPRoutes.grid);
+            autoCLIPRoutes.delete.click();
+            autoCLIPRoutes.delete_yes.click();
+            ys_waitingLoading(autoCLIPRoutes.grid_Mask);
+        }
+        gridCheckDeleteAll(autoCLIPRoutes.grid);
+        autoCLIPRoutes.closeAutoClIP_List();
+        closeSetting();
 
     }
+
     @Test
     public void A_AutoCLIP() throws InterruptedException {
         Reporter.infoExec("编辑inrouter，Destination设置到Conference，meet1");
@@ -51,7 +68,7 @@ public class CallControl {
 
 
         inboundRoutes.inboundRoutes.click();
-        ys_waitingLoading(inboundRoutes.gridLoading);
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         gridClick(inboundRoutes.grid,1,inboundRoutes.gridEdit);
         ys_waitingMask();
 //        add_inbound_route.SetTimeConditionTableviewDestination(1,2,add_inbound_route.s_conference);
@@ -79,9 +96,9 @@ public class CallControl {
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         }
-        pjsip.Pj_Make_Call_Auto_Answer(1000,2000,"90", DEVICE_IP_LAN);
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"902000", DEVICE_IP_LAN);
         Thread.sleep(5000);
-        pjsip.Pj_hangupCall(1000,2000);
+        pjsip.Pj_Hangup_All();
         if(Single_Device_Test) {
             pageDeskTop.settings.click();
             settings.callControl_panel.click();
@@ -110,10 +127,11 @@ public class CallControl {
             pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }
-        pjsip.Pj_Make_Call_Auto_Answer(2000,2000,"77",DEVICE_ASSIST_2);
-        Thread.sleep(5000);
+        pjsip.Pj_Make_Call_No_Answer(2000,"772000",DEVICE_ASSIST_2);
+        pjsip.Pj_Answer_Call(1000,false);
+        Thread.sleep(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("2000 <2000>","1000 <1000>" ,"Answered");
+        m_extension.checkCDR("2000 <2000>","1000 <1000>" ,"Answered",BRI_1,"",communication_inbound);
     }
 
     @Test
@@ -139,8 +157,6 @@ public class CallControl {
 
         //检查列表全删除情况
         gridCheckDeleteAll(autoCLIPRoutes.grid);
-//        String line = String.valueOf(gridLineNum(autoCLIPRoutes.grid));
-//        YsAssert.assertEquals(line,"0");
         autoCLIPRoutes.closeAutoClIP_List();
 
     }
@@ -157,17 +173,17 @@ public class CallControl {
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }
         tcpSocket.connectToDevice();
-        pjsip.Pj_Make_Call_Auto_Answer(2000,2000,"77",DEVICE_ASSIST_2);
-        tcpSocket.getAsteriskInfo("conference",30);
+        pjsip.Pj_Make_Call_Auto_Answer(2000,"772000",DEVICE_ASSIST_2);
+        boolean tcpInfo= tcpSocket.getAsteriskInfo("meet1");
         tcpSocket.closeTcpSocket();
-        Thread.sleep(5000);
+        ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
 
+        YsAssert.assertEquals(tcpInfo,true,"设备A通过autoClip呼入");
     }
 
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(10000);
         Reporter.infoAfterClass("关闭游览器"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();

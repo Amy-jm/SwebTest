@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SYSCORE">
+    <listeners>
+        <listener class-name="com.yeastar.swebtest.tools.retry.RetryListener"></listener>
+        <listener class-name="com.yeastar.swebtest.tools.retry.TestResultListener"></listener>
+    </listeners>
+    <test name="syscore" preserve-order="true">
+        <classes>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Network"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Security"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Maintain"/>
+        </classes>
+    </test> <!-- YsAutoTest -->
+
+</suite> <!-- Default Suite -->

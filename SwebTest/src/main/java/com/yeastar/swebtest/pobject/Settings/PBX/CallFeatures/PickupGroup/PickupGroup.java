@@ -20,7 +20,7 @@ public class PickupGroup {
     public String grid = "Ext.getCmp('control-panel').down('pickupgroup')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('pickupgroup').down('loadmask')";
 
-    public SelenideElement pickupGroup = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"Pickup Group\"]"));
+    public SelenideElement pickupGroup = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[ text()='Pickup Group']"));
 
     /**
      * 功能按钮

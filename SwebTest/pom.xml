@@ -16,8 +16,9 @@
                 <version>2.17</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>suite/pbxcore.xml</suiteXmlFile>
-                        <!--<suiteXmlFile>suite/syscore.xml</suiteXmlFile>-->
+                        <suiteXmlFile>suite/smokecase/pbxcore.xml</suiteXmlFile>
+                        <!--<suiteXmlFile>suite/smokecase/syscore.xml</suiteXmlFile>-->
+                        <!--<suiteXmlFile>suite/smokecase/test.xml</suiteXmlFile>-->
                     </suiteXmlFiles>
                     <properties>
                         <!-- No TestNG listeners
@@ -28,8 +29,9 @@
                         <!-- Setting ReportNG listeners-->
                         <property>
                             <name>listener</name>
-                            <value>org.uncommons.reportng.HTMLReporter, org.uncommons.reportng.JUnitXMLReporter</value>
+                            <value>org.uncommons.reportng.HTMLReporter, org.uncommons.reportng.JUnitXMLReporter, com.yeastar.swebtest.tools.retry.RetryListener, com.yeastar.swebtest.tools.retry.TestResultListener</value>
                         </property>
+
                     </properties>
                 </configuration>
             </plugin>

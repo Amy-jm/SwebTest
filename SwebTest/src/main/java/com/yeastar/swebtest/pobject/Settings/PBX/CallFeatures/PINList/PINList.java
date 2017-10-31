@@ -20,7 +20,7 @@ public class PINList {
     public String grid = "Ext.getCmp('control-panel').down('pinset')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('pinset').down('loadmask')";
 
-    public SelenideElement PINList = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"PIN List\"]"));
+    public SelenideElement PINList = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[ text()='PIN List']"));
 
     /**
      * 功能按钮

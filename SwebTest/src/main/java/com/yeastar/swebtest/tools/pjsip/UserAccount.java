@@ -17,4 +17,5 @@ public class UserAccount {
     public String uriHead;
     public int status;
     public int pos;
+    public int toTalk;
 }

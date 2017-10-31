@@ -16,7 +16,7 @@ public class Add_MOH_Playlist {
 
 
     public SelenideElement name = $(By.id("st-moh-name-inputEl"));
-    public SelenideElement playlistOrder = $(By.id("st-moh-playsort-trigger-picker"));
+    public String playlistOrder = "st-moh-playsort";
 
     public SelenideElement mohPlayList = $(By.id("st-moh-choosefolder-inputEl"));
 

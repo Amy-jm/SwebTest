@@ -9,6 +9,6 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class StaticRoutes {
-    public SelenideElement staticRoutes = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Static Routes\"]"));
+    public SelenideElement staticRoutes = $(By.xpath(".//div[starts-with(@id,'network')]//span[ text()='Static Routes']"));
 
 }

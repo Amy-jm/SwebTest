@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.driver.YSMethod;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.openqa.selenium.By;
 
@@ -59,38 +60,38 @@ public class YS_Trunk {
         }
 
     }
-    /**
-     * 删除所有trunk
-     */
-    public void deleteTrunks() throws InterruptedException {
-        pageDeskTop.settings.click();
-        settings.trunks_panel.click();
-
-        showTrunkNum(100);
-        Thread.sleep(3000);
-        String count= String.valueOf(gridLineNum(trunks.grid));
-//        String count = String.valueOf(executeJs("return Ext.getCmp('control-panel').down('trunk').down('trunklist').getStore().getCount()"));
-        if(Integer.parseInt(count) >0){
-            String pageCount = (String) executeJs("return document.getElementById(Ext.getCmp('control-panel').down('trunk').down('mypagingtoolbar').down('tbtext').id).innerText");
-            for(int i=0; i<Integer.parseInt(String.valueOf(pageCount.charAt(2))); i++){
-                executeJs("Ext.getCmp('control-panel').down('trunk').down('trunklist').getSelectionModel().selectAll()");
-                trunks.delete.click();
-                trunks.delete_yes.shouldBe(Condition.exist).click();
-                trunks.delete.shouldBe(Condition.exist);
-//                while(true){
-//                    String pleaseWaitCount = String.valueOf(Integer.parseInt(String.valueOf(executeJs("return Ext.query('#control-panel #control-panel-body .x-mask').length")))-1);
-//                    if(executeJs("return Ext.query('#control-panel #control-panel-body .x-mask')["+pleaseWaitCount+"].style.display").toString().equals("none")){
-//                        break;
-//                    }
-//                    Thread.sleep(10);
-//                }
-                Thread.sleep(1000);
-            }
-        }
-        Thread.sleep(500);
-        pageDeskTop.apply.click();
-        closeSettingWindow();
-    }
+//    /**
+//     * 删除所有trunk
+//     */
+//    public void deleteTrunks() throws InterruptedException {
+//        Reporter.infoExec(" 删除所有VoIP外线");
+//        pageDeskTop.taskBar_Main.click();
+//        pageDeskTop.settingShortcut.click();
+//        setPageShowNum(trunks.grid,100);
+//        Thread.sleep(3000);
+//        String count= String.valueOf(gridLineNum(trunks.grid));
+////        String count = String.valueOf(executeJs("return Ext.getCmp('control-panel').down('trunk').down('trunklist').getStore().getCount()"));
+//        if(Integer.parseInt(count) >0){
+//            String pageCount = (String) executeJs("return document.getElementById(Ext.getCmp('control-panel').down('trunk').down('mypagingtoolbar').down('tbtext').id).innerText");
+//            for(int i=0; i<Integer.parseInt(String.valueOf(pageCount.charAt(2))); i++){
+//                executeJs("Ext.getCmp('control-panel').down('trunk').down('trunklist').getSelectionModel().selectAll()");
+//                trunks.delete.click();
+//                trunks.delete_yes.shouldBe(Condition.exist).click();
+//                trunks.delete.shouldBe(Condition.exist);
+////                while(true){
+////                    String pleaseWaitCount = String.valueOf(Integer.parseInt(String.valueOf(executeJs("return Ext.query('#control-panel #control-panel-body .x-mask').length")))-1);
+////                    if(executeJs("return Ext.query('#control-panel #control-panel-body .x-mask')["+pleaseWaitCount+"].style.display").toString().equals("none")){
+////                        break;
+////                    }
+////                    Thread.sleep(10);
+////                }
+//                Thread.sleep(1000);
+//            }
+//        }
+//        Thread.sleep(500);
+////        pageDeskTop.apply.click();
+////        closeSettingWindow();
+//    }
 
     /**
      *
@@ -108,10 +109,15 @@ public class YS_Trunk {
      */
     public void addTrunk(String protocol,int type,String providerName,String hostname,String hostport,
                             String domain,String username,String authenticationName,String fromUser,String password) throws InterruptedException {
+        if(protocol.equals("IAX") && PRODUCT.equals(CLOUD_PBX)){
+            System.out.println("Cloud PBX no support IAX extension");
+            Reporter.infoExec("Cloud PBX no support IAX extension");
+            return;
+        }
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         trunks.add.click();
-        Thread.sleep(2000);
+        ys_waitingMask();
         String typeName = null;
         if(protocol.equals("IAX")){
             executeJs("Ext.getCmp('type').setValue('IAX')");
@@ -137,6 +143,7 @@ public class YS_Trunk {
             typeName = "IAX-Peer";
         }
         //
+        ys_waitingTime(2000);
         add_voIP_trunk_basic.providerName.setValue(providerName);
         add_voIP_trunk_basic.hostname.setValue(hostname);
 
@@ -176,6 +183,7 @@ public class YS_Trunk {
         }
 //        m_trunks.assertTrunkGrid("IAXTrunk","IAX-Register","192.168.7.151","3040",row);
         assertTrunkGrid(providerName,typeName,hostname,username,row);
+        ys_waitingTime(10000);
         assertTrunkStatus(providerName);
     }
 

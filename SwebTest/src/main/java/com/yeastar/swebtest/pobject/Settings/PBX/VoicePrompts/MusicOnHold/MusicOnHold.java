@@ -11,17 +11,17 @@ import static com.codeborne.selenide.Selenide.$;
 public class MusicOnHold {
 
 
-
+    public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
     public int gridcolumn_MusicOnHoldFile = 1;
     public int gridPlay = 0;
     public int gridDelete =1;
     public String grid = "Ext.getCmp('control-panel').down('mohfiles')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('mohfiles').down('loadmask')";
 
-    public SelenideElement musicOnHold = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Music on Hold\"]"));
+    public SelenideElement musicOnHold = $(By.xpath(".//div[starts-with(@id,'prompt')]//span[ text()='Music on Hold']"));
+    public String chooseMOHPlaylist_id  = "st-moh-choosefolder";
 
     public SelenideElement createNewPlaylist = $(By.id("st-moh-createfolder-btnInnerEl"));
-    public String chooseMOHPlaylist_id  = "st-moh-choosefolder";
     public SelenideElement chooseMOHPlaylist_picker = $(By.id("st-moh-choosefolder-trigger-picker"));
     public SelenideElement chooseMOHPlaylist_input = $(By.id("st-moh-choosefolder-inputEl"));
     public SelenideElement chooseMOHPlaylist_edit = $(By.id("st-moh-editfolder"));

@@ -9,10 +9,12 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class IAX {
-    public SelenideElement IAX = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"IAX\"]"));
+    public SelenideElement IAX = $(By.xpath(".//div[starts-with(@id,'general')]//span[ text()='IAX']"));
 
     public SelenideElement UDPPort = $(By.id("st-iax-bindport-inputEl"));
-    public SelenideElement bandwidth = $(By.id("st-iax-bandwidth-trigger-picker"));
+//    public SelenideElement bandwidth = $(By.id("st-iax-bandwidth-trigger-picker"));
+    public String bandwidth = "st-iax-bandwidth";
+
     public SelenideElement maximumRegistration = $(By.id("st-iax-maxreg-inputEl"));
     public SelenideElement minimumRegistration = $(By.id("st-iax-minreg-inputEl"));
 

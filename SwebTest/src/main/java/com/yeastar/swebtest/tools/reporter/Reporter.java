@@ -71,6 +71,7 @@ public class Reporter  {
 
     public static void infoAfterClass(String message) {
         String tmpname = "【测试类场景恢复】";
+        message = message+"\n\n";
         reporterOut(tmpname,message,1);
     }
 

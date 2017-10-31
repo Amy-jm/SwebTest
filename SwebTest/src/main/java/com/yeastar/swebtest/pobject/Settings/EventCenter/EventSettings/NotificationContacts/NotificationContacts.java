@@ -10,22 +10,23 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class NotificationContacts {
     public String grid = "Ext.getCmp('control-panel').down('contact').down('tableview')";
-    public String gridLoading = "Ext.getCmp('control-panel').down('contact').down('loadmask')";
+    public String grid_Mask = "Ext.getCmp('control-panel').down('contact').down('loadmask')";
 
+    public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
     public int gridColumn_Name = 1;
     public int gridColumn_NotificationMethod = 2;
     public int gridColumnEdit= 0;
     public int gridColumnDelete= 1;
 
-    public SelenideElement notificationContacts = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Notification Contacts\"]"));
+    public SelenideElement notificationContacts = $(By.xpath(".//div[starts-with(@id,\"eventsetting\")]//span[ text()=\"Notification Contacts\"]"));
 
 
     /**
      * 功能按钮
      */
 
-    public SelenideElement add = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Add\"]"));
-    public SelenideElement delete = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Delete\"]"));
+    public SelenideElement add = $(By.xpath(".//div[starts-with(@id,\"eventsetting\")]//span[ text()=\"Add\"]"));
+    public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,\"eventsetting\")]//span[ text()=\"Delete\"]"));
 
     /**
      * 删除功能

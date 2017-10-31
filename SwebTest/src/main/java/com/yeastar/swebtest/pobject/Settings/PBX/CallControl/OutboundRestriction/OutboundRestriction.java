@@ -13,13 +13,24 @@ public class OutboundRestriction {
     public String grid = "Ext.getCmp('control-panel').down('constraint')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('constraint').down('loadmask')";
 
-    public SelenideElement outboundRestriction = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Outbound Restriction\"]"));
+    public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
+    public int gridcolumn_Name = 1;
+    public int gridcolumn_TimeLimit = 2;
+    public int gridcolumn_NumofCall = 3;
+    public int gridcolumn_MemberExtension = 4;
+
+    public int gridEdit = 0;
+    public int gridDelete  = 1;
+
+
+    public SelenideElement outboundRestriction = $(By.xpath(".//div[starts-with(@id,\"callcontrol\")]//span[ text()=\"Outbound Restriction\"]"));
 
     /**
      * 功能按钮
      */
 
     public SelenideElement add = $(By.xpath(".//div[starts-with(@id,'constraint-')]//span[text()='Add']"));
+    public SelenideElement Import = $(By.xpath(".//div[starts-with(@id,'constraint-')]//span[text()='Import']"));
     public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,'constraint-')]//span[text()='Delete']"));
 
     /**
@@ -38,6 +49,6 @@ public class OutboundRestriction {
     public SelenideElement refresh = $(By.xpath(".//div[starts-with(@id,'constraint')]//a[@data-qtip='Refresh']"));
     public SelenideElement gotoinput = $(By.xpath(".//div[starts-with(@id,'constraint')]//input[@name='gotoinput']"));
     public SelenideElement go = $(By.xpath(".//div[starts-with(@id,'constraint')]//span[text()='Go']"));
-    public SelenideElement selectPage = $(By.id(".//*[(@data-ref='bodyEl') and (@role='presentation')]"));
+//    public SelenideElement selectPage = $(By.id(".//div[starts-with(@id,'constraint')]//input[(@name='gotoinput')]"));
 
 }

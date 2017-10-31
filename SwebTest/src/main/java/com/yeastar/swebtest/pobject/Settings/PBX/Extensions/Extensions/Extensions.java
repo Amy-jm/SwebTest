@@ -14,7 +14,7 @@ public class Extensions {
      * 进入Extensions
      */
 
-    public SelenideElement Extensions = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Extensions\"]"));
+    public SelenideElement Extensions = $(By.xpath(".//div[starts-with(@id,'extension')]//span[ text()='Extensions']"));
 
     /**
      * Extensions表格
@@ -31,10 +31,6 @@ public class Extensions {
     public int gridEdit = 0; //仅搜索img
     public int gridDelete = 1; //仅搜索img
 
-    public void GridExtensions(int row, int column) throws InterruptedException {
-        String two = (String)executeJs("return Ext.getCmp('control-panel').down('extension').down(\"actioncolumn\").id");
-        //String three = executeJs("return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('extension').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent");
-    }
     public String grid = "Ext.getCmp('control-panel').down('extension')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('extension').down('loadmask')";
     public String grid_status = "Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview')";

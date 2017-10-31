@@ -19,7 +19,7 @@ public class Callback {
 
     public String grid = "Ext.getCmp('control-panel').down('callback')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('callback').down('loadmask')";
-    public SelenideElement callback = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"Callback\"]"));
+    public SelenideElement callback = $(By.xpath(".//div[starts-with(@id,\"callfeature\")]//span[ text()=\"Callback\"]"));
 
     /**
      * 功能按钮

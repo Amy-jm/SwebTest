@@ -12,31 +12,31 @@ public class Add_Extension_Advanced {
     /**
      * 进入Advanced
      */
-    public SelenideElement advanced = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Advanced\"]"));
+    public SelenideElement advanced = $(By.xpath(".//div[starts-with(@id,\"extension-edit\")]//span[ text()=\"Advanced\"]"));
 
     /**
      * VoIP Settings
      */
-    public SelenideElement NAT = $(By.id("nat-displayEl"));
-    public SelenideElement qualify = $(By.id("qualify-displayEl"));
-    public SelenideElement registerRemotely = $(By.id("remoteregister-displayEl"));
-    public SelenideElement enableSRTP = $(By.id("enablesrtp-displayEl"));
-    public SelenideElement transport_button = $(By.id("transport-trigger-picker"));
-    public SelenideElement DTMFMode_button = $(By.id("dtmfmode-trigger-picker"));
-    public SelenideElement enableUserAgentRegistrationAuthorization = $(By.id("enableuseragent-displayEl"));
+    public String NAT = "nat";
+    public String qualify = "qualify";
+    public String registerRemotely = "remoteregister";
+    public String enableSRTP = "enablesrtp";
+    public String transport_button = "transport";
+    public String DTMFMode_button = "dtmfmode";
+    public String enableUserAgentRegistrationAuthorization = "enableuseragent";
     public SelenideElement userAgent = $(By.id("limituseragent0-inputEl"));
-    public SelenideElement userAgent_add = $(By.xpath(""));
+    public SelenideElement userAgent_add = $(By.xpath(".//div[starts-with(@id,\"extension-advanced\")]//div[ @class=\"cp-icon\"]"));
 
     /**
      * IP Restriction
      */
-    public SelenideElement enableIPRestriction = $(By.id("enableiprestrict-displayEl"));
+    public String enableIPRestriction = "enableiprestrict";
     public SelenideElement permittedIP = $(By.id("permitip0-inputEl"));
     public SelenideElement subnetmask = $(By.id("permitmask0-inputEl"));
     public SelenideElement enableIPRestriction_add = $(By.xpath(""));
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,\"extension-edit\")]//span[ text()=\"Save\"]"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,\"extension-edit\")]//span[ text()=\"Cancel\"]"));
 
 
 }

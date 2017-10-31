@@ -32,22 +32,22 @@ public class Preference {
     public String sdtf_CDR = "tf/sd-1";
     public String local_CDR = "local-1";
 
-    public SelenideElement preference = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Preference\"]"));
+    public SelenideElement preference = $(By.xpath(".//div[starts-with(@id,\"storage\")]//span[ text()=\"Preference\"]"));
 
     public SelenideElement recordingSettings = $(By.xpath(".//a[starts-with(@class,\"cp-link-before\") and text()=\"Recording Settings\"]"));
     /**
      * Storage Locations
      */
-    public SelenideElement CDR = $(By.id("st-storage-slotcdr-trigger-picker"));
-    public SelenideElement voicemail_OneTouchRecordings = $(By.id("st-storage-slotvm-trigger-picker"));
-    public SelenideElement recordings = $(By.id("st-storage-slotrecording-trigger-picker"));
-    public SelenideElement logs = $(By.id("st-storage-slotlog-trigger-picker"));
+    public String CDR = ("st-storage-slotcdr");
+    public String voicemail_OneTouchRecordings = ("st-storage-slotvm");
+    public String recordings ="st-storage-slotrecording";
+    public String logs = ("st-storage-slotlog");
 
     /**
      * Storage Devices
      */
 
-    public SelenideElement addNetworkDrive = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Add Network Drive\"]"));
+    public SelenideElement addNetworkDrive = $(By.xpath(".//div[starts-with(@id,'storagepreference')]//span[text()='Add Network Drive']"));
     public SelenideElement networkName = $(By.id("st-storage-name-inputEl"));
     public SelenideElement networkHostIp = $(By.id(("st-storage-host-inputEl")));
     public SelenideElement networkShareName  =$(By.id(("st-storage-sharename-inputEl")));
@@ -57,8 +57,8 @@ public class Preference {
     public SelenideElement networkcancel = $(By.xpath(".//div[starts-with(@id,'storagepreference-netdisk-')]//span[text()='Cancel']"));
 
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(" .//div[starts-with(@id,'storagepreference')]//span[ text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'storagepreference')]//span[text()='Cancel']"));
 
     /**
      * 删除挂载磁盘判断

@@ -10,17 +10,18 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class Whitelist {
 
+    public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
     public int gridcolumn_Name = 1;
     public int gridcolumn_Number = 2;
     public int gridcolumn_Type = 3;
     public int gridEdit = 0; //仅搜索img
     public int gridDelete = 1; //仅搜索img
 
-    public String grid = "Ext.getCmp('control-panel').down('whitelist').down('tableview')";
+    public String grid = "Ext.getCmp('control-panel').down('whitelist')";
     public String grid_loadMask = "Ext.getCmp('control-panel').down('whitelist').down('loadmask')";
 
 
-    public SelenideElement whitelist = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Whitelist\"]"));
+    public SelenideElement whitelist = $(By.xpath(".//div[starts-with(@id,\"blackwhitelist\")]//span[ text()=\"Whitelist\"]"));
 
     /**
      * 功能按钮

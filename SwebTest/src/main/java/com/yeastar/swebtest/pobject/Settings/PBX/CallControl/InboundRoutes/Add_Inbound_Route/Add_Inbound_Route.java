@@ -14,31 +14,33 @@ import static com.yeastar.swebtest.driver.SwebDriver.*;
 public class Add_Inbound_Route {
 
     public String s_extensin = "e";
+    public String s_extension_range ="E";
+    public String s_hangup = "h";
     public String s_voicemail = "v";
     public String s_ringGroup = "r";
     public String s_queue = "q";
     public String s_conference = "c";
     public String s_disa = "d";
     public String s_callback = "C";
+    public String s_outboundRoute ="o";
     public String s_faxToMail = "F";
     public String s_customPrompt = "P";
     public String s_ivr = "i";
 
     public String add_Inbound_Route_Interface = "Ext.getCmp('st-ir-name').up('inrouter-edit')";
-    public String destinationType = "st-ir-desttype";
-    public String destination = "st-ir-dest";
+
     public String list = "st-ir-trunkinfo";
 
     public SelenideElement name = $(By.id("st-ir-name-inputEl"));
     public SelenideElement DIDPatem = $(By.id("st-ir-didprefix-inputEl"));
-    public SelenideElement callIDPattem = $(By.xpath("st-ir-calleridprefix-inputEl"));
+    public SelenideElement callIDPattem = $(By.id("st-ir-calleridprefix-inputEl"));
 
-    public SelenideElement enableTimeCondition = $(By.id("st-ir-enabletimecondition-displayEl"));
+    public String enableTimeCondition ="st-ir-enabletimecondition";
     public SelenideElement addTimeCondition = $(By.id("st-ir-addtimecondition"));
-    public SelenideElement destination_button = $(By.id("st-ir-desttype-trigger-picker"));
-    public SelenideElement distinctiveRingtone = $(By.id("st-ir-ringtone-inputEl"));
-    public SelenideElement enableFaxDetection = $(By.id("st-ir-faxdetect-displayEl"));
-    public SelenideElement faxDestination_button = $(By.id("st-ir-faxto-trigger-picker"));
+    public String destinationType = "st-ir-desttype";
+    public String destination = "st-ir-dest";
+    public String enableFaxDetection ="st-ir-faxdetect";
+    public String faxDestination_button = "st-ir-faxto";
     public SelenideElement faxDestinationNumber = $(By.id("st-ir-faxdest-inputEl"));
     public SelenideElement destinationInput = $(By.id("st-ir-extensionrange-inputEl"));
 
@@ -47,18 +49,32 @@ public class Add_Inbound_Route {
 
 
 
-    public void SetTimeConditionTableviewDestination(int row, int column, String des) throws InterruptedException {
-        Thread.sleep(2000);
-        System.out.println("1231"+ "Ext.query('#'+Ext.query('#'+ Ext.query('#'+"+add_Inbound_Route_Interface+".down('tableview').id + ' [data-recordindex]')["+row+"].id + ' tr td')["+column+"].id + ' div div')[0].id");
+    public void SetTimeConditionTableviewDestination(int row, int column, String des)  {
+        ys_waitingTime(2000);
+        System.out.println("1231 "+ "Ext.query('#'+Ext.query('#'+ Ext.query('#'+"+add_Inbound_Route_Interface+".down('tableview').id + ' [data-recordindex]')["+row+"].id + ' tr td')["+column+"].id + ' div div')[0].id");
         String cellId = String.valueOf(return_executeJs("Ext.query('#'+Ext.query('#'+ Ext.query('#'+"+add_Inbound_Route_Interface+".down('tableview').id + ' [data-recordindex]')["+--row+"].id + ' tr td')["+column+"].id + ' div div')[0].id"));
+        System.out.println("1231 Ext.getCmp('"+cellId+"').setValue('"+des+"')");
         executeJs("Ext.getCmp('"+cellId+"').setValue('"+des+"')");
+
     }
 
-    public void SetTimeConditionTableviewDestition(int row, int column, int extIndex, String extName) throws InterruptedException {
-        Thread.sleep(2000);
+    public void SetTimeConditionTableviewDestition(int row, int column, String extName) {
+        ys_waitingTime(2000);
         System.out.println("456  "+ "Ext.query('#'+Ext.query('#'+ Ext.query('#'+"+add_Inbound_Route_Interface+".down('tableview').id + ' [data-recordindex]')["+row+"].id + ' tr td')["+column+"].id + ' div div')[0].id");
         String cellId = String.valueOf(return_executeJs("Ext.query('#'+Ext.query('#'+ Ext.query('#'+"+add_Inbound_Route_Interface+".down('tableview').id + ' [data-recordindex]')["+--row+"].id + ' tr td')["+column+"].id + ' div div')[0].id"));
         String id =  String.valueOf(listGetId(cellId,"name",extName)) ;
+        System.out.println(id);
+        System.out.println("Ext.getCmp('"+cellId+"').setValue('"+id+"')");
+        executeJs("Ext.getCmp('"+cellId+"').setValue('"+id+"')");
+    }
+
+//    目的地到分机时用改函数
+    public void SetTimeConditionTableviewDestitionEx(int row, int column, String extName) {
+        ys_waitingTime(2000);
+        System.out.println("...  "+ "Ext.query('#'+Ext.query('#'+ Ext.query('#'+"+add_Inbound_Route_Interface+".down('tableview').id + ' [data-recordindex]')["+row+"].id + ' tr td')["+column+"].id + ' div div')[0].id");
+        String cellId = String.valueOf(return_executeJs("Ext.query('#'+Ext.query('#'+ Ext.query('#'+"+add_Inbound_Route_Interface+".down('tableview').id + ' [data-recordindex]')["+--row+"].id + ' tr td')["+column+"].id + ' div div')[0].id"));
+        String id =  String.valueOf(listGetId(cellId,extensionList,extName)) ;
+        System.out.println(id);
         System.out.println("Ext.getCmp('"+cellId+"').setValue('"+id+"')");
         executeJs("Ext.getCmp('"+cellId+"').setValue('"+id+"')");
     }

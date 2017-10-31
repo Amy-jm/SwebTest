@@ -23,7 +23,7 @@ public class Paging_Intercom {
     public String grid = "Ext.getCmp('control-panel').down('paginggroup')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('paginggroup').down('loadmask')";
 
-    public SelenideElement paging_Intercom = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"Paging/Intercom\"]"));
+    public SelenideElement paging_Intercom = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[ text()='Paging/Intercom']"));
 
     /**
      * 功能按钮

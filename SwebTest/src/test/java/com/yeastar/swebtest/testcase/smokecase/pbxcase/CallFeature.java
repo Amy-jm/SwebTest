@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.testcase.smokecase.pbxcase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
@@ -13,25 +14,87 @@ import static com.yeastar.swebtest.driver.SwebDriver.*;
 /**
  * Created by Yeastar on 2017/7/17.
  */
-public class CallFeature {
+public class CallFeature extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {
         Reporter.infoBeforeClass("打开游览器并登录设备_CallFeatureTest"); //执行操作
-        initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
-        mySettings.close.click();
-        m_extension.showCDRClounm();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            mySettings.close.click();
+        }
+//        m_extension.showCDRClounm();
+    }
+    @BeforeClass
+    public void InitCallFeature(){
+        pageDeskTop.settings.click();
+        settings.callFeatures_panel.click();
+        ringGroup.ringGroup.click();
+        ys_waitingLoading(ringGroup.grid_Mask);
+        if(Integer.parseInt(String.valueOf(gridLineNum(ringGroup.grid))) != 0) {
+            gridSeleteAll(ringGroup.grid);
+            ringGroup.delete.click();
+            ringGroup.delete_yes.click();
+        }
+
+        queue.queue.click();
+        ys_waitingLoading(queue.grid_Mask);
+        if(Integer.parseInt(String.valueOf(gridLineNum(queue.grid))) != 0) {
+            gridSeleteAll(queue.grid);
+            queue.delete.click();
+            queue.delete_yes.click();
+        }
+        conference.conference.click();
+        ys_waitingLoading(conference.grid_Mask);
+        if(Integer.parseInt(String.valueOf(gridLineNum(conference.grid))) != 0) {
+            gridSeleteAll(conference.grid);
+            conference.delete.click();
+            conference.delete_yes.click();
+        }
+        pickupGroup.pickupGroup.click();
+        ys_waitingLoading(pickupGroup.grid_Mask);
+        if(Integer.parseInt(String.valueOf(gridLineNum(pickupGroup.grid))) != 0) {
+            gridSeleteAll(pickupGroup.grid);
+            pickupGroup.delete.click();
+            pickupGroup.delete_yes.click();
+        }
+
+        paging_intercom.paging_Intercom.click();
+        ys_waitingLoading(paging_intercom.grid_Mask);
+        if(Integer.parseInt(String.valueOf(gridLineNum(paging_intercom.grid))) != 0) {
+            gridSeleteAll(paging_intercom.grid);
+            paging_intercom.delete.click();
+            paging_intercom.delete_yes.click();
+        }
+
+        callFeatures.more.click();
+        callback.callback.click();
+        ys_waitingLoading(callback.grid_Mask);
+        if(Integer.parseInt(String.valueOf(gridLineNum(callback.grid))) != 0) {
+            gridSeleteAll(callback.grid);
+            callback.delete.click();
+            callback.delete_yes.click();
+        }
+        pinList.PINList.click();
+        ys_waitingLoading(pinList.grid_Mask);
+        if(Integer.parseInt(String.valueOf(gridLineNum(pinList.grid))) != 0) {
+            gridSeleteAll(pinList.grid);
+            pinList.delete.click();
+            pinList.delete_yes.click();
+        }
+        closeSetting();
     }
     @Test
     public void A_RingGroup() throws InterruptedException {
         Reporter.infoExec("添加RingGroup");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callFeatures_panel.click();
         ringGroup.ringGroup.click();
-        m_callFeature.addRingGroup("ringgoup1","",0,1100,1102   );
+        m_callFeature.addRingGroup("ringgoup1","","0",1100,1102   );
     }
 
     @Test
@@ -47,7 +110,7 @@ public class CallFeature {
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("添加conference");
         conference.conference.click();
-        m_callFeature.addConference("meet1");
+        m_callFeature.addConference("6400","meet1");
 
     }
 
@@ -68,7 +131,7 @@ public class CallFeature {
     public void E_PagingIntercom() throws InterruptedException {
         Reporter.infoExec("添加paging_Intercom");
         paging_intercom.paging_Intercom.click();
-        m_callFeature.addPagingIntercom("paging_Intercom",1100,1102);
+        m_callFeature.addPagingIntercom("paging_Intercom",6300,"",false,1100,1102);
     }
 
     @Test

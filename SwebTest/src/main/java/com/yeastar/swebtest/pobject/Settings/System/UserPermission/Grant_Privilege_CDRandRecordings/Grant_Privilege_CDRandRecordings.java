@@ -15,7 +15,7 @@ public class Grant_Privilege_CDRandRecordings {
     public String setPrivilegeAs_id = "st-up-type";
     public String user_id = "st-up-id";
 
-    public SelenideElement grant_Privilege_CDRandRecordings = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"CDR and Recordings\"]"));
+    public SelenideElement grant_Privilege_CDRandRecordings = $(By.xpath(".//div[starts-with(@id,\"userpermission-edit\")]//span[ text()=\"CDR and Recordings\"]"));
 
     public SelenideElement user = $(By.id("st-up-id-inputEl"));
     public SelenideElement setPrivilegeAs = $(By.id("st-up-type-trigger-picker"));

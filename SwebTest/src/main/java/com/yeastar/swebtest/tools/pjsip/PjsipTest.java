@@ -49,7 +49,7 @@ public class PjsipTest {
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
         System.out.println("After Register ..........");
         Thread.sleep(10000);
-        app.Pj_Make_Call_No_Answer(3000,3030,DEVICE_ASSIST_1);
+        app.Pj_Make_Call_No_Answer(3000,"3030",DEVICE_ASSIST_1);
 //        app.Pj_Make_Call_Auto_Answer(3000,3030,DEVICE_ASSIST_1,false);
         System.out.println("After Make Call No Answer");
         Thread.sleep(3000);
@@ -67,7 +67,7 @@ public class PjsipTest {
         pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_IP_LAN);
         System.out.println("After Register ..........");
         Thread.sleep(5000);
-        app.Pj_Make_Call_No_Answer(4000,4001, DEVICE_IP_LAN);
+        app.Pj_Make_Call_No_Answer(4000,"4001", DEVICE_IP_LAN);
         Thread.sleep(3000);
 //        app.Pj_Make_Call_Auto_Answer(4000,4001,DEVICE_IP_LAN,false);
         System.out.println("After Make Call No Answer");

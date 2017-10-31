@@ -1,10 +1,11 @@
 package com.yeastar.swebtest.tools.retry;
 
-import com.yeastar.swebtest.tools.retry.utils.ConfigReader;
 import org.apache.log4j.Logger;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+
+import static com.yeastar.swebtest.driver.DataReader.RETRY_COUNT;
 
 
 /**
@@ -18,11 +19,11 @@ public class TestngRetry implements IRetryAnalyzer {
 	private static int maxRetryCount;
 
 	static {
-		ConfigReader config = ConfigReader.getInstance();
-		maxRetryCount = config.getRetryCount();
+//		ConfigReader config = ConfigReader.getInstance();
+		maxRetryCount = Integer.valueOf(RETRY_COUNT);
 		logger.info("retrycount=" + maxRetryCount);
-		logger.info("sourceCodeDir=" + config.getSourceCodeDir());
-		logger.info("sourceCodeEncoding=" + config.getSrouceCodeEncoding());
+		logger.info("sourceCodeDir=" + "src");
+		logger.info("sourceCodeEncoding=" + "UTF-8");
 	}
 
 	public boolean retry(ITestResult result) {

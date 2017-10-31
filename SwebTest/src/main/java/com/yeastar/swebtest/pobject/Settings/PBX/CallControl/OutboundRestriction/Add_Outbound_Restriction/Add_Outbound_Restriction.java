@@ -14,9 +14,13 @@ public class Add_Outbound_Restriction {
     public SelenideElement timeLimit = $(By.id("st-constraint-limittime-inputEl"));
     public SelenideElement numberofCallsLimit = $(By.id("st-constraint-callamount-inputEl"));
 
-
+    public String list = "st-constraint-exteninfo";
+    public SelenideElement allExtensions = $(By.xpath(".//div[starts-with(@id,'constraint-edit-')]//label[text()='All Extensions']"));
+    public SelenideElement selectExtensions = $(By.xpath(".//div[starts-with(@id,'constraint-edit-')]//label[text()='Selected Extensions']"));
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'constraint-edit-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'constraint-edit-')]//span[text()='Cancel']"));
+
+
 
 }

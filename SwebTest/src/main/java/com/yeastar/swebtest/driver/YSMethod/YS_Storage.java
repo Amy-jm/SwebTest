@@ -3,6 +3,8 @@ package com.yeastar.swebtest.driver.YSMethod;
 import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 
+import java.util.ArrayList;
+
 import static com.yeastar.swebtest.driver.Config.addBulkExtensionsCallPermission;
 import static com.yeastar.swebtest.driver.Config.extensions;
 import static com.yeastar.swebtest.driver.Config.preference;
@@ -103,5 +105,40 @@ public class YS_Storage {
         executeJs("Ext.getCmp('st-storage-slotlog').setValue('"+preference.sdtf_CDR+"1')");
         executeJs("Ext.getCmp('st-storage-slotvm').setValue('netdisk-2')");
         preference.save.click();
+    }
+
+    /**
+     * 选择进行全局录音的外线、分机、会议室
+     * @param trunks：外线名称
+     * @param extensions：分机名称
+     * @param conference :会议室名称
+     * @throws InterruptedException
+     */
+    public void selectRecord(ArrayList trunks,ArrayList extensions, ArrayList conference) throws InterruptedException {
+        ys_waitingTime(10000);
+        if(!trunks.isEmpty())
+            if(trunks.get(0).equals("all")){
+                recording.rt_AddAllToSelect.click();
+                System.out.println("点击选择所有外线");
+            }else {
+                listSelect(recording.recordTrunks, trunkList, trunks);
+            }
+        if(!extensions.isEmpty())
+            if(extensions.get(0).equals("all")){
+                recording.re_AddAllToSelect.click();
+                System.out.println("点击选择所有分机");
+            }else{
+                listSelect(recording.recordExtensions,extensionList,extensions);
+             }
+        if(!conference.isEmpty())
+            if(conference.get(0).equals("all")){
+                recording.rc_AddAllToSelect.click();
+                System.out.println("点击选择所有会议室");
+            }else
+                listSelect(recording.recordConferences,nameList,conference);
+        Thread.sleep(1000);
+        recording.save.click();
+        ys_waitingMask();
+
     }
 }

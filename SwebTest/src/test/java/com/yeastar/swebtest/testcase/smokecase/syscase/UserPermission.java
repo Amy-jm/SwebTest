@@ -1,26 +1,23 @@
 package com.yeastar.swebtest.testcase.smokecase.syscase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static com.yeastar.swebtest.driver.Config.*;
-import static com.yeastar.swebtest.driver.Config.mySettings;
-import static com.yeastar.swebtest.driver.Config.pageDeskTop;
-import static com.yeastar.swebtest.driver.SwebDriver.*;
 
 /**
  * Created by Yeastar on 2017/8/16.
  */
-public class UserPermission {
+public class UserPermission extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
 
         Reporter.infoBeforeClass("打开游览器并登录设备_UserPermission"); //执行操作
-        initialDriver(CHROME,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
@@ -77,7 +74,7 @@ public class UserPermission {
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.click();
         settings.userPermission_panel.click();
-        ys_waitingLoading(userPermission.gridLoading);
+        ys_waitingLoading(userPermission.grid_Mask);
         m_userPermission.addUserPermission(1101,grant_privilege_application.privilegeAs_Custom);
         gridClick(userPermission.grid,2,userPermission.gridColumnEdit);
         ys_waitingMask();
@@ -85,7 +82,7 @@ public class UserPermission {
         grant_privilege_application.grant_Privilege_Application.click();
         grant_privilege_application.autoProvisioning.click();
         grant_privilege_application.save.click();
-        ys_waitingLoading(userPermission.gridLoading);
+        ys_waitingLoading(userPermission.grid_Mask);
 
         String username= String.valueOf(gridContent(userPermission.grid,2,userPermission.gridColumn_User)) ;
         String role = String.valueOf(gridContent(userPermission.grid,2,userPermission.gridColumn_Role));

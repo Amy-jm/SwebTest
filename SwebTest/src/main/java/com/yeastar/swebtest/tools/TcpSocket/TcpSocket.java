@@ -3,6 +3,8 @@ package com.yeastar.swebtest.tools.TcpSocket;
 import org.testng.annotations.Test;
 
 import java.io.*;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 
 /**
@@ -18,7 +20,7 @@ import static com.yeastar.swebtest.driver.Config.DEVICE_IP_LAN;
 public class TcpSocket {
 //    public static final String IP_ADDR = DEVICE_IP_LAN;//服务器地址
     public static final int PORT = 5038;//服务器端口号
-
+    public static int TIMEOUT = 40000;
     public static void main1(String[] args) {
         System.out.println("客户端启动...");
         System.out.println("当接收到服务器端字符为 \"OK\" 的时候, 客户端将终止\n");
@@ -108,7 +110,6 @@ public class TcpSocket {
                         break;
                 }
             }
-            System.out.println("aaaaaaa");
             //4.关闭资源
             br.close();
 //            is.close();
@@ -131,10 +132,16 @@ public class TcpSocket {
     private BufferedReader br;
     private  PrintWriter pw;
     public void connectToDevice(){
+        connectToDevice(40000);
+    }
+    public void connectToDevice(int mssec){
         try {
             //1.建立客户端socket连接，指定服务器位置及端口
-            socket =new Socket(DEVICE_IP_LAN,PORT);
-            socket.setSoTimeout(40000);
+            socket =new Socket();
+            SocketAddress socketAddress = new InetSocketAddress(DEVICE_IP_LAN,PORT);
+            socket.connect(socketAddress, 100);//连不上的0.1毫秒断掉连接
+            socket.setSoTimeout(mssec);//响应阻塞超时
+            TIMEOUT = mssec;
             //2.得到socket读写流
             pw=new PrintWriter(socket.getOutputStream());
             //得到输入流
@@ -153,16 +160,13 @@ public class TcpSocket {
     /**
      *
      * @param KeyWord
-     * @param Duration  默认30S
      * @return
 
      */
-    public boolean getAsteriskInfo(String KeyWord,int Duration) {
+    public boolean getAsteriskInfo(String KeyWord) {
         //输入流
-        System.out.println("In getAsteriskInfo");
-        if(Duration == -1){
-            Duration = 30;
-        }
+        int  Duration = TIMEOUT/1000;
+
         Date date  = new Date();
         long time = date.getTime();
         boolean ret = false;
@@ -190,7 +194,7 @@ public class TcpSocket {
                 }
 
 
-                if(currentTime/1000-time/1000 == Duration){
+                if(currentTime/1000-time/1000 > Duration){
                     System.out.println("TcpSocket Check Timeout");
                     break;
                 }
@@ -218,13 +222,10 @@ public class TcpSocket {
         }
 
     }
-    public boolean getAsteriskInfo(String KeyWord) {
-        return  getAsteriskInfo(KeyWord,-1);
-    }
     @Test
     public void test() throws IOException, InterruptedException {
-        connectToDevice();
-        getAsteriskInfo("fff",15);
+        connectToDevice(10000);
+        getAsteriskInfo("fff");
         System.out.println("read out ");
 //        getAsteriskInfo();
 

@@ -21,6 +21,7 @@ public class Me_CDRandRecording {
     public int gridColumn_CommunicationType =6;
     public int     gridColumn_CallIp =7;
 
+    public String gridColumnColor_Gray = "gray";
     public int gridPlay = 0;
     public int gridDownload = 1;
     public int gridDelete = 2;

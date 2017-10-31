@@ -22,7 +22,7 @@ public class DISA {
     public String grid_Mask = "Ext.getCmp('control-panel').down('disa').down('loadmask')";
 
 
-    public SelenideElement DISA = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"DISA\"]"));
+    public SelenideElement DISA = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[ text()='DISA']"));
     /**
      * 功能按钮
      */

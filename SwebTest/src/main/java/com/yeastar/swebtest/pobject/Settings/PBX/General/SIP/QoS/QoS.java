@@ -9,14 +9,14 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class QoS {
-    public SelenideElement QoS = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"QoS\"]"));
+    public SelenideElement QoS = $(By.xpath(".//div[starts-with(@id,\"general\")]//div[starts-with(@id,\"sip\")]//span[text()='Qos']"));
 
-    public SelenideElement ToSSIP = $(By.id("st-sip-tossip-trigger-picker"));
-    public SelenideElement ToSAudio = $(By.id("st-sip-tosaudio-trigger-picker"));
-    public SelenideElement ToSVideo = $(By.id("st-sip-tosvideo-trigger-picker"));
-    public SelenideElement CoSSIP = $(By.id("st-sip-cossip-trigger-picker"));
-    public SelenideElement CoSAudio = $(By.id("st-sip-cosaudio-trigger-picker"));
-    public SelenideElement CoSVideo = $(By.id("st-sip-cosvideo-trigger-picker"));
+    public String ToSSIP = "st-sip-tossip-trigger-picker";
+    public String  ToSAudio = "st-sip-tosaudio";
+    public String ToSVideo = "st-sip-tosvideo";
+    public String CoSSIP = "st-sip-cossip";
+    public String CoSAudio = "st-sip-cosaudio";
+    public String CoSVideo = "st-sip-cosvideo";
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'sip-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'sip-')]//span[text()='Cancel']"));

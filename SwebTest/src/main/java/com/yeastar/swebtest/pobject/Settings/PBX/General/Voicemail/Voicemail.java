@@ -14,32 +14,32 @@ public class Voicemail {
     /**
      * Message Options
      */
-    public SelenideElement maxMessagesperFolder = $(By.id("st-voicemail-maxmsgcount-trigger-picker"));
-    public SelenideElement maxMessagesTime = $(By.id("st-voicemail-maxmsgduration-trigger-picker"));
-    public SelenideElement minMessagesTime = $(By.id("st-voicemail-minmsgduration-trigger-picker"));
+    public String maxMessagesperFolder = "st-voicemail-maxmsgcount";
+    public String maxMessagesTime = "st-voicemail-maxmsgduration";
+    public String minMessagesTime = "st-voicemail-minmsgduration";
 
-    public SelenideElement deleteVoicemail = $(By.id("st-voicemail-deletevm-displayEl"));
-    public SelenideElement askCallertoDial5 = $(By.id("st-voicemail-press5-displayEl"));
-    public SelenideElement opetatorBreakoutfromVoicemail = $(By.id("st-voicemail-press0to-displayEl"));
-    public SelenideElement destination = $(By.id("st-voicemail-press0dest-trigger-picker"));
+    public String deleteVoicemail = "st-voicemail-deletevm";
+    public String askCallertoDial5 = "st-voicemail-press5";
+    public String opetatorBreakoutfromVoicemail = "st-voicemail-press0to";
+    public String destination = "st-voicemail-press0dest";
 
     /**
      * Greeting Options
      */
 
-    public SelenideElement busyPrompt = $(By.id("st-voicemail-busygreet-trigger-picker"));
-    public SelenideElement unavailablePrompt = $(By.id("st-voicemail-unavgreet-trigger-picker"));
-    public SelenideElement leaveaMeaagePrompt = $(By.id("st-voicemail-vmprompt-displayEl"));
-    public SelenideElement dial5Prompt = $(By.id("st-voicemail-normalgreet-displayEl"));
+    public String busyPrompt = "st-voicemail-busygreet";
+    public String unavailablePrompt = "st-voicemail-unavgreet";
+    public String leaveaMeaagePrompt = "st-voicemail-vmprompt";
+    public String dial5Prompt = "st-voicemail-normalgreet";
 
     /**
      * Playback Options
      */
 
-    public SelenideElement announceMessageCalledID = $(By.id("st-voicemail-saycallerid-displayEl"));
-    public SelenideElement announceMessageDuration = $(By.id("st-voicemail-sayduration-displayEl"));
-    public SelenideElement announceMessageArrivalTime = $(By.id("st-voicemail-envelope-displayEl"));
-    public SelenideElement allowUserstoReviewMessages = $(By.id("st-voicemail-review-displayEl"));
+    public String announceMessageCalledID = "st-voicemail-saycallerid";
+    public String announceMessageDuration = "st-voicemail-sayduration";
+    public String announceMessageArrivalTime = "st-voicemail-envelope";
+    public String allowUserstoReviewMessages = "st-voicemail-review";
 
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'voicemail-')]//span[text()='Save']"));

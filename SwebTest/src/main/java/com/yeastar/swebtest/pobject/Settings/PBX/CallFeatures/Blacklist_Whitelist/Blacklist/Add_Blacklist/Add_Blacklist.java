@@ -16,7 +16,7 @@ public class Add_Blacklist {
 
     public SelenideElement name = $(By.id("st-bw-name-inputEl"));
     public SelenideElement number = $(By.id("st-bw-numbers-inputEl"));
-    public SelenideElement type = $(By.xpath("st-bw-type-trigger-picker"));
+    public String type = "st-bw-type";
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'blacklist-edit-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'blacklist-edit-')]//span[text()='Cancel']"));

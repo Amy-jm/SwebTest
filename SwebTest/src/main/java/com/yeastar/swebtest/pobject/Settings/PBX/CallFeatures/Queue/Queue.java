@@ -21,7 +21,7 @@ public class Queue {
     public String grid = "Ext.getCmp('control-panel').down('queue')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('queue').down('loadmask')";
 
-    public SelenideElement queue = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"Queue\"]"));
+    public SelenideElement queue = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[ text()='Queue']"));
 
     /**
      * 功能按钮

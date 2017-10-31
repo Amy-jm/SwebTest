@@ -16,8 +16,8 @@ import org.testng.annotations.Test;
 public class GridTest extends SwebDriver {
     @Test
     public void LogTest() throws InterruptedException {
-        initialDriver(CHROME,"http://192.168.4.99","http://192.168.3.13:5555/wd/hub");
-        //initialDriver(CHROME,"http://192.168.4.99");
+        initialDriver(BROWSER,"http://192.168.4.99","http://192.168.3.13:5555/wd/hub");
+        //initialDriver(BROWSER,"http://192.168.4.99");
         login("6205","GaGa6205");
         Thread.sleep(5000);
         logout();

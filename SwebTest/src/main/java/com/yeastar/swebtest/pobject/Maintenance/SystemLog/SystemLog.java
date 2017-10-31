@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class SystemLog {
 
     public String grid = "Ext.getCmp('maintance').down('systemlog').down('tableview')";
-    public String gridLoading = "Ext.getCmp('maintance').down('systemlog').down('loadmask')";
+    public String grid_Mask = "Ext.getCmp('maintance').down('systemlog').down('loadmask')";
     public int gridColumn_Checked = 0;
     public int gridColumn_Name = 1;
     public int gridDownload = 0;

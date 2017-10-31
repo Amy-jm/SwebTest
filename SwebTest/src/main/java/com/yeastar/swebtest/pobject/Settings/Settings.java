@@ -27,6 +27,7 @@ public class Settings {
     public SelenideElement network_panel = $(By.id("menunetwork"));
     public SelenideElement security_panel = $(By.id("menusecurity"));
     public SelenideElement userPermission_panel = $(By.id("menuuserpermission"));
+    public SelenideElement menumultisite_panel = $(By.id("menumultisite"));
     public SelenideElement dateTime_panel = $(By.id("menutime"));
     public SelenideElement email_panel = $(By.id("menuemail"));
     public SelenideElement storage_panel = $(By.id("menustorage"));
@@ -41,34 +42,35 @@ public class Settings {
     /**
      * TreePBX，PBX如需使用需双击
      */
-    public SelenideElement PBX_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"PBX\"]"));
-    public SelenideElement extensions_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Extensions\"]"));
-    public SelenideElement trunks_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Trunks\"]"));
-    public SelenideElement callControl_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Call Control\"]"));
-    public SelenideElement callFeatures_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Call Features\"]"));
-    public SelenideElement voicePrompts_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Voice Prompts\"]"));
-    public SelenideElement general_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"General\"]"));
-    public SelenideElement recording_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Recording\"]"));
-    public SelenideElement emergencyNumber_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Emergency Number\"]"));
+    public SelenideElement PBX_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"PBX\"]"));
+    public SelenideElement extensions_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()='Extensions']"));
+    public SelenideElement trunks_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()='Trunks']"));
+    public SelenideElement multisiteInterconnect_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()='Multisite Interconnect']"));
+    public SelenideElement callControl_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Call Control\"]"));
+    public SelenideElement callFeatures_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Call Features\"]"));
+    public SelenideElement voicePrompts_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Voice Prompts\"]"));
+    public SelenideElement general_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"General\"]"));
+    public SelenideElement recording_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Recording\"]"));
+    public SelenideElement emergencyNumber_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Emergency Number\"]"));
 
     /**
      * TreeSystem，System如需使用需双击
      */
-    public SelenideElement system_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"System\"]"));
-    public SelenideElement network_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Network\"]"));
-    public SelenideElement security_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Security\"]"));
-    public SelenideElement userPermission_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"User Permission\"]"));
-    public SelenideElement dateTime_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Date & Time\"]"));
-    public SelenideElement email_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Email\"]"));
-    public SelenideElement storage_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Storage\"]"));
-    public SelenideElement hotStandby_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Hot Standby\"]"));
+    public SelenideElement system_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"System\"]"));
+    public SelenideElement network_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Network\"]"));
+    public SelenideElement security_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Security\"]"));
+    public SelenideElement userPermission_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"User Permission\"]"));
+    public SelenideElement dateTime_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Date & Time\"]"));
+    public SelenideElement email_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Email\"]"));
+    public SelenideElement storage_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Storage\"]"));
+    public SelenideElement hotStandby_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Hot Standby\"]"));
 
     /**
      * TreeEventCenter，EventCenter如需使用需双击
      */
-    public SelenideElement eventCenter_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Event Center\"]"));
-    public SelenideElement eventSettings_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Event Settings\"]"));
-    public SelenideElement eventLog_tree = $(By.xpath(".//span[starts-with(@class,\"x-tree-node-text\") and text()=\"Event Log\"]"));
+    public SelenideElement eventCenter_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Event Center\"]"));
+    public SelenideElement eventSettings_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Event Settings\"]"));
+    public SelenideElement eventLog_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Event Log\"]"));
 
     /**
      * 最小化，最大化，关闭

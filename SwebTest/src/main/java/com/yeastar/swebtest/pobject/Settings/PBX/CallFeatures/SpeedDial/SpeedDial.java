@@ -15,13 +15,14 @@ public class SpeedDial {
 
     public int gridEdit = 0;
     public int gridDelete = 1;
+    public int gridcheck =0;
 
 
-    public String grid = "Ext.getCmp('control-panel').down('speeddial').down('tableview')";
+    public String grid = "Ext.getCmp('control-panel').down('speeddial')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('speeddial').down('loadmask')";
 
 
-    public SelenideElement speedDial = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"Speed Dial\"]"));
+    public SelenideElement speedDial = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[ text()='Speed Dial']"));
 
     /**
      * 功能按钮
@@ -33,7 +34,7 @@ public class SpeedDial {
     public SelenideElement export = $(By.xpath(".//div[starts-with(@id,'speeddial-')]//span[text()='Export']"));
 
     public SelenideElement speedDialPrefix = $(By.id("st-speeddial-speeddial-inputEl"));
-    public SelenideElement speedDialPrefix_button = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
+    public SelenideElement speedDialPrefix_button = $(By.xpath(".//div[starts-with(@id,'speeddial')]//span[ text()='Save']"));
     /**
      * 删除功能
      */

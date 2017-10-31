@@ -9,18 +9,17 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class Preferences {
-    public SelenideElement preferences = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Preferences\"]"));
+    public SelenideElement preferences = $(By.xpath(".//div[starts-with(@id,'general')]//span[ text()='Preferences']"));
 
-    public SelenideElement maxCallDuration = $(By.id("st-general-maxduration-inputEl"));
-    public SelenideElement attendedTransferCalledID = $(By.id("st-general-transfercid-trigger-picker"));
-    public SelenideElement flashEvent = $(By.id("st-general-flashfunction-trigger-picker"));
+    public String maxCallDuration = "st-general-maxduration";
+    public String attendedTransferCalledID = "st-general-transfercid";
+    public String flashEvent = "st-general-flashfunction";
 
-    public SelenideElement virtualRingBackTone = $(By.id("st-general-gsmringtone-displayEl"));
+    public String virtualRingBackTone = "st-general-gsmringtone";
+    public String distinctiveCallerID = "st-general-distinctivecid";
 
-    public SelenideElement distinctiveCallerID = $(By.id("st-general-distinctivecid-displayEl"));
-
-    public SelenideElement FXOMode = $(By.id("st-general-fxomode-trigger-picker"));
-    public SelenideElement toneRegion = $(By.id("st-general-toneregion-trigger-picker"));
+    public String FXOMode = "st-general-fxomode";
+    public String toneRegion = "st-general-toneregion";
     public SelenideElement DTMFDuration = $(By.id("st-general-tonelength-inputEl"));
     public SelenideElement DTMFGap = $(By.id("st-general-toneinterval-inputEl"));
 

@@ -9,19 +9,19 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class Advanced {
-    public SelenideElement advanced = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Advanced\"]"));
+    public SelenideElement advanced = $(By.xpath(".//div[starts-with(@id,\"general\")]//div[starts-with(@id,\"sip\")]//span[text()='Advanced']"));
 
-    public SelenideElement allowRTPRe_invite = $(By.id("st-sip-canreinvite-trigger-picker"));
-    public SelenideElement getCallerIDFrom = $(By.id("st-sip-getfrom-trigger-picker"));
+    public String allowRTPRe_invite = "st-sip-canreinvite";
+    public String getCallerIDFrom = "st-sip-getfrom";
     public SelenideElement userAgent = $(By.id("st-sip-useragent-inputEl"));
-    public SelenideElement getDIDFrom = $(By.id("st-sip-getto-trigger-picker"));
-    public SelenideElement sendRemotePartyID = $(By.id("st-sip-sendrpid-displayEl"));
-    public SelenideElement _100rel = $(By.id("st-sip-sip100rel-displayEl"));
-    public SelenideElement sendPAssertedIdentify = $(By.id("st-sip-sendpai-displayEl"));
-    public SelenideElement allowGuest = $(By.id("st-sip-allowguest-displayEl"));
-    public SelenideElement sendDiversionID = $(By.id("st-sip-diversionid-displayEl"));
-    public SelenideElement supportMessageRequest = $(By.id("st-sip-supportmessage-displayEl"));
-    public SelenideElement allBusyModeforSIPForking = $(By.id("st-sip-sipforking-displayEl"));
+    public String getDIDFrom ="st-sip-getto";
+    public String sendRemotePartyID = "st-sip-sendrpid";
+    public String _100rel ="st-sip-sip100rel";
+    public String sendPAssertedIdentify ="st-sip-sendpai";
+    public String allowGuest ="st-sip-allowguest";
+    public String sendDiversionID ="st-sip-diversionid";
+    public String supportMessageRequest ="st-sip-supportmessage";
+    public String allBusyModeforSIPForking ="st-sip-sipforking";
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'sip-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'sip-')]//span[text()='Cancel']"));

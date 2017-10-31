@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class Import_DOD {
     public SelenideElement extensionFile = $(By.id("st-trunk-filename-inputEl"));
     public SelenideElement browse = $(By.id("st-trunk-filename-button-fileInputEl"));
-    public SelenideElement Import = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Import\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement Import = $(By.xpath(".//div[starts-with(@id,'trunkdod-impor')]//span[ text()='Import']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'trunkdod-impor')]//span[ text()='Cancel']"));
 
 }

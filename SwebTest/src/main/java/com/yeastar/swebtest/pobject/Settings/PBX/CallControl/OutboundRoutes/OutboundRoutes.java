@@ -23,7 +23,7 @@ public class OutboundRoutes {
     public int gridButtom = 5;
 
 
-    public SelenideElement outboundRoutes = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Outbound Routes\"]"));
+    public SelenideElement outboundRoutes = $(By.xpath(".//div[starts-with(@id,\"callcontrol\")]//span[ text()=\"Outbound Routes\"]"));
 
     /**
      * 功能按钮

@@ -13,10 +13,11 @@ public class Add_VoIP_Trunk_Basic {
     public int  PeerToPeer = 2;
 
 
-    public SelenideElement basic = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Basic\"]"));
+    public SelenideElement basic = $(By.xpath(".//div[starts-with(@id,\"editvoip\")]//span[text()=\"Basic\"]"));
 
-    public SelenideElement trunkStatus = $(By.id("trunk-status-inputEl"));
-    public SelenideElement protocol = $(By.id("type-inputEl"));
+    public String type ="trunk-itsptype";
+    public String trunkStatus = "trunk-status";
+    public String protocol = "type";
     public SelenideElement providerName = $(By.id("trunkname-inputEl"));
     public SelenideElement hostname = $(By.id("hostname-inputEl"));
     public SelenideElement hostnamePort = $(By.id("hostport-inputEl"));
@@ -24,18 +25,18 @@ public class Add_VoIP_Trunk_Basic {
     public SelenideElement username = $(By.id("username-inputEl"));
     public SelenideElement authenticationName = $(By.id("ysauth-inputEl"));
     public SelenideElement calledIDNumber = $(By.id("globaldod-inputEl"));
-    public SelenideElement trunkType = $(By.id("trunktype-inputEl"));
-    public SelenideElement transport = $(By.id("transport-inputEl"));
+    public String trunkType = "trunktype";
+    public String transport = "transport";
     public SelenideElement password = $(By.id("secret-inputEl"));
     public SelenideElement fromUser = $(By.id("fromuser-inputEl"));
     public SelenideElement callerIDName = $(By.id("calleridname-inputEl"));
-    public SelenideElement enableProxyServer = $(By.id("enableproxy-displayEl"));
+    public String enableProxyServer = "enableproxy-displayEl";
     public SelenideElement outboundProxyServer = $(By.id("proxyserver-inputEl"));
     public SelenideElement outboundProxyServerPort = $(By.id("proxyport-inputEl"));
-    public SelenideElement enableSLA = $(By.id("enablesla-displayEl"));
+    public String enableSLA = "enablesla-displayEl";
 
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(" .//div[starts-with(@id,'editvoip')]//span[ text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'editvoip')]//span[text()='Cancel']"));
 
 }

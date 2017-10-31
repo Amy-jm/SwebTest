@@ -10,13 +10,13 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class Add_Emergency_Number {
 
-    public String selectTrunk = "trunk0";
+    public String trunkSelect = "trunk0";
     public String selectExtension = "admin0";
 
     public SelenideElement emergencyNumber = $(By.id("st-emergency-number-inputEl"));
     public SelenideElement trunk = $(By.id("prefix0-inputEl"));
-    public SelenideElement trunk_button = $(By.id("trunk0-trigger-picker"));
-    public SelenideElement notification = $(By.id("admin0-trigger-picker"));
+    public SelenideElement trunkPrepend = $(By.id("prefix0-inputEl"));
+    public String notification = "admin0";
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'emergency-edit-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'emergency-edit-')]//span[text()='Cancel']"));

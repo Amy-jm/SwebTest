@@ -13,7 +13,7 @@ public class Grant_Privilege_Application {
     public String privilegeAs_Administrator = "admin";
     public String privilegeAs_Custom = "custom";
 
-    public SelenideElement grant_Privilege_Application = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Application\"]"));
+    public SelenideElement grant_Privilege_Application = $(By.xpath(".//div[starts-with(@id,\"userpermission-edit\")]//span[ text()=\"Application\"]"));
 
     public SelenideElement user = $(By.id("st-up-id-inputEl"));
     public String user_id = "st-up-id";

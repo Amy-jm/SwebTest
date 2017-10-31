@@ -10,13 +10,13 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class SystemPrompt {
     public String grid = "Ext.getCmp('control-panel').down('systemprompt').down('grid')";
-    public String gridLoading = "Ext.getCmp('control-panel').down('systemprompt').down('grid').down('loadmask')";
+    public String grid_Mask = "Ext.getCmp('control-panel').down('systemprompt').down('grid').down('loadmask')";
 
     public int Default = 0;
     public int gridColumn_Language = 1;
     public int gridDelete = 0;
 
-    public SelenideElement systemPrompt = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"System Prompt\"]"));
+    public SelenideElement systemPrompt = $(By.xpath(".//div[starts-with(@id,'prompt')]//span[ text()='System Prompt']"));
 
     public SelenideElement file = $(By.id("st-sp-promptfile-inputEl"));
     public SelenideElement browse = $(By.id("st-sp-promptfile-trigger-filebutton"));

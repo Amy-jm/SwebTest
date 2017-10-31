@@ -4,7 +4,6 @@ import static com.yeastar.swebtest.driver.Config.extensionList;
 import static com.yeastar.swebtest.driver.Config.grant_privilege_application;
 import static com.yeastar.swebtest.driver.Config.userPermission;
 import static com.yeastar.swebtest.driver.SwebDriver.*;
-import static com.yeastar.swebtest.driver.SwebDriver.gridContent;
 
 /**
  * Created by Yeastar on 2017/8/17.
@@ -15,11 +14,11 @@ public class Ys_UserPermission {
         userPermission.add.click();
         ys_waitingMask();
         ys_waitingTime(8000);
-        comboboxSelect(grant_privilege_settings.user_id,extensionList,String.valueOf(userNum));
+        comboboxSet(grant_privilege_settings.user_id,extensionList,String.valueOf(userNum));
         if(privilegeAs.equals(grant_privilege_settings.privilegeAs_Administrator)){
-            setCombobox(grant_privilege_settings.setPrivilegeAs_id,grant_privilege_settings.privilegeAs_Administrator);
+            comboboxSelect(grant_privilege_settings.setPrivilegeAs_id,grant_privilege_settings.privilegeAs_Administrator);
         }else if(privilegeAs.equals(grant_privilege_settings.privilegeAs_Custom)){
-            setCombobox(grant_privilege_settings.setPrivilegeAs_id,grant_privilege_settings.privilegeAs_Custom);
+            comboboxSelect(grant_privilege_settings.setPrivilegeAs_id,grant_privilege_settings.privilegeAs_Custom);
         }
 
         grant_privilege_application.save.click();

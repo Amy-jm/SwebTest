@@ -14,7 +14,11 @@ public class Add_Paging_Intercom {
 
     public SelenideElement number = $(By.id("st-paginggroup-number-inputEl"));
     public SelenideElement name = $(By.id("st-paginggroup-name-inputEl"));
-    public SelenideElement type = $(By.id("st-paginggroup-duplex-trigger-picker"));
+    public String type = "st-paginggroup-duplex";
+    public String paging1way="paging";
+    public String paging2way = "intercom";
+    public String answers = "st-paginggroup-enablekeyhanup";
+//    public SelenideElement answers = $(By.id("st-paginggroup-enablekeyhanup-displayEl"));
 
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'paginggroup-edit-')]//span[text()='Save']"));

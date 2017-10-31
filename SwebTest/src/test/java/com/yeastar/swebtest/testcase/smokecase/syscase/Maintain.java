@@ -1,32 +1,26 @@
 package com.yeastar.swebtest.testcase.smokecase.syscase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
-import cucumber.api.java.ro.Si;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.security.Signature;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static com.yeastar.swebtest.driver.Config.*;
-import static com.yeastar.swebtest.driver.Config.mySettings;
-import static com.yeastar.swebtest.driver.Config.pageDeskTop;
-import static com.yeastar.swebtest.driver.SwebDriver.*;
 
 /**
  * Created by Yeastar on 2017/8/18.
  */
-public class Maintain {
+public class Maintain extends SwebDriver {
     int backUpRow = 0;
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
 
         Reporter.infoBeforeClass("打开游览器并登录设备_Maintain"); //执行操作
-        initialDriver(CHROME,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
@@ -90,7 +84,7 @@ public class Maintain {
         Reporter.infoExec("删除备份文件"); //执行操作
         pageDeskTop.maintenance.click();
         maintenance.backupandRestore.click();
-        ys_waitingLoading(backupandRestore.gridLoading);
+        ys_waitingLoading(backupandRestore.grid_Mask);
         gridClick(backupandRestore.grid,backUpRow,backupandRestore.gridDelete);
         backupandRestore.delete_yes.click();
         ys_apply();
@@ -192,7 +186,7 @@ public class Maintain {
         String operation = String.valueOf(gridContent(operationLog.grid,1,operationLog.gridColumn_Operation));
         String detials = String.valueOf(gridContent(operationLog.grid,1,operationLog.gridColumn_Details));
         System.out.println("user "+user+" operation "+operation+ " detials "+detials);
-        YsAssert.assertEquals(user,"admin","操作日志User");
+        YsAssert.assertEquals(user,LOGIN_USERNAME,"操作日志User");
 //        YsAssert.assertEquals(operation,"Extensions: Add");
         YsAssert.assertInclude(detials,"Extension: 4000");
     }
@@ -219,7 +213,7 @@ public class Maintain {
         settings.security_tree.click();
         service.service.click();
         ys_waitingTime(6666);
-        setCombobox(service.protocol_id,service.HTTPS);
+        comboboxSelect(service.protocol,service.HTTPS);
         service.save.click();
 
     }

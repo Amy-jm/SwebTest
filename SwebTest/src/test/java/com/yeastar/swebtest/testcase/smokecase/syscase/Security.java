@@ -1,27 +1,23 @@
 package com.yeastar.swebtest.testcase.smokecase.syscase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static com.yeastar.swebtest.driver.Config.*;
-import static com.yeastar.swebtest.driver.Config.mySettings;
-import static com.yeastar.swebtest.driver.Config.pageDeskTop;
-import static com.yeastar.swebtest.driver.SwebDriver.*;
-
 /**
  * Created by Yeastar on 2017/8/16.
  */
-public class Security {
+public class Security extends SwebDriver {
 
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
 
         Reporter.infoBeforeClass("打开游览器并登录设备_Security"); //执行操作
-        initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
@@ -39,10 +35,10 @@ public class Security {
         settings.security_panel.click();
         service.service.click();
         ys_waitingTime(6666);
-        setCombobox(service.protocol_id,service.HTTP);
+        comboboxSelect(service.protocol,service.HTTP);
 
-        if(String.valueOf(return_executeJs("Ext.getCmp('"+service.enableSSH_check_id+"').getValue()")).equals("false")){
-            setCheckBox(service.enableSSH_check_id,true);
+        if(String.valueOf(return_executeJs("Ext.getCmp('"+service.enableSSH_check +"').getValue()")).equals("false")){
+            setCheckBox(service.enableSSH_check,true);
             service.secure_OK.click();
         }
         boolean sshPortChange = false;

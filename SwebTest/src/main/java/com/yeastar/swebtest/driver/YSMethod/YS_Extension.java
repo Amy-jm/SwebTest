@@ -2,6 +2,7 @@ package com.yeastar.swebtest.driver.YSMethod;
 
 import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
+import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.openqa.selenium.By;
 
@@ -64,6 +65,7 @@ public class YS_Extension extends SwebDriver{
             }
             addExtensionBasic.FXS.click();
             executeJs("Ext.getCmp('pbxport').setValue('"+port+"')");
+
         }
         addExtensionBasic.extensions.setValue(String.valueOf(username));
         addExtensionBasic.callerID.setValue(String.valueOf(username));
@@ -145,14 +147,16 @@ public class YS_Extension extends SwebDriver{
     public void addSipExtension(int username, String password) {
 
         extensions.add.shouldBe(Condition.exist).click();
-        ys_waitingMask();
         ys_waitingTime(3000);
+        ys_waitingMask();
+
         setGeneralInfo(username,password, null);
-        addExtensionAdvanced.advanced.click();
-        addExtensionAdvanced.registerRemotely.click();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            addExtensionAdvanced.advanced.click();
+            setCheckBox(addExtensionAdvanced.registerRemotely,true);
+        }
         addExtensionBasic.save.click();
         ys_waitingLoading(extensions.grid_Mask);
-//        closeSettingWindow();
     }
     /**
      * 创建FXS分机
@@ -162,8 +166,9 @@ public class YS_Extension extends SwebDriver{
         extensions.add.shouldBe(Condition.exist).click();
 
         setGeneralInfo(username,password,port);
+
         addExtensionAdvanced.advanced.click();
-        addExtensionAdvanced.registerRemotely.click();
+        setCheckBox(addExtensionAdvanced.registerRemotely,true);
         addExtensionBasic.save.click();
         ys_waitingLoading(extensions.grid_Mask);
 
@@ -176,12 +181,13 @@ public class YS_Extension extends SwebDriver{
     public void addBulkExtensions(int startExension, int createNum, int registPwdWay, String registPwd, int userPwdWay, String userPwd) throws InterruptedException {
 
         extensions.bulkAdd.click();
-//        Thread.sleep(6000);
         ys_waitingMask();
         setBulkGeneralInfo(startExension,createNum,registPwdWay,registPwd,userPwdWay,userPwd);
-        addExtensionAdvanced.advanced.click();
-        addExtensionAdvanced.registerRemotely.click();
-        addBulkExtensionsBasic.save.click();
+        addBulkExtensionsAdvanced.advanced.click();
+        setCheckBox(addExtensionAdvanced.registerRemotely,true);
+//        addExtensionAdvanced.advanced.click();
+//        addExtensionAdvanced.registerRemotely.click();
+        addBulkExtensionsAdvanced.save.click();
 
         ys_waitingLoading(extensions.grid_Mask);
 
@@ -191,7 +197,7 @@ public class YS_Extension extends SwebDriver{
             pjsip.Pj_CreateAccount(startExension+i,registPwd,"UDP",Integer.valueOf(lineAfterAdd));
         }
         Thread.sleep(500);
-        YsAssert.assertEquals(actual,String.valueOf(startExension+createNum-1));
+        YsAssert.assertEquals(actual,String.valueOf(startExension+createNum-1),"批量创建分机");
     }
     /**
      * 删除分机
@@ -208,11 +214,13 @@ public class YS_Extension extends SwebDriver{
     /**
      * 导入分机
      */
-    public void ImportExtensions(String path){
+    public void ImportExtensions(String file){
 
         extensions.Import.click();
-
-        extensions.ImportExtension_Input.setValue(path);
+        importExtension.browse.click();
+        importFile(EXPORT_PATH +file);
+        importExtension.Import.click();
+        importExtension.ImportOK.click();
     }
     /**
      * CDR通话判断
@@ -230,17 +238,17 @@ public class YS_Extension extends SwebDriver{
         closeCDRRecord();
     }
 
-    public void checkCDR(String caller, String callee, String status) throws InterruptedException {
-        checkCDR(caller,callee,status,null,null,null,1);
+    public void checkCDR(String caller, String callee, String status)  {
+        checkCDR(caller,callee,status,"","","",1);
     }
-    public void checkCDR(String caller, String callee, String status,String source,String destination ,String communition ) throws InterruptedException {
+    public void checkCDR(String caller, String callee, String status,String source,String destination ,String communition ){
         checkCDR(caller,callee,status,source,destination,communition,1);
     }
-    public void checkCDR(String caller, String callee, String status,String source,String destination ,String communition ,int row) throws InterruptedException {
+    public void checkCDR(String caller, String callee, String status,String source,String destination ,String communition ,int row)  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.CDRandRecordShortcut.click();
         cdRandRecordings.search.click();
-        ys_waitingLoading(cdRandRecordings.gridLoading);
+        ys_waitingLoading(cdRandRecordings.grid_Mask);
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,1)).trim(),caller,"CDR呼叫方检测");
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim(),callee,"CDR被叫方检测");
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,5)).trim(),status,"CDR_Status检测");
@@ -255,39 +263,41 @@ public class YS_Extension extends SwebDriver{
         }
         closeCDRRecord();
     }
-    public void checkCDR_OtherInfo(int col, String info ,int row) throws InterruptedException {
+    public void checkCDR_OtherInfo(int col, String info ,int row){
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.CDRandRecordShortcut.click();
         cdRandRecordings.search.click();
-        ys_waitingLoading(cdRandRecordings.gridLoading);
+        ys_waitingLoading(cdRandRecordings.grid_Mask);
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,col)).trim(),info,"CDR检测");
         closeCDRRecord();
     }
-    public void checkCDR(String caller,String callee, String status, int... rowList){
-
+    public void checkCDR(String caller,String callee, String status, int... rowList) {
+        checkCDR(caller,callee,status,"","","",rowList);
     }
-    public void checkCDR(String caller,String callee, String status,String source,String destination ,String communition, int... rowList) throws InterruptedException {
+    public void checkCDR(String caller,String callee, String status,String source,String destination ,String communition, int... rowList) {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.CDRandRecordShortcut.click();
         cdRandRecordings.search.click();
-        ys_waitingLoading(cdRandRecordings.gridLoading);
+        ys_waitingLoading(cdRandRecordings.grid_Mask);
         boolean findCDR = false;
         for(int row:rowList){
-            if(caller.equals(String.valueOf(gridContent(extensions.grid_CDR,row,1)).trim()) && callee.equals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim())){
-                findCDR = true;
-                YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,1)).trim(),caller,"CDR呼叫方检测");
-                YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim(),callee,"CDR被叫方检测");
-                YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,5)).trim(),status,"CDR_Status检测");
-                if(!source.isEmpty()){
-                    YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_SourceTrunk)).trim(),source,"CDR源中继检测");
+            if(caller.equals(String.valueOf(gridContent(extensions.grid_CDR,row,1)).trim()) ){
+                if(callee.equals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim())){
+                    findCDR = true;
+                    YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,1)).trim(),caller,"CDR呼叫方检测");
+                    YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim(),callee,"CDR被叫方检测");
+                    YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,5)).trim(),status,"CDR_Status检测");
+                    if(!source.isEmpty()){
+                        YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_SourceTrunk)).trim(),source,"CDR源中继检测");
+                    }
+                    if(!destination.isEmpty()){
+                        YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_DestinationTrunk)).trim(),destination,"CDR目的中继检测");
+                    }
+                    if(!communition.isEmpty()){
+                        YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_CommunicationTrunk)).trim(),communition,"CDR通讯类型检测");
+                    }
+                    break;
                 }
-                if(!destination.isEmpty()){
-                    YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_DestinationTrunk)).trim(),destination,"CDR目的中继检测");
-                }
-                if(!communition.isEmpty()){
-                    YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_CommunicationTrunk)).trim(),communition,"CDR通讯类型检测");
-                }
-                break;
             }
         }
         if(!findCDR){
@@ -306,12 +316,12 @@ public class YS_Extension extends SwebDriver{
         }
         closeCDRRecord();
     }
-    //s时间检查
+    //时间检查
     public void checkCDR(String caller, String callee, String status,String time,int row) throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.CDRandRecordShortcut.click();
         cdRandRecordings.search.click();
-        ys_waitingLoading(cdRandRecordings.gridLoading);
+        ys_waitingLoading(cdRandRecordings.grid_Mask);
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,0)).substring(0,13),time,"CDR呼叫时间检测");
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,1)).trim(),caller,"CDR呼叫方检测");
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim(),callee,"CDR被叫方检测");

@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.testcase.smokecase.syscase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
@@ -10,21 +11,16 @@ import org.testng.annotations.Test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.yeastar.swebtest.driver.Config.*;
-import static com.yeastar.swebtest.driver.Config.mySettings;
-import static com.yeastar.swebtest.driver.Config.pageDeskTop;
-import static com.yeastar.swebtest.driver.SwebDriver.*;
-
 /**
  * Created by Yeastar on 2017/8/16.
  */
-public class DateTime {
+public class DateTime extends SwebDriver {
     String systemTime = "";
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
         pjsip.Pj_Init();
         Reporter.infoBeforeClass("打开游览器并登录设备_DateTime"); //执行操作
-        initialDriver(CHROME,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
@@ -38,7 +34,7 @@ public class DateTime {
         pageDeskTop.settings.click();
         settings.dateTime_panel.click();
         ys_waitingTime(5000);
-        executeJs("Ext.getCmp('"+dateTime.timeZone_id+"').setValue('"+dateTime.chinaTime+"')");
+        executeJs("Ext.getCmp('"+dateTime.timeZone +"').setValue('"+dateTime.chinaTime+"')");
         dateTime.save.click();
         ys_apply();
 
@@ -76,7 +72,7 @@ public class DateTime {
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
 
-        pjsip.Pj_Make_Call_Auto_Answer(1100,1101,DEVICE_IP_LAN);
+        pjsip.Pj_Make_Call_Auto_Answer(1100,"1101",DEVICE_IP_LAN);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
 

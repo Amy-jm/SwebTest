@@ -22,7 +22,7 @@ public class ExtensionGroup {
     /**
      * 进入ExtensionGroup
      */
-        public SelenideElement extensionGroup = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Extension Group\"]"));
+    public SelenideElement extensionGroup = $(By.xpath(".//div[starts-with(@id,'extension')]//span[ text()='Extension Group']"));
     /**
      * 功能按钮
      */

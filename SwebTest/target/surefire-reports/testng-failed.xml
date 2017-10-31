@@ -1,38 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [PBXCORE]">
-  <test name="pbxcore(failed)">
+<suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [SYSCORE]">
+  <test name="syscore(failed)">
     <classes>
-      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes">
+      <class name="com.yeastar.swebtest.testcase.extendcase.MyTest">
         <methods>
-          <include name="F_CallSps"/>
-          <include name="waitMethod"/>
-          <include name="D_CallSip"/>
-          <include name="AfterClass"/>
-          <include name="C_RegisterExtensions"/>
-          <include name="InitInboundRoutes"/>
-          <include name="E_CallIax"/>
-          <include name="I_CallPstn"/>
-          <include name="L_CallDidSps"/>
+          <include name="DCaseName"/>
           <include name="BeforeClass"/>
-          <include name="G_CallSpx"/>
+          <include name="CaseafterName"/>
         </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.InboundRoutes -->
-      <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes">
-        <methods>
-          <include name="waitMethod"/>
-          <include name="AfterClass"/>
-          <include name="K_CallSpx"/>
-          <include name="L_CallPstn"/>
-          <include name="InitOutboundRoutes"/>
-          <include name="BeforeClass"/>
-          <include name="Q_PinListCall"/>
-          <include name="M_CallBri"/>
-          <include name="G_CallSip"/>
-          <include name="J_CallSps"/>
-          <include name="I_CallIax"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.smokecase.pbxcase.OutboundRoutes -->
+      </class> <!-- com.yeastar.swebtest.testcase.extendcase.MyTest -->
     </classes>
-  </test> <!-- pbxcore(failed) -->
-</suite> <!-- Failed suite [PBXCORE] -->
+  </test> <!-- syscore(failed) -->
+</suite> <!-- Failed suite [SYSCORE] -->

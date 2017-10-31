@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/30.
  */
 public class AutoDefenseRules {
-    public SelenideElement autoDefenseRules = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Auto Defense Rules\"]"));
+    public SelenideElement autoDefenseRules = $(By.xpath(".//div[starts-with(@id,'security')]//span[text()='Auto Defense Rules']"));
 
     /**
      * 功能按钮

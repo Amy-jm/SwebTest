@@ -10,10 +10,16 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class Add_DISA {
 
+    public String passwordType_None =  "none";
+    public String passwordType_Pinset = "pinset";
+    public String passwordType_Singlepin = "singlepin";
+
     public String list = "st-disa-allowrouter";
 
     public SelenideElement name = $(By.id("st-disa-name-inputEl"));
-    public SelenideElement password = $(By.id("st-disa-pintype-trigger-picker"));
+    public String password ="st-disa-pintype";
+    public String password_Pinset = "st-disa-pinset";
+    public SelenideElement password_Singlepin = $(By.id("st-disa-singlepin-inputEl"));
     public SelenideElement responseTimeout = $(By.id("st-disa-responsetimeout-inputEl"));
     public SelenideElement dightTimeout = $(By.id("st-disa-digittimeout-inputEl"));
 

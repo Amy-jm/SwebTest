@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class OperationLog {
 
     public String grid = "Ext.getCmp('maintance').down('operationlog').down('tableview')";
-    public String gridLoading = "Ext.getCmp('maintance').down('operationlog').down('loadmask')";
+    public String grid_Mask = "Ext.getCmp('maintance').down('operationlog').down('loadmask')";
     public int gridColumn_Time = 0;
     public int gridColumn_User = 1;
     public int gridColumn_IP = 2;

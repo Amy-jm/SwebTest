@@ -15,60 +15,15 @@
   </p>
 
   <div id="log">
-                  【测试类场景初始化】打开游览器并登录设备_OutboundRoutes<br />
-                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
-                        &nbsp; 【执行操作】设置Time Conditions<br />
-                        &nbsp;&nbsp;&nbsp; Pass: TimeConditions名称错误<br />
-                        &nbsp; 【执行操作】设置Holiday<br />
-                        &nbsp;&nbsp;&nbsp; Pass: TimeConditions名称错误<br />
-                        &nbsp; 【执行操作】创建呼出路由<br />
-                        &nbsp; 【执行操作】创建Disa<br />
-                        &nbsp; 【执行操作】创建IVR<br />
-                        &nbsp; 【执行操作】SipTrunk外线呼出 1000打 903000<br />
-                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a><br />
-                        &nbsp; 【执行操作】SipTrunk外线呼出失败1001打903000<br />
-                        &nbsp; 【执行操作】IAXTrunk外线呼出1000打903000<br />
-                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a><br />
-                        &nbsp; 【执行操作】SPS外线呼出1000打902000<br />
-                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：902000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：903000 [903000]】</a><br />
-                        &nbsp; 【执行操作】SPX外线呼出1000打902000<br />
-                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a><br />
-                        &nbsp; 【执行操作】PSTN外线呼出1000打902000<br />
-                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：903000 实际：903000 [903000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：903000 实际：903000 [903000]】</a><br />
-                        &nbsp; 【执行操作】BRI外线呼出1000打902000<br />
-                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR被叫方检测 【预期：902000 实际：902000 [902000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：902000 实际：902000 [902000]】</a><br />
-                        &nbsp; 【执行操作】呼出路由设置Pinlist<br />
-                        &nbsp; 【执行操作】PinList外线呼出1000打903000<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\外线呼出进入pin1List 【预期：true 实际：false】.jpg" target="_blank">Error: 外线呼出进入pin1List 【预期：true 实际：false】</a><br />
-                        &nbsp; 【执行操作】设置呼出路由无Pinlist<br />
-                        &nbsp; 【执行操作】设置呼出路由无Pinlist 1000拨打903000<br />
-                        &nbsp; 【执行操作】登录1000分机判断路由是否存在<br />
-                        【测试类场景恢复】关闭游览器_OutboundRoutes<br />
-                        【测试类场景初始化】打开游览器并登录设备_InboundRoutesTest<br />
-                        &nbsp; 【执行操作】创建呼入路由<br />
-                        &nbsp; 【执行操作】注册测试分机<br />
-                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\1101分机注册 【预期：Registered 实际：Unavailable】.jpg" target="_blank">Error: 1101分机注册 【预期：Registered 实际：Unavailable】</a><br />
-                        &nbsp; 【执行操作】设备3通过sip外线呼入到设备1，听到IVR提示音后，按0<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】</a><br />
-                        &nbsp; 【执行操作】设备3通过iax外线呼入到设备1，听到IVR的提示音后，按1<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：3000 [3000] 实际：1000 [1000]】</a><br />
-                        &nbsp; 【执行操作】设备2通过sps外线呼入到设备1，听到IVR的提示音后，按2<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a><br />
-                        &nbsp; 【执行操作】A拨打90+分机号码（设备3的分机），SPX通话<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a><br />
-                        &nbsp; 【执行操作】A拨打90+分机号码（设备3的分机），PSTN通话<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a><br />
-                        &nbsp; 【执行操作】编辑呼入路由,设置DID<br />
-                        &nbsp; 【执行操作】设备2通过sps外线呼入到设备（呼出前缀后+分机B）<br />
-                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\0GitProject\swebtest\SwebTest\pic\CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2000 [2000] 实际：1000 [1000]】</a><br />
-                        【测试类场景恢复】关闭游览器InboundRoutesTest<br />
+                  【测试类场景初始化】执行的操作414<br />
+                        &nbsp; 【执行操作】执行的操作<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 出错了<br />
+                        &nbsp; 【执行操作】执行的操作<br />
+                        RunCount=2<br />
+                        &nbsp; 【执行操作】执行的操作<br />
+                        RunCount=3<br />
+                        &nbsp; 【执行操作】执行的操作<br />
+                        【测试类场景恢复】执行的操作<br />
             </div>
 
 </body>

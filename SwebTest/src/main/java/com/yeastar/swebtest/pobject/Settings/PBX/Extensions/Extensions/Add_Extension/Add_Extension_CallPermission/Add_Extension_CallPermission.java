@@ -12,15 +12,15 @@ public class Add_Extension_CallPermission {
     /**
      * 进入CallPermission
      */
-    public SelenideElement callPermission = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Call Permission\"]"));
+    public SelenideElement callPermission = $(By.xpath(".//div[starts-with(@id,'extension-edit')]//span[ text()='Call Permission']"));
 
     /**
      * Outbound Routes
      */
 
-    public SelenideElement outboundRestriction = $(By.id("st-extension-callconstraint-displayEl"));
+    public String outboundRestriction = "st-extension-callconstraint";
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(" .//div[starts-with(@id,'extension-edit')]//span[ text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'extension-edit')]//span[text()='Cancel']"));
 
 }

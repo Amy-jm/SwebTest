@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.testcase.smokecase.pbxcase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
@@ -15,17 +16,19 @@ import static com.yeastar.swebtest.driver.SwebDriver.*;
 /**
  * Created by Yeastar on 2017/7/25.
  */
-public class EmergencyNumberTest {
+public class EmergencyNumberTest extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
         pjsip.Pj_Init();
         Reporter.infoBeforeClass("打开游览器并登录设备"); //执行操作
-        initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
-        mySettings.close.click();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
 
         pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
@@ -39,6 +42,13 @@ public class EmergencyNumberTest {
         pjsip.Pj_Register_Account(1102, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
+    }
+//    @BeforeClass
+    public void InitEmergencyNumberTest(){
+        pageDeskTop.settings.click();
+        settings.emergencyNumber_panel.click();
+        deletes("初始化紧急呼叫",emergencyNumber.grid,emergencyNumber.delete,emergencyNumber.delete_yes,emergencyNumber.grid_Mask);
+        closeSetting();
     }
 
     @Test
@@ -60,12 +70,12 @@ public class EmergencyNumberTest {
     @Test
     public void B_CallEmergencyNumber() throws InterruptedException {
         Reporter.infoExec("分机C通过PSTN线路呼出，通话中。分机1100直接拨打紧急号码2001");
-        pjsip.Pj_Make_Call_Auto_Answer(1102,2000,"90", DEVICE_IP_LAN);
+        pjsip.Pj_Make_Call_Auto_Answer(1102,"902000", DEVICE_IP_LAN);
         ys_waitingTime(10000);
 
         tcpSocket.connectToDevice();
-        pjsip.Pj_Make_Call_Auto_Answer(1100,2001, DEVICE_IP_LAN);
-        boolean tcpInfo = tcpSocket.getAsteriskInfo("Emergency",50);
+        pjsip.Pj_Make_Call_Auto_Answer(1100,"2001", DEVICE_IP_LAN);
+        boolean tcpInfo = tcpSocket.getAsteriskInfo("Emergency");
         tcpSocket.closeTcpSocket();
         ys_waitingTime(10000);
         pjsip.Pj_Answer_Call(1101,true);
@@ -73,9 +83,11 @@ public class EmergencyNumberTest {
 
         YsAssert.assertEquals(tcpInfo,true,"进入紧急呼叫");
 
-        m_extension.checkCDR("1100 <1100>","2001 <2001>","Answered",1,2);
         m_extension.checkCDR("1100dial2001 <Emergency>","1101 <1101>","Answered",1,2);
+        m_extension.checkCDR("1100 <1100>","2001","Answered",1,2);
+
         m_extension.checkCDR("1102 <1102>","902000","Answered",3);
+
     }
     @Test
     public void C_DeleteEmergencyNumber() throws InterruptedException {
@@ -87,7 +99,7 @@ public class EmergencyNumberTest {
         emergencyNumber.delete_yes.click();
         ys_apply();
         //分机直接拨打  拨打失败
-        pjsip.Pj_Make_Call_Auto_Answer(1100,2001, DEVICE_IP_LAN);
+        pjsip.Pj_Make_Call_Auto_Answer(1100,"2001", DEVICE_IP_LAN);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
     }

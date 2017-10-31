@@ -9,17 +9,17 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class CustomPrompts {
-
+    public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
     public int gridcolumn_Name = 1;
     public int gridRecord = 0;
     public int gridPlay = 1;
     public int gridDownload = 2;
     public int gridDelete = 3 ;
-    public String grid = "Ext.getCmp('control-panel').down('customprompt').down('tableview')";
+    public String grid = "Ext.getCmp('control-panel').down('customprompt')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('customprompt').down('loadmask')";
 
 
-    public SelenideElement customPrompts = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Custom Prompts\"]"));
+    public SelenideElement customPrompts = $(By.xpath(".//div[starts-with(@id,'prompt')]//span[ text()='Custom Prompts']"));
 
     public SelenideElement recordNew = $(By.xpath(".//div[starts-with(@id,'customprompt-')]//span[text()='Record New']"));
     public SelenideElement upload = $(By.xpath(".//div[starts-with(@id,'customprompt-')]//span[text()='Upload']"));
@@ -32,7 +32,7 @@ public class CustomPrompts {
     public SelenideElement palyToExtension = $(By.id("st-moh-extension-trigger-picker"));
     public SelenideElement play = $(By.xpath(".//div[starts-with(@id,'customprompt-play-')]//span[text()='Play']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'customprompt-play-')]//span[text()='Cancel']"));
-    public String  plauToExtension = "st-cp-extension";
+    public String playToExtension = "st-cp-extension";
 
 
     public SelenideElement record_play = $(By.xpath(".//div[starts-with(@id,'customprompt-record-')]//span[text()='Record']"));

@@ -20,7 +20,7 @@ public class RingGroup {
 
     public String grid = "Ext.getCmp('control-panel').down('ringgroup')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('ringgroup').down('loadmask')";
-    public SelenideElement ringGroup = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"Ring Group\"]"));
+    public SelenideElement ringGroup = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[ text()='Ring Group']"));
 
     /**
      * 功能按钮

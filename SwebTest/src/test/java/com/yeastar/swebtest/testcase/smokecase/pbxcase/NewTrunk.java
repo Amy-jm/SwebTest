@@ -1,10 +1,14 @@
 package com.yeastar.swebtest.testcase.smokecase.pbxcase;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import org.openqa.selenium.By;
 import org.testng.annotations.*;
+
+import static com.codeborne.selenide.Selenide.$;
 
 /**
  * Created by GaGa on 2017-05-15.
@@ -14,44 +18,60 @@ public class NewTrunk extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {
         Reporter.infoBeforeClass("打开游览器并登录设备_NewTrunkTest"); //执行操作
-        initialDriver("chrome","https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
-        mySettings.close.click();
-        m_extension.showCDRClounm();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            mySettings.close.click();
+        }
     }
-
+    @BeforeClass
+    public void InitTrunk(){
+        if(Single_Init){
+            pageDeskTop.settings.click();
+            settings.trunks_panel.click();
+            trunks.add.shouldBe(Condition.exist);
+            ys_waitingLoading(trunks.grid_Mask);
+            setPageShowNum(trunks.grid,100);
+            if(String.valueOf(gridLineNum(trunks.grid)).equals("0")){
+            }else {
+                gridSeleteAll(trunks.grid);
+                trunks.delete.click();
+                trunks.delete_yes.click();
+            }
+            closeSetting();
+        }
+    }
     @Test
     public void A_AddTrunk() throws InterruptedException {
         Reporter.infoExec("添加SIPTrunk");
         pageDeskTop.settings.click();
         settings.trunks_panel.click();
         setPageShowNum(trunks.grid,100);
-        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,SIPTrunk,DEVICE_ASSIST_1,"",DEVICE_ASSIST_1
+        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,SIPTrunk,DEVICE_ASSIST_1,String.valueOf(UDP_PORT_ASSIST_1),DEVICE_ASSIST_1
                 ,"3030","3030","3030","Yeastar202");
     }
     @Test
     public void B_AddTrunkIAXTrunk() throws InterruptedException {
         Reporter.infoExec("添加IAXTrunk");
-        m_trunks.addTrunk("IAX",add_voIP_trunk_basic.VoipTrunk,IAXTrunk,DEVICE_ASSIST_1,"","",
+        m_trunks.addTrunk("IAX",add_voIP_trunk_basic.VoipTrunk,IAXTrunk,DEVICE_ASSIST_1,String.valueOf("4569"),"",
                 "3034","","","Yeastar202");
     }
     @Test
     public void C_AddSPX() throws InterruptedException {
         Reporter.infoExec("添加SPX");
-        m_trunks.addTrunk("IAX",add_voIP_trunk_basic.PeerToPeer,SPX,DEVICE_ASSIST_2,"",DEVICE_ASSIST_2,
+        m_trunks.addTrunk("IAX",add_voIP_trunk_basic.PeerToPeer,SPX,DEVICE_ASSIST_2,String.valueOf("4569"),DEVICE_ASSIST_2,
                 "","","","");
     }
     @Test
     public void D_AddSPS() throws InterruptedException {
         Reporter.infoExec("添加SPS");
-        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.PeerToPeer,SPS,DEVICE_ASSIST_2,"",DEVICE_ASSIST_2,
+        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.PeerToPeer,SPS,DEVICE_ASSIST_2,String.valueOf(UDP_PORT_ASSIST_2),DEVICE_ASSIST_2,
                 "","","","");
     }
-    //改成辅助设备设置成network模式，减少测试时间
-//    @Test
+//    @Test  改成辅助设备设置成network模式,减少测试时间
     public void E_SetBriTrunk() throws InterruptedException {
         if(Single_Device_Test){
             pageDeskTop.settings.click();
@@ -89,10 +109,7 @@ public class NewTrunk extends SwebDriver {
 
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(10000);
         Reporter.infoAfterClass("关闭游览器_NewTrunk"); //执行操作
-//        pjsip.Pj_Destory();
-//        ssh.Close();
         quitDriver();
         Thread.sleep(5000);
     }

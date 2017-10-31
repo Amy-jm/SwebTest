@@ -19,10 +19,11 @@ public class IVR {
     public int gridEdit = 0; //仅搜索img
     public int gridDelete = 1; //仅搜索img
 
-    public String grid = "Ext.getCmp('control-panel').down('ivr').down('tableview')";
+//    public String grid = "Ext.getCmp('control-panel').down('ivr').down('tableview')";
+    public String grid = "Ext.getCmp('control-panel').down('ivr')";
     public String grid_Mask = "Ext.getCmp('control-panel').down('ivr').down('loadmask')";
 
-    public SelenideElement IVR = $(By.xpath(".//span[starts-with(@class,\"toolbartip\") and text()=\"IVR\"]"));
+    public SelenideElement IVR = $(By.xpath(".//div[starts-with(@id,'callfeature')]//span[ text()='IVR']"));
 
     /**
      * 功能按钮

@@ -13,14 +13,19 @@ public class Add_Ring_Group {
 
     public SelenideElement number = $(By.id("st-rg-groupnum-inputEl"));
     public SelenideElement name = $(By.id("st-rg-groupname-inputEl"));
-    public SelenideElement ringStrategy = $(By.id("st-rg-ringtype-trigger-picker"));
+//    public SelenideElement ringStrategy = $(By.id("st-rg-ringtype"));
+    public String ringStrategy= "st-rg-ringtype";
     public SelenideElement secondstoringeachmenmber = $(By.id("st-rg-timeout-inputEl"));
 
+    //    响铃策略的选择
+    public String rs_ringall = "ringall";
+    public String rs_sequentially="ringinorder";
 
-
-    public SelenideElement failoverDestination = $(By.id("st-rg-noansweraction-trigger-picker"));
+    public String failoverDestinationtype = "st-rg-noansweraction";
+    public String failoverDestination = "st-rg-noanswerdest";
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'ringgroup-edit-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'ringgroup-edit-')]//span[text()='Cancel']"));
+
 
 }

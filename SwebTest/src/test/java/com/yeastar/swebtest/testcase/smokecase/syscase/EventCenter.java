@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.testcase.smokecase.syscase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
@@ -15,12 +16,12 @@ import static com.yeastar.swebtest.driver.SwebDriver.*;
 /**
  * Created by Yeastar on 2017/8/16.
  */
-public class EventCenter {
+public class EventCenter extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
         pjsip.Pj_Init();
         Reporter.infoBeforeClass("打开游览器并登录设备_EventCenter"); //执行操作
-        initialDriver(CHROME,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
@@ -38,8 +39,8 @@ public class EventCenter {
         notificationContacts.notificationContacts.click();
         notificationContacts.add.click();
         ys_waitingTime(3000);
-        comboboxSelect(add_contact.chooseContact_id,extensionList,"1100");
-        add_contact.callExtension.click();
+        comboboxSet(add_contact.chooseContact_id,extensionList,"1100");
+        setCheckBox(add_contact.callExtension,true);
         add_contact.save.click();
         ys_apply();
 
@@ -66,7 +67,7 @@ public class EventCenter {
     public void C_Answer() {
         Reporter.infoExec("分机1100响铃接听"); //执行操作
         logout();
-        tcpSocket.connectToDevice();
+        tcpSocket.connectToDevice(0);
         login("1100","Yeastar202");
         ys_waitingTime(5000);
         pjsip.Pj_Answer_Call(1100,false);

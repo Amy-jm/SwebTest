@@ -11,8 +11,10 @@ import static com.codeborne.selenide.Selenide.$;
 public class Add_Firewall_Rule {
     public SelenideElement name = $(By.id("st-fwrules-rulename-inputEl"));
     public SelenideElement description = $(By.id("st-fwrules-fwdescribe-inputEl"));
-    public SelenideElement action = $(By.id("st-fwrules-action-trigger-picker"));
-    public SelenideElement protocol = $(By.id("st-fwrules-protocol-trigger-picker"));
+//    public SelenideElement action = $(By.id("st-fwrules-action-trigger-picker"));
+    public String action = ("st-fwrules-action");
+//    public SelenideElement protocol = $(By.id("st-fwrules-protocol-trigger-picker"));
+    public String protocol = "st-fwrules-protocol";
     public SelenideElement MACAddress = $(By.id("st-fwrules-mac-inputEl"));
     public SelenideElement IP = $(By.id("st-fwrules-typeip-boxLabelEl"));
     public SelenideElement domainNme = $(By.id("st-fwrules-typedomain-boxLabelEl"));
@@ -22,8 +24,8 @@ public class Add_Firewall_Rule {
     public SelenideElement port_end = $(By.id("st-fwrules-portend-inputEl"));
 
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'firewallrules-edit')]//span[ text()='Save']"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'firewallrules-edit')]//span[ text()='Cancel']"));
 
 
 }

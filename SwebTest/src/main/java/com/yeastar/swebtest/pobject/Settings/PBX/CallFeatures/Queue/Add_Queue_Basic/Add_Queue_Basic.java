@@ -15,13 +15,14 @@ public class Add_Queue_Basic {
     public SelenideElement number = $(By.id("st-queue-number-inputEl"));
     public SelenideElement name = $(By.id("st-queue-name-inputEl"));
     public SelenideElement password = $(By.id("st-queue-pass-inputEl"));
-    public SelenideElement ringStrategy = $(By.id("st-queue-ringstrategy-trigger-picker"));
-    public SelenideElement failoverDestination = $(By.id("st-queue-failoveraction-trigger-picker"));
+    public String ringStrategy = "st-queue-ringstrategy";
+    public String  failoverDestination = "st-queue-failoveraction";
+    public String failoverDestinationdst = "st-queue-failoverdest";
 
 
     public SelenideElement agentTimeout = $(By.id("st-queue-agenttimeout-inputEl"));
-    public SelenideElement ringInUse = $(By.id("st-queue-ringinuse-displayEl"));
-    public SelenideElement agentAnnouncement = $(By.id("id=\"st-queue-agentannounce-trigger-picker\""));
+    public String ringInUse = "st-queue-ringinuse-displayEl";
+    public String agentAnnouncement = "st-queue-agentannounce";
     public SelenideElement retry = $(By.id("st-queue-retry-inputEl"));
     public SelenideElement wrap_upTime = $(By.id("st-queue-wrapuptime-inputEl"));
 

@@ -9,18 +9,18 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class OpenVPN {
-    public SelenideElement openVPN = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"OpenVPN\"]"));
+    public SelenideElement openVPN = $(By.xpath(".//div[starts-with(@id,'network')]//span[ text()='OpenVPN']"));
 
     public SelenideElement enableOpenVPN = $(By.id("st-vpn-enable-displayEl"));
 
-    public SelenideElement type = $(By.id("st-vpn-type-trigger-picker"));
+    public String type = ("st-vpn-type");
     public SelenideElement serverAddress = $(By.id("st-vpn-serveraddr-inputEl"));
     public SelenideElement serverPort = $(By.id("st-vpn-serverport-inputEl"));
-    public SelenideElement protocol = $(By.id("st-vpn-protocol-trigger-picker"));
-    public SelenideElement deviceMode = $(By.id("st-vpn-device-trigger-picker"));
+    public String protocol = ("st-vpn-protocol");
+    public String deviceMode = ("st-vpn-device");
     public SelenideElement username = $(By.id("st-vpn-username-inputEl"));
     public SelenideElement password = $(By.id("st-vpn-password-inputEl"));
-    public SelenideElement encryption = $(By.id("st-vpn-encryption-trigger-picker"));
+    public String encryption = ("st-vpn-encryption");
     public SelenideElement compression = $(By.id("st-vpn-compression-displayEl"));
     public SelenideElement proxyServer = $(By.id("st-vpn-proxyserver-inputEl"));
     public SelenideElement proxyPort = $(By.id("st-vpn-proxyport-inputEl"));
@@ -40,8 +40,8 @@ public class OpenVPN {
     public SelenideElement TAKey_browse = $(By.id("st-vpn-takeyfile-button-fileInputEl"));
 
 
-    public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
-    public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));
+    public SelenideElement save = $(By.xpath(".//div[starts-with(@id,\"network\")]//span[ text()=\"Save\"]"));
+    public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,\"network\")]//span[ text()=\"Cancel\"]"));
 
 
 }

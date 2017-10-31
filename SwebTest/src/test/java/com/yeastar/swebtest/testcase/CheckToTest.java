@@ -21,7 +21,7 @@ public class CheckToTest extends SwebDriver {
     public void CleanExtensions() throws InterruptedException {
         Reporter.infoBeforeClass("清空分机"); //执行操作
 
-        initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
 //        initialDriver("chrome","https://"+ "192.168.7.154" +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.click();
@@ -101,7 +101,7 @@ public class CheckToTest extends SwebDriver {
     public static void initCallControl(){
         settings.callControl_tree.click();
         inboundRoutes.inboundRoutes.click();
-        ys_waitingLoading(inboundRoutes.gridLoading);
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         if(Integer.parseInt(String.valueOf(gridLineNum(inboundRoutes.grid))) != 0){
             gridSeleteAll(inboundRoutes.grid);
             inboundRoutes.delete.click();
@@ -130,11 +130,11 @@ public class CheckToTest extends SwebDriver {
         autoCLIPRoutes.mt_RemoveAllFromSelect.click();
         autoCLIPRoutes.save.click();
 
-        time_conditions.timeConditions.click();
+        timeConditions.timeConditions.click();
         timeConditions.timeConditions.click();
         ys_waitingTime(2000);
-        if(Integer.parseInt(String.valueOf(gridLineNum(time_conditions.grid))) != 0){
-            gridSeleteAll(time_conditions.grid);
+        if(Integer.parseInt(String.valueOf(gridLineNum(timeConditions.grid))) != 0){
+            gridSeleteAll(timeConditions.grid);
             timeConditions.delete.click();
             timeConditions.delete_yes.click();
         }
@@ -260,7 +260,7 @@ public class CheckToTest extends SwebDriver {
         settings.security_tree.click();
         service.service.click();
         ys_waitingTime(5000);
-        setCheckBox(service.enableAMI_id,true);
+        setCheckBox(service.enableAMI,true);
         ys_waitingTime(5000);
         service.enableAMI_Name.setValue("admin");
         service.enableAMI_Password.setValue("password");

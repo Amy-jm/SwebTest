@@ -10,7 +10,15 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class SLA {
 
-    public SelenideElement SLA = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"SLA\"]"));
+    public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
+    public int gridcolumn_StationName = 1;
+    public int gridcolumn_Station=2;
+    public int gridcolumn_AssociateSLATrunks = 3;
+
+    public int gridEdit = 0;
+    public int gridDelete  = 1;
+
+    public SelenideElement SLA = $(By.xpath(".//div[starts-with(@id,\"callcontrol\")]//span[ text()=\"SLA\"]"));
 
     /**
      * 功能按钮

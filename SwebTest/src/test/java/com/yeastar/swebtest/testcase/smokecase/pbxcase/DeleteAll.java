@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.testcase.smokecase.pbxcase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
@@ -10,20 +11,15 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
-import static com.yeastar.swebtest.driver.Config.*;
-import static com.yeastar.swebtest.driver.Config.mySettings;
-import static com.yeastar.swebtest.driver.Config.pageDeskTop;
-import static com.yeastar.swebtest.driver.SwebDriver.*;
-
 /**
  * Created by Yeastar on 2017/7/25.
  */
-public class DeleteAll {
+public class DeleteAll extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {
         pjsip.Pj_Init();
         Reporter.infoBeforeClass("打开游览器并登录设备"); //执行操作
-        initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
@@ -80,8 +76,8 @@ public class DeleteAll {
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("批量删除ringGroup");
         ringGroup.ringGroup.click();
-        m_callFeature.addRingGroup("test","",0,1000);
-        m_callFeature.addRingGroup("test21","",0,1000);
+        m_callFeature.addRingGroup("test","","0",1000);
+        m_callFeature.addRingGroup("test21","","0",1000);
         gridSeleteAll(ringGroup.grid);
         ringGroup.delete.click();
         ringGroup.delete_yes.click();
@@ -138,7 +134,7 @@ public class DeleteAll {
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("批量删除Conference");
         conference.conference.click();
-        m_callFeature.addConference("test3");
+        m_callFeature.addConference("6400","test3");
         gridSeleteAll(conference.grid);
         conference.delete.click();
         conference.delete_yes.click();
@@ -197,7 +193,7 @@ public class DeleteAll {
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("批量删除PagingIntercom");
         paging_intercom.paging_Intercom.click();
-        m_callFeature.addPagingIntercom("paging_Intercom",1000,1001);
+        m_callFeature.addPagingIntercom("paging_Intercom",6300,"",false,1000,1001);
         gridSeleteAll(paging_intercom.grid);
         paging_intercom.delete.click();
         paging_intercom.delete_yes.click();
@@ -345,7 +341,7 @@ public class DeleteAll {
         Reporter.infoExec("删除单个inboundRoutes");
         inboundRoutes.inboundRoutes.click();
         inboundRoutes.add.shouldBe(Condition.exist);
-        ys_waitingLoading(inboundRoutes.gridLoading);
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         gridClick(inboundRoutes.grid,1,inboundRoutes.gridDelete);
         inboundRoutes.delete_yes.click();
         pageDeskTop.apply.click();
@@ -358,14 +354,14 @@ public class DeleteAll {
         Reporter.infoExec("批量删除inboundRoutes");
         inboundRoutes.inboundRoutes.click();
         inboundRoutes.add.shouldBe(Condition.exist);
-        ys_waitingLoading(inboundRoutes.gridLoading);
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         m_callcontrol.addInboundRoutes("inrouter1","","","all");
         Thread.sleep(2000);
         gridSeleteAll(inboundRoutes.grid);
         inboundRoutes.delete.click();
         inboundRoutes.delete_yes.click();
         pageDeskTop.apply.click();
-        ys_waitingLoading(inboundRoutes.gridLoading);
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         Thread.sleep(1000);
         String afterDeleteLine = String.valueOf(gridLineNum(inboundRoutes.grid));
         YsAssert.assertEquals(afterDeleteLine,"0");

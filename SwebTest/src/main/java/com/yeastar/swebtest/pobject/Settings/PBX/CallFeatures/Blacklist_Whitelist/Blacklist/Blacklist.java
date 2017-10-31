@@ -9,15 +9,16 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class Blacklist {
-    public SelenideElement blacklist = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Blacklist\"]"));
+    public SelenideElement blacklist = $(By.xpath(".//div[starts-with(@id,\"blackwhitelist\")]//span[ text()=\"Blacklist\"]"));
 
+    public int gridcolumn_Check = 0; //仅搜索.x-grid-row-checker
     public int gridcolumn_Name = 1;
     public int gridcolumn_Number = 2;
     public int gridcolumn_Type = 3;
     public int gridEdit = 0; //仅搜索img
     public int gridDelete = 1; //仅搜索img
 
-    public String grid = "Ext.getCmp('control-panel').down('blacklist').down('tableview')";
+    public String grid = "Ext.getCmp('control-panel').down('blacklist')";
     public String grid_loadMask = "Ext.getCmp('control-panel').down('blacklist').down('loadmask')";
     /**
      * 功能按钮

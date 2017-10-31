@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.testcase.smokecase.pbxcase;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.AfterClass;
@@ -11,24 +12,23 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.yeastar.swebtest.driver.Config.*;
-import static com.yeastar.swebtest.driver.SwebDriver.*;
-
 /**
  * Created by Yeastar on 2017/7/20.
  */
-public class OutboundRoutes {
+public class OutboundRoutes extends SwebDriver {
 
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
         pjsip.Pj_Init();
         Reporter.infoBeforeClass("打开游览器并登录设备_OutboundRoutes"); //执行操作
-        initialDriver(CHROME,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         pageDeskTop.settings.shouldBe(Condition.exist);
         pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
         pageDeskTop.maintenance.shouldBe(Condition.exist);
-        mySettings.close.click();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
         pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
         pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
@@ -50,11 +50,11 @@ public class OutboundRoutes {
                 outboundRoutes.delete.click();
                 outboundRoutes.delete_yes.click();
             }
-            time_conditions.timeConditions.click();
+            time_Conditions.timeConditions.click();
             timeConditions.timeConditions.click();
             ys_waitingTime(2000);
-            if(Integer.parseInt(String.valueOf(gridLineNum(time_conditions.grid))) != 0){
-                gridSeleteAll(time_conditions.grid);
+            if(Integer.parseInt(String.valueOf(gridLineNum(timeConditions.grid))) != 0){
+                gridSeleteAll(timeConditions.grid);
                 timeConditions.delete.click();
                 timeConditions.delete_yes.click();
             }
@@ -76,7 +76,6 @@ public class OutboundRoutes {
             callFeatures.more.click();
             disa.DISA.click();
             ys_waitingLoading(disa.grid_Mask);
-//        ys_waitingTime(3000);
             if(Integer.parseInt(String.valueOf(gridLineNum(disa.grid))) != 0) {
                 gridSeleteAll(disa.grid);
                 disa.delete.click();
@@ -94,15 +93,14 @@ public class OutboundRoutes {
         Reporter.infoExec("设置Time Conditions");
         pageDeskTop.settings.click();
         settings.callControl_panel.click();
-        time_conditions.timeConditions.click();
-        m_callcontrol.addTimeContion("time1","00:00","18:00",false,"all");
+        time_Conditions.timeConditions.click();
+        m_callcontrol.addTimeContion("time1","00:00","23:00",false,"all");
     }
-
     @Test
     public void B_Holiday() throws InterruptedException {
         Reporter.infoExec("设置Holiday");
         holiday.holiday.click();
-        m_callcontrol.addHoliday("holiday1",0,"2017-04-05","2017-04-05");
+        m_callcontrol.addHolidayByDay("holiday1","2017-04-05","2017-04-05");
     }
 
     @Test
@@ -114,10 +112,18 @@ public class OutboundRoutes {
         }
         outboundRoutes.outboundRoutes.click();
         ArrayList<String> arrayTrunk = new ArrayList<>();
-        arrayTrunk.add("SIPTrunk");
-        arrayTrunk.add("IAXTrunk");
-        arrayTrunk.add("SPS");
-        arrayTrunk.add("SPX");
+        if(!SIPTrunk.equals("null")){
+            arrayTrunk.add(SIPTrunk);
+        }
+        if(!IAXTrunk.equals("null")){
+            arrayTrunk.add(IAXTrunk);
+        }
+        if(!SPS.equals("null")){
+            arrayTrunk.add(SPS);
+        }
+        if(!SPX.equals("null")){
+            arrayTrunk.add(SPX);
+        }
         if(!FXO_1.equals("null")){
             arrayTrunk.add(FXO_1);
         }
@@ -140,7 +146,7 @@ public class OutboundRoutes {
         Thread.sleep(2000);
         gridClick(outboundRoutes.grid,1,outboundRoutes.gridEdit);
         ys_waitingMask();
-        add_outbound_routes.rrmemoryHunt.click();
+//        add_outbound_routes.rrmemoryHunt.click();
         System.out.println("Ext.getCmp('"+add_outbound_routes.list_TimeContion1+"').setValue(true)");
         executeJs("Ext.getCmp("+add_outbound_routes.list_TimeContion1+").setValue(true)");
         add_outbound_routes.save.click();
@@ -167,8 +173,8 @@ public class OutboundRoutes {
         }
         callFeatures.back.click();
         ivr.IVR.click();
-        m_callFeature.addIVR("ivr1");
-        gridClick(ivr.grid, Integer.parseInt(String.valueOf(gridLineNum(ivr.grid))),ivr.gridEdit);
+        m_callFeature.addIVR("ivr1","6500");
+        gridClick(ivr.grid, gridFindRowByColumn(ivr.grid,ivr.gridcolumn_Name,"ivr1",sort_ascendingOrder),ivr.gridEdit);
         add_ivr_keyPressEvent.keyPressEvent.click();
         Thread.sleep(2000);
         executeJs("Ext.getCmp('"+add_ivr_keyPressEvent.s_press0+"').setValue('"+add_ivr_keyPressEvent.s_extensin+"')");
@@ -187,13 +193,12 @@ public class OutboundRoutes {
         Thread.sleep(500);
         executeJs("Ext.getCmp('"+add_ivr_keyPressEvent.s_press7+"').setValue('"+add_ivr_keyPressEvent.s_faxToMail+"')");
         Thread.sleep(500);
-        comboboxSelect(add_ivr_keyPressEvent.d_press0,extensionList,"1100");
+        comboboxSet(add_ivr_keyPressEvent.d_press0,extensionList,"1100");
         Thread.sleep(500);
-        comboboxSelect(add_ivr_keyPressEvent.d_press1,extensionList,"1100");
+        comboboxSet(add_ivr_keyPressEvent.d_press1,extensionList,"1100");
         Thread.sleep(500);
 //        comboboxSelect(add_ivr_keyPressEvent.d_press7,extensionList,"1000 - 1000 ( Not Set Email )");
         add_ivr_keyPressEvent.save.click();
-        Thread.sleep(500);
         ys_apply();
     }
 
@@ -201,7 +206,7 @@ public class OutboundRoutes {
     public void G_CallSip() throws InterruptedException {
         Reporter.infoExec("SipTrunk外线呼出 1000打 903000");
         Thread.sleep(5000);
-        pjsip.Pj_Make_Call_Auto_Answer(1000,3000,"90", DEVICE_IP_LAN,true);
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"903000", DEVICE_IP_LAN,true);
         Thread.sleep(10000);
         pjsip.Pj_Hangup_All();
         Thread.sleep(2000);
@@ -210,42 +215,57 @@ public class OutboundRoutes {
     @Test
     public void H_CallFail() throws InterruptedException {
         Reporter.infoExec("SipTrunk外线呼出失败1001打903000");
-        if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
-        }
+
         Thread.sleep(5000);
 //        String callee_status = pjsip.Pj_Make_Call_Auto_Answer(1001,3000,"90", DEVICE_IP_LAN,true);
 //        YsAssert.assertEquals(callee_status,"Busy",String.valueOf(3000)+"接听失败");
-        Thread.sleep(10000);
 
 //        m_extension.checkCDR(1001,3000,"idle");
     }
     @Test
     public void I_CallIax() throws InterruptedException {
         Reporter.infoExec("IAXTrunk外线呼出1000打903000");
-        pjsip.Pj_Make_Call_Auto_Answer(1000,3000,"90", DEVICE_IP_LAN,true);
+        if(Single_Device_Test){
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+        }else {
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
+        }
+        settings.callControl_tree.click();
+        outboundRoutes.outboundRoutes.click();
+        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"outrouter1",sort_ascendingOrder),outboundRoutes.gridEdit);
+        ys_waitingMask();
+        add_outbound_routes.mt_RemoveAllFromSelected.click();
+        listSelect(add_outbound_routes.list_Trunk,trunkList,IAXTrunk);
+        add_outbound_routes.save.click();
+        ys_apply();
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"903000", DEVICE_IP_LAN,true);
         Thread.sleep(10000);
         pjsip.Pj_Hangup_All();
-        Thread.sleep(10000);
         m_extension.checkCDR("1000 <1000>","903000","Answered","",IAXTrunk,communication_outRoute);
     }
     @Test
     public void J_CallSps() throws InterruptedException {
         Reporter.infoExec("SPS外线呼出1000打902000");
         if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+        }else {
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
         }
-        Thread.sleep(5000);
-        pjsip.Pj_Make_Call_Auto_Answer(1000,2000,"90", DEVICE_IP_LAN,true);
+        settings.callControl_tree.click();
+        outboundRoutes.outboundRoutes.click();
+        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"outrouter1",sort_ascendingOrder),outboundRoutes.gridEdit);
+        ys_waitingMask();
+        add_outbound_routes.mt_RemoveAllFromSelected.click();
+        listSelect(add_outbound_routes.list_Trunk,trunkList,SPS);
+        add_outbound_routes.save.click();
+        ys_apply();
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"902000",DEVICE_IP_LAN,true);
         Thread.sleep(10000);
         pjsip.Pj_Hangup_All();
-        Thread.sleep(8000);
 
         m_extension.checkCDR("1000 <1000>","902000","Answered","",SPS,communication_outRoute);
     }
@@ -253,35 +273,46 @@ public class OutboundRoutes {
     public void K_CallSpx() throws InterruptedException {
         Reporter.infoExec("SPX外线呼出1000打902000");
         if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+        }else {
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
         }
-        Thread.sleep(5000);
-        pjsip.Pj_Make_Call_Auto_Answer(1000,2000,"90", DEVICE_IP_LAN,true);
-        Thread.sleep(10000);
-//        pjsip.Pj_hangupCall(1000,3000);
+        settings.callControl_tree.click();
+        outboundRoutes.outboundRoutes.click();
+        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"outrouter1",sort_ascendingOrder),outboundRoutes.gridEdit);
+        ys_waitingMask();
+        add_outbound_routes.mt_RemoveAllFromSelected.click();
+        listSelect(add_outbound_routes.list_Trunk,trunkList,SPX);
+        add_outbound_routes.save.click();
+        ys_apply();
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"902000", DEVICE_IP_LAN,true);
+        ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        Thread.sleep(8000);
         m_extension.checkCDR("1000 <1000>","902000","Answered","",SPX,communication_outRoute);
     }
     @Test
     public void L_CallPstn() throws InterruptedException {
         Reporter.infoExec("PSTN外线呼出1000打902000");
         if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+        }else {
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
         }
-
-        Thread.sleep(5000);
-        pjsip.Pj_Make_Call_Auto_Answer(1000,3000,"90", DEVICE_IP_LAN,true);
+        settings.callControl_tree.click();
+        outboundRoutes.outboundRoutes.click();
+        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"outrouter1",sort_ascendingOrder),outboundRoutes.gridEdit);
+        ys_waitingMask();
+        add_outbound_routes.mt_RemoveAllFromSelected.click();
+        listSelect(add_outbound_routes.list_Trunk,trunkList,FXO_1);
+        add_outbound_routes.save.click();
+        ys_apply();
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"903000" ,DEVICE_IP_LAN,true);
         Thread.sleep(10000);
-//        pjsip.Pj_hangupCall(1000,3000);
         pjsip.Pj_Hangup_All();
-        Thread.sleep(10000);
         m_extension.checkCDR("1000 <1000>","903000","Answered","",FXO_1,communication_outRoute);
 
     }
@@ -292,17 +323,23 @@ public class OutboundRoutes {
         }
         Reporter.infoExec("BRI外线呼出1000打902000");
         if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+        }else {
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
         }
-        Thread.sleep(5000);
-        pjsip.Pj_Make_Call_Auto_Answer(1000,2000,"90", DEVICE_IP_LAN,true);
+        settings.callControl_tree.click();
+        outboundRoutes.outboundRoutes.click();
+        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"outrouter1",sort_ascendingOrder),outboundRoutes.gridEdit);
+        ys_waitingMask();
+        add_outbound_routes.mt_RemoveAllFromSelected.click();
+        listSelect(add_outbound_routes.list_Trunk,trunkList,BRI_1);
+        add_outbound_routes.save.click();
+        ys_apply();
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"902000", DEVICE_IP_LAN,true);
         Thread.sleep(10000);
-//        pjsip.Pj_hangupCall(1000,3000);
         pjsip.Pj_Hangup_All();
-        Thread.sleep(10000);
         m_extension.checkCDR("1000 <1000>","902000","Answered","",BRI_1,communication_outRoute);
 
     }
@@ -313,17 +350,23 @@ public class OutboundRoutes {
         }
         Reporter.infoExec("E1外线呼出1000打902000");
         if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-            pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+        }else {
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
         }
-        Thread.sleep(5000);
-        pjsip.Pj_Make_Call_Auto_Answer(1000,2000,"90", DEVICE_IP_LAN,true);
+        settings.callControl_tree.click();
+        outboundRoutes.outboundRoutes.click();
+        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"outrouter1",sort_ascendingOrder),outboundRoutes.gridEdit);
+        ys_waitingMask();
+        add_outbound_routes.mt_RemoveAllFromSelected.click();
+        listSelect(add_outbound_routes.list_Trunk,trunkList,E1);
+        add_outbound_routes.save.click();
+        ys_apply();
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"902000", DEVICE_IP_LAN,true);
         Thread.sleep(10000);
-//        pjsip.Pj_hangupCall(1000,3000);
         pjsip.Pj_Hangup_All();
-        Thread.sleep(10000);
         m_extension.checkCDR("1000 <1000>","902000","Answered","",E1,communication_outRoute);
 
     }
@@ -334,35 +377,45 @@ public class OutboundRoutes {
         }
         Reporter.infoExec("GSM外线呼出1000打903000");
         if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+        }else {
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
         }
-        Thread.sleep(5000);
+        settings.callControl_tree.click();
+        outboundRoutes.outboundRoutes.click();
+        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"outrouter1",sort_ascendingOrder),outboundRoutes.gridEdit);
+        ys_waitingMask();
+        add_outbound_routes.mt_RemoveAllFromSelected.click();
+        listSelect(add_outbound_routes.list_Trunk,trunkList,GSM);
+        add_outbound_routes.save.click();
+        ys_apply();
         pjsip.Pj_Make_Call_Auto_Answer(1000,"90"+ DEVICE_ASSIST_GSM, DEVICE_IP_LAN,true);
         Thread.sleep(10000);
         pjsip.Pj_Hangup_All();
-        Thread.sleep(10000);
-        m_extension.checkCDR("1000 <1000>","90"+ DEVICE_ASSIST_GSM,"Answered");
+        m_extension.checkCDR("1000 <1000>","90"+ DEVICE_ASSIST_GSM,"Answered","",GSM,communication_outRoute);
     }
 
 
     @Test
     public void P_PinList() throws InterruptedException {
         Reporter.infoExec("呼出路由设置Pinlist");
+        if(Single_Device_Test){
+            pageDeskTop.settings.click();
+            settings.callControl_panel.click();
+        }
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
-
-//        settings.extensions_panel.click();
-
-        ys_waitingTime(2000);
         settings.callControl_tree.click();
         outboundRoutes.outboundRoutes.click();
-
         ys_waitingLoading(outboundRoutes.grid_Mask);
-        gridClick(outboundRoutes.grid,1,outboundRoutes.gridEdit);
+        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"outrouter1",sort_ascendingOrder),outboundRoutes.gridEdit);
         ys_waitingMask();
-        setCombobox(add_outbound_routes.combobox_Password,add_outbound_routes.combobox_Password_Pinset);
-        setCombobox(add_outbound_routes.combobox_PinsetPassword,getDynamicData(add_outbound_routes.combobox_PinsetPassword,0));
+        add_outbound_routes.mt_RemoveAllFromSelected.click();
+        listSelect(add_outbound_routes.list_Trunk,trunkList,SIPTrunk);
+        comboboxSelect(add_outbound_routes.Password,add_outbound_routes.Password_Pinset);
+        comboboxSelect(add_outbound_routes.combobox_PinsetPassword,getDynamicData(add_outbound_routes.combobox_PinsetPassword,0));
         add_outbound_routes.save.click();
         pageDeskTop.apply.click();
 
@@ -372,9 +425,9 @@ public class OutboundRoutes {
     @Test
     public void Q_PinListCall() throws InterruptedException, IOException {
         Reporter.infoExec("PinList外线呼出1000打903000");
-        pjsip.Pj_Make_Call_Auto_Answer(1000,3000,"90", DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"903000", DEVICE_IP_LAN,false);
         tcpSocket.connectToDevice();
-        boolean showKeyWord= tcpSocket.getAsteriskInfo("pin",30);
+        boolean showKeyWord= tcpSocket.getAsteriskInfo("pin");
         tcpSocket.closeTcpSocket();
         System.out.println("Q_PinListCall TcpSocket return: "+showKeyWord);
         pjsip.Pj_Send_Dtmf(1000,"1","2","3");
@@ -388,10 +441,6 @@ public class OutboundRoutes {
     @Test
     public void R_PWD_None() throws InterruptedException {
         Reporter.infoExec("设置呼出路由无Pinlist");
-
-//        pageDeskTop.settings.click();
-//        settings.callControl_panel.click();
-
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.callControl_tree.click();
@@ -399,7 +448,7 @@ public class OutboundRoutes {
         Thread.sleep(2000);
         gridClick(outboundRoutes.grid,1,outboundRoutes.gridEdit);
         ys_waitingMask();
-        setCombobox(add_outbound_routes.combobox_Password,add_outbound_routes.combobox_Password_None);
+        comboboxSelect(add_outbound_routes.Password,add_outbound_routes.Password_None);
         add_outbound_routes.save.click();
         pageDeskTop.apply.click();
     }
@@ -407,9 +456,9 @@ public class OutboundRoutes {
     public void S_PinListCall() throws InterruptedException, IOException {
         Reporter.infoExec("设置呼出路由无Pinlist 1000拨打903000");
         Thread.sleep(5000);
-        pjsip.Pj_Make_Call_Auto_Answer(1000,3000,"90", DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"903000", DEVICE_IP_LAN,false);
         Thread.sleep(10000);
-        pjsip.Pj_hangupCall(1000,3000);
+        pjsip.Pj_Hangup_All();
 
     }
     @Test
@@ -429,7 +478,6 @@ public class OutboundRoutes {
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(10000);
         Reporter.infoAfterClass("关闭游览器_OutboundRoutes"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();

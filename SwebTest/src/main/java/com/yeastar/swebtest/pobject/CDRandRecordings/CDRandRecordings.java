@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class CDRandRecordings {
 
     public String grid = "Ext.getCmp('cdr-record').down('grid')";
-    public String gridLoading = "Ext.getCmp('cdr-record').down('loadmask')";
+    public String grid_Mask = "Ext.getCmp('cdr-record').down('loadmask')";
     public int gridColumn_Time = 0;
     public int gridColumn_CallFrom = 1;
     public int gridColumn_CallTo = 2;
@@ -45,7 +45,7 @@ public class CDRandRecordings {
     public SelenideElement callTo = $(By.id("cr-dst-inputEl"));
     public SelenideElement callDuration = $(By.id("cr-duration-inputEl"));
     public SelenideElement talkDuration = $(By.id("cr-billable-inputEl"));
-    public SelenideElement status = $(By.id("cr-disposition-trigger-picker"));
+    public String status = "cr-disposition";
     public SelenideElement includeRecordingFiles = $(By.id("cr-isrecord-displayEl"));
     public SelenideElement search = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-small\") and text()=\"Search\"]"));
 
@@ -56,9 +56,9 @@ public class CDRandRecordings {
     public SelenideElement PINCode = $(By.id("cr-accountcode-inputEl"));
     public SelenideElement numberFuzzySearch = $(By.id("cr-fuzzymatch-displayEl"));
 
-    public SelenideElement downloadCDR = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Download CDR\"]"));
-    public SelenideElement downloadRecordings = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Download Recordings\"]"));
-    public SelenideElement deleteCDR = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Delete CDR\"]"));
+    public SelenideElement downloadCDR = $(By.xpath(".//div[starts-with(@id,'cdr-record')]//span[text()='Download CDR']"));
+    public SelenideElement downloadRecordings = $(By.xpath(".//div[starts-with(@id,'cdr-record')]//span[text()='Download Recordings']"));
+    public SelenideElement deleteCDR = $(By.xpath(".//div[starts-with(@id,'cdr-record')]//span[text()='Delete CDR']"));
 
     public SelenideElement CDR_set = $(By.xpath(".//*[@src='images/cdr-set.png']"));
 

@@ -10,17 +10,17 @@ import static com.codeborne.selenide.Selenide.$;
  * Created by Yeastar on 2017/6/29.
  */
 public class General {
-    public SelenideElement general = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"General\"]"));
+    public SelenideElement general = $(By.xpath(".//div[starts-with(@id,\"general\")]//div[starts-with(@id,\"sip\")]//span[text()='General']"));
 
     public SelenideElement UDPPort = $(By.id("st-sip-udpport-inputEl"));
 
-    public SelenideElement TCPPort_check = $(By.id("sst-sip-enabletcp-displayEl"));
+    public String TCPPort_check = "sst-sip-enabletcp";
     public SelenideElement TCPPort = $(By.id("st-sip-tcpport-inputEl"));
 
     public SelenideElement RTPPort_start = $(By.id("st-sip-rtpportstart-inputEl"));
     public SelenideElement RTPPort_end = $(By.id("st-sip-rtpportend-inputEl"));
 
-    public SelenideElement localSIPPort_check = $(By.id("st-sip-enablerandomport-displayEl"));
+    public String localSIPPort_check = "st-sip-enablerandomport";
     public SelenideElement localSIPPort_start = $(By.id("st-sip-randomportstart-inputEl"));
     public SelenideElement localSIPPort_end = $(By.id("st-sip-randomportend-inputEl"));
 

@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.driver.YSMethod;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class YS_CallFeature {
      * @param ringStrategy
      * @param member  分机号
      */
-    public void addRingGroup(String name,String number,int ringStrategy, int... member) throws InterruptedException {
+    public void addRingGroup(String name,String number,String ringStrategy, int... member) throws InterruptedException {
         ArrayList<String> memberList = new ArrayList<>();
         for(int item:member){
             System.out.println(String.valueOf(item));
@@ -69,23 +70,39 @@ public class YS_CallFeature {
             add_ring_group.name.setValue(name);
         if(!number.isEmpty())
             add_ring_group.number.setValue(number);
-        if(ringStrategy== 0){
-//            if(ringStrategy.equals("Sequentially")){
-            if(ringStrategy == 2){
-                executeJs("Ext.getCmp('st-rg-ringtype').setValue('ringinorder')");
-            }
+        if(!ringStrategy.isEmpty()) {
+            comboboxSelect(add_ring_group.ringStrategy, ringStrategy);
         }
-        //超时下拉框设置 Ext.getCmp("st-rg-timeout").setValue("20")
         listSelect(add_ring_group.list_RingGroup,extensionList,memberList);
         Thread.sleep(1000);
         add_ring_group.save.click();
         Thread.sleep(1000);
-
-
-        Thread.sleep(1500);
         String lineNum = String.valueOf(gridLineNum(ringGroup.grid)) ;
         m_callFeature.assertRingGroup(Integer.parseInt(lineNum),"",name,memberList,"");
 //        closeSettingWindow();
+    }
+
+    public void addRingGroup(String name,String number,String ringStrategy, String... member) throws InterruptedException {
+        ArrayList<String> memberList = new ArrayList<>();
+        for(int i=0;i< member.length;i++){
+            System.out.println(String.valueOf(member[i]));
+            memberList.add(String.valueOf(member[i]));
+        }
+        ringGroup.add.click();
+        ys_waitingMask();
+        if(!name.isEmpty())
+            add_ring_group.name.setValue(name);
+        if(!number.isEmpty())
+            add_ring_group.number.setValue(number);
+        if(!ringStrategy.isEmpty()) {
+            comboboxSelect(add_ring_group.ringStrategy, ringStrategy);
+        }
+        listSelect(add_ring_group.list_RingGroup,extensionList,memberList);
+        Thread.sleep(1000);
+        add_ring_group.save.click();
+        Thread.sleep(1000);
+        String lineNum = String.valueOf(gridLineNum(ringGroup.grid)) ;
+        m_callFeature.assertRingGroup(Integer.parseInt(lineNum),"",name,memberList,"");
     }
 
     /**
@@ -111,15 +128,16 @@ public class YS_CallFeature {
         add_queue_basic.save.click();
         Thread.sleep(1000);
         String lineNum = String.valueOf(gridLineNum(queue.grid)) ;
-        assertQueue(Integer.parseInt(lineNum),number,name,memberList,"");
+        assertQueue(Integer.parseInt(lineNum),number,name,"");
 
         ys_waitingLoading(queue.grid_Mask);
 
     }
 
-    public void addConference(String name) throws InterruptedException {
+    public void addConference(String num,String name) throws InterruptedException {
         conference.add.click();
         ys_waitingMask();
+        add_conference.number.setValue(num);
         add_conference.name.setValue(name);
         add_conference.save.click();
         Thread.sleep(1000);
@@ -144,21 +162,72 @@ public class YS_CallFeature {
 
     }
 
-    public void addPagingIntercom(String name,int... member) throws InterruptedException {
+    public void addPickupGroup(String name, String... member) throws InterruptedException {
+        pickupGroup.add.click();;
+        Thread.sleep(9000);
+        add_pickup_group.name.setValue(name);
+        ArrayList<String> memberList = new ArrayList<>();
+        for(int i=0;i< member.length;i++){
+            System.out.println(String.valueOf(member[i]));
+            memberList.add(String.valueOf(member[i]));
+        }
+        listSelect(add_pickup_group.list_PickupGroup,extensionList,memberList);
+        add_pickup_group.save.click();
+        Thread.sleep(1000);
+
+    }
+
+    /**
+     * 添加广播组
+     * @param name
+     * @param number
+     * @param member
+     * @throws InterruptedException
+     */
+    public void addPagingIntercom(String name,int number,String type, boolean answer,int... member) throws InterruptedException {
         paging_intercom.add.click();
         ys_waitingMask();
+        add_paging_intercom.number.setValue(String.valueOf(number));
         add_paging_intercom.name.setValue(name);
+        if (!type.isEmpty()){
+          comboboxSelect(add_paging_intercom.type,type);
+        }
+       setCheckBox(add_paging_intercom.answers,answer);
         ArrayList<String> memberList = new ArrayList<>();
         for(int item:member){
             memberList.add(String.valueOf(item));
         }
         listSelect(add_paging_intercom.list_PageingIntercom,extensionList,memberList);
         add_paging_intercom.save.click();
-
         ys_waitingLoading(paging_intercom.grid_Mask);
         String actualName = (String) gridContent(paging_intercom.grid,Integer.parseInt(String.valueOf(gridLineNum(paging_intercom.grid))),paging_intercom.gridcolumn_Name);
         YsAssert.assertEquals(actualName,name);
     }
+
+    public void addPagingIntercom(String name,int number,String type, boolean answer,String... member) throws InterruptedException {
+        paging_intercom.add.click();
+        ys_waitingMask();
+        add_paging_intercom.number.setValue(String.valueOf(number));
+        add_paging_intercom.name.setValue(name);
+        if (!type.isEmpty()){
+            comboboxSelect(add_paging_intercom.type,type);
+        }
+        setCheckBox(add_paging_intercom.answers,answer);
+        ArrayList<String> memberList = new ArrayList<>();
+        for(int i=0;i< member.length;i++){
+            System.out.println(String.valueOf(member[i]));
+            memberList.add(String.valueOf(member[i]));
+        }
+        listSelect(add_paging_intercom.list_PageingIntercom,extensionList,memberList);
+        add_paging_intercom.save.click();
+        ys_waitingLoading(paging_intercom.grid_Mask);
+        String actualName = (String) gridContent(paging_intercom.grid,Integer.parseInt(String.valueOf(gridLineNum(paging_intercom.grid))),paging_intercom.gridcolumn_Name);
+        YsAssert.assertEquals(actualName,name);
+
+    }
+
+
+
 
     public void addCallBack(String name,String destension,String des) throws InterruptedException {
         callback.add.click();
@@ -189,11 +258,10 @@ public class YS_CallFeature {
      * @param line
      * @param number
      * @param name
-     * @param memberList
      * @param strategy
      * @throws InterruptedException
      */
-    public void assertQueue(int line, String number, String name ,ArrayList<String> memberList, String strategy ) throws InterruptedException {
+    public void assertQueue(int line, String number, String name , String strategy ) throws InterruptedException {
         String actualNumber = null;
         String actualName = null;
         String actualmember;
@@ -220,7 +288,7 @@ public class YS_CallFeature {
         for(String item:memberOutbound){
             outboundList.add(item);
         }
-        Thread.sleep(10000);
+        Thread.sleep(15000);
         listSelect(add_disa.list, nameList,outboundList);
         add_disa.save.click();
 
@@ -241,16 +309,22 @@ public class YS_CallFeature {
         YsAssert.assertEquals(actualName,name);
     }
 
+    /**
+     *
+     * @param name
+     * @throws InterruptedException
+     */
     public void addIVR(String name) throws InterruptedException {
+        addIVR(name,name);
+    }
 
+    public void addIVR(String name,String num){
         ivr.add.click();
         ys_waitingTime(5000);
+        add_ivr_basic.number.setValue(num);
         add_ivr_basic.name.setValue(name);
         add_ivr_basic.save.click();
-
         ys_waitingLoading(ivr.grid_Mask);
-
-
     }
 
     /**
@@ -259,18 +333,23 @@ public class YS_CallFeature {
      * @param type  从blacklist表中获取，type_Inbound, type_Outbound ,type_Both
      * @param number
      */
-    public void addBlacklist(String name,int type,int... number) throws InterruptedException {
+    public void addBlacklist(String name,int type,int... number) {
         add_blacklist.name.setValue(name);
         switch (type){
             case 3: {
                 executeJs("Ext.getCmp('st-bw-type').setValue('both')");
             }
+                break;
             case 2:{
                 executeJs("Ext.getCmp('st-bw-type').setValue('outbound')");
             }
+                break;
             case 1:{
                 executeJs("Ext.getCmp('st-bw-type').setValue('inbound')");
             }
+                break;
+            default:
+                break;
         }
         String num = "";
         for(int index:number){
@@ -281,26 +360,31 @@ public class YS_CallFeature {
         System.out.println(num);
         add_blacklist.number.setValue(num);
         add_blacklist.save.click();
-        Thread.sleep(1000);
-
+        ys_waitingTime(1000);
+        ys_waitingMask();
         ys_waitingLoading(blacklist.grid_loadMask);
 
         String actname =  String.valueOf(gridContent(blacklist.grid,Integer.parseInt(String.valueOf(gridLineNum(blacklist.grid))),blacklist.gridcolumn_Name)) ;
         YsAssert.assertEquals(actname,name,"黑名单添加错误");
     }
 
-    public void addWhitelist(String name,int type,int... number) throws InterruptedException {
+    public void addWhitelist(String name,int type,int... number) {
         add_whitelist.name.setValue(name);
         switch (type){
             case 3: {
                 executeJs("Ext.getCmp('st-bw-type').setValue('both')");
             }
+            break;
             case 2:{
                 executeJs("Ext.getCmp('st-bw-type').setValue('outbound')");
             }
+            break;
             case 1:{
                 executeJs("Ext.getCmp('st-bw-type').setValue('inbound')");
             }
+            break;
+            default:
+                break;
         }
         String num = "";
         for(int index:number){
@@ -312,10 +396,10 @@ public class YS_CallFeature {
         add_whitelist.number.setValue(num);
 
         add_whitelist.save.click();
-        Thread.sleep(1000);
-
+        ys_waitingTime(1000);
+        ys_waitingMask();
         ys_waitingLoading(whitelist.grid_loadMask);
-
+        ys_waitingTime(2000);
         String actname =  String.valueOf(gridContent(whitelist.grid,Integer.parseInt(String.valueOf(gridLineNum(whitelist.grid))),whitelist.gridcolumn_Name)) ;
         YsAssert.assertEquals(actname,name,"白名单添加错误");
     }
@@ -330,7 +414,7 @@ public class YS_CallFeature {
         ys_waitingTime(8000);
 
         String actname =  String.valueOf(gridContent(speedDial.grid,Integer.parseInt(String.valueOf(gridLineNum(speedDial.grid))),speedDial.gridcolumn_SpeedDialCode)) ;
-        YsAssert.assertEquals(actname,speedDialCode,"添加speed_dial_name");
+        YsAssert.assertEquals(actname,speedDialCode,"添加speed_dial_code");
         String actname2 =  String.valueOf(gridContent(speedDial.grid,Integer.parseInt(String.valueOf(gridLineNum(speedDial.grid))),speedDial.gridcolumn_PhoneNumber)) ;
         YsAssert.assertEquals(actname2,String.valueOf(phoneNumber),"添加speed_dial_phoneNumber");
     }
