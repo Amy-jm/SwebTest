@@ -24,10 +24,8 @@ public class FeatureCode extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();

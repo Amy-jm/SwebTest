@@ -320,8 +320,11 @@ public class YS_CallFeature {
 
     public void addIVR(String name,String num){
         ivr.add.click();
+        ys_waitingMask();
         ys_waitingTime(5000);
+        add_ivr_basic.number.clear();
         add_ivr_basic.number.setValue(num);
+        add_ivr_basic.name.clear();
         add_ivr_basic.name.setValue(name);
         add_ivr_basic.save.click();
         ys_waitingLoading(ivr.grid_Mask);

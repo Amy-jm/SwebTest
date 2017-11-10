@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="10"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="506.665">
+  <properties />
+  
+  
+            <testcase name="F_EditBlackList2" time="89.722" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+                <testcase name="J_DeleteWhiteList" time="40.671" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+                <testcase name="G_EditWhiteList1" time="64.193" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+                <testcase name="B_BlackListSPS" time="58.382" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+                <testcase name="C_BlackListSIP1" time="59.030" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+                <testcase name="E_WhiteListSIP" time="61.169" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+                <testcase name="I_DeleteBlackList" time="40.709" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+                <testcase name="A_SetInRoute" time="33.006" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+                <testcase name="H_Export" time="0.000" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+                <testcase name="D_WhiteListSPS" time="59.783" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist" />
+      
+</testsuite>

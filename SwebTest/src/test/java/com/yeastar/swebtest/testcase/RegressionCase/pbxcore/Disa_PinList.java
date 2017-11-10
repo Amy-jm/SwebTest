@@ -65,6 +65,7 @@ public class Disa_PinList extends SwebDriver {
         String actName = String.valueOf(gridContent(pinList.grid,gridFindRowByColumn(pinList.grid,pinList.gridcolumn_Name,"pin1",sort_ascendingOrder),pinList.gridcolumn_Name));
         YsAssert.assertEquals(actName,"pin1");
     }
+
     @Test
     public void B_CreateDisa() {
         Reporter.infoExec("--创建DISA1--"); //执行操作
@@ -82,6 +83,7 @@ public class Disa_PinList extends SwebDriver {
         String actName = String.valueOf(gridContent(disa.grid,gridFindRowByColumn(disa.grid,disa.gridcolumn_Name,"DISA1",sort_ascendingOrder),disa.gridcolumn_Name));
         YsAssert.assertEquals(actName,"DISA1");
     }
+
     @Test
     public void C_EditInroute() {
         Reporter.infoExec("--编辑呼入路由--"); //执行操作
@@ -99,7 +101,7 @@ public class Disa_PinList extends SwebDriver {
 
         Reporter.infoExec("辅助设备2通过sps呼叫被测设备1100");
         tcpSocket.connectToDevice();
-        pjsip.Pj_Make_Call_No_Answer(2001,"991100",DEVICE_ASSIST_2);
+        pjsip.Pj_Make_Call_Auto_Answer(2001,"991100",DEVICE_ASSIST_2);
         boolean showKeyWord= tcpSocket.getAsteriskInfo("pin");
         tcpSocket.closeTcpSocket();
         YsAssert.assertEquals(showKeyWord,true,"外线呼出进入pin1List");
@@ -110,6 +112,7 @@ public class Disa_PinList extends SwebDriver {
         m_extension.checkCDR("2001 <2001>","13001","Answered",SPS,SIPTrunk,communication_outRoute);
         m_extension.checkCDR_OtherInfo(cdRandRecordings.gridColumn_PinCode,"123",1);
     }
+
     @Test
     public void D_EditDisa() {
         Reporter.infoExec("--编辑DISA1，Password：选择Single Pin--"); //执行操作
@@ -135,13 +138,13 @@ public class Disa_PinList extends SwebDriver {
 
         Reporter.infoExec("辅助设备1通过SIP1拨打到被测设备，在进行二次拨号");
         tcpSocket.connectToDevice();
-        pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1);
+        pjsip.Pj_Make_Call_Auto_Answer(3001,"3000",DEVICE_ASSIST_1);
         boolean showKeyWord= tcpSocket.getAsteriskInfo("DISA1");
         tcpSocket.closeTcpSocket();
         YsAssert.assertEquals(showKeyWord,true,"外线呼出进入pin1List");
         pjsip.Pj_Send_Dtmf(3001,"7","8","9","#");
         pjsip.Pj_Send_Dtmf(3001,"1","3","0","0","2","#");
-        ys_waitingTime(10000);
+        ys_waitingTime(15000);
         pjsip.Pj_Hangup_All();
 
         m_extension.checkCDR("3001 <3001>","13002","Answered",SIPTrunk,SIPTrunk,communication_outRoute);

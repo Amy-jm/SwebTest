@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import org.apache.regexp.RE;
 import org.openqa.selenium.By;
 
 import java.util.ArrayList;
@@ -190,13 +191,15 @@ public class YS_Extension extends SwebDriver{
         addBulkExtensionsAdvanced.save.click();
 
         ys_waitingLoading(extensions.grid_Mask);
-
+        Thread.sleep(1000);
         String lineAfterAdd = String.valueOf(gridLineNum(extensions.grid)) ;
+        System.out.println("哈哈哈"+lineAfterAdd);
         String actual = (String) gridContent(extensions.grid,Integer.parseInt(lineAfterAdd),extensions.gridcolumn_Extensions);
+        System.out.println("分机值："+actual);
         for(int i=0; i<10 ; i++){
             pjsip.Pj_CreateAccount(startExension+i,registPwd,"UDP",Integer.valueOf(lineAfterAdd));
         }
-        Thread.sleep(500);
+        Thread.sleep(1000);
         YsAssert.assertEquals(actual,String.valueOf(startExension+createNum-1),"批量创建分机");
     }
     /**
@@ -217,7 +220,9 @@ public class YS_Extension extends SwebDriver{
     public void ImportExtensions(String file){
 
         extensions.Import.click();
+        ys_waitingTime(1000);
         importExtension.browse.click();
+        System.out.println(EXPORT_PATH +file);
         importFile(EXPORT_PATH +file);
         importExtension.Import.click();
         importExtension.ImportOK.click();
@@ -271,6 +276,8 @@ public class YS_Extension extends SwebDriver{
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,col)).trim(),info,"CDR检测");
         closeCDRRecord();
     }
+
+
     public void checkCDR(String caller,String callee, String status, int... rowList) {
         checkCDR(caller,callee,status,"","","",rowList);
     }
@@ -282,7 +289,7 @@ public class YS_Extension extends SwebDriver{
         boolean findCDR = false;
         for(int row:rowList){
             if(caller.equals(String.valueOf(gridContent(extensions.grid_CDR,row,1)).trim()) ){
-                if(callee.equals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim())){
+                if( callee.equals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim())){
                     findCDR = true;
                     YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,1)).trim(),caller,"CDR呼叫方检测");
                     YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim(),callee,"CDR被叫方检测");
@@ -316,7 +323,7 @@ public class YS_Extension extends SwebDriver{
         }
         closeCDRRecord();
     }
-    //时间检查
+    //s时间检查
     public void checkCDR(String caller, String callee, String status,String time,int row) throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.CDRandRecordShortcut.click();

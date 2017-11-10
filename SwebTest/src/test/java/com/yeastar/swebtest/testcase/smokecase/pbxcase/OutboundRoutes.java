@@ -23,10 +23,8 @@ public class OutboundRoutes extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_OutboundRoutes"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
@@ -41,7 +39,8 @@ public class OutboundRoutes extends SwebDriver {
     @BeforeClass
     public void InitOutboundRoutes() {
         if(Single_Init){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
             outboundRoutes.outboundRoutes.click();
             ys_waitingLoading(outboundRoutes.grid_Mask);
@@ -91,7 +90,8 @@ public class OutboundRoutes extends SwebDriver {
     @Test
     public void A_TimeCondition() throws InterruptedException {
         Reporter.infoExec("设置Time Conditions");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callControl_panel.click();
         time_Conditions.timeConditions.click();
         m_callcontrol.addTimeContion("time1","00:00","23:00",false,"all");

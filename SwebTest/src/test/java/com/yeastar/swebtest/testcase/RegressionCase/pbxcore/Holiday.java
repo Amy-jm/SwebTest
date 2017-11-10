@@ -14,8 +14,11 @@ public class Holiday extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  时间条件—Holiday  ======="); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();

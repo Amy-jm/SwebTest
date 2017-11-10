@@ -50,12 +50,14 @@ public class SwebDriver extends Config {
         //选择测试浏览器
         //这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
         if (browser.equals("chrome")) {
-//            HashMap<String, Object> chromePrefs = new HashMap<>();
-//            chromePrefs.put("profile.default_content_settings.popups",2);
-//            chromePrefs.put("download.default_directory","D:\\");
 
-//            ChromeOptions options = new ChromeOptions();
-//            options.setExperimentalOption("prefs",chromePrefs);
+            HashMap<String, Object> chromePrefs = new HashMap<>();
+            chromePrefs.put("profile.default_content_settings.popups",2);
+            chromePrefs.put("download.default_directory",SCREENSHOT_PATH);
+
+            ChromeOptions options = new ChromeOptions();
+            options.setExperimentalOption("prefs",chromePrefs);
+            
             Configuration.browser = "chrome";
             System.setProperty("selenide.browser", "Chrome");
             System.setProperty("webdriver.chrome.driver", CHROME_PATH);
@@ -410,6 +412,18 @@ public class SwebDriver extends Config {
         Id = Id.substring(0,Id.length()-1);
         listSetValue(list, Id);
     }
+
+    public static void listSelectAllbyValue(String list)  {
+        String Id = "";
+        String  num = getListCount(list);
+        for(int i=1; i<=Integer.parseInt(num); i++){
+            String listId = (String)getListValue(list,i);
+            Id = listId + "," + Id;
+        }
+        Id = Id.substring(0,Id.length()-1);
+        listSetValue(list, Id);
+    }
+
     /**
      * 获取list表格内容的id
      * @param listId
@@ -419,6 +433,11 @@ public class SwebDriver extends Config {
     public static String getListId(String listId, int index)  {
         return String.valueOf(executeJs("return Ext.getCmp('"+listId+"').getStore().getAt("+--index+").id"));
     }
+
+    public static String getListValue(String listId, int index)  {
+        return String.valueOf(executeJs("return Ext.getCmp('"+listId+"').getStore().getAt("+--index+").value"));
+    }
+
 //=======================================================================下拉框选择====================================================//
     /**
      * 下拉框的选项是固定的

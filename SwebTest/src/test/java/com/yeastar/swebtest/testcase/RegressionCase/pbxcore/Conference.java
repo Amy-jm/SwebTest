@@ -17,19 +17,22 @@ public class Conference extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  Conference  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
     }
 
     @BeforeClass
     public void Register() throws InterruptedException {
         Reporter.infoExec(" 被测设备注册分机1000、1100、1105，辅助1：分机3001，辅助2：分机2001"); //执行操作
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",2);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1105,DEVICE_IP_LAN);

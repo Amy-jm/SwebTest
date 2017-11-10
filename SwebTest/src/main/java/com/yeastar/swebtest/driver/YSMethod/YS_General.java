@@ -19,7 +19,9 @@ public class YS_General {
     public void setExPreferencesDefault(){
         preferences.preferences.click();
 
-        ys_waitingMask();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+        }
         preferences.userExtensions_start.clear();
         preferences.userExtensions_start.setValue("1000");
         preferences.userExtensions_end.clear();

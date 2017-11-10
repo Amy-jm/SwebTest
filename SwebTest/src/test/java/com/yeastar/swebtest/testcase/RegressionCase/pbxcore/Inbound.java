@@ -20,17 +20,20 @@ public class Inbound extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  Inbound  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
 
 //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2001
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",3);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2002,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2002,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1105,DEVICE_IP_LAN);
@@ -50,20 +53,25 @@ public class Inbound extends SwebDriver {
         m_extension.checkCDR("3001 <3001>","1000 <1000>","Answered",SIPTrunk," ",communication_inbound);
 
 //        检查正常录音
-        pageDeskTop.taskBar_Main.click();
-        pageDeskTop.CDRandRecordShortcut.click();
-        cdRandRecordings.search.click();
-        ys_waitingLoading(cdRandRecordings.grid_Mask);
-        if(gridPicColor(cdRandRecordings.grid,1,cdRandRecordings.gridPlay).contains(cdRandRecordings.gridColumnColor_Gray)){
-            YsAssert.fail(" 录音失败");
-        }else {
-            Reporter.pass(" 正确检测到录音文件");
+        if(!PRODUCT.equals(CLOUD_PBX)) {
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.CDRandRecordShortcut.click();
+            cdRandRecordings.search.click();
+            ys_waitingLoading(cdRandRecordings.grid_Mask);
+            if (gridPicColor(cdRandRecordings.grid, 1, cdRandRecordings.gridPlay).contains(cdRandRecordings.gridColumnColor_Gray)) {
+                YsAssert.fail(" 录音失败");
+            } else {
+                Reporter.pass(" 正确检测到录音文件");
+            }
+            closeCDRRecord();
         }
-        closeCDRRecord();
     }
 
     @Test
     public void A_callfrom2_iax() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX)){
+            return;
+        }
         Reporter.infoExec(" 3001拨打3100通过iax外线呼入到分机1000"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(3001,"3100",DEVICE_ASSIST_1);
         ys_waitingTime(10000);
@@ -83,6 +91,9 @@ public class Inbound extends SwebDriver {
 
     @Test
     public void A_callfrom4_spx() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX)){
+            return;
+        }
         Reporter.infoExec(" 2001拨打88888通过spx外线呼入到分机1000"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(2001,"88888",DEVICE_ASSIST_2);
         ys_waitingTime(10000);
@@ -92,6 +103,9 @@ public class Inbound extends SwebDriver {
 
     @Test
     public void A_callfrom5_fxo() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
+            return;
+        }
         if(!FXO_1.equals("null")){
             Reporter.infoExec(" 2001拨打2010通过fxo外线呼入到分机1000"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(2001,"2010",DEVICE_ASSIST_2);
@@ -103,6 +117,9 @@ public class Inbound extends SwebDriver {
 
     @Test
     public void A_callfrom6_bri() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
+            return;
+        }
         if(!BRI_1.equals("null")){
             Reporter.infoExec(" 2001拨打66666通过bri外线呼入到分机1000"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(2001,"66666",DEVICE_ASSIST_2);
@@ -115,6 +132,9 @@ public class Inbound extends SwebDriver {
 
     @Test
     public void A_callfrom7_e1() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
+            return;
+        }
         if(!E1.equals("null")){
             Reporter.infoExec(" 2001拨打77777通过E1外线呼入到分机1000"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(2001,"77777",DEVICE_ASSIST_2);
@@ -126,66 +146,48 @@ public class Inbound extends SwebDriver {
 
     @Test
     public void A_callfrom8_gsm() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
+            return;
+        }
         if(!GSM.equals("null")){
             Reporter.infoExec(" 2001拨打被测设备的gsm号码呼入到分机1000"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(2001,DEVICE_TEST_GSM,DEVICE_ASSIST_2);
             ys_waitingTime(15000);
             pjsip.Pj_Hangup_All();
-            m_extension.checkCDR(DEVICE_ASSIST_GSM,"1000 <1000>","Answered",GSM," ",communication_inbound);
+            m_extension.checkCDR(DEVICE_ASSIST_GSM +" <"+DEVICE_ASSIST_GSM+">","1000 <1000>","Answered",GSM," ",communication_inbound);
         }
     }
 
-//    DID Pattern：SPS外线-DID：5503301-5503305，Extension Range：1100-1105
+//    Caller ID测试
     @Test
-    public void B_did1_sps() throws InterruptedException {
-        Reporter.infoExec(" 新建呼入路由DIDtest，DID Pattern：5503301-5503305，选择SPS外线，Extension Range：1101-1105"); //执行操作
+    public void B1_callerid() throws InterruptedException {
+        Reporter.infoExec(" 编辑呼入路由InRoute1，Caller ID：2002"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.callControl_panel.click();
         inboundRoutes.inboundRoutes.click();
         ys_waitingLoading(inboundRoutes.grid_Mask);
-        ArrayList<String> arraytrunk1 = new ArrayList<>();
-        arraytrunk1.add(SPS);
-        m_callcontrol.addInboundRoutes("DIDtest","5503301-5503305","",add_inbound_route.s_extension_range,"1101-1105",arraytrunk1);
-        ys_apply();
-//      DID 通话测试
-
-//        注意CDR的正确与否！！！
-
-        Reporter.infoExec(" 2001拨打995503301通过sps外线呼入到分机1101"); //执行操作
-        pjsip.Pj_Make_Call_Auto_Answer(2001,"995503301",DEVICE_ASSIST_2);
-        ys_waitingTime(10000);
-        pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("2001 <2001>","1101 <1101>","Answered",SPS," ",communication_inbound);
-
-        Reporter.infoExec(" 2001拨打995503305通过sps外线呼入到分机1105"); //执行操作
-        pjsip.Pj_Make_Call_Auto_Answer(2001,"995503305",DEVICE_ASSIST_2);
-        ys_waitingTime(10000);
-        pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("2001 <2001>","1105 <1105>","Answered",SPS," ",communication_inbound);
-    }
-
-
-//    Caller ID测试
-    @Test
-    public void C_callerid() throws InterruptedException {
-        Reporter.infoExec(" 编辑呼入路由InRoute1，Caller ID：2002"); //执行操作
-        pageDeskTop.taskBar_Main.click();
-        pageDeskTop.settingShortcut.click();
-        inboundRoutes.add.should(Condition.exist);
+        inboundRoutes.add.shouldBe(Condition.exist);
         ys_waitingTime(5000);
         gridClick(inboundRoutes.grid,gridFindRowByColumn(inboundRoutes.grid,inboundRoutes.gridcolumn_Name,"InRoute1",sort_ascendingOrder),inboundRoutes.gridEdit);
         ys_waitingMask();
         add_inbound_route.callIDPattem.setValue("2002");
         add_inbound_route.save.click();
+        if(PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+        }
         ys_waitingTime(5000);
         ys_apply();
+    }
 
+    @Test
+    public void B2_callerid() throws InterruptedException {
         ys_waitingTime(5000);
 //        Caller ID通话测试
         Reporter.infoExec(" 2002拨打99999通过sps外线呼入到分机1000");
-        pjsip.Pj_Make_Call_Auto_Answer(2002,"99999",DEVICE_ASSIST_2);
+        pjsip.Pj_Make_Call_Auto_Answer(2002,"99999",DEVICE_ASSIST_2,false);
         ys_waitingTime(12000);
+        YsAssert.assertEquals(getExtensionStatus(1000,TALKING,10),TALKING,"预期1000为Talking");
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2002 <2002>","1000 <1000>","Answered",SPS," ",communication_inbound);
 
@@ -197,7 +199,43 @@ public class Inbound extends SwebDriver {
 
     }
 
-//    TimeCondition测试
+    //    DID Pattern：SPS外线-DID：5503301-5503305，Extension Range：1100-1105
+
+    @Test
+    public void C1_did1_sps() throws InterruptedException {
+        Reporter.infoExec(" 新建呼入路由DIDtest，DID Pattern：5503301-5503305，选择SPS外线，Extension Range：1101-1105"); //执行操作
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+//        settings.callControl_panel.click();
+//        inboundRoutes.inboundRoutes.click();
+//        ys_waitingLoading(inboundRoutes.grid_Mask);
+        ArrayList<String> arraytrunk1 = new ArrayList<>();
+        arraytrunk1.add(SPS);
+        m_callcontrol.addInboundRoutes("DIDtest","5503301-5503305","",add_inbound_route.s_extension_range,"1101-1105",arraytrunk1);
+        ys_apply();
+
+    }
+
+    //      DID 通话测试
+    @Test
+    public void C2_did1_sps() throws InterruptedException {
+//        注意CDR的正确与否！！！
+        Reporter.infoExec(" 2001拨打995503301通过sps外线呼入到分机1101"); //执行操作
+        pjsip.Pj_Make_Call_Auto_Answer(2001,"995503301",DEVICE_ASSIST_2);
+        ys_waitingTime(10000);
+        pjsip.Pj_Hangup_All();
+        m_extension.checkCDR("2001 <2001>","1101 <1101>","Answered",SPS," ",communication_inbound);
+
+        Reporter.infoExec(" 2001拨打995503305通过sps外线呼入到分机1105"); //执行操作
+        pjsip.Pj_Make_Call_Auto_Answer(2001,"995503305",DEVICE_ASSIST_2);
+        ys_waitingTime(10000);
+        pjsip.Pj_Hangup_All();
+        m_extension.checkCDR("2001 <2001>","1105 <1105>","Answered",SPS," ",communication_inbound);
+
+    }
+
+
+    //    TimeCondition测试
     @Test
     public void F_timecondition1() throws InterruptedException {
         Reporter.infoExec(" 设置分机1000具有拨打时间特征码的权限"); //执行操作

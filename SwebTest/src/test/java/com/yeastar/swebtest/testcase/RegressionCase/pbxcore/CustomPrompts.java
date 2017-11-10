@@ -17,12 +17,15 @@ public class CustomPrompts extends SwebDriver{
         Reporter.infoBeforeClass("开始执行：======  CustomPrompts  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
 
 //        被测设备注册分机1000
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
 
         pageDeskTop.taskBar_Main.click();

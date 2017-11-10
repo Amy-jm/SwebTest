@@ -15,15 +15,1062 @@
   </p>
 
   <div id="log">
-                  【测试类场景初始化】执行的操作414<br />
-                        &nbsp; 【执行操作】执行的操作<br />
-                        &nbsp;&nbsp;&nbsp; Pass: 出错了<br />
-                        &nbsp; 【执行操作】执行的操作<br />
-                        RunCount=2<br />
-                        &nbsp; 【执行操作】执行的操作<br />
-                        RunCount=3<br />
-                        &nbsp; 【执行操作】执行的操作<br />
-                        【测试类场景恢复】执行的操作<br />
+                  【测试类场景初始化】开始执行：======前置环境设置—BeforeTest======<br />
+                        &nbsp; 【执行操作】 删除所有分机<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有分机<br />
+                        &nbsp; 【执行操作】 添加分机1000<br />
+                        &nbsp; 【执行操作】 批量创建分机1100~1105<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 批量创建分机<br />
+                        &nbsp; 【执行操作】 编辑分机1103的名字为xlq<br />
+                        &nbsp; 【执行操作】 编辑分机1104的名字为xll<br />
+                        &nbsp; 【执行操作】 删除所有分机组<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有分机组<br />
+                        &nbsp; 【执行操作】 添加分机组：ExtensionGroup1:1000,1100,1101,1105<br />
+                        &nbsp; 【执行操作】 删除所有VoIP外线<br />
+                        &nbsp; 【执行操作】 添加sip外线SIP1<br />
+                        &nbsp; 【执行操作】 添加iax外线IAX1<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\IAX1注册失败.jpg" target="_blank">Error: IAX1注册失败</a><br />
+                        &nbsp; 【执行操作】 添加sps外线SPS1<br />
+                        &nbsp; 【执行操作】 添加spx外线SPX1<br />
+                        &nbsp; 【执行操作】 删除所有呼入路由<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有呼入路由<br />
+                        &nbsp; 【执行操作】 添加呼入路由InRoute1<br />
+                        &nbsp; 【执行操作】 删除所有呼出路由<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有呼出路由<br />
+                        &nbsp; 【执行操作】 添加sip的呼出路由OutRoute1_sip<br />
+                        &nbsp; 【执行操作】 添加iax的呼出路由OutRoute2_iax<br />
+                        &nbsp; 【执行操作】 添加sps的呼出路由OutRoute3_sps<br />
+                        &nbsp; 【执行操作】 添加spx的呼出路由OutRoute4_spx<br />
+                        &nbsp; 【执行操作】 添加fxo的呼出路由OutRoute5_fxo<br />
+                        &nbsp; 【执行操作】 添加bri的呼出路由OutRoute6_bri<br />
+                        &nbsp; 【执行操作】 删除所有IVR<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有IVR<br />
+                        &nbsp; 【执行操作】 添加IVR1：6500,按1到分机1000<br />
+                        &nbsp; 【执行操作】 编辑IVR1:按1到分机1000<br />
+                        &nbsp; 【执行操作】 删除所有RingGroup<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有RingGroup<br />
+                        &nbsp; 【执行操作】 添加RingGroup1：6200，选择分机1000,1100,1105，其它默认<br />
+                        &nbsp; 【执行操作】 删除所有Queue<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有Queue<br />
+                        &nbsp; 【执行操作】 添加Queue1：6700，选择分机1000、1100、1105，其它默认 <br />
+                        &nbsp; 【执行操作】 删除所有Conference<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有Conference<br />
+                        &nbsp; 【执行操作】 添加Conference1:6400<br />
+                        &nbsp; 【执行操作】 添加网络磁盘netdisk1<br />
+                        &nbsp; 【执行操作】 设置录音存储在：TF/SD<br />
+                        &nbsp; 【执行操作】 选择全部外线、分机、会议室进行录音<br />
+                        【测试类场景恢复】执行完毕：======前置环境设置—BeforeTest======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; 时间条件—TimeCondition&nbsp; ======<br />
+                        &nbsp; 【执行操作】 删除所有时间条件<br />
+                        &nbsp; 【执行操作】删除所有时间条件<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除所有时间条件<br />
+                        &nbsp; 【执行操作】 添加时间条件workday_24hour:每天24小时都是工作时间<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加TimeConditions<br />
+                        &nbsp; 【执行操作】 添加时间条件workday_test：每天05:05~22:39<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加TimeConditions<br />
+                        &nbsp; 【执行操作】 添加时间条件Outbound：00:00-00:01,周日<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加TimeConditions<br />
+                        &nbsp; 【执行操作】 添加时间条件workday_Advanced:周日/二/四，12:30~18:45<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加TimeConditions<br />
+                        &nbsp; 【执行操作】 编辑workday_Advanced，启用高级设置，1/6/12月的1/10/20/31号<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 月份编辑<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 日期编辑<br />
+                        &nbsp; 【执行操作】 添加时间条件CheckAll<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加TimeConditions<br />
+                        &nbsp; 【执行操作】 编辑CheckAl，启用高级设置，Month:All，Day:All<br />
+                        &nbsp;&nbsp;&nbsp; Pass: Week编辑页面显示检查<br />
+                        &nbsp;&nbsp;&nbsp; Pass: Month编辑页面显示检查<br />
+                        &nbsp;&nbsp;&nbsp; Pass: Day编辑页面显示检查<br />
+                        &nbsp; 【执行操作】 表格删除：workday_Advanced，取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：workday_Advanced，取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：workday_Advanced，确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：workday_Advanced，确定删除<br />
+                        &nbsp; 【执行操作】 删除：workday_test，取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：workday_test，取消删除<br />
+                        &nbsp; 【执行操作】 删除：workday_test，确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：workday_Advanced，确定删除<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; 时间条件—TimeCondition&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; 时间条件—Holiday&nbsp; =======<br />
+                        &nbsp; 【执行操作】 删除所有Holiday<br />
+                        &nbsp; 【执行操作】删除所有Holiday<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除所有Holiday<br />
+                        &nbsp; 【执行操作】 新建HolidayByDay：2017-10-01~2025-12-31<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加Holiday<br />
+                        &nbsp; 【执行操作】 新建HolidayByMonth：1月1号-12月31号<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加Holiday<br />
+                        &nbsp; 【执行操作】 新建HolidayByWeek：5月第3个周四<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加Holiday<br />
+                        &nbsp; 【执行操作】 新建HolidayByWeek2：12月最后1个周日<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加Holiday<br />
+                        &nbsp; 【执行操作】 编辑HolidayByWeek：8月第4个周六<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 编辑Holiday<br />
+                        &nbsp; 【执行操作】 表格删除：HolidayByWeek-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：HolidayByWeek-取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：HolidayByWeek-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：HolidayByWeek-确定删除<br />
+                        &nbsp; 【执行操作】 删除：HolidayByWeek2-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：HolidayByWeek2-取消删除<br />
+                        &nbsp; 【执行操作】 删除：HolidayByWeek2-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：HolidayByWeek2-确定删除<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; 时间条件-Holiday&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; Inbound&nbsp; ======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105分机注册<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入到分机1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\ 录音失败.jpg" target="_blank">Error:&nbsp; 录音失败</a><br />
+                        &nbsp; 【执行操作】 3001拨打3100通过iax外线呼入到分机1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入到分机1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 2001拨打88888通过spx外线呼入到分机1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR源中继检测 【预期：SPX1 实际：SPS1】.jpg" target="_blank">Error: CDR源中继检测 【预期：SPX1 实际：SPS1】</a><br />
+                        &nbsp; 【执行操作】 2001拨打2010通过fxo外线呼入到分机1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 2001拨打66666通过bri外线呼入到分机1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 编辑呼入路由InRoute1，Caller ID：2002<br />
+                        &nbsp; 【执行操作】 2002拨打99999通过sps外线呼入到分机1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1000为Talking<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入--预期：无法呼入，CDR不会生成<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 新建呼入路由DIDtest，DID Pattern：5503301-5503305，选择SPS外线，Extension Range：1101-1105<br />
+                        &nbsp; 【执行操作】 2001拨打995503301通过sps外线呼入到分机1101<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 2001拨打995503305通过sps外线呼入到分机1105<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 设置分机1000具有拨打时间特征码的权限<br />
+                        &nbsp; 【执行操作】 编辑InRoute1,启用时间条件，workday_24hour到分机1101<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入1101<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 编辑InRoute1，添加[Holiday]到会议室Conference1<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入到会议室6400<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 分机1000拨打特征码*801强制启用工作时间<br />
+                        &nbsp; 【执行操作】 建立通话验证特征码启用生效：3001拨打3000通过sip外线呼入，预期呼入到1101<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 编辑InRoute1禁用时间条件<br />
+                        &nbsp; 【执行操作】 建立通话验证禁用时间条件：3001拨打3000通过sip外线呼入，预期呼入到1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 表格删除：DIDtest-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：DIDtest-取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：DIDtest-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：DIDtest-确定删除<br />
+                        &nbsp; 【执行操作】 删除：DeleteTest-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：DeleteTest-取消删除<br />
+                        &nbsp; 【执行操作】 删除：DeleteTest-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：DeleteTest-确定删除<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; Inbound&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; Outbound&nbsp; ======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp; 【执行操作】 1000拨打13001通过sip外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\ 录音失败.jpg" target="_blank">Error:&nbsp; 录音失败</a><br />
+                        &nbsp; 【执行操作】 1000拨打23001通过iax外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打32000通过sps外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打42000通过spx外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：42000 实际：32000】.jpg" target="_blank">Error: CDR被叫方检测 【预期：42000 实际：32000】</a><br />
+                        &nbsp; 【执行操作】 1000拨打52000通过PSTN外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打62000通过BRI外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 新建呼出路由DialPattern，Pattern:91.，strip：2，Prepend：123456，选择SIP外线/所有分机<br />
+                        &nbsp; 【执行操作】 1000拨打9101通过sip外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 新建呼出路由Password，Pattern:92.，strip：2，外线:SPS，分机：1000<br />
+                        &nbsp; 【执行操作】 编辑呼出路由Password，Passwoed：Single Pin--123<br />
+                        &nbsp; 【执行操作】 1000拨打928888通过SPS外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR_Status检测 【预期：Answered 实际：No Answer】.jpg" target="_blank">Error: CDR_Status检测 【预期：Answered 实际：No Answer】</a><br />
+                        &nbsp; 【执行操作】 新建呼出路由Rrmemory_hunt，Pattern:93.，strip：2，外线:SPS、SIP，分机：1000<br />
+                        &nbsp; 【执行操作】 编辑呼出路由Rrmemory_hunt，启用循环抓取<br />
+                        &nbsp; 【执行操作】 1000拨打933001，第1次预期通过SPS外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：933001 实际：928888】.jpg" target="_blank">Error: CDR被叫方检测 【预期：933001 实际：928888】</a><br />
+                        &nbsp; 【执行操作】 编辑呼出路由Password：取消密码设置，TimeCondition选择Outbound<br />
+                        &nbsp; 【执行操作】 1000拨打929999，通过sps外线呼出，预期：呼出失败<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1000为HangUp<br />
+                        &nbsp; 【执行操作】 编辑呼出路由Password，TimeCondition选择CheckAll<br />
+                        &nbsp; 【执行操作】 1000拨打929999，通过sps外线呼出，预期：呼出成功<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：9299999 实际：928888】.jpg" target="_blank">Error: CDR被叫方检测 【预期：9299999 实际：928888】</a><br />
+                        &nbsp; 【执行操作】 表格删除：Rrmemory_hunt-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：Rrmemory_hunt-取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：Rrmemory_hunt-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：Rrmemory_hunt-确定删除<br />
+                        &nbsp; 【执行操作】 删除：Prepend-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：Prepend-取消删除<br />
+                        &nbsp; 【执行操作】 删除：Prepend-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：Prepend-确定删除<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; Outbound&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; OutboundRestriction&nbsp; ======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1102分机注册<br />
+                        &nbsp; 【执行操作】&nbsp; 删除所有Outbound Restriction<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp;&nbsp; 删除所有Outbound Restriction<br />
+                        &nbsp; 【执行操作】 新建呼出限制OutRestriction1，2分钟不能超过5通<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100呼出失败<br />
+                        &nbsp; 【执行操作】 检查分机1100被限制呼出，取消呼出限制<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 查看分机1100状态已被限制，并取消限制<br />
+                        &nbsp; 【执行操作】 分机1100取消呼出限制后能正常呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 新建呼出限制：OutRestriction2，分机1102，2分钟呼出不能超过2通<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1102呼出失败<br />
+                        &nbsp; 【执行操作】 检查分机1102被限制呼出，取消呼出限制<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 查看分机1102状态已被限制，并取消限制<br />
+                        &nbsp; 【执行操作】 分机1102取消呼出限制后能正常呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 表格删除：OutRestriction1-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：OutRestriction1-取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：OutRestriction1-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：OutRestriction1-确定删除<br />
+                        &nbsp; 【执行操作】 删除：OutRestriction2-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：OutRestriction2-取消删除<br />
+                        &nbsp; 【执行操作】 删除：OutRestriction2-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：OutRestriction2-确定删除<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; OutboundRestriction&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; AutoCLIP&nbsp; =======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101分机注册<br />
+                        &nbsp; 【执行操作】 ----AutoCLIP选择所有外线,其它默认----<br />
+                        &nbsp; 【执行操作】 1101拨打13001通过sip外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: AutoCLIP List--Extension Number检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: AutoCLIP List--Called Number检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: AutoCLIP List--Trunk检测<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入--预期：分机1101接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 删除AutoCLIP List的所有记录<br />
+                        &nbsp; 【执行操作】 删除AutoCLIP List后，3001拨打3000通过sip外线呼入--预期：分机1000接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 ----启用Delete Used Records----<br />
+                        &nbsp; 【执行操作】 1101拨打13001通过sip外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: AutoCLIP List--Extension Number检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: AutoCLIP List--Called Number检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: AutoCLIP List--Trunk检测<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线第1次呼入--预期：分机1101接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线第2次呼入--预期：分机1000接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 ----启用Only Keep Missed Call Records----<br />
+                        &nbsp; 【执行操作】 1101拨打13001通过sip外线呼出，被叫接听--预期不会生成cliplist<br />
+                        &nbsp;&nbsp;&nbsp; Error: 被叫接听，检查AutoCLIP List生成了记录<br />
+                        &nbsp; 【执行操作】 1101拨打13001通过sip外线呼出，被叫未接--预期生成cliplist<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 被叫未接，检查AutoCLIP List生成记录<br />
+                        &nbsp; 【执行操作】 ----启用Match Outgoing Trunk----<br />
+                        &nbsp; 【执行操作】 1101拨打13001通过sip外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: AutoCLIP List--Extension Number检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: AutoCLIP List--Called Number检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: AutoCLIP List--Trunk检测<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入--预期：分机1101接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 3001拨打3100通过iax外线呼入--预期：分机1000接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 ----不启用AutoCLIP----<br />
+                        &nbsp; 【执行操作】 1101拨打13001通过sip外线呼出<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入--预期：分机1000接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        【测试类场景恢复】执行完毕：======&nbsp;&nbsp; AutoCLIP&nbsp;&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; PickupGroup&nbsp; ======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105分机注册<br />
+                        &nbsp; 【执行操作】 删除所有PickupGroup<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有PickupGroup<br />
+                        &nbsp; 【执行操作】 新建截答组PickupGroup1,成员分机1000、1105<br />
+                        &nbsp; 【执行操作】 1100拨打1000,1105按*4截答--预期截答成功<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打1100,1105按*4截答--预期截答失败<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打1100,1105按*041100截答--预期截答成功<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 新建截答组PickupExGroup,成员：ExtensionGroup1<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入--预期分机1000响铃<br />
+                        &nbsp; 【执行操作】 1105按*4截答--预期截答成功<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 表格删除：PickupGroup1-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：PickupGroup1-取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：PickupGroup1-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：PickupGroup1-确定删除<br />
+                        &nbsp; 【执行操作】 删除：PickupExGroup-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：PickupExGroup-取消删除<br />
+                        &nbsp; 【执行操作】 删除：PickupExGroup-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：PickupExGroup-确定删除<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; PickupGroup&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; PagingIntercom&nbsp; ======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105分机注册<br />
+                        &nbsp; 【执行操作】 删除所有广播组<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有广播组<br />
+                        &nbsp; 【执行操作】 新建广播组Paging6300：单工，不启用*Answer，成员：1100,1105<br />
+                        &nbsp; 【执行操作】 1000拨打6300，预期分机1100、1105自动应答<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1100--Talking<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1105--Talking<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 新建广播组Paging6301：双工，启用*Answer成员：ExtensionGroup1<br />
+                        &nbsp; 【执行操作】 1000拨打6301，预期分机1100、1101、1105自动应答<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1100--Talking<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1101--Talking<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1105--Talking<br />
+                        &nbsp; 【执行操作】 1101按*Answer--预期1100、1105会挂断通话<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1100--Hungup<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1101--Talking<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1105--Hungup<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打*51105<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 表格删除：Paging6300-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：Paging6300-取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：Paging6300-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：Paging6300-确定删除<br />
+                        &nbsp; 【执行操作】 删除：Paging6301-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：Paging6301-取消删除<br />
+                        &nbsp; 【执行操作】 删除：Paging6301-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：Paging6301-确定删除<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; PagingIntercom&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; SpeedDial&nbsp; ======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp; 【执行操作】 删除所有速拨码<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有速拨码<br />
+                        &nbsp; 【执行操作】 设置速拨特征码为*999<br />
+                        &nbsp; 【执行操作】 新建速拨码：dialcode:1,PhoneNumber：13001<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加speed_dial_code<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加speed_dial_phoneNumber<br />
+                        &nbsp; 【执行操作】 新建速拨码：dialcode:1234567,PhoneNumber：31234567<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加speed_dial_code<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 添加speed_dial_phoneNumber<br />
+                        &nbsp; 【执行操作】 1000拨打*9991通过sip外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打*9991234567通过sps外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：31234567 实际：13001】.jpg" target="_blank">Error: CDR被叫方检测 【预期：31234567 实际：13001】</a><br />
+                        &nbsp; 【执行操作】 导出速拨码<br />
+                        &nbsp; 【执行操作】 表格删除：速拨码为1-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：速拨码为1-取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：速拨码为1-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：速拨码为1-确定删除<br />
+                        &nbsp; 【执行操作】 删除：速拨码为1234567-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：速拨码为1234567-取消删除<br />
+                        &nbsp; 【执行操作】 删除：速拨码为1234567-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：速拨码为1234567-确定删除<br />
+                        &nbsp; 【执行操作】 导入速拨码<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 导入速拨码<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; SpeedDial&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; RingGroup&nbsp; ======<br />
+                        &nbsp; 【执行操作】 删除所有RingGroup<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有RingGroup<br />
+                        &nbsp; 【执行操作】 添加RingGroup1：6200，选择分机1000,1100,1105，其它默认<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1102分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105分机注册<br />
+                        &nbsp; 【执行操作】 新建RingGroup6201,Mem:ExtensionGroup1,其它默认<br />
+                        &nbsp; 【执行操作】 1000拨打6201，分机1105接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 分机1100、1101、1105同时响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 编辑RingGroup6201，成员响铃时间：15s，Failover：分机1102<br />
+                        &nbsp; 【执行操作】 1000拨打6201，预期1100、1101、1105响铃15s后挂断，1102开始响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1100--Ring<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1101--Ring<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1105--Ring<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1102--Idle<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1102--Ring<br />
+                        &nbsp; 【执行操作】 1102接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 新建响铃组RingSequentially6202，Sequentially,每个成员20s,成员：1000、1100、1101、1105<br />
+                        &nbsp; 【执行操作】 编辑呼入路由Inroute1到RingSequentially6202<br />
+                        &nbsp; 【执行操作】 2000拨打99999通过sps外线呼入到RingSequentially6202<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1000--Ring20s--Hungup<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1100--Ring20s--Hungup<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1101--Ring20s--Hungup<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 1105--Ring--Answer<br />
+                        &nbsp; 【执行操作】 轮到1105响铃的时候，1105接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 表格删除：RingGroup6201-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：RingGroup6201-取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：RingGroup6201-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：RingGroup6201-确定删除<br />
+                        &nbsp; 【执行操作】 删除：RingSequentially6202-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：RingSequentially6202-取消删除<br />
+                        &nbsp; 【执行操作】 删除：RingSequentially6202-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：RingSequentially6202-确定删除<br />
+                        &nbsp; 【执行操作】 恢复呼入路由InRoute1到分机1000<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; RingGroup&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; CustomPrompts&nbsp; ======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp; 【执行操作】 删除所有提示音<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有提示音<br />
+                        &nbsp; 【执行操作】 分机1000录制提示音prompt1<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 生成自定义提示音<br />
+                        &nbsp; 【执行操作】 分机1000播放提示音prompt1<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 分机1000重新录制提示音prompt1<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 上传提示音autotestprompt<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 导入提示音autotestprompt<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; CustomPrompts&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; IVR&nbsp; ======<br />
+                        &nbsp; 【执行操作】 删除所有IVR<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有IVR<br />
+                        &nbsp; 【执行操作】 添加IVR1：6500,按1到分机1000<br />
+                        &nbsp; 【执行操作】 编辑IVR1:按1到分机1000<br />
+                        &nbsp; 【执行操作】 新建IVR6502,默认设置<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1103分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105分机注册<br />
+                        &nbsp; 【执行操作】 新建IVRtest1，提示音选择autotestprompt，勾选Dial Extensions，勾选Dial Outbound Routes，勾选Dial to Check Voicemail按0到分机1000，按1到1000的Voicemail，按5到Dial by Name，按#到hungup，按*到Select an Option，Timeout到customPrompt：prompt1，Invalid到分机1105<br />
+                        &nbsp; 【执行操作】 编辑呼入路由Inbound1，呼入到IVRtest1<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入IVRtest1,直拨分机1103<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入IVRtest1,直拨3333通过sps外线呼出<br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入IVRtest1,按0到分机1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：1000 [6501(1000)] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：1000 [6501(1000)] 实际：1000 [1000]】</a><br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入IVRtest1,按1到voicemail-1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：6501(1000) 实际：1000 [1000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：6501(1000) 实际：1000 [1000]】</a><br />
+                        &nbsp; 【执行操作】 1000拨打6501，按5到DialbyName,按957到分机1103<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\预期1103为Ring状态 【预期：2 实际：0】.jpg" target="_blank">Error: 预期1103为Ring状态 【预期：2 实际：0】</a><br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入IVRtest1,按#挂断通话<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR呼叫方检测 【预期：2001 [2001] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：2001 [2001] 实际：1000 [1000]】</a><br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入IVRtest1，按*到SelecttoOption--预期1105响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：1105 [6501(1105)] 实际：1000 [1000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：1105 [6501(1105)] 实际：1000 [1000]】</a><br />
+                        &nbsp; 【执行操作】 1103拨打6501，超时到prompt1<br />
+                        &nbsp; 【执行操作】 1000拨打6501，按a错误按键到分机1105<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：1105 [6501(1105)] 实际：6501】.jpg" target="_blank">Error: CDR被叫方检测 【预期：1105 [6501(1105)] 实际：6501】</a><br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入IVRtest1,直接拨打*02查看1000的语音留言<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：6501(*02) 实际：1000 [1000]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：6501(*02) 实际：1000 [1000]】</a><br />
+                        &nbsp; 【执行操作】 编辑呼入路由Inbound1，呼入到分机1000<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; IVR ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; Queue&nbsp; ======<br />
+                        &nbsp; 【执行操作】 删除所有Queue<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有Queue<br />
+                        &nbsp; 【执行操作】 添加Queue1：6700，选择分机1000、1100、1105，其它默认 <br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1102分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105分机注册<br />
+                        &nbsp; 【执行操作】 新建Queue6701,Password:123，FailoverDestination：分机1000，Static Agents：空<br />
+                        &nbsp; 【执行操作】 新建Queue6702,Ring Strategy：RingAll，Static Agents：ExtensionGroup1，Agent Announcement：prompt1，Caller Max Wait Time:100,按9到分机1000<br />
+                        &nbsp; 【执行操作】 编辑呼入路由Inbound1到Queue6702<br />
+                        &nbsp; 【执行操作】 1105拨打6701，预期到FailDestination--1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1100拨打6701*加入队列6701，密码：123<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 动态坐席1100输入密码123<br />
+                        &nbsp; 【执行操作】 1105拨打6701，预期动态坐席1100接听<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR呼叫方检测 【预期：1105 [1105] 实际：1100 [1100]】.jpg" target="_blank">Error: CDR呼叫方检测 【预期：1105 [1105] 实际：1100 [1100]】</a><br />
+                        &nbsp; 【执行操作】 1100拨打6700**退出队列6701<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 动态坐席1100退出队列6701<br />
+                        &nbsp; 【执行操作】 1105拨打6701，预期FailDestina-1000接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入到Queue6702,1100接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：1100 [6702(1100)] 实际：1000 [6702(1100)]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：1100 [6702(1100)] 实际：1000 [6702(1100)]】</a><br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入到Queue6702,100s内无人接就挂断通话<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 2001预期HangUp<br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入到Queue6702,按9到分机1000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期挂断<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101预期挂断<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105预期挂断<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 编辑Queue6701,启用Empty，不启用Leave When Empty<br />
+                        &nbsp; 【执行操作】 1100拨打6701--预期：队列无有效坐席，仍可成功呼入队列<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期Talking状态<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：6701 实际：1000 [6701(1000)]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：6701 实际：1000 [6701(1000)]】</a><br />
+                        &nbsp; 【执行操作】 编辑Queue6701，启用Empty，启用Leave When Empty<br />
+                        &nbsp; 【执行操作】 1100拨打6701--预期：队列无有效坐席--failover 1000分机响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 编辑6701，成员选择1105，1101,1102，响铃策略线性响铃<br />
+                        &nbsp; 【执行操作】 1000拨打6701，轮到1102响铃时接听<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\1105预期响铃 【预期：2 实际：4】.jpg" target="_blank">Error: 1105预期响铃 【预期：2 实际：4】</a><br />
+                        &nbsp; 【执行操作】 恢复呼入路由InRoute1到分机1000<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; Queue&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; Conference&nbsp; ======<br />
+                        &nbsp; 【执行操作】 被测设备注册分机1000、1100、1105，辅助1：分机3001，辅助2：分机2001<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105分机注册<br />
+                        &nbsp; 【执行操作】 删除所有Conference<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有Conference<br />
+                        &nbsp; 【执行操作】 添加Conference1:6400<br />
+                        &nbsp; 【执行操作】 新建Conference6401，默认设置<br />
+                        &nbsp; 【执行操作】 新建Conference6402，与会者密码123，启用等候管理员，提示音：分机号码，Allow Participant to Invite：不启用，管理员密码：456，管理员：1000、1100<br />
+                        &nbsp; 【执行操作】 编辑呼入路由InRoute1到Conference6402<br />
+                        &nbsp; 【执行操作】 1000拨打6401呼入到会议室6401<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6401有1个成员<br />
+                        &nbsp; 【执行操作】 1100拨打6401呼入到会议室6401<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6401有2个成员<br />
+                        &nbsp; 【执行操作】 1105拨打6401呼入到会议室6401<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6401有3个成员<br />
+                        &nbsp; 【执行操作】 1000退出会议室6401<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6401有2个成员<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6401有0个成员<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入6402，输入与会密码123<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6402有1个成员<br />
+                        &nbsp; 【执行操作】 2001拨打99999通过sps外线呼入6402，输入管理员密码456<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6402有2个成员<br />
+                        &nbsp; 【执行操作】 1000拨打6402呼入6402，无需密码<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6402有3个成员<br />
+                        &nbsp; 【执行操作】 1105拨打6402呼入6402，输入与会者密码123<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6402有4个成员<br />
+                        &nbsp; 【执行操作】 1105按#1100，邀请1100加入会议，预期：邀请失败<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期不会响铃<br />
+                        &nbsp; 【执行操作】 挂断所有通话,所有成员退出会议室6402<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期会议室6402有0个成员<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1105呼入到会议室6401<br />
+                        &nbsp; 【执行操作】 1105按#...1100邀请分机1100加入会议室<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 表格删除：Conference6401-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：Conference6401-取消删除<br />
+                        &nbsp; 【执行操作】 表格删除：Conference6401-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 表格删除：Conference6401-确定删除<br />
+                        &nbsp; 【执行操作】 删除：Conference6402-取消删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：Conference6402-取消删除<br />
+                        &nbsp; 【执行操作】 删除：Conference6402-确定删除<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除：Conference6402-确定删除<br />
+                        &nbsp; 【执行操作】 恢复呼入路由InRoute1到分机1000<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; Conference&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; Callback&nbsp; ======<br />
+                        &nbsp; 【执行操作】 被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp; 【执行操作】 删除所有Callback<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 删除所有Callback<br />
+                        &nbsp; 【执行操作】 创建Callback1，Destination：分机1000，其它默认<br />
+                        &nbsp; 【执行操作】 创建Callback2，CallbackThrough：SPS1，DelayBeforeCallback：10，Strip：1，Prepend：311，Destination：IVR1（6500）<br />
+                        &nbsp; 【执行操作】 编辑呼入路由Inbound1到Callback1<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入，等待2秒挂断通话<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\预期3001会响铃 【预期：2 实际：4】.jpg" target="_blank">Error: 预期3001会响铃 【预期：2 实际：4】</a><br />
+                        &nbsp; 【执行操作】 2000拨打99999通过sps外线呼入，等待2秒挂断通话<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\预期2000会响铃 【预期：2 实际：4】.jpg" target="_blank">Error: 预期2000会响铃 【预期：2 实际：4】</a><br />
+                        &nbsp; 【执行操作】 编辑呼入路由Inbound1到Callback2<br />
+                        &nbsp; 【执行操作】 3001拨打3000通过sip外线呼入,等待2秒挂断通话--预期通过sps外线回拨到分机2000<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\预期辅助2的2000分机响铃 【预期：2 实际：4】.jpg" target="_blank">Error: 预期辅助2的2000分机响铃 【预期：2 实际：4】</a><br />
+                        &nbsp; 【执行操作】 恢复呼入路由InRoute1到分机1000<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; Callback&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; Extension&nbsp; ======<br />
+                        &nbsp; 【执行操作】 初始化特征码设置<br />
+                        &nbsp; 【执行操作】 被测设备注册分机1000,1100,1101,1105，辅助2:2000<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1105分机注册<br />
+                        &nbsp; 【执行操作】 SIP内部分机互打：1000拨打1105,1105接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\ 录音失败.jpg" target="_blank">Error:&nbsp; 录音失败</a><br />
+                        &nbsp; 【执行操作】 SIP内部分机互打：1000拨打1105，1105未接<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 FXS分机：1000拨打1106，预期辅助2的2000分机响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 FXS分机：2000拨打51000，预期1000分机接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打1100,1100按*31105转移给分机1105<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1105响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期为Talking状态<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1105为Talking<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1000为Talking<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打1100,1100按*31105转移给分机1105，超时恢复通话<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1105响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期为Talking状态<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打1100,1100按*031105转移给分机1105<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1105响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100预期为HangUp状态<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打1100,1100按*6将通话停泊<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100为HangUp状态<br />
+                        &nbsp; 【执行操作】 1000拨打6900,恢复通话<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100为Talking状态<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1000为Talking状态<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打1100,1100按*066950将通话停泊<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100为HangUp状态<br />
+                        &nbsp; 【执行操作】 1105拨打6950,恢复通话<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100为Talking状态<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1000为Talking状态<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1100拨打*711105将通话总是转移到1105<br />
+                        &nbsp; 【执行操作】 1000拨打1100,预期1105响铃接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1105响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1100拨打*071取消通话总是转移<br />
+                        &nbsp; 【执行操作】 1000拨打1100,预期1100响铃接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1105为HangUp<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1100拨打*721105忙时转移到1105<br />
+                        &nbsp; 【执行操作】 1000拨打1100,预期1100响铃接听<br />
+                        &nbsp; 【执行操作】 1100保持通话，1101拨打1100--预期1105响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1105响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1100拨打*072取消忙时转移<br />
+                        &nbsp; 【执行操作】 1000拨打1100,预期1100响铃接听<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100为Ring<br />
+                        &nbsp; 【执行操作】 1100保持通话，1101拨打1100--预期1101挂断<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\预期1101挂断状态 【预期：4 实际：3】.jpg" target="_blank">Error: 预期1101挂断状态 【预期：4 实际：3】</a><br />
+                        &nbsp; 【执行操作】 1100拨打*731105无应答时转移到1105<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100响铃状态<br />
+                        &nbsp; 【执行操作】 1000拨打1100，超时不接，预期1105响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1105响铃状态<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\CDR被叫方检测 【预期：1105 [1105] 实际：1105 [1105(from 1100)]】.jpg" target="_blank">Error: CDR被叫方检测 【预期：1105 [1105] 实际：1105 [1105(from 1100)]】</a><br />
+                        &nbsp; 【执行操作】 1100拨打*073取消无应答转移<br />
+                        &nbsp; 【执行操作】 1000拨打1100，超时不接，1000被挂断<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1000为HangUp<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1100拨打*74启用免打扰<br />
+                        &nbsp; 【执行操作】 1000拨打1100，预期无法呼入<br />
+                        &nbsp;&nbsp;&nbsp; <a href="file:///F:\MyProject\SwebTest\SwebTest\pic\预期1000为HangUp 【预期：4 实际：3】.jpg" target="_blank">Error: 预期1000为HangUp 【预期：4 实际：3】</a><br />
+                        &nbsp; 【执行操作】 1100拨打*074关闭免打扰<br />
+                        &nbsp; 【执行操作】 1000拨打1100，预期正常呼入<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100响铃<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1100拨打*70恢复默认值<br />
+                        &nbsp; 【执行操作】 1000拨打1105，1105未接，到voicemail<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 1000拨打1105，1105接听，1105按*1进行一键录音<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】 分机1105登录，查看存在1000留下的语音留言<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 语音留言检查:预期第1行的CallerID为1000(1000)<br />
+                        &nbsp; 【执行操作】 分机1105登录，查看存在1键录音<br />
+                        &nbsp;&nbsp;&nbsp; Pass:&nbsp; 正确检测到录音文件<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; Extension&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; Blacklist_Whitelist&nbsp; =======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1000分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1102分机注册<br />
+                        &nbsp; 【执行操作】---设置呼入路由---<br />
+                        &nbsp; 【执行操作】---黑名单Inroute,SPS---<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 黑名单添加错误<br />
+                        &nbsp; 【执行操作】辅助设备分机2000通过SPS拨打进入黑名单<br />
+                        &nbsp;&nbsp;&nbsp; Pass: SPS通话进入黑名单列表<br />
+                        &nbsp; 【执行操作】---黑名单OutRoute,SIP---<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 黑名单添加错误<br />
+                        &nbsp; 【执行操作】被测设备分机1100通过SIP拨打进入黑名单<br />
+                        &nbsp;&nbsp;&nbsp; Pass: SIP通话进入黑名单列表<br />
+                        &nbsp; 【执行操作】白名单SPS1，Both <br />
+                        &nbsp;&nbsp;&nbsp; Pass: 白名单添加错误<br />
+                        &nbsp; 【执行操作】辅助设备分机2000通过SPS拨打<br />
+                        &nbsp;&nbsp;&nbsp; Pass: SPS白名单呼入<br />
+                        &nbsp; 【执行操作】--白名单SIP，OutRoute--<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 白名单添加错误<br />
+                        &nbsp; 【执行操作】被测设备分机1100通过SIP拨打<br />
+                        &nbsp;&nbsp;&nbsp; Pass: SIP白名单呼入<br />
+                        &nbsp; 【执行操作】--编辑blackList2 为Inbound--<br />
+                        &nbsp;&nbsp;&nbsp; Pass: blackList2 编辑为Inbound<br />
+                        &nbsp; 【执行操作】通过sip1外线呼叫分机1100<br />
+                        &nbsp;&nbsp;&nbsp; Pass: blackList2 编辑为Inbound呼入<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp; 【执行操作】--编辑whiteList1 为Outbound--<br />
+                        &nbsp;&nbsp;&nbsp; Pass: whiteList1 编辑为Outbound<br />
+                        &nbsp; 【执行操作】辅助设备分机2000通过SPS拨打<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 白名单呼入失败<br />
+                        &nbsp; 【执行操作】--删除黑名单--<br />
+                        &nbsp; 【执行操作】删除黑名单blackList1<br />
+                        &nbsp; 【执行操作】批量删除黑名单<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 批量删除黑名单<br />
+                        &nbsp; 【执行操作】--删除白名单--<br />
+                        &nbsp; 【执行操作】删除黑名单blackList1<br />
+                        &nbsp; 【执行操作】批量删除黑名单<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 批量删除黑名单<br />
+                        【测试类场景恢复】执行完毕：=======&nbsp;&nbsp; Blacklist_Whitelist&nbsp; =======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; Disa_PinList&nbsp; ======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp; 【执行操作】初始化DISA<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 初始化DISA<br />
+                        &nbsp; 【执行操作】初始化PIN LIST<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 初始化PIN LIST<br />
+                        &nbsp; 【执行操作】--创建PinList--<br />
+                        &nbsp; 【执行操作】--创建DISA1--<br />
+                        &nbsp; 【执行操作】--编辑呼入路由--<br />
+                        &nbsp; 【执行操作】辅助设备2通过sps呼叫被测设备1100<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 外线呼出进入pin1List<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR检测<br />
+                        &nbsp; 【执行操作】--编辑DISA1，Password：选择Single Pin--<br />
+                        &nbsp; 【执行操作】辅助设备1通过SIP1拨打到被测设备，在进行二次拨号<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 外线呼出进入pin1List<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR源中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR目的中继检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR通讯类型检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR检测<br />
+                        &nbsp; 【执行操作】通过SIP1呼入,输入完pin码后，不输人数字等待15s后通话被挂断<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 外线呼出进入pin1List<br />
+                        &nbsp; 【执行操作】--删除DISA--<br />
+                        &nbsp; 【执行操作】批量删除DISA<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 批量删除DISA<br />
+                        &nbsp; 【执行操作】 恢复呼入路由InRoute1到分机1000<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; Disa_PinList&nbsp; ======<br/>
+<br/>
+<br />
+                        【测试类场景初始化】开始执行：======&nbsp; EmergencyNumber&nbsp; ======<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1100分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1101分机注册<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 1102分机注册<br />
+                        &nbsp; 【执行操作】初始化EmergencyNumber<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 初始化EmergencyNumber<br />
+                        &nbsp; 【执行操作】----新增紧急号码----<br />
+                        &nbsp; 【执行操作】分机B通过SPS外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 进入紧急呼叫<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR呼叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR被叫方检测<br />
+                        &nbsp;&nbsp;&nbsp; Pass: CDR_Status检测<br />
+                        &nbsp; 【执行操作】---编辑紧急号码---<br />
+                        &nbsp; 【执行操作】分机B通过SPS外线呼出<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 进入紧急呼叫<br />
+                        &nbsp; 【执行操作】---删除紧急号码列表---<br />
+                        &nbsp; 【执行操作】删除紧急呼叫<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 删除紧急呼叫<br />
+                        &nbsp;&nbsp;&nbsp; Pass: 预期1100为HangUp<br />
+                        &nbsp; 【执行操作】---批量删除紧急号码---<br />
+                        【测试类场景恢复】执行完毕：======&nbsp; EmergencyNumber&nbsp; =======<br/>
+<br/>
+<br />
             </div>
 
 </body>

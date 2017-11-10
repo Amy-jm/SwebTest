@@ -83,7 +83,7 @@ public class YS_Storage {
         }
         preference.networksave.click();
         ys_waitingLoading(preference.grid_Mask);
-        ys_waitingTime(5000);
+        ys_waitingTime(10000);
         String lineNum = String.valueOf(gridLineNum(preference.grid));
         String NetworkName=String.valueOf(gridContent(preference.grid,Integer.valueOf(lineNum),preference.gridColumn_Name));
         String Type =String.valueOf(gridContent(preference.grid,Integer.valueOf(lineNum),preference.gridColumn_Type));

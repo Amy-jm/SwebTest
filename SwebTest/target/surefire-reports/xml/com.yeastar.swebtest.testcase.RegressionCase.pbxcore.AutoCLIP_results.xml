@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="7"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="541.686">
+  <properties />
+  
+  
+            <testcase name="D_MatchOutgoingTrunk" time="114.675" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" />
+                <testcase name="C_OnlyKeepMissedCallRecords" time="62.396" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" />
+                <testcase name="A1_clip_default" time="37.889" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" />
+                <testcase name="A2_makeCall" time="72.883" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" />
+                <testcase name="B_deleteUsedRecords" time="114.900" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" />
+                <testcase name="E_Disable_AutoCLIP" time="84.970" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" />
+                <testcase name="A3_makeCall" time="53.973" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" />
+      
+</testsuite>

@@ -169,6 +169,10 @@ public class YS_Trunk {
             add_voIP_trunk_basic.fromUser.setValue(fromUser);
         }
 
+//        选择编码
+        add_voIP_trunk_codec.codec.click();
+//        listSelectAllbyValue(add_voIP_trunk_codec.list);
+        executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
         add_voIP_trunk_basic.save.click();
         pageDeskTop.apply.click();
         ys_waitingLoading(trunks.grid_Mask);

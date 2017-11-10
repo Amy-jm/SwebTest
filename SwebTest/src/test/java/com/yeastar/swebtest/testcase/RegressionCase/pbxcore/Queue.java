@@ -16,8 +16,11 @@ public class Queue extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  Queue  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
     }
 
@@ -37,14 +40,14 @@ public class Queue extends SwebDriver {
     @BeforeClass
     public void Register() throws InterruptedException {
         //        被测设备注册分机1000、1100、1101、1102、1105，辅助1：分机3001，辅助2：分机2000、2001
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",2);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",3);
-        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",3);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101,DEVICE_IP_LAN);
@@ -140,6 +143,7 @@ public class Queue extends SwebDriver {
             YsAssert.fail("动态坐席1100加入队列6701失败");
         }
         tcpSocket.closeTcpSocket();
+        ys_waitingTime(10000);
     }
 
     @Test

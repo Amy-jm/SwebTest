@@ -20,10 +20,8 @@ public class CallFunction extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备PagingFunction"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
@@ -45,7 +43,8 @@ public class CallFunction extends SwebDriver {
     }
     @BeforeClass
     public void InitCallFunction(){
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callFeatures_panel.click();
         callFeatures.more.click();
         blacklist_whitelist.blacklist_Whitelist.click();
@@ -80,7 +79,8 @@ public class CallFunction extends SwebDriver {
     @Test
     public void B_AddBlacklist() throws InterruptedException {
         Reporter.infoExec("添加黑名单test1，分机2000通过sps线路呼入到设备1，呼入失败");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callControl_panel.click();
         outboundRoutes.outboundRoutes.click();
         ys_waitingLoading(outboundRoutes.grid_Mask);
@@ -434,7 +434,8 @@ public class CallFunction extends SwebDriver {
         Reporter.infoExec("添加快速拨号，分机1000拨打*991");
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callFeatures_panel.click();
         callFeatures.more.click();
         speedDial.speedDial.click();

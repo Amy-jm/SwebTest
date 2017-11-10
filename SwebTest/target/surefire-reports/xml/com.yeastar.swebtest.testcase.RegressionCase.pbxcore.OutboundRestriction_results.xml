@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="7"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="589.115">
+  <properties />
+  
+  
+            <testcase name="B_add_2" time="29.624" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" />
+                <testcase name="A_add_1" time="236.976" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" />
+                <testcase name="C_delete" time="60.432" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" />
+                <testcase name="A_add_3" time="31.395" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" />
+                <testcase name="B_add_1" time="175.747" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" />
+                <testcase name="A_add_2" time="23.683" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" />
+                <testcase name="B_add_3" time="31.258" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" />
+      
+</testsuite>

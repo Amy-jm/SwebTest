@@ -16,14 +16,16 @@ public class SpeedDial extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  SpeedDial  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
 
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);

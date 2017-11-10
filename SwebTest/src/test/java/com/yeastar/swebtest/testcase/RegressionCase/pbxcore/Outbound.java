@@ -21,14 +21,17 @@ public class Outbound extends SwebDriver{
         Reporter.infoBeforeClass("开始执行：======  Outbound  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
 
  //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
@@ -49,22 +52,27 @@ public class Outbound extends SwebDriver{
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1000 <1000>","13001","Answered"," ",SIPTrunk,communication_outRoute);
 
-        //        检查正常录音
-        pageDeskTop.taskBar_Main.click();
-        pageDeskTop.CDRandRecordShortcut.click();
-        cdRandRecordings.search.click();
-        ys_waitingLoading(cdRandRecordings.grid_Mask);
-        if(gridPicColor(cdRandRecordings.grid,1,cdRandRecordings.gridPlay).contains(cdRandRecordings.gridColumnColor_Gray)){
-            YsAssert.fail(" 录音失败");
-        }else {
-            Reporter.pass(" 正确检测到录音文件");
+        if(!PRODUCT.equals(CLOUD_PBX)) {
+            //        检查正常录音
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.CDRandRecordShortcut.click();
+            cdRandRecordings.search.click();
+            ys_waitingLoading(cdRandRecordings.grid_Mask);
+            if (gridPicColor(cdRandRecordings.grid, 1, cdRandRecordings.gridPlay).contains(cdRandRecordings.gridColumnColor_Gray)) {
+                YsAssert.fail(" 录音失败");
+            } else {
+                Reporter.pass(" 正确检测到录音文件");
+            }
+            closeCDRRecord();
         }
-        closeCDRRecord();
 
     }
 
     @Test
     public void A_out2_iax() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX)){
+            return;
+        }
         Reporter.infoExec(" 1000拨打23001通过iax外线呼出"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"23001",DEVICE_IP_LAN);
         ys_waitingTime(10000);
@@ -83,7 +91,10 @@ public class Outbound extends SwebDriver{
     }
 
     @Test
-    public void A_out4_sps() throws InterruptedException {
+    public void A_out4_spx() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX)){
+            return;
+        }
         Reporter.infoExec(" 1000拨打42000通过spx外线呼出"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"42000",DEVICE_IP_LAN);
         ys_waitingTime(10000);
@@ -93,6 +104,9 @@ public class Outbound extends SwebDriver{
 
     @Test
     public void A_out5_fxo() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
+            return;
+        }
         if (!FXO_1.equals("null")) {
             Reporter.infoExec(" 1000拨打52000通过PSTN外线呼出"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(1000, "52000", DEVICE_IP_LAN);
@@ -104,6 +118,9 @@ public class Outbound extends SwebDriver{
 
     @Test
     public void A_out6_bri() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
+            return;
+        }
         if (!BRI_1.equals("null")) {
             Reporter.infoExec(" 1000拨打62000通过BRI外线呼出"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(1000, "62000", DEVICE_IP_LAN);
@@ -115,6 +132,9 @@ public class Outbound extends SwebDriver{
 
     @Test
     public void A_out7_E1() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
+            return;
+        }
         if (!E1.equals("null")) {
             Reporter.infoExec(" 1000拨打72000通过E1外线呼出"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(1000, "72000", DEVICE_IP_LAN);
@@ -126,6 +146,9 @@ public class Outbound extends SwebDriver{
 
     @Test
     public void A_out8_gsm() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
+            return;
+        }
         if (!GSM.equals("null")) {
             Reporter.infoExec(" 1000拨打辅助设备的GSM号码呼出"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(1000, "8"+DEVICE_ASSIST_GSM, DEVICE_IP_LAN);
@@ -138,7 +161,7 @@ public class Outbound extends SwebDriver{
 
 //  Dial Patterns 测试
     @Test
-    public void B_Prepend() throws InterruptedException {
+    public void B1_Prepend() throws InterruptedException {
         Reporter.infoExec(" 新建呼出路由DialPattern，Pattern:91.，strip：2，Prepend：123456，选择SIP外线/所有分机"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -149,8 +172,11 @@ public class Outbound extends SwebDriver{
         trunklist.add(SIPTrunk);
         m_callcontrol.addOutboundRoute("Prepend","91.","2","30",extenlist,trunklist);
         ys_apply();
+    }
 
-//      Dial Patterns 通话测试
+    //      Dial Patterns 通话测试
+    @Test
+    public void B2_Prepend() throws InterruptedException {
         Reporter.infoExec(" 1000拨打9101通过sip外线呼出");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"9101",DEVICE_IP_LAN);
         ys_waitingTime(10000);
@@ -160,7 +186,7 @@ public class Outbound extends SwebDriver{
 
 //    Password测试
     @Test
-    public void C_password() throws InterruptedException {
+    public void C1_password() throws InterruptedException {
         Reporter.infoExec(" 新建呼出路由Password，Pattern:92.，strip：2，外线:SPS，分机：1000"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -181,8 +207,11 @@ public class Outbound extends SwebDriver{
         add_outbound_routes.save.click();
         ys_waitingLoading(outboundRoutes.grid_Mask);
         ys_apply();
+    }
 
-//       通话测试
+    //       通话测试
+    @Test
+    public void C2_password() throws InterruptedException {
         Reporter.infoExec(" 1000拨打928888通过SPS外线呼出");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"928888", DEVICE_IP_LAN,false);
         ys_waitingTime(2000);
@@ -191,12 +220,13 @@ public class Outbound extends SwebDriver{
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1000 <1000>","928888","Answered"," ",SPS,communication_outRoute);
         m_extension.checkCDR_OtherInfo(cdRandRecordings.gridColumn_PinCode,"123",1);
+
     }
 
 //    循环抓取
     @Test
-    public void D_rrmemory_hunt() throws InterruptedException {
-        Reporter.infoExec(" 新建呼出路由Rrmemory_hunt，Pattern:93.，strip：2，外线:SPS、SPX，分机：1000"); //执行操作
+    public void D1_rrmemory_hunt() throws InterruptedException {
+        Reporter.infoExec(" 新建呼出路由Rrmemory_hunt，Pattern:93.，strip：2，外线:SPS、SIP，分机：1000"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         outboundRoutes.add.should(Condition.exist);
@@ -204,7 +234,7 @@ public class Outbound extends SwebDriver{
         extenlist.add("1000");
         ArrayList<String> trunklist =new ArrayList<>();
         trunklist.add(SPS);
-        trunklist.add(SPX);
+        trunklist.add(SIPTrunk);
         m_callcontrol.addOutboundRoute("Rrmemory_hunt","93.","2","",extenlist,trunklist);
         Reporter.infoExec(" 编辑呼出路由Rrmemory_hunt，启用循环抓取");
         outboundRoutes.add.should(Condition.exist);
@@ -215,26 +245,28 @@ public class Outbound extends SwebDriver{
         add_outbound_routes.save.click();
         ys_waitingLoading(outboundRoutes.grid_Mask);
         ys_apply();
+    }
 
-//        通话测试循环抓取
-        Reporter.infoExec(" 1000拨打933333，第1次预期通过SPS外线呼出");
-        pjsip.Pj_Make_Call_Auto_Answer(1000,"933333",DEVICE_IP_LAN,false);
+    //        通话测试循环抓取
+    @Test
+    public void D2_rrmemory_hunt() throws InterruptedException {
+        Reporter.infoExec(" 1000拨打933001，第1次预期通过SPS外线呼出");
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"933001",DEVICE_IP_LAN,false);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <1000>","933333","Answered"," ",SPS,communication_outRoute);
+        m_extension.checkCDR("1000 <1000>","933001","Answered"," ",SPS,communication_outRoute);
 
-        Reporter.infoExec(" 1000拨打933333，第2次预期通过SPX外线呼出");
-        pjsip.Pj_Make_Call_Auto_Answer(1000,"933333",DEVICE_IP_LAN,false);
+        Reporter.infoExec(" 1000拨打933001，第2次预期通过SIP外线呼出");
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"933001",DEVICE_IP_LAN,false);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <1000>","933333","Answered"," ",SPX,communication_outRoute);
+        m_extension.checkCDR("1000 <1000>","933001","Answered"," ",SIPTrunk,communication_outRoute);
 
-        Reporter.infoExec(" 1000拨打933333，第3次预期通过SPS外线呼出");
-        pjsip.Pj_Make_Call_Auto_Answer(1000,"933333",DEVICE_IP_LAN,false);
+        Reporter.infoExec(" 1000拨打933001，第3次预期通过SPS外线呼出");
+        pjsip.Pj_Make_Call_Auto_Answer(1000,"933001",DEVICE_IP_LAN,false);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <1000>","933333","Answered"," ",SPS,communication_outRoute);
-
+        m_extension.checkCDR("1000 <1000>","933001","Answered"," ",SPS,communication_outRoute);
     }
 
 //    TimeCondition

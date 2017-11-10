@@ -16,17 +16,20 @@ public class Callback extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  Callback  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
     }
     
     @BeforeClass
     public void Register() throws InterruptedException {
         Reporter.infoExec(" 被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000"); //执行操作
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
@@ -130,7 +133,7 @@ public class Callback extends SwebDriver {
         pjsip.Pj_Hangup_All();
         YsAssert.assertEquals(getExtensionStatus(2000,RING,20),RING,"预期辅助2的2000分机响铃");
         pjsip.Pj_Answer_Call(2000,false);
-        ys_waitingTime(2000);
+        ys_waitingTime(3000);
         Reporter.infoExec(" 回拨到IVR1，按1到分机1000"); //执行操作
         pjsip.Pj_Send_Dtmf(2000,"1");
         YsAssert.assertEquals(getExtensionStatus(1000,RING,20),RING,"预期1000分机响铃");

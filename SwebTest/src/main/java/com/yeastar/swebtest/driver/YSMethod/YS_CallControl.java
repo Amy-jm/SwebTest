@@ -122,7 +122,6 @@ public class YS_CallControl {
      */
     public void addOutboundRoute(String name,String patterns,String strip,String prepend,ArrayList extList,ArrayList trunksList) throws InterruptedException {
         outboundRoutes.add.click();
-        ys_waitingTime(5000);
         ys_waitingMask();
         add_outbound_routes.name.setValue(name);
         if(!patterns.isEmpty())

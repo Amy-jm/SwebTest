@@ -17,8 +17,11 @@ public class IVR extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  IVR  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
     }
 
@@ -30,9 +33,6 @@ public class IVR extends SwebDriver {
         ys_waitingMask();
         ivr.add.shouldBe(Condition.exist);
         deletes(" 删除所有IVR",ivr.grid,ivr.delete,ivr.delete_yes,ivr.grid_Mask);
-        Reporter.infoExec(" 新建IVR6502,默认设置");
-        m_callFeature.addIVR("IVR6502","6502");
-
         Reporter.infoExec(" 添加IVR1：6500,按1到分机1000"); //执行操作
         m_callFeature.addIVR("IVR1","6500");
 
@@ -42,17 +42,20 @@ public class IVR extends SwebDriver {
         comboboxSet(add_ivr_keyPressEvent.d_press1,extensionList,"1000");
         add_ivr_keyPressEvent.save.click();
         ys_waitingLoading(ivr.grid_Mask);
+
+        Reporter.infoExec(" 新建IVR6502,默认设置");
+        m_callFeature.addIVR("IVR6502","6502");
     }
 
     @BeforeClass
     public void Register() throws InterruptedException {
         //        被测设备注册分机1000、1103、1105，辅助1：分机3001，辅助2：分机2000、2001
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(1103,"Yeastar202","UDP",5);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1103,"Yeastar202","UDP",UDP_PORT,5);
+        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1103,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1105,DEVICE_IP_LAN);
@@ -181,7 +184,7 @@ public class IVR extends SwebDriver {
         pjsip.Pj_Send_Dtmf(1000,"9","5","7");
         ys_waitingTime(2000);
         pjsip.Pj_Send_Dtmf(1000,"1");
-       getExtensionStatus(1103,RING,10);
+       YsAssert.assertEquals(getExtensionStatus(1103,RING,10),RING,"预期1103为Ring状态");
         pjsip.Pj_Answer_Call(1103,false);
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();

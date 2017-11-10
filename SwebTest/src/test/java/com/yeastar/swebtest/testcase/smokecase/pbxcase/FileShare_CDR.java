@@ -18,10 +18,8 @@ public class FileShare_CDR extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备FileShare_CDR"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
@@ -43,7 +41,9 @@ public class FileShare_CDR extends SwebDriver {
     public void B_DelCdr() throws InterruptedException {
         if(!PRODUCT.equals(CLOUD_PBX)){
             Reporter.infoExec("删除一行CDR");
-            pageDeskTop.CDRandRecording.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.CDRandRecordShortcut.click();
+//            pageDeskTop.CDRandRecording.click();
             ys_waitingLoading(cdRandRecordings.grid_Mask);
             ys_waitingTime(2000);
             gridClick(cdRandRecordings.grid,1,cdRandRecordings.gridDeleteCDR);
@@ -151,7 +151,8 @@ public class FileShare_CDR extends SwebDriver {
     public void H_PromprPreference() throws InterruptedException {
         Reporter.infoExec("点击CDR中Recording Options中为蓝色的Downloader图标");
 
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
 //        pageDeskTop.taskBar_Main.click();
         settings.voicePrompts_panel.click();
         ys_waitingTime(5000);
@@ -227,7 +228,8 @@ public class FileShare_CDR extends SwebDriver {
     @Test
     public void K_DeleteSharetest() throws InterruptedException {
         if(!PRODUCT.equals(CLOUD_PBX)){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.storage_panel.click();
             ys_waitingTime(5000);
             executeJs("Ext.getCmp('st-storage-slotvm').setValue('"+preference.local_CDR +"')");

@@ -19,20 +19,25 @@ public class PagingIntercom extends SwebDriver{
         Reporter.infoBeforeClass("开始执行：======  PagingIntercom  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.general_panel.click();
-        ys_waitingMask();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+        }
         m_general.setIntercom(true,"*5");
 
         //        被测设备注册分机1000，1100,1101,1105
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",2);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",3);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",7);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101,DEVICE_IP_LAN);
@@ -64,7 +69,20 @@ public class PagingIntercom extends SwebDriver{
            Reporter.error(" 1100、1105自动应答失败");
        }
        pjsip.Pj_Hangup_All();
-       m_extension.checkCDR("1000 <1000>","1105 <6300(1105)>","Answered","","",communication_internal);
+
+//        pageDeskTop.taskBar_Main.click();
+//        pageDeskTop.CDRandRecordShortcut.click();
+//        cdRandRecordings.search.click();
+//        ys_waitingLoading(cdRandRecordings.grid_Mask);
+//        String info1 = String.valueOf(gridContent(extensions.grid_CDR,1,cdRandRecordings.gridColumn_CallTo)).trim();
+//        String info2 = String.valueOf(gridContent(extensions.grid_CDR,2,cdRandRecordings.gridColumn_CallTo)).trim();
+//       if(info1.equals("1100 <6300(1100)>") || info2.equals("1100 <6300(1100)>")){
+//           Reporter.pass(" cdr正确");
+//       }else{
+//           YsAssert.fail(" cdr错误");
+//       }
+//       closeCDRRecord();
+        m_extension.checkCDR("1000 <1000>","1105 <6300(1105)>","Answered","","",communication_internal,1,2);
 
     }
 
@@ -106,7 +124,22 @@ public class PagingIntercom extends SwebDriver{
             Reporter.error(" 1100、1101、1105自动应答失败");
         }
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <1000>","1101 <6301(1101)>","Answered","","",communication_internal);
+
+//        pageDeskTop.taskBar_Main.click();
+//        pageDeskTop.CDRandRecordShortcut.click();
+//        cdRandRecordings.search.click();
+//        ys_waitingLoading(cdRandRecordings.grid_Mask);
+//        String info1 = String.valueOf(gridContent(extensions.grid_CDR,1,cdRandRecordings.gridColumn_CallTo)).trim();
+//        String info2 = String.valueOf(gridContent(extensions.grid_CDR,2,cdRandRecordings.gridColumn_CallTo)).trim();
+//        String info3 = String.valueOf(gridContent(extensions.grid_CDR,3,cdRandRecordings.gridColumn_CallTo)).trim();
+//        if(info1.equals("1101 <6301(1101)>") || info2.equals("1101 <6301(1101)>") || info3.equals("1101 <6301(1101)>")){
+//            Reporter.pass(" cdr正确");
+//        }else{
+//            YsAssert.fail(" cdr错误");
+//        }
+//        closeCDRRecord();
+
+        m_extension.checkCDR("1000 <1000>","1101 <6301(1101)>","Answered","","",communication_internal,1,2,3);
     }
 
 //    对讲

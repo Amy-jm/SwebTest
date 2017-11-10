@@ -18,10 +18,8 @@ public class CallControl extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
@@ -34,7 +32,8 @@ public class CallControl extends SwebDriver {
     }
     @BeforeClass
     public void InitAutoCLIP(){
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callControl_panel.click();
         autoCLIPRoutes.autoCLIPRoutes.click();
         autoCLIPRoutes.viewAutoCLIPList.click();
@@ -56,7 +55,8 @@ public class CallControl extends SwebDriver {
     @Test
     public void A_AutoCLIP() throws InterruptedException {
         Reporter.infoExec("编辑inrouter，Destination设置到Conference，meet1");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callControl_panel.click();
         outboundRoutes.outboundRoutes.click();
         ys_waitingLoading(outboundRoutes.grid_Mask);
@@ -127,9 +127,9 @@ public class CallControl extends SwebDriver {
             pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }
-        pjsip.Pj_Make_Call_No_Answer(2000,"772000",DEVICE_ASSIST_2);
+        pjsip.Pj_Make_Call_No_Answer(2000,"62000",DEVICE_ASSIST_2);
         pjsip.Pj_Answer_Call(1000,false);
-        Thread.sleep(10000);
+        ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2000 <2000>","1000 <1000>" ,"Answered",BRI_1,"",communication_inbound);
     }
@@ -173,7 +173,7 @@ public class CallControl extends SwebDriver {
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }
         tcpSocket.connectToDevice();
-        pjsip.Pj_Make_Call_Auto_Answer(2000,"772000",DEVICE_ASSIST_2);
+        pjsip.Pj_Make_Call_Auto_Answer(2000,"62000",DEVICE_ASSIST_2);
         boolean tcpInfo= tcpSocket.getAsteriskInfo("meet1");
         tcpSocket.closeTcpSocket();
         ys_waitingTime(5000);

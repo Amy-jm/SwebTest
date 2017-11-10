@@ -17,8 +17,11 @@ public class RingGroup extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  RingGroup  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
 
     }
@@ -40,13 +43,13 @@ public class RingGroup extends SwebDriver {
     public void Register() throws InterruptedException {
         //        注册分机
 //        被测设备注册分机1000、1100、1101、1102、1105，辅助1：分机3001，辅助2：分机2000
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",2);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",3);
-        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",4);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",UDP_PORT,4);
+        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101,DEVICE_IP_LAN);

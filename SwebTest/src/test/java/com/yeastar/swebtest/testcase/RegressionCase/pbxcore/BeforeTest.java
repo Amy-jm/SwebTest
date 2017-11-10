@@ -22,8 +22,10 @@ public class BeforeTest extends SwebDriver{
         Reporter.infoBeforeClass("开始执行：======前置环境设置—BeforeTest======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -35,29 +37,23 @@ public class BeforeTest extends SwebDriver{
 
 //    创建分机1000、1100~1105
     @Test
-    public void A_addExtension() throws InterruptedException {
+    public void A1_addExtension() throws InterruptedException {
         settings.extensions_tree.click();
         deletes(" 删除所有分机",extensions.grid,extensions.delete,extensions.delete_yes,extensions.grid_Mask);
         Reporter.infoExec(" 添加分机1000");
         m_extension.addSipExtension(1000, "Yeastar202");
         Reporter.infoExec(" 批量创建分机1100~1105");
         m_extension.addBulkExtensions(1100, 6, 2, "Yeastar202", 2, "Yeastar202");
-        if (FXS_1 != null) {
+        if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
+            return;
+        }
+        if (!FXS_1.equals("null")) {
             m_extension.addFxsExtension(1106, "Yeastar202", FXS_1);
         }
     }
 
-//  创建分机组
     @Test
-    public void A_addExtensionGroup() throws InterruptedException {
-        extensionGroup.extensionGroup.click();
-        deletes(" 删除所有分机组",extensionGroup.grid,extensionGroup.delete,extensionGroup.delete_yes,extensionGroup.grid_Mask);
-        Reporter.infoExec(" 添加分机组：ExtensionGroup1:1000,1100,1101,1105"); //执行操作
-        m_extension.addExtensionGroup("ExtensionGroup1",1000,1100,1101,1105);
-    }
-
-    @Test
-    public void A_editExtenName1() throws InterruptedException {
+    public void A2_editExtenName1() throws InterruptedException {
         extensions.Extensions.click();
         Reporter.infoExec(" 编辑分机1103的名字为xlq"); //执行操作
         gridClick(extensions.grid,gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Extensions,"1103",sort_ascendingOrder),extensions.gridEdit);
@@ -69,7 +65,7 @@ public class BeforeTest extends SwebDriver{
     }
 
     @Test
-    public void A_editExtenName2() throws InterruptedException {
+    public void A3_editExtenName2() throws InterruptedException {
         Reporter.infoExec(" 编辑分机1104的名字为xll"); //执行操作
         gridClick(extensions.grid,gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Extensions,"1104",sort_ascendingOrder),extensions.gridEdit);
         ys_waitingMask();
@@ -77,6 +73,15 @@ public class BeforeTest extends SwebDriver{
         addExtensionBasic.save.click();
         ys_waitingLoading(extensions.grid_Mask);
 
+    }
+
+    //  创建分机组
+    @Test
+    public void A4_addExtensionGroup() throws InterruptedException {
+        extensionGroup.extensionGroup.click();
+        deletes(" 删除所有分机组",extensionGroup.grid,extensionGroup.delete,extensionGroup.delete_yes,extensionGroup.grid_Mask);
+        Reporter.infoExec(" 添加分机组：ExtensionGroup1:1000,1100,1101,1105"); //执行操作
+        m_extension.addExtensionGroup("ExtensionGroup1",1000,1100,1101,1105);
     }
 
 //    创建外线
@@ -90,7 +95,7 @@ public class BeforeTest extends SwebDriver{
         trunks.delete_yes.click();
         ys_waitingLoading(trunks.grid_Mask);
         Reporter.infoExec(" 添加sip外线"+SIPTrunk); //执行操作
-        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,SIPTrunk,DEVICE_ASSIST_1,"5060",DEVICE_ASSIST_1,"3000","3000","3000","Yeastar202");
+        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,SIPTrunk,DEVICE_ASSIST_1,String.valueOf(UDP_PORT_ASSIST_1),DEVICE_ASSIST_1,"3000","3000","3000","Yeastar202");
     }
 
     @Test
@@ -101,7 +106,7 @@ public class BeforeTest extends SwebDriver{
     @Test
     public void D_addtrunk() throws InterruptedException {
         Reporter.infoExec(" 添加sps外线"+SPS);
-        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.PeerToPeer,SPS,DEVICE_ASSIST_2,"5060",DEVICE_ASSIST_2,
+        m_trunks.addTrunk("SIP",add_voIP_trunk_basic.PeerToPeer,SPS,DEVICE_ASSIST_2,String.valueOf(UDP_PORT_ASSIST_2),DEVICE_ASSIST_2,
                 "","","","");
     }
     @Test
@@ -143,6 +148,9 @@ public class BeforeTest extends SwebDriver{
     //添加IAX的呼出路由
     @Test
     public void G_addOutRoute2() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX)){
+            return;
+        }
         Reporter.infoExec(" 添加iax的呼出路由OutRoute2_iax"); //执行操作
         ArrayList<String> arrayex = new ArrayList<>();
         arrayex.add("all");
@@ -165,6 +173,9 @@ public class BeforeTest extends SwebDriver{
 //添加SPX的呼出路由
     @Test
     public void G_addOutRoute4() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX)){
+            return;
+        }
         Reporter.infoExec(" 添加spx的呼出路由OutRoute4_spx"); //执行操作
         ArrayList<String> arrayex = new ArrayList<>();
         arrayex.add("all");
@@ -176,6 +187,9 @@ public class BeforeTest extends SwebDriver{
 //    添加FXO呼出路由
     @Test
     public void G_addOutRoute5() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
+            return;
+        }
         if(!FXO_1.equals("null")){
             Reporter.infoExec(" 添加fxo的呼出路由OutRoute5_fxo"); //执行操作
             ArrayList<String> arrayex = new ArrayList<>();
@@ -189,6 +203,9 @@ public class BeforeTest extends SwebDriver{
 //添加BRI的呼出路由
     @Test
     public void G_addOutRoute6() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
+            return;
+        }
         if(!BRI_1.equals("null")){
             Reporter.infoExec(" 添加bri的呼出路由OutRoute6_bri"); //执行操作
             ArrayList<String> arrayex = new ArrayList<>();
@@ -202,6 +219,9 @@ public class BeforeTest extends SwebDriver{
 //    添加E1的呼出路由
     @Test
     public void G_addOutRoute7() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
+            return;
+        }
         if(!E1.equals("null")){
             Reporter.infoExec(" 添加E1的呼出路由OutRoute7_e1"); //执行操作
             ArrayList<String> arrayex = new ArrayList<>();
@@ -215,6 +235,9 @@ public class BeforeTest extends SwebDriver{
 //    添加GSM的呼出路由
     @Test
     public void G_addOutRoute8() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
+            return;
+        }
         if(!GSM.equals("null")){
             Reporter.infoExec(" 添加GSM的呼出路由OutRoute8_gsm"); //执行操作
             ArrayList<String> arrayex = new ArrayList<>();
@@ -275,6 +298,9 @@ public class BeforeTest extends SwebDriver{
 //    设置全局录音存储
     @Test
     public void L_setRecord() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX)){
+            return;
+        }
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.storage_panel.click();
@@ -299,8 +325,11 @@ public class BeforeTest extends SwebDriver{
                 value ="hd-1";
             }else if (DEVICE_RECORD_NAME.equals("USB") || DEVICE_RECORD_NAME.equals("usb")){
                 value="usb-1";
-            }else
+            }else if (DEVICE_RECORD_NAME.equals("Local") || DEVICE_RECORD_NAME.equals("local")){
+                value="local-1";
+            }else{
                 value= DEVICE_RECORD_NAME;
+            }
             comboboxSelect(preference.recordings,value);
             preference.save.click();
         }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="4"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="232.851">
+  <properties />
+  
+  
+            <testcase name="B_intercom" time="33.803" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom" />
+                <testcase name="C_delete" time="60.615" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom" />
+                <testcase name="A_add_paging1" time="71.912" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom" />
+                <testcase name="A_add_paging2" time="66.521" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom" />
+      
+</testsuite>

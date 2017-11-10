@@ -2,7 +2,6 @@ package com.yeastar.swebtest.tools.pjsip;
 
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
-import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -226,7 +225,7 @@ public class PjsipApp extends PjsipDll{
     public int Pj_Answer_Call(int CalleeNum ,boolean Assert){
         return Pj_Answer_Call(CalleeNum,200,Assert);
     }
-    //被叫方手动接听 可以自定义 code   486 （Busy )  200(ok)  180()
+    //被叫方手动接听 可以自定义 code   486 （Busy )  200(ok)  180(ring)
     public int Pj_Answer_Call(int CalleeNum, int code,boolean Assert) {
         int suc=-1;
         UserAccount CalleeAccount ;
@@ -339,7 +338,8 @@ public class PjsipApp extends PjsipDll{
         uri = "sip:"+Callee+"@"+ ServerIp+":"+CallerAccount.port;
 
         System.out.println("uri/./.........."+uri+"  "+CallerAccount.accId);
-        pjsipdll.instance.ys_makeCall(CallerAccount.accId,uri,true);
+        int retMakecall= pjsipdll.instance.ys_makeCall(CallerAccount.accId,uri,true);
+        System.out.println("Make call Auto "+ retMakecall);
         if(Assert){
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();

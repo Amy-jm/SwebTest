@@ -16,10 +16,8 @@ public class InboundRoutes extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_InboundRoutesTest"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
@@ -27,7 +25,8 @@ public class InboundRoutes extends SwebDriver {
     @BeforeClass
     public void InitInboundRoutes() {
         if(Single_Init){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
             inboundRoutes.inboundRoutes.click();
             ys_waitingLoading(inboundRoutes.grid_Mask);
@@ -46,7 +45,8 @@ public class InboundRoutes extends SwebDriver {
 //    @Test
     public void A_EmailSettings() throws InterruptedException {
         Reporter.infoExec("设置Email");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.email_panel.click();
         email.emailAddress.setValue("gagatest@sina.com");
         email.password.setValue("yeastar6205");
@@ -62,8 +62,8 @@ public class InboundRoutes extends SwebDriver {
     @Test
     public void B_CreateInboundRoutes() {
         Reporter.infoExec("创建呼入路由");
-
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callControl_panel.click();
         inboundRoutes.inboundRoutes.click();
         ys_waitingLoading(inboundRoutes.grid_Mask);

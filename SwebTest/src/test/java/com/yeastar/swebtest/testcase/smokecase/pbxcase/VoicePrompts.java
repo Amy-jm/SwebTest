@@ -19,10 +19,8 @@ public class VoicePrompts extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备VoicePrompts"); //执行操作
         initialDriver("chrome","https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
@@ -41,7 +39,8 @@ public class VoicePrompts extends SwebDriver {
     @Test
     public void A_SystemPrompt() throws InterruptedException {
         Reporter.infoExec("Default选择上传的一个提示音");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.voicePrompts_panel.click();
         systemPrompt.systemPrompt.click();
         systemPrompt.browse.click();
@@ -68,7 +67,8 @@ public class VoicePrompts extends SwebDriver {
     public void B_MusicOnHold() throws InterruptedException {
         Reporter.infoExec("选择Music on Hold提示音列表的第一个提示音，点击“Play”在1100播放");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.voicePrompts_panel.click();
             systemPrompt.systemPrompt.click();
         }else {
@@ -93,7 +93,8 @@ public class VoicePrompts extends SwebDriver {
     public void C_DeleteMusicOnHold() throws InterruptedException {
         Reporter.infoExec("删除Music on Hold提示音列表的第一个提示音");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.voicePrompts_panel.click();
             musicOnHold.musicOnHold.click();
         }
@@ -107,7 +108,8 @@ public class VoicePrompts extends SwebDriver {
     public void D_CreateNewPlaylist() throws InterruptedException {
         Reporter.infoExec("创建一个新的playlist");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.voicePrompts_panel.click();
             musicOnHold.musicOnHold.click();
         }
@@ -151,7 +153,8 @@ public class VoicePrompts extends SwebDriver {
     public void F_SelectPlay1() throws InterruptedException {
         Reporter.infoExec("Voice Prompts->Prompt Preference中的Music on Hold选择play1,分机1100拨打6400");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.voicePrompts_panel.click();
             promptPreference.promptPreference.click();
         }
@@ -171,7 +174,8 @@ public class VoicePrompts extends SwebDriver {
     public void G_DeleteMusicOnHold() throws InterruptedException {
         Reporter.infoExec("全选所有提示音，点击“Delete”");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.voicePrompts_panel.click();
             promptPreference.promptPreference.click();
         }else {
@@ -191,7 +195,8 @@ public class VoicePrompts extends SwebDriver {
     public void H_RecordNew() throws InterruptedException {
         Reporter.infoExec("录一个新的录音作为提示音");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.voicePrompts_panel.click();
         }
         customPrompts.customPrompts.click();

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="22"
+           failures="4"
+           errors="0"
+           skipped="0"
+           time="911.629">
+  <properties />
+            <testcase name="G1_dnd" time="26.769" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension">
+                <failure type="java.lang.AssertionError"
+                  message="预期1000为HangUp 【预期：4 实际：3】"
+              >
+<![CDATA[java.lang.AssertionError: 预期1000为HangUp 【预期：4 实际：3】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:425)
+  com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension.G1_dnd(Extension.java:378)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="F1_NoAnswer" time="58.796" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension">
+                <failure type="java.lang.AssertionError"
+                  message="CDR被叫方检测 【预期：1105 [1105] 实际：1105 [1105(from 1100)]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：1105 [1105] 实际：1105 [1105(from 1100)]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:258)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:250)
+  com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension.F1_NoAnswer(Extension.java:354)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="E2_cancelWhenBusy" time="53.034" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension">
+                <failure type="java.lang.AssertionError"
+                  message="预期1101挂断状态 【预期：4 实际：3】"
+              >
+<![CDATA[java.lang.AssertionError: 预期1101挂断状态 【预期：4 实际：3】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:425)
+  com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension.E2_cancelWhenBusy(Extension.java:337)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="A1_sip" time="44.101" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension">
+                <failure type="java.lang.AssertionError"
+                  message=" 录音失败"
+              >
+<![CDATA[java.lang.AssertionError:  录音失败
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension.A1_sip(Extension.java:135)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+  
+  
+            <testcase name="D2_cancellForward" time="30.483" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="K1_check_Voicemail" time="25.496" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="H1_resetToDefault" time="10.099" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="C2_callpark" time="54.346" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="A4_fxs" time="38.798" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="C1_callpark" time="46.279" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="G2_canceldnd" time="30.313" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="F2_NoAnswer" time="55.135" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="B3_BlindTransfer" time="47.443" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="J_internal" time="49.326" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="K2_Check_OneTouchRecord" time="4.781" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="D1_callforward" time="32.439" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="I_Voicemail" time="78.361" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="E1_whenbusy" time="56.347" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="A2_sip" time="28.006" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="B2_AttendTranferTimeout" time="53.963" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="A3_fxs" time="36.297" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+                <testcase name="B1_AttendTranfer" time="51.017" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension" />
+      
+</testsuite>

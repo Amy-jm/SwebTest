@@ -1,0 +1,1264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestSuite" time="12,794.019" tests="115" errors="0" skipped="0" failures="24">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin"/>
+    <property name="java.vm.version" value="25.121-b13"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="E:\SwebTest"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) Client VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="E:\SwebTest"/>
+    <property name="java.runtime.version" value="1.8.0_121-b13"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\endorsed"/>
+    <property name="os.arch" value="x86"/>
+    <property name="java.io.tmpdir" value="C:\Users\AutoTest\AppData\Local\Temp\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="classworlds.conf" value="C:\Program Files\Java\apache-maven-3.3.9\bin\..\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Java\apache-maven-3.3.9\bin;C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;F:\TortoiseSVN\bin;D:\Program Files\OpenVPN\bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="C:\Users\AutoTest"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="GBK"/>
+    <property name="user.name" value="AutoTest"/>
+    <property name="java.class.path" value="C:\Program Files\Java\apache-maven-3.3.9\bin\..\boot\plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="32"/>
+    <property name="java.home" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="zh"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.version" value="1.8.0_121"/>
+    <property name="java.ext.dirs" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\resources.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\rt.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\sunrsasign.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\jsse.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\jce.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\charsets.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\lib\jfr.jar;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\classes"/>
+    <property name="sun.stderr.encoding" value="ms936"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Program Files\Java\apache-maven-3.3.9\bin\.."/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.stdout.encoding" value="ms936"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
+  </properties>
+  <testcase name="A_addExtension" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="49.046"/>
+  <testcase name="A_addExtensionGroup" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="33.927"/>
+  <testcase name="A_editExtenName" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="49.348"/>
+  <testcase name="B_addtrunk" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="43.079">
+    <failure message="SIP1注册失败" type="java.lang.AssertionError">java.lang.AssertionError: SIP1注册失败
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertNotEquals(YsAssert.java:912)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Trunk.assertTrunkStatus(YS_Trunk.java:223)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Trunk.addTrunk(YS_Trunk.java:181)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest.B_addtrunk(BeforeTest.java:89)
+</failure>
+    <system-out><![CDATA[执行操作: 删除所有VoIP外线
+Ext.getCmp('control-panel').down('trunk').down('trunklist').down('mypagingtoolbar').plugins[0].setValue('100')
+Extjs:Ext.getCmp('control-panel').down('trunk').down('trunklist').down('mypagingtoolbar').plugins[0].setValue('100')
+Extjs:Ext.getCmp('control-panel').down('trunk').down('trunklist').down('mypagingtoolbar').store.setPageSize(100)
+Extjs:Ext.getCmp('control-panel').down('trunk').down('trunklist').down('mypagingtoolbar').store.loadPage(1)
+Extjs:Ext.getCmp('control-panel').down('trunk').down('trunklist').getSelectionModel().selectAll()
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('trunk').down('loadmask').id).dom.style.display
+执行操作: 添加sip外线SIP1
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:Ext.getCmp('type').setValue('SIP')
+Extjs:Ext.getCmp('trunktype').setValue('voiptrunk')
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('trunk').down('loadmask').id).dom.style.display
+Extjs:return Ext.getCmp('control-panel').down('trunk').down('trunklist').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[6].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[6].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[6].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[6].id + ' tr td')[3].textContent
+Extjs:return Ext.getCmp('pbxmonitor').down('b-trunkstatus').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+gridFindRowByColumn ascendingOrder name  SIP1
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+  </testcase>
+  <testcase name="C_addtrunk" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="28.44">
+    <failure message="IAX1注册失败" type="java.lang.AssertionError">java.lang.AssertionError: IAX1注册失败
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertNotEquals(YsAssert.java:912)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Trunk.assertTrunkStatus(YS_Trunk.java:223)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Trunk.addTrunk(YS_Trunk.java:181)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest.C_addtrunk(BeforeTest.java:95)
+</failure>
+    <system-out><![CDATA[执行操作: 添加iax外线IAX1
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:Ext.getCmp('type').setValue('IAX')
+Extjs:Ext.getCmp('trunktype').setValue('voiptrunk')
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('trunk').down('loadmask').id).dom.style.display
+Extjs:return Ext.getCmp('control-panel').down('trunk').down('trunklist').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[7].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[7].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[7].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[7].id + ' tr td')[3].textContent
+Extjs:return Ext.getCmp('pbxmonitor').down('b-trunkstatus').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+gridFindRowByColumn ascendingOrder name  IAX1
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+  </testcase>
+  <testcase name="D_addtrunk" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="26.769">
+    <failure message="SPS1注册失败" type="java.lang.AssertionError">java.lang.AssertionError: SPS1注册失败
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertNotEquals(YsAssert.java:912)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Trunk.assertTrunkStatus(YS_Trunk.java:223)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Trunk.addTrunk(YS_Trunk.java:181)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest.D_addtrunk(BeforeTest.java:100)
+</failure>
+    <system-out><![CDATA[执行操作: 添加sps外线SPS1
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:Ext.getCmp('type').setValue('SIP')
+Extjs:Ext.getCmp('trunktype').setValue('peertopeer')
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('trunk').down('loadmask').id).dom.style.display
+Extjs:return Ext.getCmp('control-panel').down('trunk').down('trunklist').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[8].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[8].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[8].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[8].id + ' tr td')[3].textContent
+Extjs:return Ext.getCmp('pbxmonitor').down('b-trunkstatus').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+gridFindRowByColumn ascendingOrder name  SPS1
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+  </testcase>
+  <testcase name="E_addtrunk" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="26.652">
+    <failure message="SPX1注册失败" type="java.lang.AssertionError">java.lang.AssertionError: SPX1注册失败
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertNotEquals(YsAssert.java:912)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Trunk.assertTrunkStatus(YS_Trunk.java:223)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Trunk.addTrunk(YS_Trunk.java:181)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest.E_addtrunk(BeforeTest.java:106)
+</failure>
+    <system-out><![CDATA[执行操作: 添加spx外线SPX1
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:Ext.getCmp('type').setValue('IAX')
+Extjs:Ext.getCmp('trunktype').setValue('peertopeer')
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('trunk').down('loadmask').id).dom.style.display
+Extjs:return Ext.getCmp('control-panel').down('trunk').down('trunklist').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[9].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[9].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[9].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('trunk').down('trunklist').id + ' [data-recordindex]')[9].id + ' tr td')[3].textContent
+Extjs:return Ext.getCmp('pbxmonitor').down('b-trunkstatus').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+gridFindRowByColumn ascendingOrder name  SPX1
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('pbxmonitor').down('b-trunkstatus').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+]]></system-out>
+  </testcase>
+  <testcase name="F_addInRoute" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="51.023"/>
+  <testcase name="G_addOutRoute1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="31.184"/>
+  <testcase name="G_addOutRoute2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="13.634"/>
+  <testcase name="G_addOutRoute3" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="13.748"/>
+  <testcase name="G_addOutRoute4" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="13.803"/>
+  <testcase name="G_addOutRoute5" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="13.638"/>
+  <testcase name="G_addOutRoute6" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="13.67"/>
+  <testcase name="G_addOutRoute7" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="13.687"/>
+  <testcase name="G_addOutRoute8" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="13.732"/>
+  <testcase name="H_addivr" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="46.16"/>
+  <testcase name="I_addringgroup" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="30.978"/>
+  <testcase name="J_addqueue" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="36.237"/>
+  <testcase name="K_addconference" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="35.274"/>
+  <testcase name="L_setRecord" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest" time="42.402"/>
+  <testcase name="addTimeCondition1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.TimeCondition" time="41.758"/>
+  <testcase name="addTimeCondition2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.TimeCondition" time="25.33"/>
+  <testcase name="addTimeCondition3" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.TimeCondition" time="25.708"/>
+  <testcase name="addTimeCondition4" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.TimeCondition" time="58.327"/>
+  <testcase name="A_addHoliday1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Holiday" time="39.479"/>
+  <testcase name="B_editHoliday" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Holiday" time="17.043"/>
+  <testcase name="C_deleteHoliday" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Holiday" time="45.774"/>
+  <testcase name="A_callfrom1_sip" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="36.378"/>
+  <testcase name="A_callfrom2_iax" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="33.382"/>
+  <testcase name="A_callfrom3_sps" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="33.224"/>
+  <testcase name="A_callfrom4_spx" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="33.494"/>
+  <testcase name="A_callfrom5_fxo" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="30.197">
+    <failure message="CDR目的中继检测 【预期：  实际：FXO2-3】" type="java.lang.AssertionError">java.lang.AssertionError: CDR目的中继检测 【预期：  实际：FXO2-3】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:257)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound.A_callfrom5_fxo(Inbound.java:88)
+</failure>
+    <system-out><![CDATA[执行操作: 2001拨打2010通过fxo外线呼入到分机1000
+find this 2001 IP:192.168.3.236
+uri/./..........sip:2010@192.168.3.236  4
+CallstateCallBack callid:8 accId:4 code:1
+CallstateCallBack : username :2001
+CallstateCallBack callid:8 accId:4 code:3
+CallstateCallBack : username :2001
+incomingcallback"2001" <sip:2001@192.168.3.234>callid:9accid:0accounts.size()：6
+CallstateCallBack callid:9 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:9 accId:0 code:5
+CallstateCallBack : username :1000
+CallstateCallBack callid:8 accId:4 code:4
+CallstateCallBack : username :2001
+CallstateCallBack callid:8 accId:4 code:5
+CallstateCallBack : username :2001
+CallstateCallBack callid:8 accId:4 code:6
+CallstateCallBack : username :2001
+CallstateCallBack callid:9 accId:0 code:6
+CallstateCallBack : username :1000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[7].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="A_callfrom6_bri" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="30.114">
+    <failure message="CDR目的中继检测 【预期：  实际：BRI2-1】" type="java.lang.AssertionError">java.lang.AssertionError: CDR目的中继检测 【预期：  实际：BRI2-1】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:257)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound.A_callfrom6_bri(Inbound.java:99)
+</failure>
+    <system-out><![CDATA[执行操作: 2001拨打66666通过bri外线呼入到分机1000
+find this 2001 IP:192.168.3.236
+uri/./..........sip:66666@192.168.3.236  4
+CallstateCallBack callid:10 accId:4 code:1
+CallstateCallBack : username :2001
+incomingcallback"2001" <sip:2001@192.168.3.234>callid:11accid:0accounts.size()：6
+CallstateCallBack callid:11 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:11 accId:0 code:5
+CallstateCallBack : username :1000
+CallstateCallBack callid:10 accId:4 code:3
+CallstateCallBack : username :2001
+CallstateCallBack callid:10 accId:4 code:3
+CallstateCallBack : username :2001
+CallstateCallBack callid:10 accId:4 code:4
+CallstateCallBack : username :2001
+CallstateCallBack callid:10 accId:4 code:5
+CallstateCallBack : username :2001
+CallstateCallBack callid:10 accId:4 code:6
+CallstateCallBack : username :2001
+CallstateCallBack callid:11 accId:0 code:6
+CallstateCallBack : username :1000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[7].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="A_callfrom7_e1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="30.164">
+    <failure message="CDR目的中继检测 【预期：  实际：DIGIT1】" type="java.lang.AssertionError">java.lang.AssertionError: CDR目的中继检测 【预期：  实际：DIGIT1】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:257)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound.A_callfrom7_e1(Inbound.java:111)
+</failure>
+    <system-out><![CDATA[执行操作: 2001拨打77777通过E1外线呼入到分机1000
+find this 2001 IP:192.168.3.236
+uri/./..........sip:77777@192.168.3.236  4
+CallstateCallBack callid:12 accId:4 code:1
+CallstateCallBack : username :2001
+incomingcallback"2001" <sip:2001@192.168.3.234>callid:13accid:0accounts.size()：6
+CallstateCallBack callid:13 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:13 accId:0 code:5
+CallstateCallBack : username :1000
+CallstateCallBack callid:12 accId:4 code:3
+CallstateCallBack : username :2001
+CallstateCallBack callid:12 accId:4 code:3
+CallstateCallBack : username :2001
+CallstateCallBack callid:12 accId:4 code:4
+CallstateCallBack : username :2001
+CallstateCallBack callid:12 accId:4 code:5
+CallstateCallBack : username :2001
+CallstateCallBack callid:12 accId:4 code:6
+CallstateCallBack : username :2001
+CallstateCallBack callid:13 accId:0 code:6
+CallstateCallBack : username :1000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[7].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="A_callfrom8_gsm" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="29.113">
+    <failure message="CDR呼叫方检测 【预期：18506938857 实际：18506938857 [18506938857]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR呼叫方检测 【预期：18506938857 实际：18506938857 [18506938857]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:250)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound.A_callfrom8_gsm(Inbound.java:122)
+</failure>
+    <system-out><![CDATA[执行操作: 2001拨打被测设备的gsm号码呼入到分机1000
+find this 2001 IP:192.168.3.236
+uri/./..........sip:18450024021@192.168.3.236  4
+CallstateCallBack callid:14 accId:4 code:1
+CallstateCallBack : username :2001
+CallstateCallBack callid:14 accId:4 code:3
+CallstateCallBack : username :2001
+CallstateCallBack callid:14 accId:4 code:3
+CallstateCallBack : username :2001
+CallstateCallBack callid:14 accId:4 code:3
+CallstateCallBack : username :2001
+incomingcallback"18506938857" <sip:18506938857@192.168.3.234>callid:15accid:0accounts.size()：6
+CallstateCallBack callid:15 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:15 accId:0 code:5
+CallstateCallBack : username :1000
+CallstateCallBack callid:14 accId:4 code:4
+CallstateCallBack : username :2001
+CallstateCallBack callid:14 accId:4 code:5
+CallstateCallBack : username :2001
+CallstateCallBack callid:14 accId:4 code:6
+CallstateCallBack : username :2001
+CallstateCallBack callid:15 accId:0 code:6
+CallstateCallBack : username :1000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="B_did1_sps" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="98.17"/>
+  <testcase name="C_callerid" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="64.193">
+    <failure message="CDR呼叫方检测 【预期：2002 [2002] 实际：2001 [2001]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR呼叫方检测 【预期：2002 [2002] 实际：2001 [2001]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:250)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound.C_callerid(Inbound.java:178)
+</failure>
+    <system-out><![CDATA[执行操作: 编辑呼入路由InRoute1，Caller ID：2002
+Extjs:return Ext.getCmp('control-panel').down('inrouter').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('inrouter').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+gridFindRowByColumn ascendingOrder name  InRoute1
+Extjs:Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('inrouter').id + ' [data-recordindex]')[0].id + ' tr td img')[0].click()
+Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('inrouter').id + ' [data-recordindex]')[-1].id + ' tr td img')[0].click()
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get('ys-waiting').dom.style.display
+执行操作: 2002拨打99999通过sps外线呼入到分机1000
+find this 2002 IP:192.168.3.236
+uri/./..........sip:99999@192.168.3.236  5
+CallstateCallBack callid:20 accId:5 code:1
+CallstateCallBack : username :2002
+CallstateCallBack callid:20 accId:5 code:6
+CallstateCallBack : username :2002
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="F_timecondition1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="9.977"/>
+  <testcase name="F_timecondition2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="73.824"/>
+  <testcase name="F_timecondition3" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="61.56">
+    <failure message="CDR呼叫方检测 【预期：3001 [3001] 实际：Unknown】" type="java.lang.AssertionError">java.lang.AssertionError: CDR呼叫方检测 【预期：3001 [3001] 实际：Unknown】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:250)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound.F_timecondition3(Inbound.java:249)
+</failure>
+    <system-out><![CDATA[执行操作: 编辑InRoute1，添加[Holiday]到会议室Conference1
+Extjs:return Ext.getCmp('control-panel').down('inrouter').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('inrouter').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+gridFindRowByColumn ascendingOrder name  InRoute1
+Extjs:Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('inrouter').id + ' [data-recordindex]')[0].id + ' tr td img')[0].click()
+Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('inrouter').id + ' [data-recordindex]')[-1].id + ' tr td img')[0].click()
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get('ys-waiting').dom.style.display
+456  Ext.query('#'+Ext.query('#'+ Ext.query('#'+Ext.getCmp('st-ir-name').up('inrouter-edit').down('tableview').id + ' [data-recordindex]')[2].id + ' tr td')[1].id + ' div div')[0].id
+Extjs:return  Ext.getCmp('combo-2778').getStore().findRecord('name', "[Holiday]", 0, false, false, true).data.id
+h
+Ext.getCmp('combo-2778').setValue('h')
+Extjs:Ext.getCmp('combo-2778').setValue('h')
+1231 Ext.query('#'+Ext.query('#'+ Ext.query('#'+Ext.getCmp('st-ir-name').up('inrouter-edit').down('tableview').id + ' [data-recordindex]')[2].id + ' tr td')[2].id + ' div div')[0].id
+1231 Ext.getCmp('combo-2779').setValue('c')
+Extjs:Ext.getCmp('combo-2779').setValue('c')
+456  Ext.query('#'+Ext.query('#'+ Ext.query('#'+Ext.getCmp('st-ir-name').up('inrouter-edit').down('tableview').id + ' [data-recordindex]')[2].id + ' tr td')[3].id + ' div div')[0].id
+Extjs:return  Ext.getCmp('combo-2780').getStore().findRecord('name', "Conference1", 0, false, false, true).data.id
+7
+Ext.getCmp('combo-2780').setValue('7')
+Extjs:Ext.getCmp('combo-2780').setValue('7')
+执行操作: 3001拨打3000通过sip外线呼入到会议室6400
+find this 3001 IP:192.168.3.235
+uri/./..........sip:3000@192.168.3.235  3
+CallstateCallBack callid:23 accId:3 code:1
+CallstateCallBack : username :3001
+CallstateCallBack callid:23 accId:3 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:23 accId:3 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:23 accId:3 code:6
+CallstateCallBack : username :3001
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="F_timecondition4" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="56.437"/>
+  <testcase name="F_timecondition5" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="58.545"/>
+  <testcase name="G_delete1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound" time="81.295"/>
+  <testcase name="A_out1_sip" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="36.208"/>
+  <testcase name="A_out2_iax" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="41.1"/>
+  <testcase name="A_out3_sps" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="38.49"/>
+  <testcase name="A_out4_sps" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="41.186"/>
+  <testcase name="A_out5_fxo" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="33.792">
+    <failure message="CDR源中继检测 【预期：  实际：FXO2-3】" type="java.lang.AssertionError">java.lang.AssertionError: CDR源中继检测 【预期：  实际：FXO2-3】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:254)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound.A_out5_fxo(Outbound.java:89)
+</failure>
+    <system-out><![CDATA[执行操作: 1000拨打52000通过PSTN外线呼出
+find this 1000 IP:192.168.3.234
+uri/./..........sip:52000@192.168.3.234  0
+CallstateCallBack callid:8 accId:0 code:1
+CallstateCallBack : username :1000
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:8 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:8 accId:0 code:5
+CallstateCallBack : username :1000
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+incomingcallback"2010" <sip:2010@192.168.3.236>callid:9accid:2accounts.size()：3
+CallstateCallBack callid:9 accId:2 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:9 accId:2 code:5
+CallstateCallBack : username :2000
+CallstateCallBack callid:8 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:9 accId:2 code:6
+CallstateCallBack : username :2000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="A_out6_bri" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="33.729">
+    <failure message="CDR源中继检测 【预期：  实际：BRI2-1】" type="java.lang.AssertionError">java.lang.AssertionError: CDR源中继检测 【预期：  实际：BRI2-1】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:254)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound.A_out6_bri(Outbound.java:100)
+</failure>
+    <system-out><![CDATA[执行操作: 1000拨打62000通过BRI外线呼出
+find this 1000 IP:192.168.3.234
+uri/./..........sip:62000@192.168.3.234  0
+CallstateCallBack callid:10 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback<sip:1000@192.168.3.236>callid:11accid:2accounts.size()：3
+CallstateCallBack callid:11 accId:2 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:11 accId:2 code:5
+CallstateCallBack : username :2000
+CallstateCallBack callid:10 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:10 accId:0 code:5
+CallstateCallBack : username :1000
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:11 accId:2 code:6
+CallstateCallBack : username :2000
+CallstateCallBack callid:10 accId:0 code:6
+CallstateCallBack : username :1000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="A_out7_E1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="34.367">
+    <failure message="CDR源中继检测 【预期：  实际：DIGIT1】" type="java.lang.AssertionError">java.lang.AssertionError: CDR源中继检测 【预期：  实际：DIGIT1】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:254)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound.A_out7_E1(Outbound.java:111)
+</failure>
+    <system-out><![CDATA[执行操作: 1000拨打72000通过E1外线呼出
+find this 1000 IP:192.168.3.234
+uri/./..........sip:72000@192.168.3.234  0
+CallstateCallBack callid:12 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback<sip:1000@192.168.3.236>callid:13accid:2accounts.size()：3
+CallstateCallBack callid:13 accId:2 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:13 accId:2 code:5
+CallstateCallBack : username :2000
+CallstateCallBack callid:12 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:12 accId:0 code:5
+CallstateCallBack : username :1000
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+CallstateCallBack callid:12 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:13 accId:2 code:6
+CallstateCallBack : username :2000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="A_out8_gsm" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="41.081">
+    <failure message="CDR源中继检测 【预期：  实际：UMTS3-3】" type="java.lang.AssertionError">java.lang.AssertionError: CDR源中继检测 【预期：  实际：UMTS3-3】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:254)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound.A_out8_gsm(Outbound.java:122)
+</failure>
+    <system-out><![CDATA[执行操作: 1000拨打辅助设备的GSM号码呼出
+find this 1000 IP:192.168.3.234
+uri/./..........sip:818506938857@192.168.3.234  0
+CallstateCallBack callid:14 accId:0 code:1
+CallstateCallBack : username :1000
+CallstateCallBack callid:14 accId:0 code:3
+CallstateCallBack : username :1000
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+incomingcallback<sip:Unknown@192.168.3.236>callid:15accid:2accounts.size()：3
+CallstateCallBack callid:15 accId:2 code:4
+CallstateCallBack : username :2000
+CallstateCallBack callid:15 accId:2 code:5
+CallstateCallBack : username :2000
+CallstateCallBack callid:14 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:14 accId:0 code:5
+CallstateCallBack : username :1000
+CallstateCallBack callid:14 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:15 accId:2 code:6
+CallstateCallBack : username :2000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="B_Prepend" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="63.833"/>
+  <testcase name="C_password" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="108.659"/>
+  <testcase name="D_rrmemory_hunt" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="163.392"/>
+  <testcase name="E_timecondition" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="65.613">
+    <failure message="CDR被叫方检测 【预期：9299999 实际：933333】" type="java.lang.AssertionError">java.lang.AssertionError: CDR被叫方检测 【预期：9299999 实际：933333】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:251)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound.E_timecondition(Outbound.java:248)
+</failure>
+    <system-out><![CDATA[执行操作: 编辑呼出路由Password：取消密码设置，TimeCondition选择Outbound
+Extjs:return Ext.getCmp('control-panel').down('outrouter').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[1].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[2].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[3].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[4].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[5].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[6].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[7].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[8].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[9].id + ' tr td')[1].textContent
+gridFindRowByColumn ascendingOrder name  Password
+Extjs:Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[9].id + ' tr td img')[0].click()
+Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('outrouter').id + ' [data-recordindex]')[8].id + ' tr td img')[0].click()
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:Ext.getCmp('st-or-pintype').setValue('none')
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('outrouter').down('loadmask').id).dom.style.display
+执行操作: 1000拨打929999，通过sps外线呼出，预期：呼出失败
+find this 1000 IP:192.168.3.234
+uri/./..........sip:9299999@192.168.3.234  0
+CallstateCallBack callid:26 accId:0 code:1
+CallstateCallBack : username :1000
+CallstateCallBack callid:26 accId:0 code:6
+CallstateCallBack : username :1000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="F_delete" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound" time="87.861"/>
+  <testcase name="A_add_1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" time="249.118">
+    <failure message="CDR_Status检测 【预期：Failed 实际：Answered】" type="java.lang.AssertionError">java.lang.AssertionError: CDR_Status检测 【预期：Failed 实际：Answered】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction.A_add_1(OutboundRestriction.java:67)
+</failure>
+    <system-out><![CDATA[pjsip init 0
+pjisp main 0
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:Ext.getCmp('cdr-record').down('cdrandrecord-edit').lookupReference('showncol').setValue('0,1,2,6,4,5,6,7,8,9,10')
+Extjs:Ext.get(Ext.query('#'+Ext.getCmp("cdr-record").down('cdrandrecord-edit').down('header').id + ' .x-tool-close')[0].id).dom.click()
+Extjs:Ext.get(Ext.query('#cdr-record_header-targetEl'+ ' .x-tool-close')[0].id).dom.click()
+find this 1100 IP:
+sip::::::.......sip:1100@192.168.3.234:5060.......0
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[1].id + ' tr td div div')[0].getAttribute('data-qtip')
+find this 1102 IP:
+sip::::::.......sip:1102@192.168.3.234:5060.......1
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[3].id + ' tr td div div')[0].getAttribute('data-qtip')
+find this 3001 IP:
+sip::::::.......sip:3001@192.168.3.235:5060.......2
+find this 2000 IP:
+sip::::::.......sip:2000@192.168.3.236:5060.......3
+执行操作:  删除所有Outbound Restriction
+Ext.getCmp('control-panel').down('constraint').down('mypagingtoolbar').plugins[0].setValue('100')
+Extjs:Ext.getCmp('control-panel').down('constraint').down('mypagingtoolbar').plugins[0].setValue('100')
+Extjs:Ext.getCmp('control-panel').down('constraint').down('mypagingtoolbar').store.setPageSize(100)
+Extjs:Ext.getCmp('control-panel').down('constraint').down('mypagingtoolbar').store.loadPage(1)
+Extjs:return Ext.getCmp('control-panel').down('constraint').getStore().getCount()
+Extjs:Ext.getCmp('control-panel').down('constraint').getSelectionModel().selectAll()
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('constraint').down('loadmask').id).dom.style.display
+Extjs:return Ext.getCmp('control-panel').down('constraint').getStore().getCount()
+Extjs:return Ext.getCmp('control-panel').down('constraint').getStore().getCount()
+执行操作: 新建呼出限制OutRestriction1，2分钟不能超过5通
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('constraint').down('loadmask').id).dom.style.display
+find this 1100 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  0
+CallstateCallBack callid:0 accId:0 code:1
+CallstateCallBack : username :1100
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:1accid:2accounts.size()：4
+CallstateCallBack callid:1 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:1 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:0 accId:0 code:4
+CallstateCallBack : username :1100
+CallstateCallBack callid:0 accId:0 code:5
+CallstateCallBack : username :1100
+CallstateCallBack callid:0 accId:0 code:6
+CallstateCallBack : username :1100
+CallstateCallBack callid:1 accId:2 code:6
+CallstateCallBack : username :3001
+1
+find this 1100 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  0
+CallstateCallBack callid:2 accId:0 code:1
+CallstateCallBack : username :1100
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:3accid:2accounts.size()：4
+CallstateCallBack callid:3 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:3 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:2 accId:0 code:4
+CallstateCallBack : username :1100
+CallstateCallBack callid:2 accId:0 code:5
+CallstateCallBack : username :1100
+CallstateCallBack callid:2 accId:0 code:6
+CallstateCallBack : username :1100
+CallstateCallBack callid:3 accId:2 code:6
+CallstateCallBack : username :3001
+2
+find this 1100 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  0
+CallstateCallBack callid:4 accId:0 code:1
+CallstateCallBack : username :1100
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:5accid:2accounts.size()：4
+CallstateCallBack callid:5 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:5 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:4 accId:0 code:4
+CallstateCallBack : username :1100
+CallstateCallBack callid:4 accId:0 code:5
+CallstateCallBack : username :1100
+CallstateCallBack callid:4 accId:0 code:6
+CallstateCallBack : username :1100
+CallstateCallBack callid:5 accId:2 code:6
+CallstateCallBack : username :3001
+3
+find this 1100 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  0
+CallstateCallBack callid:6 accId:0 code:1
+CallstateCallBack : username :1100
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:7accid:2accounts.size()：4
+CallstateCallBack callid:7 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:7 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:6 accId:0 code:4
+CallstateCallBack : username :1100
+CallstateCallBack callid:6 accId:0 code:5
+CallstateCallBack : username :1100
+CallstateCallBack callid:6 accId:0 code:6
+CallstateCallBack : username :1100
+CallstateCallBack callid:7 accId:2 code:6
+CallstateCallBack : username :3001
+4
+find this 1100 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  0
+CallstateCallBack callid:8 accId:0 code:1
+CallstateCallBack : username :1100
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:9accid:2accounts.size()：4
+CallstateCallBack callid:9 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:9 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:8 accId:0 code:4
+CallstateCallBack : username :1100
+CallstateCallBack callid:8 accId:0 code:5
+CallstateCallBack : username :1100
+CallstateCallBack callid:8 accId:0 code:6
+CallstateCallBack : username :1100
+CallstateCallBack callid:9 accId:2 code:6
+CallstateCallBack : username :3001
+5
+find this 1100 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  0
+CallstateCallBack callid:10 accId:0 code:1
+CallstateCallBack : username :1100
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:11accid:2accounts.size()：4
+CallstateCallBack callid:11 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:11 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:10 accId:0 code:4
+CallstateCallBack : username :1100
+CallstateCallBack callid:10 accId:0 code:5
+CallstateCallBack : username :1100
+CallstateCallBack callid:10 accId:0 code:6
+CallstateCallBack : username :1100
+CallstateCallBack callid:11 accId:2 code:6
+CallstateCallBack : username :3001
+6
+find this 1100 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  0
+CallstateCallBack callid:12 accId:0 code:1
+CallstateCallBack : username :1100
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:13accid:2accounts.size()：4
+CallstateCallBack callid:13 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:13 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:12 accId:0 code:4
+CallstateCallBack : username :1100
+CallstateCallBack callid:12 accId:0 code:5
+CallstateCallBack : username :1100
+CallstateCallBack callid:12 accId:0 code:6
+CallstateCallBack : username :1100
+CallstateCallBack callid:13 accId:2 code:6
+CallstateCallBack : username :3001
+7
+find this 1100 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  0
+CallstateCallBack callid:14 accId:0 code:1
+CallstateCallBack : username :1100
+CallstateCallBack callid:14 accId:0 code:6
+CallstateCallBack : username :1100
+8
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+]]></system-out>
+    <system-err><![CDATA[十月 23, 2017 9:50:16 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer getAndCheckWebDriver
+信息: Webdriver has been closed meanwhile. Let's re-create it.
+十月 23, 2017 9:50:16 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer closeWebDriver
+信息: Close webdriver: 1 -> ChromeDriver: chrome on XP (null)
+十月 23, 2017 9:50:16 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer closeWebDriver
+信息: Close proxy server: 1 -> null
+十月 23, 2017 9:50:16 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer$CloseBrowser run
+信息: Trying to close the browser ChromeDriver ...
+Starting ChromeDriver 2.29.461591 (62ebf098771772160f391d75e589dc567915b233) on port 29314
+Only local connections are allowed.
+十月 23, 2017 9:50:20 下午 com.codeborne.selenide.webdriver.WebDriverFactory createWebDriver
+信息: BrowserName=chrome Version=61.0.3163.100 Platform=XP
+十月 23, 2017 9:50:20 下午 com.codeborne.selenide.webdriver.WebDriverFactory createWebDriver
+信息: Selenide v. 4.4.2
+十月 23, 2017 9:50:20 下午 com.codeborne.selenide.webdriver.WebDriverFactory createWebDriver
+信息: Selenium WebDriver v. 2.53.1 build time: 2016-06-30 19:26:09
+十月 23, 2017 9:50:20 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer createDriver
+信息: Create webdriver in current thread 1: ChromeDriver -> ChromeDriver: chrome on XP (286a56883a7f85c057e667f29e67a036)
+]]></system-err>
+  </testcase>
+  <testcase name="A_add_2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" time="23.79"/>
+  <testcase name="A_add_3" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" time="33.157"/>
+  <testcase name="B_add_1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" time="186.38">
+    <failure message="CDR_Status检测 【预期：Failed 实际：Answered】" type="java.lang.AssertionError">java.lang.AssertionError: CDR_Status检测 【预期：Failed 实际：Answered】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction.B_add_1(OutboundRestriction.java:133)
+</failure>
+    <system-out><![CDATA[执行操作: 新建呼出限制：OutRestriction2，分机1102，2分钟呼出不能超过2通
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return  Ext.getCmp('st-constraint-exteninfo').getStore().findRecord('username', "1102", 0, false, false, true).data.id
+Extjs:Ext.getCmp('st-constraint-exteninfo').setValue('77')
+find this 1102 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  1
+CallstateCallBack callid:17 accId:1 code:1
+CallstateCallBack : username :1102
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:18accid:2accounts.size()：4
+CallstateCallBack callid:18 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:18 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:17 accId:1 code:4
+CallstateCallBack : username :1102
+CallstateCallBack callid:17 accId:1 code:5
+CallstateCallBack : username :1102
+CallstateCallBack callid:17 accId:1 code:6
+CallstateCallBack : username :1102
+CallstateCallBack callid:18 accId:2 code:6
+CallstateCallBack : username :3001
+1
+find this 1102 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  1
+CallstateCallBack callid:19 accId:1 code:1
+CallstateCallBack : username :1102
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:20accid:2accounts.size()：4
+CallstateCallBack callid:20 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:20 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:19 accId:1 code:4
+CallstateCallBack : username :1102
+CallstateCallBack callid:19 accId:1 code:5
+CallstateCallBack : username :1102
+CallstateCallBack callid:19 accId:1 code:6
+CallstateCallBack : username :1102
+CallstateCallBack callid:20 accId:2 code:6
+CallstateCallBack : username :3001
+2
+find this 1102 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  1
+CallstateCallBack callid:21 accId:1 code:1
+CallstateCallBack : username :1102
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:22accid:2accounts.size()：4
+CallstateCallBack callid:22 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:22 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:21 accId:1 code:4
+CallstateCallBack : username :1102
+CallstateCallBack callid:21 accId:1 code:5
+CallstateCallBack : username :1102
+CallstateCallBack callid:21 accId:1 code:6
+CallstateCallBack : username :1102
+CallstateCallBack callid:22 accId:2 code:6
+CallstateCallBack : username :3001
+3
+find this 1102 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  1
+CallstateCallBack callid:23 accId:1 code:1
+CallstateCallBack : username :1102
+incomingcallback"3000" <sip:3000@192.168.3.235>callid:24accid:2accounts.size()：4
+CallstateCallBack callid:24 accId:2 code:4
+CallstateCallBack : username :3001
+CallstateCallBack callid:24 accId:2 code:5
+CallstateCallBack : username :3001
+CallstateCallBack callid:23 accId:1 code:4
+CallstateCallBack : username :1102
+CallstateCallBack callid:23 accId:1 code:5
+CallstateCallBack : username :1102
+CallstateCallBack callid:23 accId:1 code:6
+CallstateCallBack : username :1102
+CallstateCallBack callid:24 accId:2 code:6
+CallstateCallBack : username :3001
+4
+find this 1102 IP:192.168.3.234
+uri/./..........sip:13001@192.168.3.234  1
+CallstateCallBack callid:25 accId:1 code:1
+CallstateCallBack : username :1102
+CallstateCallBack callid:25 accId:1 code:6
+CallstateCallBack : username :1102
+5
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="B_add_2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" time="29.361"/>
+  <testcase name="B_add_3" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" time="33.182"/>
+  <testcase name="C_delete" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction" time="60.793"/>
+  <testcase name="A_clip_default" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" time="27.464">
+    <failure message="Element should be visible {By.xpath: .//div[starts-with(@id,&apos;messagebox-&apos;)]//span[text()=&apos;Yes&apos;]}&#10;Element: &apos;&lt;span class=&quot;x-btn-inner x-btn-inner-default-small&quot; data-ref=&quot;btnInnerEl&quot; id=&quot;button-1006-btnInnerEl&quot; unselectable=&quot;on&quot; displayed:false&gt;&lt;/span&gt;&apos;" type="com.codeborne.selenide.ex.ElementShould"><![CDATA[com.codeborne.selenide.ex.ElementShould: Element should be visible {By.xpath: .//div[starts-with(@id,'messagebox-')]//span[text()='Yes']}
+Element: '<span class="x-btn-inner x-btn-inner-default-small" data-ref="btnInnerEl" id="button-1006-btnInnerEl" unselectable="on" displayed:false></span>'
+	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:66)
+	at com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP.A_clip_default(AutoCLIP.java:58)
+]]></failure>
+    <system-out><![CDATA[pjsip init 0
+pjisp main 0
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:Ext.getCmp('cdr-record').down('cdrandrecord-edit').lookupReference('showncol').setValue('0,1,2,6,4,5,6,7,8,9,10')
+Extjs:Ext.get(Ext.query('#'+Ext.getCmp("cdr-record").down('cdrandrecord-edit').down('header').id + ' .x-tool-close')[0].id).dom.click()
+Extjs:Ext.get(Ext.query('#cdr-record_header-targetEl'+ ' .x-tool-close')[0].id).dom.click()
+find this 1000 IP:
+sip::::::.......sip:1000@192.168.3.234:5060.......0
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+find this 1101 IP:
+sip::::::.......sip:1101@192.168.3.234:5060.......1
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[2].id + ' tr td div div')[0].getAttribute('data-qtip')
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[2].id + ' tr td div div')[0].getAttribute('data-qtip')
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[2].id + ' tr td div div')[0].getAttribute('data-qtip')
+find this 3001 IP:
+sip::::::.......sip:3001@192.168.3.235:5060.......2
+执行操作: ----AutoCLIP选择所有外线,其它默认----
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:Ext.getCmp('st-clip-useonce').setValue('false')
+Extjs:Ext.getCmp('st-clip-onlynoanswer').setValue('false')
+Extjs:Ext.getCmp('st-clip-checkport').setValue('false')
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('cliplist').down('loadmask').id).dom.style.display
+Extjs:Ext.getCmp('control-panel').down('cliplist').down('tableview').getSelectionModel().selectAll()
+]]></system-out>
+    <system-err><![CDATA[十月 23, 2017 10:01:22 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer getAndCheckWebDriver
+信息: Webdriver has been closed meanwhile. Let's re-create it.
+十月 23, 2017 10:01:22 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer closeWebDriver
+信息: Close webdriver: 1 -> ChromeDriver: chrome on XP (null)
+十月 23, 2017 10:01:22 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer closeWebDriver
+信息: Close proxy server: 1 -> null
+十月 23, 2017 10:01:22 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer$CloseBrowser run
+信息: Trying to close the browser ChromeDriver ...
+Starting ChromeDriver 2.29.461591 (62ebf098771772160f391d75e589dc567915b233) on port 12479
+Only local connections are allowed.
+十月 23, 2017 10:01:26 下午 com.codeborne.selenide.webdriver.WebDriverFactory createWebDriver
+信息: BrowserName=chrome Version=61.0.3163.100 Platform=XP
+十月 23, 2017 10:01:26 下午 com.codeborne.selenide.webdriver.WebDriverFactory createWebDriver
+信息: Selenide v. 4.4.2
+十月 23, 2017 10:01:26 下午 com.codeborne.selenide.webdriver.WebDriverFactory createWebDriver
+信息: Selenium WebDriver v. 2.53.1 build time: 2016-06-30 19:26:09
+十月 23, 2017 10:01:26 下午 com.codeborne.selenide.impl.WebDriverThreadLocalContainer createDriver
+信息: Create webdriver in current thread 1: ChromeDriver -> ChromeDriver: chrome on XP (b8bde1a632c9a5499aaedcbc02cf7ad7)
+]]></system-err>
+  </testcase>
+  <testcase name="B_deleteUsedRecords" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" time="10.465">
+    <failure message="Element not found {By.xpath: .//*[@src=&apos;images/taskbar-main.png&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor19.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP.B_deleteUsedRecords(AutoCLIP.java:108)
+</failure>
+    <system-out><![CDATA[执行操作: ----启用Delete Used Records----
+]]></system-out>
+  </testcase>
+  <testcase name="C_OnlyKeepMissedCallRecords" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" time="10.573">
+    <failure message="Element not found {By.xpath: .//*[@src=&apos;images/taskbar-main.png&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor19.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP.C_OnlyKeepMissedCallRecords(AutoCLIP.java:146)
+</failure>
+    <system-out><![CDATA[执行操作: ----启用Only Keep Missed Call Records----
+]]></system-out>
+  </testcase>
+  <testcase name="D_MatchOutgoingTrunk" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" time="10.543">
+    <failure message="Element not found {By.xpath: .//*[@src=&apos;images/taskbar-main.png&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor19.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP.D_MatchOutgoingTrunk(AutoCLIP.java:194)
+</failure>
+    <system-out><![CDATA[执行操作: ----启用Match Outgoing Trunk----
+]]></system-out>
+  </testcase>
+  <testcase name="E_Disable_AutoCLIP" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP" time="10.584">
+    <failure message="Element not found {By.xpath: .//*[@src=&apos;images/taskbar-main.png&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor19.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy4.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP.E_Disable_AutoCLIP(AutoCLIP.java:229)
+</failure>
+    <system-out><![CDATA[执行操作: ----不启用AutoCLIP----
+]]></system-out>
+  </testcase>
+  <testcase name="A_add_pickupgroup1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PickupGroup" time="68.699"/>
+  <testcase name="A_add_pickupgroup2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PickupGroup" time="32.478"/>
+  <testcase name="A_add_pickupgroup3" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PickupGroup" time="32.565"/>
+  <testcase name="B_add_pickupgroup2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PickupGroup" time="56.216"/>
+  <testcase name="C_delete" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PickupGroup" time="56.021"/>
+  <testcase name="A_add_paging1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom" time="70.903"/>
+  <testcase name="A_add_paging2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom" time="64.048">
+    <failure message="CDR被叫方检测 【预期：1100 [6301(1100)] 实际：1101 [6301(1101)]】" type="java.lang.AssertionError">java.lang.AssertionError: CDR被叫方检测 【预期：1100 [6301(1100)] 实际：1101 [6301(1101)]】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:251)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom.A_add_paging2(PagingIntercom.java:109)
+</failure>
+    <system-out><![CDATA[执行操作: 新建广播组Paging6301：双工，启用*Answer成员：ExtensionGroup1
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:return Ext.get('ys-waiting').dom.style.display
+Extjs:Ext.getCmp('st-paginggroup-duplex').setValue('intercom')
+Extjs:Ext.getCmp('st-paginggroup-enablekeyhanup').setValue('true')
+ExtensionGroup1
+Extjs:return  Ext.getCmp('st-paginggroup-allowexten').getStore().findRecord('username', "ExtensionGroup1", 0, false, false, true).data.id
+Extjs:Ext.getCmp('st-paginggroup-allowexten').setValue('81')
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('paginggroup').down('loadmask').id).dom.style.display
+Extjs:return Ext.getCmp('control-panel').down('paginggroup').getStore().getCount()
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('paginggroup').id + ' [data-recordindex]')[1].id + ' tr td')[2].textContent
+Extjs:return Ext.get(Ext.getCmp('control-panel').down('paginggroup').down('loadmask').id).dom.style.display
+执行操作: 1000拨打6301，预期分机1100、1101、1105自动应答
+find this 1000 IP:192.168.3.234
+uri/./..........sip:6301@192.168.3.234  0
+CallstateCallBack callid:3 accId:0 code:1
+CallstateCallBack : username :1000
+incomingcallback"1000" <sip:1000@192.168.3.234>callid:4accid:1accounts.size()：4
+CallstateCallBack callid:4 accId:1 code:4
+CallstateCallBack : username :1100
+incomingcallback"1000" <sip:1000@192.168.3.234>callid:5accid:2accounts.size()：4
+CallstateCallBack callid:5 accId:2 code:4
+CallstateCallBack : username :1101
+CallstateCallBack callid:4 accId:1 code:5
+CallstateCallBack : username :1100
+CallstateCallBack callid:5 accId:2 code:5
+CallstateCallBack : username :1101
+incomingcallback"1000" <sip:1000@192.168.3.234>callid:6accid:3accounts.size()：4
+CallstateCallBack callid:6 accId:3 code:4
+CallstateCallBack : username :1105
+CallstateCallBack callid:6 accId:3 code:5
+CallstateCallBack : username :1105
+CallstateCallBack callid:3 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:3 accId:0 code:5
+CallstateCallBack : username :1000
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp(Ext.getCmp('pbxmonitor').down('b-extenstatus').id).down('tableview').id + ' [data-recordindex]')[0].id + ' tr td div div')[0].getAttribute('data-qtip')
+Second-------get status succ--------------
+Second-------get status succ--------------
+Second-------get status succ--------------
+执行操作: 1101按*Answer--预期1100、1105会挂断通话
+find this 1101 IP:192.168.3.234
+callId: 5send dtmf :* num:
+send dtmf end ...
+CallstateCallBack callid:4 accId:1 code:6
+CallstateCallBack : username :1100
+CallstateCallBack callid:6 accId:3 code:6
+CallstateCallBack : username :1105
+Second-------get status succ--------------
+Second-------get status succ--------------
+Second-------get status succ--------------
+CallstateCallBack callid:3 accId:0 code:6
+CallstateCallBack : username :1000
+CallstateCallBack callid:5 accId:2 code:6
+CallstateCallBack : username :1101
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="B_intercom" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom" time="37.966"/>
+  <testcase name="C_delete" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom" time="60.356"/>
+  <testcase name="A_add_1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.SpeedDial" time="106.688"/>
+  <testcase name="A_add_2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.SpeedDial" time="33.559"/>
+  <testcase name="B_export" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.SpeedDial" time="0.741"/>
+  <testcase name="C_delete" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.SpeedDial" time="54.371"/>
+  <testcase name="D_import" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.SpeedDial" time="10.963"/>
+  <testcase name="A_add_RingGroup1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.RingGroup" time="58.602"/>
+  <testcase name="B_edit_RingGroup1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.RingGroup" time="77.422"/>
+  <testcase name="C_add_RingGroup2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.RingGroup" time="140.116"/>
+  <testcase name="D_delete" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.RingGroup" time="57.554"/>
+  <testcase name="A_record" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.CustomPrompts" time="46.91"/>
+  <testcase name="B_play" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.CustomPrompts" time="52.692"/>
+  <testcase name="C_reRecord" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.CustomPrompts" time="47.61"/>
+  <testcase name="D_upload" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.CustomPrompts" time="12.128"/>
+  <testcase name="A_add" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="65.459"/>
+  <testcase name="B_editInbound1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="31.948"/>
+  <testcase name="C_dialextensions" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="48.95"/>
+  <testcase name="D_dialoutbound" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="41.647"/>
+  <testcase name="E_key0toExtension" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="47.004"/>
+  <testcase name="F_key1toVoicemail" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="48.037"/>
+  <testcase name="G_key5toDialName" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="61.252">
+    <failure message="CDR_Status检测 【预期：Answered 实际：No Answer】" type="java.lang.AssertionError">java.lang.AssertionError: CDR_Status检测 【预期：Answered 实际：No Answer】
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:242)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR.G_key5toDialName(IVR.java:188)
+</failure>
+    <system-out><![CDATA[执行操作: 1000拨打6501，按5到DialbyName,按957到分机1103
+find this 1000 IP:192.168.3.234
+uri: sip:6501@192.168.3.234
+CallstateCallBack callid:7 accId:0 code:1
+CallstateCallBack : username :1000
+CallstateCallBack callid:7 accId:0 code:4
+CallstateCallBack : username :1000
+CallstateCallBack callid:7 accId:0 code:5
+CallstateCallBack : username :1000
+find this 1000 IP:192.168.3.234
+callId: 7send dtmf :5 num:
+send dtmf end ...
+find this 1000 IP:192.168.3.234
+callId: 7send dtmf :9 num:
+send dtmf end ...
+callId: 7send dtmf :5 num:
+send dtmf end ...
+callId: 7send dtmf :7 num:
+send dtmf end ...
+find this 1000 IP:192.168.3.234
+callId: 7send dtmf :1 num:
+send dtmf end ...
+third-------get status Timeout----------
+分机通话状态：4
+find this 1103 IP:192.168.3.234
+Answer Call  1  1103
+CallstateCallBack callid:7 accId:0 code:6
+CallstateCallBack : username :1000
+Extjs:return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs:return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+]]></system-out>
+  </testcase>
+  <testcase name="H_keytoHangup" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="29.226"/>
+  <testcase name="I_keytoSelectOption" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="43.48"/>
+  <testcase name="J_keytoTimeout" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="7,479.822"/>
+  <testcase name="K_keytoInvalid" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="35.118"/>
+  <testcase name="L_checkvoicemail" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="56.918"/>
+  <testcase name="M_delete" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="59.111"/>
+  <testcase name="N_editInbound2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR" time="30.99"/>
+  <testcase name="A_add_queue6701" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="16.422"/>
+  <testcase name="A_add_queue6702" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="28.012"/>
+  <testcase name="A_editInbound" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="32.103"/>
+  <testcase name="B_failtoextension" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="30.688"/>
+  <testcase name="C_agent1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="16.475"/>
+  <testcase name="C_agent2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="30.322"/>
+  <testcase name="C_agent3" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="5.475"/>
+  <testcase name="C_agent4" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="30.298"/>
+  <testcase name="D_RingAll1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="49.811"/>
+  <testcase name="E_maxWaitTime" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue" time="182.205"/>
+</testsuite>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="4"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="151.124">
+  <properties />
+  
+  
+            <testcase name="addTimeCondition2" time="25.330" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.TimeCondition" />
+                <testcase name="addTimeCondition3" time="25.708" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.TimeCondition" />
+                <testcase name="addTimeCondition4" time="58.327" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.TimeCondition" />
+                <testcase name="addTimeCondition1" time="41.759" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.TimeCondition" />
+      
+</testsuite>

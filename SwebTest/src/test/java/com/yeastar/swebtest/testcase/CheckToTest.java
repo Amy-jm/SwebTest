@@ -24,7 +24,12 @@ public class CheckToTest extends SwebDriver {
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
 //        initialDriver("chrome","https://"+ "192.168.7.154" +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.click();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.extensions_panel.click();
         deleteTrunk();
         deleteAllExtensions();
@@ -130,7 +135,7 @@ public class CheckToTest extends SwebDriver {
         autoCLIPRoutes.mt_RemoveAllFromSelect.click();
         autoCLIPRoutes.save.click();
 
-        timeConditions.timeConditions.click();
+        time_Conditions.timeConditions.click();
         timeConditions.timeConditions.click();
         ys_waitingTime(2000);
         if(Integer.parseInt(String.valueOf(gridLineNum(timeConditions.grid))) != 0){
@@ -236,7 +241,7 @@ public class CheckToTest extends SwebDriver {
             whitelist.delete_yes.click();
         }
 
-
+        ys_waitingTime(1000);
         pinList.PINList.click();
         ys_waitingLoading(pinList.grid_Mask);
 //        ys_waitingTime(3000);

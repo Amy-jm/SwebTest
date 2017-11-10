@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="PBXCORE">
+    <test name="pbxcore" preserve-order="true">
+        <classes>
+            <!--<class name="com.yeastar.swebtest.testcase.CheckToTest"/>-->
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.BeforeTest"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.TimeCondition"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Holiday"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Inbound"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Outbound"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.OutboundRestriction"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.AutoCLIP"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PickupGroup"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.PagingIntercom"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.SpeedDial"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.RingGroup"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.CustomPrompts"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.IVR"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Queue"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Conference"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Callback"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Extension"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Blacklist_Whitelist"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.Disa_PinList"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcore.EmergencyNumber"/>
+        </classes>
+    </test> <!-- YsAutoTest -->
+</suite> <!-- Default Suite -->

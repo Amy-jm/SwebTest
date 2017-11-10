@@ -17,20 +17,25 @@ public class PickupGroup extends SwebDriver{
         Reporter.infoBeforeClass("开始执行：======  PickupGroup  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        ys_waitingMask();
-        mySettings.close.click();
+
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
         m_extension.showCDRClounm();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.general_panel.click();
-        ys_waitingMask();
+        if(!PRODUCT.equals(CLOUD_PBX)){
+            ys_waitingMask();
+        }
         m_general.setPickup(true,"*4",true,"*04");
 
         //        被测设备注册分机1000/1100/1105，辅助1：分机3001
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",2);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1105,DEVICE_IP_LAN);
@@ -62,7 +67,7 @@ public class PickupGroup extends SwebDriver{
             System.out.println(" -----------开始按*4---------");
             pjsip.Pj_Make_Call_Auto_Answer(1105, "*4", DEVICE_IP_LAN, false);
         }else {
-            System.out.println("------------未执行*4---------");
+            System.out.println("------------1000未响铃，未执行*4---------");
         }
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
