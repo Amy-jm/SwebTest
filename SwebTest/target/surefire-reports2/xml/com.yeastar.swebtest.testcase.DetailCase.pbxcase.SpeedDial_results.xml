@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="40"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="862.750">
+  <properties />
+  
+  
+            <testcase name="E1_checkSIP" time="28.927" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="A_addExtension" time="28.678" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="G1_editOutRoute" time="34.625" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="E2_checkSPS" time="29.419" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="G2_checkSPS" time="14.084" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C2_checkPrefix3" time="28.801" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="D2_add_outRouteDial" time="71.028" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C4_checkPrefix" time="28.790" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C5_editPrefix" time="8.855" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="B4_checkSpeedDial2" time="28.799" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C1_editPrefix" time="8.882" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C2_checkPrefix2" time="11.084" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="E4_checkIAX" time="29.074" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="E9_checkGSM" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="E8_checkE1" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="E5_checkSPX" time="29.849" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="B1_addSpeedDial" time="35.421" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C3_editPrefix" time="8.798" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="B2_checkSpeedDial" time="28.702" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="H1_deleteOne_no" time="17.070" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="F_checkIncorrect" time="14.087" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="H3_deletePart_no" time="14.465" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="I_recovery1" time="8.788" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="H4_deletePart_yes" time="14.359" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="D3_add_incorrect" time="25.980" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="B3_editSpeedDial" time="20.588" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="G3_checkSPS" time="28.839" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C6_checkPrefix" time="28.824" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C7_editPrefix" time="8.789" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C2_checkPrefix1" time="11.088" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="E3_checkAccount" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="B4_checkSpeedDial1" time="11.111" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="E7_checkPSTN" time="29.458" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="D1_import" time="22.788" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="H5_deleteAll_no" time="9.845" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="H6_deleteAll_yes" time="13.341" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="H2_deleteOne_yes" time="24.857" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="I_recovery2" time="29.834" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="C8_checkPrefix" time="28.588" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+                <testcase name="E6_checkBRI" time="46.234" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial" />
+      
+</testsuite>

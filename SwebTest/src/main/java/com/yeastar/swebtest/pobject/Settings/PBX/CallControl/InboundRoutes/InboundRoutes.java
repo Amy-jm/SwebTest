@@ -34,6 +34,9 @@ public class InboundRoutes {
 
     public SelenideElement add = $(By.xpath(".//div[starts-with(@id,'inrouter-')]//span[text()='Add']"));
     public SelenideElement Import = $(By.xpath(".//div[starts-with(@id,'inrouter-')]//span[text()='Import']"));
+    public SelenideElement Import_import = $(By.xpath(".//div[starts-with(@id,'inrouter-import')]//.//div[starts-with(@id,'toolbar-')]//span[text()='Import']"));
+    public SelenideElement browse = $(By.id("st-inrouter-filename-trigger-filebutton"));
+    public SelenideElement import_OK = $(By.xpath(".//div[starts-with(@id,'messagebox-')]//a[starts-with(@id,'button-')]//span[text()='OK']"));
     public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,'inrouter-')]//span[text()='Delete']"));
     public SelenideElement addEnableTimeCondition = $(By.id("st-ir-addtimecondition"));
     /**

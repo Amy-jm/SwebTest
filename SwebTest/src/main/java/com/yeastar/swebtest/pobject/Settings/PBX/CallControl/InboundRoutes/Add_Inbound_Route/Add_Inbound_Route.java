@@ -28,6 +28,15 @@ public class Add_Inbound_Route {
     public String s_ivr = "i";
 
     public String add_Inbound_Route_Interface = "Ext.getCmp('st-ir-name').up('inrouter-edit')";
+    public String add_Inbound_Route_TimeCondition_Grid = "Ext.getCmp('st-ir-name').up('inrouter-edit').down('tableview')";
+
+    public int gridcolumn_TIMECondition = 1;
+    public int gridcolumn_FeatureCode = 4;
+
+    public int gridDelete = 0; //仅搜索img
+    public int gridTop = 1;
+    public int gridUp =2;
+    public int gridDown = 3;
 
     public String list = "st-ir-trunkinfo";
 
@@ -62,8 +71,9 @@ public class Add_Inbound_Route {
         ys_waitingTime(2000);
         System.out.println("456  "+ "Ext.query('#'+Ext.query('#'+ Ext.query('#'+"+add_Inbound_Route_Interface+".down('tableview').id + ' [data-recordindex]')["+row+"].id + ' tr td')["+column+"].id + ' div div')[0].id");
         String cellId = String.valueOf(return_executeJs("Ext.query('#'+Ext.query('#'+ Ext.query('#'+"+add_Inbound_Route_Interface+".down('tableview').id + ' [data-recordindex]')["+--row+"].id + ' tr td')["+column+"].id + ' div div')[0].id"));
+        System.out.println("CellID:"+cellId);
         String id =  String.valueOf(listGetId(cellId,"name",extName)) ;
-        System.out.println(id);
+        System.out.println("id:"+id);
         System.out.println("Ext.getCmp('"+cellId+"').setValue('"+id+"')");
         executeJs("Ext.getCmp('"+cellId+"').setValue('"+id+"')");
     }
@@ -85,5 +95,13 @@ public class Add_Inbound_Route {
         String id = String.valueOf(listGetId(destination,recordname,m_destination));
         listSetValue(destination,id);
 
+    }
+
+//    编辑呼入路由时，填写完编辑内容马上点击save，会导致一直在加载  please wait页面；
+//    可能是因为呼入路由页面的内容很多，编辑太快马上点击save的时候，页面的一些加载项还没加载成功而导致，所以这里在save之前增加两秒的等待时间
+    public void edit_save(){
+        ys_waitingTime(3000);
+        add_inbound_route.save.click();
+        ys_waitingLoading(inboundRoutes.grid_Mask);
     }
 }

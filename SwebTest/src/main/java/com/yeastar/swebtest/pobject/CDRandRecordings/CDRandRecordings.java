@@ -19,12 +19,13 @@ public class CDRandRecordings {
     public int gridColumn_CallTo = 2;
     public int gridColumn_CallDuration = 3;
     public int gridColumn_TalkFuration = 4;
+
+//    30.6.0.x
     public int gridColumn_Status = 5;
     public int gridColumn_SourceTrunk = 6;
     public int gridColumn_DestinationTrunk = 7;
     public int gridColumn_CommunicationTrunk = 8;
     public int gridColumn_PinCode = 9;
-
 
     public int gridPlay = 0; //仅搜索img
     public int gridDownload = 1; //仅搜索img
@@ -41,13 +42,15 @@ public class CDRandRecordings {
 
     public SelenideElement time_start = $(By.id("cr-startdate-inputEl"));
     public SelenideElement time_end = $(By.id("cr-enddate-inputEl"));
+    public SelenideElement time_ok = $(By.xpath(".//span[starts-with(@id,\"button-\") and text()=\"OK\"]"));
     public SelenideElement callFrom = $(By.id("cr-src-inputEl"));
     public SelenideElement callTo = $(By.id("cr-dst-inputEl"));
     public SelenideElement callDuration = $(By.id("cr-duration-inputEl"));
     public SelenideElement talkDuration = $(By.id("cr-billable-inputEl"));
     public String status = "cr-disposition";
     public SelenideElement includeRecordingFiles = $(By.id("cr-isrecord-displayEl"));
-    public SelenideElement search = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-small\") and text()=\"Search\"]"));
+//    public SelenideElement search = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-small\") and text()=\"Search\"]"));
+    public SelenideElement search = $(By.id("cr-search"));
 
     public SelenideElement advancedOptions = $(By.xpath(".//a[starts-with(@class,\"cp-link-before\") and text()=\"Advanced Options\"]"));
                                                             // .//a[starts-with(@id,\"cdr-play-block-innerCt\") and text()=\"Paly\"]

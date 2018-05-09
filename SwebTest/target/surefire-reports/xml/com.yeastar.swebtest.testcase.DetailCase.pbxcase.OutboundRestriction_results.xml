@@ -1,0 +1,1125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="76"
+           failures="15"
+           errors="0"
+           skipped="0"
+           time="3619.424">
+  <properties />
+            <testcase name="E7_4editInRoute" time="15.702" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="com.codeborne.selenide.ex.ElementNotFound"
+                  message="Element not found {By.xpath: .//div[starts-with(@id,"callcontrol")]//span[ text()="Inbound Routes"]}
+Expected: exist"
+              >
+<![CDATA[Element not found {By.xpath: .//div[starts-with(@id,"callcontrol")]//span[ text()="Inbound Routes"]}
+Expected: exist
+Screenshot: file:/F:/IdeaProjects/SwebTest/build/reports/tests/1518336973872.1.png
+Timeout: 15 s.
+Caused by: WebDriverException: unknown error: Element <span id="tab-3848-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (710, 253). Other element would receive the click: <div id="outrouter-edit-6095_header-title-textEl" data-ref="textEl" class="x-title-text x-title-text-ys-theme x-title-item" unselectable="on" role="presentation">...</div>
+  com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+  com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.E7_4editInRoute(OutboundRestriction.java:906)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element <span id="tab-3848-btnInnerEl" data-ref="btnInnerEl" unselectable="on" class="x-tab-inner x-tab-inner-default">...</span> is not clickable at point (710, 253). Other element would receive the click: <div id="outrouter-edit-6095_header-title-textEl" data-ref="textEl" class="x-title-text x-title-text-ys-theme x-title-item" unselectable="on" role="presentation">...</div>
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 25 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1
+  sun.reflect.GeneratedConstructorAccessor13.newInstance(Unknown Source)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+  org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+  com.codeborne.selenide.commands.Click.click(Click.java:22)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.E7_4editInRoute(OutboundRestriction.java:906)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="G6_CancelRestriction3" time="33.986" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="com.codeborne.selenide.ex.ElementShould"
+                  message="Element should be visible {By.xpath: .//span[starts-with(@class,"x-btn-inner x-btn-inner-default-small") and text()="Yes"]}
+Element: '<span class="x-btn-inner x-btn-inner-default-small" data-ref="btnInnerEl" id="button-1006-btnInnerEl" unselectable="on" displayed:false></span>'"
+              >
+<![CDATA[Element should be visible {By.xpath: .//span[starts-with(@class,"x-btn-inner x-btn-inner-default-small") and text()="Yes"]}
+Element: '<span class="x-btn-inner x-btn-inner-default-small" data-ref="btnInnerEl" id="button-1006-btnInnerEl" unselectable="on" displayed:false></span>'
+Screenshot: file:/F:/IdeaProjects/SwebTest/build/reports/tests/1518337813918.8.png
+Timeout: 15 s.
+  com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:66)
+  com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.G6_CancelRestriction3(OutboundRestriction.java:1209)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="G2_checkRestriction1" time="287.179" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="org.openqa.selenium.WebDriverException"
+                  message="unknown error: Cannot read property 'id' of undefined
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 14 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1"
+              >
+<![CDATA[org.openqa.selenium.WebDriverException: unknown error: Cannot read property 'id' of undefined
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 14 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1
+  sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+  sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebDriver.executeScript(RemoteWebDriver.java:577)
+  com.yeastar.swebtest.driver.SwebDriver.executeJs(SwebDriver.java:669)
+  com.yeastar.swebtest.driver.SwebDriver.gridClick(SwebDriver.java:165)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.G2_checkRestriction1(OutboundRestriction.java:1104)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="E9_checkExtension2" time="21.717" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1102 [1102] 实际：1000dial123 [Emergency]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1102 [1102] 实际：1000dial123 [Emergency]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:259)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.E9_checkExtension2(OutboundRestriction.java:943)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="F5_Restriction" time="35.695" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="com.codeborne.selenide.ex.ElementNotFound"
+                  message="Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="Call Permission"]}
+Expected: visible"
+              >
+<![CDATA[Element not found {By.xpath: .//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="Call Permission"]}
+Expected: visible
+Screenshot: file:/F:/IdeaProjects/SwebTest/build/reports/tests/1518337135514.5.png
+Timeout: 15 s.
+Caused by: NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":".//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="Call Permission"]"}
+  com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+  com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+  com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:59)
+  com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.F5_Restriction(OutboundRestriction.java:1031)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":".//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="Call Permission"]"}
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 31 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1
+*** Element info: {Using=xpath, value=.//span[starts-with(@class,"x-tab-inner x-tab-inner-default") and text()="Call Permission"]}
+  sun.reflect.GeneratedConstructorAccessor15.newInstance(Unknown Source)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+  org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:500)
+  org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+  org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+  com.codeborne.selenide.impl.WebElementSelector.findElement(WebElementSelector.java:28)
+  com.codeborne.selenide.impl.ElementFinder.getWebElement(ElementFinder.java:56)
+  com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:44)
+  com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.F5_Restriction(OutboundRestriction.java:1031)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="F4_checkRestriction" time="27.224" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="com.codeborne.selenide.ex.ElementShould"
+                  message="Element should be visible {By.id: cdr-record-shortcut}
+Element: '<div aria-selected="true" class="ys-desktop-shortcut-control ys-desktop-shortcut x-item-selected" data-boundview="dataview-1068" data-recordid="40" data-recordindex="1" id="cdr-record-shortcut" role="option" tabindex="-1" displayed:false></div>'"
+              >
+<![CDATA[Element should be visible {By.id: cdr-record-shortcut}
+Element: '<div aria-selected="true" class="ys-desktop-shortcut-control ys-desktop-shortcut x-item-selected" data-boundview="dataview-1068" data-recordid="40" data-recordindex="1" id="cdr-record-shortcut" role="option" tabindex="-1" displayed:false></div>'
+Screenshot: file:/F:/IdeaProjects/SwebTest/build/reports/tests/1518337099735.4.png
+Timeout: 15 s.
+  com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:66)
+  com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:256)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.F4_checkRestriction(OutboundRestriction.java:1020)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="G6_CancelRestriction1" time="44.951" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="com.codeborne.selenide.ex.ElementShould"
+                  message="Element should be visible {By.xpath: .//span[starts-with(@class,"x-btn-inner x-btn-inner-default-small") and text()="Yes"]}
+Element: '<span class="x-btn-inner x-btn-inner-default-small" data-ref="btnInnerEl" id="button-1006-btnInnerEl" unselectable="on" displayed:false></span>'"
+              >
+<![CDATA[Element should be visible {By.xpath: .//span[starts-with(@class,"x-btn-inner x-btn-inner-default-small") and text()="Yes"]}
+Element: '<span class="x-btn-inner x-btn-inner-default-small" data-ref="btnInnerEl" id="button-1006-btnInnerEl" unselectable="on" displayed:false></span>'
+Screenshot: file:/F:/IdeaProjects/SwebTest/build/reports/tests/1518337746563.6.png
+Timeout: 15 s.
+  com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:66)
+  com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.G6_CancelRestriction1(OutboundRestriction.java:1185)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="F3_CancelRestriction" time="4.760" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="org.openqa.selenium.WebDriverException"
+                  message="unknown error: Cannot read property 'down' of null
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 309 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1"
+              >
+<![CDATA[org.openqa.selenium.WebDriverException: unknown error: Cannot read property 'down' of null
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 309 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1
+  sun.reflect.GeneratedConstructorAccessor13.newInstance(Unknown Source)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebDriver.executeScript(RemoteWebDriver.java:577)
+  com.yeastar.swebtest.driver.SwebDriver.executeJs(SwebDriver.java:669)
+  com.yeastar.swebtest.driver.SwebDriver.setPageShowNum(SwebDriver.java:710)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.F3_CancelRestriction(OutboundRestriction.java:1001)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="G5_checkRestriction1" time="187.072" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="org.openqa.selenium.WebDriverException"
+                  message="unknown error: Cannot read property 'id' of undefined
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 13 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1"
+              >
+<![CDATA[org.openqa.selenium.WebDriverException: unknown error: Cannot read property 'id' of undefined
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 13 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1
+  sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+  sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebDriver.executeScript(RemoteWebDriver.java:577)
+  com.yeastar.swebtest.driver.SwebDriver.executeJs(SwebDriver.java:669)
+  com.yeastar.swebtest.driver.SwebDriver.gridClick(SwebDriver.java:165)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.G5_checkRestriction1(OutboundRestriction.java:1161)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="E9_checkExtension1" time="26.875" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="com.codeborne.selenide.ex.ElementNotFound"
+                  message="Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist"
+              >
+<![CDATA[Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+Screenshot: file:/F:/IdeaProjects/SwebTest/build/reports/tests/1518337016366.3.png
+Timeout: 15 s.
+Caused by: WebDriverException: unknown error: Element <img src="images/taskbar-main.png" width="100%" height="100%" id="ext-element-8"> is not clickable at point (55, 23). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 948px; width: 1349px; z-index: 18996; right: auto; left: 0px; top: 0px;" id="ext-element-70"></div>
+  com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+  com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:255)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.E9_checkExtension1(OutboundRestriction.java:935)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element <img src="images/taskbar-main.png" width="100%" height="100%" id="ext-element-8"> is not clickable at point (55, 23). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 948px; width: 1349px; z-index: 18996; right: auto; left: 0px; top: 0px;" id="ext-element-70"></div>
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 63 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1
+  sun.reflect.GeneratedConstructorAccessor13.newInstance(Unknown Source)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+  org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+  com.codeborne.selenide.commands.Click.click(Click.java:22)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:255)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.E9_checkExtension1(OutboundRestriction.java:935)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="F1_removeExtension" time="2.903" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="org.openqa.selenium.WebDriverException"
+                  message="unknown error: Cannot read property 'id' of undefined
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 12 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1"
+              >
+<![CDATA[org.openqa.selenium.WebDriverException: unknown error: Cannot read property 'id' of undefined
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 12 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1
+  sun.reflect.GeneratedConstructorAccessor13.newInstance(Unknown Source)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebDriver.executeScript(RemoteWebDriver.java:577)
+  com.yeastar.swebtest.driver.SwebDriver.executeJs(SwebDriver.java:669)
+  com.yeastar.swebtest.driver.SwebDriver.gridContent(SwebDriver.java:234)
+  com.yeastar.swebtest.driver.SwebDriver.gridFindRowByColumn(SwebDriver.java:292)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.F1_removeExtension(OutboundRestriction.java:967)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="E8_registerExtension" time="15.609" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="com.codeborne.selenide.ex.ElementNotFound"
+                  message="Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist"
+              >
+<![CDATA[Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+Screenshot: file:/F:/IdeaProjects/SwebTest/build/reports/tests/1518336989558.2.png
+Timeout: 15 s.
+Caused by: WebDriverException: unknown error: Element <img src="images/taskbar-main.png" width="100%" height="100%" id="ext-element-8"> is not clickable at point (55, 23). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 948px; width: 1904px; z-index: 18996; right: auto; left: 0px; top: 0px;" id="ext-element-70"></div>
+  com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+  com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Register_Account(PjsipApp.java:91)
+  com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Register_Account(PjsipApp.java:157)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.E8_registerExtension(OutboundRestriction.java:921)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element <img src="images/taskbar-main.png" width="100%" height="100%" id="ext-element-8"> is not clickable at point (55, 23). Other element would receive the click: <div role="presentation" class="x-mask x-border-box" style="height: 948px; width: 1904px; z-index: 18996; right: auto; left: 0px; top: 0px;" id="ext-element-70"></div>
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 19 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1
+  sun.reflect.GeneratedConstructorAccessor13.newInstance(Unknown Source)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+  org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+  com.codeborne.selenide.commands.Click.click(Click.java:22)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Register_Account(PjsipApp.java:91)
+  com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Register_Account(PjsipApp.java:157)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.E8_registerExtension(OutboundRestriction.java:921)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="E7_3editOutRoute" time="222.761" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="com.codeborne.selenide.ex.ElementNotFound"
+                  message="Element not found {By.xpath: .//div[starts-with(@id,'st-or-exteninfo-innerCt')]//a[@data-qtip='Add All to Selected']}
+Expected: exist"
+              >
+<![CDATA[Element not found {By.xpath: .//div[starts-with(@id,'st-or-exteninfo-innerCt')]//a[@data-qtip='Add All to Selected']}
+Expected: exist
+Screenshot: file:/F:/IdeaProjects/SwebTest/build/reports/tests/1518336957769.0.png
+Timeout: 15 s.
+Caused by: WebDriverException: unknown error: Element <a class="x-btn x-form-itemselector-btn x-unselectable x-box-item x-toolbar-item x-btn-default-small" style="margin: 0px; right: auto; left: 0px; top: 71px;" hidefocus="on" unselectable="on" role="button" aria-hidden="false" aria-disabled="false" aria-label="Add All to Selected" id="button-6132" tabindex="-1" data-qtip="Add All to Selected" data-componentid="button-6132">...</a> is not clickable at point (927, 730). Other element would receive the click: <span id="button-6072-btnIconEl" data-ref="btnIconEl" role="presentation" unselectable="on" class="x-btn-icon-el x-btn-icon-el-default-small x-form-itemselector-addall " style=""></span>
+  com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:31)
+  com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:82)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:115)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.E7_3editOutRoute(OutboundRestriction.java:897)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+Caused by: org.openqa.selenium.WebDriverException: unknown error: Element <a class="x-btn x-form-itemselector-btn x-unselectable x-box-item x-toolbar-item x-btn-default-small" style="margin: 0px; right: auto; left: 0px; top: 71px;" hidefocus="on" unselectable="on" role="button" aria-hidden="false" aria-disabled="false" aria-label="Add All to Selected" id="button-6132" tabindex="-1" data-qtip="Add All to Selected" data-componentid="button-6132">...</a> is not clickable at point (927, 730). Other element would receive the click: <span id="button-6072-btnIconEl" data-ref="btnIconEl" role="presentation" unselectable="on" class="x-btn-icon-el x-btn-icon-el-default-small x-form-itemselector-addall " style=""></span>
+  (Session info: chrome=62.0.3202.94)
+  (Driver info: chromedriver=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 23 milliseconds
+Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+System info: host: 'Caroline-PC', ip: '192.168.11.30', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.8.0_144'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.33.506120 (e3e53437346286c0bc2d2dc9aa4915ba81d9023f), userDataDir=C:\Users\Caroline\AppData\Local\Temp\scoped_dir22272_7295}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=62.0.3202.94, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 7f8ceb1ba02a4f8b26b623d85d52b1c1
+  sun.reflect.GeneratedConstructorAccessor13.newInstance(Unknown Source)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+  org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+  org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+  com.codeborne.selenide.commands.Click.click(Click.java:22)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.E7_3editOutRoute(OutboundRestriction.java:897)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="D1_checkCallIn9_account" time="21.118" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：4001 [6100] 实际：18450023764 [18450023764]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：4001 [6100] 实际：18450023764 [18450023764]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:259)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.D1_checkCallIn9_account(OutboundRestriction.java:417)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="G6_CancelRestriction2" time="32.746" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
+                <failure type="com.codeborne.selenide.ex.ElementShould"
+                  message="Element should be visible {By.xpath: .//span[starts-with(@class,"x-btn-inner x-btn-inner-default-small") and text()="Yes"]}
+Element: '<span class="x-btn-inner x-btn-inner-default-small" data-ref="btnInnerEl" id="button-1006-btnInnerEl" unselectable="on" displayed:false></span>'"
+              >
+<![CDATA[Element should be visible {By.xpath: .//span[starts-with(@class,"x-btn-inner x-btn-inner-default-small") and text()="Yes"]}
+Element: '<span class="x-btn-inner x-btn-inner-default-small" data-ref="btnInnerEl" id="button-1006-btnInnerEl" unselectable="on" displayed:false></span>'
+Screenshot: file:/F:/IdeaProjects/SwebTest/build/reports/tests/1518337779762.7.png
+Timeout: 15 s.
+  com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:66)
+  com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy5.click(Unknown Source)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction.G6_CancelRestriction2(OutboundRestriction.java:1197)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+  
+  
+            <testcase name="I_recovery1" time="17.003" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery2" time="42.462" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E2_Restriction2" time="205.069" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D5_checkExtension_no" time="24.948" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut6_pstn" time="12.124" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D3_deleteRestriction" time="45.641" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D2_checkCallOut9_EmergencyNum" time="51.966" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G7_checkRestriction1" time="27.818" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check4_callIn" time="27.502" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E2_Restriction1" time="173.580" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check5_callIn_internal" time="27.549" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="A_addExtension" time="37.109" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E6_deleteExtension" time="33.377" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G7_checkRestriction3" time="27.874" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="H4_deleteAll_yes" time="28.376" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check3_callOut_internal" time="32.938" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check6_EmergencyNum" time="48.978" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E9_checkExtension3" time="12.133" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn6_e1" time="29.673" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn7_pstn" time="29.519" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut4_bri" time="12.127" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="H3_deleteAll_no" time="19.885" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut8_account" time="12.130" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G7_checkRestriction2" time="27.549" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check1_callOut" time="12.137" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G1_addRestriction_Extension" time="34.216" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery6" time="70.051" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn3_iax" time="27.536" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C2_checkCallOut_internal" time="27.723" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D7_checkExtension_yes" time="15.714" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="F6_checkRestriction" time="12.126" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="B2_addEmergencyNum" time="31.459" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="F2_checkExtension" time="12.147" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut1_sip" time="12.121" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E7_2editExtensionGroup" time="33.696" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn5_bri" time="29.546" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery4" time="55.033" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="B1_addRestriction" time="36.224" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D2_checkCallIn1_internal" time="27.507" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn1_sip" time="27.603" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G4_addRestriction" time="45.770" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E7_1addExtension" time="55.559" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn4_spx" time="29.578" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn2_sps" time="27.603" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E2_Restriction4" time="180.641" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check2_callOut" time="12.118" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery5" time="61.725" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn8_gsm" time="36.560" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut2_spx" time="12.126" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E1_addRestriction" time="30.815" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="H2_deletePart_yes" time="28.568" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="H1_deletePart_no" time="40.715" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut7_gsm" time="12.134" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut3_iax" time="12.131" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut5_e1" time="12.125" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D4_checkCallOut_sps" time="12.123" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E2_Restriction3" time="204.486" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C1_checkRestriction" time="227.430" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D6_checkRestriction" time="12.131" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D8_checkRestriction" time="31.549" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery3" time="81.070" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+      
+</testsuite>

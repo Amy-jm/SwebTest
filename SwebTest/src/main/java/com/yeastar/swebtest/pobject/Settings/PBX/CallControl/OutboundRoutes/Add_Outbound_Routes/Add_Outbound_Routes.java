@@ -14,6 +14,15 @@ public class Add_Outbound_Routes {
     public SelenideElement mt_RemoveAllFromSelected = $(By.xpath(".//div[starts-with(@id,'st-or-trunkinfo-innerCt')]//a[@data-qtip='Remove All from Selected']"));
     public SelenideElement me_AddAllToSelect = $(By.xpath(".//div[starts-with(@id,'st-or-exteninfo-innerCt')]//a[@data-qtip='Add All to Selected']"));
     public SelenideElement me_RemoveAllFromSelected = $(By.xpath(".//div[starts-with(@id,'st-or-exteninfo-innerCt')]//a[@data-qtip='Remove All from Selected']"));
+    public SelenideElement add_patterns = $(By.xpath("//*[@id=\"st-ir-adddialpattern\"]/div/img"));
+
+    public String grid = "Ext.getCmp('control-panel').down('outrouter-edit').down('grid')";         //呼出路由中patterns部分的表格名字
+    public String grid_Mask = "Ext.getCmp('control-panel').down('outrouter-edit').down('grid').down('loadmask')";   //表格加载需要缓冲时间
+
+    public int grid_gridcolumn_patterns = 0;
+
+    public int gridEdit = 0; //仅搜索img
+    public int gridDelete = 1; //仅搜索img
 
     public String list_Trunk = "st-or-trunkinfo";
     public String list_Extension = "st-or-exteninfo";

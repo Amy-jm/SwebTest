@@ -20,9 +20,7 @@ public class NewTrunk extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_NewTrunkTest"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
             mySettings.close.click();
         }
@@ -30,7 +28,8 @@ public class NewTrunk extends SwebDriver {
     @BeforeClass
     public void InitTrunk(){
         if(Single_Init){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.trunks_panel.click();
             trunks.add.shouldBe(Condition.exist);
             ys_waitingLoading(trunks.grid_Mask);
@@ -47,7 +46,8 @@ public class NewTrunk extends SwebDriver {
     @Test
     public void A_AddTrunk() throws InterruptedException {
         Reporter.infoExec("添加SIPTrunk");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.trunks_panel.click();
         setPageShowNum(trunks.grid,100);
         m_trunks.addTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,SIPTrunk,DEVICE_ASSIST_1,String.valueOf(UDP_PORT_ASSIST_1),DEVICE_ASSIST_1
@@ -74,7 +74,8 @@ public class NewTrunk extends SwebDriver {
 //    @Test  改成辅助设备设置成network模式,减少测试时间
     public void E_SetBriTrunk() throws InterruptedException {
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.trunks_panel.click();
         }
         ys_waitingTime(5000);

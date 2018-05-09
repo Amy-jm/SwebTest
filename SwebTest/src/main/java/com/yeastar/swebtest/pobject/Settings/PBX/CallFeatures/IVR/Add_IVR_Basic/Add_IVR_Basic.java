@@ -16,13 +16,15 @@ public class Add_IVR_Basic {
     public SelenideElement name = $(By.id("st-ivr-name-inputEl"));
     public String prompt = "st-ivr-prompt0";
     public String promptRepeatCount ="st-ivr-playtimes";
-    public String responseTimeout ="st-ivr-waitexten";
-    public String dightTimeout ="st-ivr-digittimeout";
+//    public String responseTimeout ="st-ivr-waitexten";
+//    public String dightTimeout ="st-ivr-digittimeout";
     public String dialExtensions ="st-ivr-enablenumber";
     public String dialOutboundRoutes ="st-ivr-enableoutrouter";
     public String listOutboundRoutes = "st-ivr-allowrouters";
     public String dialtoCheckVoicemail = "st-ivr-enablecheckvoicemail";
     public SelenideElement checkVoicemail_ok = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-small\") and text()=\"OK\"]"));
+    public SelenideElement responseTimeout =$(By.id("st-ivr-waitexten-inputEl"));
+    public SelenideElement dightTimeout =$(By.id("st-ivr-digittimeout-inputEl"));
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'ivr-edit-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'ivr-edit-')]//span[text()='Cancel']"));

@@ -32,6 +32,14 @@ public class Me_Blacklist {
     public SelenideElement Import = $(By.xpath(".//div[starts-with(@id,'meblacklist-')]//span[text()='Import']"));
     public SelenideElement export = $(By.xpath(".//div[starts-with(@id,'meblacklist-')]//span[text()='Export']"));
 
+    /*
+    * 导入文件
+    * */
+    public SelenideElement browse = $(By.id("me-blacklist-filename-trigger-filebutton"));
+    public SelenideElement Import_OK = $(By.xpath(".//div[starts-with(@id,\"messagebox\")]//span[text()=\"OK\"]"));
+    public SelenideElement Import_import = $(By.xpath(".//div[starts-with(@id,'meblacklist-import-')]//span[text()='Import']"));
+
+
     /**
      * 删除功能
      */

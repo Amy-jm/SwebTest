@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="74"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="2683.935">
+  <properties />
+  
+  
+            <testcase name="B2_checkDefault" time="87.851" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D3_diffNum1" time="42.930" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="M2_deleteOne_yes" time="20.224" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D2_checkTrunk9_GSM" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="M5_delteAll_no" time="13.307" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="M3_deletePart_no" time="24.439" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="F4_disMatchOutTrunk" time="16.294" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D2_checkTrunk4_IAX" time="47.978" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D1_makeCall4" time="42.515" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="J4_disUsedRecord" time="15.587" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="I4_checkMissRecord_SPX" time="42.300" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="E2_checkDigits_makeCall" time="39.006" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K2_makeCall_sps_accept" time="36.410" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="F2_matchOutTrunk_makeCall1" time="38.168" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="I1_makeCall_SPS_noAnswer" time="38.323" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="L_addCallRecord5" time="37.039" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="H3_checkMissRecord_BRI" time="40.437" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="J6_checkUsedRecord_makeCall" time="36.336" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="I8_disMissRecord" time="14.347" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="I5_checkMissRecord_BRI" time="37.968" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K9_checkTrunk_sip" time="42.806" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="J2_checkUsedRecord_makeCall" time="43.793" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="C_addAllTrunk" time="14.758" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K1_combine" time="41.533" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="L_addCallRecord4" time="36.630" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="I6_checkMissRecord_E1" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="M1_deleteOne_no" time="25.772" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="J3_checkUsedRecord_makeCall" time="43.434" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="L_addCallRecord2" time="37.438" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D1_makeCall2" time="46.616" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D2_checkTrunk7_PSTN" time="42.603" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="F1_matchOutTrunk_edit" time="36.900" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="J7_checkUsedRecord_makeCall" time="43.545" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="M4_deltePart_yes" time="6.836" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D1_makeCall1" time="39.077" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K5_checkTrunk_sip" time="41.869" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D2_checkTrunk2_SIP" time="50.609" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="L_addCallRecord3" time="37.351" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="B1_default" time="54.795" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D2_checkTrunk5_SPX" time="41.077" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K4_makeCall2_SPS_noAnswer" time="36.279" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="H2_checkMissRecord_SPX" time="41.900" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="H4_checkMissRecord_E1" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D2_checkTrunk1_SPS" time="41.661" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D2_checkTrunk6_BRI" time="48.419" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="J1_deleteUsedRecords" time="16.325" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="A_addExtension" time="42.251" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K8_makeCall_sip_noAnswer" time="37.129" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K3_checkTrunk_sps" time="42.886" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="G1_OnlyMissedRecord" time="40.457" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="I9_checkMissRecord1" time="50.797" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D3_diffNum2_makeCall" time="44.678" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D3_diffNum3" time="45.144" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="E1_editAutoCLIP" time="33.864" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K6_checkTrunk_sps" time="35.024" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="E3_checkDigits1" time="41.264" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="H1_checkMissRecord_SPS" time="38.179" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="F2_matchOutTrunk_makeCall2" time="45.422" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="F3_matchOutTrunk1" time="43.129" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="N_recovery" time="22.331" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="I9_checkMissRecord2" time="36.244" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K7_checkUsedRecord" time="51.249" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="J5_makeCall_SPS" time="42.202" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="B3_checkDefault" time="44.087" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="L_addCallRecord1" time="38.388" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="F3_matchOutTrunk2" time="45.243" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="D2_checkTrunk8_E1" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="E3_checkDigits2" time="41.417" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="M6_delteAll_yes" time="7.957" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="F5_matchOutTrunk" time="45.154" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="K4_makeCall1_SPS_noAnswer" time="38.362" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="G3_makeCall_sps_reject" time="58.078" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="I3_checkMissRecord_SPS" time="44.330" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+                <testcase name="G2_makeCall1_sps_accept" time="45.183" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP" />
+      
+</testsuite>

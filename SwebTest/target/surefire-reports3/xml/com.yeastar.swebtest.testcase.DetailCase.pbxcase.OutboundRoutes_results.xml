@@ -1,0 +1,2352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="88"
+           failures="53"
+           errors="0"
+           skipped="0"
+           time="4648.343">
+  <properties />
+            <testcase name="K1_editPatterns" time="64.757" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.808" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.799" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.935" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="O_checkPriority3" time="73.274" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.O_checkPriority3(OutboundRoutes.java:925)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.744" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.591" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.922" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.800" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.871" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.763" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="C_call" time="36.288" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="预期1000为Talking状态 【预期：3 实际：4】"
+              >
+<![CDATA[java.lang.AssertionError: 预期1000为Talking状态 【预期：3 实际：4】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:425)
+  com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound.A_out1_sip(Outbound.java:52)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.C_call(OutboundRoutes.java:96)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="G_rrmemory_hunt" time="36.545" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：2001 [2001]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：2001 [2001]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.G_rrmemory_hunt(OutboundRoutes.java:251)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.635" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.715" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.858" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="L8_checkPassword4" time="57.379" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1000 [1000] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1000 [1000] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.L8_checkPassword4(OutboundRoutes.java:753)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.718" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="L6_checkPassword3" time="42.295" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1000 [1000] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1000 [1000] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.L6_checkPassword3(OutboundRoutes.java:719)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.894" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.761" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.485" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.823" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="I_checkPatterns" time="65.146" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.I_checkPatterns(OutboundRoutes.java:443)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.892" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="M2_timeCondition1" time="70.999" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.M2_timeCondition1(OutboundRoutes.java:808)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.937" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.829" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.814" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.491" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.665" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.717" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.856" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="O_checkPriority2" time="58.247" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.O_checkPriority2(OutboundRoutes.java:902)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.870" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.596" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.884" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.833" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.747" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.767" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.852" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.859" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.849" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.849" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.748" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="L2_checkPassword" time="63.203" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1000 [1000] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1000 [1000] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.L2_checkPassword(OutboundRoutes.java:649)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.952" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="L4_checkPassword2" time="44.983" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1000 [1000] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1000 [1000] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.L4_checkPassword2(OutboundRoutes.java:685)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="65.042" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="O_checkPriority1" time="36.730" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.O_checkPriority1(OutboundRoutes.java:881)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.753" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.748" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="K1_editPatterns" time="64.703" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
+                <failure type="java.lang.AssertionError"
+                  message="CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】"
+              >
+<![CDATA[java.lang.AssertionError: CDR呼叫方检测 【预期：1100 [1100] 实际：xll [1104]】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:262)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes.K1_editPatterns(OutboundRoutes.java:527)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+  
+  
+            <testcase name="K2_editPatterns" time="44.367" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="Q_recovery2" time="40.965" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="L5_editPassword3" time="29.411" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="K2_editPatterns" time="44.329" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="P9_deleteTrunk" time="35.568" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="M2_timeCondition2" time="47.654" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="L3_editPassword2" time="34.256" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="F_checkMember" time="11.086" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="L7_editPassword4" time="30.129" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="J_editOutBound" time="65.526" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="K2_editPatterns" time="44.319" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="P3_deletePart_no" time="21.530" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="K2_editPatterns" time="44.363" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="P1_deleteOne_no" time="25.275" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="M1_addTimeCondition" time="32.304" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="D_deleteOutBoundRoutes" time="23.086" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="K2_editPatterns" time="44.305" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="P8_addTime" time="36.290" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="P5_deleteAll_no" time="9.855" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="K2_editPatterns" time="44.410" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="P7_deleteTime" time="26.085" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="Q_recovery1" time="103.425" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="B_addExtensions" time="37.506" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="P4_deletePart_yes" time="13.341" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="N_import" time="18.769" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="A_addTrunk" time="26.676" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="K2_editPatterns" time="44.302" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="P6_deleteAll_yes" time="13.384" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="L1_editPassword" time="75.494" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="P2_deleteOne_yes" time="27.296" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="K2_editPatterns" time="44.313" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="K2_editPatterns" time="44.332" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="H_editSecond" time="35.779" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="E_editOutRoute" time="77.892" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+                <testcase name="K2_editPatterns" time="44.500" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes" />
+      
+</testsuite>

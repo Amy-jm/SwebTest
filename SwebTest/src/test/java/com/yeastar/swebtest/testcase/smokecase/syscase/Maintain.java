@@ -22,16 +22,15 @@ public class Maintain extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_Maintain"); //执行操作
         initialDriver(BROWSER,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         mySettings.close.click();
         m_extension.showCDRClounm();
     }
     @Test
     public void A_BackupRestore() {
         Reporter.infoExec("添加备份文件"); //执行操作
-        pageDeskTop.maintenance.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.maintanceShortcut.click();
         maintenance.backupandRestore.click();
         backupandRestore.backup.click();
         ys_waitingTime(5000);
@@ -57,7 +56,7 @@ public class Maintain extends SwebDriver {
         Reporter.infoExec("点击“Reset”，弹出的Reset页面的Verification Code输入图片的验证码，点击“Reset”"); //执行操作
 //      1）设备重置，网页上出现重启进度页面。重启后，设备恢复出厂设置
         if(Single_Device_Test){
-            pageDeskTop.maintenance.click();
+            pageDeskTop.taskBar_Main.click();     pageDeskTop.maintanceShortcut.click();
         }
         maintenance.reset.click();
         reset.reset.click();
@@ -70,7 +69,7 @@ public class Maintain extends SwebDriver {
     public void D_Restore() {
         Reporter.infoExec("导入备份文件"); //执行操作
         if(Single_Device_Test){
-            pageDeskTop.maintenance.click();
+            pageDeskTop.taskBar_Main.click();     pageDeskTop.maintanceShortcut.click();
         }
         maintenance.backupandRestore.click();
         gridClick(backupandRestore.grid,backUpRow,backupandRestore.gridRestroe);
@@ -82,7 +81,7 @@ public class Maintain extends SwebDriver {
     @Test
     public void E_DeleteBackUp() {
         Reporter.infoExec("删除备份文件"); //执行操作
-        pageDeskTop.maintenance.click();
+        pageDeskTop.taskBar_Main.click();     pageDeskTop.maintanceShortcut.click();
         maintenance.backupandRestore.click();
         ys_waitingLoading(backupandRestore.grid_Mask);
         gridClick(backupandRestore.grid,backUpRow,backupandRestore.gridDelete);

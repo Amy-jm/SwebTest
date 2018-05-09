@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="77"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="3378.364">
+  <properties />
+  
+  
+            <testcase name="D5_checkExtension_no" time="25.061" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="B2_addEmergencyNum" time="31.769" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G7_checkRestriction2" time="29.838" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn4_spx" time="28.764" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery6" time="40.059" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery4" time="32.697" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut8_account" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut7_gsm" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="F6_checkRestriction" time="12.143" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery2" time="17.985" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D7_checkExtension_yes" time="15.639" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check5_callIn_internal" time="29.901" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery5" time="38.530" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D6_checkRestriction" time="12.085" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G6_CancelRestriction1" time="24.110" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E1_addRestriction" time="30.637" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E7_3editOutRoute" time="126.788" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D2_checkCallOut9_EmergencyNum" time="59.577" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E8_registerExtension" time="14.451" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check6_EmergencyNum" time="62.366" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="A_addExtension" time="52.044" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E9_checkExtension3" time="12.089" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E7_2editExtensionGroup" time="33.490" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn9_account" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check4_callIn" time="29.779" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D3_deleteRestriction" time="46.169" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G7_checkRestriction3" time="32.009" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E2_Restriction1" time="195.891" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="F2_checkExtension" time="12.162" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check3_callOut_internal" time="37.243" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut5_e1" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn3_iax" time="30.222" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="F3_CancelRestriction" time="41.067" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D2_checkCallIn1_internal" time="30.491" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery7" time="50.585" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E7_1addExtension" time="63.797" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D8_checkRestriction" time="28.676" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut4_bri" time="12.589" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G1_addRestriction_Extension" time="19.583" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C1_checkRestriction" time="301.611" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G6_CancelRestriction2" time="21.649" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="F4_checkRestriction" time="30.203" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G7_checkRestriction1" time="30.444" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="F5_Restriction" time="39.543" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="F1_removeExtension" time="27.834" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E2_Restriction2" time="241.549" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E2_Restriction3" time="215.552" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut3_iax" time="12.155" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="H4_deleteAll_yes" time="13.327" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E6_deleteExtension" time="33.800" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check2_callOut" time="12.085" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E3_check1_callOut" time="12.085" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery3" time="48.143" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="H1_deletePart_no" time="15.953" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E9_checkExtension1" time="30.251" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C2_checkCallOut_internal" time="30.027" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn5_bri" time="29.153" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn1_sip" time="30.260" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn6_e1" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G5_checkRestriction1" time="140.081" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G6_CancelRestriction3" time="23.168" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="I_recovery1" time="7.071" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="H2_deletePart_yes" time="13.376" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut2_spx" time="12.086" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E2_Restriction4" time="184.362" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E7_4editInRoute" time="34.642" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="E9_checkExtension2" time="31.022" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn7_pstn" time="29.909" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn2_sps" time="29.972" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D1_checkCallIn8_gsm" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut6_pstn" time="12.753" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="H3_deleteAll_no" time="9.761" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G4_addRestriction" time="16.174" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="D4_checkCallOut_sps" time="12.957" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="B1_addRestriction" time="36.470" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="G2_checkRestriction1" time="236.568" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+                <testcase name="C3_checkCallOut1_sip" time="12.081" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction" />
+      
+</testsuite>

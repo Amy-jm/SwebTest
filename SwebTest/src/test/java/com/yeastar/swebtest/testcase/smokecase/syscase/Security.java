@@ -19,9 +19,7 @@ public class Security extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_Security"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         mySettings.close.click();
         m_extension.showCDRClounm();
     }
@@ -31,7 +29,7 @@ public class Security extends SwebDriver {
         //1）Protocol下拉选择为Http，点击“Save”并点击“Apply”
         //2）勾选SSH，点击“Save”并点击“Apply”
         //3）CRT通过ssh连接到设备
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.security_panel.click();
         service.service.click();
         ys_waitingTime(6666);

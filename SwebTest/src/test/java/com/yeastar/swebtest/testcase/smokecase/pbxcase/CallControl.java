@@ -100,7 +100,7 @@ public class CallControl extends SwebDriver {
         Thread.sleep(5000);
         pjsip.Pj_Hangup_All();
         if(Single_Device_Test) {
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }else{
             pageDeskTop.taskBar_Main.click();
@@ -138,7 +138,7 @@ public class CallControl extends SwebDriver {
     public void D_DeleteViewAutoCLIP() throws InterruptedException {
         Reporter.infoExec("删除AutoCLIP记录");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
             autoCLIPRoutes.autoCLIPRoutes.click();
         }else {

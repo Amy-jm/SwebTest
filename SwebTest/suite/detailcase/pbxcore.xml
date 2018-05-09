@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="PBXCORE">
+    <test name="pbxcore" preserve-order="true">
+        <classes>
+            <!--<class name="com.yeastar.swebtest.testcase.CheckToTest"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.VoicePrompts"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PickupGroup"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom"/>-->
+            <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference"/>
+            <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup"/>
+            <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR"/>
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Queue"/>-->
+
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.EmergencyNumber"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.InboundRoutes"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.TimeCondition"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Blacklist_Whitelist"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction"/>-->
+        </classes>
+    </test> <!-- YsAutoTest -->
+</suite> <!-- Default Suite -->

@@ -77,5 +77,6 @@ public class Settings {
      */
     public SelenideElement minimize = $(By.xpath(".//div[starts-with(@class,\"x-tool-img x-tool-minimize\")]"));
     public SelenideElement maximize = $(By.xpath(".//div[starts-with(@class,\"x-tool-img x-tool-maximize\")]"));
+    public SelenideElement restore = $(By.xpath(".//div[starts-with(@class,\"x-tool-img x-tool-restore\")]"));
     public SelenideElement close = $(By.xpath(".//div[starts-with(@class,\"x-tool-img x-tool-close\")]"));
 }

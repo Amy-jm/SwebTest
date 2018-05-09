@@ -22,9 +22,7 @@ public class Network extends SwebDriver {
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
 //        initialDriver(BROWSER,"https://"+"192.168.7.151"+":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         mySettings.close.click();
         m_extension.showCDRClounm();
     }
@@ -35,7 +33,7 @@ public class Network extends SwebDriver {
         // 配置为192.168.yy.yy，Subnet Mask为255.255.255.0，Gateway为192.168.yy.1，
         // DNS为192.168.1.1，点击“Save”并点击“Apply”
         Reporter.infoExec("修改网络设置"); //执行操作
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.network_panel.click();
         ys_waitingTime(5000);
         boolean reboot = false;

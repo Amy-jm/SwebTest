@@ -18,7 +18,8 @@
                     <suiteXmlFiles>
                         <!--<suiteXmlFile>suite/smokecase/pbxcore.xml</suiteXmlFile>-->
                         <!--<suiteXmlFile>suite/smokecase/syscore.xml</suiteXmlFile>-->
-                        <suiteXmlFile>suite/regression/pbxcore.xml</suiteXmlFile>
+                        <!--<suiteXmlFile>suite/regression/pbxcore.xml</suiteXmlFile>-->
+                        <suiteXmlFile>suite/detailcase/pbxcore.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <properties>
                         <!-- No TestNG listeners
@@ -146,6 +147,13 @@
             <artifactId>ganymed-ssh2</artifactId>
             <version>262</version>
         </dependency>
+
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.leon.channel/verify &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.leon.channel</groupId>-->
+            <!--<artifactId>verify</artifactId>-->
+            <!--<version>1.1.9</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 

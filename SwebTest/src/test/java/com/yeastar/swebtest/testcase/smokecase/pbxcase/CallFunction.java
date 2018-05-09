@@ -126,7 +126,7 @@ public class CallFunction extends SwebDriver {
     public void D_DeleteBlacklist() throws InterruptedException {
         Reporter.infoExec("删除黑名单，分机2000通过sps线路呼入到设备1，呼入成功");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callFeatures_panel.click();
             callFeatures.more.click();
             blacklist_whitelist.blacklist_Whitelist.click();
@@ -158,7 +158,7 @@ public class CallFunction extends SwebDriver {
     public void F_AddWhitelist() throws InterruptedException {
         Reporter.infoExec("添加白名单test2，分机2000通过sps线路呼入到设备1，呼入成功");
         if(Single_Device_Test) {
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
             settings.callFeatures_tree.click();
             callFeatures.more.click();
@@ -190,7 +190,7 @@ public class CallFunction extends SwebDriver {
     public void H_DelWhitelist() throws InterruptedException {
         Reporter.infoExec("删除白名单，分机2000通过sps线路呼入到设备1，呼入失败");
         if(Single_Device_Test) {
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
             settings.callFeatures_tree.click();
             callFeatures.more.click();
@@ -460,7 +460,7 @@ public class CallFunction extends SwebDriver {
     @Test
     public void Z_DeleteSpeedDial() throws InterruptedException {
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callFeatures_panel.click();
             callFeatures.more.click();
             speedDial.speedDial.click();
@@ -479,7 +479,7 @@ public class CallFunction extends SwebDriver {
     public void a_ImportSpeedDial(){
         Reporter.infoExec("导入快速拨号列表");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callFeatures_panel.click();
             callFeatures.more.click();
             speedDial.speedDial.click();

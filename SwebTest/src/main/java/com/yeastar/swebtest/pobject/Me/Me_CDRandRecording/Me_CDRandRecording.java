@@ -1,6 +1,7 @@
 package com.yeastar.swebtest.pobject.Me.Me_CDRandRecording;
 
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.swebtest.driver.SwebDriver;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -8,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
 /**
  * Created by Yeastar on 2017/7/21.
  */
-public class Me_CDRandRecording {
+public class Me_CDRandRecording extends SwebDriver{
     public  String grid = "Ext.getCmp('mesetting').down('mecdr').down('tableview')";
     public  String grid_Mask = "Ext.getCmp('mesetting').down('mecdr').down('loadmask')";
 
@@ -27,5 +28,19 @@ public class Me_CDRandRecording {
     public int gridDelete = 2;
 
 
+    public SelenideElement search = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-small\") and text()=\"Search\"]"));
+
+    /**
+     *关闭CDR页面
+     */
+    public static void me_closeCDRRecord(){
+        try {
+            Thread.sleep(500);
+            executeJs("Ext.get(Ext.query('#mesetting_header-targetEl'+ ' .x-tool-close')[0].id).dom.click()");
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

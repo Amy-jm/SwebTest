@@ -23,9 +23,7 @@ public class EmergencyNumberTest extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
             mySettings.close.click();
         }
@@ -45,7 +43,7 @@ public class EmergencyNumberTest extends SwebDriver {
     }
 //    @BeforeClass
     public void InitEmergencyNumberTest(){
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.emergencyNumber_panel.click();
         deletes("初始化紧急呼叫",emergencyNumber.grid,emergencyNumber.delete,emergencyNumber.delete_yes,emergencyNumber.grid_Mask);
         closeSetting();
@@ -54,7 +52,7 @@ public class EmergencyNumberTest extends SwebDriver {
     @Test
     public void A_addEmergencyNumber() throws InterruptedException {
         Reporter.infoExec("添加紧急呼叫号码");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.callControl_panel.click();
         outboundRoutes.outboundRoutes.click();
         ys_waitingLoading(outboundRoutes.grid_Mask);

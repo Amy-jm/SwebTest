@@ -14,7 +14,7 @@ public class Reboot {
     public SelenideElement timeType = $(By.id("mt-rr-timetype-trigger-picker"));
     public SelenideElement timeTime = $(By.id("mt-rr-timetime-trigger-picker"));
 
-    public SelenideElement reboot_Yes = $(By.id(".//div[starts-with(@id,'messagebox')]//span[text()='Yes']"));
-    public SelenideElement reboot_No = $(By.id(".//div[starts-with(@id,'messagebox')]//span[text()='No']"));
+    public SelenideElement reboot_Yes = $(By.xpath(".//div[starts-with(@id,'messagebox')]//span[text()='Yes']"));
+    public SelenideElement reboot_No = $(By.xpath(".//div[starts-with(@id,'messagebox')]//span[text()='No']"));
 
 }

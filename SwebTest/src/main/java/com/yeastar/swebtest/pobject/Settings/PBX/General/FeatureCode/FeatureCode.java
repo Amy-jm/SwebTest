@@ -108,6 +108,7 @@ public class FeatureCode {
     public String timeConditionOverride_check = "st-feature-enbforcetime";
     public SelenideElement timeConditionOverride = $(By.id("st-feature-forcetime-inputEl"));
     public SelenideElement setExtensionPermission = $(By.xpath(".//div[starts-with(@id,'panel')]//a[text()='Set Extension Permission']"));
+    public SelenideElement extension_RemoveAllFromSelect = $(By.xpath(".//div[@id='st-feature-extenspermission']//a[@data-qtip='Remove All from Selected']"));
     /**
      * Set Extension Permission
      */

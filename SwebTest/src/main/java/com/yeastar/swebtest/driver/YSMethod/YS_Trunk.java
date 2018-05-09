@@ -192,6 +192,154 @@ public class YS_Trunk {
     }
 
     /**
+     * trunk不作状态判断
+     * @param protocol
+     * @param type
+     * @param providerName
+     * @param hostname
+     * @param hostport
+     * @param domain
+     * @param username
+     * @param authenticationName
+     * @param fromUser
+     * @param password
+     * @throws InterruptedException
+     */
+    public void addUnavailTrunk(String protocol,int type,String providerName,String hostname,String hostport,
+                         String domain,String username,String authenticationName,String fromUser,String password,boolean Assert) throws InterruptedException {
+        if(protocol.equals("IAX") && PRODUCT.equals(CLOUD_PBX)){
+            System.out.println("Cloud PBX no support IAX extension");
+            Reporter.infoExec("Cloud PBX no support IAX extension");
+            return;
+        }
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        trunks.add.click();
+        ys_waitingMask();
+        String typeName = null;
+        if(protocol.equals("IAX")){
+            executeJs("Ext.getCmp('type').setValue('IAX')");
+        }else{
+            executeJs("Ext.getCmp('type').setValue('SIP')");
+        }
+
+        //
+        if(type == 2){
+            typeName = "SIP-Peer";
+            executeJs("Ext.getCmp('trunktype').setValue('peertopeer')");
+        }else {
+
+            executeJs("Ext.getCmp('trunktype').setValue('voiptrunk')");
+        }
+        if(type == 1 && protocol.equals("SIP")){
+            typeName = "SIP-Register";
+        }else if(type == 2 && protocol.equals("SIP")){
+            typeName = "SIP-Peer";
+        }else if(type == 1 && protocol.equals("IAX")){
+            typeName = "IAX-Register";
+        }else if(type == 2 && protocol.equals("IAX")){
+            typeName = "IAX-Peer";
+        }
+        //
+        ys_waitingTime(2000);
+        add_voIP_trunk_basic.providerName.setValue(providerName);
+        add_voIP_trunk_basic.hostname.setValue(hostname);
+
+        if(!domain.isEmpty()){
+            add_voIP_trunk_basic.domain.setValue(domain);
+        }
+
+
+        if(!hostport.isEmpty()){
+            add_voIP_trunk_basic.hostnamePort.setValue(hostport);
+        }
+        if(!username.isEmpty()){
+            add_voIP_trunk_basic.username.setValue(username);
+        }
+
+        if(!password.isEmpty()){
+            add_voIP_trunk_basic.password.setValue(password);
+        }
+        if(!authenticationName.isEmpty()){
+            add_voIP_trunk_basic.authenticationName.setValue(authenticationName);
+        }
+        if(!fromUser.isEmpty()){
+            add_voIP_trunk_basic.fromUser.setValue(fromUser);
+        }
+
+//        选择编码
+        add_voIP_trunk_codec.codec.click();
+//        listSelectAllbyValue(add_voIP_trunk_codec.list);
+        executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
+        add_voIP_trunk_basic.save.click();
+        pageDeskTop.apply.click();
+        ys_waitingLoading(trunks.grid_Mask);
+
+        String lineNum = String.valueOf(gridLineNum(trunks.grid));
+        int row=0;
+        for(row = Integer.parseInt(lineNum) ; row>0 ; row--){
+            String actTrunkName = String.valueOf(gridContent(trunks.grid,row,trunks.gridcolumn_TrunkName));
+            if(actTrunkName.equals(providerName)){
+                break;
+            }
+        }
+        if(Assert){
+//        m_trunks.assertTrunkGrid("IAXTrunk","IAX-Register","192.168.7.151","3040",row);
+         assertTrunkGrid(providerName,typeName,hostname,username,row);
+         ys_waitingTime(10000);
+         assertTrunkStatus(providerName);
+        }
+    }
+
+
+    /**
+     * 创建Account中继,Caroline新增
+     * @param providerName
+     * @param username
+     * @param authenticationName
+     * @param password
+     * @throws InterruptedException
+     */
+    public void addAccountTrunk(String providerName, String username,String authenticationName,String password) throws InterruptedException {
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        trunks.add.click();
+        ys_waitingMask();
+        String typeName = "SIP-Account";
+        executeJs("Ext.getCmp('trunktype').setValue('account')");
+        ys_waitingTime(2000);
+        add_voIP_trunk_basic.providerName.setValue(providerName);
+        add_voIP_trunk_basic.username.setValue(username);
+        add_voIP_trunk_basic.authenticationName.setValue(authenticationName);
+        add_voIP_trunk_basic.password.setValue(password);
+
+//        选择编码
+        add_voIP_trunk_codec.codec.click();
+//        listSelectAllbyValue(add_voIP_trunk_codec.list);
+        executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
+        add_voIP_trunk_basic.save.click();
+        pageDeskTop.apply.click();
+        ys_waitingLoading(trunks.grid_Mask);
+
+        String lineNum = String.valueOf(gridLineNum(trunks.grid));
+        int row=0;
+        for(row = Integer.parseInt(lineNum) ; row>0 ; row--){
+            String actTrunkName = String.valueOf(gridContent(trunks.grid,row,trunks.gridcolumn_TrunkName));
+            if(actTrunkName.equals(providerName)){
+                break;
+            }
+        }
+        String actualName = (String) gridContent(trunks.grid, row, trunks.gridcolumn_TrunkName);
+        YsAssert.assertEquals(actualName,providerName);
+
+        String actualType = (String) gridContent(trunks.grid, row, trunks.gridcolumn_Type);
+        YsAssert.assertEquals(actualType,typeName);
+        ys_waitingTime(10000);
+        assertTrunkStatus(providerName);
+    }
+
+
+    /**
      * 断言Trunk表格
      * @param trunkName
      * @param type

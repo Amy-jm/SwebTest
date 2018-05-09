@@ -16,10 +16,14 @@ import java.net.Socket;
 import java.util.Date;
 
 import static com.yeastar.swebtest.driver.Config.DEVICE_IP_LAN;
+import static com.yeastar.swebtest.driver.Config.currentPath;
+import static com.yeastar.swebtest.driver.DataReader.AMI_LOG_FILE;
+import static com.yeastar.swebtest.driver.DataReader.AMI_PROT;
+import static com.yeastar.swebtest.driver.DataReader.LOCAL_LOG_FILE;
 
 public class TcpSocket {
 //    public static final String IP_ADDR = DEVICE_IP_LAN;//服务器地址
-    public static final int PORT = 5038;//服务器端口号
+    public static final int PORT = AMI_PROT;//服务器端口号
     public static int TIMEOUT = 40000;
     public static void main1(String[] args) {
         System.out.println("客户端启动...");
@@ -161,6 +165,9 @@ public class TcpSocket {
      *
      * @param KeyWord
      * @return
+     * System.out.println("LOCAL_LOG_PATH="+currentPath+"localLog\\"+LOCAL_LOG_FILE);
+    WriteStringToFilePath(currentPath+"localLog\\"+LOCAL_LOG_FILE,emptynum+tmpname+message+"\r\n");
+    org.testng.Reporter.log(emptynum+tmpname+message);
 
      */
     public boolean getAsteriskInfo(String KeyWord) {
@@ -183,6 +190,7 @@ public class TcpSocket {
 //                System.out.println("before readLine");
                 reply=br.readLine();
                 System.out.println("接收服务器的信息1："+reply+" time:"+(currentTime/1000-time/1000));
+                WriteStringToFilePath(currentPath+"localLog\\"+AMI_LOG_FILE,reply);
                 if(reply == null){
                     ret = false;
                     break;
@@ -220,7 +228,25 @@ public class TcpSocket {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void WriteStringToFilePath(String filePath,String content) {
+        try {
+            File f = new File(filePath);
+            if (f.exists()) {
+            } else {
+                System.out.print("文件不存在");
+                f.createNewFile();// 不存在则创建
+            }
+            PrintStream ps = new PrintStream(new FileOutputStream(f,true));
+//            ps.println(content);// 往文件里写入字符串
+            ps.append(content);// 在已有的基础上添加字符串
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @Test
     public void test() throws IOException, InterruptedException {

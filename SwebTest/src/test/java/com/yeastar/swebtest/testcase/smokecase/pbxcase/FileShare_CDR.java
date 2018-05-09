@@ -70,7 +70,8 @@ public class FileShare_CDR extends SwebDriver {
     public void E_RecordingPlay(){
         if(!PRODUCT.equals(CLOUD_PBX)){
             if(Single_Device_Test){
-                pageDeskTop.CDRandRecording.click();
+                pageDeskTop.taskBar_Main.click();
+                pageDeskTop.CDRandRecordShortcut.click();
             }
             ys_waitingTime(5000);
             int useRow = 2;
@@ -103,7 +104,8 @@ public class FileShare_CDR extends SwebDriver {
     public void F_Downloader() throws InterruptedException {
         if(!PRODUCT.equals(CLOUD_PBX)){
             if(Single_Device_Test){
-                pageDeskTop.CDRandRecording.click();
+                pageDeskTop.taskBar_Main.click();
+                pageDeskTop.CDRandRecordShortcut.click();
                 ys_waitingLoading(cdRandRecordings.grid_Mask);
             }
             int row=1;
@@ -199,7 +201,8 @@ public class FileShare_CDR extends SwebDriver {
         Reporter.infoExec("返回admin用户下载Recording Options");
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.CDRandRecording.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.CDRandRecordShortcut.click();
 
         gridClick(cdRandRecordings.grid,1,cdRandRecordings.gridDownload);
 

@@ -107,7 +107,7 @@ public class OutboundRoutes extends SwebDriver {
     public void C_CreateOutRoutes() throws InterruptedException {
         Reporter.infoExec("创建呼出路由");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }
         outboundRoutes.outboundRoutes.click();
@@ -168,7 +168,7 @@ public class OutboundRoutes extends SwebDriver {
     public void E_CreateIVR() throws InterruptedException {
         Reporter.infoExec("创建IVR");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callFeatures_panel.click();
         }
         callFeatures.back.click();
@@ -226,7 +226,7 @@ public class OutboundRoutes extends SwebDriver {
     public void I_CallIax() throws InterruptedException {
         Reporter.infoExec("IAXTrunk外线呼出1000打903000");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }else {
             pageDeskTop.taskBar_Main.click();
@@ -249,7 +249,7 @@ public class OutboundRoutes extends SwebDriver {
     public void J_CallSps() throws InterruptedException {
         Reporter.infoExec("SPS外线呼出1000打902000");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }else {
             pageDeskTop.taskBar_Main.click();
@@ -273,7 +273,7 @@ public class OutboundRoutes extends SwebDriver {
     public void K_CallSpx() throws InterruptedException {
         Reporter.infoExec("SPX外线呼出1000打902000");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }else {
             pageDeskTop.taskBar_Main.click();
@@ -296,7 +296,7 @@ public class OutboundRoutes extends SwebDriver {
     public void L_CallPstn() throws InterruptedException {
         Reporter.infoExec("PSTN外线呼出1000打902000");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }else {
             pageDeskTop.taskBar_Main.click();
@@ -323,7 +323,7 @@ public class OutboundRoutes extends SwebDriver {
         }
         Reporter.infoExec("BRI外线呼出1000打902000");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }else {
             pageDeskTop.taskBar_Main.click();
@@ -350,7 +350,7 @@ public class OutboundRoutes extends SwebDriver {
         }
         Reporter.infoExec("E1外线呼出1000打902000");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }else {
             pageDeskTop.taskBar_Main.click();
@@ -377,7 +377,7 @@ public class OutboundRoutes extends SwebDriver {
         }
         Reporter.infoExec("GSM外线呼出1000打903000");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }else {
             pageDeskTop.taskBar_Main.click();
@@ -402,7 +402,7 @@ public class OutboundRoutes extends SwebDriver {
     public void P_PinList() throws InterruptedException {
         Reporter.infoExec("呼出路由设置Pinlist");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }
         pageDeskTop.taskBar_Main.click();

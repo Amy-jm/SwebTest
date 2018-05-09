@@ -20,9 +20,7 @@ public class CallFeature extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_CallFeatureTest"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.settingShortcut.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
             mySettings.close.click();
         }
@@ -30,7 +28,7 @@ public class CallFeature extends SwebDriver {
     }
     @BeforeClass
     public void InitCallFeature(){
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.callFeatures_panel.click();
         ringGroup.ringGroup.click();
         ys_waitingLoading(ringGroup.grid_Mask);
@@ -106,7 +104,7 @@ public class CallFeature extends SwebDriver {
 
     @Test
     public void C_Conference() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("添加conference");
         conference.conference.click();
@@ -116,7 +114,7 @@ public class CallFeature extends SwebDriver {
 
     @Test
     public void D_PickupGroup() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("添加pickupGroup");
         pickupGroup.pickupGroup.click();
@@ -137,7 +135,7 @@ public class CallFeature extends SwebDriver {
     @Test
     public void F_CallBack() throws InterruptedException {
         Reporter.infoExec("添加callback");
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         callFeatures.more.click();
         callback.callback.click();
@@ -148,7 +146,7 @@ public class CallFeature extends SwebDriver {
     }
     @Test
     public void F_PINList() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
 //        callFeatures.more.click();
         Reporter.infoExec("添加PINList");

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="60"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="2111.813">
+  <properties />
+  
+  
+            <testcase name="K7_deleteAll_yes" time="13.326" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="F3_editInRoute" time="36.187" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="E2_checkPriority1" time="39.802" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="H1_editNone" time="32.964" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="H4_newCall" time="73.155" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="D_checkTrunk5" time="39.779" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="B3_addDisa2" time="10.894" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="E2_checkPriority3" time="49.944" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="D_checkTrunk7" time="39.764" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="L2_recovery_deleteTrunk" time="35.683" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="F2_checkPin1" time="38.091" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="K1_addDisa" time="16.250" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="B2_addRoute1" time="24.791" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="D_checkTrunk4" time="41.730" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="I3_checkResponse2" time="63.410" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="I1_checkResponse" time="27.084" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="G3_checkNewSinglePin" time="28.091" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="D_checkTrunk6" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="G4_editSinglePin" time="32.239" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="E7_recoveryOutRoute" time="27.682" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="G1_editSinglePin" time="39.133" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="L1_recovery_deleteRoute" time="37.577" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="F4_checkPin4" time="65.124" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="H3_editNone" time="33.032" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="K6_deleteAll_no" time="9.820" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="K2_deleteOne_no" time="16.715" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="D_checkTrunk2" time="39.906" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="J2_editDigit" time="32.587" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="B3_addDisa1" time="41.660" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="A_addExtensions" time="29.340" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="K3_deleteOne_yes" time="24.822" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="D_checkTrunk8" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="E1_editInRoute" time="33.507" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="K5_deletePart_yes" time="13.396" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="B1_addUnavil" time="25.775" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="G2_checkSiglePin" time="68.969" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="K4_deletePart_no" time="15.993" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="J3_checkDigit" time="75.092" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="L3_addDisa" time="28.357" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="F1_editPin" time="39.054" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="D_checkTrunk9" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="H2_checkNewNone" time="9.084" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="E4_checkPriority" time="40.394" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="E3_editOutRoute" time="27.743" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="G5_newCall" time="104.064" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="E6_checkPriority" time="40.203" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="C_editInRoute" time="57.126" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="E5_editDisa" time="37.184" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="B2_addRoute2" time="14.325" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="J1_checkDigit" time="30.587" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="D_checkTrunk1" time="39.907" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="J4_checkDigit" time="35.658" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="F2_checkPin3" time="54.188" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="E2_checkPriority2" time="39.802" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="D_checkTrunk3" time="39.771" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="F2_checkPin2" time="63.452" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="I2_editResponse" time="32.202" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="I3_checkResponse1" time="38.095" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="L4_addInRoute" time="56.215" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+                <testcase name="K8_checkDestination" time="11.087" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa" />
+      
+</testsuite>

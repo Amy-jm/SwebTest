@@ -26,11 +26,10 @@ public class YS_CallFeature {
      * @param line
      * @param number
      * @param name
-     * @param memberList
      * @param strategy
      * @throws InterruptedException
      */
-    public void assertRingGroup(int line, String number, String name ,ArrayList<String> memberList, String strategy) throws InterruptedException {
+    public void assertRingGroup(int line, String number, String name , String strategy) throws InterruptedException {
         String actualNumber = null;
         String actualName = null;
         String actualmember;
@@ -78,7 +77,7 @@ public class YS_CallFeature {
         add_ring_group.save.click();
         Thread.sleep(1000);
         String lineNum = String.valueOf(gridLineNum(ringGroup.grid)) ;
-        m_callFeature.assertRingGroup(Integer.parseInt(lineNum),"",name,memberList,"");
+        m_callFeature.assertRingGroup(Integer.parseInt(lineNum),"",name,"");
 //        closeSettingWindow();
     }
 
@@ -102,7 +101,7 @@ public class YS_CallFeature {
         add_ring_group.save.click();
         Thread.sleep(1000);
         String lineNum = String.valueOf(gridLineNum(ringGroup.grid)) ;
-        m_callFeature.assertRingGroup(Integer.parseInt(lineNum),"",name,memberList,"");
+        m_callFeature.assertRingGroup(Integer.parseInt(lineNum),"",name,"");
     }
 
     /**
@@ -302,7 +301,6 @@ public class YS_CallFeature {
         add_pin_list.recordInCDR.click();
         add_pin_list.PINList.setValue(addpinlist);
         add_pin_list.save.click();
-
         ys_waitingLoading(pinList.grid_Mask);
         int row= gridFindRowByColumn(pinList.grid,pinList.gridcolumn_Name,name,sort_ascendingOrder);
         String actualName = (String) gridContent(pinList.grid,row,pinList.gridcolumn_Name);
@@ -321,7 +319,7 @@ public class YS_CallFeature {
     public void addIVR(String name,String num){
         ivr.add.click();
         ys_waitingMask();
-        ys_waitingTime(5000);
+//        ys_waitingTime(5000);
         add_ivr_basic.number.clear();
         add_ivr_basic.number.setValue(num);
         add_ivr_basic.name.clear();
@@ -364,7 +362,6 @@ public class YS_CallFeature {
         add_blacklist.number.setValue(num);
         add_blacklist.save.click();
         ys_waitingTime(1000);
-        ys_waitingMask();
         ys_waitingLoading(blacklist.grid_loadMask);
 
         String actname =  String.valueOf(gridContent(blacklist.grid,Integer.parseInt(String.valueOf(gridLineNum(blacklist.grid))),blacklist.gridcolumn_Name)) ;
@@ -400,12 +397,105 @@ public class YS_CallFeature {
 
         add_whitelist.save.click();
         ys_waitingTime(1000);
-        ys_waitingMask();
         ys_waitingLoading(whitelist.grid_loadMask);
         ys_waitingTime(2000);
         String actname =  String.valueOf(gridContent(whitelist.grid,Integer.parseInt(String.valueOf(gridLineNum(whitelist.grid))),whitelist.gridcolumn_Name)) ;
         YsAssert.assertEquals(actname,name,"白名单添加错误");
     }
+//    Caroline新增
+    public void addBlacklist_OutBound(String name,ArrayList<String> extendsion,String... number) {
+        blacklist.add.click();
+        add_blacklist.name.setValue(name);
+        executeJs("Ext.getCmp('st-bw-type').setValue('outbound')");
+
+        String num = "";
+        for(String index:number){
+            System.out.println(String.valueOf(index));
+            num = num + String.valueOf(index);
+            num = num + "\n";
+        }
+        System.out.println(num);
+        add_blacklist.number.setValue(num);
+
+        add_blacklist.selectExtensions.click();
+        listSelect(add_blacklist.list,extensionList,extendsion);
+
+        add_blacklist.save.click();
+        ys_waitingTime(1000);
+        ys_waitingLoading(blacklist.grid_loadMask);
+
+        String actname =  String.valueOf(gridContent(blacklist.grid,Integer.parseInt(String.valueOf(gridLineNum(blacklist.grid))),blacklist.gridcolumn_Name)) ;
+        YsAssert.assertEquals(actname,name,"黑名单添加错误");
+    }
+
+//    Caroline新增
+public void addBlacklist_String(String name,int type,String... number) {
+    blacklist.add.click();
+    add_blacklist.name.setValue(name);
+    switch (type){
+        case 3: {
+            executeJs("Ext.getCmp('st-bw-type').setValue('both')");
+        }
+        break;
+        case 2:{
+            executeJs("Ext.getCmp('st-bw-type').setValue('outbound')");
+        }
+        break;
+        case 1:{
+            executeJs("Ext.getCmp('st-bw-type').setValue('inbound')");
+        }
+        break;
+        default:
+            break;
+    }
+    String num = "";
+    for(String index:number){
+        System.out.println(String.valueOf(index));
+        num = num + String.valueOf(index);
+        num = num + "\n";
+    }
+    System.out.println(num);
+    add_blacklist.number.setValue(num);
+    add_blacklist.save.click();
+    ys_waitingTime(1000);
+    ys_waitingLoading(blacklist.grid_loadMask);
+    ys_waitingTime(2000);
+}
+    public void addWhitelist_String(String name,int type,String... number) {
+        whitelist.add.click();
+        add_whitelist.name.setValue(name);
+        switch (type){
+            case 3: {
+                executeJs("Ext.getCmp('st-bw-type').setValue('both')");
+            }
+            break;
+            case 2:{
+                executeJs("Ext.getCmp('st-bw-type').setValue('outbound')");
+            }
+            break;
+            case 1:{
+                executeJs("Ext.getCmp('st-bw-type').setValue('inbound')");
+            }
+            break;
+            default:
+                break;
+        }
+        String num = "";
+        for(String index:number){
+            System.out.println(String.valueOf(index));
+            num = num + String.valueOf(index);
+            num = num + "\n";
+        }
+        System.out.println(num);
+        add_whitelist.number.setValue(num);
+
+        add_whitelist.save.click();
+        ys_waitingTime(1000);
+        ys_waitingLoading(whitelist.grid_loadMask);
+        ys_waitingTime(2000);
+    }
+
+
 
     public void addSpeedDial(String speedDialCode, int phoneNumber) throws InterruptedException {
         speedDial.add.click();

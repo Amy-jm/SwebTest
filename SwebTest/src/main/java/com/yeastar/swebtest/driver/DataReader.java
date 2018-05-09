@@ -3,6 +3,8 @@ package com.yeastar.swebtest.driver;
 import com.sun.jna.platform.win32.WinBase;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 import static com.yeastar.swebtest.driver.Config.currentPath;
@@ -40,6 +42,7 @@ public class DataReader {
     public static String DEVICE_PORT = readFromfile("DEVICE_PORT");
     public static String LOGIN_USERNAME = readFromfile("LOGIN_USERNAME");
     public static String LOGIN_PASSWORD = readFromfile("LOGIN_PASSWORD");
+    public static String LOGIN_ADMIN = readFromfile("LOGIN_ADMIN");
     public static String SSH_PORT = readFromfile("SSH_PORT");
     public static String USERNAEM_LS = readFromfile( "USERNAEM_LS");
     public static String USERNAME_SUPPORT = readFromfile("USERNAME_SUPPORT");
@@ -49,7 +52,9 @@ public class DataReader {
     public static int TLS_PORT = Integer.parseInt(readFromfile("TLS_PORT"));
     public static int UDP_PORT_ASSIST_1 = Integer.parseInt(readFromfile("UDP_PORT_ASSIST_1"));
     public static int UDP_PORT_ASSIST_2 = Integer.parseInt(readFromfile("UDP_PORT_ASSIST_2"));
-
+    public static int UDP_PORT_ASSIST_3 = Integer.parseInt(readFromfile("UDP_PORT_ASSIST_3"));
+    public static int AMI_PROT = Integer.parseInt(readFromfile("AMI_PORT"));
+    public static String DEVICE_AMI_IP =  readFromfile("DEVICE_AMI_IP");
     /**
      * 测试模块定义
      */
@@ -65,6 +70,8 @@ public class DataReader {
     public static String DEVICE_TEST_GSM = readFromfile("DEVICE_TEST_GSM");
 
     public static String SIPTrunk = readFromfile("SIPTRUNK");
+    public static String SIPTrunk2 = readFromfile("SIPTRUNK2");
+    public static String ACCOUNTTRUNK = readFromfile("ACCOUNTTRUNK");
     public static String IAXTrunk = readFromfile( "IAXTRUNK");
     public static String SPS = readFromfile("SPS");
     public static String SPX = readFromfile("SPX");
@@ -84,6 +91,7 @@ public class DataReader {
      */
     public static String DEVICE_ASSIST_1 = readFromfile("DEVICE_ASSIST_1");
     public static String DEVICE_ASSIST_2 =readFromfile("DEVICE_ASSIST_2");
+    public static String DEVICE_ASSIST_3 =readFromfile("DEVICE_ASSIST_3");
 
     public static String DEVICE_VERSION = readFromfile("VERSION");
     public static String BROWSER = readFromfile("BROWSER");
@@ -93,6 +101,13 @@ public class DataReader {
      * 导入文件名称
      */
     public static String IMPORT_EXTENSION = readFromfile("IMPORT_EXTENSION");
+    /**
+     * 本地log保存
+     */
+    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+    static String currentTime = String.valueOf(sdf.format(new Date()))+"_";
+    public static String LOCAL_LOG_FILE =  currentTime+readFromfile("LOCAL_LOG_FILE");
+    public static String AMI_LOG_FILE =  currentTime+readFromfile("AMI_LOG_FILE");
     /**
      * 定义出错重跑
      */
@@ -115,6 +130,7 @@ public class DataReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Key: "+key+" Value: "+properties.getProperty(key)+ " is Null:"+properties.getProperty(key).equals("null"));
         if (properties.getProperty(key).equals("null")){
             return "null";
         }else{

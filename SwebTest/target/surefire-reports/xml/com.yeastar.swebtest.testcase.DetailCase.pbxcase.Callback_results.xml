@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="46"
+           failures="3"
+           errors="0"
+           skipped="0"
+           time="1778.289">
+  <properties />
+            <testcase name="D5_des_queue" time="47.303" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback">
+                <failure type="java.lang.AssertionError"
+                  message="CDR被叫方检测 【预期：1100 [6700(1100)] 实际：6700(1100)】"
+              >
+<![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：1100 [6700(1100)] 实际：6700(1100)】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:263)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback.D5_des_queue(Callback.java:431)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="E2_spx" time="15.510" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback">
+                <failure type="java.lang.Error"
+                  message="Invalid memory access"
+              >
+<![CDATA[java.lang.Error: Invalid memory access
+  com.sun.jna.Native.invokeInt(Native Method)
+  com.sun.jna.Function.invoke(Function.java:383)
+  com.sun.jna.Function.invoke(Function.java:315)
+  com.sun.jna.Library$Handler.invoke(Library.java:212)
+  com.sun.proxy.$Proxy7.ys_hangup_all_call(Unknown Source)
+  com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Hangup_All(PjsipApp.java:397)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback.E2_spx(Callback.java:517)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="B4_apply" time="16.821" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback">
+                <failure type="com.codeborne.selenide.ex.ElementShould"
+                  message="Element should be visible {By.xpath: .//a[starts-with(@class,'css_apply') and text()='Apply']}
+Element: '<a class="css_apply" displayed:false></a>'"
+              >
+<![CDATA[Element should be visible {By.xpath: .//a[starts-with(@class,'css_apply') and text()='Apply']}
+Element: '<a class="css_apply" displayed:false></a>'
+Screenshot: file:/F:/MyProject/SwebTest/build/reports/tests/1525784435720.1.png
+Timeout: 15 s.
+  com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:66)
+  com.codeborne.selenide.impl.WebElementSource.findAndAssertElementIsVisible(WebElementSource.java:72)
+  com.codeborne.selenide.commands.Click.execute(Click.java:14)
+  com.codeborne.selenide.commands.Click.execute(Click.java:11)
+  com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+  com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+  com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+  com.sun.proxy.$Proxy6.click(Unknown Source)
+  com.yeastar.swebtest.driver.SwebDriver.ys_apply(SwebDriver.java:644)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback.B4_apply(Callback.java:217)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+  
+  
+            <testcase name="D6_des_conference" time="39.441" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="E5_e1" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B2_add_InRoute_destination" time="33.606" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="D4_des_ringgroup" time="50.863" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A3_add_destination" time="16.137" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A3_add_destination" time="10.265" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="C1_through_sps" time="65.354" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="E3_fxo" time="43.129" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A3_add_destination" time="15.954" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B2_add_InRoute_destination" time="33.987" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B1_add_InRoute_trunk" time="253.423" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="C8_through_gsm" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A1_Init" time="24.121" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="G2_recovery_inbound" time="50.368" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="C4_through_spx" time="64.488" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="F_delete" time="49.838" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="D1_des_hangup" time="11.172" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A3_add_destination" time="15.757" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B2_add_InRoute_destination" time="32.104" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="G1_recovery_callback" time="41.295" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="C2_through_sip" time="39.984" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B2_add_InRoute_destination" time="32.698" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B2_add_InRoute_destination" time="32.685" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="D2_des_extension" time="52.414" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="E6_gsm" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="C7_through_e1" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B3_bakckUp" time="37.618" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="E1_sps" time="40.700" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A3_add_destination" time="15.802" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="D8_des_fxs" time="39.564" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="C3_through_iax" time="40.406" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A3_add_destination" time="18.093" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A3_add_destination" time="15.987" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="D3_des_ivr" time="47.079" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B2_add_InRoute_destination" time="33.798" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="C6_through_bri" time="40.877" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A3_add_destination" time="15.874" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B2_add_InRoute_destination" time="33.092" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="C5_through_fxo" time="45.230" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="B2_add_InRoute_destination" time="32.928" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="E4_bri" time="38.339" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="D7_des_disa" time="51.166" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+                <testcase name="A2_add_trunks" time="143.016" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback" />
+      
+</testsuite>

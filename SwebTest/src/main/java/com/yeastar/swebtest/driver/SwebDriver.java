@@ -50,14 +50,12 @@ public class SwebDriver extends Config {
         //选择测试浏览器
         //这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
         if (browser.equals("chrome")) {
+//            HashMap<String, Object> chromePrefs = new HashMap<>();
+//            chromePrefs.put("profile.default_content_settings.popups",2);
+//            chromePrefs.put("download.default_directory","D:\\");
 
-            HashMap<String, Object> chromePrefs = new HashMap<>();
-            chromePrefs.put("profile.default_content_settings.popups",2);
-            chromePrefs.put("download.default_directory",SCREENSHOT_PATH);
-
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("prefs",chromePrefs);
-            
+//            ChromeOptions options = new ChromeOptions();
+//            options.setExperimentalOption("prefs",chromePrefs);
             Configuration.browser = "chrome";
             System.setProperty("selenide.browser", "Chrome");
             System.setProperty("webdriver.chrome.driver", CHROME_PATH);
@@ -129,7 +127,9 @@ public class SwebDriver extends Config {
      */
     public static void logout() {
         pageDeskTop.taskBar_User.click();
+        ys_waitingTime(1000);
         pageDeskTop.taskBar_User_Logout.click();
+        ys_waitingTime(1000);
         pageDeskTop.messageBox_Yes.click();
         pageLogin.username.should(exist);
     }
@@ -292,7 +292,7 @@ public class SwebDriver extends Config {
                 String actTrunkName = String.valueOf(gridContent(grid,row,column));
                 if(actTrunkName.equals(providerName)){
                     System.out.println("gridFindRowByColumn ascendingOrder name  "+ actTrunkName);
-                    break;
+                    return row;
                 }
             }
         }else{
@@ -300,11 +300,11 @@ public class SwebDriver extends Config {
                 String actTrunkName = String.valueOf(gridContent(grid,row,column));
                 if(actTrunkName.equals(providerName)){
                     System.out.println("gridFindRowByColumn descendingOrder name  "+ actTrunkName);
-                    break;
+                    return row;
                 }
             }
         }
-        return row;
+        return -1;
     }
 
 //====================================================================List 选择框========================================================
@@ -366,6 +366,10 @@ public class SwebDriver extends Config {
      */
     public static Object listGetId(String listname, String recordname, String value) {
         return executeJs("return  Ext.getCmp('" + listname + "').getStore()." +"findRecord('" + recordname + "', \"" + value + "\", 0, false, false, true).data.id");
+    }
+
+    public static Object listGetValue(String listname,String recordname,String value){
+        return executeJs("return  Ext.getCmp('" + listname + "').getStore()." +"findRecord('" + recordname + "', \"" + value + "\", 0, false, false, true).data.value");
     }
 
 
@@ -469,6 +473,18 @@ public class SwebDriver extends Config {
         ys_waitingTime(3000);
     }
 
+    public static void comboboxSetbyValue(String listname,String recordname,String value){
+        String Value = "";
+
+        String listValue = (String)listGetValue(listname, recordname, value);
+        Value =  Value+ listValue;
+        Value = Value + ",";
+
+        Value = Value.substring(0,Value.length()-1);
+        listSetValue(listname,Value);
+        ys_waitingTime(3000);
+    }
+
 
 //===============================================================================系统弹窗插件============================================================
     /**
@@ -509,6 +525,7 @@ public class SwebDriver extends Config {
                 break;
             }
         }
+        ys_waitingTime(1000);
     }
     /**
      * 表格loading 页面等待
@@ -521,7 +538,7 @@ public class SwebDriver extends Config {
                 break;
             }
             try {
-                Thread.sleep(50);
+                Thread.sleep(60);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -545,7 +562,7 @@ public class SwebDriver extends Config {
      * param sec 默认200 S
      */
     public static void waitReboot(){
-        waitReboot(200);
+        waitReboot(300);
 
     }
     public static void waitReboot(int sec){
@@ -712,6 +729,38 @@ public class SwebDriver extends Config {
         YsAssert.assertEquals(Integer.parseInt(String.valueOf(gridLineNum(grid))),0,message);
     }
 
+    public static void backupEnviroment(String className){
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.maintanceShortcut.click();
+        maintenance.backupandRestore.click();
+        System.out.println("current grid row: "+gridLineNum(backupandRestore.grid).toString());
+        if(!gridLineNum(backupandRestore.grid).toString().equals("0")){
+            //Thread.currentThread().getStackTrace()[1].getMethodName();
+            int row = gridFindRowByColumn(backupandRestore.grid,backupandRestore.gridColumn_Name,className+"_Local.bak",sort_ascendingOrder);
+            System.out.println("backupEnviroment row :"+row);
+            if(row != -1){
+                System.out.println("backupEnviroment class name : "+ gridContent(backupandRestore.grid,row,backupandRestore.gridColumn_Name));
+                if(gridContent(backupandRestore.grid,row,backupandRestore.gridColumn_Name).equals(className+"_Local.bak")){
+                    gridClick(backupandRestore.grid,row,backupandRestore.gridDelete);
+                    backupandRestore.delete_yes.click();
+                }
+                ys_apply();
+            }
+        }
+        backupandRestore.backup.click();
+        create_new_backup_file.fileName.setValue(className);
+        int t=30;
+        while (t>0){
+            if(!return_executeJs("Ext.get('mt-br-storagetype-inputEl').getValue()").toString().equals("")){
+                System.out.println("find localType ..");
+                break;
+            }
+            ys_waitingTime(500);
+            t=t-1;
+        }
+        create_new_backup_file.save.click();
+        closeMaintenance();
+    }
     /**
      * 获取分机通话状态
      * @param username

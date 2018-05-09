@@ -5,6 +5,10 @@ import org.apache.log4j.PropertyConfigurator;
 import java.io.*;
 import java.util.Properties;
 
+import static com.yeastar.swebtest.driver.Config.currentPath;
+import static com.yeastar.swebtest.driver.DataReader.LOCAL_LOG_FILE;
+import static com.yeastar.swebtest.driver.DataReader.SCREENSHOT_PATH;
+
 /**
  * Created by GaGa on 2017-06-05.
  */
@@ -119,6 +123,7 @@ public class Reporter  {
     public static void infoConfig(String message) {
         String tmpname = "【测试环境配置检查】";
         reporterOut(tmpname,message,2);
+
     }
 
     public static void error(String message) {
@@ -149,6 +154,57 @@ public class Reporter  {
                 break;
             default:
         }
+        System.out.println("LOCAL_LOG_PATH="+currentPath+"localLog\\"+LOCAL_LOG_FILE);
+//        if(String(emptynum+tmpname+message))
+        String toDelPic = emptynum+tmpname+message;
+        if(toDelPic.contains("BeforeTest")){//
+            clearDirFiles(SCREENSHOT_PATH,200);
+            clearDirFiles(currentPath+"build\\reports\\tests",300);
+        }
+        clearDirFiles(currentPath+"localLog",100);
+        WriteStringToFilePath(currentPath+"localLog\\"+LOCAL_LOG_FILE,emptynum+tmpname+message+"\r\n");
         org.testng.Reporter.log(emptynum+tmpname+message);
     }
+
+    /**
+     * //文件数量超过100，清空这个文件夹
+     * @param path
+     */
+    public static void clearDirFiles(String path,int maxNum){
+        System.out.println("clearDirFiles Path :"+path);
+        File file = new File(path);
+        int fileNum=0;
+        if(file.isDirectory()){
+            File []files = file.listFiles();
+            System.out.println("file count "+files.length);
+            fileNum = files.length;
+        }
+        if(fileNum >maxNum){
+            System.out.println("to delete, "+fileNum);
+            File []files = file.listFiles();
+            for(int i=0; i<files.length; i++){
+                files[i].delete();
+            }
+        }
+    }
+    public static void WriteStringToFilePath(String filePath,String content) {
+
+        try {
+            File f = new File(filePath);
+            if (f.exists()) {
+            } else {
+//                System.out.print("文件不存在");
+                f.createNewFile();// 不存在则创建
+            }
+            PrintStream ps = new PrintStream(new FileOutputStream(f,true));
+//            ps.println(content);// 往文件里写入字符串
+            ps.append(content);// 在已有的基础上添加字符串
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

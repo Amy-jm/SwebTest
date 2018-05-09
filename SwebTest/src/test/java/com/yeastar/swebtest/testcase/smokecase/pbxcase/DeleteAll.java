@@ -21,9 +21,7 @@ public class DeleteAll extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         mySettings.close.click();
     }
     @BeforeMethod
@@ -33,7 +31,7 @@ public class DeleteAll extends SwebDriver {
     @Test
     public void A_IVR() throws InterruptedException {
         Reporter.infoExec("删除单个IVR");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.callFeatures_panel.click();
         ivr.add.shouldBe(Condition.exist);
         ys_waitingLoading(ivr.grid_Mask);
@@ -43,7 +41,7 @@ public class DeleteAll extends SwebDriver {
     }
     @Test
     public void B_IVR() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("批量删除IVR");
         ivr.add.shouldBe(Condition.exist);
@@ -59,7 +57,7 @@ public class DeleteAll extends SwebDriver {
     }
     @Test
     public void C_RingGroup() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("删除单个ringGroup");
         ringGroup.ringGroup.click();
@@ -72,7 +70,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void D_RingGroup() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("批量删除ringGroup");
         ringGroup.ringGroup.click();
@@ -89,7 +87,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void E_Queue() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("单个删除Queue");
         queue.queue.click();
@@ -101,7 +99,7 @@ public class DeleteAll extends SwebDriver {
     }
     @Test
     public void F_Queue() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("批量删除Queue");
         queue.queue.click();
@@ -118,7 +116,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void G_Conference() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("删除单个Conference");
         conference.conference.click();
@@ -130,7 +128,7 @@ public class DeleteAll extends SwebDriver {
     }
     @Test
     public void H_Conferene() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("批量删除Conference");
         conference.conference.click();
@@ -146,7 +144,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void I_PickupGroup() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("删除单个PinckupGruop");
         pickupGroup.pickupGroup.click();
@@ -159,7 +157,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void J_PickupGroup() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("批量删除PinckupGruop");
         pickupGroup.pickupGroup.click();
@@ -176,7 +174,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void K_PagingIntercom() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("删除单个PagingIntercom");
         paging_intercom.paging_Intercom.click();
@@ -189,7 +187,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void L_PagingIntercom() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("批量删除PagingIntercom");
         paging_intercom.paging_Intercom.click();
@@ -205,7 +203,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void M_CallBack() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
         Reporter.infoExec("删除单个Callback");
         callFeatures.more.click();
@@ -219,7 +217,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void N_CallBack() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
 //        callFeatures.more.click();
         Reporter.infoExec("批量删除CallBack");
@@ -235,7 +233,7 @@ public class DeleteAll extends SwebDriver {
     }
     @Test
     public void O_Disa() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
 //        callFeatures.more.click();
         Reporter.infoExec("删除单个Disa");
@@ -249,7 +247,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void P_Disa() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
 //        callFeatures.more.click();
         Reporter.infoExec("批量删除disa1");
@@ -266,7 +264,7 @@ public class DeleteAll extends SwebDriver {
     }
     @Test
     public void R_PINList() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
 //        callFeatures.more.click();
         Reporter.infoExec("删除单个PINList");
@@ -280,7 +278,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void S_PINList() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callFeatures_panel.click();
 //        callFeatures.more.click();
         Reporter.infoExec("批量删除Pin1");
@@ -298,7 +296,7 @@ public class DeleteAll extends SwebDriver {
     }
     @Test
     public void T_OutboundRoutes() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callControl_panel.click();
         Reporter.infoExec("删除单个OutboundRoutes");
         settings.callControl_tree.click();
@@ -311,7 +309,7 @@ public class DeleteAll extends SwebDriver {
     }
     @Test
     public void U_OutboundRoutes() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callControl_panel.click();
         Reporter.infoExec("批量删除OutboundRoutes");
         outboundRoutes.outboundRoutes.click();
@@ -336,7 +334,7 @@ public class DeleteAll extends SwebDriver {
     }
     @Test
     public void V_InboundRoutes() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callControl_panel.click();
         Reporter.infoExec("删除单个inboundRoutes");
         inboundRoutes.inboundRoutes.click();
@@ -349,7 +347,7 @@ public class DeleteAll extends SwebDriver {
 
     @Test
     public void W_InboundRoutes() throws InterruptedException {
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.callControl_panel.click();
         Reporter.infoExec("批量删除inboundRoutes");
         inboundRoutes.inboundRoutes.click();

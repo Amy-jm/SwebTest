@@ -23,9 +23,7 @@ public class EventCenter extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_EventCenter"); //执行操作
         initialDriver(BROWSER,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         mySettings.close.click();
         m_extension.showCDRClounm();
         pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",3);
@@ -34,7 +32,7 @@ public class EventCenter extends SwebDriver {
     @Test
     public void A_AddContact() {
         Reporter.infoExec("Add Contact"); //执行操作
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.eventSettings_panel.click();
         notificationContacts.notificationContacts.click();
         notificationContacts.add.click();
@@ -82,7 +80,7 @@ public class EventCenter extends SwebDriver {
         Reporter.infoExec("查看Event log"); //执行操作
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.eventLog_panel.click();
         ys_waitingTime(5000);
         String log = String.valueOf(gridContent(eventLog.grid,2,eventLog.gridColumn_EventName));
@@ -120,7 +118,7 @@ public class EventCenter extends SwebDriver {
         Reporter.infoExec("删除Notification后查看Event log"); //执行操作
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.eventLog_panel.click();
         ys_waitingTime(5000);
         String log = String.valueOf(gridContent(eventLog.grid,1,eventLog.gridColumn_EventName));

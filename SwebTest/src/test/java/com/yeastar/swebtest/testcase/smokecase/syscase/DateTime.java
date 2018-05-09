@@ -22,16 +22,14 @@ public class DateTime extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_DateTime"); //执行操作
         initialDriver(BROWSER,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         mySettings.close.click();
         m_extension.showCDRClounm();
     }
     @Test
     public void A_SetTimeZone() {
         Reporter.infoExec("设置Time Zone为8 China (Beijing)"); //执行操作
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.dateTime_panel.click();
         ys_waitingTime(5000);
         executeJs("Ext.getCmp('"+dateTime.timeZone +"').setValue('"+dateTime.chinaTime+"')");
@@ -54,7 +52,7 @@ public class DateTime extends SwebDriver {
         System.out.println(pageDeskTop.reboot_No.isDisplayed());
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
 
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.dateTime_panel.click();
         ys_waitingTime(6000);
         Date d = new Date();

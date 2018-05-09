@@ -50,7 +50,7 @@ public class GridTest extends SwebDriver {
         ys_waitingTime(5000);
 //        driver.findElement(By.id("st-exten-filename-button-btnEl")).click();
         executeJs("Ext.get('st-exten-filename-button-fileInputEl').dom.click()");
-//        pageDeskTop.settings.click();
+//        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
 //        settings.extensions_panel.click();
 //        extensions.export.click();
 //        pageLogin.username.setValue(username);

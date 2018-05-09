@@ -25,11 +25,15 @@ public class Add_Queue_CallerExperienceSettings {
     public String announcePosition ="st-queue-announcepos";
     public String announceHoldTime ="st-queue-announceholdtime";
     public String frequency ="st-queue-announcefreq";
+//    public SelenideElement frequency =$(By.id("st-queue-announcefreq-inputEl"));
+    public String agentidAnnouncement="st-queue-greetingsprompt";
+    public String satisfactionSurveyPrompt ="st-queue-satisfactionprompt";
     /**
      * Periodic Announcements
      */
     public String prompt ="st-queue-userannounce";
     public String frequencys ="st-queue-userannouncefreq";
+//    public SelenideElement frequencys =$(By.id("st-queue-userannouncefreq-inputEl"));
     /**
      * Events
      */

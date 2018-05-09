@@ -261,6 +261,9 @@ public class CheckToTest extends SwebDriver {
         }
     }
     public static void setAMI(){
+        if(PRODUCT.equals(CLOUD_PBX)){
+            return;
+        }
         settings.system_tree.doubleClick();
         settings.security_tree.click();
         service.service.click();

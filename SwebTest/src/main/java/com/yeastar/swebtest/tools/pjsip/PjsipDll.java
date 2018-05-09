@@ -13,12 +13,12 @@ public class PjsipDll {
 
     public interface pjsipdll extends Library {
 
-        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"src\\main\\resources\\pjsip\\pjsipDlld.dll",pjsipdll.class);
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"src\\main\\resources\\pjsip\\pjsipDll.dll",pjsipdll.class);
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"src\\main\\resources\\pjsip\\pjsipDlld_Debug.dll",pjsipdll.class);
 
         //PjsipDll.dll的通用API
         int ys_registerAccount(String uri, String reguri, String name, String username,
-                                       String password, String proxy, Boolean isdefault);
+                               String password, String proxy, Boolean isdefault,int reg_timeout);
         int ys_init();
         int ys_main();
         int ys_destroy_pjsua();

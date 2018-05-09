@@ -221,7 +221,8 @@ public class InboundRoutes extends SwebDriver {
     public void K_SetDidSps() throws InterruptedException {
         Reporter.infoExec("编辑呼入路由,设置DID");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.callControl_panel.click();
         }
 

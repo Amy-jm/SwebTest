@@ -280,7 +280,8 @@ public class VoicePrompts extends SwebDriver {
     @Test
     public void Z_Recover() throws InterruptedException {
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
             settings.voicePrompts_panel.click();
         }
         musicOnHold.musicOnHold.click();

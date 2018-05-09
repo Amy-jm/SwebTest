@@ -14,7 +14,8 @@ public class Edit_Selected_Extensions_CallPermission {
      */
     public SelenideElement callPermission = $(By.xpath(".//span[starts-with(@class,\"x-tab-inner x-tab-inner-default\") and text()=\"Call Permission\"]"));
 
-    public SelenideElement outboundRoutes_checkbox = $(By.xpath(".//label[starts-with(@class,\"x-form-cb-label x-form-cb-label-default x-form-cb-label-after  \") and text()=\"Outbound Routes\"]"));
+//    public SelenideElement outboundRoutes_checkbox = $(By.xpath(".//label[starts-with(@class,\"x-form-cb-label x-form-cb-label-default x-form-cb-label-after  \") and text()=\"Outbound Routes\"]"));
+    public String outboundRoutes_checkbox = ("st-extension-callconstraint");
 
     public SelenideElement save = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Save\"]"));
     public SelenideElement cancel = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-ys-theme-small\") and text()=\"Cancel\"]"));

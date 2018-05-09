@@ -165,6 +165,7 @@ import com.yeastar.swebtest.pobject.Settings.System.UserPermission.Grant_Privile
 import com.yeastar.swebtest.pobject.Settings.System.UserPermission.Grant_Privilege_Settings.Grant_Privilege_Settings;
 import com.yeastar.swebtest.pobject.Settings.System.UserPermission.UserPermission;
 import com.yeastar.swebtest.tools.TcpSocket.TcpSocket;
+import com.yeastar.swebtest.tools.file.ExcelUnit;
 import com.yeastar.swebtest.tools.pjsip.PjsipApp;
 import com.yeastar.swebtest.tools.ssh.SSHApp;
 
@@ -203,6 +204,7 @@ public class Config extends DataReader {
     public static String communication_internal = "Internal";
     public static String communication_callback = "Callback";
     public static String communication_transfer = "Transfer";
+    public static String communication_warning = "Warning";
 
     //升序降序定义
     public static int sort_ascendingOrder=0;

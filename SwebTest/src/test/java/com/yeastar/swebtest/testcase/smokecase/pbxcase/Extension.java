@@ -21,9 +21,7 @@ public class Extension extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_ExtensionTest"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         if(!PRODUCT.equals(CLOUD_PBX)){
             mySettings.close.click();
         }
@@ -34,7 +32,7 @@ public class Extension extends SwebDriver {
 //    @BeforeClass
     public void InitExtension(){
         if(Single_Init){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.extensions_panel.click();
 //            ys_waitingMask();
             ys_waitingLoading(extensions.grid_Mask);
@@ -48,11 +46,11 @@ public class Extension extends SwebDriver {
     @Test
     public void A_SettingSystemTime() throws InterruptedException {
         if(PRODUCT.equals(CLOUD_PBX)){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.dateTime_panel.click();
             executeJs("Ext.getCmp('"+dateTime.timeZone+"').setValue('"+dateTime.chinaTime+"')");
         }else{
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.dateTime_panel.click();
             Reporter.infoExec("设置系统时间为00点整");
             dateTime.setUpManually.click();
@@ -86,7 +84,7 @@ public class Extension extends SwebDriver {
     @Test
     public void B_CreateExtension() throws InterruptedException {
         Reporter.infoExec("创建分机1000");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.extensions_panel.click();
         setPageShowNum(extensions.grid,100);
         m_extension.addSipExtension(1000,"Yeastar202");
@@ -171,7 +169,7 @@ public class Extension extends SwebDriver {
     public void H_DelExteiosns() throws InterruptedException {
         Reporter.infoExec("删除所有分机");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.extensions_panel.click();
 
         }
@@ -185,7 +183,7 @@ public class Extension extends SwebDriver {
     public void I_ImportExtension() throws InterruptedException {
         Reporter.infoExec("导入分机列表");
         if(Single_Device_Test){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.extensions_panel.click();
         }
         m_extension.ImportExtensions(IMPORT_EXTENSION);

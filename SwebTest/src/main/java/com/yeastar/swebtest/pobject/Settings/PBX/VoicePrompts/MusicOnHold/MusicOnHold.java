@@ -25,7 +25,7 @@ public class MusicOnHold {
     public SelenideElement chooseMOHPlaylist_picker = $(By.id("st-moh-choosefolder-trigger-picker"));
     public SelenideElement chooseMOHPlaylist_input = $(By.id("st-moh-choosefolder-inputEl"));
     public SelenideElement chooseMOHPlaylist_edit = $(By.id("st-moh-editfolder"));
-    public SelenideElement chooseMOHPlaylist_delete = $(By.id("st-moh-delfolder"));
+    public SelenideElement chooseMOHPlaylist_delete = $(By.xpath(".//*[@id='st-moh-delfolder']/div/img"));
     public SelenideElement uploadNewMusic = $(By.id("st-moh-mohfile-inputEl"));
     public SelenideElement browse = $(By.id("st-moh-mohfile-trigger-filebutton"));
     public SelenideElement upload = $(By.id("st-moh-upload-btnInnerEl"));

@@ -25,6 +25,7 @@ public class AutoCLIPRoutes {
     public int gridColumn_CallerNumber = 2;
     public int gridColumn_Trunk = 3;
     public int gridColumn_ExpirationsTime = 4;
+    public int gridColumn_Delete = 0;
 
     public String list= "st-clip-trunkinfo";
     public SelenideElement autoCLIPRoutes = $(By.xpath(".//div[starts-with(@id,\"callcontrol\")]//span[ text()=\"AutoCLIP Routes\"]"));
@@ -36,6 +37,8 @@ public class AutoCLIPRoutes {
     public String matchOutgoingTrunk = ("st-clip-checkport");
     public String recordKeepTime_button = ("st-clip-keeptime");
     public String digitsMatch = "st-clip-matchdigit";
+//    public String digitsMatch = "st-clip-matchdigit-inputEl";
+
 
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,\"callcontrol\")]//span[ text()=\"Save\"]"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,\"callcontrol\")]//span[ text()=\"Cancel\"]"));

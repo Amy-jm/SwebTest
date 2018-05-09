@@ -19,9 +19,7 @@ public class UserPermission extends SwebDriver {
         Reporter.infoBeforeClass("打开游览器并登录设备_UserPermission"); //执行操作
         initialDriver(BROWSER,"http://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
+        pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         mySettings.close.click();
         m_extension.showCDRClounm();
     }
@@ -37,7 +35,7 @@ public class UserPermission extends SwebDriver {
     @Test
     public void A_AddUserPermissionAdmin() {
         Reporter.infoExec("添加UserPermession,admin权限"); //执行操作
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.userPermission_panel.click();
         m_userPermission.addUserPermission(1100,grant_privilege_application.privilegeAs_Administrator);
 //        ys_apply();
@@ -72,7 +70,7 @@ public class UserPermission extends SwebDriver {
         Reporter.infoExec("User设置为分机B 1101，Set Privilege As为Custom，网页设置项默认未勾选，勾选PBX、Auto Provisioning"); //执行操作
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.userPermission_panel.click();
         ys_waitingLoading(userPermission.grid_Mask);
         m_userPermission.addUserPermission(1101,grant_privilege_application.privilegeAs_Custom);
@@ -111,7 +109,7 @@ public class UserPermission extends SwebDriver {
         executeJs(me.closeMeSetting);
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.userPermission_panel.click();
 
         gridClick(userPermission.grid,1,userPermission.gridColumnDelete);
@@ -131,7 +129,7 @@ public class UserPermission extends SwebDriver {
         Reporter.infoExec("勾选全部UserPermission,删除"); //执行操作
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.userPermission_panel.click();
         gridSeleteAll(userPermission.grid);
         userPermission.delete.click();

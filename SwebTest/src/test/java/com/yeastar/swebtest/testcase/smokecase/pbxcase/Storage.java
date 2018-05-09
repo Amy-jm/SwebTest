@@ -23,9 +23,7 @@ public class Storage extends SwebDriver {
             Reporter.infoBeforeClass("打开游览器并登录设备_StorageTest"); //执行操作
             initialDriver("chrome","https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
             login(LOGIN_USERNAME,LOGIN_PASSWORD);
-            pageDeskTop.settings.shouldBe(Condition.exist);
-            pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-            pageDeskTop.maintenance.shouldBe(Condition.exist);
+            pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
             if(!PRODUCT.equals(CLOUD_PBX)){
                 mySettings.close.click();
             }
@@ -35,7 +33,7 @@ public class Storage extends SwebDriver {
     @BeforeClass
     public void InitStorage() {
         if(!PRODUCT.equals(CLOUD_PBX)){
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.storage_panel.click();
             ys_waitingTime(5000);
             executeJs("Ext.getCmp('st-storage-slotvm').setValue('"+preference.local_CDR +"')");
@@ -53,7 +51,7 @@ public class Storage extends SwebDriver {
     public void A_JudgeStorage() throws InterruptedException {
         if(!PRODUCT.equals(PC) && !PRODUCT.equals(CLOUD_PBX)){
             Reporter.infoExec("SD/HD/USB检测");
-            pageDeskTop.settings.click();
+            pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
             settings.storage_panel.click();
             m_storage.isExistStorage("SD");
             m_storage.isExistStorage("HD");
@@ -65,7 +63,7 @@ public class Storage extends SwebDriver {
     public void B_AddNetworkDrive() throws InterruptedException {
         if(!PRODUCT.equals(CLOUD_PBX)){
             if(Single_Device_Test){
-                pageDeskTop.settings.click();
+                pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
                 settings.storage_panel.click();
             }
             Reporter.infoExec("挂载网络磁盘sharetest1");
@@ -78,7 +76,7 @@ public class Storage extends SwebDriver {
         if(!PRODUCT.equals(CLOUD_PBX)){
             Reporter.infoExec("勾选Enable File Sharing");
             if(Single_Device_Test){
-                pageDeskTop.settings.click();
+                pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
                 settings.storage_panel.click();
             }
             fileShare.fileShare.click();
@@ -112,7 +110,7 @@ public class Storage extends SwebDriver {
         if(!PRODUCT.equals(CLOUD_PBX)){
             Reporter.infoExec("Record Trunks全选所有Trunk、Record Extensions全选所有分机");
             if(Single_Device_Test){
-                pageDeskTop.settings.click();
+                pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
                 settings.storage_panel.click();
             }
 

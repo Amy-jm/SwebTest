@@ -1,5 +1,6 @@
 package com.yeastar.swebtest.tools.pjsip;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 
@@ -81,12 +82,15 @@ public class PjsipApp extends PjsipDll{
         UserAccount account ;
         account = findAccountByUsername(String.valueOf(username));
         account.ip = ip;
-        System.out.println("xxxxxxx  "+account.port);
 //        account.port = String.valueOf(port);
         account.uriHead = "sip:";
-        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+String.valueOf(port), "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true);
+//        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+String.valueOf(port), "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true);
+        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port, "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true,99999);
 
-        System.out.println("sip::::::......."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
+        System.out.println("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
+        System.out.println("sip register: "+"sip:"+ip+":"+account.port);
+        System.out.println("username:"+String.valueOf(username));
+        System.out.println("pwd :" +account.password);
         if(isAsserst){
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();
@@ -117,6 +121,10 @@ public class PjsipApp extends PjsipDll{
      */
     public void Pj_Register_Account_WithoutAssist(int username , String ip){
         Pj_Register_Account("UDP",username,ip, "",5060,false);
+        ys_waitingTime(2000);
+    }
+    public void Pj_Register_Account_WithoutAssist(int username , String ip,int port){
+        Pj_Register_Account("UDP",username,ip, "",port,false);
     }
 
     /**
@@ -151,6 +159,10 @@ public class PjsipApp extends PjsipDll{
      */
     public void Pj_Register_Account(int username,String ip) {
         Pj_Register_Account("UDP",username,ip, "",5060,true);
+    }
+
+    public void Pj_Register_Account(int username,String ip,int port) {
+        Pj_Register_Account("UDP",username,ip, "",port,true);
     }
     /**
      * 取消注册
@@ -212,10 +224,12 @@ public class PjsipApp extends PjsipDll{
         UserAccount CallerAccount ;
         CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
         String uri  = "";
-        uri = "sip:"+Callee+"@"+ ServerIp;
+        uri = "sip:"+Callee+"@"+ ServerIp+":"+CallerAccount.port;
         System.out.println("uri: "+ uri);
-        if(CallerAccount.accId != -1)
-            pjsipdll.instance.ys_makeCall(CallerAccount.accId,uri,false);
+        if(CallerAccount.accId != -1){
+            System.out.println("make call no answer:"+pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false));
+        }
+
         return "";
     }
     public String Pj_Make_Call_No_Answer(int CallerNum,String Callee,String ServerIp ){
@@ -386,13 +400,13 @@ public class PjsipApp extends PjsipDll{
     }
     //挂断指定通话
     public int Pj_hangupCall(int caller,int callee) throws InterruptedException {
-        int suc=-1;
+        int suc = -1;
         UserAccount account = null;
-        for(int i=0; i<accounts.size(); i++){
+        for (int i = 0; i < accounts.size(); i++) {
             account = accounts.get(i);
-            if(account.username.equals(String.valueOf(caller))){
-                if(account.status != TALKING){
-                    Reporter.error("分机:"+account.username+"未接通");
+            if (account.username.equals(String.valueOf(caller))) {
+                if (account.status != TALKING) {
+                    Reporter.infoCheck("分机:" + account.username + "未接通");
 //                    YsAssert.assertEquals(account.status,TALKING,"分机"+account.username+"未接通");
                 }
                 account.toTalk = 0;
@@ -401,17 +415,19 @@ public class PjsipApp extends PjsipDll{
         UserAccount HangupAccont = findAccountByUsername(String.valueOf(caller));
         suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
 
-        for(int i=0; i<accounts.size(); i++){
+        if (caller != callee){
+        for (int i = 0; i < accounts.size(); i++) {
             account = accounts.get(i);
-            if(account.username.equals(String.valueOf(callee))){
-                if(account.status != TALKING){
-                    Reporter.error("分机:"+account.username+"未接通");
+            if (account.username.equals(String.valueOf(callee))) {
+                if (account.status != TALKING) {
+                    Reporter.error("分机:" + account.username + "未接通");
                 }
                 account.toTalk = 0;
             }
         }
         HangupAccont = findAccountByUsername(String.valueOf(callee));
         suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
+    }
         ys_waitingTime(5000);
         return suc;
     }
@@ -469,7 +485,7 @@ public class PjsipApp extends PjsipDll{
     public  pjsipdll.RegisterCallBack registerCallBack = new pjsipdll.RegisterCallBack() {
         @Override
         public int fptr_regstate(int id, int registerCode) {
-//            System.out.println("RegisterCallBack :"+id +" code:"+ registerCode);
+            System.out.println("RegisterCallBack :"+id +" code:"+ registerCode);
             if(registerCode == 200){
                 for(int i=0; i<accounts.size(); i++){
                     if(accounts.get(i).accId == id)
@@ -527,7 +543,7 @@ public class PjsipApp extends PjsipDll{
                             break;
                         case PJSIP_INV_STATE_EARLY:
                             accounts.get(i).callId = id;
-                            accounts.get(i).status = CALLING;
+                            accounts.get(i).status = RING;
                             break;
                         case PJSIP_INV_STATE_CONNECTING:
                             accounts.get(i).callId = id;

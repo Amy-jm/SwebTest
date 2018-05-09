@@ -144,8 +144,9 @@ public class YS_CallControl {
         Thread.sleep(1000);
         add_outbound_routes.save.click();
         ys_waitingLoading(outboundRoutes.grid_Mask);
-
     }
+
+
 
     /**
      *
@@ -186,7 +187,11 @@ public class YS_CallControl {
             if(String.valueOf(des1)==add_inbound_route.s_extension_range){
                 add_inbound_route.destinationInput.shouldBe(Condition.exist).setValue(des2);
             }else {
-                comboboxSet(add_inbound_route.destination, extensionList, des2);
+                if(des1.equals("e") || des1.equals("v")) {
+                    comboboxSet(add_inbound_route.destination, extensionList, des2);
+                }else{
+                    comboboxSet(add_inbound_route.destination,nameList, des2);
+                }
             }
         }
         ys_waitingTime(1000);

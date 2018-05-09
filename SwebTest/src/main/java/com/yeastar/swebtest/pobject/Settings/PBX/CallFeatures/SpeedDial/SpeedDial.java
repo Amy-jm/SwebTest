@@ -31,6 +31,9 @@ public class SpeedDial {
     public SelenideElement add = $(By.xpath(".//div[starts-with(@id,'speeddial-')]//span[text()='Add']"));
     public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,'speeddial-')]//span[text()='Delete']"));
     public SelenideElement Import = $(By.xpath(".//div[starts-with(@id,'speeddial-')]//span[text()='Import']"));
+    public SelenideElement Import_import = $(By.xpath(".//div[starts-with(@id,'speeddial-import-')]//span[starts-with(@id,'button-')]//span[text()='Import']"));
+    public SelenideElement Import_browse = $(By.id("st-speeddial-filename-button"));
+    public SelenideElement import_OK = $(By.xpath(".//div[starts-with(@id,'messagebox-')]//a[starts-with(@id,'button-')]//span[text()='OK']"));
     public SelenideElement export = $(By.xpath(".//div[starts-with(@id,'speeddial-')]//span[text()='Export']"));
 
     public SelenideElement speedDialPrefix = $(By.id("st-speeddial-speeddial-inputEl"));

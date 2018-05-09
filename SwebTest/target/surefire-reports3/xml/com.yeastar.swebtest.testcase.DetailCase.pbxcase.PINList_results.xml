@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="17"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="427.081">
+  <properties />
+  
+  
+            <testcase name="J4_deleteAllPin_yes" time="13.318" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="J2_deletePartPin_yes" time="13.342" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="H2_deleteOnePin_yes" time="27.887" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="D_editInRoute" time="34.150" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="C_editDISA" time="29.188" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="I_checkPin" time="36.759" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="K1_recovery_InRoute" time="27.771" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="G_checkPin" time="58.104" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="E_checkPin" time="53.281" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="J1_deletePartPin_no" time="14.405" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="A_addExtension" time="12.269" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="J3_deleteAllPin_no" time="9.814" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="K3_recovery_Disa" time="24.494" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="K2_recovery_Pin" time="10.250" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="H1_deleteOnePin_no" time="19.834" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="B_addPin" time="18.989" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+                <testcase name="F_deletePinNumber" time="23.226" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList" />
+      
+</testsuite>

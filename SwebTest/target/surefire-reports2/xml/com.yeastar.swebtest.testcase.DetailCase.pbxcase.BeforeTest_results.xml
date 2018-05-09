@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="36"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="1128.326">
+  <properties />
+  
+  
+            <testcase name="A2_editExtenName1" time="27.456" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="G_addOutRoute1" time="32.259" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="A4_addExtensionGroup" time="33.861" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="A3_editExtenEmail1" time="21.818" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="P1_setRegistrationTime" time="7.350" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="O2_setRecord" time="48.413" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="B_addtrunk" time="43.562" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="G_addOutRoute5" time="14.907" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="P2_setCode" time="7.615" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="N_addPin" time="49.645" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="G_addOutRoute8" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="G_addOutRoute7" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="O1_setRecord" time="9.305" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="G_addOutRoute3" time="14.875" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="G_addOutRoute4" time="14.723" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="A3_editExtenName2" time="28.752" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="A1_addExtension" time="79.643" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="C1_addtrunk" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="I_addringgroup" time="33.573" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="B1_addtrunk" time="56.616" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="G_addOutRoute2" time="15.010" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="R_UserPermission" time="36.158" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="F_addInRoute" time="51.384" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="S_setSystemTime" time="120.962" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="J_addqueue" time="38.579" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="L_addcallback" time="40.618" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="M_adddisa" time="37.607" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="E_addtrunk" time="41.058" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="H_addivr" time="49.775" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="A3_editExtenEmail2" time="31.214" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="G_addOutRoute9" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="K_addconference" time="26.142" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="C_addtrunk" time="40.421" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="Q_setAMI" time="19.877" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="G_addOutRoute6" time="14.813" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+                <testcase name="D_addtrunk" time="40.334" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest" />
+      
+</testsuite>

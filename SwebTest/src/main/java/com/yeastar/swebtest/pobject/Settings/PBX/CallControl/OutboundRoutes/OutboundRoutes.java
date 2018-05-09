@@ -31,6 +31,10 @@ public class OutboundRoutes {
 
     public SelenideElement add = $(By.xpath(".//div[starts-with(@id,'outrouter-')]//span[text()='Add']"));
     public SelenideElement delete = $(By.xpath(".//div[starts-with(@id,'outrouter-')]//span[text()='Delete']"));
+    public SelenideElement outRoute_import = $(By.xpath(".//div[starts-with(@id,'outrouter-')]//span[text()='Import']"));
+    public SelenideElement browse = $(By.id("st-outrouter-filename-trigger-filebutton"));
+    public SelenideElement import_import = $(By.xpath(".//div[starts-with(@id,'outrouter-import')]//.//div[starts-with(@id,'toolbar-')]//span[text()='Import']"));
+    public SelenideElement import_OK = $(By.xpath(".//div[starts-with(@id,'messagebox-')]//a[starts-with(@id,'button-')]//span[text()='OK']"));
 
     /**
      * 删除功能

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="52"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="2198.478">
+  <properties />
+  
+  
+            <testcase name="D93_TimeOut" time="96.864" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="F6_DialOut_bri" time="37.579" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D90_key9_dialbyname" time="57.557" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D94_Invalid" time="53.004" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A1_Init" time="22.072" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="B_EditInRoute1" time="35.661" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="F1_DialOut_sip" time="37.553" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="E3_DialExtension_disable" time="39.454" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="F8_DialOut_gsm" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D2_key2_voicemail3" time="22.898" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D8_key8_fxs" time="35.600" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D7_key7_ivr" time="49.206" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="E1_DialExtension_1103" time="44.795" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="C6_bri_key0_1000" time="41.347" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A2_AddIVR" time="20.153" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A2_AddIVR" time="36.671" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D1_key1_callback" time="56.577" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D6_key6_custom_prompt" time="49.839" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="G2_voicemail_disable" time="30.951" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="C2_sps_keyj_1100" time="64.935" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A2_AddIVR" time="37.853" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D2_key2_voicemail2" time="26.168" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A2_AddIVR" time="30.362" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="C1_sip_key0_1000" time="57.167" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A2_AddIVR" time="30.132" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="F4_DialOut_spx" time="37.549" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A3_EditKeys" time="89.198" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D92_keyx_1101" time="48.561" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D5_key5_conference" time="37.577" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="C5_fxo_key0_1000" time="39.053" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A2_AddIVR" time="39.308" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D3_key3_ringgroup" time="49.240" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D2_key2_voicemail1" time="67.918" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="C4_spx_key0_1000" time="78.730" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="C7_e1_key0_1000" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="K_editInbound2" time="34.934" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="F9_DialOut_disable" time="32.623" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D4_key4_queue" time="47.441" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="E2_DialExtension_ringgroup1" time="44.957" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="I_delete" time="57.376" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="J_recovery" time="58.797" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="D91_keyj_1100" time="40.617" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A2_AddIVR" time="37.863" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="F2_DialOut_sps" time="40.661" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="F5_DialOut_fxo" time="41.713" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="C3_iax_key0_1000" time="49.020" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="C8_gsm_key0_1000" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="A2_AddIVR" time="30.081" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="F3_DialOut_iax" time="37.575" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="F7_DialOut_e1" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="H_prompt" time="90.262" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+                <testcase name="G1_voicemail_enable" time="53.025" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" />
+      
+</testsuite>

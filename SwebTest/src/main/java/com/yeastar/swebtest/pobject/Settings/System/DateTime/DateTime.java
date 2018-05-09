@@ -29,10 +29,4 @@ public class DateTime {
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'timesetting-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'timesetting-')]//span[text()='Cancel']"));
 
-
-
-
-
-
-
 }

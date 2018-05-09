@@ -10,7 +10,8 @@ import static com.codeborne.selenide.Selenide.$;
  */
 public class Import_Extension {
     public SelenideElement extensionFile = $(By.id("st-exten-filename-inputEl"));
-    public SelenideElement browse = $(By.id("st-exten-filename-button-fileInputEl"));
+//    public SelenideElement browse = $(By.id("st-exten-filename-button-fileInputEl"));
+    public SelenideElement browse = $(By.id("st-exten-filename-button"));
     public SelenideElement Import = $(By.xpath(".//div[starts-with(@id,'extension-import')]//span[ text()='Import']"));
     public SelenideElement ImportOK = $(By.xpath(".//div[starts-with(@id,\"messagebox\")]//span[text()=\"OK\"]"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'extension-import')]//span[ text()='Cancel']"));

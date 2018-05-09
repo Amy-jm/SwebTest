@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="40"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="1431.292">
+  <properties />
+  
+  
+            <testcase name="C6_fxo" time="26.048" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="C8_e1" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="I1_menu" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="Ca9_hangup_gsm" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="B2_AddInbound" time="29.681" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="B2_AddInbound" time="30.725" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="C5_iax1" time="31.881" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="E1_Prompt" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="A2_AddConferences" time="14.534" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="Ca4_hangup_spx" time="21.470" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="D4_Participant4" time="144.565" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="Ca1_hangup_extension" time="27.788" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="B3_Apply" time="8.104" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="Ca8_hangup_e1" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="K1_recovery" time="25.471" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="Ca6_hangup_fxo" time="21.357" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="C7_bri" time="25.884" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="B2_AddInbound" time="30.724" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="A2_AddConferences" time="14.409" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="Ca2_hangup_sps" time="29.195" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="A2_AddConferences" time="15.810" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="Ca5_hangup_iax" time="21.160" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="F1_waitModerator" time="141.250" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="C9_gsm" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="G1_ModeratorPassword" time="99.984" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="C1_extension" time="32.432" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="J1_delete" time="61.876" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="D3_Participant3" time="49.213" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="C5_iax2" time="0.000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="K2_recovery" time="56.082" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="C3_sip" time="31.708" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="A1_Init" time="30.067" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="D2_Participant2" time="35.308" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="B1_AddInbound" time="19.909" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="C2_sps" time="31.871" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="H1_AllowInvite" time="187.193" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="D1_Participant1" time="59.189" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="C4_spx" time="25.939" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="Ca7_hangup_bri" time="21.208" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+                <testcase name="Ca3_hangup_sip" time="29.254" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference" />
+      
+</testsuite>
