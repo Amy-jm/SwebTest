@@ -5,6 +5,7 @@ import com.yeastar.swebtest.tools.ysassert.YsAssert;
 
 import java.util.ArrayList;
 
+
 import static com.yeastar.swebtest.driver.Config.addBulkExtensionsCallPermission;
 import static com.yeastar.swebtest.driver.Config.extensions;
 import static com.yeastar.swebtest.driver.Config.preference;
@@ -70,7 +71,7 @@ public class YS_Storage {
      * @param username  可以 为 空
      * @param password  可以 为 空
      */
-    public void AddNetworkDrive(String name,String hostip, String shareName, String username,String password) throws InterruptedException {
+    public void AddNetworkDrive(String name,String hostip, String shareName, String username,String password) {
         preference.addNetworkDrive.click();
         preference.networkName.setValue(name);
         preference.networkHostIp.setValue(hostip);
@@ -114,7 +115,7 @@ public class YS_Storage {
      * @param conference :会议室名称
      * @throws InterruptedException
      */
-    public void selectRecord(ArrayList trunks,ArrayList extensions, ArrayList conference) throws InterruptedException {
+    public void selectRecord(ArrayList trunks,ArrayList extensions, ArrayList conference) {
         ys_waitingTime(10000);
         if(!trunks.isEmpty())
             if(trunks.get(0).equals("all")){
@@ -136,7 +137,7 @@ public class YS_Storage {
                 System.out.println("点击选择所有会议室");
             }else
                 listSelect(recording.recordConferences,nameList,conference);
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         recording.save.click();
         ys_waitingMask();
 

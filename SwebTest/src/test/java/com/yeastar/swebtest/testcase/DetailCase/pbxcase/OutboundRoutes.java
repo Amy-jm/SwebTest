@@ -31,61 +31,111 @@ import static com.codeborne.selenide.Selenide.page;
  * import呼出路由部分：所有的数据都是可行的，不考虑导入失败的各种情况
  */
 public class OutboundRoutes extends SwebDriver {
+    //    标志SIP4线路是否存在的标志变量
+    boolean isTrunkExist = false;
+
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：====== OutboundRoutes ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
-    //    添加一条不可用的路由,最后恢复BeforeTest环境时要删除
+//    @Test
+    public void A0_initbeforeTest(){
+        //初始化beforetest
+        resetoreBeforetest("BeforeTest_Local.bak");
+
+    }
     @Test
-    public void A_addTrunk() throws InterruptedException {
+    public void A1_init1(){
+//        如果不可用的SIP3存在的话，将标志变量设置为已存在
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
-        ys_waitingTime(1000);
         settings.trunks_panel.click();
-        ys_waitingTime(1000);
         setPageShowNum(trunks.grid,100);
-        Reporter.infoExec(" 添加不可用的sip外线SIP3");
-        m_trunks.addUnavailTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,"SIP3",DEVICE_ASSIST_1,String.valueOf(UDP_PORT_ASSIST_1),DEVICE_ASSIST_1,"1","1","1","Yeastar",false);
-    }
+        String []name = new String[20];
+        for (int i=0;i<Integer.parseInt(String.valueOf(gridLineNum(trunks.grid)));i++){
+            name[i] = String.valueOf(gridContent(trunks.grid,i+1,trunks.gridcolumn_TrunkName));
+            if (name[i].equals("SIP3")){
+//                如果name[i]就是要找的那条中继，将标志变量 isTrunkExist 赋值为true
+                isTrunkExist = true ;
+                break;
+            }
+        }
 
+    }
+    //    添加一条不可用的路由,最后恢复BeforeTest环境时要删除
+    @Test
+    public void A2_addTrunk() throws InterruptedException {
+//        如果不存在SIP3，那就添加
+        if (!isTrunkExist) {
+            Reporter.infoExec(" 添加不可用的sip外线SIP3");
+            if (!PRODUCT.equals(CLOUD_PBX)) {
+                m_trunks.addUnavailTrunk("SIP", add_voIP_trunk_basic.VoipTrunk, "SIP3", DEVICE_ASSIST_1, String.valueOf(UDP_PORT_ASSIST_1), DEVICE_ASSIST_1, "1", "1", "1", "Yeastar", false,"");
+            }else {
+                m_trunks.addUnavailTrunk("SIP", add_voIP_trunk_basic.VoipTrunk, "SIP3", DEVICE_ASSIST_1, String.valueOf(UDP_PORT_ASSIST_1), DEVICE_ASSIST_1, "1", "1", "1", "Yeastar", false,"1");
+            }
+        }
+    }
+    @Test
+    public void A3_initOutRoute() throws InterruptedException {
+        settings.callControl_tree.click();
+        outboundRoutes.outboundRoutes.click();
+        ys_waitingTime(2000);
+//        判断呼出路由是否为BeforeTest的环境，如果不是，那就删除全部呼出路由，进行重新添加
+        if (Integer.parseInt(String.valueOf(gridLineNum(outboundRoutes.grid))) != 9){
+            deletes("删除所有呼出路由",outboundRoutes.grid,outboundRoutes.delete,outboundRoutes.delete_yes,outboundRoutes.grid_Mask);
+            BeforeTest recovery = new BeforeTest();
+            recovery.G_addOutRoute1();
+            recovery.G_addOutRoute2();
+            recovery.G_addOutRoute3();
+            recovery.G_addOutRoute4();
+            recovery.G_addOutRoute5();
+            recovery.G_addOutRoute6();
+            recovery.G_addOutRoute7();
+            recovery.G_addOutRoute8();
+            recovery.G_addOutRoute9();
+            ys_apply();
+        }
+    }
 //    创建注册分机
     @Test
     public void B_addExtensions() {
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1100, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1103"); //执行操作
-        pjsip.Pj_CreateAccount(1103, "Yeastar202", "UDP", UDP_PORT, 5);
+        pjsip.Pj_CreateAccount(1103, EXTENSION_PASSWORD, "UDP", UDP_PORT, 5);
         pjsip.Pj_Register_Account(1103, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1104"); //执行操作
-        pjsip.Pj_CreateAccount(1104, "Yeastar202", "UDP", UDP_PORT, 6);
+        pjsip.Pj_CreateAccount(1104, EXTENSION_PASSWORD, "UDP", UDP_PORT, 6);
         pjsip.Pj_Register_Account(1104, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
+        ys_waitingTime(1000);
         closePbxMonitor();
     }
 
@@ -114,6 +164,7 @@ public class OutboundRoutes extends SwebDriver {
           }
           pjsip.Pj_Hangup_All();
           closePbxMonitor();
+//          cloud cdr不同；Callee显示为 6100 <914000>
           m_extension.checkCDR("1000 <1000>", "914000", "Answered", " ", ACCOUNTTRUNK, communication_outRoute);
       }
     }
@@ -121,11 +172,6 @@ public class OutboundRoutes extends SwebDriver {
 //  删除beforeTest所创建的呼出路由，避免之后测试呼出前缀有冲突
     @Test
     public void D_deleteOutBoundRoutes(){
-        pageDeskTop.taskBar_Main.click();
-        pageDeskTop.settingShortcut.click();
-        settings.callControl_tree.click();
-        outboundRoutes.outboundRoutes.click();
-
 //        删除beforeTest所创建的呼出路由，避免之后测试呼出前缀有冲突
         Reporter.infoExec(" 勾选全部的呼出路由"); //执行操作
         gridSeleteAll(outboundRoutes.grid);  //勾选全部
@@ -141,7 +187,7 @@ public class OutboundRoutes extends SwebDriver {
 
 //    编辑呼出路由：修改name、增删patterns、选择多条的路由、选择分机组、勾选循环抓取
     @Test
-    public void E_editOutRoute() throws InterruptedException {
+    public void E_editOutRoute() {
         Reporter.infoExec(" 编辑呼出路由OutRoute1_sip");
         gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"OutRoute1_sip",sort_ascendingOrder),outboundRoutes.gridEdit);
         ys_waitingMask();
@@ -500,7 +546,7 @@ public class OutboundRoutes extends SwebDriver {
     }
 
     @Test(dataProvider="success")
-    public void K1_editPatterns(HashMap<String, String> data) throws InterruptedException {
+    public void K1_editPatterns(HashMap<String, String> data) {
         Reporter.infoExec("修改呼出路由的pattern、strip和prepend为："+data.get("patterns")+"、"+data.get("strip")+"、"+data.get("prepend"));
 //        System.out.println(data.toString());
 
@@ -525,7 +571,7 @@ public class OutboundRoutes extends SwebDriver {
         }
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1100 <1100>",data.get("number"),"Answered"," ",SPS,communication_outRoute);
-        }
+    }
 
     //    验证patterns && 呼出失败的例子——从表格中获取
     //        添加pattern的数据
@@ -536,7 +582,7 @@ public class OutboundRoutes extends SwebDriver {
     }
 
     @Test(dataProvider="fail")
-    public void K2_editPatterns(HashMap<String, String> data) throws InterruptedException {
+    public void K2_editPatterns(HashMap<String, String> data) {
         Reporter.infoExec("修改呼出路由的pattern、strip和prepend为："+data.get("patterns")+"、"+data.get("strip")+"、"+data.get("prepend"));
 
         gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"OutRoute1_sip",sort_ascendingOrder),outboundRoutes.gridEdit);
@@ -580,31 +626,31 @@ public class OutboundRoutes extends SwebDriver {
         pjsip.Pj_Unregister_Account(4000);
 
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1100, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1103"); //执行操作
-        pjsip.Pj_CreateAccount(1103, "Yeastar202", "UDP", UDP_PORT, 5);
+        pjsip.Pj_CreateAccount(1103, EXTENSION_PASSWORD, "UDP", UDP_PORT, 5);
         pjsip.Pj_Register_Account(1103, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1104"); //执行操作
-        pjsip.Pj_CreateAccount(1104, "Yeastar202", "UDP", UDP_PORT, 6);
+        pjsip.Pj_CreateAccount(1104, EXTENSION_PASSWORD, "UDP", UDP_PORT, 6);
         pjsip.Pj_Register_Account(1104, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
         closePbxMonitor();
 
@@ -858,6 +904,7 @@ public class OutboundRoutes extends SwebDriver {
         ys_waitingTime(1000);
         outboundRoutes.browse.click();
         System.out.println(EXPORT_PATH +"OutboundRoute.csv");
+        ys_waitingTime(1000);
         importFile(EXPORT_PATH +"OutboundRoute.csv");
         outboundRoutes.import_import.click();
         ys_waitingTime(2000);
@@ -868,6 +915,7 @@ public class OutboundRoutes extends SwebDriver {
 //    验证patterns的优先级
     @Test
     public void O_checkPriority1() {
+
 //        未变换呼出路由位置时
         Reporter.infoExec(" 1100拨打903001，预期呼出成功");
         pjsip.Pj_Make_Call_Auto_Answer(1100, "903001", DEVICE_IP_LAN, false);
@@ -926,7 +974,7 @@ public class OutboundRoutes extends SwebDriver {
     }
 
     @Test
-    public void P1_deleteOne_no() throws InterruptedException {
+    public void P1_deleteOne_no() {
         setPageShowNum(outboundRoutes.grid, 100);
         Reporter.infoExec(" 删除单个呼出路由OutboundRoute1——选择no"); //执行操作
 //       定位要删除的那条呼出路由
@@ -943,7 +991,7 @@ public class OutboundRoutes extends SwebDriver {
         YsAssert.assertEquals(row1, rows, "删除呼出路由OutboundRoute1-取消删除");
     }
     @Test
-    public void P2_deleteOne_yes() throws InterruptedException {
+    public void P2_deleteOne_yes() {
         Reporter.infoExec(" 删除单个呼出路由OutboundRoute1——选择yes"); //执行操作
         int row = Integer.parseInt(String.valueOf(gridLineNum(outboundRoutes.grid)));
         //       定位要删除的那条呼出路由
@@ -960,7 +1008,7 @@ public class OutboundRoutes extends SwebDriver {
         YsAssert.assertEquals(row2, row3, "删除单个呼出路由OutboundRoute1——确定删除");
     }
     @Test
-    public void P3_deletePart_no() throws InterruptedException {
+    public void P3_deletePart_no() {
         Reporter.infoExec(" 全部勾选，再取消某条的勾选后-取消删除"); //执行操作
 //        还未删除前的表格行数
         int row1 = Integer.parseInt(String.valueOf(gridLineNum(outboundRoutes.grid)));
@@ -981,7 +1029,7 @@ public class OutboundRoutes extends SwebDriver {
         YsAssert.assertEquals(row4, row1, "全部勾选，再取消某条的勾选后-取消删除");
     }
     @Test
-    public void P4_deletePart_yes() throws InterruptedException {
+    public void P4_deletePart_yes() {
         Reporter.infoExec(" 全部勾选，再取消某条的勾选后-确定删除"); //执行操作
         outboundRoutes.delete.click();
         outboundRoutes.delete_yes.click();
@@ -992,7 +1040,7 @@ public class OutboundRoutes extends SwebDriver {
         YsAssert.assertEquals(row1, 2, "全部勾选，再取消某条的勾选后-确定删除");
     }
     @Test
-    public void P5_deleteAll_no() throws InterruptedException {
+    public void P5_deleteAll_no() {
 //        勾选全部进行删除
         Reporter.infoExec(" 全部勾选-取消删除"); //执行操作
 //        还未删除前的表格行数
@@ -1008,7 +1056,7 @@ public class OutboundRoutes extends SwebDriver {
         YsAssert.assertEquals(row1, row2, "全部勾选-取消删除");
     }
     @Test
-    public void P6_deleteAll_yes() throws InterruptedException {
+    public void P6_deleteAll_yes() {
         Reporter.infoExec(" 全部勾选-确定删除"); //执行操作
         outboundRoutes.delete.click();
         outboundRoutes.delete_yes.click();
@@ -1087,14 +1135,14 @@ public class OutboundRoutes extends SwebDriver {
     }
     @Test
     public void Q_recovery2(){
+//        因为前面有删除过呼出路由，所以会影响到DISA线路的选择，这里恢复一下环境
         settings.callFeatures_tree.click();
         callFeatures.more.click();
         disa.DISA.click();
         disa.add.shouldBe(Condition.exist);
-        deletes("删除所有DISA",disa.grid,disa.delete,disa.delete_yes,disa.grid_Mask);
-        disa.add.click();
-        ys_waitingTime(8000);
-        add_disa.name.setValue("DISA1");
+        ys_waitingMask();
+        ys_waitingLoading(disa.grid_Mask);
+        gridClick(disa.grid,gridFindRowByColumn(disa.grid,disa.gridcolumn_Name,"DISA1",sort_ascendingOrder),disa.gridEdit);
         listSelect(add_disa.list,nameList,"OutRoute1_sip","OutRoute3_sps");
         add_disa.save.click();
         ys_waitingLoading(disa.grid_Mask);
@@ -1118,11 +1166,12 @@ public class OutboundRoutes extends SwebDriver {
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
         Reporter.infoAfterClass("执行完毕：======  OutboundRoutes  ======"); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+
+        ys_waitingTime(10000);
+        killChromePid();
     }
 
 }

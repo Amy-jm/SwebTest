@@ -1,7 +1,6 @@
 package com.yeastar.swebtest.driver.YSMethod;
 
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
-
 import java.util.ArrayList;
 
 import static com.yeastar.swebtest.driver.Config.*;

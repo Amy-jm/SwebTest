@@ -3,6 +3,8 @@ package com.yeastar.swebtest.tools.reporter;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 import static com.yeastar.swebtest.driver.Config.currentPath;
@@ -69,12 +71,16 @@ public class Reporter  {
     }
 
     public static void infoBeforeClass(String message) {
-        String tmpname = "【测试类场景初始化】";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+        String currentTime = String.valueOf(sdf.format(new Date()));
+        String tmpname = "【测试类场景初始化】_"+currentTime;
         reporterOut(tmpname,message,1);
     }
 
     public static void infoAfterClass(String message) {
-        String tmpname = "【测试类场景恢复】";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+        String currentTime = String.valueOf(sdf.format(new Date()));
+        String tmpname = "【测试类场景恢复】_"+currentTime;
         message = message+"\n\n";
         reporterOut(tmpname,message,1);
     }
@@ -100,8 +106,10 @@ public class Reporter  {
     }
 
     public static void infoExec(String message) {
-        String tmpname = "【执行操作】";
-        System.out.println("执行操作:"+message);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH时mm分ss秒");
+        String currentTime = String.valueOf(sdf.format(new Date()));
+        String tmpname = "【"+currentTime+" 执行操作】";
+
         reporterOut(tmpname,message,2);
     }
 
@@ -154,14 +162,16 @@ public class Reporter  {
                 break;
             default:
         }
-        System.out.println("LOCAL_LOG_PATH="+currentPath+"localLog\\"+LOCAL_LOG_FILE);
+//        System.out.println("LOCAL_LOG_PATH="+currentPath+"localLog\\"+LOCAL_LOG_FILE);
+
+        System.out.println(tmpname+": "+message);
 //        if(String(emptynum+tmpname+message))
         String toDelPic = emptynum+tmpname+message;
         if(toDelPic.contains("BeforeTest")){//
-            clearDirFiles(SCREENSHOT_PATH,200);
-            clearDirFiles(currentPath+"build\\reports\\tests",300);
+            clearDirFiles(SCREENSHOT_PATH,500);
+//            clearDirFiles(currentPath+"build\\reports\\tests",300);
+            clearDirFiles(currentPath+"localLog",500);
         }
-        clearDirFiles(currentPath+"localLog",100);
         WriteStringToFilePath(currentPath+"localLog\\"+LOCAL_LOG_FILE,emptynum+tmpname+message+"\r\n");
         org.testng.Reporter.log(emptynum+tmpname+message);
     }
@@ -199,6 +209,7 @@ public class Reporter  {
             PrintStream ps = new PrintStream(new FileOutputStream(f,true));
 //            ps.println(content);// 往文件里写入字符串
             ps.append(content);// 在已有的基础上添加字符串
+            ps.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

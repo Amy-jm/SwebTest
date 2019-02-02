@@ -15,12 +15,12 @@ import org.testng.annotations.*;
 public class PagingIntercom extends SwebDriver{
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：======  PagingIntercom  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
 
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -33,18 +33,21 @@ public class PagingIntercom extends SwebDriver{
         }
         m_general.setIntercom(true,"*5");
 
+
+    }
+    @Test
+    public void A0_Regist(){
+        pjsip.Pj_Init();
         //        被测设备注册分机1000，1100,1101,1105
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1105,EXTENSION_PASSWORD,"UDP",UDP_PORT,7);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN,UDP_PORT);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN,UDP_PORT);
         pjsip.Pj_Register_Account(1101,DEVICE_IP_LAN,UDP_PORT);
         pjsip.Pj_Register_Account(1105,DEVICE_IP_LAN,UDP_PORT);
-
     }
-
 //    新建广播组Paging6300：单工，不启用*Answer，成员：1100,1105
     @Test
     public void A_add_paging1() throws InterruptedException {
@@ -217,7 +220,8 @@ public class PagingIntercom extends SwebDriver{
         Reporter.infoAfterClass("执行完毕：======  PagingIntercom  ======"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        ys_waitingTime(10000);
+        killChromePid();
 
     }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="18"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="439.048">
+  <properties />
+  
+  
+            <testcase name="D_callin1" time="18.158" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn3" time="12.301" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn2" time="12.413" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="G_recovery" time="28.898" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="A_add_conference2" time="13.221" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn5" time="27.015" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="D_callin3" time="12.954" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn4" time="13.375" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="A_add_conference1" time="11.124" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn1" time="12.647" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="E_invite" time="35.480" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="D_callin4" time="34.762" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="F_delete" time="49.728" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="D_callin2" time="23.832" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="D_callin5" time="28.367" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="AA1_InitConference" time="51.867" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="B_editInRoute1" time="30.165" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="AA0_Register" time="22.741" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+      
+</testsuite>

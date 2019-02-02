@@ -2,6 +2,7 @@ package com.yeastar.swebtest.tools.pjsip;
 
 import org.testng.annotations.*;
 
+
 import java.util.*;
 
 import static com.yeastar.swebtest.driver.Config.DEVICE_ASSIST_1;
@@ -42,9 +43,9 @@ public class PjsipTest {
 //            app.Pj_Register_Account(Integer.parseInt(accounts.get(i).username) ,"192.168.7.153");
 //        }
         Thread.sleep(5000);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,-1);
-        pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",5060,3);
-        pjsip.Pj_CreateAccount(3030,"Yeastar202","UDP",5060,3);
+        pjsip.Pj_CreateAccount(1100,"Yeastar202Yeastar202","UDP",5060,-1);
+        pjsip.Pj_CreateAccount(3000,"Yeastar202Yeastar202","UDP",5060,3);
+        pjsip.Pj_CreateAccount(3030,"Yeastar202Yeastar202","UDP",5060,3);
         pjsip.Pj_Register_Account_WithoutAssist(1100, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
         System.out.println("After Register ..........");
@@ -61,8 +62,8 @@ public class PjsipTest {
     @Test
     public void makeCall() throws InterruptedException {
         System.out.println("is make call ");
-        pjsip.Pj_CreateAccount(4000,"Yeastar202","UDP",5060,-1);
-        pjsip.Pj_CreateAccount(4001,"Yeastar202","UDP",5060,3);
+        pjsip.Pj_CreateAccount(4000,"Yeastar202Yeastar202","UDP",5060,-1);
+        pjsip.Pj_CreateAccount(4001,"Yeastar202Yeastar202","UDP",5060,3);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_IP_LAN);
         System.out.println("After Register ..........");

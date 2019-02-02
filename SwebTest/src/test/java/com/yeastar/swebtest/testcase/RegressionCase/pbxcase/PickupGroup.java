@@ -13,12 +13,12 @@ public class PickupGroup extends SwebDriver{
 
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：======  PickupGroup  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
 
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -31,21 +31,24 @@ public class PickupGroup extends SwebDriver{
         }
         m_general.setPickup(true,"*4",true,"*04");
 
+    }
+    @Test
+    public void A0_init(){
+        pjsip.Pj_Init();
         //        被测设备注册分机1000/1100/1105，辅助1：分机3001
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1105,EXTENSION_PASSWORD,"UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN,UDP_PORT);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN,UDP_PORT);
         pjsip.Pj_Register_Account(1105,DEVICE_IP_LAN,UDP_PORT);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1,UDP_PORT_ASSIST_1);
     }
 
-
 //内部分机互打截答、指定截答
     @Test
-    public void A_add_pickupgroup1() throws InterruptedException {
+    public void A1_add_pickupgroup1() throws InterruptedException {
 
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -69,6 +72,7 @@ public class PickupGroup extends SwebDriver{
         }else {
             System.out.println("------------1000未响铃，未执行*4---------");
         }
+
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1100 <1100>","1105 <1105(pickup 1000)>","Answered","","",communication_internal);
@@ -192,7 +196,8 @@ public class PickupGroup extends SwebDriver{
         Reporter.infoAfterClass("执行完毕：======  PickupGroup  ======"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        ys_waitingTime(10000);
+        killChromePid();
 
     }
 }

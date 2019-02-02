@@ -11,33 +11,15 @@ import org.testng.annotations.*;
 public class Blacklist_Whitelist extends SwebDriver{
     @BeforeClass
     public void A_Login() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：======  Blacklist_Whitelist  ======="); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
-    }
-
-    @BeforeClass
-    public void B_Register() {
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
-        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",UDP_PORT,4);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN,UDP_PORT);
-        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN,UDP_PORT);
-        pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN,UDP_PORT);
-        pjsip.Pj_Register_Account(1102, DEVICE_IP_LAN,UDP_PORT);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2,UDP_PORT_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2,UDP_PORT_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1,UDP_PORT_ASSIST_1);
     }
 
     @BeforeClass
@@ -75,9 +57,27 @@ public class Blacklist_Whitelist extends SwebDriver{
         }
         callFeatures.back.click();
     }
-
     @Test
-    public void A_EditInRoute1() {
+    public void A0_Register() {
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1102,EXTENSION_PASSWORD,"UDP",UDP_PORT,4);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN,UDP_PORT);
+        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN,UDP_PORT);
+        pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN,UDP_PORT);
+        pjsip.Pj_Register_Account(1102, DEVICE_IP_LAN,UDP_PORT);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2,UDP_PORT_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2,UDP_PORT_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1,UDP_PORT_ASSIST_1);
+        closePbxMonitor();
+    }
+    @Test
+    public void A1_EditInRoute1() {
         Reporter.infoExec("编辑呼入路由InRoute1，呼入目的地：分机1100"); //执行操作
         settings.callControl_tree.click();
         inboundRoutes.inboundRoutes.click();
@@ -219,6 +219,7 @@ public class Blacklist_Whitelist extends SwebDriver{
         pjsip.Pj_Hangup_All();
 //        YsAssert.assertEquals(tcpInfo,true,"blackList2 编辑为Inbound呼入");
         m_extension.checkCDR("1100 <1100>","13001","Answered","","SIP1",communication_outRoute);
+
     }
 
     @Test
@@ -326,6 +327,7 @@ public class Blacklist_Whitelist extends SwebDriver{
 
     @AfterMethod
     public void AfterMethod(){
+        pjsip.Pj_Hangup_All();
         if(cdRandRecordings.deleteCDR.isDisplayed()){
             closeCDRRecord();
         }
@@ -337,6 +339,6 @@ public class Blacklist_Whitelist extends SwebDriver{
         Reporter.infoAfterClass("执行完毕：=======   Blacklist_Whitelist  ======="); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
-    }
+        ys_waitingTime(10000);
+        killChromePid();    }
 }

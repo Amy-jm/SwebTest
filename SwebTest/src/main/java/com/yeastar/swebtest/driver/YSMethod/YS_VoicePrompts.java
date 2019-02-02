@@ -5,6 +5,7 @@ import static com.yeastar.swebtest.driver.SwebDriver.executeJs;
 import static com.yeastar.swebtest.driver.SwebDriver.ys_waitingLoading;
 import static com.yeastar.swebtest.driver.SwebDriver.ys_waitingTime;
 
+
 /**
  * Created by Yeastar on 2017/7/25.
  */
@@ -15,7 +16,7 @@ public class YS_VoicePrompts {
      * @param name
      * @param type
      */
-    public void addMOHPlaylist(String name,int type) throws InterruptedException {
+    public void addMOHPlaylist(String name,int type){
         add_moh_playlist.name.setValue(name);
         if(type == add_moh_playlist.playlistOrder_Random){
             executeJs("Ext.getCmp('st-moh-playsort').setValue('random')");

@@ -49,7 +49,7 @@ public class UserPermission extends SwebDriver {
     public void B_CheckUserPermisson() {
         Reporter.infoExec("登录分机A 1100的页面，检查主菜单内所有勾选功能"); //执行操作
         logout();
-        login("1100","Yeastar202");
+        login("1100",EXTENSION_PASSWORD);
         me.taskBar_Main.click();
         me.settingShortcut.shouldBe(Condition.exist);
         me.cdrShortcut.shouldBe(Condition.exist);
@@ -91,7 +91,7 @@ public class UserPermission extends SwebDriver {
     public void D_CheckUserPerssion() {
         Reporter.infoExec("登录分机A 1101的页面，检查主菜单内所有勾选功能"); //执行操作
         logout();
-        login("1101","Yeastar202");
+        login("1101",EXTENSION_PASSWORD);
         me.taskBar_Main.click();
         me.autopShortcut.shouldBe(Condition.exist);
         me.settingShortcut.click();
@@ -119,7 +119,7 @@ public class UserPermission extends SwebDriver {
     public void F_CheckUserPerssion() {
         Reporter.infoExec("登录分机A 1101的页面，检查主菜单内只有ME功能"); //执行操作
         logout();
-        login("1101","Yeastar202");
+        login("1101",EXTENSION_PASSWORD);
         me.taskBar_Main.click();
         me.mesettingShortcut.shouldBe(Condition.exist);
 

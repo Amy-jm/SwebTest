@@ -1,5 +1,6 @@
 package com.yeastar.swebtest.testcase.DetailCase.pbxcase;
 
+import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
@@ -17,51 +18,74 @@ import java.util.ArrayList;
 public class SpeedDial extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：====== SpeedDial ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
     @Test
-    public void A_addExtension(){
+    public void A1_addExtension(){
+        pjsip.Pj_Init();
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1100, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
-        pjsip.Pj_CreateAccount(1101, "Yeastar202", "UDP", UDP_PORT, 3);
+        pjsip.Pj_CreateAccount(1101, EXTENSION_PASSWORD, "UDP", UDP_PORT, 3);
         pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
         closePbxMonitor();
     }
     @Test
+    public void A2_init(){
+        //        修改呼出路由
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        settings.callControl_panel.click();
+        outboundRoutes.outboundRoutes.click();
+        Reporter.infoExec(" 编辑呼出路由OutRoute3_sps,分机选择全部");
+        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"OutRoute3_sps",sort_ascendingOrder),outboundRoutes.gridEdit);
+        ys_waitingMask();
+        add_outbound_routes.me_AddAllToSelect.click();
+        ys_waitingTime(1000);
+        add_outbound_routes.save.click();
+        ys_waitingLoading(outboundRoutes.grid_Mask);
+        closeSetting();
+    }
+    @Test
     public void B1_addSpeedDial() throws InterruptedException {
         Reporter.infoExec(" 添加速拨码，speedDialCode=1，phoneNumber=1100");
-        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callFeatures_panel.click();
         callFeatures.more.click();
         speedDial.speedDial.click();
+        setPageShowNum(speedDial.grid,100);
+        deletes("删除所有速拨码",speedDial.grid,speedDial.delete,speedDial.delete_yes,speedDial.grid_Mask);
         m_callFeature.addSpeedDial("1",1100);
+        ys_waitingTime(1000);
+        speedDial.speedDialPrefix.setValue("*99");
+        speedDial.speedDialPrefix_button.click();
         ys_apply();
     }
     @Test
@@ -237,14 +261,12 @@ public class SpeedDial extends SwebDriver {
         speedDial.Import.click();
         ys_waitingTime(1000);
         speedDial.Import_browse.click();
-        ys_waitingTime(1000);
-        System.out.println(EXPORT_PATH +"speeddial2.csv");
+        ys_waitingTime(3000);
         importFile(EXPORT_PATH +"speeddial2.csv");
         speedDial.Import_import.click();
         ys_waitingTime(2000);
         speedDial.import_OK.click();
         setPageShowNum(speedDial.grid,100);
-        ys_apply();
     }
     @Test
     public void D2_add_outRouteDial() throws InterruptedException {
@@ -451,12 +473,17 @@ public class SpeedDial extends SwebDriver {
     }
     @Test
     public void G1_editOutRoute(){
-        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callControl_tree.click();
         outboundRoutes.outboundRoutes.click();
+        ys_waitingTime(2000);
         Reporter.infoExec(" 编辑呼出路由OutRoute3_sps,分机不选择1000");
-        gridClick(outboundRoutes.grid,gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"OutRoute3_sps",sort_ascendingOrder),outboundRoutes.gridEdit);
+        int row = gridFindRowByColumn(outboundRoutes.grid,outboundRoutes.gridcolumn_Name,"OutRoute3_sps",sort_ascendingOrder);
+        System.out.println("row："+row);
+        gridClick(outboundRoutes.grid,row,outboundRoutes.gridEdit);
         ys_waitingMask();
+        add_outbound_routes.me_RemoveAllFromSelected.click();
         ArrayList<String> arrayex = new ArrayList<>();
         arrayex.add("1100");
         listSelect(add_outbound_routes.list_Extension, extensionList,arrayex);
@@ -619,10 +646,11 @@ public class SpeedDial extends SwebDriver {
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
         Reporter.infoAfterClass("执行完毕：======  SpeedDial  ======"); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+
+        ys_waitingTime(10000);
+        killChromePid();
     }
 }

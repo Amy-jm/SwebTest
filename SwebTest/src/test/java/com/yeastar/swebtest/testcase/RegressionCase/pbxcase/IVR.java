@@ -13,12 +13,12 @@ import org.testng.annotations.*;
 public class IVR extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：======  IVR  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
 
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -53,15 +53,16 @@ public class IVR extends SwebDriver {
         m_callFeature.addIVR("IVR6502","6502");
     }
 
-    @BeforeClass
-    public void Register() throws InterruptedException {
+    @Test
+    public void A0_Register() {
+        pjsip.Pj_Init();
         //        被测设备注册分机1000、1103、1105，辅助1：分机3001，辅助2：分机2000、2001
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1103,"Yeastar202","UDP",UDP_PORT,5);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1103,EXTENSION_PASSWORD,"UDP",UDP_PORT,5);
+        pjsip.Pj_CreateAccount(1105,EXTENSION_PASSWORD,"UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1103,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1105,DEVICE_IP_LAN);
@@ -71,7 +72,7 @@ public class IVR extends SwebDriver {
     }
 
     @Test
-    public void A_add() throws InterruptedException {
+    public void A1_add() {
         Reporter.infoExec(" 新建IVRtest1，提示音选择autotestprompt，勾选Dial Extensions，勾选Dial Outbound Routes，勾选Dial to Check Voicemail" +
                 "按0到分机1000，按1到1000的Voicemail，按5到Dial by Name，按#到hungup，按*到Select an Option，Timeout到customPrompt：prompt1，Invalid到分机1105"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -96,7 +97,7 @@ public class IVR extends SwebDriver {
 //        设置Key Press Event
         ys_waitingTime(1000);
         add_ivr_keyPressEvent.keyPressEvent.click();
-        Thread.sleep(2000);
+        ys_waitingTime(2000);
         comboboxSelect(add_ivr_keyPressEvent.s_press0,s_extensin);
         comboboxSelect(add_ivr_keyPressEvent.s_press1,s_voicemail);
         comboboxSelect(add_ivr_keyPressEvent.s_press5,s_dialByName);
@@ -114,7 +115,7 @@ public class IVR extends SwebDriver {
     }
 
     @Test
-    public void B_editInbound1() throws InterruptedException {
+    public void B_editInbound1() {
         Reporter.infoExec(" 编辑呼入路由Inbound1，呼入到IVRtest1"); //执行操作
         settings.callControl_tree.click();
         inboundRoutes.inboundRoutes.click();
@@ -130,12 +131,12 @@ public class IVR extends SwebDriver {
 
 //    Dial Extensions
     @Test
-    public void C_dialextensions() throws InterruptedException {
+    public void C_dialextensions() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入IVRtest1,直拨分机1103"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
         ys_waitingTime(3000);
         pjsip.Pj_Send_Dtmf(3001,"1","1","0","3","#");
-        YsAssert.assertEquals(getExtensionStatus(1103,RING,10),RING,"预期1103会Ring");
+        ysAssertWithHangup(getExtensionStatus(1103,RING,10),RING,"预期1103会Ring");
         pjsip.Pj_Answer_Call(1103,true);
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
@@ -144,13 +145,13 @@ public class IVR extends SwebDriver {
 
 //    Dial Outbound Routes
     @Test
-    public void D_dialoutbound() throws InterruptedException {
+    public void D_dialoutbound() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入IVRtest1,直拨3333通过sps外线呼出"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
         ys_waitingTime(3000);
         pjsip.Pj_Send_Dtmf(3001,"3","3","3","3","3","#");
 //        getExtensionStatus(2000,RING,10);
-        YsAssert.assertEquals(getExtensionStatus(2000,RING,10),RING,"预期2000会Ring");
+        ysAssertWithHangup(getExtensionStatus(2000,RING,10),RING,"预期2000会Ring");
         pjsip.Pj_Answer_Call(2000,false);
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
@@ -158,13 +159,13 @@ public class IVR extends SwebDriver {
     }
 
     @Test
-    public void E_key0toExtension() throws InterruptedException {
+    public void E_key0toExtension() {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1,按0到分机1000"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
         ys_waitingTime(3000);
         pjsip.Pj_Send_Dtmf(2001,"0");
 //        getExtensionStatus(1000,RING,10);
-        YsAssert.assertEquals(getExtensionStatus(1000,RING,10),RING,"预期1000会Ring");
+        ysAssertWithHangup(getExtensionStatus(1000,RING,10),RING,"预期1000会Ring");
         pjsip.Pj_Answer_Call(1000,true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
@@ -172,7 +173,7 @@ public class IVR extends SwebDriver {
     }
 
     @Test
-    public void F_key1toVoicemail() throws InterruptedException {
+    public void F_key1toVoicemail() {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1,按1到voicemail-1000"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
         ys_waitingTime(3000);
@@ -183,7 +184,7 @@ public class IVR extends SwebDriver {
     }
 
     @Test
-    public void G_key5toDialName() throws InterruptedException {
+    public void G_key5toDialName() {
         Reporter.infoExec(" 1000拨打6501，按5到DialbyName,按957到分机1103"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"6501",DEVICE_IP_LAN,true);
         ys_waitingTime(3000);
@@ -192,7 +193,7 @@ public class IVR extends SwebDriver {
         pjsip.Pj_Send_Dtmf(1000,"9","5","7");
         ys_waitingTime(5000);
         pjsip.Pj_Send_Dtmf(1000,"1");
-       YsAssert.assertEquals(getExtensionStatus(1103,RING,10),RING,"预期1103为Ring状态");
+       ysAssertWithHangup(getExtensionStatus(1103,RING,10),RING,"预期1103为Ring状态");
         pjsip.Pj_Answer_Call(1103,false);
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
@@ -200,19 +201,19 @@ public class IVR extends SwebDriver {
     }
 
     @Test
-    public void H_keytoHangup() throws InterruptedException {
+    public void H_keytoHangup() {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1,按#挂断通话"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
         ys_waitingTime(3000);
         pjsip.Pj_Send_Dtmf(2001,"#");
         ys_waitingTime(2000);
         getExtensionStatus(2001,HUNGUP,10);
-        YsAssert.assertEquals(getExtensionStatus(2001,HUNGUP,10),HUNGUP,"预期2001会HangUp");
+        ysAssertWithHangup(getExtensionStatus(2001,HUNGUP,10),HUNGUP,"预期2001会HangUp");
         m_extension.checkCDR("2001 <2001>","6501(h)","Answered",SPS,"",communication_inbound);
     }
 
     @Test
-    public void I_keytoSelectOption() throws InterruptedException {
+    public void I_keytoSelectOption() {
         pjsip.Pj_Hangup_All();
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1，按*到SelecttoOption--预期1105响铃"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
@@ -220,7 +221,7 @@ public class IVR extends SwebDriver {
         pjsip.Pj_Send_Dtmf(2001,"*");
         ys_waitingTime(2000);
 //        getExtensionStatus(1105,RING,10);
-        YsAssert.assertEquals(getExtensionStatus(1105,RING,10),RING,"预期1105为Ring状态");
+        ysAssertWithHangup(getExtensionStatus(1105,RING,10),RING,"预期1105为Ring状态");
         pjsip.Pj_Answer_Call(1105,false);
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
@@ -228,7 +229,7 @@ public class IVR extends SwebDriver {
     }
 
     @Test
-    public void J_keytoTimeout() throws InterruptedException {
+    public void J_keytoTimeout() {
         Reporter.infoExec(" 1103拨打6501，超时到prompt1"); //执行操作
         tcpSocket.connectToDevice(50000);
         pjsip.Pj_Make_Call_No_Answer(1103,"6501",DEVICE_IP_LAN,true);
@@ -240,7 +241,7 @@ public class IVR extends SwebDriver {
             Reporter.infoExec(" 1103按0到分机1000");
             pjsip.Pj_Send_Dtmf(1103,"0");
 //            getExtensionStatus(1000,RING,10);
-            YsAssert.assertEquals(getExtensionStatus(1000,RING,10),RING,"预期1000为Ring状态");
+            ysAssertWithHangup(getExtensionStatus(1000,RING,10),RING,"预期1000为Ring状态");
             pjsip.Pj_Answer_Call(1000,false);
             ys_waitingTime(10000);
             pjsip.Pj_Hangup_All();
@@ -250,13 +251,13 @@ public class IVR extends SwebDriver {
     }
 
     @Test
-    public void K_keytoInvalid() throws InterruptedException {
+    public void K_keytoInvalid() {
         Reporter.infoExec(" 1000拨打6501，按a错误按键到分机1105"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"6501",DEVICE_IP_LAN);
         ys_waitingTime(2000);
         pjsip.Pj_Send_Dtmf(1000,"a");
 //        getExtensionStatus(1105,RING,10);
-        YsAssert.assertEquals(getExtensionStatus(1105,RING,10),RING,"预期1105为Ring状态");
+        ysAssertWithHangup(getExtensionStatus(1105,RING,10),RING,"预期1105为Ring状态");
         pjsip.Pj_Answer_Call(1105,false);
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
@@ -265,7 +266,7 @@ public class IVR extends SwebDriver {
 
 //Dial to Check Voicemail
     @Test
-    public void L_checkvoicemail() throws InterruptedException {
+    public void L_checkvoicemail() {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1,直接拨打*02查看1000的语音留言"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
         ys_waitingTime(5000);
@@ -281,7 +282,7 @@ public class IVR extends SwebDriver {
 
 //    Delete
     @Test
-    public void M_delete() throws InterruptedException {
+    public void M_delete() {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.callFeatures_tree.click();
@@ -331,7 +332,7 @@ public class IVR extends SwebDriver {
     }
 
     @Test
-    public void N_editInbound2() throws InterruptedException {
+    public void N_editInbound2() {
         Reporter.infoExec(" 编辑呼入路由Inbound1，呼入到分机1000"); //执行操作
         settings.callControl_tree.click();
         inboundRoutes.inboundRoutes.click();
@@ -354,12 +355,13 @@ public class IVR extends SwebDriver {
     }
 
     @AfterClass
-    public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
+    public void AfterClass() {
+        ys_waitingTime(5000);
         Reporter.infoAfterClass("执行完毕：======  IVR ======"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        ys_waitingTime(10000);
+        killChromePid();
 
     }
 }

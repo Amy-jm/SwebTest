@@ -11,29 +11,31 @@ import org.testng.annotations.*;
  */
 public class SpeedDial extends SwebDriver {
     @BeforeClass
-    public void BeforeClass() throws InterruptedException {
-        pjsip.Pj_Init();
+    public void BeforeClass()  {
         Reporter.infoBeforeClass("开始执行：======  SpeedDial  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
 
+
+    }
+    @Test
+    public void A0_init(){
+        pjsip.Pj_Init();
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
     }
-
-    @Test
-    public void A_add_1() throws InterruptedException {
+//    @Test
+    public void A_add_1()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.callFeatures_panel.click();
@@ -67,8 +69,8 @@ public class SpeedDial extends SwebDriver {
 
     }
 
-    @Test
-    public void A_add_2() throws InterruptedException {
+//    @Test
+    public void A_add_2()  {
         Reporter.infoExec(" 1000拨打*9991234567通过sps外线呼出");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"*9991234567",DEVICE_IP_LAN,false);
         ys_waitingTime(10000);
@@ -78,16 +80,16 @@ public class SpeedDial extends SwebDriver {
     }
 
 //    导出、导入
-    @Test
-    public void B_export() throws InterruptedException {
+//    @Test
+    public void B_export()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         Reporter.infoExec(" 导出速拨码"); //执行操作
         speedDial.export.click();
     }
 
-    @Test
-    public void C_delete() throws InterruptedException {
+//    @Test
+    public void C_delete()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         speedDial.speedDial.click();
@@ -136,8 +138,8 @@ public class SpeedDial extends SwebDriver {
 
     }
 
-    @Test
-    public void D_import() throws InterruptedException {
+//    @Test
+    public void D_import()  {
         Reporter.infoExec(" 导入速拨码"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -152,7 +154,7 @@ public class SpeedDial extends SwebDriver {
 
     }
 
-    @AfterMethod
+//    @AfterMethod
     public void AfterMethod(){
         if(cdRandRecordings.deleteCDR.isDisplayed()){
             closeCDRRecord();
@@ -160,12 +162,13 @@ public class SpeedDial extends SwebDriver {
     }
 
     @AfterClass
-    public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
+    public void AfterClass()  {
+        ys_waitingTime(5000);
         Reporter.infoAfterClass("执行完毕：======  SpeedDial  ======"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        ys_waitingTime(10000);
+        killChromePid();
 
     }
 }

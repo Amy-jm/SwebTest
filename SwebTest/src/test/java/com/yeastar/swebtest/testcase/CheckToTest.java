@@ -5,6 +5,8 @@ import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.confirm;
 
@@ -18,29 +20,30 @@ public class CheckToTest extends SwebDriver {
      * 确定可测试后再将测试内容填充进来（xml文件连接进来）
      */
     @Test
-    public void CleanExtensions() throws InterruptedException {
-        Reporter.infoBeforeClass("清空分机"); //执行操作
-
-        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
-//        initialDriver("chrome","https://"+ "192.168.7.154" +":"+DEVICE_PORT+"/");
-        login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX)){
-            ys_waitingMask();
-            mySettings.close.click();
-        }
-        pageDeskTop.taskBar_Main.click();
-        pageDeskTop.settingShortcut.click();
-        settings.extensions_panel.click();
-        deleteTrunk();
-        deleteAllExtensions();
-        initCallControl();
-        setAMI();
-        closeFirewall();
-        initCDR();
-        if(pageDeskTop.apply.isDisplayed()) {
-            ys_apply();
-        }
-        Single_Init = false;
+    public void CleanExtensions() throws InterruptedException, IOException {
+//        Reporter.infoBeforeClass("清空分机"); //执行操作
+//
+//        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+//        login(LOGIN_USERNAME,LOGIN_PASSWORD);
+//        if(!PRODUCT.equals(CLOUD_PBX)){
+//            ys_waitingMask();
+//            mySettings.close.click();
+//        }
+        System.out.println("this is checktoTest ");
+        Reporter.setOutPutFile("linhaoran0726");
+//        pageDeskTop.taskBar_Main.click();
+//        pageDeskTop.settingShortcut.click();
+//        settings.extensions_panel.click();
+//        deleteTrunk();
+//        deleteAllExtensions();
+//        initCallControl();
+//        setAMI();
+//        closeFirewall();
+//        initCDR();
+//        if(pageDeskTop.apply.isDisplayed()) {
+//            ys_apply();
+//        }
+//        Single_Init = false;
         quitDriver();
     }
 

@@ -11,6 +11,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import java.util.ArrayList;
 
+import static com.codeborne.selenide.ex.ErrorMessages.screenshot;
+
 /**
  * Created by Caroline on 2018/1/8.
  */
@@ -18,56 +20,61 @@ public class OutboundRestriction extends SwebDriver {
     BeforeTest beforeTest = new BeforeTest();
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：====== OutboundRestriction ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
+//    @BeforeClass
+    public void BeforeClass2() {
+        resetoreBeforetest("BeforeTest_Local.bak");
+    }
     @Test
     public void A_addExtension(){
+        pjsip.Pj_Init();
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1100, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1102"); //执行操作
-        pjsip.Pj_CreateAccount(1102, "Yeastar202", "UDP", UDP_PORT, 4);
+        pjsip.Pj_CreateAccount(1102, EXTENSION_PASSWORD, "UDP", UDP_PORT, 4);
         pjsip.Pj_Register_Account(1102, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1103"); //执行操作
-        pjsip.Pj_CreateAccount(1103, "Yeastar202", "UDP", UDP_PORT, 5);
+        pjsip.Pj_CreateAccount(1103, EXTENSION_PASSWORD, "UDP", UDP_PORT, 5);
         pjsip.Pj_Register_Account(1103, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1104"); //执行操作
-        pjsip.Pj_CreateAccount(1104, "Yeastar202", "UDP", UDP_PORT, 6);
+        pjsip.Pj_CreateAccount(1104, EXTENSION_PASSWORD, "UDP", UDP_PORT, 6);
         pjsip.Pj_Register_Account(1104, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
 
         Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4001, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
         closePbxMonitor();
     }
@@ -109,7 +116,7 @@ public class OutboundRestriction extends SwebDriver {
             pjsip.Pj_Make_Call_Auto_Answer(1000, "3333", DEVICE_IP_LAN);
             ys_waitingTime(8000);
             closePbxMonitor();
-            System.out.println("=============================第"+i+"次循环打电话========================");
+            Reporter.infoExec("=============================第"+i+"次循环打电话========================");
             int state = getExtensionStatus(1000,TALKING,1);
 //            呼出限制无法实时生效，大概要1分钟
             if(i==7) {
@@ -140,10 +147,6 @@ public class OutboundRestriction extends SwebDriver {
                 if (state == TALKING) {
                     Reporter.pass(" 分机1000状态--TALKING，通话正常建立");
                 } else {
-                    pageDeskTop.taskBar_Main.click();
-                    pageDeskTop.pbxmonitorShortcut.click();
-                    ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH + "C1_checkRestriction()第" + i + "次分机1000.jpg");
-                    Reporter.sendReport("link", "Error: " + "C1_checkRestriction()调试", SCREENSHOT_PATH + "C1_checkRestriction()第" + i + "次分机1000.jpg");
                     Reporter.error(" 预期分机1000状态为TALKING，实际状态为" + state);
                 }
             }
@@ -158,10 +161,6 @@ public class OutboundRestriction extends SwebDriver {
         if (getExtensionStatus(1100, TALKING, 8) == TALKING) {
             Reporter.pass(" 分机1100状态--TALKING，通话正常建立");
         } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"C2_checkCallOut_internal()分机1000.jpg");
-            Reporter.sendReport("link","Error: " + "C2_checkCallOut_internal()调试", SCREENSHOT_PATH +"C2_checkCallOut_internal()分机1000.jpg");
             Reporter.error(" 预期分机1100状态为TALKING，实际状态为"+getExtensionStatus(1100, TALKING, 8));
         }
         pjsip.Pj_Hangup_All();
@@ -324,10 +323,6 @@ public class OutboundRestriction extends SwebDriver {
         if (getExtensionStatus(1000, TALKING, 8) == TALKING) {
             Reporter.pass(" 分机1000状态--TALKING，通话正常建立");
         } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"D1_checkCallIn1_sip()分机1000.jpg");
-            Reporter.sendReport("link","Error: " + "D1_checkCallIn1_sip()调试", SCREENSHOT_PATH +"D1_checkCallIn1_sip()分机1000.jpg");
             Reporter.error(" 预期分机1000状态为TALKING，实际状态为"+getExtensionStatus(1000, TALKING, 8));
         }
         pjsip.Pj_Hangup_All();
@@ -464,6 +459,7 @@ public class OutboundRestriction extends SwebDriver {
                 Reporter.error(" 预期分机1000状态为TALKING，实际状态为"+getExtensionStatus(1000, TALKING, 8));
             }
             pjsip.Pj_Hangup_All();
+//            cloud cdr不同，caller为6100 <6100>
             m_extension.checkCDR("4001 <6100>", "1000 <1000>", "Answered", ACCOUNTTRUNK, " ", communication_inbound);
         }
     }
@@ -486,10 +482,6 @@ public class OutboundRestriction extends SwebDriver {
         if (getExtensionStatus(1103, RING, 8) == RING) {
             Reporter.pass(" 被通知的分机1103状态--RING");
         } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"D2_checkCallOut9_EmergencyNum()分机1000.jpg");
-            Reporter.sendReport("link","Error: " + "D2_checkCallOut9_EmergencyNum()调试", SCREENSHOT_PATH +"D2_checkCallOut9_EmergencyNum()分机1000.jpg");
             Reporter.error(" 预期被通知的分机1103状态为RING，实际状态为"+getExtensionStatus(1100, RING, 8));
         }
         ys_waitingTime(1000);
@@ -650,6 +642,7 @@ public class OutboundRestriction extends SwebDriver {
             System.out.println("=============================第"+i+"次循环打电话========================");
             int state = getExtensionStatus(1000,TALKING,1);
             if(i==4) {
+                state = getExtensionStatus(1000,HUNGUP,20);
                 if(state == HUNGUP){
                     Reporter.infoExec(" 1000拨打3333通过sps外线呼出,预期第4次呼出失败,实际呼出失败");
                 }else{
@@ -658,6 +651,7 @@ public class OutboundRestriction extends SwebDriver {
                     pjsip.Pj_Hangup_All();
 
                     Reporter.infoExec(" 分机1000没有被限制住，为了不影响接下来的test，手动去分机页面勾选呼出限制");
+                    YsAssert.fail(" 1000拨打3333通过sps外线呼出,预期第4次呼出失败,实际呼出成功");
                     settings.extensions_tree.click();
                     extensions.Extensions.click();
                     setPageShowNum(extensions.grid,100);
@@ -677,10 +671,6 @@ public class OutboundRestriction extends SwebDriver {
                 if (state == TALKING) {
                     Reporter.pass(" 分机1000状态--TALKING，通话正常建立");
                 } else {
-                    pageDeskTop.taskBar_Main.click();
-                    pageDeskTop.pbxmonitorShortcut.click();
-                    ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH + "E2_Restriction1()第" + i + "次分机1000.jpg");
-                    Reporter.sendReport("link", "Error: " + "E2_Restriction1()调试", SCREENSHOT_PATH + "E2_Restriction1()第" + i + "次分机1000.jpg");
                     Reporter.error(" 预期分机1000状态为TALKING，实际状态为" + state);
                 }
             }
@@ -728,10 +718,6 @@ public class OutboundRestriction extends SwebDriver {
                 if (state == TALKING) {
                     Reporter.pass(" 分机1100状态--TALKING，通话正常建立");
                 } else {
-                    pageDeskTop.taskBar_Main.click();
-                    pageDeskTop.pbxmonitorShortcut.click();
-                    ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH + "E2_Restriction2()第" + i + "次分机1100.jpg");
-                    Reporter.sendReport("link", "Error: " + "E2_Restriction2()调试", SCREENSHOT_PATH + "E2_Restriction2()第" + i + "次分机1100.jpg");
                     Reporter.error(" 预期分机1100状态为TALKING，实际状态为" + state);
                 }
             }
@@ -780,10 +766,6 @@ public class OutboundRestriction extends SwebDriver {
                 if (state == TALKING) {
                     Reporter.pass(" 分机1102状态--TALKING，通话正常建立");
                 } else {
-                    pageDeskTop.taskBar_Main.click();
-                    pageDeskTop.pbxmonitorShortcut.click();
-                    ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH + "E2_Restriction3()第" + i + "次分机1102.jpg");
-                    Reporter.sendReport("link", "Error: " + "E2_Restriction3()调试", SCREENSHOT_PATH + "E2_Restriction3()第" + i + "次分机1102.jpg");
                     Reporter.error(" 预期分机1102状态为TALKING，实际状态为" + state);
                 }
             }
@@ -830,10 +812,6 @@ public class OutboundRestriction extends SwebDriver {
                 if (state == TALKING) {
                     Reporter.pass(" 分机1103状态--TALKING，通话正常建立");
                 } else {
-                    pageDeskTop.taskBar_Main.click();
-                    pageDeskTop.pbxmonitorShortcut.click();
-                    ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH + "E2_Restriction4()分机1103.jpg");
-                    Reporter.sendReport("link", "Error: " + "E2_Restriction4()调试", SCREENSHOT_PATH + "E2_Restriction4()分机1103.jpg");
                     Reporter.error(" 预期分机1103状态为TALKING，实际状态为" + state);
                 }
             }
@@ -876,10 +854,6 @@ public class OutboundRestriction extends SwebDriver {
         if (getExtensionStatus(1100, TALKING, 8) == TALKING) {
             Reporter.pass(" 分机1100状态--TALKING，通话正常建立");
         } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"E3_check3_callOut_internal()分机1100.jpg");
-            Reporter.sendReport("link","Error: " + "E3_check3_callOut_internal()调试", SCREENSHOT_PATH +"E3_check3_callOut_internal()分机1100.jpg");
             Reporter.error(" 预期分机1100状态为TALKING，实际状态为"+getExtensionStatus(1100, TALKING, 8));
         }
         pjsip.Pj_Hangup_All();
@@ -894,10 +868,6 @@ public class OutboundRestriction extends SwebDriver {
         if (getExtensionStatus(1000, TALKING, 8) == TALKING) {
             Reporter.pass(" 分机1000状态--TALKING，通话正常建立");
         } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"E3_check4_callIn()分机1000.jpg");
-            Reporter.sendReport("link","Error: " + "E3_check4_callIn()调试", SCREENSHOT_PATH +"E3_check4_callIn()分机1000.jpg");
             Reporter.error(" 预期分机1000状态为TALKING，实际状态为"+getExtensionStatus(1000, TALKING, 8));
         }
         pjsip.Pj_Hangup_All();
@@ -910,10 +880,6 @@ public class OutboundRestriction extends SwebDriver {
         if (getExtensionStatus(1100, TALKING, 8) == TALKING) {
             Reporter.pass(" 分机1100状态--TALKING，通话正常建立");
         } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"E3_check5_callIn_internal()分机1100.jpg");
-            Reporter.sendReport("link","Error: " + "E3_check5_callIn_internal()调试", SCREENSHOT_PATH +"E3_check5_callIn_internal()分机1100.jpg");
             Reporter.error(" 预期分机1100状态为TALKING，实际状态为"+getExtensionStatus(1100, TALKING, 8));
         }
         pjsip.Pj_Hangup_All();
@@ -925,10 +891,6 @@ public class OutboundRestriction extends SwebDriver {
         if (getExtensionStatus(1103, RING, 8) == RING) {
             Reporter.pass(" 被通知的分机1103状态--RING");
         } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"E3_check6_EmergencyNum()分机1103.jpg");
-            Reporter.sendReport("link","Error: " + "E3_check6_EmergencyNum()调试", SCREENSHOT_PATH +"E3_check6_EmergencyNum()分机1103.jpg");
             Reporter.error(" 预期被通知的分机1103状态为RING，实际状态为"+getExtensionStatus(1103, RING, 8));
         }
         ys_waitingTime(1000);
@@ -954,11 +916,16 @@ public class OutboundRestriction extends SwebDriver {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.extensions_tree.click();
-        int row = Integer.parseInt(String.valueOf(gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Name,"1000",sort_ascendingOrder)));
+        extensions.add.should(Condition.exist);
+        ys_waitingLoading(extensions.grid_Mask);
+        ys_waitingTime(5000);
+        int row = Integer.parseInt(String.valueOf(gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Name,"1000",sort_descendingOrder)));
         System.out.println("row:"+row);
         gridClick(extensions.grid,row,2);//因为多了一个呼出限制的图标，所以这里删除按钮应该算第2个（从0开始）
         ys_waitingTime(3000);
         extensions.delete_yes.click();
+        ys_waitingLoading(extensions.grid_Mask);
+        ys_waitingTime(3000);
         int row2 = Integer.parseInt(String.valueOf(gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Name,"1102",sort_ascendingOrder)));
         gridClick(extensions.grid,row2,2);
         ys_waitingTime(3000);
@@ -968,7 +935,7 @@ public class OutboundRestriction extends SwebDriver {
     @Test
     public void E7_1addExtension(){
         Reporter.infoExec(" 添加分机1000和1102");
-        m_extension.addSipExtension(1000, "Yeastar202");
+        m_extension.addSipExtension(1000, EXTENSION_PASSWORD);
         Reporter.infoExec(" 编辑分机1000的邮箱为1000@yeastar.com"); //执行操作
         gridClick(extensions.grid,gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Extensions,"1000",sort_ascendingOrder),extensions.gridEdit);
         ys_waitingMask();
@@ -976,7 +943,7 @@ public class OutboundRestriction extends SwebDriver {
         addExtensionBasic.save.click();
         ys_waitingLoading(extensions.grid_Mask);
 
-        m_extension.addSipExtension(1102, "Yeastar202");
+        m_extension.addSipExtension(1102, EXTENSION_PASSWORD);
         ys_apply();
     }
     @Test
@@ -1139,7 +1106,8 @@ public class OutboundRestriction extends SwebDriver {
         add_outbound_restriction.timeLimit.setValue("3");
         add_outbound_restriction.numberofCallsLimit.setValue("1");
         add_outbound_restriction.selectExtensions.click();
-
+        ys_waitingMask();
+        ys_waitingTime(5000);
         ArrayList<String> extendsion = new ArrayList<>();
         extendsion.add("1103");
         listSelect(add_outbound_restriction.list,extensionList,extendsion);
@@ -1280,7 +1248,7 @@ public class OutboundRestriction extends SwebDriver {
                      settings.extensions_tree.click();
                      extensions.Extensions.click();
                      setPageShowNum(extensions.grid,100);
-                     gridClick(extensions.grid,gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Name,"1103",sort_ascendingOrder),extensions.gridEdit);
+                     gridClick(extensions.grid,gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Extensions,"1103",sort_ascendingOrder),extensions.gridEdit);
                      ys_waitingTime(1000);
                      editSelectedExtensionsCallPermission.callPermission.click();
                      ys_waitingTime(1000);
@@ -1296,10 +1264,6 @@ public class OutboundRestriction extends SwebDriver {
                  if (state == TALKING) {
                      Reporter.pass(" 分机1103状态--TALKING，通话正常建立");
                  } else {
-                     pageDeskTop.taskBar_Main.click();
-                     pageDeskTop.pbxmonitorShortcut.click();
-                     ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH + "G2_checkRestriction1()第" + i + "次分机1103.jpg");
-                     Reporter.sendReport("link", "Error: " + "G2_checkRestriction1()调试", SCREENSHOT_PATH + "G2_checkRestriction1()第" + i + "次分机1103.jpg");
                      Reporter.error(" 预期分机1103状态为TALKING，实际状态为" + state);
                  }
              }
@@ -1347,7 +1311,7 @@ public class OutboundRestriction extends SwebDriver {
                      settings.extensions_tree.click();
                      extensions.Extensions.click();
                      setPageShowNum(extensions.grid,100);
-                     gridClick(extensions.grid,gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Name,"1104",sort_ascendingOrder),extensions.gridEdit);
+                     gridClick(extensions.grid,gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Extensions,"1104",sort_ascendingOrder),extensions.gridEdit);
                      ys_waitingTime(1000);
                      editSelectedExtensionsCallPermission.callPermission.click();
                      ys_waitingTime(1000);
@@ -1356,7 +1320,6 @@ public class OutboundRestriction extends SwebDriver {
                      addExtensionBasic.save.click();
                      ys_waitingLoading(extensions.grid_Mask);
                      ys_apply();
-
                      YsAssert.fail(" 1104拨打32000通过sps外线呼出,预期第3次呼出失败,实际呼出成功");
                  }
              }else {
@@ -1366,7 +1329,7 @@ public class OutboundRestriction extends SwebDriver {
                      pageDeskTop.taskBar_Main.click();
                      pageDeskTop.pbxmonitorShortcut.click();
                      ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH + "G5_checkRestriction1()第" + i + "次分机1104.jpg");
-                     Reporter.sendReport("link", "Error: " + "G5_checkRestriction1()调试", SCREENSHOT_PATH + "G5_checkRestriction1()第" + i + "次分机1104.jpg");
+                     Reporter.sendReport("link", "Info: " + "G5_checkRestriction1()调试", SCREENSHOT_PATH + "G5_checkRestriction1()第" + i + "次分机1104.jpg");
                      Reporter.error(" 预期分机1104状态为TALKING，实际状态为" + state);
                  }
              }
@@ -1533,6 +1496,15 @@ public class OutboundRestriction extends SwebDriver {
         pageDeskTop.settingShortcut.click();
         settings.emergencyNumber_tree.click();
         Reporter.infoExec(" EmergencyNumber全部勾选-确定删除"); //执行操作
+        emergencyNumber.add.shouldBe(Condition.exist);
+        screenshot("OutboundRestriction I_recovery21");
+        ys_waitingMask();
+        ys_waitingLoading(emergencyNumber.grid_Mask);
+        screenshot("OutboundRestriction I_recovery2");
+        String rows = gridLineNum(emergencyNumber.grid).toString();
+        if(rows.equals("0")){
+            return;
+        }
 //        全部勾选
         gridSeleteAll(emergencyNumber.grid);
 //        点击删除按钮
@@ -1592,10 +1564,11 @@ public class OutboundRestriction extends SwebDriver {
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
         Reporter.infoAfterClass("执行完毕：====== OutboundRestriction ======"); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+
+        ys_waitingTime(10000);
+        killChromePid();
     }
 }

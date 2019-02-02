@@ -38,11 +38,11 @@ public class ExtensionPractice extends SwebDriver{
 
 //        deletes(" 删除所有分机",extensions.grid,extensions.delete,extensions.delete_yes,extensions.grid_Mask);
 //        Reporter.infoExec(" 添加分机1000");
-//        m_extension.addSipExtension(1000, "Yeastar202");
+//        m_extension.addSipExtension(1000, EXTENSION_PASSWORD);
 //        Reporter.infoExec(" 添加分机1017");
         Reporter.infoExec(" 主测设备注册分机1000，1100"); //执行操作
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
 
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);

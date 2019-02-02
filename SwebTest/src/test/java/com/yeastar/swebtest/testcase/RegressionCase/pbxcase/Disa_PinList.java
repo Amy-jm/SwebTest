@@ -15,31 +15,16 @@ import org.testng.annotations.Test;
 public class Disa_PinList extends SwebDriver {
     @BeforeClass
     public void A_Login() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：======  Disa_PinList  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
-
-    @BeforeClass
-    public  void B_register(){
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_CreateAccount(3002,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
-        pjsip.Pj_Register_Account_WithoutAssist(3002,DEVICE_ASSIST_1);
-    }
-
 
     @BeforeClass
     public void C_InitDisa_PinList(){
@@ -59,9 +44,23 @@ public class Disa_PinList extends SwebDriver {
         pinList.add.shouldBe(Condition.exist);
         deletes("初始化PIN LIST--删除所有pin码",pinList.grid,pinList.delete,pinList.delete_yes,pinList.grid_Mask);
     }
-
     @Test
-    public void A_CreatePin() {
+    public  void A0_register(){
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(3002,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist(3002,DEVICE_ASSIST_1);
+        closePbxMonitor();
+    }
+    @Test
+    public void A1_CreatePin() {
         Reporter.infoExec("创建PinList：pin1,123-456"); //执行操作
         pinList.PINList.click();
         pinList.add.shouldBe(Condition.exist).click();
@@ -122,7 +121,7 @@ public class Disa_PinList extends SwebDriver {
         pjsip.Pj_Send_Dtmf(2001,"1","2","3","#");
         pjsip.Pj_Send_Dtmf(2001,"1","3","0","0","1","#");
         ys_waitingTime(10000);
-        YsAssert.assertEquals(getExtensionStatus(3001,TALKING,20),TALKING,"预期3001会Talking");
+        ysAssertWithHangup(getExtensionStatus(3001,TALKING,20),TALKING,"预期3001会Talking");
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2001 <2001>","13001","Answered",SPS,SIPTrunk,communication_outRoute);
         m_extension.checkCDR_OtherInfo(cdRandRecordings.gridColumn_PinCode,"123",1);
@@ -165,7 +164,7 @@ public class Disa_PinList extends SwebDriver {
         pjsip.Pj_Send_Dtmf(3001,"7","8","9","#");
         pjsip.Pj_Send_Dtmf(3001,"1","3","0","0","2","#");
         ys_waitingTime(15000);
-        YsAssert.assertEquals(getExtensionStatus(3002,TALKING,20),TALKING,"预期3002会Talking");
+        ysAssertWithHangup(getExtensionStatus(3002,TALKING,20),TALKING,"预期3002会Talking");
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("3001 <3001>","13002","Answered",SIPTrunk,SIPTrunk,communication_outRoute);
         m_extension.checkCDR_OtherInfo(cdRandRecordings.gridColumn_PinCode,"789",1);
@@ -227,7 +226,7 @@ public class Disa_PinList extends SwebDriver {
         Reporter.infoAfterClass("执行完毕：======  Disa_PinList  ======"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
-
+        ys_waitingTime(10000);
+        killChromePid();
     }
 }

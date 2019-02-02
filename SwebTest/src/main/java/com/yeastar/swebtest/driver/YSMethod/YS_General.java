@@ -6,6 +6,7 @@ import com.yeastar.swebtest.tools.ysassert.YsAssert;
 
 import java.util.ArrayList;
 
+
 import static com.yeastar.swebtest.driver.Config.*;
 import static com.yeastar.swebtest.driver.SwebDriver.*;
 
@@ -53,22 +54,24 @@ public class YS_General {
     /*设置允许拨打时间的特征码、分机
      */
    public void setExtensionPermission(boolean enable, String prefix ,String... extension ){
-        featureCode.featureCode.click();
+       featureCode.featureCode.click();
        featureCode.setExtensionPermission.should(Condition.exist);
-       ys_waitingTime(1000);
+       ys_waitingTime(5000);
         executeJs("Ext.getCmp('st-feature-enbforcetime').setValue("+String.valueOf(enable)+")");
+        ys_waitingTime(1000);
         if(!prefix.isEmpty()){
             featureCode.timeConditionOverride.clear();
             featureCode.timeConditionOverride.setValue(prefix);
+            featureCode.save.click();
         }
         featureCode.setExtensionPermission.click();
-       if(extension[0].equals("all")){;
+        if(extension[0].equals("all")){;
            listSelectAll(featureCode.list_setExtionsionPermission);
-       }else {
+        }else {
            listSelect(featureCode.list_setExtionsionPermission,extensionList,extension);
-       }
-       featureCode.list_save.click();
-       featureCode.save.click();
+        }
+        featureCode.list_save.click();
+        featureCode.save.click();
    }
 
     /**
@@ -82,12 +85,17 @@ public class YS_General {
         featureCode.featureCode.click();
         featureCode.callPickup.shouldBe(Condition.exist);
         ys_waitingTime(1000);
-        setCheckBox(featureCode.callPickup_check,checkcallpickup);
+
+        setCheckBox(featureCode.callPickup_check,true);
         featureCode.callPickup.clear();
         featureCode.callPickup.setValue(callpickup);
-        setCheckBox(featureCode.extensionPickup_check,checkextensionPickup);
+        setCheckBox(featureCode.callPickup_check,checkcallpickup);
+
+        setCheckBox(featureCode.extensionPickup_check,true);
         featureCode.extensionPickup.clear();
         featureCode.extensionPickup.setValue(extensionPickup);
+        setCheckBox(featureCode.extensionPickup_check,checkextensionPickup);
+
         featureCode.save.click();
 
     }

@@ -18,8 +18,8 @@
                     <suiteXmlFiles>
                         <!--<suiteXmlFile>suite/smokecase/pbxcore.xml</suiteXmlFile>-->
                         <!--<suiteXmlFile>suite/smokecase/syscore.xml</suiteXmlFile>-->
-                        <!--<suiteXmlFile>suite/regression/pbxcore.xml</suiteXmlFile>-->
-                        <suiteXmlFile>suite/detailcase/pbxcore.xml</suiteXmlFile>
+                        <suiteXmlFile>suite/regression/pbxcore.xml</suiteXmlFile>
+                        <!--<suiteXmlFile>suite/detailcase/pbxcore.xml</suiteXmlFile>-->
                     </suiteXmlFiles>
                     <properties>
                         <!-- No TestNG listeners
@@ -59,58 +59,38 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>info.cukes</groupId>
-            <artifactId>cucumber-java8</artifactId>
-            <version>1.2.5</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/info.cukes/cucumber-testng -->
-        <dependency>
-            <groupId>info.cukes</groupId>
-            <artifactId>cucumber-testng</artifactId>
-            <version>1.2.5</version>
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.codeborne/selenide -->
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
             <version>4.4.2</version>
+            <!--<version>4.10</version>-->
+            <!--<version>4.12.3</version>-->
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>2.53.1</version>
+            <!--<version>3.8.1</version>-->
         </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <version>2.53.1</version>
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.9.9</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.sun.jna/jna -->
-        <dependency>
-            <groupId>com.sun.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>3.0.9</version>
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.hynnet/jxl -->
         <dependency>
             <groupId>com.hynnet</groupId>
             <artifactId>jxl</artifactId>
             <version>2.6.12.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.uncommons/reportng-->
-        <!--<dependency>
-            <groupId>org.uncommons</groupId>
-            <artifactId>reportng</artifactId>
-            <version>1.1.4</version>
-        </dependency>-->
+
         <dependency>
             <groupId>reportng</groupId>
             <artifactId>reportng</artifactId>
@@ -118,29 +98,35 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/reportng-1.1.5s.jar</systemPath>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/velocity/velocity-dep -->
         <dependency>
             <groupId>velocity</groupId>
             <artifactId>velocity-dep</artifactId>
             <version>1.4</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>3.0</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.53</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.jcraft</groupId>-->
+            <!--<artifactId>jsch</artifactId>-->
+            <!--<version>0.1.53</version>-->
+        <!--</dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/ch.ethz.ganymed/ganymed-ssh2 -->
         <dependency>
             <groupId>ch.ethz.ganymed</groupId>
@@ -148,12 +134,24 @@
             <version>262</version>
         </dependency>
 
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.leon.channel/verify &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>com.leon.channel</groupId>-->
-            <!--<artifactId>verify</artifactId>-->
-            <!--<version>1.1.9</version>-->
-        <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/android/android -->
+        <dependency>
+            <groupId>android</groupId>
+            <artifactId>android</artifactId>
+            <version>4.4.2_r4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>4.0.0</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+
+
+
+
 
     </dependencies>
 

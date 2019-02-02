@@ -11,6 +11,7 @@ import org.testng.annotations.*;
  * Created by AutoTest on 2017/10/18.
  */
 public class CustomPrompts extends SwebDriver{
+    String[] version = DEVICE_VERSION.split("\\.");
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
         pjsip.Pj_Init();
@@ -18,14 +19,14 @@ public class CustomPrompts extends SwebDriver{
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
 
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
 
 //        被测设备注册分机1000
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
 
         pageDeskTop.taskBar_Main.click();
@@ -54,7 +55,11 @@ public class CustomPrompts extends SwebDriver{
         pjsip.Pj_Answer_Call(1000,true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
+        if (Integer.valueOf(version[1]) <= 8) {
+            m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
+        }else{
+            m_extension.checkCDR("RecordFile","1000","Answered","","",communication_internal);
+        }
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         customPrompts.refresh.click();
@@ -74,8 +79,11 @@ public class CustomPrompts extends SwebDriver{
         pjsip.Pj_Answer_Call(1000,true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("play_file","1000 <1000>","Answered","","",communication_internal);
-
+        if (Integer.valueOf(version[1]) <= 8) {
+            m_extension.checkCDR("play_file","1000 <1000>","Answered","","",communication_internal);
+        }else{
+            m_extension.checkCDR("play_file","1000","Answered","","",communication_internal);
+        }
     }
 
 //    重新录制

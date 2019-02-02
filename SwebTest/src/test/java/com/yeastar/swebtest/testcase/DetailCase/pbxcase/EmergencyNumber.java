@@ -15,8 +15,11 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import static com.codeborne.selenide.Selenide.screenshot;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.yeastar.swebtest.tools.ScreenShot.takeScreenshot;
 
@@ -26,88 +29,150 @@ import static com.yeastar.swebtest.tools.ScreenShot.takeScreenshot;
  * Cloud预安装linkus就不用卸载了
  */
 public class EmergencyNumber extends SwebDriver {
+//    分割版本号字符
     String[] version = DEVICE_VERSION.split("\\.");
-
+//    SIP4线路是否存在的标志变量
+    boolean isTrunkExist = false;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时");
+    String currentTime = String.valueOf(sdf.format(new Date()))+"_";
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：====== Emergency Number ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
+    @BeforeClass
+    public void BeforeClass2() {
+//        resetoreBeforetest("BeforeTest_Local.bak");
+    }
     @Test
     public void A1_registerExtensions(){
+        pjsip.Pj_Init();
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1100, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
-        pjsip.Pj_CreateAccount(1101, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1101, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1102"); //执行操作
-        pjsip.Pj_CreateAccount(1102, "Yeastar202", "UDP", UDP_PORT, 4);
+        pjsip.Pj_CreateAccount(1102, EXTENSION_PASSWORD, "UDP", UDP_PORT, 4);
         pjsip.Pj_Register_Account(1102, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1103"); //执行操作
-        pjsip.Pj_CreateAccount(1103, "Yeastar202", "UDP", UDP_PORT, 5);
+        pjsip.Pj_CreateAccount(1103, EXTENSION_PASSWORD, "UDP", UDP_PORT, 5);
         pjsip.Pj_Register_Account(1103, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备1注册分机3002"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3002, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3002, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3002, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备1注册分机3004"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3004, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3004, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3004, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
         closePbxMonitor();
     }
-
     @Test
-    public void A2_addUnavailTrunk() throws InterruptedException {
+    public void A2_Init(){
+//        如果不可用的SIP4存在的话，将标志变量设置为已存在
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.trunks_panel.click();
-        Reporter.infoExec(" 添加不可用的sip外线SIP4");
-        m_trunks.addUnavailTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,"SIP4",DEVICE_ASSIST_1,String.valueOf(UDP_PORT_ASSIST_1),DEVICE_ASSIST_1,"1","1","1","Yeastar",false);
+        setPageShowNum(trunks.grid,100);
+        String []name = new String[20];
+        for (int i=0;i<Integer.parseInt(String.valueOf(gridLineNum(trunks.grid)));i++){
+                name[i] = String.valueOf(gridContent(trunks.grid, i + 1, trunks.gridcolumn_TrunkName));
+                if (name[i].equals("SIP4")) {
+//                如果name[i]就是要找的那条中继，将标志变量 isTrunkExist 赋值为true
+                    isTrunkExist = true;
+                    Reporter.infoExec(" SIP4已存在，不进行添加");
+                    break;
+                }
+        }
+    }
+    @Test
+    public void A3_addUnavailTrunk() throws InterruptedException {
+//        如果不存在SIP4，那就添加
+        if (!isTrunkExist) {
+            Reporter.infoExec(" 添加不可用的sip外线SIP4");
+            m_trunks.addUnavailTrunk("SIP",add_voIP_trunk_basic.VoipTrunk,"SIP4",DEVICE_ASSIST_1,String.valueOf(UDP_PORT_ASSIST_1),DEVICE_ASSIST_1,"1","1","1","Yeastar",false,"1");
+        }
+    }
+    @Test
+    public void A4_recoveryEventCenter() throws InterruptedException {
+        closeSetting();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        settings.eventSettings_panel.click();
+        ys_waitingTime(5000);
+        Reporter.infoExec("恢复事件中心的紧急号码设置——勾选Record，勾选Notification");
+
+        int count = Integer.valueOf(executeJs("return Ext.query('.cp-label').length").toString());
+        int i=0;
+        for(i=5; i<count; i++){
+            String contxt = executeJs("return Ext.query('.cp-label')["+i+"].innerText").toString();
+            if(contxt.equals("Emergency Call")){
+                break;
+            }
+        }
+        if(i == count){
+            return;
+        }
+
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1)+ "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(true)");
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1) + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(true)");
+
+        notificationContacts.notificationContacts.click();
+        Reporter.infoExec("删除所有的notification通知人"); //执行操作
+        while (Integer.parseInt(String.valueOf(gridLineNum(notificationContacts.grid))) != 0) {
+            gridSeleteAll(notificationContacts.grid);
+            notificationContacts.delete.click();
+            notificationContacts.delete_yes.click();
+            ys_apply();
+        }
     }
     @Test
     public void B1_addEmergencyNum(){
+        closeSetting();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
-        settings.emergencyNumber_tree.click();
+        settings.emergencyNumber_panel.click();
+
+        ys_waitingLoading(emergencyNumber.grid_Mask);
         deletes("  删除所有紧急号码",emergencyNumber.grid,emergencyNumber.delete,emergencyNumber.delete_yes,emergencyNumber.grid_Mask);
         Reporter.infoExec(" 添加紧急号码2000，通过SPS外线，通知人为1100");
         m_emergencyNumber.addEmergencyNumber(2000,SPS,1100);
         ys_apply();
     }
     @Test
-    public void B2_makeCall() throws InterruptedException {
+    public void B2_makeCall() {
         Reporter.infoExec(" 验证紧急号码可正常使用，分机1000拨打2000，预期1100响铃");
 //        验证紧急号码可正常使用
         pjsip.Pj_Make_Call_No_Answer(1000, "2000", DEVICE_IP_LAN, false);
@@ -356,6 +421,7 @@ public class EmergencyNumber extends SwebDriver {
         m_extension.checkCDR("1100 <1100>","3001","Answered"," ",SIPTrunk,communication_outRoute,2);
 //    CDR可能会误报，前后顺序不同
     }
+
     /*
     * 验证紧急号码可以通过各物理外线正常呼出
     * */
@@ -364,6 +430,7 @@ public class EmergencyNumber extends SwebDriver {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.emergencyNumber_tree.click();
+        ys_waitingLoading(emergencyNumber.grid_Mask);
         Reporter.infoExec(" 验证紧急号码可以通过各物理外线正常呼出，添加经过各物理外线呼出的紧急号码");
         ys_waitingTime(1000);
         Reporter.infoExec(" 添加SPS");
@@ -405,6 +472,11 @@ public class EmergencyNumber extends SwebDriver {
         }
         ys_apply();
     }
+    @Test
+    public void D2_backup(){
+        backupEnviroment(this.getClass().getName());
+    }
+
 //    ACCOUNT不支持紧急号码
    /* @Test
     public void D2_check_account(){
@@ -548,7 +620,6 @@ public class EmergencyNumber extends SwebDriver {
             ys_waitingTime(8000);
             pjsip.Pj_Hangup_All();
             m_extension.checkCDR("1000dial"+DEVICE_ASSIST_GSM+" <Emergency>","1100 <1100>","Answered"," "," ",communication_internal,1);
-//            m_extension.checkCDR("1000 <1000>",DEVICE_ASSIST_GSM,"No Answer"," ",GSM,communication_outRoute,2);
             m_extension.checkCDR("1000 <1000>",DEVICE_ASSIST_GSM,"Answered"," ",GSM,communication_outRoute,2);
         }
     }
@@ -733,6 +804,7 @@ public class EmergencyNumber extends SwebDriver {
         settings.eventSettings_panel.click();
         ys_waitingTime(1000);
         notificationContacts.notificationContacts.click();
+        ys_waitingLoading(notificationContacts.grid_Mask);
         while (Integer.parseInt(String.valueOf(gridLineNum(notificationContacts.grid))) != 0) {
             gridSeleteAll(notificationContacts.grid);
             notificationContacts.delete.click();
@@ -785,7 +857,9 @@ public class EmergencyNumber extends SwebDriver {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.eventLog_panel.click();
+        ys_waitingLoading(eventLog.grid_Mask);
         ys_waitingTime(6000);
+        eventLog.search.click();
         String time = String.valueOf(gridContent(eventLog.grid,1,eventLog.gridColumn_Time));
         Reporter.infoExec("Event log获取到的time为："+time); //执行操作
         String type = String.valueOf(gridContent(eventLog.grid,1,eventLog.gridColumn_Type));
@@ -795,7 +869,7 @@ public class EmergencyNumber extends SwebDriver {
         String message = String.valueOf(gridContent(eventLog.grid,1,eventLog.gridColumn_EventMessage));
         Reporter.infoExec("预期message = \"Extension 1000 has made an emergency call to 111\"，实际Event log获取到的message为："+message);
 
-        YsAssert.assertInclude(time,t,"EventTime查看");
+//        YsAssert.assertInclude(time,t,"EventTime查看");
         YsAssert.assertInclude(type,"telephony","EventType查看");
         YsAssert.assertInclude(name,"Emergency Call","EventName查看");
         YsAssert.assertInclude(message,"Extension 1000 has made an emergency call to 111","EventMessage 查看");
@@ -803,22 +877,29 @@ public class EmergencyNumber extends SwebDriver {
 
     @Test
     public void F2_EventCenter1(){
+        closeSetting();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
-        settings.eventSettings_tree.click();
+        settings.eventSettings_panel.click();
         ys_waitingTime(5000);
         Reporter.infoExec("事件中心的紧急号码——不勾选Record，勾选Notification");
-        if (PRODUCT.equals(CLOUD_PBX)){
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_CloudPBX + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(false)");
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Notification_EmergencyCall_CloudPBX + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(true)");
-        }else {
-            if (version[1].equals("6")) {
-                executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_306 + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(false)");
-            }else{
-                executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_307 + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(false)");
+
+        int count = Integer.valueOf(executeJs("return Ext.query('.cp-label').length").toString());
+        int i=0;
+        for(i=0; i<count; i++){
+            String contxt = executeJs("return Ext.query('.cp-label')["+i+"].innerText").toString();
+            if(contxt.equals("Emergency Call")){
+                break;
             }
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Notification_EmergencyCall + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(true)");
         }
+        if(i == count){
+            return;
+        }
+
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1)+ "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(false)");
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1) + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(true)");
+
+        screenshot("F2_EventCenter1 "+currentTime);
         closeSetting();
     }
     @Test
@@ -838,19 +919,18 @@ public class EmergencyNumber extends SwebDriver {
         pjsip.Pj_Answer_Call(1103,200,false);
         ys_waitingTime(8000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("Warning","xlq <1103>","Answered"," "," ",communication_warning,1);
-        m_extension.checkCDR("1102dial111 <Emergency>","1100 <1100>","Answered"," "," ",communication_internal,2);
-        m_extension.checkCDR("1102 <1102>","111","Answered"," ",SPS,communication_outRoute,3);
+        m_extension.checkCDR("Warning","xlq <1103>","Answered"," "," ",communication_warning,1,2,3);
+        m_extension.checkCDR("1102dial111 <Emergency>","1100 <1100>","Answered"," "," ",communication_internal,1,2,3);
+        m_extension.checkCDR("1102 <1102>","111","Answered"," ",SPS,communication_outRoute,1,2,3);
     }
     @Test
     public void F2_EventCenter3(){
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.eventLog_panel.click();
-        ys_waitingTime(5000);
         eventLog.search.click();
-//        ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"F2_EventCenter3().jpg");
-//        Reporter.sendReport("link","Error: " + "F2_EventCenter3()调试", SCREENSHOT_PATH +"F2_EventCenter3().jpg");
+        ys_waitingLoading(eventLog.grid_Mask);
+        ys_waitingTime(5000);
 
         String type = String.valueOf(gridContent(eventLog.grid,1,eventLog.gridColumn_Type));
         Reporter.infoExec("预期type = \"telephony\"，实际Event log获取到的type为："+type);
@@ -865,22 +945,29 @@ public class EmergencyNumber extends SwebDriver {
     }
     @Test
     public void F2_EventCenter4() {
+        closeSetting();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
-        settings.eventSettings_tree.click();
+        settings.eventSettings_panel.click();
         ys_waitingTime(5000);
         Reporter.infoExec("事件中心的紧急号码——不勾选Record，不勾选Notification");
-        if (PRODUCT.equals(CLOUD_PBX)) {
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_CloudPBX + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(false)");
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Notification_EmergencyCall_CloudPBX + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(false)");
-        } else {
-            if (version[1].equals("6")) {
-                executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_306 + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(false)");
-            }else{
-                executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_307 + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(false)");
+
+        int count = Integer.valueOf(executeJs("return Ext.query('.cp-label').length").toString());
+        int i=0;
+        for(i=5; i<count; i++){
+            String contxt = executeJs("return Ext.query('.cp-label')["+i+"].innerText").toString();
+            if(contxt.equals("Emergency Call")){
+                break;
             }
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Notification_EmergencyCall + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(false)");
         }
+        if(i == count){
+            return;
+        }
+
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1)+ "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(false)");
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1) + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(false)");
+
+        screenshot("F2_EventCenter4 "+currentTime);
     }
     @Test
     public void F2_EventCenter5(){
@@ -906,7 +993,10 @@ public class EmergencyNumber extends SwebDriver {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.eventLog_panel.click();
+        eventLog.search.click();
+        ys_waitingLoading(eventLog.grid_Mask);
         ys_waitingTime(5000);
+
         String type = String.valueOf(gridContent(eventLog.grid,1,eventLog.gridColumn_Type));
         Reporter.infoExec("预期type = \"telephony\"，实际Event log获取到的type为："+type);
         String name = String.valueOf(gridContent(eventLog.grid,1,eventLog.gridColumn_EventName));
@@ -920,22 +1010,28 @@ public class EmergencyNumber extends SwebDriver {
     }
     @Test
     public void F2_eventCenter7(){
+        closeSetting();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
-        settings.eventSettings_tree.click();
+        settings.eventSettings_panel.click();
         ys_waitingTime(5000);
         Reporter.infoExec("事件中心的紧急号码——勾选Record，不勾选Notification");
-        if (PRODUCT.equals(CLOUD_PBX)){
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_CloudPBX + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(true)");
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Notification_EmergencyCall_CloudPBX + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(false)");
-        }else {
-            if (version[1].equals("6")) {
-                executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_306 + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(true)");
-            }else {
-                executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_307 + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(true)");
+        int count = Integer.valueOf(executeJs("return Ext.query('.cp-label').length").toString());
+        int i=0;
+        for(i=5; i<count; i++){
+            String contxt = executeJs("return Ext.query('.cp-label')["+i+"].innerText").toString();
+            if(contxt.equals("Emergency Call")){
+                break;
             }
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Notification_EmergencyCall + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(false)");
         }
+        if(i == count){
+            return;
+        }
+
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1)+ "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(true)");
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1) + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(false)");
+
+        screenshot("F2_EventCenter7 "+currentTime);
         closeSetting();
     }
     @Test
@@ -971,7 +1067,10 @@ public class EmergencyNumber extends SwebDriver {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.eventLog_panel.click();
+        eventLog.search.click();
+        ys_waitingLoading(eventLog.grid_Mask);
         ys_waitingTime(8000);
+
         String time = String.valueOf(gridContent(eventLog.grid,1,eventLog.gridColumn_Time));
         Reporter.infoExec("Event log获取到的time为："+time);
         String type = String.valueOf(gridContent(eventLog.grid,1,eventLog.gridColumn_Type));
@@ -992,20 +1091,27 @@ public class EmergencyNumber extends SwebDriver {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.eventSettings_panel.click();
+
         ys_waitingTime(5000);
         Reporter.infoExec("事件中心的紧急号码——勾选Record，勾选Notification");
-        if (PRODUCT.equals(CLOUD_PBX)){
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_CloudPBX + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(true)");
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Notification_EmergencyCall_CloudPBX + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(true)");
-        }else {
-            executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Notification_EmergencyCall + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(true)");
-            if (version[1].equals("6")) {
-                executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_306 + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(true)");
-            }else {
-                executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" + eventSetting.Record_EmergencyCall_307 + "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(true)");
+        int count = Integer.valueOf(executeJs("return Ext.query('.cp-label').length").toString());
+        int i=0;
+        for(i=5; i<count; i++){
+            String contxt = executeJs("return Ext.query('.cp-label')["+i+"].innerText").toString();
+            if(contxt.equals("Emergency Call")){
+                break;
             }
         }
+        if(i == count){
+            return;
+        }
+        
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1)+ "].down('[name=" + eventSetting.EventSetting_Record + "]').setValue(true)");
+        executeJs("Ext.ComponentQuery.query('[xType=checkrow]')[" +(i-1) + "].down('[name=" + eventSetting.EventSetting_Noticication + "]').setValue(true)");
+
+        screenshot("F3_recoveryEvent "+currentTime);
         notificationContacts.notificationContacts.click();
+        ys_waitingLoading(notificationContacts.grid_Mask);
         Reporter.infoExec(" 全部勾选-确定删除"); //执行操作
 //        全部勾选
         gridSeleteAll(notificationContacts.grid);
@@ -1023,6 +1129,7 @@ public class EmergencyNumber extends SwebDriver {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.emergencyNumber_panel.click();
+        ys_waitingLoading(emergencyNumber.grid_Mask);
         if (PRODUCT.equals(CLOUD_PBX)) {
             m_emergencyNumber.addEmergencyNumber(2001, SPS, 1100);
             m_emergencyNumber.addEmergencyNumber(2000, SPS, 1100);
@@ -1120,15 +1227,12 @@ public class EmergencyNumber extends SwebDriver {
         YsAssert.assertEquals(row, 0, "全部勾选-确定删除");
     }
     @Test
-    public void H_recovery(){
+    public void G8_deleteUnavailTrunk(){
+        closeSetting();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         ys_waitingTime(3000);
-        if(settings.trunks_panel.isDisplayed()){
-            settings.trunks_panel.click();
-        }else{
-            settings.trunks_tree.click();
-        }
+        settings.trunks_panel.click();
         setPageShowNum(trunks.grid,100);
         Reporter.infoExec(" 删除SIP4——选择yes"); //执行操作
         int row = Integer.parseInt(String.valueOf(gridFindRowByColumn(trunks.grid,trunks.gridcolumn_TrunkName,"SIP4",sort_ascendingOrder)));
@@ -1142,6 +1246,7 @@ public class EmergencyNumber extends SwebDriver {
         Reporter.infoExec("期望值row3:"+row3);
         YsAssert.assertEquals(row2,row3,"删除SIP4——确定删除");
     }
+
     //    AfterMethod是在每个Test执行后都要来执行的方法
     @AfterMethod
     public void AfterMethod(){
@@ -1151,12 +1256,14 @@ public class EmergencyNumber extends SwebDriver {
             System.out.println("admin角色的cdr页面已关闭");
         }
     }
+
     @AfterClass
-    public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
+    public void AfterClass1() throws InterruptedException {
         Reporter.infoAfterClass("执行完毕：====== Emergency Number ======"); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+
+        ys_waitingTime(10000);
+        killChromePid();
     }
 }

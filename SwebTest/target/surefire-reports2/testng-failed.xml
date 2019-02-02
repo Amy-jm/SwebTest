@@ -3,204 +3,71 @@
 <suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [PBXCORE]">
   <test name="pbxcore(failed)">
     <classes>
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest">
-        <methods>
-          <include name="BeforeClass"/>
-          <include name="AfterMethod"/>
-          <include name="AfterClass"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.BeforeTest -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes">
-        <methods>
-          <include name="AfterMethod"/>
-          <include name="AfterClass"/>
-          <include name="C_call"/>
-          <include name="BeforeClass"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRoutes -->
       <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference">
         <methods>
+          <include name="D1_Participant1"/>
           <include name="AfterMethod"/>
           <include name="BeforeClass"/>
           <include name="AfterClass"/>
-          <include name="Register"/>
         </methods>
       </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.Conference -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.VoicePrompts">
+      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa">
         <methods>
-          <include name="AfterClass"/>
-          <include name="F_CreateNewPlaylist"/>
-          <include name="AfterMethod"/>
-          <include name="BeforeClass"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.VoicePrompts -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList">
-        <methods>
-          <include name="G_checkPin"/>
-          <include name="E_checkPin"/>
-          <include name="AfterClass"/>
-          <include name="BeforeClass"/>
-          <include name="AfterMethod"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.PINList -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial">
-        <methods>
+          <include name="A0_BeforeClass"/>
           <include name="AfterClass"/>
           <include name="AfterMethod"/>
-          <include name="BeforeClass"/>
+          <include name="D_checkTrunk9"/>
         </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.SpeedDial -->
+      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa -->
       <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Queue">
         <methods>
-          <include name="N8_leave_join_empty"/>
+          <include name="G8_AgentTimeout_Retry"/>
           <include name="AfterMethod"/>
           <include name="BeforeClass"/>
           <include name="G5_Satisfaction"/>
-          <include name="M1_ringall"/>
-          <include name="C6_bri_6701"/>
-          <include name="F5_dynamic_login6710"/>
-          <include name="D2_fail_extension"/>
-          <include name="G3_MusicOnHold1"/>
+          <include name="G9_warp_time0"/>
           <include name="AfterClass"/>
-          <include name="Register"/>
-          <include name="F4_dynamic_call6701"/>
-          <include name="G2_JoinAnnouncement"/>
         </methods>
       </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.Queue -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa">
-        <methods>
-          <include name="BeforeClass"/>
-          <include name="AfterClass"/>
-          <include name="AfterMethod"/>
-          <include name="E4_checkPriority"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.Disa -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom">
-        <methods>
-          <include name="F1_followToPaging"/>
-          <include name="BeforeClass"/>
-          <include name="Register"/>
-          <include name="AfterMethod"/>
-          <include name="AfterClass"/>
-          <include name="G1_intercom"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Blacklist_Whitelist">
-        <methods>
-          <include name="AfterClass"/>
-          <include name="B1_black_admin2"/>
-          <include name="C6_white_admin2"/>
-          <include name="BeforeClass"/>
-          <include name="AfterMethod"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.Blacklist_Whitelist -->
       <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback">
         <methods>
-          <include name="C2_through_sip"/>
+          <include name="D2_des_extension"/>
+          <include name="D3_des_ivr"/>
           <include name="D5_des_queue"/>
-          <include name="C7_through_e1"/>
-          <include name="Register"/>
           <include name="AfterMethod"/>
-          <include name="C3_through_iax"/>
           <include name="BeforeClass"/>
           <include name="AfterClass"/>
-          <include name="C1_through_sps"/>
-          <include name="D8_des_fxs"/>
-          <include name="C8_through_gsm"/>
-          <include name="C4_through_spx"/>
         </methods>
       </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.Callback -->
+      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom">
+        <methods>
+          <include name="I_Recovery"/>
+          <include name="D2_2way"/>
+          <include name="BeforeClass"/>
+          <include name="Register"/>
+          <include name="AfterMethod"/>
+          <include name="AfterClass"/>
+        </methods>
+      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom -->
+      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR">
+        <methods>
+          <include name="AfterMethod"/>
+          <include name="BeforeClass"/>
+          <include name="H1_prompt"/>
+          <include name="E1_DialExtension_1103"/>
+          <include name="AfterClass0"/>
+          <include name="D6_key6_custom_prompt"/>
+        </methods>
+      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR -->
       <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.PickupGroup">
         <methods>
           <include name="AfterMethod"/>
           <include name="BeforeClass"/>
           <include name="AfterClass"/>
           <include name="Register"/>
-          <include name="F1_edit_disablefeaturecode"/>
+          <include name="D3_queue"/>
         </methods>
       </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.PickupGroup -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.TimeCondition">
-        <methods>
-          <include name="J7_makeCall_In"/>
-          <include name="C3_makeCall_Out"/>
-          <include name="I7_makeCall_In"/>
-          <include name="C7_makeCall_In"/>
-          <include name="H6_makeCall_In"/>
-          <include name="AfterMethod"/>
-          <include name="E7_makeCall_In"/>
-          <include name="F7_makeCall_In"/>
-          <include name="H8_makeCall_In"/>
-          <include name="J9_makeCall_In"/>
-          <include name="AfterClass"/>
-          <include name="D4_deleteTime"/>
-          <include name="E3_makeCall_Out"/>
-          <include name="H2_makeCall_Out"/>
-          <include name="F3_makeCall_Out"/>
-          <include name="D9_makeCall_In"/>
-          <include name="D8_makeCall_Out"/>
-          <include name="C9_makeCall_In"/>
-          <include name="D2_makeCall_Out"/>
-          <include name="J3_makeCall_Out"/>
-          <include name="D5_makeCall_Out"/>
-          <include name="I3_makeCall_Out"/>
-          <include name="BeforeClass"/>
-          <include name="G3_makeCall_Out"/>
-          <include name="K7_makeCall_In"/>
-          <include name="K3_makeCall_Out"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.TimeCondition -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction">
-        <methods>
-          <include name="I_recovery3"/>
-          <include name="AfterMethod"/>
-          <include name="I_recovery5"/>
-          <include name="BeforeClass"/>
-          <include name="I_recovery4"/>
-          <include name="G5_checkRestriction1"/>
-          <include name="I_recovery6"/>
-          <include name="I_recovery1"/>
-          <include name="G6_CancelRestriction3"/>
-          <include name="AfterClass"/>
-          <include name="I_recovery2"/>
-          <include name="H1_deletePart_no"/>
-          <include name="H3_deleteAll_no"/>
-          <include name="H4_deleteAll_yes"/>
-          <include name="H2_deletePart_yes"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.OutboundRestriction -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.EmergencyNumber">
-        <methods>
-          <include name="BeforeClass"/>
-          <include name="F2_EventCenter5"/>
-          <include name="AfterClass"/>
-          <include name="AfterMethod"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.EmergencyNumber -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP">
-        <methods>
-          <include name="BeforeClass"/>
-          <include name="AfterMethod"/>
-          <include name="AfterClass"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.AutoCLIP -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.InboundRoutes">
-        <methods>
-          <include name="B1_checkTrunk"/>
-          <include name="BeforeClass"/>
-          <include name="AfterClass"/>
-          <include name="AfterMethod"/>
-          <include name="Q_recovery5"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.InboundRoutes -->
-      <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR">
-        <methods>
-          <include name="AfterMethod"/>
-          <include name="BeforeClass"/>
-          <include name="H_prompt"/>
-          <include name="Register"/>
-          <include name="AfterClass"/>
-        </methods>
-      </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR -->
       <class name="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup">
         <methods>
           <include name="B_Register"/>
@@ -208,7 +75,9 @@
           <include name="A_BeforeClass"/>
           <include name="F5_FailtoQueue"/>
           <include name="F6_FailtoConference"/>
-          <include name="AfterClass"/>
+          <include name="AfterClass1"/>
+          <include name="AfterClass2"/>
+          <include name="AfterClass0"/>
         </methods>
       </class> <!-- com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup -->
     </classes>

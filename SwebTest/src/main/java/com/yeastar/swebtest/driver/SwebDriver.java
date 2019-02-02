@@ -2,27 +2,19 @@ package com.yeastar.swebtest.driver;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.testng.ScreenShooter;
 import com.yeastar.swebtest.tools.pjsip.UserAccount;
 import com.yeastar.swebtest.tools.reporter.Logger;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.*;
@@ -40,24 +32,22 @@ public class SwebDriver extends Config {
     public static int initialDriver(String browser, String relativeOrAbsoluteUrl) {
         return initialDriver(browser,relativeOrAbsoluteUrl,null);
     }
-
     public static int initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl) {
         //Selenide的配置信息
         Configuration.timeout = FINDELEMENT_TIMEOUT;
-//        Configuration.collectionsTimeout = 20;
-
+        Configuration.collectionsTimeout = FINDELEMENT_TIMEOUT;
+        Configuration.startMaximized = true;
+        Configuration.reportsFolder=SCREENSHOT_PATH;
+//        ScreenShooter.captureSuccessfulTests = true; //每个test后都截图，不论失败或成功
+        Configuration.captureJavascriptErrors=false;//捕获js错误
+        Configuration.savePageSource = false;
         DesiredCapabilities grid;
         //选择测试浏览器
         //这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
         if (browser.equals("chrome")) {
-//            HashMap<String, Object> chromePrefs = new HashMap<>();
-//            chromePrefs.put("profile.default_content_settings.popups",2);
-//            chromePrefs.put("download.default_directory","D:\\");
-
-//            ChromeOptions options = new ChromeOptions();
-//            options.setExperimentalOption("prefs",chromePrefs);
-            Configuration.browser = "chrome";
-            System.setProperty("selenide.browser", "Chrome");
+            Configuration.browser=CHROME;
+//            Configuration.browserBinary = CHROME_PATH;
+//            Configuration.browserVersion = 谷歌版本
             System.setProperty("webdriver.chrome.driver", CHROME_PATH);
             grid = DesiredCapabilities.chrome();
         } else if (browser.equals("firefox")) {
@@ -67,28 +57,79 @@ public class SwebDriver extends Config {
             Logger.error("浏览器参数有误："+browser);
             return 0;
         }
-
         if (hubUrl != null ) {
             try {
                 webDriver = new RemoteWebDriver(new URL(hubUrl),grid);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+            System.out.println("hubUrl "+"No null "+hubUrl
+            );
             webDriver.get(relativeOrAbsoluteUrl);
             setWebDriver(webDriver);
         } else {
 //            如果指定，则打开被测服务器
             open(relativeOrAbsoluteUrl);
-//            返回WebDriver的类型
             webDriver = getWebDriver();
         }
 
         return 1;
     }
 
+//    public static int initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl) {
+//        //Selenide的配置信息
+//        Configuration.timeout = FINDELEMENT_TIMEOUT;
+//        Configuration.collectionsTimeout = 20;
+//        Configuration.startMaximized = true;
+//        DesiredCapabilities grid;
+//        //这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
+//        if (browser.equals("chrome")) {
+//            Configuration.browser = CHROME;
+//            System.setProperty("webdriver.chrome.driver", CHROME_PATH);
+//            grid = DesiredCapabilities.chrome();
+//        } else if (browser.equals("firefox")) {
+//            System.setProperty("webdriver.firefox.bin",FIREFOX_PATH);
+//            grid = DesiredCapabilities.firefox();
+//        } else {
+//            Logger.error("浏览器参数有误："+browser);
+//            return 0;
+//        }
+//
+    //        if (hubUrl != null ) {
+//            try {
+//                webDriver = new RemoteWebDriver(new URL(hubUrl),grid);
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            }
+////            webDriver.get(relativeOrAbsoluteUrl);
+// //           setWebDriver(webDriver);
+//            open(relativeOrAbsoluteUrl);
+//            webDriver = getWebDriver();
+//        } else {
+////            如果指定，则打开被测服务器
+//            open(relativeOrAbsoluteUrl);
+////            返回WebDriver的类型
+//            webDriver = getWebDriver();
+//        }
+//
+//        return 1;
+//    }
+
     public static void quitDriver() {
-        webDriver.quit();
-        ys_waitingTime(1000);
+//        webDriver.quit();
+        logout();
+        close();
+//        ys_waitingTime(5000);
+    }
+    public static void killChromePid()  {
+
+        try {
+            Runtime.getRuntime().exec("taskkill /im chrome.exe /f");
+//            Runtime.getRuntime().exec("taskkill /im chromedriver.exe /f");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     /**
      * 登录S系列设备，默认语言为英文
@@ -117,9 +158,23 @@ public class SwebDriver extends Config {
         pageLogin.password.setValue(password);
         ys_waitingTime(1000);
         pageLogin.login.click();
+        sleep(10000);
+        if(pageDeskTop.pp_comfirm.isDisplayed()){
+            setCheckBox(pageDeskTop.pp_agreement_checkBox,true);
+            pageDeskTop.pp_comfirm.click();
+        }
         pageDeskTop.taskBar_User.should(exist);
 //        mySettings.close.click();
         sleep(1000);
+
+        if(Integer.valueOf(VERSION_SPLIT[1]) > 9 || PRODUCT.equals(CLOUD_PBX) ){
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
+            settings.extensions_panel.click();
+            extensions.add.click();
+            ys_waitingMask();
+            closeSetting();
+        }
     }
 
     /**
@@ -166,9 +221,6 @@ public class SwebDriver extends Config {
                 gridname + ".id + ' [data-recordindex]')" +
                 "[" + --row + "].id + ' tr td img')[" + column + "].click()");
         ys_waitingTime(2000);
-        System.out.println("Ext.query('#'+Ext.query('#'+" +
-                gridname + ".id + ' [data-recordindex]')" +
-                        "[" + --row + "].id + ' tr td img')[" + column + "].click()");
     }
 
     /**
@@ -304,19 +356,14 @@ public class SwebDriver extends Config {
                 }
             }
         }
+        Reporter.error("没有找到指定的目标："+providerName);
+        System.out.println("gridFindRowByColumn no find providerName row=-1");
         return -1;
     }
 
 //====================================================================List 选择框========================================================
 
-    /**
-     * 选择多个参数的list选择
-     * @param listname   list表格的定位
-     * @param recordname 查找依据
-     * @param valuelist  要选择的参数  数组
-     * @throws InterruptedException
-     */
-    public static void listSelect(String listname, String recordname, ArrayList<String> valuelist) {
+    public static void listSelect(String listname, String recordname, String... valuelist) {
         String Id = "";
         for (String value :
                 valuelist) {
@@ -328,7 +375,14 @@ public class SwebDriver extends Config {
         listSetValue(listname,Id);
     }
 
-    public static void listSelect(String listname, String recordname, String... valuelist) {
+    /**
+     * 选择多个参数的list选择
+     * @param listname   list表格的定位
+     * @param recordname 查找依据
+     * @param valuelist  要选择的参数  数组
+     * @throws InterruptedException
+     */
+    public static void listSelect(String listname, String recordname, ArrayList<String> valuelist) {
         String Id = "";
         for (String value :
                 valuelist) {
@@ -462,8 +516,8 @@ public class SwebDriver extends Config {
      * @param value
      */
     public static void comboboxSet(String listname, String recordname, String value) {
+//        sleep(2000);
         String Id = "";
-
         String listId = (String)listGetId(listname, recordname, value);
         Id =  Id+ listId;
         Id = Id + ",";
@@ -474,8 +528,8 @@ public class SwebDriver extends Config {
     }
 
     public static void comboboxSetbyValue(String listname,String recordname,String value){
+//        sleep(2000);
         String Value = "";
-
         String listValue = (String)listGetValue(listname, recordname, value);
         Value =  Value+ listValue;
         Value = Value + ",";
@@ -512,7 +566,7 @@ public class SwebDriver extends Config {
         while (true){
             Date currentDate  = new Date();
             long currentTime = currentDate.getTime();
-            if(executeJs("return Ext.get('ys-waiting').dom.style.display").equals("none") ){
+            if(executeJs("return Ext.get('ys-waiting').dom.style.display").toString().equals("none") ){
                 break;
             }
             try {
@@ -551,23 +605,29 @@ public class SwebDriver extends Config {
      * @throws InterruptedException
      */
     public static void ys_waitingTime(int ms)  {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(ms);
     }
     /**
      * 等待重启
-     * param sec 默认200 S
+     * param sec 默认300 S
      */
     public static void waitReboot(){
         waitReboot(300);
 
     }
     public static void waitReboot(int sec){
-        new WebDriverWait(webDriver,sec).until(ExpectedConditions.presenceOfElementLocated(By.id("login-btn-btnEl")));
-
+//        new WebDriverWait(webDriver,sec).until(ExpectedConditions.presenceOfElementLocated(By.id("login-btn-btnEl")));
+        while(true){
+            sleep(10000);
+            sec = sec - 10;
+            if(pageLogin.username.isDisplayed()){
+                break;
+            }
+            refresh();
+            if(sec <= 0){
+                break;
+            }
+        }
         boolean rebootSuc= pageLogin.username.isDisplayed();
         System.out.println("waitReboot ..check "+rebootSuc);
         YsAssert.assertEquals(rebootSuc,true,"waitReboot重启");
@@ -642,7 +702,25 @@ public class SwebDriver extends Config {
      */
     public static void ys_apply(){
         pageDeskTop.apply.click();
-        ys_waitingTime(8000);
+        if(PRODUCT.equals(PC)){
+            Date date  = new Date();
+            long time = date.getTime();
+            while (true){
+                Date currentDate  = new Date();
+                long currentTime = currentDate.getTime();
+                if(executeJs("return Ext.query('.x-mask-msg-text').filter(function(o){if(o.id == '')return true;return false;}).length").equals("0") ){
+                    break;
+                }
+                sleep(50);
+                if(currentTime/1000-time/1000 > 30){
+                    Reporter.error("apply timeout");
+                    break;
+                }
+            }
+        }else{
+            ys_waitingTime(6000);
+        }
+        ys_waitingTime(2000);
     }
 
     /**
@@ -650,7 +728,25 @@ public class SwebDriver extends Config {
      */
     public static void ys_me_apply(){
         me.me_apply.click();
-        ys_waitingTime(8000);
+        if(PRODUCT.equals(PC)){
+            Date date  = new Date();
+            long time = date.getTime();
+            while (true){
+                Date currentDate  = new Date();
+                long currentTime = currentDate.getTime();
+                if(executeJs("return Ext.query('.x-mask-msg-text').filter(function(o){if(o.id == '')return true;return false;}).length").equals("0") ){
+                    break;
+                }
+                sleep(50);
+                if(currentTime/1000-time/1000 > 30){
+                    Reporter.error("apply timeout");
+                    break;
+                }
+            }
+        }else{
+            ys_waitingTime(6000);
+        }
+        ys_waitingTime(2000);
     }
     //=============================================================EextJs命令执行==========================================================//
     /**
@@ -664,8 +760,13 @@ public class SwebDriver extends Config {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Extjs：  "+js);
-        return (Object)((JavascriptExecutor)webDriver).executeScript(js);
+        Reporter.infoExec("Extjs： "+js);
+        Object result= (Object)executeJavaScript(js);
+//        Object result= (Object)((JavascriptExecutor)webDriver).executeScript(js);
+        if(js.contains("return")){
+            System.out.println("Extjs: Result:  "+ result);
+        }
+        return result;
     }
 
     /**
@@ -675,7 +776,8 @@ public class SwebDriver extends Config {
      */
     public static Object return_executeJs(String js) {
         String reJs = "return "+ js;
-        return (Object)((JavascriptExecutor)webDriver).executeScript(reJs);
+//        return (Object)((JavascriptExecutor)webDriver).executeScript(reJs);
+        return (Object)executeJavaScript(reJs);
     }
 
     //=================================================================其他==========================================================
@@ -720,19 +822,53 @@ public class SwebDriver extends Config {
     public static void deletes(String message,String grid,SelenideElement delete,SelenideElement delete_yes,String grid_Mask ) {
         Reporter.infoExec(message); //执行操作
         setPageShowNum(grid, 100);
-        while (Integer.parseInt(String.valueOf(gridLineNum(grid))) != 0) {
+        ys_waitingLoading(grid_Mask);
+//        System.out.println("deletes "+message +": "+Integer.parseInt(String.valueOf(gridLineNum(grid))));
+        Reporter.infoExec("deletes "+message +": "+Integer.parseInt(String.valueOf(gridLineNum(grid))));
+        while (Integer.parseInt(String.valueOf(gridLineNum(grid))) > 0) {
             gridSeleteAll(grid);
             delete.click();
             delete_yes.click();
+            ys_waitingMask();
             ys_waitingLoading(grid_Mask);
+            ys_waitingTime(2000);
+            Reporter.infoExec("deleting "+message +": "+Integer.parseInt(String.valueOf(gridLineNum(grid))));
         }
         YsAssert.assertEquals(Integer.parseInt(String.valueOf(gridLineNum(grid))),0,message);
     }
 
-    public static void backupEnviroment(String className){
+    public static void resetoreBeforetest(String pathName){
+        Reporter.infoExec("通过备份环境初始化");
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.maintanceShortcut.click();
         maintenance.backupandRestore.click();
+        if (!PRODUCT.equals(CLOUD_PBX)) {
+            ys_waitingMask();
+        }
+        ys_waitingLoading(backupandRestore.grid_Mask);
+        gridClick(backupandRestore.grid,gridFindRowByColumn(backupandRestore.grid,backupandRestore.gridColumn_Name,pathName,sort_ascendingOrder),backupandRestore.gridColumn_Name);
+        pageDeskTop.messageBox_Yes.click();
+        ys_waitingMask();
+        pageDeskTop.reboot_Yes.click();
+        waitReboot();
+        login(LOGIN_USERNAME, LOGIN_PASSWORD);
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
+        m_extension.showCDRClounm();
+    }
+    public static void backupEnviroment(String className){
+        backupEnviroment(className,false);
+    }
+    public static void backupEnviroment(String className,boolean cdr){
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.maintanceShortcut.click();
+        maintenance.backupandRestore.click();
+        if (!PRODUCT.equals(CLOUD_PBX)) {
+            ys_waitingMask();
+        }
+        ys_waitingLoading(backupandRestore.grid_Mask);
         System.out.println("current grid row: "+gridLineNum(backupandRestore.grid).toString());
         if(!gridLineNum(backupandRestore.grid).toString().equals("0")){
             //Thread.currentThread().getStackTrace()[1].getMethodName();
@@ -749,6 +885,7 @@ public class SwebDriver extends Config {
         }
         backupandRestore.backup.click();
         create_new_backup_file.fileName.setValue(className);
+        setCheckBox(create_new_backup_file.callLog_Checkbox,cdr);
         int t=30;
         while (t>0){
             if(!return_executeJs("Ext.get('mt-br-storagetype-inputEl').getValue()").toString().equals("")){
@@ -760,6 +897,20 @@ public class SwebDriver extends Config {
         }
         create_new_backup_file.save.click();
         closeMaintenance();
+    }
+
+    /**
+     * 因为YsAssert必然会终止当前Test,如果终止前没有挂断当前电话，会影响到下一通通话测试，故这个函数用在通话结束前的判断
+     * @param actStatus
+     * @param expStatus
+     * @param desc
+     */
+    public static void ysAssertWithHangup(int actStatus,int expStatus, String desc){
+//        YsAssert.assertEquals(getExtensionStatus(2000,HUNGUP,20),HUNGUP,"预期2000会被挂断");
+        if(actStatus != expStatus){
+            pjsip.Pj_Hangup_All();
+            YsAssert.assertEquals(actStatus,expStatus,desc);
+        }
     }
     /**
      * 获取分机通话状态

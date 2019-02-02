@@ -27,7 +27,7 @@ public class Extension extends SwebDriver {
         }
         m_extension.showCDRClounm();
         //在pjsip中创建分机
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",-1);
     }
 //    @BeforeClass
     public void InitExtension(){
@@ -87,13 +87,13 @@ public class Extension extends SwebDriver {
         pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
         settings.extensions_panel.click();
         setPageShowNum(extensions.grid,100);
-        m_extension.addSipExtension(1000,"Yeastar202");
+        m_extension.addSipExtension(1000,EXTENSION_PASSWORD);
 
         Number lineAfterAdd = (Number) gridLineNum(extensions.grid);
         String actual = (String) gridContent(extensions.grid,lineAfterAdd.intValue(),extensions.gridcolumn_Extensions);
         Thread.sleep(500);
         YsAssert.assertEquals(actual,String.valueOf("1000"));
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
 
 
     }
@@ -102,12 +102,12 @@ public class Extension extends SwebDriver {
     public void C_CreateFxsExtension() throws InterruptedException {
         if(PRODUCT.equals(PC) || PRODUCT.equals(CLOUD_PBX)){
             Reporter.infoExec("创建分机1001");
-            m_extension.addSipExtension(1001,"Yeastar202");
-            pjsip.Pj_CreateAccount(1001,"Yeastar202","UDP",UDP_PORT,2);
+            m_extension.addSipExtension(1001,EXTENSION_PASSWORD);
+            pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
         }else {
             Reporter.infoExec("创建FXS分机1001");
-            m_extension.addFxsExtension(1001,"Yeastar202",FXS_1);
-            pjsip.Pj_CreateAccount(1001,"Yeastar202","UDP",2);
+            m_extension.addFxsExtension(1001,EXTENSION_PASSWORD,FXS_1);
+            pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",2);
         }
 
         Number lineAfterAdd = (Number) gridLineNum(extensions.grid);
@@ -120,15 +120,15 @@ public class Extension extends SwebDriver {
     @Test
     public void D_CreateBulkExtensions() throws InterruptedException {
         Reporter.infoExec("批量创建分机1100-1109");
-        m_extension.addBulkExtensions(1100,10,REGIST_EXTENSION_PWD_FIX,"Yeastar202",REGIST_EXTENSION_PWD_FIX,"Yeastar202");
+        m_extension.addBulkExtensions(1100,10,REGIST_EXTENSION_PWD_FIX,EXTENSION_PASSWORD,REGIST_EXTENSION_PWD_FIX,EXTENSION_PASSWORD);
         String lineAfterAdd = String.valueOf(gridLineNum(extensions.grid)) ;
         String actual = (String) gridContent(extensions.grid,Integer.parseInt(lineAfterAdd),extensions.gridcolumn_Extensions);
         YsAssert.assertEquals(actual,String.valueOf(1100+10-1));
         ys_apply();
 
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,3);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,4);
-        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",UDP_PORT,5);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",UDP_PORT,4);
+        pjsip.Pj_CreateAccount(1102,EXTENSION_PASSWORD,"UDP",UDP_PORT,5);
     }
 
     @Test

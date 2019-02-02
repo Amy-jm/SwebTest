@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestSuite" time="2,368.019" tests="53" errors="0" skipped="0" failures="0">
+<testsuite name="TestSuite" time="689.753" tests="75" errors="0" skipped="52" failures="12">
   <properties>
     <property name="idea.version" value="2018.1"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -29,7 +29,7 @@
     <property name="os.name" value="Windows 7"/>
     <property name="classworlds.conf" value="C:\Program Files\JetBrains\IntelliJ IDEA 2018.1\plugins\maven\lib\maven3\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="GBK"/>
-    <property name="java.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\apache-maven-3.3.9\bin;C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin;C:\Perl\site\bin;C:\Perl\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;D:\Qt\Qt5.5.1\5.5\mingw492_32\bin;D:\Microsoft SQL Server\120\Tools\Binn\;D:\Microsoft SQL Server\120\DTS\Binn\;D:\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\ManagementStudio\;D:\Microsoft SQL ServerX86\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;D:\UltarEdit;D:\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin;C:\windows\system32;D:\Qt\installer-framework3.0.2\bin;C:\Users\Yeastar\.dnx\bin;."/>
+    <property name="java.library.path" value="C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\apache-maven-3.3.9\bin;C:\Program Files (x86)\Java\jdk1.8.0_121\bin;C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin;C:\Perl\site\bin;C:\Perl\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;D:\Qt\Qt5.5.1\5.5\mingw492_32\bin;D:\Microsoft SQL Server\120\Tools\Binn\;D:\Microsoft SQL Server\120\DTS\Binn\;D:\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\;D:\Microsoft SQL ServerX86\120\Tools\Binn\ManagementStudio\;D:\Microsoft SQL ServerX86\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;D:\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin;C:\windows\system32;D:\Qt\installer-framework3.0.2\bin;C:\Users\Yeastar\.dnx\bin;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
@@ -61,57 +61,546 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
   </properties>
-  <testcase name="A1_Init" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="102.084"/>
-  <testcase name="A2_AddIVR" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="20.695"/>
-  <testcase name="A2_AddIVR" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="39.408"/>
-  <testcase name="A2_AddIVR" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="30.139"/>
-  <testcase name="A2_AddIVR" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="36.904"/>
-  <testcase name="A2_AddIVR" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="30.057"/>
-  <testcase name="A2_AddIVR" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="38.072"/>
-  <testcase name="A2_AddIVR" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="36.823"/>
-  <testcase name="A2_AddIVR" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="31.041"/>
-  <testcase name="A3_EditKeys" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="89.662"/>
-  <testcase name="B_EditInRoute1" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="36.072"/>
-  <testcase name="C0_backup" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="37.562"/>
-  <testcase name="C1_sip_key0_1000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="59.867"/>
-  <testcase name="C2_sps_keyj_1100" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="65.011"/>
-  <testcase name="C3_iax_key0_1000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="54"/>
-  <testcase name="C4_spx_key0_1000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="73.692"/>
-  <testcase name="C5_fxo_key0_1000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="39.155"/>
-  <testcase name="C6_bri_key0_1000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="39.018"/>
-  <testcase name="C7_e1_key0_1000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="0"/>
-  <testcase name="C8_gsm_key0_1000" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="0"/>
-  <testcase name="D1_key1_callback" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="56.427"/>
-  <testcase name="D2_key2_voicemail1" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="67.885"/>
-  <testcase name="D2_key2_voicemail2" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="24.442"/>
-  <testcase name="D2_key2_voicemail3" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="21.212"/>
-  <testcase name="D3_key3_ringgroup" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="49.064"/>
-  <testcase name="D4_key4_queue" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="47.995"/>
-  <testcase name="D5_key5_conference" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="37.599"/>
-  <testcase name="D6_key6_custom_prompt" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="55.182"/>
-  <testcase name="D7_key7_ivr" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="49.124"/>
-  <testcase name="D8_key8_fxs" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="35.659"/>
-  <testcase name="D90_key9_dialbyname" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="57.652"/>
-  <testcase name="D91_keyj_1100" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="40.596"/>
-  <testcase name="D92_keyx_1101" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="48.695"/>
-  <testcase name="D93_TimeOut" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="113.138"/>
-  <testcase name="D94_Invalid" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="53.133"/>
-  <testcase name="E1_DialExtension_1103" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="45.139"/>
-  <testcase name="E2_DialExtension_ringgroup1" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="48.041"/>
-  <testcase name="E3_DialExtension_disable" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="36.989"/>
-  <testcase name="F1_DialOut_sip" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="37.81"/>
-  <testcase name="F2_DialOut_sps" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="40.575"/>
-  <testcase name="F3_DialOut_iax" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="37.79"/>
-  <testcase name="F4_DialOut_spx" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="37.639"/>
-  <testcase name="F5_DialOut_fxo" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="41.644"/>
-  <testcase name="F6_DialOut_bri" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="37.585"/>
-  <testcase name="F7_DialOut_e1" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="0"/>
-  <testcase name="F8_DialOut_gsm" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="0"/>
-  <testcase name="F9_DialOut_disable" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="32.721"/>
-  <testcase name="G1_voicemail_enable" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="53.296"/>
-  <testcase name="G2_voicemail_disable" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="31.072"/>
-  <testcase name="H_prompt" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="105.938"/>
-  <testcase name="I_delete" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="64.16"/>
-  <testcase name="J_recovery" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="66.048"/>
-  <testcase name="K_editInbound2" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.IVR" time="34.507"/>
+  <testcase name="A0_init" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="22.788"/>
+  <testcase name="A_callfrom1_sip" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="26.93">
+    <failure message="CDRÂëºÂè´ÊñπÊ£ÄÊµã „ÄêÈ¢ÑÊúüÔºö3001 [3001] ÂÆûÈôÖÔºö1000 [1000]„Äë" type="java.lang.AssertionError">java.lang.AssertionError: CDRÂëºÂè´ÊñπÊ£ÄÊµã „ÄêÈ¢ÑÊúüÔºö3001 [3001] ÂÆûÈôÖÔºö1000 [1000]„Äë
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1092)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:583)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:146)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:120)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:203)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:288)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:278)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.A_callfrom1_sip(Inbound.java:58)
+</failure>
+    <system-out><![CDATA[°æ15 ±10∑÷57√Î ÷¥––≤Ÿ◊˜°ø:  3001≤¶¥Ú3000Õ®π˝sipÕ‚œﬂ∫Ù»ÎµΩ∑÷ª˙1000
+find this 3001 IP:192.168.12.217
+uri/./..........sip:3000@192.168.12.217:5060  3
+CallstateCallBack callid:0 accId:3 code:1
+CallstateCallBack : username :3001
+Make call Auto 0
+find this 3001 IP:192.168.12.217
+find this 1000 IP:192.168.12.212
+SIP--Õ®ª∞ÕÍ≥…
+°æ15 ±11∑÷20√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs: Result:  none
+°æ15 ±11∑÷23√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs: Result:  1000 <1000>
+  : <a href="file:///F:\MyProject\SwebTest\pic\CDR∫ÙΩ–∑ΩºÏ≤‚ °æ‘§∆⁄£∫3001 [3001]  µº £∫1000 [1000]°ø.jpg" target="_blank">Error: CDR∫ÙΩ–∑ΩºÏ≤‚ °æ‘§∆⁄£∫3001 [3001]  µº £∫1000 [1000]°ø</a>
+]]></system-out>
+  </testcase>
+  <testcase name="A_callfrom2_iax" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="24.008">
+    <failure message="CDRÂëºÂè´ÊñπÊ£ÄÊµã „ÄêÈ¢ÑÊúüÔºö3001 [3001] ÂÆûÈôÖÔºö1000 [1000]„Äë" type="java.lang.AssertionError">java.lang.AssertionError: CDRÂëºÂè´ÊñπÊ£ÄÊµã „ÄêÈ¢ÑÊúüÔºö3001 [3001] ÂÆûÈôÖÔºö1000 [1000]„Äë
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1092)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:583)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:146)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:120)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:203)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:288)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:278)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.A_callfrom2_iax(Inbound.java:86)
+</failure>
+    <system-out><![CDATA[RegisterCallBack :3 code:408
+°æ15 ±11∑÷25√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.get(Ext.query('#cdr-record_header-targetEl'+ ' .x-tool-close')[0].id).dom.click()
+°æ15 ±11∑÷26√Î ÷¥––≤Ÿ◊˜°ø:  3001≤¶¥Ú3100Õ®π˝iaxÕ‚œﬂ∫Ù»ÎµΩ∑÷ª˙1000
+find this 3001 IP:192.168.12.217
+uri/./..........sip:3100@192.168.12.217:5060  3
+CallstateCallBack : username :3001
+Make call Auto 1
+CallstateCallBack callid:0 accId:3 code:6
+CallstateCallBack : username :3001
+°æ15 ±11∑÷46√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.get(Ext.getCmp('cdr-record').down('loadmask').id).dom.style.display
+Extjs: Result:  none
+°æ15 ±11∑÷49√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs: Result:  1000 <1000>
+  : <a href="file:///F:\MyProject\SwebTest\pic\CDR∫ÙΩ–∑ΩºÏ≤‚ °æ‘§∆⁄£∫3001 [3001]  µº £∫1000 [1000]°ø.jpg" target="_blank">Error: CDR∫ÙΩ–∑ΩºÏ≤‚ °æ‘§∆⁄£∫3001 [3001]  µº £∫1000 [1000]°ø</a>
+]]></system-out>
+  </testcase>
+  <testcase name="A_callfrom3_sps" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="33.184"/>
+  <testcase name="A_callfrom4_spx" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="28.519">
+    <failure message="CDRÊ∫ê‰∏≠ÁªßÊ£ÄÊµã „ÄêÈ¢ÑÊúüÔºöspx216 ÂÆûÈôÖÔºösps216„Äë" type="java.lang.AssertionError">java.lang.AssertionError: CDRÊ∫ê‰∏≠ÁªßÊ£ÄÊµã „ÄêÈ¢ÑÊúüÔºöspx216 ÂÆûÈôÖÔºösps216„Äë
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1092)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:583)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:146)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:120)
+	at com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:203)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:292)
+	at com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:278)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.A_callfrom4_spx(Inbound.java:108)
+</failure>
+    <system-out><![CDATA[°æ15 ±12∑÷25√Î ÷¥––≤Ÿ◊˜°ø:  2001≤¶¥Ú88888Õ®π˝spxÕ‚œﬂ∫Ù»ÎµΩ∑÷ª˙1000
+find this 2001 IP:192.168.12.216
+uri/./..........sip:88888@192.168.12.216:5060  4
+CallstateCallBack : username :2001
+Make call Auto 4
+CallstateCallBack callid:4 accId:4 code:4
+CallstateCallBack : username :2001
+CallstateCallBack callid:4 accId:4 code:5
+CallstateCallBack : username :2001
+CallstateCallBack callid:4 accId:4 code:6
+CallstateCallBack : username :2001
+Extjs: Result:  none
+°æ15 ±12∑÷49√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs: Result:  2001 <2001>
+Pass: : CDR∫ÙΩ–∑ΩºÏ≤‚
+°æ15 ±12∑÷50√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[2].textContent
+Extjs: Result:  1000 <1000>
+Pass: : CDR±ªΩ–∑ΩºÏ≤‚
+°æ15 ±12∑÷52√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[5].textContent
+Extjs: Result:  Answered
+Pass: : CDR_StatusºÏ≤‚
+°æ15 ±12∑÷53√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.query('#'+Ext.query('#'+Ext.getCmp('cdr-record').down('grid').down('tableview').id + ' [data-recordindex]')[0].id + ' tr td')[6].textContent
+Extjs: Result:  sps216
+  : <a href="file:///F:\MyProject\SwebTest\pic\CDR‘¥÷–ºÃºÏ≤‚ °æ‘§∆⁄£∫spx216  µº £∫sps216°ø.jpg" target="_blank">Error: CDR‘¥÷–ºÃºÏ≤‚ °æ‘§∆⁄£∫spx216  µº £∫sps216°ø</a>
+]]></system-out>
+  </testcase>
+  <testcase name="A_callfrom5_fxo" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="33.029"/>
+  <testcase name="A_callfrom6_bri" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="33.367"/>
+  <testcase name="A_callfrom7_e1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="32.93"/>
+  <testcase name="A_callfrom8_gsm" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="0"/>
+  <testcase name="B1_callerid" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="44.106"/>
+  <testcase name="B2_callerid" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="72.994"/>
+  <testcase name="C1_did1_sps" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="25.212"/>
+  <testcase name="C2_did1_sps" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="66.691"/>
+  <testcase name="F_timecondition1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="16.247"/>
+  <testcase name="F_timecondition2" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="45.242">
+    <failure message="Element not found {By.xpath: .//a[starts-with(@class,&apos;css_apply&apos;) and text()=&apos;Apply&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//a[starts-with(@class,'css_apply') and text()='Apply']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor12.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.click(Unknown Source)
+	at com.yeastar.swebtest.driver.SwebDriver.ys_apply(SwebDriver.java:704)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.F_timecondition2(Inbound.java:275)
+</failure>
+    <system-out><![CDATA[°æ15 ±18∑÷20√Î ÷¥––≤Ÿ◊˜°ø:  ±‡º≠InRoute1,∆Ù”√ ±º‰Ãıº˛£¨workday_24hourµΩ∑÷ª˙1101
+°æ15 ±18∑÷22√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.getCmp('control-panel').down('inrouter').getStore().getCount()
+Extjs: Result:  2
+°æ15 ±18∑÷24√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('inrouter').id + ' [data-recordindex]')[0].id + ' tr td')[1].textContent
+Extjs: Result:  InRoute1
+gridFindRowByColumn ascendingOrder name  InRoute1
+°æ15 ±18∑÷30√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.query('#'+Ext.query('#'+Ext.getCmp('control-panel').down('inrouter').id + ' [data-recordindex]')[0].id + ' tr td img')[0].click()
+°æ15 ±18∑÷34√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.get('ys-waiting').dom.style.display
+Extjs: Result:  
+°æ15 ±18∑÷35√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.get('ys-waiting').dom.style.display
+Extjs: Result:  
+°æ15 ±18∑÷36√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.get('ys-waiting').dom.style.display
+Extjs: Result:  
+°æ15 ±18∑÷37√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.get('ys-waiting').dom.style.display
+Extjs: Result:  none
+°æ15 ±18∑÷42√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.getCmp('st-ir-enabletimecondition').setValue('true')
+456  Ext.query('#'+Ext.query('#'+ Ext.query('#'+Ext.getCmp('st-ir-name').up('inrouter-edit').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[1].id + ' div div')[0].id
+CellID:combo-3538
+°æ15 ±18∑÷46√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return  Ext.getCmp('combo-3538').getStore().findRecord('name', "workday_24hour", 0, false, false, true).data.id
+Extjs: Result:  2
+id:2
+Ext.getCmp('combo-3538').setValue('2')
+°æ15 ±18∑÷47√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.getCmp('combo-3538').setValue('2')
+1231 Ext.query('#'+Ext.query('#'+ Ext.query('#'+Ext.getCmp('st-ir-name').up('inrouter-edit').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[2].id + ' div div')[0].id
+1231 Ext.getCmp('combo-3539').setValue('e')
+°æ15 ±18∑÷50√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.getCmp('combo-3539').setValue('e')
+...  Ext.query('#'+Ext.query('#'+ Ext.query('#'+Ext.getCmp('st-ir-name').up('inrouter-edit').down('tableview').id + ' [data-recordindex]')[1].id + ' tr td')[3].id + ' div div')[0].id
+°æ15 ±18∑÷53√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return  Ext.getCmp('combo-3540').getStore().findRecord('username', "1101", 0, false, false, true).data.id
+Extjs: Result:  30
+30
+Ext.getCmp('combo-3540').setValue('30')
+°æ15 ±18∑÷54√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.getCmp('combo-3540').setValue('30')
+]]></system-out>
+  </testcase>
+  <testcase name="F_timecondition3" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="10.51">
+    <failure message="Element not found {By.xpath: .//*[@src=&apos;images/taskbar-main.png&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor12.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.F_timecondition3(Inbound.java:288)
+</failure>
+    <system-out><![CDATA[°æ15 ±19∑÷06√Î ÷¥––≤Ÿ◊˜°ø:  ±‡º≠InRoute1£¨ÃÌº”[Holiday]µΩª·“È “Conference1
+]]></system-out>
+  </testcase>
+  <testcase name="F_timecondition4" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="10.66">
+    <failure message="Element not found {By.xpath: .//*[@src=&apos;images/taskbar-main.png&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor12.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.click(Unknown Source)
+	at com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Make_Call_Auto_Answer(PjsipApp.java:266)
+	at com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Make_Call_Auto_Answer(PjsipApp.java:288)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.F_timecondition4(Inbound.java:315)
+</failure>
+    <system-out><![CDATA[°æ15 ±19∑÷16√Î ÷¥––≤Ÿ◊˜°ø:  ∑÷ª˙1000≤¶¥ÚÃÿ’˜¬Î*802«ø÷∆∆Ù”√π§◊˜ ±º‰
+find this 1000 IP:192.168.12.212
+uri/./..........sip:*802@192.168.12.212:5060  0
+CallstateCallBack callid:18 accId:0 code:1
+CallstateCallBack : username :1000
+Make call Auto 18
+CallstateCallBack : username :1000
+]]></system-out>
+  </testcase>
+  <testcase name="F_timecondition5" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="10.451">
+    <failure message="Element not found {By.xpath: .//*[@src=&apos;images/taskbar-main.png&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor12.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.F_timecondition5(Inbound.java:330)
+</failure>
+    <system-out><![CDATA[°æ15 ±19∑÷27√Î ÷¥––≤Ÿ◊˜°ø:  ±‡º≠InRoute1Ω˚”√ ±º‰Ãıº˛
+]]></system-out>
+  </testcase>
+  <testcase name="G_delete1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="10.578">
+    <failure message="Element not found {By.xpath: .//*[@src=&apos;images/taskbar-main.png&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//*[@src='images/taskbar-main.png']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor12.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.click(Unknown Source)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.G_delete1(Inbound.java:352)
+</failure>
+  </testcase>
+  <testcase name="H_recovery" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="26.452">
+    <failure message="Element not found {By.xpath: .//div[starts-with(@id,&apos;inrouter-&apos;)]//span[text()=&apos;Delete&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//div[starts-with(@id,'inrouter-')]//span[text()='Delete']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor12.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.click(Unknown Source)
+	at com.yeastar.swebtest.driver.SwebDriver.deletes(SwebDriver.java:830)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.H_recovery(Inbound.java:403)
+</failure>
+    <system-out><![CDATA[°æ15 ±19∑÷48√Î ÷¥––≤Ÿ◊˜°ø:  …æ≥˝À˘”–∫Ù»Î¬∑”…
+Ext.getCmp('control-panel').down('inrouter').down('mypagingtoolbar').plugins[0].setValue('100')
+°æ15 ±19∑÷52√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.getCmp('control-panel').down('inrouter').down('mypagingtoolbar').plugins[0].setValue('100')
+°æ15 ±19∑÷53√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.getCmp('control-panel').down('inrouter').down('mypagingtoolbar').store.setPageSize(100)
+°æ15 ±19∑÷54√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.getCmp('control-panel').down('inrouter').down('mypagingtoolbar').store.loadPage(1)
+°æ15 ±19∑÷57√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.get(Ext.getCmp('control-panel').down('inrouter').down('loadmask').id).dom.style.display
+Extjs: Result:  none
+°æ15 ±19∑÷59√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.getCmp('control-panel').down('inrouter').getStore().getCount()
+Extjs: Result:  2
+°æ15 ±19∑÷59√Î ÷¥––≤Ÿ◊˜°ø: deletes  …æ≥˝À˘”–∫Ù»Î¬∑”…: 2
+°æ15 ±20∑÷00√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ return Ext.getCmp('control-panel').down('inrouter').getStore().getCount()
+Extjs: Result:  2
+°æ15 ±20∑÷04√Î ÷¥––≤Ÿ◊˜°ø: Extjs£∫ Ext.getCmp('control-panel').down('inrouter').getSelectionModel().selectAll()
+]]></system-out>
+  </testcase>
+  <testcase name="AfterClass" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" time="43.167">
+    <failure message="Element not found {By.xpath: .//*[@src=&apos;images/taskbar-user.png&apos;]}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.xpath: .//*[@src='images/taskbar-user.png']}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor12.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:327)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:85)
+	at com.codeborne.selenide.commands.Click.click(Click.java:22)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:14)
+	at com.codeborne.selenide.commands.Click.execute(Click.java:11)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.click(Unknown Source)
+	at com.yeastar.swebtest.driver.SwebDriver.logout(SwebDriver.java:184)
+	at com.yeastar.swebtest.driver.SwebDriver.quitDriver(SwebDriver.java:120)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound.AfterClass(Inbound.java:424)
+</failure>
+    <system-out><![CDATA[°æ≤‚ ‘¿‡≥°æ∞ª÷∏¥°ø_2018ƒÍ10‘¬27»’ 15 ±20∑÷20√Î: ÷¥––ÕÍ±œ£∫======  Inbound  ======
+
+
+RegisterCallBack :4 code:200
+RegisterCallBack :0 code:200
+RegisterCallBack :1 code:200
+RegisterCallBack :5 code:200
+]]></system-out>
+  </testcase>
+  <testcase name="BeforeClass" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="59.519">
+    <failure message="Element not found {By.id: login-language-inputEl}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.id: login-language-inputEl}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor13.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:413)
+	at org.openqa.selenium.By$ById.findElement(By.java:218)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+	at com.codeborne.selenide.impl.WebElementSelector.findElement(WebElementSelector.java:28)
+	at com.codeborne.selenide.impl.ElementFinder.getWebElement(ElementFinder.java:56)
+	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:44)
+	at com.codeborne.selenide.commands.Should.should(Should.java:35)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:29)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:12)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.should(Unknown Source)
+	at com.yeastar.swebtest.driver.SwebDriver.click(SwebDriver.java:207)
+	at com.yeastar.swebtest.driver.SwebDriver.select(SwebDriver.java:198)
+	at com.yeastar.swebtest.driver.SwebDriver.login(SwebDriver.java:152)
+	at com.yeastar.swebtest.driver.SwebDriver.login(SwebDriver.java:140)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound.BeforeClass(Outbound.java:23)
+</failure>
+    <system-out><![CDATA[°æ≤‚ ‘¿‡≥°æ∞≥ı ºªØ°ø_2018ƒÍ10‘¬27»’ 15 ±20∑÷31√Î: ø™ º÷¥––£∫======  Outbound  ======
+]]></system-out>
+  </testcase>
+  <testcase name="A0_init" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_out1_sip" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_out2_iax" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_out3_sps" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_out4_spx" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_out5_fxo" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_out6_bri" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_out7_E1" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_out8_gsm" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="B1_Prepend" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="B2_Prepend" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="C1_password" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="C2_password" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="D1_rrmemory_hunt" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="D2_rrmemory_hunt" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="E_timecondition" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="F_delete" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterClass" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="BeforeClass" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="13.169">
+    <failure message="Element not found {By.id: login-language-inputEl}&#10;Expected: exist" type="com.codeborne.selenide.ex.ElementNotFound">com.codeborne.selenide.ex.ElementNotFound: Element not found {By.id: login-language-inputEl}
+Expected: exist
+	at sun.reflect.GeneratedConstructorAccessor13.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:413)
+	at org.openqa.selenium.By$ById.findElement(By.java:218)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+	at com.codeborne.selenide.impl.WebElementSelector.findElement(WebElementSelector.java:28)
+	at com.codeborne.selenide.impl.ElementFinder.getWebElement(ElementFinder.java:56)
+	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:44)
+	at com.codeborne.selenide.commands.Should.should(Should.java:35)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:29)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:12)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:140)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:86)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:62)
+	at com.sun.proxy.$Proxy5.should(Unknown Source)
+	at com.yeastar.swebtest.driver.SwebDriver.click(SwebDriver.java:207)
+	at com.yeastar.swebtest.driver.SwebDriver.select(SwebDriver.java:198)
+	at com.yeastar.swebtest.driver.SwebDriver.login(SwebDriver.java:152)
+	at com.yeastar.swebtest.driver.SwebDriver.login(SwebDriver.java:140)
+	at com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction.BeforeClass(OutboundRestriction.java:18)
+</failure>
+    <system-out><![CDATA[°æ≤‚ ‘¿‡≥°æ∞≥ı ºªØ°ø_2018ƒÍ10‘¬27»’ 15 ±20∑÷48√Î: ø™ º÷¥––£∫======  OutboundRestriction  ======
+]]></system-out>
+  </testcase>
+  <testcase name="A0_init" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A1_add_1_all" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_add_2_cancel" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="A_add_3_cancelCall" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="B_add_1_exten1102" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="B_add_2_exten1102_cancel" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="B_add_3_exten1102_cancelCall" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="C_delete" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterMethod" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="AfterClass" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction" time="0">
+    <skipped/>
+  </testcase>
 </testsuite>

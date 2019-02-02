@@ -23,8 +23,8 @@ public class FileShare_CDR extends SwebDriver {
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",5060,4);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",5060,3);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",5060,4);
 
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
@@ -182,7 +182,7 @@ public class FileShare_CDR extends SwebDriver {
     public void I_Me_CDRRecording() throws InterruptedException {
         Reporter.infoExec("登录1000分机网页查看最新的CDR");
         logout();
-        login("1100","Yeastar202");
+        login("1100",EXTENSION_PASSWORD);
         me.me.click();
         me.me_CDRandRecording.click();
         ys_waitingLoading(me_cdRandRecording.grid_Mask);

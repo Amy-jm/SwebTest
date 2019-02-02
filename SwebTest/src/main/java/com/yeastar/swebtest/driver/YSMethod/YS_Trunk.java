@@ -5,6 +5,7 @@ import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.openqa.selenium.By;
 
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.yeastar.swebtest.driver.Config.*;
 import static com.yeastar.swebtest.driver.SwebDriver.*;
@@ -26,7 +27,7 @@ public class YS_Trunk {
      * 修改Trunks页面显示数量
      * @param nums
      */
-    public void showTrunkNum(int nums) throws InterruptedException {
+    public void showTrunkNum(int nums) {
         switch (100){
             case 10:{
                 $(By.xpath(".//div[starts-with(@id,'mypagingtoolbar')]")).shouldBe(Condition.exist);
@@ -63,7 +64,7 @@ public class YS_Trunk {
 //    /**
 //     * 删除所有trunk
 //     */
-//    public void deleteTrunks() throws InterruptedException {
+//    public void deleteTrunks() {
 //        Reporter.infoExec(" 删除所有VoIP外线");
 //        pageDeskTop.taskBar_Main.click();
 //        pageDeskTop.settingShortcut.click();
@@ -108,7 +109,7 @@ public class YS_Trunk {
      * @throws InterruptedException
      */
     public void addTrunk(String protocol,int type,String providerName,String hostname,String hostport,
-                            String domain,String username,String authenticationName,String fromUser,String password) throws InterruptedException {
+                            String domain,String username,String authenticationName,String fromUser,String password,String did) {
         if(protocol.equals("IAX") && PRODUCT.equals(CLOUD_PBX)){
             System.out.println("Cloud PBX no support IAX extension");
             Reporter.infoExec("Cloud PBX no support IAX extension");
@@ -129,6 +130,9 @@ public class YS_Trunk {
         if(type == 2){
             typeName = "SIP-Peer";
             executeJs("Ext.getCmp('trunktype').setValue('peertopeer')");
+            if(protocol.equals(CLOUD_PBX)){
+                add_voIP_trunk_basic.didNumber.setValue("584321");
+            }
         }else {
 
             executeJs("Ext.getCmp('trunktype').setValue('voiptrunk')");
@@ -168,11 +172,18 @@ public class YS_Trunk {
         if(!fromUser.isEmpty()){
             add_voIP_trunk_basic.fromUser.setValue(fromUser);
         }
+        if (!did.isEmpty()) {
+            if (PRODUCT.equals(CLOUD_PBX)) {
+                add_voIP_trunk_basic.didNumber.setValue(did);
+            }
+        }
 
+        if (!(PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) >= 7)){
 //        选择编码
         add_voIP_trunk_codec.codec.click();
 //        listSelectAllbyValue(add_voIP_trunk_codec.list);
-        executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
+            executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
+        }
         add_voIP_trunk_basic.save.click();
         pageDeskTop.apply.click();
         ys_waitingLoading(trunks.grid_Mask);
@@ -190,7 +201,6 @@ public class YS_Trunk {
         ys_waitingTime(10000);
         assertTrunkStatus(providerName);
     }
-
     /**
      * trunk不作状态判断
      * @param protocol
@@ -206,7 +216,7 @@ public class YS_Trunk {
      * @throws InterruptedException
      */
     public void addUnavailTrunk(String protocol,int type,String providerName,String hostname,String hostport,
-                         String domain,String username,String authenticationName,String fromUser,String password,boolean Assert) throws InterruptedException {
+                         String domain,String username,String authenticationName,String fromUser,String password,boolean Assert,String did) {
         if(protocol.equals("IAX") && PRODUCT.equals(CLOUD_PBX)){
             System.out.println("Cloud PBX no support IAX extension");
             Reporter.infoExec("Cloud PBX no support IAX extension");
@@ -266,11 +276,17 @@ public class YS_Trunk {
         if(!fromUser.isEmpty()){
             add_voIP_trunk_basic.fromUser.setValue(fromUser);
         }
-
+        if (!did.isEmpty()) {
+            if (PRODUCT.equals(CLOUD_PBX)) {
+                add_voIP_trunk_basic.didNumber.setValue(did);
+            }
+        }
+        if (!(PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) >= 7)) {
 //        选择编码
-        add_voIP_trunk_codec.codec.click();
+            add_voIP_trunk_codec.codec.click();
 //        listSelectAllbyValue(add_voIP_trunk_codec.list);
-        executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
+            executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
+        }
         add_voIP_trunk_basic.save.click();
         pageDeskTop.apply.click();
         ys_waitingLoading(trunks.grid_Mask);
@@ -300,7 +316,7 @@ public class YS_Trunk {
      * @param password
      * @throws InterruptedException
      */
-    public void addAccountTrunk(String providerName, String username,String authenticationName,String password) throws InterruptedException {
+    public void addAccountTrunk(String providerName, String username,String authenticationName,String password) {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         trunks.add.click();
@@ -313,10 +329,12 @@ public class YS_Trunk {
         add_voIP_trunk_basic.authenticationName.setValue(authenticationName);
         add_voIP_trunk_basic.password.setValue(password);
 
+        if (!(PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) >= 7)) {
 //        选择编码
-        add_voIP_trunk_codec.codec.click();
+            add_voIP_trunk_codec.codec.click();
 //        listSelectAllbyValue(add_voIP_trunk_codec.list);
-        executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
+            executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
+        }
         add_voIP_trunk_basic.save.click();
         pageDeskTop.apply.click();
         ys_waitingLoading(trunks.grid_Mask);
@@ -347,7 +365,7 @@ public class YS_Trunk {
      * @param username
      * @throws InterruptedException
      */
-    public void assertTrunkGrid(String trunkName, String type, String hostname,String username,int row) throws InterruptedException {
+    public void assertTrunkGrid(String trunkName, String type, String hostname,String username,int row) {
 
         String actualName = (String) gridContent(trunks.grid, row, trunks.gridcolumn_TrunkName);
         YsAssert.assertEquals(actualName,trunkName);

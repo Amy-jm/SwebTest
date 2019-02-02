@@ -9,9 +9,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.w3c.css.sac.ElementSelector;
-import org.yaml.snakeyaml.events.Event;
-
 import java.util.ArrayList;
 
 /**
@@ -19,50 +16,55 @@ import java.util.ArrayList;
  */
 public class Disa extends SwebDriver {
     @BeforeClass
-    public void BeforeClass() {
-        pjsip.Pj_Init();
+    public void A0_BeforeClass() {
+
         Reporter.infoBeforeClass("开始执行：====== Disa ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
+//    @BeforeClass
+    public void BeforeClass2() {
+//        resetoreBeforetest("BeforeTest_Local.bak");
+    }
 
     @Test
-    public void A_addExtensions(){
+    public void A1_addExtensions(){
+        pjsip.Pj_Init();
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备1注册分机3004"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3004, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3004, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3004, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2002"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2002, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2002, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2002, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
 
         Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4001, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
         closePbxMonitor();
     }
@@ -73,7 +75,7 @@ public class Disa extends SwebDriver {
         settings.trunks_panel.click();
         setPageShowNum(trunks.grid, 100);
         Reporter.infoExec(" 添加不可用的sip外线SIP3");
-        m_trunks.addUnavailTrunk("SIP", add_voIP_trunk_basic.VoipTrunk, "SIP3", DEVICE_ASSIST_1, String.valueOf(UDP_PORT_ASSIST_1), DEVICE_ASSIST_1, "1", "1", "1", "Yeastar", false);
+        m_trunks.addUnavailTrunk("SIP", add_voIP_trunk_basic.VoipTrunk, "SIP3", DEVICE_ASSIST_1, String.valueOf(UDP_PORT_ASSIST_1), DEVICE_ASSIST_1, "1", "1", "1", "Yeastar", false,"1");
     }
     @Test
     public void B2_addRoute1() throws InterruptedException {
@@ -180,7 +182,7 @@ public class Disa extends SwebDriver {
         m_callcontrol.addInboundRoutes("InRoute1_DISA","","",add_inbound_route.s_disa,"DISA2_+?.-*12345678901234567890",arraytrunk10);
         ys_apply();
     }
-    @Test
+//    @Test
     public void C2_bakckUp(){
         backupEnviroment(this.getClass().getName());
     }
@@ -207,7 +209,7 @@ public class Disa extends SwebDriver {
         pjsip.Pj_Make_Call_Auto_Answer(3001,"3000",DEVICE_ASSIST_1,false);
         ys_waitingTime(2000);
         pjsip.Pj_Send_Dtmf(3001,"3","1","1","1","1","#");
-        ys_waitingTime(8000);
+        ys_waitingTime(5000);
         if (getExtensionStatus(2000, TALKING, 8) == TALKING) {
             Reporter.pass(" 分机2000状态--TALKING，通话正常建立");
         } else {
@@ -337,7 +339,7 @@ public class Disa extends SwebDriver {
             pjsip.Pj_Send_Dtmf(2001,"8",b[0],b[1],b[2],b[3],b[4],b[5],b[6],b[7],b[8],b[9],b[10],"#");
 //            pjsip.Pj_Send_Dtmf(2001,"8","1","8","4","5","0","0","2","3","7","6","4","#");
 
-//            pjsip.Pj_Answer_Call(2000,200,false);  //需要加这行代码2000才会接听？前面的Auto Answer没有作用？
+//            pjsip.Pj_Answer_Call(2000,200,false);  //需要加这行代码2000才会接听？前面的Auto Answer没有作用？18450024021
             ys_waitingTime(8000);
             if (getExtensionStatus(2001, TALKING, 8) == TALKING) {
                 Reporter.pass(" 分机2001状态--TALKING，通话正常建立");
@@ -624,7 +626,6 @@ public class Disa extends SwebDriver {
     }
     @Test
     public void G1_editSinglePin(){
-//        改为SinglePin，新增呼出路由Out_sip
         settings.callFeatures_tree.click();
         disa.DISA.click();
         disa.add.shouldBe(Condition.exist);
@@ -642,10 +643,11 @@ public class Disa extends SwebDriver {
     @Test
     public void G2_checkSiglePin(){
         //        SPS呼入，DISA走SIP
-        Reporter.infoExec("2001拨打99999通过SPS外线呼入，进入DISA后输入Pin码，再进行二次拨号");
+        Reporter.infoExec("G2 2001拨打99999通过SPS外线呼入，进入DISA后输入Pin码，再进行二次拨号");
         pjsip.Pj_Make_Call_Auto_Answer(2001,"99999",DEVICE_ASSIST_2,false);
         ys_waitingTime(2000);
         pjsip.Pj_Send_Dtmf(2001,"1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6","7","8","9","0","1","#");
+        ys_waitingTime(1000);
         pjsip.Pj_Send_Dtmf(2001,"1","3","0","0","1","#");
         ys_waitingTime(8000);
         if (getExtensionStatus(3001, TALKING, 8) == TALKING) {
@@ -660,21 +662,57 @@ public class Disa extends SwebDriver {
     }
     @Test
     public void G3_checkNewSinglePin(){
-        //        SPS呼入，DISA走SIP；保持通话时修改DISA的SinglePin，新的电话呼入时要输入新的SinglePin才可以成功通话
-        Reporter.infoExec("2001拨打99999通过SPS外线呼入，进入DISA后输入Pin码，再进行二次拨号");
+        //        改为SinglePin，新增呼出路由Out_sip
+
+//        SPS呼入，DISA走SIP；保持通话时修改DISA的SinglePin，新的电话呼入时要输入新的SinglePin才可以成功通话
+        Reporter.infoExec("G3 2001拨打99999通过SPS外线呼入，进入DISA后输入Pin码，再进行二次拨号");
         pjsip.Pj_Make_Call_Auto_Answer(2001,"99999",DEVICE_ASSIST_2,false);
         ys_waitingTime(2000);
         pjsip.Pj_Send_Dtmf(2001,"1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6","7","8","9","0","1","#");
+        ys_waitingTime(1000);
         pjsip.Pj_Send_Dtmf(2001,"1","3","0","0","1","#");
         if (getExtensionStatus(3001, TALKING, 8) == TALKING) {
             Reporter.pass(" 分机3001状态--TALKING，通话正常建立");
         } else {
             Reporter.error(" 预期分机3001状态为TALKING，实际状态为"+getExtensionStatus(3001, TALKING, 8));
+            YsAssert.fail(" 预期分机3001状态为TALKING，实际状态为 4");
         }
 //        暂时不挂断电话
+        Reporter.infoExec("通话过程中，修改DISA3密码为123");
+        settings.callFeatures_tree.click();
+        disa.DISA.click();
+        disa.add.shouldBe(Condition.exist);
+        ys_waitingLoading(disa.grid_Mask);
+        ys_waitingTime(2000);
+        gridClick(disa.grid,gridFindRowByColumn(disa.grid,disa.gridcolumn_Name,"DISA3",sort_ascendingOrder),disa.gridEdit);
+        ys_waitingTime(1000);
+        add_disa.password_Singlepin.setValue("123");
+        add_disa.save.click();
+        ys_waitingLoading(disa.grid_Mask);
+        ys_apply();
+
+//        SPS呼入，DISA走SIP；保持通话时修改DISA的SinglePin，新的电话呼入时要输入新的SinglePin才可以成功通话
+        Reporter.infoExec("G5 2002拨打99999通过SPS外线呼入，进入DISA后输入Pin码，再进行二次拨号");
+        pjsip.Pj_Make_Call_Auto_Answer(2002,"99999",DEVICE_ASSIST_2,false);
+        ys_waitingTime(2000);
+        pjsip.Pj_Send_Dtmf(2002,"1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6","7","8","9","0","1","#");
+        pjsip.Pj_Send_Dtmf(2002,"1","2","3","#");
+        pjsip.Pj_Send_Dtmf(2002,"9","2","3","0","0","4","#");
+        ys_waitingTime(8000);
+        if (getExtensionStatus(3004, TALKING, 8) == TALKING) {
+            Reporter.pass(" 分机3004状态--TALKING，通话正常建立");
+        } else {
+            Reporter.error(" 预期分机3004状态为TALKING，实际状态为"+getExtensionStatus(3004, TALKING, 8));
+        }
+        pjsip.Pj_Hangup_All();
+        m_extension.checkCDR("2002 <2002>","923004","Answered",SPS,SIPTrunk2,communication_outRoute);
+        m_extension.checkCDR_OtherInfo(cdRandRecordings.gridColumn_PinCode,"123",1);
+        m_extension.checkCDR("2001 <2001>","13001","Answered",SPS,SIPTrunk,communication_outRoute,2);
+        m_extension.checkCDR_OtherInfo(cdRandRecordings.gridColumn_PinCode,"1234567890123456789012345678901",2);
     }
-    @Test
+//    @Test
     public void G4_editSinglePin(){
+        Reporter.infoExec("通话过程中，修改DISA3密码为123");
         settings.callFeatures_tree.click();
         disa.DISA.click();
         disa.add.shouldBe(Condition.exist);
@@ -687,10 +725,10 @@ public class Disa extends SwebDriver {
         ys_waitingLoading(disa.grid_Mask);
         ys_apply();
     }
-    @Test
+//    @Test
     public void G5_newCall(){
         //        SPS呼入，DISA走SIP；保持通话时修改DISA的SinglePin，新的电话呼入时要输入新的SinglePin才可以成功通话
-        Reporter.infoExec("2002拨打99999通过SPS外线呼入，进入DISA后输入Pin码，再进行二次拨号");
+        Reporter.infoExec("G5 2002拨打99999通过SPS外线呼入，进入DISA后输入Pin码，再进行二次拨号");
         pjsip.Pj_Make_Call_Auto_Answer(2002,"99999",DEVICE_ASSIST_2,false);
         ys_waitingTime(2000);
         pjsip.Pj_Send_Dtmf(2002,"1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6","7","8","9","0","1","#");
@@ -1155,10 +1193,11 @@ public class Disa extends SwebDriver {
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
         Reporter.infoAfterClass("执行完毕：======  DISA  ======"); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+
+        ys_waitingTime(10000);
+        killChromePid();
     }
 }

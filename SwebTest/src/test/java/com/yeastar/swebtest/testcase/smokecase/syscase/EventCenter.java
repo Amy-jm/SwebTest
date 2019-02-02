@@ -26,7 +26,7 @@ public class EventCenter extends SwebDriver {
         pageDeskTop.taskBar_Main.shouldBe(Condition.exist);
         mySettings.close.click();
         m_extension.showCDRClounm();
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",3);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",3);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
     }
     @Test
@@ -66,7 +66,7 @@ public class EventCenter extends SwebDriver {
         Reporter.infoExec("分机1100响铃接听"); //执行操作
         logout();
         tcpSocket.connectToDevice(0);
-        login("1100","Yeastar202");
+        login("1100",EXTENSION_PASSWORD);
         ys_waitingTime(5000);
         pjsip.Pj_Answer_Call(1100,false);
         boolean tcpInfo= tcpSocket.getAsteriskInfo("ANSWERED");
@@ -103,7 +103,7 @@ public class EventCenter extends SwebDriver {
     public void F_CheckLog() {
         Reporter.infoExec("删除Notification分机1100不响铃"); //执行操作
         logout();
-        login("1100","Yeastar202");
+        login("1100",EXTENSION_PASSWORD);
         ys_waitingTime(5000);
         pjsip.Pj_Answer_Call(1100,false);
         boolean tcpInfo= tcpSocket.getAsteriskInfo("ANSWERED");

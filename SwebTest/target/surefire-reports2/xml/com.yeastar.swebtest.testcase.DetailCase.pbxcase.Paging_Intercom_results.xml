@@ -4,19 +4,19 @@
            failures="2"
            errors="0"
            skipped="0"
-           time="506.453">
+           time="715.779">
   <properties />
-            <testcase name="G1_intercom" time="24.567" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom">
+            <testcase name="D2_2way" time="28.173" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom">
                 <failure type="java.lang.AssertionError"
-                  message="1105预期：自动应答 【预期：3 实际：4】"
+                  message="预期：AMI会打印,d 【预期：true 实际：false】"
               >
-<![CDATA[java.lang.AssertionError: 1105预期：自动应答 【预期：3 实际：4】
-  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:425)
-  com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom.G1_intercom(Paging_Intercom.java:235)
+<![CDATA[java.lang.AssertionError: 预期：AMI会打印,d 【预期：true 实际：false】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1092)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:583)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:146)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:120)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:337)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom.D2_2way(Paging_Intercom.java:150)
   sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
   sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
   sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -48,13 +48,18 @@
       </failure>
 
           </testcase>
-            <testcase name="F1_followToPaging" time="32.062" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom">
-                <failure type="java.lang.AssertionError"
-                  message=" 1100、1105自动应答失败"
+            <testcase name="I_Recovery" time="6.123" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom">
+                <failure type="java.lang.Error"
+                  message="Invalid memory access"
               >
-<![CDATA[java.lang.AssertionError:  1100、1105自动应答失败
-  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
-  com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom.F1_followToPaging(Paging_Intercom.java:223)
+<![CDATA[java.lang.Error: Invalid memory access
+  com.sun.jna.Native.invokeInt(Native Method)
+  com.sun.jna.Function.invoke(Function.java:383)
+  com.sun.jna.Function.invoke(Function.java:315)
+  com.sun.jna.Library$Handler.invoke(Library.java:212)
+  com.sun.proxy.$Proxy7.ys_hangup_all_call(Unknown Source)
+  com.yeastar.swebtest.tools.pjsip.PjsipApp.Pj_Hangup_All(PjsipApp.java:294)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom.I_Recovery(Paging_Intercom.java:336)
   sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
   sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
   sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -88,21 +93,21 @@
           </testcase>
   
   
-            <testcase name="E1_EnableAnswer" time="44.565" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="D1_1way" time="54.137" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="C1_callforward" time="9.087" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="A1_InitIntercom" time="10.408" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="H_delete" time="60.829" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="B4_add_Paging6303" time="20.382" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="B5_Apply" time="8.109" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="D2_2way" time="37.134" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="A2_InitPaging" time="25.340" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="I_Recovery" time="9.091" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="B3_add_NewPage6302" time="21.068" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="B1_add_Paging6300" time="20.241" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="B2_add_AutoPag6301" time="19.421" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="G3_newIntercom" time="34.027" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="E2_DisableAnswer" time="58.594" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
-                <testcase name="G2_EditFeatureCode" time="17.391" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+            <testcase name="B3_add_NewPage6302" time="19.888" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="B2_add_AutoPag6301" time="17.715" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="H_delete" time="118.064" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="G1_intercom" time="63.224" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="A1_InitIntercom" time="8.943" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="C1_callforward" time="6.045" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="G2_EditFeatureCode" time="49.539" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="B4_add_Paging6303" time="18.728" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="F1_followToPaging" time="62.971" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="D1_1way" time="55.524" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="E1_EnableAnswer" time="57.461" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="A2_InitPaging" time="32.111" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="B1_add_Paging6300" time="19.172" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="B5_Apply" time="8.098" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="E2_DisableAnswer" time="79.553" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="G3_newIntercom" time="64.447" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
       
 </testsuite>

@@ -24,8 +24,8 @@ public class CallControl extends SwebDriver {
         }
         m_extension.showCDRClounm();
         if(!Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",5060,1);
-            pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",5060,-1);
+            pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",5060,1);
+            pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",5060,-1);
             pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }
@@ -90,8 +90,8 @@ public class CallControl extends SwebDriver {
 //        1000 call (bri) 2000
 //        2000接听5s后挂断
         if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",5060,1);
-            pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",5060,-1);
+            pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",5060,1);
+            pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",5060,-1);
             pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
@@ -122,8 +122,8 @@ public class CallControl extends SwebDriver {
     public void C_CallBri() throws InterruptedException {
         Reporter.infoExec("分机2000通过bri线路呼入到设备1的1000");
         if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",5060,1);
-            pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",5060,-1);
+            pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",5060,1);
+            pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",5060,-1);
             pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }
@@ -167,8 +167,8 @@ public class CallControl extends SwebDriver {
 //        呼入到会议室meet1。
         Reporter.infoExec("设备A 1000 call (bri) B 2000呼入到会议室meet1");
         if(Single_Device_Test){
-            pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",5060,1);
-            pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",5060,-1);
+            pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",5060,1);
+            pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",5060,-1);
             pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         }

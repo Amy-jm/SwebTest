@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="20"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="686.000">
+  <properties />
+  
+  
+            <testcase name="A_callfrom3_sps" time="32.990" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="C2_did1_sps" time="66.053" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="F_timecondition1" time="13.756" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="F_timecondition4" time="53.342" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="A_callfrom4_spx" time="0.000" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="A_callfrom5_fxo" time="0.000" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="H_recovery" time="41.834" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="C1_did1_sps" time="20.431" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="F_timecondition2" time="72.596" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="G_delete1" time="47.717" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="F_timecondition5" time="57.133" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="A_callfrom1_sip" time="36.266" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="A_callfrom2_iax" time="0.001" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="A_callfrom7_e1" time="0.000" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="B1_callerid" time="74.211" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="F_timecondition3" time="74.184" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="A0_init" time="22.848" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="B2_callerid" time="72.638" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="A_callfrom6_bri" time="0.000" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+                <testcase name="A_callfrom8_gsm" time="0.000" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound" />
+      
+</testsuite>

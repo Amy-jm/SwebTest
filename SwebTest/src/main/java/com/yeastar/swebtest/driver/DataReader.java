@@ -1,6 +1,6 @@
 package com.yeastar.swebtest.driver;
 
-import com.sun.jna.platform.win32.WinBase;
+
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import static com.yeastar.swebtest.driver.Config.currentPath;
-import static org.bouncycastle.asn1.cms.CMSObjectIdentifiers.data;
+//import static org.bouncycastle.asn1.cms.CMSObjectIdentifiers.data;
 
 /**
  * Created by GaGa on 2017-05-12.
@@ -42,6 +42,7 @@ public class DataReader {
     public static String DEVICE_PORT = readFromfile("DEVICE_PORT");
     public static String LOGIN_USERNAME = readFromfile("LOGIN_USERNAME");
     public static String LOGIN_PASSWORD = readFromfile("LOGIN_PASSWORD");
+
     public static String LOGIN_ADMIN = readFromfile("LOGIN_ADMIN");
     public static String SSH_PORT = readFromfile("SSH_PORT");
     public static String USERNAEM_LS = readFromfile( "USERNAEM_LS");
@@ -54,7 +55,7 @@ public class DataReader {
     public static int UDP_PORT_ASSIST_2 = Integer.parseInt(readFromfile("UDP_PORT_ASSIST_2"));
     public static int UDP_PORT_ASSIST_3 = Integer.parseInt(readFromfile("UDP_PORT_ASSIST_3"));
     public static int AMI_PROT = Integer.parseInt(readFromfile("AMI_PORT"));
-    public static String DEVICE_AMI_IP =  readFromfile("DEVICE_AMI_IP");
+
     /**
      * 测试模块定义
      */
@@ -66,8 +67,8 @@ public class DataReader {
     public static String BRI_2 = readFromfile("BRI_2");
     public static String GSM = readFromfile("GSM");
     public static String E1 = readFromfile("E1");
-    public static String DEVICE_ASSIST_GSM = readFromfile("DEVICE_ASSIST_GSM");
-    public static String DEVICE_TEST_GSM = readFromfile("DEVICE_TEST_GSM");
+    public static String DEVICE_ASSIST_GSM = readFromfile("DEVICE_ASSIST_GSM").trim();
+    public static String DEVICE_TEST_GSM = readFromfile("DEVICE_TEST_GSM").trim();
 
     public static String SIPTrunk = readFromfile("SIPTRUNK");
     public static String SIPTrunk2 = readFromfile("SIPTRUNK2");
@@ -94,6 +95,7 @@ public class DataReader {
     public static String DEVICE_ASSIST_3 =readFromfile("DEVICE_ASSIST_3");
 
     public static String DEVICE_VERSION = readFromfile("VERSION");
+    public static String[] VERSION_SPLIT = DEVICE_VERSION.split("\\.");
     public static String BROWSER = readFromfile("BROWSER");
     public static String URL = readFromfile("URL");
 
@@ -121,7 +123,7 @@ public class DataReader {
         Properties properties = new Properties();
         InputStream inputStream = null;
         try {
-            inputStream = new BufferedInputStream(new FileInputStream("src/main/resources/data.properties"));
+            inputStream = new BufferedInputStream(new FileInputStream("data.properties"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -130,7 +132,7 @@ public class DataReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Key: "+key+" Value: "+properties.getProperty(key)+ " is Null:"+properties.getProperty(key).equals("null"));
+//        System.out.println("Key: "+key+" Value: "+properties.getProperty(key)+ " is Null:"+properties.getProperty(key).equals("null"));
         if (properties.getProperty(key).equals("null")){
             return "null";
         }else{

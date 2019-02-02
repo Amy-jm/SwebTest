@@ -31,73 +31,95 @@ public class InboundRoutes extends SwebDriver {
 
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：====== InboundRoutes ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
-
-        pageDeskTop.taskBar_Main.click();
-        pageDeskTop.settingShortcut.click();
-        settings.callControl_panel.click();
-        inboundRoutes.inboundRoutes.click();
-        setPageShowNum(inboundRoutes.grid,100);
+    }
+//    @Test
+    public void A0_restore(){
+        //初始化beforetest
+//        resetoreBeforetest("BeforeTest_Local.bak");
     }
 //  创建注册分机：主测设备分机1000，辅助1：3001；辅助2:2001；辅助3:4001
     @Test
-    public void A_addExtensions(){
+    public void A1_addExtensions(){
+        //初始化beforetest
+        pjsip.Pj_Init();
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1100, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
-        pjsip.Pj_CreateAccount(1101, "Yeastar202", "UDP", UDP_PORT, 3);
+        pjsip.Pj_CreateAccount(1101, EXTENSION_PASSWORD, "UDP", UDP_PORT, 3);
         pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1105"); //执行操作
-        pjsip.Pj_CreateAccount(1105, "Yeastar202", "UDP", UDP_PORT, 7);
+        pjsip.Pj_CreateAccount(1105, EXTENSION_PASSWORD, "UDP", UDP_PORT, 7);
         pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1106"); //执行操作
-        pjsip.Pj_CreateAccount(1106, "Yeastar202", "UDP", UDP_PORT, 8);
+        pjsip.Pj_CreateAccount(1106, EXTENSION_PASSWORD, "UDP", UDP_PORT, 8);
 
         Reporter.infoExec(" 辅助设备1注册分机3000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3000, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2005"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2005, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2005, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2005, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
 
         Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4001, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
         closePbxMonitor();
     }
-
+    @Test
+    public void A2_init() throws InterruptedException {
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        settings.callFeatures_panel.click();
+        conference.conference.click();
+        String name = String.valueOf(gridContent(conference.grid,1,conference.gridcolumn_Name));
+        if (!name.equals("6400")) {
+            //        恢复会议室
+            BeforeTest recover = new BeforeTest();
+            recover.K_addconference();
+        }
+    }
+    @Test
+    public void A3_init() throws InterruptedException {
+        settings.callControl_tree.click();
+        inboundRoutes.inboundRoutes.click();
+        setPageShowNum(inboundRoutes.grid,100);
+        deletes("删除所有呼入路由",inboundRoutes.grid,inboundRoutes.delete,inboundRoutes.delete_yes,inboundRoutes.grid_Mask);
+        BeforeTest recover = new BeforeTest();
+        recover.F_addInRoute();
+    }
 //    测试各种外线都能正常呼入到分机1000——目的地到SIP的Extensions
     @Test
     public void B1_checkTrunk() throws InterruptedException {
@@ -130,7 +152,7 @@ public class InboundRoutes extends SwebDriver {
 //        考虑account的呼入
         if (!DEVICE_ASSIST_3.equals("null")) {
             Reporter.infoExec(" 4001拨打1111通过account外线呼入到分机1000"); //执行操作
-            pjsip.Pj_Make_Call_Auto_Answer(4001, "1111", DEVICE_ASSIST_3);
+            pjsip.Pj_Make_Call_Auto_Answer(4001, "11000", DEVICE_ASSIST_3);
             ys_waitingTime(5000);
             if (getExtensionStatus(1000, TALKING, 8) == TALKING) {
                 Reporter.pass(" 分机1000状态--TALKING，通话正常建立");
@@ -155,7 +177,7 @@ public class InboundRoutes extends SwebDriver {
     }
 
     @Test(dataProvider="did1")
-    public void B2_checkDID(HashMap<String, String> data) throws InterruptedException {
+    public void B2_checkDID(HashMap<String, String> data){
         Reporter.infoExec("修改呼入路由的DID为："+data.get("DID"));
         System.out.println("data.toString():"+data.toString());
         gridClick(inboundRoutes.grid,gridFindRowByColumn(inboundRoutes.grid,inboundRoutes.gridcolumn_Name,"InRoute1",sort_ascendingOrder),inboundRoutes.gridEdit);
@@ -355,7 +377,7 @@ public class InboundRoutes extends SwebDriver {
         m_callcontrol.addInboundRoutes("InRoute3_SipExtension","","",add_inbound_route.s_extensin,"1100",arraytrunk2);
 
         if(!PRODUCT.equals(CLOUD_PBX)) {
-            if(!FXO_1.equals("null")) {
+            if(!FXS_1.equals("null")) {
                 Reporter.infoExec(" 添加呼入路由InRoute4——呼入目的地到fxs_Extension ");
                 ArrayList<String> arraytrunk3 = new ArrayList<>();
                 arraytrunk3.add("all");
@@ -443,7 +465,7 @@ public class InboundRoutes extends SwebDriver {
         }
     }
     @Test
-    public void C2_checkPriority1() throws InterruptedException {
+    public void C2_checkPriority1(){
         setPageShowNum(inboundRoutes.grid,100);
 //        还未变换呼入路由顺序时，不同外线同时呼入，到达分机1000和分机1000的语音信箱
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到分机1000"); //执行操作
@@ -477,7 +499,7 @@ public class InboundRoutes extends SwebDriver {
     }
 
     @Test
-    public void C2_checkPriority2() throws InterruptedException {
+    public void C2_checkPriority2(){
 //        将InRoute10——Conference移至第一行，不同外线同时呼入，到达会议室6400
         int column = gridFindRowByColumn(inboundRoutes.grid, inboundRoutes.gridcolumn_Name, "InRoute10_Conference", sort_ascendingOrder);
         if(column != 1) {
@@ -518,7 +540,7 @@ public class InboundRoutes extends SwebDriver {
     }
 
     @Test
-    public void C2_checkPriority3() throws InterruptedException {
+    public void C2_checkPriority3(){
 //        将InRoute8_RingGroup移至第一行，不同外线同时呼入，到达ringgroup
         int column = gridFindRowByColumn(inboundRoutes.grid, inboundRoutes.gridcolumn_Name, "InRoute8_RingGroup", sort_ascendingOrder);
         if(column != 1) {
@@ -609,6 +631,8 @@ public class InboundRoutes extends SwebDriver {
     @Test
     public void C3_recoveryRingGroup(){
         inboundRoutes.inboundRoutes.click();
+        ys_waitingMask();
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         Reporter.infoExec(" 添加呼入路由InRoute8——呼入目的地到RingGroup ");
         ArrayList<String> arraytrunk13 = new ArrayList<>();
         arraytrunk13.add("all");
@@ -618,61 +642,6 @@ public class InboundRoutes extends SwebDriver {
 //    目的地设置为hangup
     @Test
     public void D1_Hangup(){
-//        pjsip.Pj_Unregister_Account(1000);
-//        pjsip.Pj_Unregister_Account(1100);
-//        pjsip.Pj_Unregister_Account(1101);
-//        pjsip.Pj_Unregister_Account(1105);
-//        pjsip.Pj_Unregister_Account(1106);
-//        pjsip.Pj_Unregister_Account(3001);
-//        pjsip.Pj_Unregister_Account(2000);
-//        pjsip.Pj_Unregister_Account(2001);
-//        pjsip.Pj_Unregister_Account(2005);
-//        pjsip.Pj_Unregister_Account(4000);
-//        pjsip.Pj_Unregister_Account(4001);
-//        ys_waitingTime(6000);
-//        Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-//        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
-//        pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-//        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
-//        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
-//        pjsip.Pj_CreateAccount(1101, "Yeastar202", "UDP", UDP_PORT, 3);
-//        pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1105"); //执行操作
-//        pjsip.Pj_CreateAccount(1105, "Yeastar202", "UDP", UDP_PORT, 7);
-//        pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1106"); //执行操作
-//        pjsip.Pj_CreateAccount(1106, "Yeastar202", "UDP", UDP_PORT, 8);
-//
-//        Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
-//        pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
-//
-//        Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
-//        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-//
-//        Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
-//        pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
-//
-//        Reporter.infoExec(" 辅助设备2注册分机2005"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 2005, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
-//        pjsip.Pj_Register_Account_WithoutAssist(2005, DEVICE_ASSIST_2);
-//
-//        Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
-//        pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
-//
-//        Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 4001, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
-//        pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
-//        closePbxMonitor();
         setPageShowNum(inboundRoutes.grid,100);
 //        将InRoute2_HangUp移至第一行，不同外线呼入，都被挂断
         int column = gridFindRowByColumn(inboundRoutes.grid, inboundRoutes.gridcolumn_Name, "InRoute2_HangUp", sort_ascendingOrder);
@@ -698,7 +667,7 @@ public class InboundRoutes extends SwebDriver {
     }
     //     目的地设置为FXS类型的分机
     @Test
-    public void D2_FxsExtensions() throws InterruptedException {
+    public void D2_FxsExtensions(){
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
         }
@@ -723,7 +692,7 @@ public class InboundRoutes extends SwebDriver {
     }
 //    目的地设置为Extension Range
     @Test
-    public void D3_ExtensionRange() throws InterruptedException {
+    public void D3_ExtensionRange(){
         int column = gridFindRowByColumn(inboundRoutes.grid, inboundRoutes.gridcolumn_Name, "InRoute5_ExtensionRange", sort_ascendingOrder);
         if(column != 1) {
             Reporter.infoExec(" 移动第" + column + "行到第一行 ");
@@ -833,7 +802,7 @@ public class InboundRoutes extends SwebDriver {
     }
 //    目的地设置为Voicemail
     @Test
-    public void D4_Voicemail() throws InterruptedException {
+    public void D4_Voicemail(){
         int column = gridFindRowByColumn(inboundRoutes.grid, inboundRoutes.gridcolumn_Name, "InRoute6_voicemail", sort_ascendingOrder);
         if(column != 1) {
             Reporter.infoExec(" 移动第" + column + "行到第一行 ");
@@ -858,7 +827,7 @@ public class InboundRoutes extends SwebDriver {
 //    不测试拒接和未接的情况：因为sip线路会直接被注册分机接听
 //    要考虑设备的不同性
     @Test
-    public void E1_Outbound_sip() throws InterruptedException {
+    public void E1_Outbound_sip(){
         int column = gridFindRowByColumn(inboundRoutes.grid, inboundRoutes.gridcolumn_Name, "InRoute13_Outbound_sip", sort_ascendingOrder);
         if(column != 1) {
             Reporter.infoExec(" 移动第" + column + "行到第一行 ");
@@ -906,7 +875,7 @@ public class InboundRoutes extends SwebDriver {
     }
 //    目的地设置为Outbound Route——OutRoute4_spx
 //    不测试拒接的情况，因为拒接的Busy通话记录是在辅助设备上，主测设备都是Answer状态
-    @Test
+//    @Test
     public void E3_Outbound_spx(){
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
@@ -927,6 +896,7 @@ public class InboundRoutes extends SwebDriver {
         } else {
             Reporter.error(" 预期分机2000状态为TALKING，实际状态为"+getExtensionStatus(2000, RING, 8));
         }
+        pjsip.Pj_hangupCall(2001,2001);
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2001 <2001>","42000","No Answer",SPS, SPX,communication_outRoute);
     }
@@ -1019,7 +989,7 @@ public class InboundRoutes extends SwebDriver {
             }
 //        account测试 && 分机接听
             Reporter.infoExec(" 2001拨打9991111通过sps外线呼入转account外线到分机1000，分机接听"); //执行操作
-            pjsip.Pj_Make_Call_Auto_Answer(2001, "9991111", DEVICE_ASSIST_2,false);
+            pjsip.Pj_Make_Call_Auto_Answer(2001, "99914000", DEVICE_ASSIST_2,false);
             ys_waitingTime(8000);
             if (getExtensionStatus(4000, TALKING, 8) == TALKING) {
                 Reporter.pass(" 分机4000状态--TALKING，通话正常建立");
@@ -1027,7 +997,7 @@ public class InboundRoutes extends SwebDriver {
                 Reporter.error(" 预期分机4000状态为TALKING，实际状态为"+getExtensionStatus(4000, TALKING, 8));
             }
             pjsip.Pj_Hangup_All();
-            m_extension.checkCDR("2001 <2001>", "91111", "Answered", SPS, ACCOUNTTRUNK, communication_outRoute);
+            m_extension.checkCDR("2001 <2001>", "914000", "Answered", SPS, ACCOUNTTRUNK, communication_outRoute);
         }
     }
 
@@ -1119,8 +1089,8 @@ public class InboundRoutes extends SwebDriver {
         inbound2.A_callfrom8_gsm();
 //        考虑account的呼入
         if (!DEVICE_ASSIST_3.equals("null")) {
-            Reporter.infoExec(" 4001拨打1111通过account外线呼入到分机1000"); //执行操作
-            pjsip.Pj_Make_Call_Auto_Answer(4001, "1111", DEVICE_ASSIST_3);
+            Reporter.infoExec(" 4001拨打11000通过account外线呼入到分机1000"); //执行操作
+            pjsip.Pj_Make_Call_Auto_Answer(4001, "11000", DEVICE_ASSIST_3);
             ys_waitingTime(5000);
             if (getExtensionStatus(1000, TALKING, 8) == TALKING) {
                 Reporter.pass(" 分机1000状态--TALKING，通话正常建立");
@@ -1128,13 +1098,14 @@ public class InboundRoutes extends SwebDriver {
                 Reporter.error(" 预期分机1000状态为TALKING，实际状态为"+getExtensionStatus(1000, TALKING, 8));
             }
             pjsip.Pj_Hangup_All();
+//            cloud cdr不同，caller显示未6100 <6100>
             m_extension.checkCDR("4001 <6100>", "1000 <1000>", "Answered", ACCOUNTTRUNK, " ", communication_inbound);
         }
         closePbxMonitor();
     }
     @Test
     public void G3_workday(){
-        Reporter.infoExec("修改InRoute10_Conference呼入路由:新增TimeCondition——workday");
+        Reporter.infoExec("修改InRoute10_Conference呼入路由:新增TimeCondition——workday_24hour");
         gridClick(inboundRoutes.grid,gridFindRowByColumn(inboundRoutes.grid,inboundRoutes.gridcolumn_Name,"InRoute10_Conference",sort_ascendingOrder),inboundRoutes.gridEdit);
         ys_waitingMask();
         add_inbound_route.addTimeCondition.click();
@@ -1277,6 +1248,8 @@ public class InboundRoutes extends SwebDriver {
     public void G7_checkPriority_NoWorkday(){
         settings.callControl_tree.click();
         inboundRoutes.inboundRoutes.click();
+        ys_waitingMask();
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         Reporter.infoExec("修改InRoute10_Conference呼入路由:编辑workday当前时间不是上班时间");
         gridClick(inboundRoutes.grid,gridFindRowByColumn(inboundRoutes.grid,inboundRoutes.gridcolumn_Name,"InRoute10_Conference",sort_ascendingOrder),inboundRoutes.gridEdit);
         ys_waitingMask();
@@ -1297,6 +1270,48 @@ public class InboundRoutes extends SwebDriver {
     }
     @Test
     public void G8_timeDelay() throws InterruptedException {
+        pjsip.Pj_Unregister_Account(1000);
+        pjsip.Pj_Unregister_Account(1100);
+        pjsip.Pj_Unregister_Account(1101);
+        pjsip.Pj_Unregister_Account(1105);
+        pjsip.Pj_Unregister_Account(3001);
+        pjsip.Pj_Unregister_Account(2000);
+        pjsip.Pj_Unregister_Account(2001);
+        pjsip.Pj_Unregister_Account(2005);
+        pjsip.Pj_Unregister_Account(4000);
+        pjsip.Pj_Unregister_Account(4001);
+
+        Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
+        pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
+        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
+        pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 主测设备注册分机1105"); //执行操作
+        pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
+
+        Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
+
+        Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
+
+        Reporter.infoExec(" 辅助设备2注册分机2005"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(2005, DEVICE_ASSIST_2);
+
+        Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
+
+        Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
+        closePbxMonitor();
+
         Calendar calendar = Calendar.getInstance();
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");//设置获取到的时间显示格式
@@ -1315,6 +1330,8 @@ public class InboundRoutes extends SwebDriver {
         m_callcontrol.addTimeContion("threeMinuteWork",time2,"23:59",false,"all");
 //        呼入路由的时间条件中新增twoMinuteWork
         inboundRoutes.inboundRoutes.click();
+        ys_waitingMask();
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         Reporter.infoExec("修改InRoute10_Conference呼入路由:新增threeMinuteWork");
         gridClick(inboundRoutes.grid,gridFindRowByColumn(inboundRoutes.grid,inboundRoutes.gridcolumn_Name,"InRoute10_Conference",sort_ascendingOrder),inboundRoutes.gridEdit);
         ys_waitingMask();
@@ -1400,6 +1417,13 @@ public class InboundRoutes extends SwebDriver {
     }
     @Test
     public void G9_timeOrder2(){
+        closeSetting();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        settings.callControl_panel.click();
+        inboundRoutes.inboundRoutes.click();
+        ys_waitingMask();
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         Reporter.infoExec("修改InRoute10_Conference呼入路由顺序");
         gridClick(inboundRoutes.grid,gridFindRowByColumn(inboundRoutes.grid,inboundRoutes.gridcolumn_Name,"InRoute10_Conference",sort_ascendingOrder),inboundRoutes.gridEdit);
         ys_waitingMask();
@@ -1455,90 +1479,40 @@ public class InboundRoutes extends SwebDriver {
         }
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2001 <2001>", "1105 <6200(1105)>", "Answered", SPS, "", communication_inbound);
-
     }
+
     @Test
     public void H1_FeatureCode1() {
-//        pjsip.Pj_Unregister_Account(1000);
-//        pjsip.Pj_Unregister_Account(1100);
-//        pjsip.Pj_Unregister_Account(1101);
-//        pjsip.Pj_Unregister_Account(1105);
-//        pjsip.Pj_Unregister_Account(1106);
-//        pjsip.Pj_Unregister_Account(3001);
-//        pjsip.Pj_Unregister_Account(2000);
-//        pjsip.Pj_Unregister_Account(2001);
-//        pjsip.Pj_Unregister_Account(2005);
-//        pjsip.Pj_Unregister_Account(4000);
-//        pjsip.Pj_Unregister_Account(4001);
-//        ys_waitingTime(6000);
-//        Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-//        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
-//        pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-//        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
-//        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
-//        pjsip.Pj_CreateAccount(1101, "Yeastar202", "UDP", UDP_PORT, 3);
-//        pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1105"); //执行操作
-//        pjsip.Pj_CreateAccount(1105, "Yeastar202", "UDP", UDP_PORT, 7);
-//        pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1106"); //执行操作
-//        pjsip.Pj_CreateAccount(1106, "Yeastar202", "UDP", UDP_PORT, 8);
-//
-//        Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
-//        pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
-//
-//        Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
-//        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-//
-//        Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
-//        pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
-//
-//        Reporter.infoExec(" 辅助设备2注册分机2005"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 2005, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
-//        pjsip.Pj_Register_Account_WithoutAssist(2005, DEVICE_ASSIST_2);
-//
-//        Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
-//        pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
-//
-//        Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 4001, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
-//        pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
-//        closePbxMonitor();
-
         closeSetting();
         Reporter.infoExec(" 设置分机1000具有拨打时间特征码的权限"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.general_panel.click();
         ys_waitingTime(3000);
-        m_general.setExtensionPermission(true, "*88", "1000");
+        m_general.setExtensionPermission(true,"*88","1000");
         ys_waitingTime(1000);
         ys_apply();
     }
     @Test
     public void H1_FeatureCode2() {
-        settings.callControl_tree.click();
+        closeSetting();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        settings.callControl_panel.click();
         inboundRoutes.inboundRoutes.click();
+        ys_waitingMask();
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         Reporter.infoExec("检查时间特征码+修改InRoute10_Conference呼入路由：将workday_24hour改为NoWorkday");
         gridClick(inboundRoutes.grid, gridFindRowByColumn(inboundRoutes.grid, inboundRoutes.gridcolumn_Name, "InRoute10_Conference", sort_ascendingOrder), inboundRoutes.gridEdit);
         ys_waitingMask();
-        String featureCode1 = String.valueOf(gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid, 1, add_inbound_route.gridcolumn_FeatureCode));
-        String featureCode2 = String.valueOf(gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid, 2, add_inbound_route.gridcolumn_FeatureCode));
-        String featureCode3 = String.valueOf(gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid, 3, add_inbound_route.gridcolumn_FeatureCode));
+        String featureCode1 = gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid, 1, add_inbound_route.gridcolumn_FeatureCode);
+        String featureCode2 = gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid, 2, add_inbound_route.gridcolumn_FeatureCode);
+        String featureCode3 = gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid, 3, add_inbound_route.gridcolumn_FeatureCode);
 
         add_inbound_route.SetTimeConditionTableviewDestition(3, 1, "NoWorkday");
         add_inbound_route.save.click();
-        if(version[1].equals("6")){
+        ys_apply();
+        if(Integer.valueOf(version[1]) <= 6){
 //        30.6.0.X
             if (featureCode1.equals("*8803") && featureCode2.equals("*8801") && featureCode3.equals("*8802")) {
                 Reporter.pass(" 特征码生成正确");
@@ -1569,10 +1543,10 @@ public class InboundRoutes extends SwebDriver {
         ys_waitingTime(1000);
         add_inbound_route.addTimeCondition.click();
         ys_waitingTime(1000);
-        String featureCode1 = String.valueOf(gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid,1,add_inbound_route.gridcolumn_FeatureCode));
-        String featureCode2 = String.valueOf(gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid,2,add_inbound_route.gridcolumn_FeatureCode));
+        String featureCode1 = gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid,1,add_inbound_route.gridcolumn_FeatureCode);
+        String featureCode2 = gridContent(add_inbound_route.add_Inbound_Route_TimeCondition_Grid,2,add_inbound_route.gridcolumn_FeatureCode);
         add_inbound_route.cancel.click();
-        if (version[1].equals("6")) {
+        if (Integer.valueOf(version[1]) <= 6) {
 //        30.6.0.X
             if (featureCode1.equals("*88101") && featureCode2.equals("*88102")) {
                 Reporter.pass(" 特征码生成正确");
@@ -1594,7 +1568,7 @@ public class InboundRoutes extends SwebDriver {
     }
     @Test
     public void H2_checkFeatureCode1(){
-        if (version[1].equals("6")) {
+        if (Integer.valueOf(version[1]) <= 6) {
 //        30.6.0.X
             Reporter.infoExec(" 分机1000拨打特征码*8802强制启用非工作时间"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(1000, "*8802", DEVICE_IP_LAN, false);
@@ -1624,7 +1598,7 @@ public class InboundRoutes extends SwebDriver {
     }
     @Test
     public void H2_checkFeatureCode2(){
-        if (version[1].equals("6")) {
+        if (Integer.valueOf(version[1]) <= 6) {
 //        30.6.0.X
             Reporter.infoExec(" 分机1000拨打特征码*8801强制启用工作时间"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(1000, "*8801", DEVICE_IP_LAN, false);
@@ -1716,6 +1690,8 @@ public class InboundRoutes extends SwebDriver {
         settings.callControl_panel.click();
         ys_waitingTime(2000);
         inboundRoutes.inboundRoutes.click();
+        ys_waitingMask();
+        ys_waitingLoading(inboundRoutes.grid_Mask);
         gridClick(inboundRoutes.grid, gridFindRowByColumn(inboundRoutes.grid, inboundRoutes.gridcolumn_Name, "InRoute10_Conference", sort_ascendingOrder), inboundRoutes.gridEdit);
         ys_waitingMask();
         ys_waitingTime(1000);
@@ -1724,9 +1700,13 @@ public class InboundRoutes extends SwebDriver {
         add_inbound_route.SetTimeConditionTableviewDestination(1,2,add_inbound_route.s_disa);
         add_inbound_route.SetTimeConditionTableviewDestination(2,2,add_inbound_route.s_callback);
         add_inbound_route.SetTimeConditionTableviewDestination(3,2,add_inbound_route.s_outboundRoute);
-        add_inbound_route.SetTimeConditionTableviewDestition(4,1,"workday_24hour");
-        add_inbound_route.SetTimeConditionTableviewDestination(4,2,add_inbound_route.s_extensin);
-        add_inbound_route.SetTimeConditionTableviewDestitionEx(4,3,"1106");
+        if (!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC)) {
+            if (!FXS_1.equals("null")) {
+                add_inbound_route.SetTimeConditionTableviewDestition(4, 1, "workday_24hour");
+                add_inbound_route.SetTimeConditionTableviewDestination(4, 2, add_inbound_route.s_extensin);
+                add_inbound_route.SetTimeConditionTableviewDestitionEx(4, 3, "1106");
+            }
+        }
         add_inbound_route.edit_save();
         ys_apply();
     }
@@ -1747,7 +1727,7 @@ public class InboundRoutes extends SwebDriver {
     }
     @Test
     public void I2_callBack() {
-        if (version[1].equals("6")) {
+        if (Integer.valueOf(version[1]) <= 6) {
 //        通过强制启用第二时间条件，来调整呼入目的地_30.6.0.X
             Reporter.infoExec(" 分机1000拨打特征码*801"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(1000, "*801", DEVICE_IP_LAN, false);
@@ -1785,7 +1765,7 @@ public class InboundRoutes extends SwebDriver {
     }
     @Test
     public void I3_FxsExtension(){
-        if (version[1].equals("6")) {
+        if (Integer.valueOf(version[1]) <= 6) {
 //        通过强制启用第四时间条件，来调整呼入目的地_30.6.0.X
         Reporter.infoExec(" 分机1000拨打特征码*804"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"*804",DEVICE_IP_LAN,false);
@@ -1821,63 +1801,7 @@ public class InboundRoutes extends SwebDriver {
     }
     @Test
     public void I4_timecondition_outbound_sip(){
-//        pjsip.Pj_Unregister_Account(1000);
-//        pjsip.Pj_Unregister_Account(1100);
-//        pjsip.Pj_Unregister_Account(1101);
-//        pjsip.Pj_Unregister_Account(1105);
-//        pjsip.Pj_Unregister_Account(1106);
-//        pjsip.Pj_Unregister_Account(3001);
-//        pjsip.Pj_Unregister_Account(2000);
-//        pjsip.Pj_Unregister_Account(2001);
-//        pjsip.Pj_Unregister_Account(2005);
-//        pjsip.Pj_Unregister_Account(4000);
-//        pjsip.Pj_Unregister_Account(4001);
-//        ys_waitingTime(6000);
-//        Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-//        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
-//        pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-//        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
-//        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
-//        pjsip.Pj_CreateAccount(1101, "Yeastar202", "UDP", UDP_PORT, 3);
-//        pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1105"); //执行操作
-//        pjsip.Pj_CreateAccount(1105, "Yeastar202", "UDP", UDP_PORT, 7);
-//        pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
-//
-//        Reporter.infoExec(" 主测设备注册分机1106"); //执行操作
-//        pjsip.Pj_CreateAccount(1106, "Yeastar202", "UDP", UDP_PORT, 8);
-//
-//        Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
-//        pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
-//
-//        Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
-//        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-//
-//        Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
-//        pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
-//
-//        Reporter.infoExec(" 辅助设备2注册分机2005"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 2005, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
-//        pjsip.Pj_Register_Account_WithoutAssist(2005, DEVICE_ASSIST_2);
-//
-//        Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
-//        pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
-//
-//        Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
-//        pjsip.Pj_CreateAccount("UDP", 4001, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
-//        pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
-//        closePbxMonitor();
-
-        if (version[1].equals("6")) {
+        if (Integer.valueOf(version[1]) <= 6) {
             //        通过强制启用第二时间条件，来调整呼入目的地——30.6.0.X
         Reporter.infoExec(" 分机1000拨打特征码*802"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"*802",DEVICE_IP_LAN,false);
@@ -2122,6 +2046,10 @@ public class InboundRoutes extends SwebDriver {
         }
     }
     @Test
+    public void J4_backup(){
+        backupEnviroment(this.getClass().getSimpleName(),true);
+    }
+    @Test
     public void K1_deletePartRoute_no(){
         settings.callControl_tree.click();
         ys_waitingTime(2000);
@@ -2186,6 +2114,7 @@ public class InboundRoutes extends SwebDriver {
         ys_apply();
         YsAssert.assertEquals(row, 0, "全部勾选-确定删除");
     }
+
     @Test
     public void L1_import(){
         inboundRoutes.Import.click();
@@ -2254,6 +2183,7 @@ public class InboundRoutes extends SwebDriver {
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2001 <2001>","1105 <1105>","Answered",SPS," ",communication_inbound);
     }
+
     @Test
     public void M1_deleteOneRoute_no(){
         Reporter.infoExec(" 删除单个呼入路由InRoute3——选择no"); //执行操作
@@ -2315,7 +2245,7 @@ public class InboundRoutes extends SwebDriver {
         ys_apply();
     }
     @Test
-    public void N_checkCallerIDPriority1() throws InterruptedException {
+    public void N_checkCallerIDPriority1(){
 //        3001通过sip外线呼入，匹配到3.的CallerID
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到分机1000"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(3001,"3000",DEVICE_ASSIST_1,false);
@@ -2329,7 +2259,7 @@ public class InboundRoutes extends SwebDriver {
         m_extension.checkCDR("3001 <3001>","1000 <1000>","Answered",SIPTrunk," ",communication_inbound);
     }
     @Test
-    public void N_checkCallerIDPriority2() throws InterruptedException {
+    public void N_checkCallerIDPriority2(){
 //        2001通过SPS外线呼入，匹配到X.的CallerID
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入到分机1000"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(2001,"99999",DEVICE_ASSIST_2,false);
@@ -2435,11 +2365,18 @@ public class InboundRoutes extends SwebDriver {
     public void Q_recovery5(){
 //        取消分机1000具有拨打时间特征码的权限
         Reporter.infoExec(" 取消分机1000具有拨打时间特征码的权限"); //执行操作
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        closeSetting();
+        ys_waitingTime(5000);
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        settings.general_panel.click();
         settings.general_tree.click();
         featureCode.featureCode.click();
-        ys_waitingTime(2000);
+        ys_waitingTime(5000);
         featureCode.setExtensionPermission.click();
-        ys_waitingTime(3000);
+        ys_waitingTime(5000);
         featureCode.extension_RemoveAllFromSelect.click();
         ys_waitingTime(2000);
         featureCode.list_save.click();
@@ -2462,10 +2399,11 @@ public class InboundRoutes extends SwebDriver {
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
         Reporter.infoAfterClass("执行完毕：======  InboundRoutes  ======"); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+
+        ys_waitingTime(10000);
+        killChromePid();
     }
 }

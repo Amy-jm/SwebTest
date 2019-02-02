@@ -15,20 +15,20 @@ import org.testng.annotations.Test;
  */
 public class VoicePrompts extends SwebDriver{
     @BeforeClass
-    public void BeforeClass() throws InterruptedException {
+    public void BeforeClass() {
         pjsip.Pj_Init();
         Reporter.infoBeforeClass("开始执行：======  VoicePrompts  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
 
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
 
 //        被测设备注册分机1000
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
 
         pageDeskTop.taskBar_Main.click();
@@ -47,7 +47,7 @@ public class VoicePrompts extends SwebDriver{
 
 //    录制
     @Test
-    public void A1_record_satisfaction() throws InterruptedException {
+    public void A1_record_satisfaction() {
         Reporter.infoExec(" 分机1000录制提示音satisfaction"); //执行操作
         customPrompts.recordNew.click();
         record_new_prompt.name.setValue("satisfaction");
@@ -57,7 +57,7 @@ public class VoicePrompts extends SwebDriver{
         pjsip.Pj_Answer_Call(1000, true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <RecordFile>", "1000", "Answered", "", "", communication_internal);
+//        m_extension.checkCDR("1000 <RecordFile>", "1000", "Answered", "", "", communication_internal);
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         customPrompts.refresh.click();
@@ -65,7 +65,7 @@ public class VoicePrompts extends SwebDriver{
     }
 
     @Test
-    public void A2_record_prompt1() throws InterruptedException {
+    public void A2_record_prompt1() {
         Reporter.infoExec(" 分机1000录制提示音prompt1"); //执行操作
         customPrompts.recordNew.click();
         record_new_prompt.name.setValue("prompt1");
@@ -75,7 +75,7 @@ public class VoicePrompts extends SwebDriver{
         pjsip.Pj_Answer_Call(1000,true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
+//        m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         customPrompts.refresh.click();
@@ -83,7 +83,7 @@ public class VoicePrompts extends SwebDriver{
     }
 
     @Test
-    public void A3_record_agentid() throws InterruptedException {
+    public void A3_record_agentid() {
         Reporter.infoExec(" 分机1000录制提示音agentid"); //执行操作
         customPrompts.recordNew.click();
         record_new_prompt.name.setValue("agentid");
@@ -93,7 +93,7 @@ public class VoicePrompts extends SwebDriver{
         pjsip.Pj_Answer_Call(1000,true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
+//        m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         customPrompts.refresh.click();
@@ -101,7 +101,7 @@ public class VoicePrompts extends SwebDriver{
     }
 
     @Test
-    public void A4_record_Join() throws InterruptedException {
+    public void A4_record_Join() {
         Reporter.infoExec(" 分机1000录制提示音Join"); //执行操作
         customPrompts.recordNew.click();
         record_new_prompt.name.setValue("Join");
@@ -111,7 +111,7 @@ public class VoicePrompts extends SwebDriver{
         pjsip.Pj_Answer_Call(1000,true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
+//        m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         customPrompts.refresh.click();
@@ -119,7 +119,7 @@ public class VoicePrompts extends SwebDriver{
     }
 
     @Test
-    public void A5_record_AgentAnnouncement() throws InterruptedException {
+    public void A5_record_AgentAnnouncement() {
         Reporter.infoExec(" 分机1000录制提示音AgentAnnouncement"); //执行操作
         customPrompts.recordNew.click();
         record_new_prompt.name.setValue("AgentAnnouncement");
@@ -129,7 +129,7 @@ public class VoicePrompts extends SwebDriver{
         pjsip.Pj_Answer_Call(1000,true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
+//        m_extension.checkCDR("1000 <RecordFile>","1000","Answered","","",communication_internal);
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         customPrompts.refresh.click();
@@ -138,7 +138,7 @@ public class VoicePrompts extends SwebDriver{
 
 //    播放
     @Test
-    public void B_play() throws InterruptedException {
+    public void B_play() {
         Reporter.infoExec(" 分机1000播放提示音prompt1"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -155,7 +155,7 @@ public class VoicePrompts extends SwebDriver{
 
 //    重新录制
     @Test
-    public void C_reRecord() throws InterruptedException {
+    public void C_reRecord() {
         Reporter.infoExec(" 分机1000重新录制提示音prompt1"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -171,7 +171,7 @@ public class VoicePrompts extends SwebDriver{
 
 //    上传
     @Test
-    public void D_upload() throws InterruptedException {
+    public void D_upload() {
         Reporter.infoExec(" 上传提示音autotestprompt"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -191,7 +191,7 @@ public class VoicePrompts extends SwebDriver{
 
 //    music on hold
     @Test
-    public void E_MusicOnHold() throws InterruptedException {
+    public void E_MusicOnHold() {
         Reporter.infoExec("选择Music on Hold提示音列表的第一个提示音，点击“Play”在1000播放");
         musicOnHold.musicOnHold.click();
         gridClick(musicOnHold.grid,1,musicOnHold.gridPlay);
@@ -207,7 +207,7 @@ public class VoicePrompts extends SwebDriver{
     }
 
     @Test
-    public void F_CreateNewPlaylist() throws InterruptedException {
+    public void F_CreateNewPlaylist() {
         Reporter.infoExec("创建一个新的Autotest");
         musicOnHold.musicOnHold.click();
         System.out.println("nnnnnnnnn："+return_executeJs("Ext.getCmp('st-moh-choosefolder').store.getCount()"));
@@ -261,12 +261,10 @@ public class VoicePrompts extends SwebDriver{
     }
 
     @AfterClass
-    public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
+    public void AfterClass() {
         Reporter.infoAfterClass("执行完毕：======  VoicePrompts  ======"); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
-
+        pjsip.Pj_Destory();
+        ys_waitingTime(30000);
     }
 }

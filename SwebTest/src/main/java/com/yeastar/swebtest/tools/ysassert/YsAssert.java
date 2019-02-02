@@ -6,10 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.collections.Lists;
 
+import javax.xml.crypto.Data;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
+
+import static com.codeborne.selenide.Selenide.screenshot;
 import static com.yeastar.swebtest.driver.Config.*;
 import static org.testng.internal.EclipseInterface.*;
 
@@ -1080,7 +1084,9 @@ public class YsAssert extends org.testng.Assert {
     static public void fail(String message) {
 //        调用截图方法
         String filename = message+".jpg";
-        ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +filename);
+//        ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +filename);
+//        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
+//        screenshot(message);
         Reporter.sendReport("link","Error: " + message, SCREENSHOT_PATH +filename);
 
         throw new AssertionError(message);

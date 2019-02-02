@@ -9,7 +9,10 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.file.ExcelUnit;
 import com.yeastar.swebtest.tools.reporter.Reporter;
+import org.openqa.selenium.By;
 import org.testng.annotations.*;
+
+import static com.codeborne.selenide.Selenide.$;
 
 /**
  * Created by AutoTest on 2017/11/21.
@@ -18,11 +21,11 @@ public class RingGroup extends SwebDriver{
 
     @BeforeClass
     public void A_BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：=======  RingGroup  ======="); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -31,15 +34,16 @@ public class RingGroup extends SwebDriver{
 
     @BeforeClass
     public void B_Register() {
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
-        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",UDP_PORT,4);
-        pjsip.Pj_CreateAccount(1103,"Yeastar202","UDP",UDP_PORT,5);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1102,EXTENSION_PASSWORD,"UDP",UDP_PORT,4);
+        pjsip.Pj_CreateAccount(1103,EXTENSION_PASSWORD,"UDP",UDP_PORT,5);
+        pjsip.Pj_CreateAccount(1105,EXTENSION_PASSWORD,"UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101,DEVICE_IP_LAN);
@@ -74,7 +78,7 @@ public class RingGroup extends SwebDriver{
     }
 
     @Test(dataProvider="add")
-    public void A2_AddRingGroups(HashMap<String, String> data) throws InterruptedException {
+    public void A2_AddRingGroups(HashMap<String, String> data) {
         Reporter.infoExec("添加响铃组"+data.get("Name")+"："+data.get("Number"));
 //        System.out.println(data.toString());
         ringGroup.add.shouldBe(Condition.exist);
@@ -96,6 +100,7 @@ public class RingGroup extends SwebDriver{
         }
         listSelect(add_ring_group.list_RingGroup,extensionList,memberList);
 
+//        $(By.id("st-rg-noansweraction-labelEl")).scrollIntoView(false);    //selenide 4.12.3 才能用
         if(!data.get("Failover").equals("")){
             comboboxSelect(add_ring_group.failoverDestinationtype,data.get("Failover"));
         }
@@ -114,7 +119,7 @@ public class RingGroup extends SwebDriver{
 
 //    添加各项，点击Cancel
     @Test
-    public void A3_add_cancel() throws InterruptedException {
+    public void A3_add_cancel() {
         Reporter.infoExec(" 新建RingGroup：xxx，点击取消"); //执行操作
         ringGroup.add.shouldBe(Condition.exist);
         String lineNum1 = String.valueOf(gridLineNum(ringGroup.grid)) ;
@@ -140,7 +145,7 @@ public class RingGroup extends SwebDriver{
 
 //    编辑RingGroup：viszontlátasra，新增成员分机1106（FXS分机）
     @Test
-    public void B_EditRingGroupFxs() throws InterruptedException {
+    public void B1_EditRingGroupFxs() {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals((PC))){
             return;
         }
@@ -158,9 +163,10 @@ public class RingGroup extends SwebDriver{
         ys_waitingTime(1000);
     }
 
+
 //    编辑呼入路由InRoute1，到RingGroup：a
     @Test
-    public void C_EditInRoute1() throws InterruptedException {
+    public void C1_EditInRoute1() {
         Reporter.infoExec(" 编辑呼入路由InRoute1，到RingGroup：a"); //执行操作
         settings.callControl_tree.click();
         inboundRoutes.inboundRoutes.click();
@@ -173,10 +179,13 @@ public class RingGroup extends SwebDriver{
         ys_waitingTime(1000);
         ys_apply();
     }
-
+    @Test
+    public void C2_Backup(){
+        backupEnviroment(this.getClass().getName());
+    }
 //    各种外线呼入到RingGroup:a通话测试
     @Test
-    public void D_InboundtoRingGroup_a() throws InterruptedException {
+    public void D_InboundtoRingGroup_a() {
         for (int i = 1; i < 9; i++) {
             switch (i) {
                 case 1:
@@ -343,7 +352,7 @@ public class RingGroup extends SwebDriver{
 
     //    分机xx接听后，其它分机不会再继续响铃
     @Test
-    public void E1_Sequentially() throws InterruptedException {
+    public void E1_Sequentially() {
         Reporter.infoExec(" 1102拨打6208呼入到响铃组viszontlátasra，到分机1101响铃时，1101接听"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1102,"6208",DEVICE_IP_LAN);
         if(!FXS_1.equals("null")){
@@ -392,7 +401,7 @@ public class RingGroup extends SwebDriver{
     }
 
     @Test
-    public void E2_RingAll() throws InterruptedException {
+    public void E2_RingAll() {
         Reporter.infoExec(" 1102拨打6201呼入到响铃组a，分机1105接听，预期其它分机停止响铃"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1102,"6201",DEVICE_IP_LAN);
         ys_waitingTime(25000);
@@ -450,7 +459,7 @@ public class RingGroup extends SwebDriver{
 
     //    呼入到不同的响铃组Failover
     @Test
-    public void F1_FailtoHangup() throws InterruptedException {
+    public void F1_FailtoHangup() {
         Reporter.infoExec(" 2001拨打999999通过sps外线呼入到RingGroup:a，无人接听，60s后通话挂断"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001, "999999", DEVICE_ASSIST_2);
         ys_waitingTime(10000);
@@ -510,11 +519,11 @@ public class RingGroup extends SwebDriver{
             YsAssert.fail(" 预期2001状态为Hang up");
         }
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("2001 <2001>","1000 <6201(1000)>","No Answer",SPS,"",communication_inbound);
+        m_extension.checkCDR("2001 <2001>","6201","No Answer",SPS,"",communication_inbound);
     }
 
     @Test
-    public void F2_FailtoExtension() throws InterruptedException {
+    public void F2_FailtoExtension() {
         Reporter.infoExec(" 1102拨打6202呼入到响铃组Yeastar202，无人接听，20s后分机1000响铃接听"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1102,"6202",DEVICE_IP_LAN);
         if(getExtensionStatus(1103,RING,10) == RING){
@@ -540,7 +549,7 @@ public class RingGroup extends SwebDriver{
     }
 
     @Test
-    public void F3_FailtoIVR() throws InterruptedException {
+    public void F3_FailtoIVR() {
         Reporter.infoExec(" 1103拨打6204呼入到响铃组*.*，无人接听，20S后到IVR1按1到1000"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1103,"6204",DEVICE_IP_LAN);
         if(getExtensionStatus(1000,RING,10) == RING){
@@ -578,7 +587,7 @@ public class RingGroup extends SwebDriver{
     }
 
     @Test
-    public void F4_FailtoRingGroup() throws InterruptedException {
+    public void F4_FailtoRingGroup() {
         Reporter.infoExec(" 1102拨打6205呼入到响铃组RingGroup6205，顺序响铃10s，无人接听，转到响铃组Yeastar202，1103接听"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1102,"6205",DEVICE_IP_LAN,false);
         if(getExtensionStatus(1000,RING,10) == RING){
@@ -629,7 +638,7 @@ public class RingGroup extends SwebDriver{
     }
 
     @Test
-    public void F5_FailtoQueue() throws InterruptedException {
+    public void F5_FailtoQueue() {
         Reporter.infoExec(" 1102拨打6206呼入到响铃组さようなら，顺序响铃10s，无人接听，转到队列Queue1，1105接听"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1102,"6206",DEVICE_IP_LAN);
         if(getExtensionStatus(1000,RING,10) == RING){
@@ -686,11 +695,12 @@ public class RingGroup extends SwebDriver{
         pjsip.Pj_Answer_Call(1100,false);
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
+        //cloud cdr
         m_extension.checkCDR("1102 <1102>","1100 <6700(1100)>","Answered","","",communication_internal);
     }
 
     @Test
-    public void F6_FailtoConference() throws InterruptedException {
+    public void F6_FailtoConference() {
         Reporter.infoExec(" 1105拨打6207呼入到响铃组Досвидания，顺序响铃30s，无人接听，转到Conference1"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1105,"6207",DEVICE_IP_LAN);
         if(getExtensionStatus(1000,RING,12) == RING){
@@ -706,11 +716,13 @@ public class RingGroup extends SwebDriver{
 //        预期转到会议室6400
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1105 <1105>","1000 <6207(6400)>","Answered","","",communication_internal);
+        //cloud cdr
+        m_extension.checkCDR("1105 <1105>","6400 <6207(6400)>","Answered","","",communication_internal,1,2);
+        m_extension.checkCDR("1105 <1105>","1000 <6207(1000)>","No Answer","","",communication_internal,1,2);
     }
 
     @Test
-    public void F7_FailtoVoicemail() throws InterruptedException {
+    public void F7_FailtoVoicemail() {
         Reporter.infoExec(" 1102拨打6203呼入到响铃组，同时响铃10s，无人接听，预期到1105的voicemail"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1102,"6203",DEVICE_IP_LAN);
         ys_waitingTime(40000);
@@ -723,28 +735,33 @@ public class RingGroup extends SwebDriver{
         Reporter.infoExec(" 分机1105登录，查看存在1102留下的语音留言"); //执行操作
         logout();
         if (PRODUCT.equals(CLOUD_PBX)) {
-            login("autotest@yeastar.com", "Yeastar202");
+            login("autotest@yeastar.com", EXTENSION_PASSWORD);
         } else {
-            login("1105", "Yeastar202");
+            login("1105", EXTENSION_PASSWORD);
         }
         me.taskBar_Main.click();
         me.mesettingShortcut.click();
         me.me_Voicemail.click();
         ys_waitingLoading(me_voicemail.grid_Mask);
+        setPageShowNum(me_voicemail.grid,100);
         if (Integer.parseInt(String.valueOf(gridLineNum(me_voicemail.grid))) != 0) {
             YsAssert.assertEquals((gridContent(me_voicemail.grid, Integer.parseInt(String.valueOf(gridLineNum(me_voicemail.grid))), me_voicemail.gridColumn_Callerid)),
-                    "1102(1102)", "语音留言检查:预期第"+Integer.parseInt(String.valueOf(gridLineNum(me_voicemail.grid)))+"行的CallerID为1102(1102)");
+                    "1102(1102)", "语音留言:预期第"+Integer.parseInt(String.valueOf(gridLineNum(me_voicemail.grid)))+"行的CallerID为1102(1102)");
         } else {
-            YsAssert.fail("语音留言检查:预期第1行的CallerID为1102(1102)");
+//            YsAssert.fail("语音留言:预期第"+Integer.parseInt(String.valueOf(gridLineNum(me_voicemail.grid)))+"行的CallerID为1102(1102)");
+            YsAssert.fail("语音留言:预期最后一行的CallerID为1102(1102)");
         }
+    }
+    @Test
+    public void F9_loglout(){
         logout();
         ys_waitingTime(5000);
     }
 
     @Test
-    public void G_delete() throws InterruptedException {
+    public void G_delete() {
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -759,7 +776,7 @@ public class RingGroup extends SwebDriver{
         ringGroup.ringGroup.click();
         ringGroup.add.shouldBe(Condition.exist);
         Reporter.infoExec(" 表格删除：Yeastar202-取消删除"); //执行操作
-        int row = Integer.parseInt(String.valueOf(gridFindRowByColumn(ringGroup.grid,ringGroup.gridcolumn_Name,"Yeastar202",sort_ascendingOrder)));
+        int row = Integer.parseInt(String.valueOf(gridFindRowByColumn(ringGroup.grid,ringGroup.gridcolumn_Name,"Yeastar202Yeastar202",sort_ascendingOrder)));
         int rows=Integer.parseInt(String.valueOf(gridLineNum(ringGroup.grid)));
         gridClick(ringGroup.grid,row,ringGroup.gridDelete);
         ringGroup.delete_no.click();
@@ -801,19 +818,40 @@ public class RingGroup extends SwebDriver{
         ys_apply();
 
     }
-
+    @AfterMethod
+    public void AfterMethod(){
+        if(cdRandRecordings.deleteCDR.isDisplayed()){
+            closeCDRRecord();
+        }
+    }
 //    恢复初始化环境
-    @Test
-    public void H1_recovery() throws InterruptedException {
+    @AfterClass
+    public void AfterClass0() {
         Reporter.infoExec(" 恢复初始化环境"); //执行操作
+        pjsip.Pj_Destory();
+        quitDriver();
+        initialDriver(BROWSER, "https://" + DEVICE_IP_LAN + ":" + DEVICE_PORT + "/");
+        login(LOGIN_USERNAME, LOGIN_PASSWORD);
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+            ys_waitingMask();
+            mySettings.close.click();
+        }
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        ys_waitingTime(3000);
+        if(settings.callFeatures_panel.isDisplayed()){
+            settings.callFeatures_panel.click();
+        }else{
+            settings.callFeatures_tree.click();
+        }
         ringGroup.ringGroup.click();
         deletes(" 删除所有RingGroup",ringGroup.grid,ringGroup.delete,ringGroup.delete_yes,ringGroup.grid_Mask);
         Reporter.infoExec(" 添加RingGroup1：6200，选择分机1000,1100,1105，其它默认"); //执行操作
         m_callFeature.addRingGroup("RingGroup1","6200",add_ring_group.rs_ringall,1000,1100,1105);
     }
 
-    @Test
-    public void H2_recovery() throws InterruptedException {
+    @AfterClass
+    public void AfterClass1() {
         settings.callControl_tree.click();
         inboundRoutes.inboundRoutes.click();
         inboundRoutes.add.shouldBe(Condition.exist);
@@ -826,20 +864,16 @@ public class RingGroup extends SwebDriver{
         ys_apply();
     }
 
-    @AfterMethod
-    public void AfterMethod(){
-        if(cdRandRecordings.deleteCDR.isDisplayed()){
-            closeCDRRecord();
-        }
-    }
+
 
     @AfterClass
-    public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
+    public void AfterClass2() {
         Reporter.infoAfterClass("执行完毕：=====  RingGroup ====="); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+
+        ys_waitingTime(10000);
+        killChromePid();
     }
 
 }

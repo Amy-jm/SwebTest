@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="18"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="512.238">
+  <properties />
+  
+  
+            <testcase name="B1_add_Paging6300" time="18.716" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="A2_InitPaging" time="33.933" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="G3_newIntercom" time="33.800" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="B3_add_NewPage6302" time="19.850" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="B4_add_Paging6303" time="18.759" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="E2_DisableAnswer" time="55.515" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="C1_callforward" time="6.091" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="D2_2way" time="37.192" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="E1_EnableAnswer" time="41.370" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="I_Recovery" time="6.086" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="H_delete" time="60.803" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="G1_intercom" time="34.405" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="D1_1way" time="48.923" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="G2_EditFeatureCode" time="16.830" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="B2_add_AutoPag6301" time="17.924" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="B5_Apply" time="8.077" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="A1_InitIntercom" time="8.991" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+                <testcase name="F1_followToPaging" time="44.973" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.Paging_Intercom" />
+      
+</testsuite>

@@ -4,10 +4,9 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
-import org.apache.regexp.RE;
 import org.openqa.selenium.By;
-
 import java.util.ArrayList;
+
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
@@ -19,7 +18,7 @@ public class YS_Extension extends SwebDriver{
     /*
     * 调整分机页面显示数量
     */
-    public void changeExtensionDisplaying(int num) throws InterruptedException {
+    public void changeExtensionDisplaying(int num)  {
         switch (num){
             case 10:{
                 $(By.xpath(".//div[starts-with(@id,'mypagingtoolbar')]")).shouldBe(Condition.exist);
@@ -59,11 +58,7 @@ public class YS_Extension extends SwebDriver{
      */
     public void setGeneralInfo(int username,String password,String port) {
         if(null!=port){
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            ys_waitingTime(5000);
             addExtensionBasic.FXS.click();
             executeJs("Ext.getCmp('pbxport').setValue('"+port+"')");
 
@@ -156,6 +151,7 @@ public class YS_Extension extends SwebDriver{
         setCheckBox(addExtensionAdvanced.qualify,false);
         if(!PRODUCT.equals(CLOUD_PBX)){
             setCheckBox(addExtensionAdvanced.registerRemotely,true);
+            setCheckBox(addExtensionAdvanced.NAT,true);
         }
         addExtensionBasic.save.click();
         ys_waitingLoading(extensions.grid_Mask);
@@ -163,7 +159,7 @@ public class YS_Extension extends SwebDriver{
     /**
      * 创建FXS分机
      */
-    public void addFxsExtension(int username, String password, String port) throws InterruptedException {
+    public void addFxsExtension(int username, String password, String port)  {
 
         extensions.add.shouldBe(Condition.exist).click();
 
@@ -171,17 +167,18 @@ public class YS_Extension extends SwebDriver{
 
         addExtensionAdvanced.advanced.click();
         setCheckBox(addExtensionAdvanced.registerRemotely,true);
+        setCheckBox(addExtensionAdvanced.NAT,true);
         setCheckBox(addExtensionAdvanced.qualify,false);
         addExtensionBasic.save.click();
         ys_waitingLoading(extensions.grid_Mask);
 
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
 
     }
     /**
      * 批量创建分机
      */
-    public void addBulkExtensions(int startExension, int createNum, int registPwdWay, String registPwd, int userPwdWay, String userPwd) throws InterruptedException {
+    public void addBulkExtensions(int startExension, int createNum, int registPwdWay, String registPwd, int userPwdWay, String userPwd)  {
 
         extensions.bulkAdd.click();
         ys_waitingMask();
@@ -192,21 +189,52 @@ public class YS_Extension extends SwebDriver{
 //        addExtensionAdvanced.advanced.click();
 //        addExtensionAdvanced.registerRemotely.click();
         addBulkExtensionsAdvanced.save.click();
-
+        ys_waitingTime(1000);
+        ys_waitingMask();
         ys_waitingLoading(extensions.grid_Mask);
-        Thread.sleep(1000);
+
+        //cloud网页批量添加做过特殊处理，关闭批量添加页面是会把ys_waiting页面一起关掉，需要再次调用出来才能正常使用ys_waitngMask()函数
+        if(PRODUCT.equals(CLOUD_PBX)){
+            extensions.add.click();
+            ys_waitingMask();
+            addExtensionAdvanced.cancel.click();
+        }
         String lineAfterAdd = String.valueOf(gridLineNum(extensions.grid)) ;
-        System.out.println("哈哈哈"+lineAfterAdd);
         String actual = (String) gridContent(extensions.grid,Integer.parseInt(lineAfterAdd),extensions.gridcolumn_Extensions);
         System.out.println("分机值："+actual);
 
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
+        YsAssert.assertEquals(actual,String.valueOf(startExension+createNum-1),"批量创建分机");
+    }
+    /*Cloud的批量添加分机--81.7版本以上*/
+    public void addBulkExtensions_cloud(int startExension, int createNum)  {
+
+        extensions.bulkAdd.click();
+        ys_waitingMask();
+        addBulkExtensionsBasic.startExtension.setValue(String.valueOf(startExension));
+        addBulkExtensionsBasic.createNumber.setValue(String.valueOf(createNum));
+        addBulkExtensionsAdvanced.save.click();
+        ys_waitingTime(1000);
+        ys_waitingMask();
+        ys_waitingLoading(extensions.grid_Mask);
+
+        //cloud网页批量添加做过特殊处理，关闭批量添加页面是会把ys_waiting页面一起关掉，需要再次调用出来才能正常使用ys_waitngMask()函数
+        if(PRODUCT.equals(CLOUD_PBX)){
+            extensions.add.click();
+            ys_waitingMask();
+            addExtensionAdvanced.cancel.click();
+        }
+        String lineAfterAdd = String.valueOf(gridLineNum(extensions.grid)) ;
+        String actual = (String) gridContent(extensions.grid,Integer.parseInt(lineAfterAdd),extensions.gridcolumn_Extensions);
+        System.out.println("分机值："+actual);
+
+        ys_waitingTime(1000);
         YsAssert.assertEquals(actual,String.valueOf(startExension+createNum-1),"批量创建分机");
     }
     /**
      * 删除分机
      */
-    public void deleteExtension(int username) throws InterruptedException {
+    public void deleteExtension(int username)  {
 
         System.out.println("delelte extension pos "+pjsip.getUserAccountInfo(username).pos);
         gridClick(extensions.grid,pjsip.getUserAccountInfo(username).pos,extensions.gridDelete);
@@ -256,7 +284,7 @@ public class YS_Extension extends SwebDriver{
         pageDeskTop.CDRandRecordShortcut.click();
 //        Caroline新增
         cdRandRecordings.maxWindows.click();
-        ys_waitingTime(1000);
+        ys_waitingTime(4000);
         cdRandRecordings.search.click();
         ys_waitingLoading(cdRandRecordings.grid_Mask);
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_CallFrom)).trim(),caller,"CDR呼叫方检测");
@@ -284,8 +312,6 @@ public class YS_Extension extends SwebDriver{
         YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,col)).trim(),info,"CDR检测");
         closeCDRRecord();
     }
-
-
     public void checkCDR(String caller,String callee, String status, int... rowList) {
         checkCDR(caller,callee,status,"","","",rowList);
     }
@@ -299,8 +325,8 @@ public class YS_Extension extends SwebDriver{
         ys_waitingLoading(cdRandRecordings.grid_Mask);
         boolean findCDR = false;
         for(int row:rowList){
-            if(caller.equals(String.valueOf(gridContent(extensions.grid_CDR,row,1)).trim()) ){
-                if( callee.equals(String.valueOf(gridContent(extensions.grid_CDR,row,2)).trim())){
+            if(caller.equals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_CallFrom)).trim()) ){
+                if( callee.equals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_CallTo)).trim())){
                     findCDR = true;
                     YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_CallFrom)).trim(),caller,"CDR呼叫方检测");
                     YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,row,cdRandRecordings.gridColumn_CallTo)).trim(),callee,"CDR被叫方检测");
@@ -319,6 +345,7 @@ public class YS_Extension extends SwebDriver{
             }
         }
         if(!findCDR){
+            YsAssert.fail("预计产生多条CDR，但没有找到匹配");
             YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,1,1)).trim(),caller,"CDR呼叫方检测");
             YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,1,2)).trim(),callee,"CDR被叫方检测");
             YsAssert.assertEquals(String.valueOf(gridContent(extensions.grid_CDR,1,5)).trim(),status,"CDR_Status检测");
@@ -335,7 +362,7 @@ public class YS_Extension extends SwebDriver{
         closeCDRRecord();
     }
     //s时间检查
-    public void checkCDR(String caller, String callee, String status,String time,int row) throws InterruptedException {
+    public void checkCDR(String caller, String callee, String status,String time,int row)  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.CDRandRecordShortcut.click();
 //        Caroline新增
@@ -352,7 +379,7 @@ public class YS_Extension extends SwebDriver{
     /**
      * 清空分机组
      */
-    public void deleteExtensionGroup() throws InterruptedException {
+    public void deleteExtensionGroup()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.extensions_panel.click();
@@ -364,7 +391,7 @@ public class YS_Extension extends SwebDriver{
 //        $(By.xpath(".//li[@data-recordindex='3' and text()='100']")).click();
 
 
-        Thread.sleep(3000);
+        ys_waitingTime(3000);
         String count = String.valueOf(executeJs("return Ext.getCmp('control-panel').down('extensiongroup').getStore().getCount()"));
         if(Integer.parseInt(count) != 0){
 //            String pageCountId = String.valueOf(executeJs("return Ext.query('#control-panel #control-panel-body .x-toolbar-text-default')[0].id"));
@@ -384,16 +411,16 @@ public class YS_Extension extends SwebDriver{
 //                    if(executeJs("return Ext.query('#control-panel #control-panel-body .x-mask')["+pleaseWaitCount+"].style.display").toString().equals("none")){
 //                        break;
 //                    }
-//                    Thread.sleep(10);
+//                    ys_waitingTime(10);
 //                }
-                Thread.sleep(1000);
+                ys_waitingTime(1000);
             }
 
         }
     }
 
 
-    public void addExtensionGroup(String name, int... member) throws InterruptedException {
+    public void addExtensionGroup(String name, int... member)  {
         ArrayList<String> memberList = new ArrayList();
         for (int item:member){
             System.out.println(item);
@@ -401,21 +428,21 @@ public class YS_Extension extends SwebDriver{
         }
 
         extensionGroup.add.click();
-        Thread.sleep(5000);
+        ys_waitingTime(5000);
         add_extension_group.name.setValue(name);
 
         listSelect(add_extension_group.list_ExtensionGroup,extensionList,memberList);
         add_extension_group.save.click();
 
 //        ys_waitingLoading(extensionGroup.grid);
-        Thread.sleep(2000);
+        ys_waitingTime(2000);
         String lineNum = String.valueOf(gridLineNum(extensionGroup.grid_Mask)) ;
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         m_extension.assertExtensionGroup(Integer.parseInt(lineNum),name,memberList);
 
     }
 
-    public void assertExtensionGroup(int line, String name ,ArrayList<String> memberList) throws InterruptedException {
+    public void assertExtensionGroup(int line, String name ,ArrayList<String> memberList)  {
 
         String actualName = null;
         String actualmember;

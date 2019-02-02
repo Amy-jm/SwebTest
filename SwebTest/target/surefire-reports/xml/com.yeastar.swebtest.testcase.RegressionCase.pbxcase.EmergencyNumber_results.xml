@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="8"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="382.871">
+  <properties />
+  
+  
+            <testcase name="A1_EmergencyNumber" time="27.785" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber" />
+                <testcase name="D_BlukDelete" time="50.121" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber" />
+                <testcase name="A2_EmergencyNumber_call" time="77.298" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber" />
+                <testcase name="B1_EditEmergencyNumber_prepend" time="21.459" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber" />
+                <testcase name="C2_Delete_Call" time="26.175" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber" />
+                <testcase name="C1_DeleteEmergencyNumber" time="71.338" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber" />
+                <testcase name="B2_EditEmergencyNumber_prepend_call" time="82.337" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber" />
+                <testcase name="A0_Register" time="26.358" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber" />
+      
+</testsuite>

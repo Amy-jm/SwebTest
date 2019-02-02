@@ -1,7 +1,5 @@
 package com.yeastar.swebtest.tools.pjsip;
 
-import cucumber.api.java.en_old.Ac;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 /**
  * Created by Yeastar on 2017/6/7.
@@ -17,5 +15,5 @@ public class UserAccount {
     public String uriHead;
     public int status;
     public int pos;
-    public int toTalk;
+//    public int toTalk;
 }

@@ -175,7 +175,7 @@ import com.yeastar.swebtest.tools.ssh.SSHApp;
 public class Config extends DataReader {
 
     public static long TEST_TIMEOUT = 3000;  //测试过程的时间差
-    public static long FINDELEMENT_TIMEOUT = 15000;  //元素查找的时间差
+    public static long FINDELEMENT_TIMEOUT = 10000;  //元素查找的时间差
 //    public static String CHROME = "chrome";
 //    public static String FIREFOX = "firefox";
 //    public static String IE = "ie";
@@ -189,14 +189,13 @@ public class Config extends DataReader {
     public static String S412 = "S412";
     public static String PC = "PC";
     public static String CLOUD_PBX= "CloudPBX";
-
+    public static String EXTENSION_PASSWORD = "Yeastar202Yeastar202";
     public static String currentPath = System.getProperty("user.dir")+"\\";
 
     public static boolean Single_Init = true;
     public static boolean Single_Device_Test = false;
 //    public static boolean Single_Device_Test = true;
 //    public static boolean Single_Init = false;
-
 
     //通讯类型定义
     public static String communication_outRoute = "Outbound";

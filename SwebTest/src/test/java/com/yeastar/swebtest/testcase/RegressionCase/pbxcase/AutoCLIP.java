@@ -12,31 +12,35 @@ import org.testng.annotations.*;
 public class AutoCLIP extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
+        System.out.println("java.library.path");
         pjsip.Pj_Init();
         Reporter.infoBeforeClass("开始执行：======  AutoCLIP  ======="); //执行操作
+
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
 
+    }
 
+    @Test
+    public void A0_init(){
+        pjsip.Pj_Init();
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2001
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
-
     }
-
-
 //    默认选择所有外线
     @Test
     public void A1_clip_default() throws InterruptedException {
+
         Reporter.infoExec(" ----AutoCLIP选择所有外线,其它默认----"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -292,7 +296,8 @@ public class AutoCLIP extends SwebDriver {
         Reporter.infoAfterClass("执行完毕：======   AutoCLIP   ======"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        ys_waitingTime(10000);
+        killChromePid();
 
     }
 }

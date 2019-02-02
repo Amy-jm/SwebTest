@@ -28,9 +28,9 @@ public class OutboundRoutes extends SwebDriver {
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",1);
+        pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",-1);
 
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
@@ -465,7 +465,7 @@ public class OutboundRoutes extends SwebDriver {
     public void T_RoutePermission() throws InterruptedException {
         Reporter.infoExec("登录1000分机判断路由是否存在");
         logout();
-        login("1000","Yeastar202");
+        login("1000",EXTENSION_PASSWORD);
         me.me.click();
         me.me_RoutePetmission.click();
         ys_waitingLoading(me_routePermission.grid_Mask);

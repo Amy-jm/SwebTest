@@ -5,7 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import com.yeastar.swebtest.driver.Config;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
-
 import java.util.ArrayList;
 
 import static com.yeastar.swebtest.driver.Config.*;
@@ -20,7 +19,7 @@ public class YS_CallControl {
      * 功能描述：添加时间条件，未进行高级设置
      * 参数说明：name,startTime：00:05,endTime：00：80，daysOfWeek: sun,mon,tue,wed,thu,fri,sat
      */
-    public void addTimeContion(String name,String startTime,String endTime, boolean advanceOptions,String... daysOfWeek ) throws InterruptedException {
+    public void addTimeContion(String name,String startTime,String endTime, boolean advanceOptions,String... daysOfWeek )  {
         timeConditions.add.click();
         add_time_condition.name.setValue(name);
 //        add_time_condition.starthour.setValue()
@@ -69,7 +68,7 @@ public class YS_CallControl {
      * @param startDate   格式为 yyyy-mm-dd   eg:2017-07-19
      * @param endDate     格式为 yyyy-mm-dd   eg:2017-07-19
      */
-    public void addHolidayByDay(String name, String startDate, String endDate) throws InterruptedException {
+    public void addHolidayByDay(String name, String startDate, String endDate)  {
         holiday.add.click();
         add_holiday.name.setValue(name);
         add_holiday.byDay.click();
@@ -118,9 +117,9 @@ public class YS_CallControl {
      * @param prepend    可为空
      * @param extList
      * @param trunksList
-     * @throws InterruptedException
+     * @
      */
-    public void addOutboundRoute(String name,String patterns,String strip,String prepend,ArrayList extList,ArrayList trunksList) throws InterruptedException {
+    public void addOutboundRoute(String name,String patterns,String strip,String prepend,ArrayList extList,ArrayList trunksList)  {
         outboundRoutes.add.click();
         ys_waitingMask();
         add_outbound_routes.name.setValue(name);
@@ -131,7 +130,7 @@ public class YS_CallControl {
         if(!prepend.isEmpty()){
             executeJs("Ext.getCmp('control-panel').down('outrouter-edit').down('grid').store.getAt(0).set('prepend','"+prepend+"')");
         }
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         if(trunksList.get(0).equals("all")){
             add_outbound_routes.mt_AddAllToSelect.click();
         }else
@@ -141,7 +140,7 @@ public class YS_CallControl {
             add_outbound_routes.me_AddAllToSelect.click();
         }else
             listSelect(add_outbound_routes.list_Extension, extensionList,extList);
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         add_outbound_routes.save.click();
         ys_waitingLoading(outboundRoutes.grid_Mask);
     }

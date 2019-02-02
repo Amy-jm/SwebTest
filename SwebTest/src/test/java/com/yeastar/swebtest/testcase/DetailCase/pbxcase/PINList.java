@@ -9,6 +9,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import static com.codeborne.selenide.Selenide.screenshot;
+
 /**
  * Created by Caroline on 2018/1/3.
  * 因为在呼出呼入路由、DISA部分有对PINList进行部分测试，所以PINList详细用例中的一些测试点在该份代码中不再重复编写
@@ -17,36 +19,41 @@ import org.testng.annotations.Test;
 public class PINList extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：====== PINList ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
-
     @Test
-    public void A_addExtension(){
+    public void A0_Init1() {
+//        resetoreBeforetest("BeforeTest_Local.bak");
+    }
+    @Test
+    public void A1_addExtension(){
+        pjsip.Pj_Init();
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
         closePbxMonitor();
     }
 //    新增PINList
     @Test
-    public void B_addPin() throws InterruptedException {
-        pageDeskTop.taskBar_Main.click();        pageDeskTop.settingShortcut.click();
+    public void B_addPin() {
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         settings.callFeatures_panel.click();
         callFeatures.more.click();
         pinList.PINList.click();
@@ -82,15 +89,19 @@ public class PINList extends SwebDriver {
         ys_waitingLoading(inboundRoutes.grid_Mask);
         ys_apply();
     }
+//    @Test
+    public void D1_backup(){
+        backupEnviroment(this.getClass().getName());
+    }
     @Test
     public void E_checkPin(){
         //        SPS呼入，DISA走SIP
         Reporter.infoExec("2001拨打99999通过SPS外线呼入，进入DISA后正确的Pin码，再进行二次拨号");
-        tcpSocket.connectToDevice();
+        tcpSocket.connectToDevice(100000);
         pjsip.Pj_Make_Call_Auto_Answer(2001,"99999",DEVICE_ASSIST_2,false);
         boolean showKeyWord= tcpSocket.getAsteriskInfo("DISA1");
         tcpSocket.closeTcpSocket();
-        YsAssert.assertEquals(showKeyWord,true,"外线呼出进入pinList");
+        YsAssert.assertEquals(showKeyWord,true,"外线呼出进入pinList，AMI未打印关键字");
         pjsip.Pj_Send_Dtmf(2001,"*","*","*","*","*","*","*","*","#");
         pjsip.Pj_Send_Dtmf(2001,"1","3","0","0","1","#");
         ys_waitingTime(5000);
@@ -102,6 +113,7 @@ public class PINList extends SwebDriver {
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2001 <2001>","13001","Answered",SPS,SIPTrunk,communication_outRoute);
         m_extension.checkCDR_OtherInfo(cdRandRecordings.gridColumn_PinCode,"********",1);
+
     }
     @Test
     public void F_deletePinNumber(){
@@ -117,11 +129,11 @@ public class PINList extends SwebDriver {
     public void G_checkPin(){
         //        SPS呼入，DISA走SIP
         Reporter.infoExec("2001拨打99999通过SPS外线呼入，进入DISA后先输入错误pin码，接着输入正确Pin码，再进行二次拨号");
-        tcpSocket.connectToDevice();
+        tcpSocket.connectToDevice(70000);
         pjsip.Pj_Make_Call_Auto_Answer(2001,"99999",DEVICE_ASSIST_2,false);
         boolean showKeyWord= tcpSocket.getAsteriskInfo("DISA1");
         tcpSocket.closeTcpSocket();
-        YsAssert.assertEquals(showKeyWord,true,"外线呼出进入pinList");
+        YsAssert.assertEquals(showKeyWord,true,"外线呼出进入pinList，AMI未打印关键字");
         pjsip.Pj_Send_Dtmf(2001,"*","*","*","*","*","*","*","*","#");
         pjsip.Pj_Send_Dtmf(2001,"1","2","3","#");
         pjsip.Pj_Send_Dtmf(2001,"1","3","0","0","1","#");
@@ -135,6 +147,7 @@ public class PINList extends SwebDriver {
 
         m_extension.checkCDR("2001 <2001>","13001","Answered",SPS,SIPTrunk,communication_outRoute);
         m_extension.checkCDR_OtherInfo(cdRandRecordings.gridColumn_PinCode,"123",1);
+
     }
     @Test
     public void H1_deleteOnePin_no(){
@@ -288,10 +301,10 @@ public class PINList extends SwebDriver {
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
         Reporter.infoAfterClass("执行完毕：======  PINList  ======"); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+        ys_waitingTime(10000);
+        killChromePid();
     }
 }

@@ -29,9 +29,9 @@ public class FeatureCode extends SwebDriver {
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",5060,4);
-        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",5060,5);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",5060,3);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",5060,4);
+        pjsip.Pj_CreateAccount(1102,EXTENSION_PASSWORD,"UDP",5060,5);
 
 
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);

@@ -13,21 +13,24 @@ import org.testng.annotations.*;
 public class OutboundRestriction extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
-        pjsip.Pj_Init();
         Reporter.infoBeforeClass("开始执行：======  OutboundRestriction  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
 
+    }
+    @Test
+    public void A0_init(){
+        pjsip.Pj_Init();
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
-        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",UDP_PORT,4);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1102,EXTENSION_PASSWORD,"UDP",UDP_PORT,4);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1102,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
@@ -39,10 +42,9 @@ public class OutboundRestriction extends SwebDriver {
         outboundRestriction.outboundRestriction.click();
         outboundRestriction.add.should(Condition.exist);
     }
-
 //    新建呼出限制
     @Test
-    public void A_add_1_all() throws InterruptedException {
+    public void A1_add_1_all() throws InterruptedException {
         deletes("  删除所有Outbound Restriction",outboundRestriction.grid,outboundRestriction.delete,outboundRestriction.delete_yes,outboundRestriction.grid_Mask);
         Reporter.infoExec(" 新建呼出限制OutRestriction1，2分钟不能超过5通");
         outboundRestriction.add.click();
@@ -102,7 +104,7 @@ public class OutboundRestriction extends SwebDriver {
     @Test
     public void A_add_3_cancelCall() throws InterruptedException {
         Reporter.infoExec(" 分机1100取消呼出限制后能正常呼出"); //执行操作
-        pjsip.Pj_Make_Call_Auto_Answer(1100, "13001", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_Auto_Answer(1100, "13001", DEVICE_IP_LAN, true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1100 <1100>","13001","Answered"," ",SIPTrunk,communication_outRoute);
@@ -133,7 +135,7 @@ public class OutboundRestriction extends SwebDriver {
             if(i==4) {
                 ys_waitingTime(80000);
             }
-            pjsip.Pj_Make_Call_Auto_Answer(1102, "13001", DEVICE_IP_LAN, false);
+            pjsip.Pj_Make_Call_Auto_Answer(1102, "13001", DEVICE_IP_LAN, true);
             ys_waitingTime(8000);
             System.out.println("=============================第"+i+"次循环打电话========================");
             System.out.println("1100的通话状态："+getExtensionStatus(1102,TALKING,1));
@@ -159,7 +161,7 @@ public class OutboundRestriction extends SwebDriver {
         settings.extensions_panel.click();
         ys_waitingTime(5000);
         gridClick(extensions.grid,gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Name,"1102",sort_ascendingOrder),0);
-        if(extensions.delete_yes.exists()){
+        if(extensions.delete_yes.isDisplayed()){
             extensions.delete_yes.click();
             System.out.println("取消呼出限制");
             Reporter.pass(" 查看分机1102状态已被限制，并取消限制");
@@ -244,7 +246,8 @@ public class OutboundRestriction extends SwebDriver {
         Reporter.infoAfterClass("执行完毕：======  OutboundRestriction  ======"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        ys_waitingTime(10000);
+        killChromePid();
 
     }
 }

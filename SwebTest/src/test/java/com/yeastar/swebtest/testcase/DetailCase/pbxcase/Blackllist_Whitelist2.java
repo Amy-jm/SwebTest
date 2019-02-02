@@ -18,7 +18,7 @@ public class Blackllist_Whitelist2 extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：====== Blacklist/Whitelist ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -27,58 +27,58 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     @Test
     public void A1_addExtensions(){
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1100, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
-        pjsip.Pj_CreateAccount(1101, "Yeastar202", "UDP", UDP_PORT, 3);
+        pjsip.Pj_CreateAccount(1101, EXTENSION_PASSWORD, "UDP", UDP_PORT, 3);
         pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1102"); //执行操作
-        pjsip.Pj_CreateAccount(1102, "Yeastar202", "UDP", UDP_PORT, 4);
+        pjsip.Pj_CreateAccount(1102, EXTENSION_PASSWORD, "UDP", UDP_PORT, 4);
         pjsip.Pj_Register_Account(1102, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1103"); //执行操作
-        pjsip.Pj_CreateAccount(1103, "Yeastar202", "UDP", UDP_PORT, 5);
+        pjsip.Pj_CreateAccount(1103, EXTENSION_PASSWORD, "UDP", UDP_PORT, 5);
         pjsip.Pj_Register_Account(1103, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1105"); //执行操作
-        pjsip.Pj_CreateAccount(1105, "Yeastar202", "UDP", UDP_PORT, 7);
+        pjsip.Pj_CreateAccount(1105, EXTENSION_PASSWORD, "UDP", UDP_PORT, 7);
         pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1106"); //执行操作
-        pjsip.Pj_CreateAccount(1106, "Yeastar202", "UDP", UDP_PORT, 8);
+        pjsip.Pj_CreateAccount(1106, EXTENSION_PASSWORD, "UDP", UDP_PORT, 8);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备1注册分机3004"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3004, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3004, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3004, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备1注册分机3005"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3005, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3005, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3005, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2002"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2002, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2002, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2002, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2006"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2006, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2006, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2006, DEVICE_ASSIST_2);
         closePbxMonitor();
     }
@@ -86,9 +86,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void E1_onlyWhite_me1() throws InterruptedException {
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -509,9 +509,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F1_onlyWhite1_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -633,9 +633,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F1_onlyWhite2_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -755,9 +755,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F1_onlyWhite3_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -988,9 +988,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F1_onlyWhite5_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -1102,9 +1102,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F1_onlyWhite6_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -1419,9 +1419,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F1_onlyWhite9_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -1514,7 +1514,7 @@ public class Blackllist_Whitelist2 extends SwebDriver {
 //        pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
 //
 //        Reporter.infoExec(" 主测设备注册分机1106"); //执行操作
-//        pjsip.Pj_CreateAccount(1106, "Yeastar202", "UDP", UDP_PORT, 8);
+//        pjsip.Pj_CreateAccount(1106, EXTENSION_PASSWORD, "UDP", UDP_PORT, 8);
 //
 //        Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
 //        pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
@@ -1598,9 +1598,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F2_onlyWhite1_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -1729,9 +1729,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F2_onlyWhite2_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -1843,9 +1843,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F2_onlyWhite3_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -1986,9 +1986,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F2_onlyWhite4_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -2113,9 +2113,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F2_onlyWhite5_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -2258,9 +2258,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F2_onlyWhite6_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -2387,9 +2387,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void F2_onlyWhite7_admin4_cancel(){
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();
@@ -2639,9 +2639,9 @@ public class Blackllist_Whitelist2 extends SwebDriver {
     public void I1_whiteMe_deleteOne_no() throws InterruptedException {
         logout();
         if (PRODUCT.equals(CLOUD_PBX)){
-            login("1000@yeastar.com","Yeastar202");
+            login("1000@yeastar.com",EXTENSION_PASSWORD);
         }else {
-            login("1000", "Yeastar202");
+            login("1000", EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();

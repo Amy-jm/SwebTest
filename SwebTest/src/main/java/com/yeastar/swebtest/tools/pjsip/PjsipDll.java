@@ -4,6 +4,7 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.win32.StdCallLibrary.*;
 
+
 import static com.yeastar.swebtest.driver.Config.currentPath;
 
 /**
@@ -32,6 +33,7 @@ public class PjsipDll {
         int ys_answerCall(int callId, int code);
         int ys_unregister_account(int callId);
         int ys_dialDtmf(int callId, String  digits, int mode);
+        int ys_sendInfo(int callid, String content);
         int ys_makeConference(int callId);
 
 

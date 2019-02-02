@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="5"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="361.723">
+  <properties />
+  
+  
+            <testcase name="B_edit_RingGroup1" time="76.554" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup" />
+                <testcase name="A0_Register" time="36.017" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup" />
+                <testcase name="A1_add_RingGroup1" time="55.911" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup" />
+                <testcase name="C_add_RingGroup2" time="135.608" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup" />
+                <testcase name="D_delete" time="57.633" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup" />
+      
+</testsuite>

@@ -11,6 +11,8 @@ import com.yeastar.swebtest.tools.file.ExcelUnit;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import org.testng.annotations.*;
 
+import static com.codeborne.selenide.Selenide.sleep;
+
 /**
  * Created by AutoTest on 2017/12/20.
  */
@@ -19,29 +21,30 @@ public class Conference extends SwebDriver {
 
     @BeforeClass
     public void BeforeClass()  {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：=======  Conference  ======="); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
 
-    @BeforeClass
-    public void Register() {
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_CreateAccount(3003,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(2003,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(2004,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(2005,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-        pjsip.Pj_CreateAccount(2006,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+    @Test
+    public void A0_Register() {
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(3003,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2003,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2004,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2005,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(2006,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
@@ -55,7 +58,7 @@ public class Conference extends SwebDriver {
     }
 
      @Test
-     public void A1_Init() throws InterruptedException {
+     public void A1_Init()  {
          pageDeskTop.taskBar_Main.click();
          pageDeskTop.settingShortcut.click();
          settings.callFeatures_panel.click();
@@ -76,7 +79,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test(dataProvider="add")
-    public void A2_AddConferences(HashMap<String, String> data) throws InterruptedException {
+    public void A2_AddConferences(HashMap<String, String> data)  {
         Reporter.infoExec("添加会议室" + data.get("Name") + "：" + data.get("Number"));
         conference.add.shouldBe(Condition.exist);
         conference.add.click();
@@ -104,7 +107,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void B1_AddInbound() throws InterruptedException {
+    public void B1_AddInbound()  {
         settings.callControl_tree.click();
         inboundRoutes.inboundRoutes.click();
         inboundRoutes.add.shouldBe(Condition.exist);
@@ -112,7 +115,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test(dataProvider = "add")
-    public void B2_AddInbound(HashMap<String, String> data) throws InterruptedException {
+    public void B2_AddInbound(HashMap<String, String> data)  {
         Reporter.infoExec("添加呼入路由："+data.get("Name")+"，DID："+data.get("DID")+"，Destination："+data.get("Name"));
         ArrayList<String> memberList = new ArrayList<>();
         memberList.add("all");
@@ -120,41 +123,45 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void B3_Apply() throws InterruptedException {
+    public void B3_Apply()  {
         ys_apply();
     }
 
+    @Test
+    public void B4_backup(){
+        backupEnviroment(this.getClass().getSimpleName());
+    }
 //    通话测试
     @Test
-    public void C1_extension() throws InterruptedException {
+    public void C1_extension()  {
         Reporter.infoExec(" 分机1000呼入会议室6400"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"6400",DEVICE_IP_LAN);
         ys_waitingTime(20000);
         if(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400"))==num) {
             YsAssert.assertEquals(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400")), num, "预期会议室6400有" + num + "个成员");
             num = num + 1;
-            System.out.println("会议室成员数：" + num);
+            Reporter.infoExec("会议室成员数：" + num);
         }else {
             YsAssert.fail("分机1000呼入会议室6400失败");
         }
     }
 
     @Test
-    public void C2_sps() throws InterruptedException {
+    public void C2_sps()  {
         Reporter.infoExec(" 2000拨打99999通过sps外线呼入到会议室6400"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2000,"99999",DEVICE_ASSIST_2,false);
         ys_waitingTime(20000);
         if(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400"))==num) {
             YsAssert.assertEquals(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400")), num, "预期会议室6400有" + num + "个成员");
             num = num + 1;
-            System.out.println("会议室成员数：" + num);
+            Reporter.infoExec("会议室成员数：" + num);
         }else {
             YsAssert.fail("从sps外线呼入会议室6400失败");
         }
     }
 
     @Test
-    public void C3_sip() throws InterruptedException {
+    public void C3_sip()  {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到会议室6400"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
         ys_waitingTime(20000);
@@ -163,14 +170,14 @@ public class Conference extends SwebDriver {
             if(!PRODUCT.equals(CLOUD_PBX)) {
                 num = num + 1;
             }
-            System.out.println("会议室成员数：" + num);
+            Reporter.infoExec("会议室成员数：" + num);
         }else {
             YsAssert.fail("从sip外线呼入会议室6400失败");
         }
     }
 
     @Test
-    public void C4_spx() throws InterruptedException {
+    public void C4_spx()  {
         if (PRODUCT.equals(CLOUD_PBX)) {
             return;
         }
@@ -179,11 +186,11 @@ public class Conference extends SwebDriver {
         ys_waitingTime(20000);
         YsAssert.assertEquals(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400")), num, "预期会议室6400有" + num + "个成员");
         num = num + 1;
-        System.out.println("会议室成员数："+num);
+        Reporter.infoExec("会议室成员数："+num);
     }
 
     @Test
-    public void C5_iax1() throws InterruptedException {
+    public void C5_iax1()  {
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
         }
@@ -193,21 +200,21 @@ public class Conference extends SwebDriver {
         if(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400"))==num) {
             YsAssert.assertEquals(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400")), num, "预期会议室6400有" + num + "个成员");
             num=num+1;
-            System.out.println("会议室成员数：" + num);
+            Reporter.infoExec("会议室成员数：" + num);
         }else {
             YsAssert.fail("iax外线呼入会议室6400失败");
         }
     }
 
     @Test
-    public void C5_iax2() throws InterruptedException {
+    public void C5_iax2()  {
         if(PRODUCT.equals(PC)) {
             num = num - 1;
         }
     }
 
     @Test
-    public void C6_fxo() throws InterruptedException {
+    public void C6_fxo()  {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -219,11 +226,11 @@ public class Conference extends SwebDriver {
         ys_waitingTime(20000);
         YsAssert.assertEquals(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400")), num, "预期会议室6400有" + num + "个成员");
         num = num + 1;
-        System.out.println("会议室成员数："+num);
+        Reporter.infoExec("会议室成员数："+num);
     }
 
     @Test
-    public void C7_bri() throws InterruptedException {
+    public void C7_bri()  {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -235,11 +242,11 @@ public class Conference extends SwebDriver {
         ys_waitingTime(20000);
         YsAssert.assertEquals(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400")), num, "预期会议室6400有" + num + "个成员");
         num = num + 1;
-        System.out.println("会议室成员数："+num);
+        Reporter.infoExec("会议室成员数："+num);
     }
 
     @Test
-    public void C8_e1() throws InterruptedException {
+    public void C8_e1()  {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -251,11 +258,11 @@ public class Conference extends SwebDriver {
         ys_waitingTime(20000);
         YsAssert.assertEquals(Integer.parseInt(pbxMonitor.getInConference_num("Conference6400")), num, "预期会议室6400有" + num + "个成员");
         num = num + 1;
-        System.out.println("会议室成员数："+num);
+        Reporter.infoExec("会议室成员数："+num);
     }
 
     @Test
-    public void C9_gsm() throws InterruptedException {
+    public void C9_gsm()  {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -276,7 +283,7 @@ public class Conference extends SwebDriver {
 
 //    会议室中对应的分机状态为0（IDLE），无法通过判断对应的分机状态为Talking
     @Test
-    public void Ca1_hangup_extension() throws InterruptedException {
+    public void Ca1_hangup_extension()  {
         Reporter.infoExec(" 1000退出会议室"); //执行操作
         pjsip.Pj_hangupCall(1000,1000);
         ys_waitingTime(2000);
@@ -286,7 +293,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void Ca2_hangup_sps() throws InterruptedException {
+    public void Ca2_hangup_sps()  {
         Reporter.infoExec(" 2000退出会议室"); //执行操作
         pjsip.Pj_hangupCall(2000,2000);
         ys_waitingTime(2000);
@@ -296,7 +303,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void Ca3_hangup_sip() throws InterruptedException {
+    public void Ca3_hangup_sip()  {
         Reporter.infoExec(" 3001退出会议室"); //执行操作
         pjsip.Pj_hangupCall(3001,3001);
         num=num-1;
@@ -306,7 +313,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void Ca4_hangup_spx() throws InterruptedException {
+    public void Ca4_hangup_spx()  {
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
         }
@@ -316,7 +323,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void Ca5_hangup_iax() throws InterruptedException {
+    public void Ca5_hangup_iax()  {
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
         }
@@ -326,7 +333,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void Ca6_hangup_fxo() throws InterruptedException {
+    public void Ca6_hangup_fxo()  {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC) || FXO_1.equals("null")){
             return;
         }
@@ -336,7 +343,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void Ca7_hangup_bri() throws InterruptedException {
+    public void Ca7_hangup_bri()  {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC) || BRI_1.equals("null")){
             return;
         }
@@ -346,28 +353,30 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void Ca8_hangup_e1() throws InterruptedException {
+    public void Ca8_hangup_e1()  {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC) || E1.equals("null")){
             return;
         }
         Reporter.infoExec(" 2005退出会议室"); //执行操作
         pjsip.Pj_hangupCall(2005,2005);
-        m_extension.checkCDR("2005 <2005>","6400","Answered",E1,"",communication_inbound);
+        m_extension.checkCDR("2005 <2X612>","6400","Answered",E1,"",communication_inbound);
     }
 
     @Test
-    public void Ca9_hangup_gsm() throws InterruptedException {
+    public void Ca9_hangup_gsm()  {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC) || GSM.equals("null")){
             return;
         }
         Reporter.infoExec(" 2006退出会议室"); //执行操作
         pjsip.Pj_hangupCall(2006,2006);
+        Reporter.infoExec("Pj_hangupCall 3");
         m_extension.checkCDR(DEVICE_ASSIST_GSM+" <"+DEVICE_ASSIST_GSM+">","6400","Answered",GSM,"",communication_inbound);
+        Reporter.infoExec("Pj_hangupCall 4");
     }
 
 //    与会者密码ParticipantPassword
     @Test
-    public void D1_Participant1() throws InterruptedException {
+    public void D1_Participant1()  {
         pjsip.Pj_Hangup_All();
         Reporter.infoExec(" 2000拨打995503301通过sps外线呼入到会议室6401，输入与会者密码：789"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2000,"995503301",DEVICE_ASSIST_2,false);
@@ -381,7 +390,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void D2_Participant2() throws InterruptedException {
+    public void D2_Participant2()  {
         Reporter.infoExec(" 1000拨打6401呼入到会议室6401，管理员不需要输入密码直接进入会议室"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"6401",DEVICE_IP_LAN,false);
         ys_waitingTime(8000);
@@ -391,7 +400,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void D3_Participant3() throws InterruptedException {
+    public void D3_Participant3()  {
         Reporter.infoExec(" 2000拨打995503301通过sps外线呼入到会议室6401，输入错误的与会密码：123，再次输入正确的与会者密码：789"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2000,"995503301",DEVICE_ASSIST_2,false);
         ys_waitingTime(3000);
@@ -406,7 +415,7 @@ public class Conference extends SwebDriver {
 
 //    通话过程中修改与会者密码
     @Test
-    public void D4_Participant4() throws InterruptedException {
+    public void D4_Participant4()  {
         Reporter.infoExec(" 1000拨打6401呼入到会议室6401，管理员不需要输入密码直接进入会议室，保持通话"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"6401",DEVICE_IP_LAN,false);
         ys_waitingTime(8000);
@@ -443,13 +452,13 @@ public class Conference extends SwebDriver {
 
 //    提示音
     @Test
-    public void E1_Prompt() throws InterruptedException {
+    public void E1_Prompt()  {
         Reporter.infoExec(" AMI未打印提示音相关信息--请手动验证"); //执行操作
     }
 
 //    等候管理员--AMI---Status: off
     @Test
-    public void F1_waitModerator() throws InterruptedException {
+    public void F1_waitModerator()  {
         pjsip.Pj_Hangup_All();
         Reporter.infoExec(" 2000拨打995503302通过sps外线呼入到会议室6402，需等候管理员---判断方法：AMI打印Status: off"); //执行操作
         tcpSocket.connectToDevice(100000);
@@ -472,14 +481,14 @@ public class Conference extends SwebDriver {
 
 //    管理员密码
     @Test
-    public void G1_ModeratorPassword() throws InterruptedException {
+    public void G1_ModeratorPassword()  {
         pjsip.Pj_Hangup_All();
         Reporter.infoExec(" 2000拨打995503302通过sps外线呼入到会议室6402，需等候管理员---判断方法：AMI打印Status: off"); //执行操作
-        tcpSocket.connectToDevice(50000);
+        tcpSocket.connectToDevice(100000);
         pjsip.Pj_Make_Call_No_Answer(2000,"995503302",DEVICE_ASSIST_2,false);
         boolean showKeyWord2 = tcpSocket.getAsteriskInfo("Status: off");
         System.out.println("Conference 等候管理员 TcpSocket return: " + showKeyWord2);
-        YsAssert.assertEquals(showKeyWord2, true, "会议室6402需等候管理员才能通话");
+
         Reporter.infoExec(" 1100拨打6402呼入到会议室6402，输入管理员密码：456---判断方法：AMI不会打印Status: off");
         pjsip.Pj_Make_Call_No_Answer(1100,"6402",DEVICE_IP_LAN,false);
 //        ys_waitingTime(5000);
@@ -487,13 +496,15 @@ public class Conference extends SwebDriver {
         pjsip.Pj_Send_Dtmf(1100,"4","5","6","#");
         boolean showKeyWord1 = tcpSocket.getAsteriskInfo("Status: off");
         System.out.println("Conference 等候管理员 TcpSocket return: " + showKeyWord1);
-        YsAssert.assertEquals(showKeyWord1, false, "1100成为会议室6402的管理员");
+        tcpSocket.closeTcpSocket();
         pjsip.Pj_Hangup_All();
+        YsAssert.assertEquals(showKeyWord2, true, "会议室6402需等候管理员才能通话");
+        YsAssert.assertEquals(showKeyWord1, false, "1100成为会议室6402的管理员");
     }
 
 //    允许邀请其它号码
     @Test
-    public void H1_AllowInvite() throws InterruptedException {
+    public void H1_AllowInvite()  {
         pjsip.Pj_Hangup_All();
         Reporter.infoExec(" 2000拨打99999通过sps外线呼入到会议室6400，按#邀请成员1100加入会议室"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2000,"99999",DEVICE_ASSIST_2,false);
@@ -533,13 +544,13 @@ public class Conference extends SwebDriver {
 
 //    语音菜单
     @Test
-    public void I1_menu() throws InterruptedException {
+    public void I1_menu()  {
         Reporter.infoExec(" 语音菜单--AMI未打印相关信息--请手动测试"); //执行操作
     }
 
 //    删除
     @Test
-    public void J1_delete() throws InterruptedException {
+    public void J1_delete()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.callFeatures_tree.click();
@@ -590,7 +601,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void K1_recovery() throws InterruptedException {
+    public void K1_recovery()  {
         Reporter.infoExec(" 恢复初始化环境"); //执行操作
         conference.conference.click();
         deletes(" 删除所有Conference",conference.grid,conference.delete,conference.delete_yes,conference.grid_Mask);
@@ -599,7 +610,7 @@ public class Conference extends SwebDriver {
     }
 
     @Test
-    public void K2_recovery() throws InterruptedException {
+    public void K2_recovery()  {
         settings.callControl_tree.click();
         inboundRoutes.inboundRoutes.click();
         inboundRoutes.add.shouldBe(Condition.exist);
@@ -619,12 +630,12 @@ public class Conference extends SwebDriver {
     }
 
     @AfterClass
-    public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
+    public void AfterClass()  {
         Reporter.infoAfterClass("执行完毕：=======  Conference  ======="); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
 
+        sleep(10000);
+        killChromePid();
     }
 }

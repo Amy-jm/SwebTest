@@ -20,52 +20,54 @@ import java.util.ArrayList;
 public class AutoCLIP extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：====== AutoCLIP ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")  && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
-            mySettings.close.click();
+        }else{
+            ys_waitingTime(5000);
         }
         m_extension.showCDRClounm();
     }
     @Test
     public void A_addExtension(){
+        pjsip.Pj_Init();
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1100, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2000, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2001, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2002"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2002, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2002, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2002, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备2注册分机2006"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 2006, "Yeastar202", -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
+        pjsip.Pj_CreateAccount("UDP", 2006, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_2, UDP_PORT_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2006, DEVICE_ASSIST_2);
 
         Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 3001, "Yeastar202", -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_CreateAccount("UDP", 3001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
         Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4000, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4000, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
 
         Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
-        pjsip.Pj_CreateAccount("UDP", 4001, "Yeastar202", -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
+        pjsip.Pj_CreateAccount("UDP", 4001, EXTENSION_PASSWORD, -1, DEVICE_ASSIST_3, UDP_PORT_ASSIST_3);
         pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
         closePbxMonitor();
     }
@@ -170,14 +172,6 @@ public class AutoCLIP extends SwebDriver {
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1100 <1100>","32000","Answered"," ",SPS,communication_outRoute);
     }
-//    @Test
-  /*  public void D1_makeCall2(){
-        Reporter.infoExec(" 1100拨打13001通过sip外线呼入到分机3001,分机接听"); //执行操作
-        pjsip.Pj_Make_Call_Auto_Answer(1100,"13001",DEVICE_IP_LAN,false);
-        ys_waitingTime(8000);
-        pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1100 <1100>","13001","Answered"," ",SIPTrunk,communication_outRoute);
-    }*/
 @Test
 public void D1_makeCall2(){
     Reporter.infoExec(" 1100拨打33001通过sps外线呼入到分机2000,分机接听"); //执行操作
@@ -201,17 +195,19 @@ public void D1_makeCall3(){
     m_extension.checkCDR("1100 <1100>","34000","Answered"," ",SPS,communication_outRoute);
 }*/
     @Test
-    public void D1_makeCall4(){
-        Reporter.infoExec(" 1100拨打3+DEVICE_ASSIST_GSM通过sps外线呼入到分机2000,分机接听"); //执行操作
-        pjsip.Pj_Make_Call_Auto_Answer(1100,"3"+DEVICE_ASSIST_GSM,DEVICE_IP_LAN,false);
-        if (getExtensionStatus(2000, TALKING, 8) == TALKING) {
-            Reporter.pass(" 分机2000状态--TALKING，通话正常建立");
-        } else {
-            Reporter.error(" 预期分机2000状态为TALKING，实际状态为"+getExtensionStatus(2000, TALKING, 8));
+    public void D1_makeCall4() {
+        if (!DEVICE_ASSIST_GSM.equals("null")) {
+            Reporter.infoExec(" 1100拨打3+DEVICE_ASSIST_GSM通过sps外线呼入到分机2000,分机接听"); //执行操作
+            pjsip.Pj_Make_Call_Auto_Answer(1100, "3" + DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
+            if (getExtensionStatus(2000, TALKING, 8) == TALKING) {
+                Reporter.pass(" 分机2000状态--TALKING，通话正常建立");
+            } else {
+                Reporter.error(" 预期分机2000状态为TALKING，实际状态为" + getExtensionStatus(2000, TALKING, 8));
+            }
+            ys_waitingTime(8000);
+            pjsip.Pj_Hangup_All();
+            m_extension.checkCDR("1100 <1100>", "3" + DEVICE_ASSIST_GSM, "Answered", " ", SPS, communication_outRoute);
         }
-        ys_waitingTime(8000);
-        pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1100 <1100>","3"+DEVICE_ASSIST_GSM,"Answered"," ",SPS,communication_outRoute);
     }
 //    验证不同外线
     @Test
@@ -401,7 +397,7 @@ public void D1_makeCall3(){
     @Test
     public void E1_editAutoCLIP(){
 //        删除AutoCLIP记录 && digitsMatch设置为31
-        Reporter.infoExec(" 删除AutoCLIP记录 && digitsMatch设置为31"); //执行操作
+        Reporter.infoExec(" 删除AutoCLIP记录 && digitsMatch设置为20"); //执行操作
         autoCLIPRoutes.viewAutoCLIPList.shouldBe(Condition.exist);
         autoCLIPRoutes.viewAutoCLIPList.click();
         ys_waitingLoading(autoCLIPRoutes.grid_Mask);
@@ -638,12 +634,9 @@ public void D1_makeCall3(){
             Reporter.error(" 预期分机2000状态为IDLE，实际状态为"+getExtensionStatus(2000, IDLE, 8));
         }
         pjsip.Pj_Hangup_All();
-        if (PRODUCT.equals(CLOUD_PBX)) {
-            m_extension.checkCDR("1100 <1100>", "32001", "Busy", " ", SPS, communication_outRoute);
-        }else {
-            m_extension.checkCDR("1100 <1100>", "32001", "Answered"," ", SPS,  communication_outRoute);
-        }
+        m_extension.checkCDR("1100 <1100>", "32001", "Answered"," ", SPS,  communication_outRoute);
     }
+    /*AutoCLIP 不支持Account线路，所以先注释掉*/
    /* @Test
     public void G4_makeCall_account_accept(){
         if(!DEVICE_ASSIST_3.equals("null")) {
@@ -732,6 +725,7 @@ public void D1_makeCall3(){
             m_extension.checkCDR("2000 <2000>","1000 <1000>","Answered",E1," ",communication_inbound);
         }
     }
+    /*AutoCLIP 不支持Account线路，所以先注释掉*/
    /* @Test
     public void H5_checkMissRecord_Accout(){
         if (!DEVICE_ASSIST_3.equals("null")) {
@@ -756,6 +750,7 @@ public void D1_makeCall3(){
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1100 <1100>", "32000", "No Answer", " ",SPS,  communication_outRoute);
     }
+    /*AutoCLIP 不支持Account线路，所以先注释掉*/
    /* @Test
     public void I1_makeCall_SPS_noAnswer2(){
         //        sps外线测试&&分机2000未接电话
@@ -842,14 +837,18 @@ public void D1_makeCall3(){
             m_extension.checkCDR("2000 <2000>","1100 <1100>","Answered",E1," ",communication_inbound);
         }
     }
-   /* @Test
+    /*AutoCLIP 不支持Account线路，所以先注释掉*/
+    /*@Test
     public void I7_checkMissRecord_Account(){
         if (!DEVICE_ASSIST_3.equals("null")) {
             Reporter.infoExec(" 4001拨打1111通过account外线呼入到分机1100，而不是呼入到路由目的地——分机1000"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(4001, "1111", DEVICE_ASSIST_3,false);
             ys_waitingTime(10000);
             pjsip.Pj_Hangup_All();
+//          m_extension.checkCDR("6100 <6100>", "1100 <1100>", "Answered", ACCOUNTTRUNK, " ", communication_inbound);
+//            cloud会显示成6100 <>
             m_extension.checkCDR("4001 <6100>", "1100 <1100>", "Answered", ACCOUNTTRUNK, " ", communication_inbound);
+
         }
     }*/
     @Test
@@ -984,7 +983,7 @@ public void D1_makeCall3(){
     * */
     @Test
     public void K1_combine(){
-        Reporter.infoExec(" ----所有选项默认----"); //执行操作
+        Reporter.infoExec(" ----Delete Used Records、Only Keep Missed Call Records和Match Outgoing Trunk全都勾选的情况下----"); //执行操作
         autoCLIPRoutes.viewAutoCLIPList.shouldBe(Condition.exist);
         ys_waitingTime(2000);
         setCheckBox(autoCLIPRoutes.deleteUsedRecords,true);
@@ -1327,10 +1326,11 @@ public void D1_makeCall3(){
     }
     @AfterClass
     public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
         Reporter.infoAfterClass("执行完毕：====== AutoCLIP ======"); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+
+        Thread.sleep(50000);
+        killChromePid();
     }
 }

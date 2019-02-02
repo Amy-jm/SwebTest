@@ -1,7 +1,6 @@
 package com.yeastar.swebtest.pobject;
 
 import com.codeborne.selenide.SelenideElement;
-import cucumber.api.java.eo.Se;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -23,7 +22,6 @@ public class PageDeskTop {
     public SelenideElement boxCDRandRecordings = $(By.xpath(".//span[starts-with(@class,'x-btn-inner x-btn-inner-default-toolbar-small') and text()='CDR and Recordings']"));
     public SelenideElement boxMaintenance = $(By.xpath(".//span[starts-with(@class,'x-btn-inner x-btn-inner-default-toolbar-small') and text()='Maintenance']"));
 
-
     public SelenideElement settings = $(By.name("control-panel"));
     public SelenideElement CDRandRecording = $(By.name("cdr-record"));
     public SelenideElement maintenance = $(By.name("maintance"));
@@ -44,4 +42,8 @@ public class PageDeskTop {
 
     //login out
     public SelenideElement loginout_OK = $(By.xpath(".//div[starts-with(@id,'messagebox')]//span[text()=\"OK\"]"));
+
+    //Privacy Policy Agreement
+    public String pp_agreement_checkBox = "pp-nevernotify";
+    public SelenideElement pp_comfirm = $(By.id("pp-save"));
 }

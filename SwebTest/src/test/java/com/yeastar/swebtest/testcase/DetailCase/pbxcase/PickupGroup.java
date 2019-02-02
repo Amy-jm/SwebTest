@@ -15,11 +15,11 @@ public class PickupGroup extends SwebDriver{
 
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：=======  Pickup Group  ======="); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -28,15 +28,16 @@ public class PickupGroup extends SwebDriver{
 
     @BeforeClass
     public void Register() {
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
-//        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
-        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",UDP_PORT,4);
-        pjsip.Pj_CreateAccount(1103,"Yeastar202","UDP",UDP_PORT,5);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
-        pjsip.Pj_CreateAccount(3001,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-//        pjsip.Pj_CreateAccount(2001,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
+//        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1102,EXTENSION_PASSWORD,"UDP",UDP_PORT,4);
+        pjsip.Pj_CreateAccount(1103,EXTENSION_PASSWORD,"UDP",UDP_PORT,5);
+        pjsip.Pj_CreateAccount(1105,EXTENSION_PASSWORD,"UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+//        pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
 //        pjsip.Pj_Register_Account(1101,DEVICE_IP_LAN);
@@ -49,7 +50,7 @@ public class PickupGroup extends SwebDriver{
      }
 
     @Test
-    public void A1_InitFeatureCode() throws InterruptedException {
+    public void A1_InitFeatureCode() {
         Reporter.infoExec(" 初始化Pickup Group的特征码为*4 、*04"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -72,7 +73,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void A2_InitPickupGroup() throws InterruptedException {
+    public void A2_InitPickupGroup() {
         settings.callFeatures_tree.click();
         pickupGroup.pickupGroup.click();
         ys_waitingTime(5000);
@@ -82,20 +83,20 @@ public class PickupGroup extends SwebDriver{
 
 //    新建截答组
     @Test
-    public void B1_AddPickupGroup1() throws InterruptedException {
+    public void B1_AddPickupGroup1() {
         Reporter.infoExec(" 新建截答组PickupGroup1,成员分机1000、1105");
         m_callFeature.addPickupGroup("PickupGroup1",1000,1105);
     }
 
     @Test
-    public void B2_AddPickupGroup2() throws InterruptedException {
+    public void B2_AddPickupGroup2() {
         Reporter.infoExec(" 新建截答组PickupGroup2,成员分机组ExtensionGroup1、分机1103"); //执行操作
         m_callFeature.addPickupGroup("PickupGroup2","ExtensionGroup1","1103");
     }
 
 //    如果存在FXS分机
     @Test
-    public void B3_EditPickupGroup1() throws InterruptedException {
+    public void B3_EditPickupGroup1() {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -115,13 +116,17 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void B4_apply() throws InterruptedException {
+    public void B4_apply() {
         ys_apply();
+    }
+//    @Test
+    public void B5_backup(){
+        backupEnviroment(this.getClass().getName());
     }
 
 //    通话测试
     @Test
-    public void C1_sip_4() throws InterruptedException {
+    public void C1_sip_4() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到分机1000,1105按*4截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
 //        getExtensionStatus(1000,RING,20);
@@ -138,7 +143,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void C2_sip_4_1() throws InterruptedException {
+    public void C2_sip_4_1() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到分机1000,1102按*4截答，预期截答失败"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
 //        getExtensionStatus(1000,RING,20);
@@ -153,7 +158,7 @@ public class PickupGroup extends SwebDriver{
 
     //    分机组成员1103
     @Test
-    public void C2_sip_4_2() throws InterruptedException {
+    public void C2_sip_4_2() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到分机1000,1103按*4截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
 //        getExtensionStatus(1000,RING,20);
@@ -169,7 +174,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void C3_sip_04_1() throws InterruptedException {
+    public void C3_sip_04_1() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到分机1000,1103按*041000截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
 //        getExtensionStatus(1000,RING,20);
@@ -184,7 +189,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void C3_sip_04_2() throws InterruptedException {
+    public void C3_sip_04_2() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到分机1000,1102按*041000截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
 //        getExtensionStatus(1000,RING,20);
@@ -199,7 +204,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void C4_sps() throws InterruptedException {
+    public void C4_sps() {
         Reporter.infoExec(" 2000拨打99999通过sps外线呼入到分机1000,1105按*4截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2000,"99999",DEVICE_ASSIST_2,false);
 //        getExtensionStatus(1000,RING,20);
@@ -214,7 +219,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void C5_iax() throws InterruptedException {
+    public void C5_iax() {
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
         }
@@ -232,7 +237,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void C6_spx() throws InterruptedException {
+    public void C6_spx() {
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
         }
@@ -250,7 +255,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void C7_fxo() throws InterruptedException {
+    public void C7_fxo() {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
        }
@@ -271,7 +276,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void C8_bri() throws InterruptedException {
+    public void C8_bri() {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -292,7 +297,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void C9_e1() throws InterruptedException {
+    public void C9_e1() {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -313,7 +318,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void Ca_gsm() throws InterruptedException {
+    public void Ca_gsm() {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -334,7 +339,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void Cb_fxs() throws InterruptedException {
+    public void Cb_fxs() {
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -350,12 +355,12 @@ public class PickupGroup extends SwebDriver{
         getExtensionStatus(1000,HUNGUP,10);
         ys_waitingTime(15000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("3001 <3001>","1106 <1106(pickup 1000)>","Answered",SIPTrunk,"",communication_inbound,1,2);
+        m_extension.checkCDR("3001 <3001>","1106 <1106(pickup 1000)>","Answered",SIPTrunk,"",communication_inbound,1);
     }
 
 //    呼入到各种目的地截答成功
     @Test
-    public void D1_ivr() throws InterruptedException {
+    public void D1_ivr() {
         Reporter.infoExec(" 1103拨打6500呼入到IVR，按1到分机1000,1100按*4截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1103,"6500",DEVICE_IP_LAN,true);
         getExtensionStatus(1103,TALKING,10);
@@ -371,7 +376,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void D2_ringgroup() throws InterruptedException {
+    public void D2_ringgroup() {
         Reporter.infoExec(" 1102拨打6200呼入到RingGroup，1103按*4截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1102,"6200",DEVICE_IP_LAN,true);
 //        getExtensionStatus(1100,RING,20);
@@ -385,22 +390,26 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void D3_queue() throws InterruptedException {
+    public void D3_queue() {
         Reporter.infoExec(" 1102拨打6700呼入到队列，1103按*4截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1102,"6700",DEVICE_IP_LAN,true);
 //        getExtensionStatus(1100,RING,20);
         YsAssert.assertEquals(getExtensionStatus(1100,RING,20),RING,"预期1100会响铃");
+        pjsip.Pj_Answer_Call(1000,180,false);
+        pjsip.Pj_Answer_Call(1105,180,false);
+        pjsip.Pj_Answer_Call(1100,180,false);
         ys_waitingTime(3000);
         pjsip.Pj_Make_Call_Auto_Answer(1103,"*4",DEVICE_IP_LAN,false);
         getExtensionStatus(1000,HUNGUP,10);
         ys_waitingTime(8000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1102 <1102>","xlq <1103(pickup 6700(1105))>","Answered","","",communication_internal,1,2);
+        //cloud cdr
+        m_extension.checkCDR("1102 <1102>","xlq <1103(pickup 6700(1103))>","Answered","","",communication_internal,1);
     }
 
 //    修改特征码
     @Test
-    public void E1_editfeaturecode() throws InterruptedException {
+    public void E1_editfeaturecode() {
         Reporter.infoExec(" 编辑截答的特征码为*4004,指定截答的特征码为*0401"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -412,7 +421,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void E2_pickup() throws InterruptedException {
+    public void E2_pickup() {
         Reporter.infoExec(" 1100拨打1000,1105按*4004截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"1000",DEVICE_IP_LAN,false);
 //        getExtensionStatus(1000,RING,20);
@@ -426,7 +435,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void E3_pickup_ex() throws InterruptedException {
+    public void E3_pickup_ex() {
         Reporter.infoExec(" 1100拨打1000,1102按*04011000截答，预期截答成功"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"1000",DEVICE_IP_LAN,false);
 //        getExtensionStatus(1000,RING,20);
@@ -441,7 +450,7 @@ public class PickupGroup extends SwebDriver{
 
 //    不启用截答特征码
     @Test
-    public void F1_edit_disablefeaturecode() throws InterruptedException {
+    public void F1_edit_disablefeaturecode() {
         Reporter.infoExec(" 编辑特征码：不启用截答*4、指定截答*04"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -453,7 +462,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void F2_pickup() throws InterruptedException {
+    public void F2_pickup() {
         Reporter.infoExec(" 1100拨打1000,1105按*4截答，预期截答失败"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"1000",DEVICE_IP_LAN,false);
 //        getExtensionStatus(1000,RING,20);
@@ -467,7 +476,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void F3_pickup_ex() throws InterruptedException {
+    public void F3_pickup_ex() {
         Reporter.infoExec(" 1100拨打1105,1102按*041105截答，预期截答失败"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"1105",DEVICE_IP_LAN,false);
 //        getExtensionStatus(1105,RING,20);
@@ -482,7 +491,7 @@ public class PickupGroup extends SwebDriver{
 
 //    删除
     @Test
-    public void G1_delete() throws InterruptedException {
+    public void G1_delete() {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.callFeatures_tree.click();
@@ -533,7 +542,7 @@ public class PickupGroup extends SwebDriver{
     }
 
     @Test
-    public void G_recovery_featurecode() throws InterruptedException {
+    public void G_recovery_featurecode() {
         Reporter.infoExec(" 恢复截答特征码设置"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -551,12 +560,13 @@ public class PickupGroup extends SwebDriver{
     }
 
     @AfterClass
-    public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
+    public void AfterClass() {
         Reporter.infoAfterClass("执行完毕：=======  Pickup Group  ======="); //执行操作
-        pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
+        pjsip.Pj_Destory();
+
+        ys_waitingTime(30000);
+        killChromePid();
 
     }
 }

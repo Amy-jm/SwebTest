@@ -1,8 +1,11 @@
 package com.yeastar.swebtest.tools.reporter;
 
+
+import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.spi.LoggerFactory;
@@ -23,7 +26,12 @@ public class Logger {
             eh.setSuperclass(org.apache.log4j.Logger.class);
             eh.setCallbackType(LogInterceptor.class);
             Class c = eh.createClass();
-            Enhancer.registerCallbacks(c, new LogInterceptor[]{new LogInterceptor()});
+            Enhancer.registerCallbacks(c, (Callback[]) new LogInterceptor[]{new LogInterceptor() {
+                @Override
+                public Object invoke(MethodInvocation invocation) throws Throwable {
+                    return null;
+                }
+            }});
 
             Constructor<org.apache.log4j.Logger> constructor = c.getConstructor(String.class);
             org.apache.log4j.Logger loggerProxy = constructor.newInstance(Logger.class.getName());
@@ -48,7 +56,7 @@ public class Logger {
         }
     }
 
-    private static class LogInterceptor implements MethodInterceptor {
+    private static abstract class LogInterceptor implements MethodInterceptor {
         public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
             // 只拦截log方法。
             if (objects.length != 4 || !method.getName().equals("log"))

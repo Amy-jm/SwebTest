@@ -2,7 +2,6 @@ package com.yeastar.swebtest.pobject.Settings.PBX.Trunks.Add_VoIP_Trunk.Add_VoIP
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-
 import static com.codeborne.selenide.Selenide.$;
 
 /**
@@ -34,6 +33,7 @@ public class Add_VoIP_Trunk_Basic {
     public SelenideElement outboundProxyServer = $(By.id("proxyserver-inputEl"));
     public SelenideElement outboundProxyServerPort = $(By.id("proxyport-inputEl"));
     public String enableSLA = "enablesla-displayEl";
+    public SelenideElement didNumber =$(By.id("dnisnumber0-inputEl"));
 
 
     public SelenideElement save = $(By.xpath(" .//div[starts-with(@id,'editvoip')]//span[ text()='Save']"));

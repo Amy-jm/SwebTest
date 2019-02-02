@@ -13,6 +13,7 @@ import java.net.UnknownHostException;
 
 
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.yeastar.swebtest.driver.Config.DEVICE_IP_LAN;
@@ -24,7 +25,7 @@ import static com.yeastar.swebtest.driver.DataReader.LOCAL_LOG_FILE;
 public class TcpSocket {
 //    public static final String IP_ADDR = DEVICE_IP_LAN;//服务器地址
     public static final int PORT = AMI_PROT;//服务器端口号
-    public static int TIMEOUT = 40000;
+    public static int TIMEOUT = 70000;
     public static void main1(String[] args) {
         System.out.println("客户端启动...");
         System.out.println("当接收到服务器端字符为 \"OK\" 的时候, 客户端将终止\n");
@@ -136,7 +137,7 @@ public class TcpSocket {
     private BufferedReader br;
     private  PrintWriter pw;
     public void connectToDevice(){
-        connectToDevice(40000);
+        connectToDevice(TIMEOUT);
     }
     public void connectToDevice(int mssec){
         try {
@@ -158,7 +159,6 @@ public class TcpSocket {
         } catch (IOException e) {
             e.printStackTrace();//
         }
-
     }
 
     /**
@@ -178,19 +178,15 @@ public class TcpSocket {
         long time = date.getTime();
         boolean ret = false;
         try {
-
-
             //接收服务器的相应
             String reply=null;
-
             while(true){
-
                 Date currentDate  = new Date();
                 long currentTime = currentDate.getTime();
 //                System.out.println("before readLine");
                 reply=br.readLine();
                 System.out.println("接收服务器的信息1："+reply+" time:"+(currentTime/1000-time/1000));
-                WriteStringToFilePath(currentPath+"localLog\\"+AMI_LOG_FILE,reply);
+                WriteStringToFilePath(currentPath+"localLog\\"+AMI_LOG_FILE,reply+"\n");
                 if(reply == null){
                     ret = false;
                     break;
@@ -200,8 +196,6 @@ public class TcpSocket {
                     ret = true;
                     break;
                 }
-
-
                 if(currentTime/1000-time/1000 > Duration){
                     System.out.println("TcpSocket Check Timeout");
                     break;
@@ -235,12 +229,14 @@ public class TcpSocket {
             File f = new File(filePath);
             if (f.exists()) {
             } else {
-                System.out.print("文件不存在");
+//                System.out.print("文件不存在");
                 f.createNewFile();// 不存在则创建
             }
             PrintStream ps = new PrintStream(new FileOutputStream(f,true));
 //            ps.println(content);// 往文件里写入字符串
-            ps.append(content);// 在已有的基础上添加字符串
+            SimpleDateFormat sdf = new SimpleDateFormat("HH时mm分ss秒SSS ");
+            String currentTime = String.valueOf(sdf.format(new Date()));
+            ps.append(currentTime+content);// 在已有的基础上添加字符串
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

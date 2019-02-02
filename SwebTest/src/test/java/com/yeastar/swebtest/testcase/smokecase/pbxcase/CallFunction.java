@@ -26,13 +26,13 @@ public class CallFunction extends SwebDriver {
         }
         m_extension.showCDRClounm();
 
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",3);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",4);
-        pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",5);
-        pjsip.Pj_CreateAccount(6300,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(991,"Yeastar202","UDP",-1);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",-1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",3);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",4);
+        pjsip.Pj_CreateAccount(1102,EXTENSION_PASSWORD,"UDP",5);
+        pjsip.Pj_CreateAccount(6300,EXTENSION_PASSWORD,"UDP",-1);
+        pjsip.Pj_CreateAccount(991,EXTENSION_PASSWORD,"UDP",-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",-1);
 
 
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
@@ -253,7 +253,7 @@ public class CallFunction extends SwebDriver {
     public void L_ExtensionPage() throws InterruptedException {
         Reporter.infoExec("登录1100分机页面创建黑名单test1");
         logout();
-        login("1100","Yeastar202");
+        login("1100",EXTENSION_PASSWORD);
         me.me.click();
         me.me_Blacklist_Whitelist.click();
         ys_waitingLoading(me_blacklist.grid_Mask);
@@ -296,7 +296,7 @@ public class CallFunction extends SwebDriver {
 //        m_me.addMeBlacklist("Metest",me_add_blacklist.routeType_Inbound,2000);
         if(Single_Device_Test){
             logout();
-            login("1100","Yeastar202");
+            login("1100",EXTENSION_PASSWORD);
             me.me.click();
             me.me_Blacklist_Whitelist.click();
             me_blacklist.me_Blacklist.click();
@@ -316,7 +316,7 @@ public class CallFunction extends SwebDriver {
     public void P_ExtensionWhitelist() throws InterruptedException {
         Reporter.infoExec("1100分机页面，删除黑名单test1，分机2000通过sps呼入到设备1，呼入成功");
         logout();
-        login("1100","Yeastar202");
+        login("1100",EXTENSION_PASSWORD);
         me.me.click();
         me.me_Blacklist_Whitelist.click();
         me_whitelist.me_Whitelist.click();
@@ -359,7 +359,7 @@ public class CallFunction extends SwebDriver {
         Reporter.infoExec("1100分机页面，导入白名单");
         if(Single_Device_Test){
             logout();
-            login("1100","Yeastar202");
+            login("1100",EXTENSION_PASSWORD);
         }
         me.me.click();
         me.me_Blacklist_Whitelist.click();

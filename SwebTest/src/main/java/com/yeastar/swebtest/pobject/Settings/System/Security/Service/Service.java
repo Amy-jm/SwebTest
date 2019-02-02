@@ -11,6 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class Service {
     public SelenideElement service = $(By.xpath(".//div[starts-with(@id,'security')]//span[text()='Service']"));
 
+    public String weakPassword = "st-service-enableweakpwd";
     public String autoLogoutTime = "webexpiretime";
     public String loginMode_extension = ("loginmode-ext");
     public String loginMode_email = ("loginmode-eml");

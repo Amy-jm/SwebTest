@@ -5,7 +5,6 @@ import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 
 import java.util.ArrayList;
-
 import static com.yeastar.swebtest.driver.Config.*;
 import static com.yeastar.swebtest.driver.SwebDriver.*;
 
@@ -29,7 +28,7 @@ public class YS_CallFeature {
      * @param strategy
      * @throws InterruptedException
      */
-    public void assertRingGroup(int line, String number, String name , String strategy) throws InterruptedException {
+    public void assertRingGroup(int line, String number, String name , String strategy)  {
         String actualNumber = null;
         String actualName = null;
         String actualmember;
@@ -57,7 +56,7 @@ public class YS_CallFeature {
      * @param ringStrategy
      * @param member  分机号
      */
-    public void addRingGroup(String name,String number,String ringStrategy, int... member) throws InterruptedException {
+    public void addRingGroup(String name,String number,String ringStrategy, int... member) {
         ArrayList<String> memberList = new ArrayList<>();
         for(int item:member){
             System.out.println(String.valueOf(item));
@@ -73,15 +72,15 @@ public class YS_CallFeature {
             comboboxSelect(add_ring_group.ringStrategy, ringStrategy);
         }
         listSelect(add_ring_group.list_RingGroup,extensionList,memberList);
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         add_ring_group.save.click();
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         String lineNum = String.valueOf(gridLineNum(ringGroup.grid)) ;
         m_callFeature.assertRingGroup(Integer.parseInt(lineNum),"",name,"");
 //        closeSettingWindow();
     }
 
-    public void addRingGroup(String name,String number,String ringStrategy, String... member) throws InterruptedException {
+    public void addRingGroup(String name,String number,String ringStrategy, String... member) {
         ArrayList<String> memberList = new ArrayList<>();
         for(int i=0;i< member.length;i++){
             System.out.println(String.valueOf(member[i]));
@@ -97,9 +96,9 @@ public class YS_CallFeature {
             comboboxSelect(add_ring_group.ringStrategy, ringStrategy);
         }
         listSelect(add_ring_group.list_RingGroup,extensionList,memberList);
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         add_ring_group.save.click();
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         String lineNum = String.valueOf(gridLineNum(ringGroup.grid)) ;
         m_callFeature.assertRingGroup(Integer.parseInt(lineNum),"",name,"");
     }
@@ -110,7 +109,7 @@ public class YS_CallFeature {
      * @param number  可以为空
      * @param member
      */
-    public void addQueue(String name ,String number, int... member) throws InterruptedException {
+    public void addQueue(String name ,String number, int... member) {
         ArrayList<String> memberList = new ArrayList<>();
         for(int item:member){
             System.out.println(String.valueOf(item));
@@ -125,7 +124,7 @@ public class YS_CallFeature {
         }
         listSelect(add_queue_basic.list_AddQueue,extensionList,memberList);
         add_queue_basic.save.click();
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         String lineNum = String.valueOf(gridLineNum(queue.grid)) ;
         assertQueue(Integer.parseInt(lineNum),number,name,"");
 
@@ -133,23 +132,23 @@ public class YS_CallFeature {
 
     }
 
-    public void addConference(String num,String name) throws InterruptedException {
+    public void addConference(String num,String name) {
         conference.add.click();
         ys_waitingMask();
         add_conference.number.setValue(num);
         add_conference.name.setValue(name);
         add_conference.save.click();
-        Thread.sleep(1000);
-
+        ys_waitingTime(1000);
+        ys_waitingLoading(conference.grid_Mask);
         //断言
         String actualName = null;
         actualName = (String) gridContent(conference.grid,Integer.parseInt(String.valueOf(gridLineNum(conference.grid))),conference.gridcolumn_Name);
         YsAssert.assertEquals(actualName,name);
     }
 
-    public void addPickupGroup(String name, int... member) throws InterruptedException {
+    public void addPickupGroup(String name, int... member) {
         pickupGroup.add.click();;
-        Thread.sleep(9000);
+        ys_waitingTime(9000);
         add_pickup_group.name.setValue(name);
         ArrayList<String> memberList = new ArrayList<>();
         for(int item:member){
@@ -157,13 +156,13 @@ public class YS_CallFeature {
         }
         listSelect(add_pickup_group.list_PickupGroup,extensionList,memberList);
         add_pickup_group.save.click();
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
 
     }
 
-    public void addPickupGroup(String name, String... member) throws InterruptedException {
+    public void addPickupGroup(String name, String... member) {
         pickupGroup.add.click();;
-        Thread.sleep(9000);
+        ys_waitingTime(9000);
         add_pickup_group.name.setValue(name);
         ArrayList<String> memberList = new ArrayList<>();
         for(int i=0;i< member.length;i++){
@@ -172,7 +171,7 @@ public class YS_CallFeature {
         }
         listSelect(add_pickup_group.list_PickupGroup,extensionList,memberList);
         add_pickup_group.save.click();
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
 
     }
 
@@ -183,7 +182,7 @@ public class YS_CallFeature {
      * @param member
      * @throws InterruptedException
      */
-    public void addPagingIntercom(String name,int number,String type, boolean answer,int... member) throws InterruptedException {
+    public void addPagingIntercom(String name,int number,String type, boolean answer,int... member) {
         paging_intercom.add.click();
         ys_waitingMask();
         add_paging_intercom.number.setValue(String.valueOf(number));
@@ -203,7 +202,7 @@ public class YS_CallFeature {
         YsAssert.assertEquals(actualName,name);
     }
 
-    public void addPagingIntercom(String name,int number,String type, boolean answer,String... member) throws InterruptedException {
+    public void addPagingIntercom(String name,int number,String type, boolean answer,String... member) {
         paging_intercom.add.click();
         ys_waitingMask();
         add_paging_intercom.number.setValue(String.valueOf(number));
@@ -228,9 +227,9 @@ public class YS_CallFeature {
 
 
 
-    public void addCallBack(String name,String destension,String des) throws InterruptedException {
+    public void addCallBack(String name,String destension,String des) {
         callback.add.click();
-        Thread.sleep(10000);
+        ys_waitingTime(10000);
         add_callback.name.setValue(name);
         //Extension-->e  Voip-->v  以此类推
         if(!destension.isEmpty()){
@@ -243,9 +242,9 @@ public class YS_CallFeature {
             memberList.add(des);
             listSelect(add_callback.id_destinationNumber,extensionList,memberList);
         }
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
         add_callback.save.click();
-        Thread.sleep(1000);
+        ys_waitingTime(1000);
 
         ys_waitingLoading(callback.grid_Mask);
         String actualName = null;
@@ -260,7 +259,7 @@ public class YS_CallFeature {
      * @param strategy
      * @throws InterruptedException
      */
-    public void assertQueue(int line, String number, String name , String strategy ) throws InterruptedException {
+    public void assertQueue(int line, String number, String name , String strategy ) {
         String actualNumber = null;
         String actualName = null;
         String actualmember;
@@ -279,7 +278,7 @@ public class YS_CallFeature {
         }
     }
 
-    public void addDISA(String name,String password, int responseTimeout, int digitTimeout, String... memberOutbound) throws InterruptedException {
+    public void addDISA(String name,String password, int responseTimeout, int digitTimeout, String... memberOutbound) {
         disa.add.click();
         ys_waitingMask();
         add_disa.name.setValue(name);
@@ -287,20 +286,21 @@ public class YS_CallFeature {
         for(String item:memberOutbound){
             outboundList.add(item);
         }
-        Thread.sleep(15000);
+        ys_waitingTime(15000);
         listSelect(add_disa.list, nameList,outboundList);
         add_disa.save.click();
 
         ys_waitingLoading(disa.grid_Mask);
     }
 
-    public void addPinList(String name,String addpinlist) throws InterruptedException {
+    public void addPinList(String name,String addpinlist) {
 
         pinList.add.click();
         add_pin_list.name.setValue(name);
         add_pin_list.recordInCDR.click();
         add_pin_list.PINList.setValue(addpinlist);
         add_pin_list.save.click();
+        ys_waitingMask();
         ys_waitingLoading(pinList.grid_Mask);
         int row= gridFindRowByColumn(pinList.grid,pinList.gridcolumn_Name,name,sort_ascendingOrder);
         String actualName = (String) gridContent(pinList.grid,row,pinList.gridcolumn_Name);
@@ -312,7 +312,7 @@ public class YS_CallFeature {
      * @param name
      * @throws InterruptedException
      */
-    public void addIVR(String name) throws InterruptedException {
+    public void addIVR(String name) {
         addIVR(name,name);
     }
 
@@ -497,7 +497,7 @@ public void addBlacklist_String(String name,int type,String... number) {
 
 
 
-    public void addSpeedDial(String speedDialCode, int phoneNumber) throws InterruptedException {
+    public void addSpeedDial(String speedDialCode, int phoneNumber) {
         speedDial.add.click();
         add_speed_dial.speedDialCode.setValue(speedDialCode);
         add_speed_dial.phoneNumber.setValue(String.valueOf(phoneNumber));

@@ -4,21 +4,16 @@
            failures="2"
            errors="0"
            skipped="0"
-           time="1352.890">
+           time="1362.542">
   <properties />
-            <testcase name="F6_FailtoConference" time="52.189" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup">
+            <testcase name="F6_FailtoConference" time="69.744" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup">
                 <failure type="java.lang.AssertionError"
-                  message="CDR被叫方检测 【预期：1000 [6207(6400)] 实际：6400 [6207(6400)]】"
+                  message="预计产生多条CDR，但没有找到匹配"
               >
-<![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：1000 [6207(6400)] 实际：6400 [6207(6400)]】
-  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
-  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:263)
-  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
-  com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup.F6_FailtoConference(RingGroup.java:709)
+<![CDATA[java.lang.AssertionError: 预计产生多条CDR，但没有找到匹配
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1092)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:346)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup.F6_FailtoConference(RingGroup.java:721)
   sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
   sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
   sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -50,19 +45,19 @@
       </failure>
 
           </testcase>
-            <testcase name="F5_FailtoQueue" time="72.713" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup">
+            <testcase name="F5_FailtoQueue" time="72.132" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup">
                 <failure type="java.lang.AssertionError"
                   message="CDR被叫方检测 【预期：1100 [6700(1100)] 实际：6700 [6700(1100)]】"
               >
 <![CDATA[java.lang.AssertionError: CDR被叫方检测 【预期：1100 [6700(1100)] 实际：6700 [6700(1100)]】
-  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1086)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:579)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:142)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:116)
-  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:199)
-  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:263)
-  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:252)
-  com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup.F5_FailtoQueue(RingGroup.java:689)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1092)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:583)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:146)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:120)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:203)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:289)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:278)
+  com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup.F5_FailtoQueue(RingGroup.java:699)
   sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
   sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
   sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -96,29 +91,29 @@
           </testcase>
   
   
-            <testcase name="A2_AddRingGroups" time="19.948" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="C_EditInRoute1" time="34.569" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="A3_add_cancel" time="20.635" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="E2_RingAll" time="66.597" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="F8_check_Voicemail" time="34.478" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="F7_FailtoVoicemail" time="60.043" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="D_InboundtoRingGroup_a" time="372.023" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="A2_AddRingGroups" time="21.199" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="H2_recovery" time="34.394" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="F1_FailtoHangup" time="88.335" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="A2_AddRingGroups" time="19.669" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="A2_AddRingGroups" time="22.052" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="A2_AddRingGroups" time="15.032" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="E1_Sequentially" time="31.895" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="F4_FailtoRingGroup" time="67.816" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="A2_AddRingGroups" time="19.037" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="B_EditRingGroupFxs" time="25.439" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="A2_AddRingGroups" time="18.076" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="F3_FailtoIVR" time="54.427" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="A1_Init" time="22.356" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="A2_AddRingGroups" time="18.319" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="H1_recovery" time="31.431" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="F2_FailtoExtension" time="54.795" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
-                <testcase name="G_delete" time="75.423" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+            <testcase name="C1_EditInRoute1" time="30.368" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A2_AddRingGroups" time="16.793" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A2_AddRingGroups" time="18.834" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A2_AddRingGroups" time="15.867" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="F4_FailtoRingGroup" time="75.047" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="F9_loglout" time="8.298" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="E1_Sequentially" time="46.905" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="B1_EditRingGroupFxs" time="0.001" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A3_add_cancel" time="17.323" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="F1_FailtoHangup" time="93.477" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="E2_RingAll" time="67.197" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="F8_check_Voicemail" time="42.927" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A2_AddRingGroups" time="16.923" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A2_AddRingGroups" time="17.296" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="F3_FailtoIVR" time="58.028" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="F7_FailtoVoicemail" time="59.771" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="C2_Backup" time="76.768" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A1_Init" time="31.385" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A2_AddRingGroups" time="11.694" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A2_AddRingGroups" time="15.939" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="D_InboundtoRingGroup_a" time="338.039" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="A2_AddRingGroups" time="18.947" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="F2_FailtoExtension" time="54.457" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
+                <testcase name="G_delete" time="88.382" classname="com.yeastar.swebtest.testcase.DetailCase.pbxcase.RingGroup" />
       
 </testsuite>

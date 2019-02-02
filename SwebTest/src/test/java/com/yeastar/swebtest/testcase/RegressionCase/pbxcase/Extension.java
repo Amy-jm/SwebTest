@@ -14,12 +14,12 @@ import org.testng.annotations.*;
 public class Extension extends SwebDriver{
     @BeforeClass
     public void BeforeClass() {
-        pjsip.Pj_Init();
+
         Reporter.infoBeforeClass("开始执行：======  Extension  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
 
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -27,7 +27,7 @@ public class Extension extends SwebDriver{
     }
 
 //    初始化特征码
-//    @BeforeClass
+    @BeforeClass
     public void InitFeatureCode() {
         Reporter.infoExec(" 初始化特征码设置");
         pageDeskTop.taskBar_Main.click();
@@ -101,14 +101,15 @@ public class Extension extends SwebDriver{
         ys_waitingTime(3000);
     }
 
-    @BeforeClass
-    public void Register() throws InterruptedException {
+    @Test
+    public void A0_Register(){
+        pjsip.Pj_Init();
         Reporter.infoExec(" 被测设备注册分机1000,1100,1101,1105，辅助2:2000"); //执行操作
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,2);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,3);
-        pjsip.Pj_CreateAccount(1105,"Yeastar202","UDP",UDP_PORT,7);
-        pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",UDP_PORT,3);
+        pjsip.Pj_CreateAccount(1105,EXTENSION_PASSWORD,"UDP",UDP_PORT,7);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
         pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101,DEVICE_IP_LAN);
@@ -118,31 +119,32 @@ public class Extension extends SwebDriver{
 
 //    内部分机互打，并录音
     @Test
-    public void A1_sip() throws InterruptedException {
+    public void A1_sip() {
         Reporter.infoExec(" SIP内部分机互打：1000拨打1105,1105接听"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"1105",DEVICE_IP_LAN,true);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1000 <1000>","1105 <1105>","Answered","","",communication_internal);
-//        检查cdr录音
-        if(PRODUCT.equals(CLOUD_PBX)){
-            return;
+
+        if(!NETWORK_DEVICE_NAME.equals("null")) {
+            if (!PRODUCT.equals(CLOUD_PBX)) {
+                pageDeskTop.taskBar_Main.click();
+                pageDeskTop.CDRandRecordShortcut.click();
+                cdRandRecordings.search.click();
+                ys_waitingLoading(cdRandRecordings.grid_Mask);
+                if(gridPicColor(cdRandRecordings.grid,1,cdRandRecordings.gridPlay).contains(cdRandRecordings.gridColumnColor_Gray)){
+                    YsAssert.fail(" 录音失败");
+                }else {
+                    Reporter.pass(" 正确检测到录音文件");
+                }
+                closeCDRRecord();
+            }
         }
-        pageDeskTop.taskBar_Main.click();
-        pageDeskTop.CDRandRecordShortcut.click();
-        cdRandRecordings.search.click();
-        ys_waitingLoading(cdRandRecordings.grid_Mask);
-        if(gridPicColor(cdRandRecordings.grid,1,cdRandRecordings.gridPlay).contains(cdRandRecordings.gridColumnColor_Gray)){
-            YsAssert.fail(" 录音失败");
-        }else {
-            Reporter.pass(" 正确检测到录音文件");
-        }
-        closeCDRRecord();
     }
 
 //    内部分机互打，未接
     @Test
-    public void A2_sip() throws InterruptedException {
+    public void A2_sip(){
         Reporter.infoExec(" SIP内部分机互打：1000拨打1105，1105未接"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"1105",DEVICE_IP_LAN,false);
         ys_waitingTime(10000);
@@ -152,7 +154,7 @@ public class Extension extends SwebDriver{
 
 //  fxs作为被叫
     @Test
-    public void A3_fxs() throws InterruptedException {
+    public void A3_fxs(){
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -167,7 +169,7 @@ public class Extension extends SwebDriver{
 
 //    FXS作为主叫
     @Test
-    public void A4_fxs() throws InterruptedException {
+    public void A4_fxs(){
         if(PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             return;
         }
@@ -203,7 +205,7 @@ public class Extension extends SwebDriver{
 
 //    转移超时
     @Test
-    public void B2_AttendTranferTimeout() throws InterruptedException {
+    public void B2_AttendTranferTimeout(){
         Reporter.infoExec(" 1000拨打1100,1100按*31105转移给分机1105，超时恢复通话"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"1100",DEVICE_IP_LAN);
         ys_waitingTime(2000);
@@ -219,7 +221,7 @@ public class Extension extends SwebDriver{
 
 //    指定转移
     @Test
-    public void B3_BlindTransfer() throws InterruptedException {
+    public void B3_BlindTransfer(){
         Reporter.infoExec(" 1000拨打1100,1100按*031105转移给分机1105"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"1100",DEVICE_IP_LAN);
         ys_waitingTime(2000);
@@ -237,7 +239,7 @@ public class Extension extends SwebDriver{
 
 //    呼叫停泊
     @Test
-    public void C1_callpark() throws InterruptedException {
+    public void C1_callpark(){
         Reporter.infoExec(" 1000拨打1100,1100按*6将通话停泊"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"1100",DEVICE_IP_LAN);
         ys_waitingTime(8000);
@@ -254,7 +256,7 @@ public class Extension extends SwebDriver{
 
 //    指定停泊
     @Test
-    public void C2_callpark() throws InterruptedException {
+    public void C2_callpark(){
         Reporter.infoExec(" 1000拨打1100,1100按*066950将通话停泊"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"1100",DEVICE_IP_LAN);
         ys_waitingTime(8000);
@@ -272,7 +274,7 @@ public class Extension extends SwebDriver{
 //总是转移
 
     @Test
-    public void D1_callforward() throws InterruptedException {
+    public void D1_callforward(){
         Reporter.infoExec(" 1100拨打*711105将通话总是转移到1105"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"*711105",DEVICE_IP_LAN,false);
         ys_waitingTime(2000);
@@ -287,7 +289,7 @@ public class Extension extends SwebDriver{
     }
 
     @Test
-    public void D2_cancellForward() throws InterruptedException {
+    public void D2_cancellForward(){
         Reporter.infoExec(" 1100拨打*071取消通话总是转移"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"*071",DEVICE_IP_LAN,false);
         ys_waitingTime(5000);
@@ -302,29 +304,30 @@ public class Extension extends SwebDriver{
     }
 
 //    忙时转移
-    @Test
+	 @Test
     public void E1_whenbusy() throws InterruptedException {
         Reporter.infoExec(" 1100拨打*721105忙时转移到1105"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1100,"*721105",DEVICE_IP_LAN,false);
         ys_waitingTime(10000);
-        Reporter.infoExec(" 1000拨打1100,预期1100响铃接听"); //执行操作
+        Reporter.infoExec(" 1000拨打1100,1100拒接，转移到1105"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"1100",DEVICE_IP_LAN);
         ys_waitingTime(2000);
         pjsip.Pj_Answer_Call(1100,486,false);
         ys_waitingTime(4000);
-        Reporter.infoExec(" 1100保持通话，1101拨打1100--预期1105响铃"); //执行操作
-        pjsip.Pj_Make_Call_Auto_Answer(1101,"1100",DEVICE_IP_LAN);
+//        Reporter.infoExec(" 1100保持通话，1101拨打1100--预期1105响铃"); //执行操作
+//        pjsip.Pj_Make_Call_Auto_Answer(1101,"1100",DEVICE_IP_LAN);
         YsAssert.assertEquals(getExtensionStatus(1105,RING,10),RING,"预期1105响铃");
         pjsip.Pj_Answer_Call(1105,true);
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <1000>","1105 <1105(from 1100)>","Answered","","",communication_internal);
+        m_extension.checkCDR("1000 <1000>","1105 <1105(from 1100)>","Answered","","",communication_internal,1,2);
     }
-
-    @Test
+ 
+     @Test
     public void E2_cancelWhenBusy() throws InterruptedException {
         Reporter.infoExec(" 1100拨打*072取消忙时转移"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1100,"*072",DEVICE_IP_LAN,false);
+        ys_waitingTime(2000);
         pjsip.Pj_Make_Call_Auto_Answer(1100,"*073",DEVICE_IP_LAN,false);
         ys_waitingTime(5000);
         Reporter.infoExec(" 1000拨打1100,预期1100响铃接听"); //执行操作
@@ -332,10 +335,11 @@ public class Extension extends SwebDriver{
         ys_waitingTime(2000);
         YsAssert.assertEquals(getExtensionStatus(1100,RING,10),RING,"预期1100为Ring");
         pjsip.Pj_Answer_Call(1100,486,true);
-        ys_waitingTime(2000);
-        Reporter.infoExec(" 1100保持通话，1101拨打1100--预期1101挂断"); //执行操作
-        pjsip.Pj_Make_Call_Auto_Answer(1101,"1100",DEVICE_IP_LAN);
-        YsAssert.assertEquals(getExtensionStatus(1101,HUNGUP,20),HUNGUP,"预期1101挂断状态");
+        ys_waitingTime(4000);
+//        Reporter.infoExec(" 1100保持通话，1101拨打1100--预期1101挂断"); //执行操作
+//        pjsip.Pj_Make_Call_Auto_Answer(1101,"1100",DEVICE_IP_LAN);
+//        YsAssert.assertEquals(getExtensionStatus(1101,HUNGUP,20),HUNGUP,"预期1101挂断状态");
+        YsAssert.assertEquals(getExtensionStatus(1105,RING,10),HUNGUP,"预期1105不会响铃");
         pjsip.Pj_Hangup_All();
     }
 
@@ -344,7 +348,7 @@ public class Extension extends SwebDriver{
     public void F1_NoAnswer() throws InterruptedException {
         Reporter.infoExec(" 1100拨打*731105无应答时转移到1105"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1100,"*731105",DEVICE_IP_LAN,false);
-        ys_waitingTime(5000);
+        ys_waitingTime(8000);
         pjsip.Pj_Make_Call_No_Answer(1000,"1100",DEVICE_IP_LAN);
         YsAssert.assertEquals(getExtensionStatus(1100,RING,20),RING,"预期1100响铃状态");
         Reporter.infoExec(" 1000拨打1100，超时不接，预期1105响铃"); //执行操作
@@ -352,7 +356,7 @@ public class Extension extends SwebDriver{
         pjsip.Pj_Answer_Call(1105,false);
         ys_waitingTime(5000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1000 <1000>","1105 <1105>","Answered","","",communication_internal);
+        m_extension.checkCDR("1000 <1000>","1105 <1105(from 1100)>","Answered","","",communication_internal,1,2);
     }
 
     @Test
@@ -376,12 +380,13 @@ public class Extension extends SwebDriver{
         ys_waitingTime(5000);
         Reporter.infoExec(" 1000拨打1100，预期无法呼入"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"1100",DEVICE_IP_LAN);
-        YsAssert.assertEquals(getExtensionStatus(1000,HUNGUP,20),HUNGUP,"预期1000为HangUp");
+        YsAssert.assertEquals(getExtensionStatus(1100,RING,5),HUNGUP,"预期1100不会响铃");
         pjsip.Pj_Hangup_All();
     }
 
+	
     @Test
-    public void G2_canceldnd() throws InterruptedException {
+    public void G2_canceldnd(){
         Reporter.infoExec(" 1100拨打*074关闭免打扰"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1100,"*074",DEVICE_IP_LAN,false);
         ys_waitingTime(5000);
@@ -396,7 +401,7 @@ public class Extension extends SwebDriver{
 
 //  Reset to Default
     @Test
-    public void H1_resetToDefault() throws InterruptedException {
+    public void H1_resetToDefault(){
         Reporter.infoExec(" 1100拨打*70恢复默认值"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1100,"*70",DEVICE_IP_LAN,false);
         ys_waitingTime(5000);
@@ -406,7 +411,7 @@ public class Extension extends SwebDriver{
     //监听，怎么验证？
 
     @Test
-    public void I_Voicemail() throws InterruptedException {
+    public void I_Voicemail(){
         Reporter.infoExec(" 1000拨打1105，1105未接，到voicemail");
         pjsip.Pj_Make_Call_No_Answer(1000,"1105",DEVICE_IP_LAN);
         ys_waitingTime(60000);
@@ -415,7 +420,7 @@ public class Extension extends SwebDriver{
     }
 
     @Test
-    public void J_internal() throws InterruptedException {
+    public void J_internal(){
         Reporter.infoExec(" 1000拨打1105，1105接听，1105按*1进行一键录音");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"1105",DEVICE_IP_LAN);
         ys_waitingTime(5000);
@@ -432,9 +437,9 @@ public class Extension extends SwebDriver{
         Reporter.infoExec(" 分机1105登录，查看存在1000留下的语音留言"); //执行操作
         logout();
         if(PRODUCT.equals(CLOUD_PBX)) {
-            login("autotest@yeastar.com", "Yeastar202");
+            login("autotest@yeastar.com", EXTENSION_PASSWORD);
         }else{
-            login("1105","Yeastar202");
+            login("1105",EXTENSION_PASSWORD);
         }
         me.taskBar_Main.click();
         me.mesettingShortcut.click();
@@ -448,7 +453,7 @@ public class Extension extends SwebDriver{
     }
 
     @Test
-    public void K2_Check_OneTouchRecord() throws InterruptedException {
+    public void K2_Check_OneTouchRecord(){
         Reporter.infoExec(" 分机1105登录，查看存在1键录音"); //执行操作
         me.taskBar_Main.click();
         me.mesettingShortcut.click();
@@ -470,13 +475,13 @@ public class Extension extends SwebDriver{
     }
 
     @AfterClass
-    public void AfterClass() throws InterruptedException {
-        Thread.sleep(5000);
+    public void AfterClass(){
+        ys_waitingTime(5000);
         Reporter.infoAfterClass("执行完毕：======  Extension  ======"); //执行操作
         pjsip.Pj_Destory();
         quitDriver();
-        Thread.sleep(5000);
-    }
+        ys_waitingTime(10000);
+        killChromePid();    }
 
 }
 

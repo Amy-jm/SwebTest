@@ -65,8 +65,8 @@ public class DateTime extends SwebDriver {
     @Test
     public void B_CallTest() throws InterruptedException {
         Reporter.infoExec("分机A打给分机B，通话10s"); //执行操作
-        pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",5060,3);
-        pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",5060,4);
+        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",5060,3);
+        pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",5060,4);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
 

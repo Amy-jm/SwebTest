@@ -6,7 +6,7 @@ import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.testng.annotations.Test;
-import org.xbill.DNS.NULLRecord;
+//import org.xbill.DNS.NULLRecord;
 
 import javax.sound.midi.Soundbank;
 import java.io.BufferedReader;
@@ -33,7 +33,8 @@ public class SSHApp {
         m_UserName = UserName;
         m_Password = Password;
         try {
-            conn = new Connection(HostName,Integer.parseInt(SSH_PORT));
+//            conn = new Connection(HostName,Integer.parseInt(SSH_PORT));
+            conn = new Connection(HostName,Integer.parseInt("22"));
             conn.connect();
 
 
@@ -149,7 +150,7 @@ public class SSHApp {
     @Test
     public  void testT(){
 
-        int creatconnect =CreatConnect("192.168.7.153","ls@yf","");
+        int creatconnect =CreatConnect("192.168.23.27","root","123456");
         System.out.println("creat connect to ssh ret ="+creatconnect);
         StringBuilder ret;
 
@@ -165,7 +166,7 @@ public class SSHApp {
 //        System.out.println(WriteToSSH("export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib/")+"333\n");
 //        System.out.println(WriteToSSH("echo $LD_LIBRARY_PATH")+"1111\n");
 //        System.out.println(WriteToSSH("sh /etc/profile "));
-        System.out.println(WriteToSSH("/bin/ping 192.168.7.1","CLI",2000));
+        System.out.println(WriteToSSH("cat /etc/update.log","CLI",2000));
         Close();
     }
 }

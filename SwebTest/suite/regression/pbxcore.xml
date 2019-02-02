@@ -3,27 +3,32 @@
 <suite name="PBXCORE">
     <test name="pbxcore" preserve-order="true">
         <classes>
-            <!--<class name="com.yeastar.swebtest.testcase.CheckToTest"/>-->
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.TimeCondition"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Holiday"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.CustomPrompts"/>
+            <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest"/>-->
+            <!--20180724 起TimeCondition、Holiday\CustomPrompts合并到BeforeTest中-->
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound"/>
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound"/>
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction"/>
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.AutoCLIP"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.PickupGroup"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.PagingIntercom"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.SpeedDial"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.IVR"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Queue"/>
+            <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.PickupGroup"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.PagingIntercom"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.SpeedDial"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup"/>-->
+
+            <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.IVR"/>-->
+            <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Queue"/>-->
+
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Callback"/>
+            <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Callback"/>-->
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Extension"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Blacklist_Whitelist"/>
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Disa_PinList"/>
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Blacklist_Whitelist"/>
         </classes>
     </test> <!-- YsAutoTest -->
 </suite> <!-- Default Suite -->
+
+        <!--<class name="com.yeastar.swebtest.testcase.CheckToTest"/>-->
+        <!--<class name="com.yeastar.swebtest.testcase.test"/>-->
+<!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.TimeCondition"/>-->
+<!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Holiday"/>-->
+<!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.CustomPrompts"/>-->

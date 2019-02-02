@@ -1,7 +1,7 @@
 package com.yeastar.swebtest.pobject.Settings.System.Network.DDNSSettings;
 
 import com.codeborne.selenide.SelenideElement;
-import com.sun.jna.platform.win32.WinNT;
+
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;

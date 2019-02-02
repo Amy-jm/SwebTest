@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.yeastar.swebtest.driver.SwebDriver.executeJs;
 
 /**
  * Created by Yeastar on 2017/7/21.
@@ -47,5 +48,11 @@ public class Me_Whitelist {
     public SelenideElement delete_no = $(By.xpath(".//span[starts-with(@class,\"x-btn-inner x-btn-inner-default-small\") and text()=\"No\"]"));
 
     public SelenideElement whitelistOnly = $(By.id("me-bw-onlywhitelist-boxLabelEl"));
+//    public SelenideElement whitelistOnly = $(By.id("me-bw-onlywhitelist-inputEl"));
+
+    public String getOnlyWhiteSelect(){
+        return String.valueOf(executeJs("return Ext.getCmp(\"me-bw-onlywhitelist\").value"));
+    }
+
     public SelenideElement ok = $(By.xpath(".//div[starts-with(@id,'messagebox-')]//span[text()='OK']"));
 }

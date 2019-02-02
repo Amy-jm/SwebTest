@@ -89,16 +89,16 @@ public class InboundRoutes extends SwebDriver {
         Reporter.infoExec("注册测试分机");
 
         if(!Single_Device_Test){
-            pjsip.Pj_CreateAccount(1100,"Yeastar202","UDP",UDP_PORT,3);
-            pjsip.Pj_CreateAccount(1101,"Yeastar202","UDP",UDP_PORT,4);
-            pjsip.Pj_CreateAccount(1102,"Yeastar202","UDP",UDP_PORT,5);
-            pjsip.Pj_CreateAccount(2000,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-            pjsip.Pj_CreateAccount(3000,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-//            pjsip.Pj_CreateAccount(2010,"Yeastar202","UDP",UDP_PORT_ASSIST_2,-1);
-//            pjsip.Pj_CreateAccount(3030,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-//            pjsip.Pj_CreateAccount(3034,"Yeastar202","UDP",UDP_PORT_ASSIST_1,-1);
-//            pjsip.Pj_CreateAccount(9999,"Yeastar202","UDP",ASSIST_PORT,-1);
-//            pjsip.Pj_CreateAccount(8888,"Yeastar202","UDP",ASSIST_PORT,-1);
+            pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,3);
+            pjsip.Pj_CreateAccount(1101,EXTENSION_PASSWORD,"UDP",UDP_PORT,4);
+            pjsip.Pj_CreateAccount(1102,EXTENSION_PASSWORD,"UDP",UDP_PORT,5);
+            pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+            pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+//            pjsip.Pj_CreateAccount(2010,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_2,-1);
+//            pjsip.Pj_CreateAccount(3030,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+//            pjsip.Pj_CreateAccount(3034,EXTENSION_PASSWORD,"UDP",UDP_PORT_ASSIST_1,-1);
+//            pjsip.Pj_CreateAccount(9999,EXTENSION_PASSWORD,"UDP",ASSIST_PORT,-1);
+//            pjsip.Pj_CreateAccount(8888,EXTENSION_PASSWORD,"UDP",ASSIST_PORT,-1);
 
             pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
             pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);

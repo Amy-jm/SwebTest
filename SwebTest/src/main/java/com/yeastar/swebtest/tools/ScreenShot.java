@@ -32,6 +32,8 @@ public class ScreenShot extends SwebDriver {
         } catch (IOException e) {
             System.out.println("Screen shot error: " + screenPath);
         }
+
+
     }
 
     public static void takeScreenshotByAll(String filename) {

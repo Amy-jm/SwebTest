@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="18"
+           failures="2"
+           errors="0"
+           skipped="0"
+           time="440.444">
+  <properties />
+            <testcase name="E_invite" time="26.475" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference">
+                <failure type="java.lang.AssertionError"
+                  message="预计产生多条CDR，但没有找到匹配"
+              >
+<![CDATA[java.lang.AssertionError: 预计产生多条CDR，但没有找到匹配
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1092)
+  com.yeastar.swebtest.driver.YSMethod.YS_Extension.checkCDR(YS_Extension.java:348)
+  com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference.E_invite(Conference.java:228)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+            <testcase name="D_callin1" time="18.821" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference">
+                <failure type="java.lang.AssertionError"
+                  message="预期会议室6402有1个成员 【预期：1 实际：0】"
+              >
+<![CDATA[java.lang.AssertionError: 预期会议室6402有1个成员 【预期：1 实际：0】
+  com.yeastar.swebtest.tools.ysassert.YsAssert.fail(YsAssert.java:1092)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.failNotEquals(YsAssert.java:583)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEqualsImpl(YsAssert.java:146)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:120)
+  com.yeastar.swebtest.tools.ysassert.YsAssert.assertEquals(YsAssert.java:429)
+  com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference.D_callin1(Conference.java:163)
+  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  java.lang.reflect.Method.invoke(Method.java:498)
+  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+  org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+  org.testng.TestRunner.privateRun(TestRunner.java:774)
+  org.testng.TestRunner.run(TestRunner.java:624)
+  org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+  org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+  org.testng.SuiteRunner.run(SuiteRunner.java:261)
+  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+  org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+  org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+  org.testng.TestNG.run(TestNG.java:1048)
+  org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:293)
+  org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:84)
+  org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:91)
+  org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+  org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+  org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+]]>
+      </failure>
+
+          </testcase>
+  
+  
+            <testcase name="A_add_conference1" time="12.262" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn1" time="12.941" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn4" time="13.471" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="B_editInRoute1" time="34.415" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="AA0_Register" time="22.057" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="A_add_conference2" time="13.661" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="G_recovery" time="32.189" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="D_callin4" time="35.021" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn3" time="12.566" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="D_callin5" time="29.026" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn5" time="27.120" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="F_delete" time="49.578" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="D_callin2" time="24.172" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="C_CallIn2" time="12.406" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="D_callin3" time="12.962" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+                <testcase name="AA1_InitConference" time="51.301" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference" />
+      
+</testsuite>

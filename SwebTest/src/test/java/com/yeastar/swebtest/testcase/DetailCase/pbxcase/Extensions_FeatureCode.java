@@ -17,7 +17,7 @@ public class Extensions_FeatureCode extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：====== Extensions_FeatureCode ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX)){
+        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -26,27 +26,28 @@ public class Extensions_FeatureCode extends SwebDriver {
     @Test
     public void A_RegisterExtensions(){
         Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_CreateAccount(1000, "Yeastar202", "UDP", UDP_PORT, 1);
+        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
         Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_CreateAccount(1100, "Yeastar202", "UDP", UDP_PORT, 2);
+        pjsip.Pj_CreateAccount(1100, EXTENSION_PASSWORD, "UDP", UDP_PORT, 2);
         pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
         closePbxMonitor();
     }
     @Test
     public void B1_addExtension(){
         Reporter.infoExec(" 添加分机1200");
-        pageDeskTop.settings.click();
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
         ys_waitingTime(1000);
         settings.extensions_panel.click();
         ys_waitingTime(1000);
         extensions.Extensions.click();
-        m_extension.addSipExtension(1200, "Yeastar202");
+        m_extension.addSipExtension(1200, EXTENSION_PASSWORD);
         ys_apply();
 //        注册1200
         Reporter.infoExec(" 主测设备注册分机1200"); //执行操作
-        pjsip.Pj_CreateAccount(1200, "Yeastar202", "UDP", UDP_PORT, 10);
+        pjsip.Pj_CreateAccount(1200, EXTENSION_PASSWORD, "UDP", UDP_PORT, 10);
         pjsip.Pj_Register_Account(1200, DEVICE_IP_LAN);
 
         closePbxMonitor();

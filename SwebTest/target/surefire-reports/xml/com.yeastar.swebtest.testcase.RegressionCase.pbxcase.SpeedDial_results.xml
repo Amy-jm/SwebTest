@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pbxcore"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="10.313">
+  <properties />
+  
+  
+            <testcase name="A0_init" time="10.313" classname="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.SpeedDial" />
+      
+</testsuite>

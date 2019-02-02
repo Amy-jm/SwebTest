@@ -175,7 +175,7 @@ public class Maintain extends SwebDriver {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.extensions_panel.click();
-        m_extension.addSipExtension(4000,"Yeastar202");
+        m_extension.addSipExtension(4000,EXTENSION_PASSWORD);
         ys_apply();
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.maintanceShortcut.click();
