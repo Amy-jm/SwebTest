@@ -60,9 +60,9 @@ public class Extension extends SwebDriver {
         }
         dateTime.save.click();
         ys_waitingTime(2000);
-        if(pageDeskTop.apply.isDisplayed()){
-            pageDeskTop.apply.click();
-        }
+
+        ys_apply();
+
         closeSetting();
         if(pageDeskTop.reboot_Yes.isDisplayed()){
             System.out.println("go to reboot ");

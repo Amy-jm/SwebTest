@@ -117,7 +117,7 @@ public class SwebDriver extends Config {
 
     public static void quitDriver() {
 //        webDriver.quit();
-        logout();
+		logout();
         close();
 //        ys_waitingTime(5000);
     }
@@ -167,13 +167,13 @@ public class SwebDriver extends Config {
 //        mySettings.close.click();
         sleep(1000);
 
-        if(Integer.valueOf(VERSION_SPLIT[1]) > 9 || PRODUCT.equals(CLOUD_PBX) ){
+        if(Integer.valueOf(VERSION_SPLIT[1]) > 9 || PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)){
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.settingShortcut.click();
             settings.extensions_panel.click();
             extensions.add.click();
-            ys_waitingMask();
-            closeSetting();
+           ys_waitingMask();
+           closeSetting();
         }
     }
 
@@ -618,7 +618,7 @@ public class SwebDriver extends Config {
     public static void waitReboot(int sec){
 //        new WebDriverWait(webDriver,sec).until(ExpectedConditions.presenceOfElementLocated(By.id("login-btn-btnEl")));
         while(true){
-            sleep(10000);
+            sleep(90000);
             sec = sec - 10;
             if(pageLogin.username.isDisplayed()){
                 break;
@@ -701,7 +701,26 @@ public class SwebDriver extends Config {
      * 页面apply 点击
      */
     public static void ys_apply(){
-        pageDeskTop.apply.click();
+        if(versionCompare(DEVICE_VERSION,"30.11.0.25").equals(">")){
+            System.out.println("1111");
+            if(pageDeskTop.apply_new.isDisplayed()){
+                System.out.println("2222");
+                pageDeskTop.apply_new.click();
+            }else{
+                System.out.println("3333");
+                return;
+            }
+        }else{
+            System.out.println("7777");
+            if(pageDeskTop.apply.isDisplayed()) {
+                System.out.println("8888");
+                pageDeskTop.apply.click();
+            }else{
+                System.out.println("9999");
+                return;
+            }
+        }
+        System.out.println("4444");
         if(PRODUCT.equals(PC)){
             Date date  = new Date();
             long time = date.getTime();
@@ -782,6 +801,42 @@ public class SwebDriver extends Config {
 
     //=================================================================其他==========================================================
 
+    /**
+     * 版本比较，返回“>” 小于"<" 等于"="
+     * @param ver
+     * @param target
+     * @return
+     */
+    public static String versionCompare(String ver, String target){
+        System.out.println("ver："+ver+ "target: "+target);
+
+        if(ver.split("\\.").length < 4 || target.split("\\.").length < 4){
+            return null;
+        }
+        int verpart1 = Integer.parseInt(ver.split("\\.")[1]);
+        int verpart3 = Integer.parseInt(ver.split("\\.")[3].split("-")[0]);
+
+        int tarpart1 = Integer.parseInt(target.split("\\.")[1]);
+        int tarpart3 = Integer.parseInt(target.split("\\.")[3]);
+
+        if(verpart1 == tarpart1){
+
+            if(verpart3 == tarpart3){
+                return "=";
+            }else if(verpart3 > tarpart3){
+                return ">";
+            }else if(verpart3 < tarpart3){
+                return "<";
+            }
+
+        }else if(verpart1 > tarpart1){
+            return ">";
+
+        }else if(verpart1 < tarpart1){
+            return "<";
+        }
+        return null;
+    }
     /**
      * 设置文本、下拉框等值，网页标签要是Input类型，并且不是ReadOnly状态
      * @param element

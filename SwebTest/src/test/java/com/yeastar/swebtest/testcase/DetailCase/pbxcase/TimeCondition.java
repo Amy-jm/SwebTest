@@ -41,7 +41,7 @@ public class TimeCondition extends SwebDriver {
         login(LOGIN_USERNAME, LOGIN_PASSWORD);
         if (!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9) {
             ys_waitingMask();
-            mySettings.close.click();
+//            mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
@@ -106,7 +106,9 @@ public class TimeCondition extends SwebDriver {
         ys_waitingTime(5000);
         if (pageDeskTop.reboot_Yes.isDisplayed()) {
             pageDeskTop.reboot_Yes.click();
+            System.out.println("重启等待 ");
             waitReboot();
+            System.out.println("重启等待结束 ");
         } else if (pageDeskTop.loginout_OK.isDisplayed()) {
             System.out.println("datetime go to logout ");
             pageDeskTop.loginout_OK.click();

@@ -16,7 +16,7 @@ public class OutboundRestriction extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  OutboundRestriction  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC)&& Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -104,7 +104,7 @@ public class OutboundRestriction extends SwebDriver {
     @Test
     public void A_add_3_cancelCall() throws InterruptedException {
         Reporter.infoExec(" 分机1100取消呼出限制后能正常呼出"); //执行操作
-        pjsip.Pj_Make_Call_Auto_Answer(1100, "13001", DEVICE_IP_LAN, true);
+        pjsip.Pj_Make_Call_Auto_Answer(1100, "13001", DEVICE_IP_LAN, false);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1100 <1100>","13001","Answered"," ",SIPTrunk,communication_outRoute);
@@ -135,7 +135,7 @@ public class OutboundRestriction extends SwebDriver {
             if(i==4) {
                 ys_waitingTime(80000);
             }
-            pjsip.Pj_Make_Call_Auto_Answer(1102, "13001", DEVICE_IP_LAN, true);
+            pjsip.Pj_Make_Call_Auto_Answer(1102, "13001", DEVICE_IP_LAN, false);
             ys_waitingTime(8000);
             System.out.println("=============================第"+i+"次循环打电话========================");
             System.out.println("1100的通话状态："+getExtensionStatus(1102,TALKING,1));
@@ -161,7 +161,7 @@ public class OutboundRestriction extends SwebDriver {
         settings.extensions_panel.click();
         ys_waitingTime(5000);
         gridClick(extensions.grid,gridFindRowByColumn(extensions.grid,extensions.gridcolumn_Name,"1102",sort_ascendingOrder),0);
-        if(extensions.delete_yes.isDisplayed()){
+        if(extensions.delete_yes.exists()){
             extensions.delete_yes.click();
             System.out.println("取消呼出限制");
             Reporter.pass(" 查看分机1102状态已被限制，并取消限制");

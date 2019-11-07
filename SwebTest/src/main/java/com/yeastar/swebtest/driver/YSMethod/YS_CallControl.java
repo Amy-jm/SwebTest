@@ -57,7 +57,7 @@ public class YS_CallControl {
         if(advanceOptions)
             add_time_condition.advancedOptions.click();
         add_time_condition.save.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(Config.timeConditions.grid_Mask);
         YsAssert.assertEquals(String.valueOf(gridContent(Config.timeConditions.grid,1, Config.timeConditions.gridcolumn_Name)),name,"添加TimeConditions");
     }

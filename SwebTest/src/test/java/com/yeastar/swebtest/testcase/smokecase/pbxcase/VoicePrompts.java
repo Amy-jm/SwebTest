@@ -161,7 +161,7 @@ public class VoicePrompts extends SwebDriver {
         promptPreference.promptPreference.click();
         comboboxSelect(promptPreference.MusicOnHold,"play1");
         promptPreference.save.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         tcpSocket.connectToDevice();
         pjsip.Pj_Make_Call_Auto_Answer(1100,"6400", DEVICE_IP_LAN);
         boolean tcpInfo = tcpSocket.getAsteriskInfo("Language: zh");

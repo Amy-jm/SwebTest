@@ -1084,7 +1084,7 @@ public class YsAssert extends org.testng.Assert {
     static public void fail(String message) {
 //        调用截图方法
         String filename = message+".jpg";
-//        ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +filename);
+        ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +filename);
 //        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
 //        screenshot(message);
         Reporter.sendReport("link","Error: " + message, SCREENSHOT_PATH +filename);

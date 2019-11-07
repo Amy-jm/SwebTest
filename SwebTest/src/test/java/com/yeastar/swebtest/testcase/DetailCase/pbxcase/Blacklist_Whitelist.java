@@ -70,9 +70,9 @@ public class Blacklist_Whitelist extends SwebDriver {
 //        以admin角色登录后，去删除紧急号码列表（因为该用例中有涉及到紧急列表）
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && LOGIN_ADMIN.equals("yes")){
             ys_waitingMask();
-            mySettings.close.click();
+//            mySettings.close.click();
         }
         m_extension.showCDRClounm();
 
@@ -688,6 +688,66 @@ public class Blacklist_Whitelist extends SwebDriver {
         }
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1105 <1105>","13001","Answered"," ",SIPTrunk,communication_outRoute);
+    }
+    @Test
+    public void B9_Register(){
+        pjsip.Pj_Unregister_Account(1000);
+        pjsip.Pj_Unregister_Account(1100);
+        pjsip.Pj_Unregister_Account(1101);
+        pjsip.Pj_Unregister_Account(1102);
+        pjsip.Pj_Unregister_Account(1103);
+        pjsip.Pj_Unregister_Account(1105);
+        pjsip.Pj_Unregister_Account(1106);
+        pjsip.Pj_Unregister_Account(3001);
+        pjsip.Pj_Unregister_Account(3004);
+        pjsip.Pj_Unregister_Account(3005);
+        pjsip.Pj_Unregister_Account(2000);
+        pjsip.Pj_Unregister_Account(2001);
+        pjsip.Pj_Unregister_Account(2002);
+        pjsip.Pj_Unregister_Account(2006);
+
+        Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
+        pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
+        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
+        pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 主测设备注册分机1102"); //执行操作
+        pjsip.Pj_Register_Account(1102, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 主测设备注册分机1103"); //执行操作
+        pjsip.Pj_Register_Account(1103, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 主测设备注册分机1105"); //执行操作
+        pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 主测设备注册分机1106"); //执行操作
+        pjsip.Pj_Register_Account(1106, DEVICE_IP_LAN);
+
+        Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
+
+        Reporter.infoExec(" 辅助设备1注册分机3004"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(3004, DEVICE_ASSIST_1);
+
+        Reporter.infoExec(" 辅助设备1注册分机3005"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(3005, DEVICE_ASSIST_1);
+
+        Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
+
+        Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
+
+        Reporter.infoExec(" 辅助设备2注册分机2002"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(2002, DEVICE_ASSIST_2);
+
+        Reporter.infoExec(" 辅助设备2注册分机2006"); //执行操作
+        pjsip.Pj_Register_Account_WithoutAssist(2006, DEVICE_ASSIST_2);
+        closePbxMonitor();
     }
     @Test
     public void C1_black_admin1(){

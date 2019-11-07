@@ -27,7 +27,7 @@ public class Queue extends SwebDriver{
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
             ys_waitingMask();
-            mySettings.close.click();
+//          mySettings.close.click();
         }
         m_extension.showCDRClounm();
 
@@ -45,7 +45,7 @@ public class Queue extends SwebDriver{
          pageDeskTop.taskBar_Main.click();
          pageDeskTop.settingShortcut.click();
          settings.callFeatures_panel.click();
-         if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+         if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
              ys_waitingMask();
          }else{
              ys_waitingTime(5000);
@@ -384,9 +384,9 @@ public class Queue extends SwebDriver{
         sleep(10000);
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && LOGIN_ADMIN.equals("yes")){
             ys_waitingMask();
-            mySettings.close.click();
+//            mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }
@@ -527,9 +527,9 @@ public class Queue extends SwebDriver{
     public void E3_key2_voicemail3_login(){
         logout();
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && LOGIN_ADMIN.equals("yes")){
             ys_waitingMask();
-            mySettings.close.click();
+//            mySettings.close.click();
         }
         m_extension.showCDRClounm();
     }

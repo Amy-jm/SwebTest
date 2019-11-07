@@ -18,6 +18,7 @@ public class PageDeskTop {
 
 
     public SelenideElement apply = $(By.xpath(".//a[starts-with(@class,'css_apply') and text()='Apply']"));
+	public SelenideElement apply_new = $(By.id("taskbarapply"));
     public SelenideElement boxSettings = $(By.xpath(".//span[starts-with(@class,'x-btn-inner x-btn-inner-default-toolbar-small') and text()='Settings']"));
     public SelenideElement boxCDRandRecordings = $(By.xpath(".//span[starts-with(@class,'x-btn-inner x-btn-inner-default-toolbar-small') and text()='CDR and Recordings']"));
     public SelenideElement boxMaintenance = $(By.xpath(".//span[starts-with(@class,'x-btn-inner x-btn-inner-default-toolbar-small') and text()='Maintenance']"));
@@ -35,6 +36,7 @@ public class PageDeskTop {
     public SelenideElement maintanceShortcut = $(By.id("maintance-shortcut"));
     public SelenideElement autopShortcut = $(By.id("autop-shortcut"));
     public SelenideElement guideShortcut = $(By.id("guide-specification-shortcut"));
+    public SelenideElement linkusShortcut = $(By.id("linkus-shortcut"));
 
     //reboot
     public SelenideElement reboot_Yes = $(By.xpath(".//div[starts-with(@id,'notifaction')]//span[text()=\"Yes\"]"));

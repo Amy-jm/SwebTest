@@ -42,6 +42,7 @@ public class Preference {
     public String voicemail_OneTouchRecordings = ("st-storage-slotvm");
     public String recordings ="st-storage-slotrecording";
     public String logs = ("st-storage-slotlog");
+    public SelenideElement storage_yes = $(By.xpath(".//span[starts-with(@id,'button')]//span[text()='Yes']"));
 
     /**
      * Storage Devices

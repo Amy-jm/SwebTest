@@ -20,7 +20,7 @@ public class EmergencyNumber extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  EmergencyNumber  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -165,8 +165,6 @@ public class EmergencyNumber extends SwebDriver {
         ys_waitingTime(5000);
         Reporter.infoAfterClass("执行完毕：======  EmergencyNumber  ======="); //执行操作
         pjsip.Pj_Destory();
-        quitDriver();
         ys_waitingTime(10000);
-        killChromePid();
-    }
+        killChromePid();    }
 }

@@ -19,7 +19,7 @@ public class Conference extends SwebDriver {
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
 
-        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -223,7 +223,7 @@ public class Conference extends SwebDriver {
         pjsip.Pj_Send_Dtmf(1105,"#","1","1","0","0","#");
         YsAssert.assertEquals(getExtensionStatus(1100,RING,25),RING,"1100预期响铃");
         pjsip.Pj_Answer_Call(1100,false);
-        ys_waitingTime(2000);
+        ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1100 <1100>","6401(from 1105)","Answered","","",communication_internal,1,2);
     }

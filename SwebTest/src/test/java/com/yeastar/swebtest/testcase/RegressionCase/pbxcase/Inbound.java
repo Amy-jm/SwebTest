@@ -21,7 +21,7 @@ public class Inbound extends SwebDriver {
         System.out.println("after. initialDriver.");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         System.out.println("after. login(LOGIN_USERNAME,LOGIN_PASSWORD)..");
-        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }

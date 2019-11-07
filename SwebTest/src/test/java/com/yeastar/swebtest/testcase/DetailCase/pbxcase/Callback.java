@@ -49,7 +49,7 @@ public class Callback extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：=======  Callback  ======="); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -91,7 +91,7 @@ public class Callback extends SwebDriver {
          pageDeskTop.taskBar_Main.click();
          pageDeskTop.settingShortcut.click();
          settings.callFeatures_panel.click();
-         if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && LOGIN_ADMIN.equals("yes")){
+         if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
              ys_waitingMask();
          }else{
              ys_waitingTime(5000);

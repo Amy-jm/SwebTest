@@ -35,7 +35,7 @@ public class InboundRoutes extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：====== InboundRoutes ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -715,39 +715,6 @@ public class InboundRoutes extends SwebDriver {
         }
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2001 <2001>","1101 <1101>","Answered",SPS," ",communication_inbound);
-//        sps外线测试&&分机1101拒接电话
-        Reporter.infoExec(" 2001拨打995503302通过sps外线呼入到分机1101"); //执行操作
-        pjsip.Pj_Make_Call_No_Answer(2001,"995503302",DEVICE_ASSIST_2);
-        ys_waitingTime(5000);
-        if (getExtensionStatus(1101, RING, 8) == RING) {
-            Reporter.pass(" 分机1101状态--RING，通话正常建立");
-        } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"D3_ExtensionRange()分机1101_rejectAnswer.jpg");
-            Reporter.sendReport("link","Error: " + "D3_ExtensionRange()调试", SCREENSHOT_PATH +"D3_ExtensionRange()分机1101_rejectAnswer.jpg");
-            Reporter.error(" 预期分机1101状态为RING，实际状态为"+getExtensionStatus(1101, RING, 8));
-        }
-        pjsip.Pj_Answer_Call(1101,486,false);
-        ys_waitingTime(3000);
-        pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("2001 <2001>", "1101 <1101>", "Voicemail", SPS, " ", communication_inbound);
-        m_extension.checkCDR("2001 <2001>", "1101 <1101>", "Busy", SPS, " ", communication_inbound,2);
-//        sps外线测试&&分机1101未接电话
-        Reporter.infoExec(" 2001拨打995503302通过sps外线呼入到分机1101"); //执行操作
-        pjsip.Pj_Make_Call_No_Answer(2001,"995503302",DEVICE_ASSIST_2);
-        ys_waitingTime(5000);
-        if (getExtensionStatus(1101, RING, 8) == RING) {
-            Reporter.pass(" 分机1101状态--RING，通话正常建立");
-        } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"D3_ExtensionRange()分机1101_noAnswer.jpg");
-            Reporter.sendReport("link","Error: " + "D3_ExtensionRange()调试", SCREENSHOT_PATH +"D3_ExtensionRange()分机1101_noAnswer.jpg");
-            Reporter.error(" 预期分机1101状态为RING，实际状态为"+getExtensionStatus(1101, RING, 8));
-        }
-        pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("2001 <2001>", "1101 <1101>", "No Answer", SPS, " ", communication_inbound);
 
 //        SPS外线测试&&分机1105接听电话
         Reporter.infoExec(" 2001拨打995503306通过sps外线呼入到分机1105"); //执行操作
@@ -764,41 +731,6 @@ public class InboundRoutes extends SwebDriver {
         }
         pjsip.Pj_Hangup_All();
         m_extension.checkCDR("2001 <2001>","1105 <1105>","Answered",SPS," ",communication_inbound);
-//        sps外线测试&&分机1105拒接电话
-        Reporter.infoExec(" 2001拨打995503306通过sps外线呼入到分机1105"); //执行操作
-        pjsip.Pj_Make_Call_No_Answer(2001,"995503306",DEVICE_ASSIST_2);
-        ys_waitingTime(5000);
-        if (getExtensionStatus(1105, RING, 8) == RING) {
-            Reporter.pass(" 分机1105状态--RING，通话正常建立");
-        } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"D3_ExtensionRange()分机1105_rejectAnswer.jpg");
-            Reporter.sendReport("link","Error: " + "D3_ExtensionRange()调试", SCREENSHOT_PATH +"D3_ExtensionRange()分机1105_rejectAnswer.jpg");
-            Reporter.error(" 预期分机1105状态为RING，实际状态为"+getExtensionStatus(1105, RING, 8));
-        }
-        pjsip.Pj_Answer_Call(1105,486,false);
-        ys_waitingTime(3000);
-        pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("2001 <2001>", "1105 <1105>", "Voicemail", SPS, " ", communication_inbound);
-        m_extension.checkCDR("2001 <2001>", "1105 <1105>", "Busy", SPS, " ", communication_inbound,2);
-//        sps外线测试&&分机1105未接电话
-        Reporter.infoExec(" 2001拨打995503306通过sps外线呼入到分机1105"); //执行操作
-        pjsip.Pj_Make_Call_No_Answer(2001,"995503306",DEVICE_ASSIST_2);
-        ys_waitingTime(5000);
-        if (getExtensionStatus(1105, RING, 8) == RING) {
-            Reporter.pass(" 分机1105状态--RING，通话正常建立");
-        } else {
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            ScreenShot.takeScreenshotByAll(SCREENSHOT_PATH +"D3_ExtensionRange()分机1105_noAnswer.jpg");
-            Reporter.sendReport("link","Error: " + "D3_ExtensionRange()调试", SCREENSHOT_PATH +"D3_ExtensionRange()分机1105_noAnswer.jpg");
-            Reporter.error(" 预期分机1105状态为RING，实际状态为"+getExtensionStatus(1105, RING, 8));
-        }
-        pjsip.Pj_Hangup_All();
-        closePbxMonitor();
-        m_extension.checkCDR("2001 <2001>", "1105 <1105>", "No Answer", SPS, " ", communication_inbound);
-
     }
 //    目的地设置为Voicemail
     @Test
@@ -1269,49 +1201,53 @@ public class InboundRoutes extends SwebDriver {
         m_extension.checkCDR("2001 <2001>","1000 <1000>","Answered",SPS," ",communication_inbound);
     }
     @Test
-    public void G8_timeDelay() throws InterruptedException {
-        pjsip.Pj_Unregister_Account(1000);
-        pjsip.Pj_Unregister_Account(1100);
-        pjsip.Pj_Unregister_Account(1101);
-        pjsip.Pj_Unregister_Account(1105);
-        pjsip.Pj_Unregister_Account(3001);
-        pjsip.Pj_Unregister_Account(2000);
-        pjsip.Pj_Unregister_Account(2001);
-        pjsip.Pj_Unregister_Account(2005);
-        pjsip.Pj_Unregister_Account(4000);
-        pjsip.Pj_Unregister_Account(4001);
+    public void G8_timeDelay1() throws InterruptedException {
+        if(PRODUCT.equals(CLOUD_PBX)) {
+            pjsip.Pj_Unregister_Account(1000);
+            pjsip.Pj_Unregister_Account(1100);
+            pjsip.Pj_Unregister_Account(1101);
+            pjsip.Pj_Unregister_Account(1105);
+            pjsip.Pj_Unregister_Account(3001);
+            pjsip.Pj_Unregister_Account(2000);
+            pjsip.Pj_Unregister_Account(2001);
+            pjsip.Pj_Unregister_Account(2005);
+            pjsip.Pj_Unregister_Account(4000);
+            pjsip.Pj_Unregister_Account(4001);
 
-        Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
-        pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
+            Reporter.infoExec(" 主测设备注册分机1000"); //执行操作
+            pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
 
-        Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-        pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
+            Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
+            pjsip.Pj_Register_Account(1100, DEVICE_IP_LAN);
 
-        Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
-        pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
+            Reporter.infoExec(" 主测设备注册分机1101"); //执行操作
+            pjsip.Pj_Register_Account(1101, DEVICE_IP_LAN);
 
-        Reporter.infoExec(" 主测设备注册分机1105"); //执行操作
-        pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
+            Reporter.infoExec(" 主测设备注册分机1105"); //执行操作
+            pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
 
-        Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
-        pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
+            Reporter.infoExec(" 辅助设备1注册分机3001"); //执行操作
+            pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
 
-        Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
+            Reporter.infoExec(" 辅助设备2注册分机2000"); //执行操作
+            pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 
-        Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
-        pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
+            Reporter.infoExec(" 辅助设备2注册分机2001"); //执行操作
+            pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
 
-        Reporter.infoExec(" 辅助设备2注册分机2005"); //执行操作
-        pjsip.Pj_Register_Account_WithoutAssist(2005, DEVICE_ASSIST_2);
+            Reporter.infoExec(" 辅助设备2注册分机2005"); //执行操作
+            pjsip.Pj_Register_Account_WithoutAssist(2005, DEVICE_ASSIST_2);
 
-        Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
-        pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
+            Reporter.infoExec(" 辅助设备3注册分机4000"); //执行操作
+            pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
 
-        Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
-        pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
-        closePbxMonitor();
-
+            Reporter.infoExec(" 辅助设备3注册分机4001"); //执行操作
+            pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
+            closePbxMonitor();
+        }
+    }
+        @Test
+        public void G8_timeDelay2() throws InterruptedException {
         Calendar calendar = Calendar.getInstance();
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");//设置获取到的时间显示格式

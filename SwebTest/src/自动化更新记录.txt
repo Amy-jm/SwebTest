@@ -15,4 +15,7 @@
 2018.7.31：更新回归BeforeTest中提示CDR显示问题（7.31）
 2018.7.31：【重要】更新PjsipApp.java，解决挂断电话时可能导致整个自动化卡住的问题（7.31）。
 2018.8.1 ：修复 详细用例【IVR】【回拨】中通话bug（8.1）
+2018.10.19: cloud+pc+S系列全部测试完毕。
+2018.10.28:周末有更新一个文件\\192.168.3.5\s系列\S系列-自动化\SwebTest\src\main\java\com\yeastar\swebtest\driver\SwebDriver.java 增加在每次结束测试前执行登出操作
+2018.10.31:cloud\pc调试完毕。建议整个文件夹全部替换，考虑到每个人谷歌游览器版本不同，更新代码前先将你自己电脑中\SwebTest\src\main\resources\driver\chrome路径下chromedriver.exe拷贝出来，代码更新完毕后再将你自己的chromedriver.exe替换回去
 

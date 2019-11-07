@@ -37,7 +37,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(ivr.grid_Mask);
         gridClick(ivr.grid,1,ivr.gridDelete);
         ivr.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
     @Test
     public void B_IVR() throws InterruptedException {
@@ -50,7 +50,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(ivr.grid);
         ivr.delete.click();
         ivr.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(ivr.grid_Mask);
         String afterDeleteLine = String.valueOf(gridLineNum(ivr.grid));
         YsAssert.assertEquals(afterDeleteLine,"0");
@@ -65,7 +65,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(ringGroup.grid_Mask);
         gridClick(ringGroup.grid,1,ringGroup.gridDelete);
         ringGroup.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
 
     @Test
@@ -79,7 +79,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(ringGroup.grid);
         ringGroup.delete.click();
         ringGroup.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(ringGroup.grid_Mask);
         String afterDeleteLine = String.valueOf(gridLineNum(ringGroup.grid));
         YsAssert.assertEquals(afterDeleteLine,"0");
@@ -95,7 +95,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(queue.grid_Mask);
         gridClick(queue.grid,1,queue.gridDelete);
         queue.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
     @Test
     public void F_Queue() throws InterruptedException {
@@ -108,7 +108,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(queue.grid);
         queue.delete.click();
         queue.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(queue.grid_Mask);
         String afterDeleteLine = String.valueOf(gridLineNum(queue.grid));
         YsAssert.assertEquals(afterDeleteLine,"0");
@@ -124,7 +124,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(conference.grid_Mask);
         gridClick(conference.grid,1,conference.gridDelete);
         conference.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
     @Test
     public void H_Conferene() throws InterruptedException {
@@ -136,7 +136,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(conference.grid);
         conference.delete.click();
         conference.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(conference.grid_Mask);
         String afterDeleteLine = String.valueOf(gridLineNum(conference.grid));
         YsAssert.assertEquals(afterDeleteLine,"0");
@@ -152,7 +152,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(pickupGroup.grid_Mask);
         gridClick(pickupGroup.grid,1,pickupGroup.gridDelete);
         pickupGroup.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
 
     @Test
@@ -166,7 +166,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(pickupGroup.grid);
         pickupGroup.delete.click();
         pickupGroup.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(pickupGroup.grid_Mask);
         String afterDeleteLine = String.valueOf(gridLineNum(pickupGroup.grid));
         YsAssert.assertEquals(afterDeleteLine,"0");
@@ -182,7 +182,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(paging_intercom.grid_Mask);
         gridClick(paging_intercom.grid,1,paging_intercom.gridDelete);
         paging_intercom.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
 
     @Test
@@ -195,7 +195,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(paging_intercom.grid);
         paging_intercom.delete.click();
         paging_intercom.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(paging_intercom.grid_Mask);
         String afterDeleteLine = String.valueOf(gridLineNum(paging_intercom.grid));
         YsAssert.assertEquals(afterDeleteLine,"0");
@@ -212,7 +212,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(callback.grid_Mask);
         gridClick(callback.grid,1,callback.gridDelete);
         callback.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
 
     @Test
@@ -226,7 +226,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(callback.grid);
         callback.delete.click();
         callback.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(callback.grid_Mask);
         String afterDeleteLine = String.valueOf(gridLineNum(callback.grid));
         YsAssert.assertEquals(afterDeleteLine,"0");
@@ -242,7 +242,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(disa.grid_Mask);
         gridClick(disa.grid,1,disa.gridDelete);
         disa.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
 
     @Test
@@ -257,7 +257,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(disa.grid);
         disa.delete.click();
         disa.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(disa.grid_Mask);
         String afterDeleteLine = String.valueOf(gridLineNum(disa.grid));
         YsAssert.assertEquals(afterDeleteLine,"0");
@@ -273,7 +273,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(pinList.grid_Mask);
         gridClick(pinList.grid,1,pinList.gridDelete);
         pinList.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
 
     @Test
@@ -288,7 +288,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(pinList.grid);
         pinList.delete.click();
         pinList.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(pinList.grid_Mask);
         Thread.sleep(1000);
         String afterDeleteLine = String.valueOf(gridLineNum(pinList.grid));
@@ -305,7 +305,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(outboundRoutes.grid_Mask);
         gridClick(outboundRoutes.grid,1,outboundRoutes.gridDelete);
         outboundRoutes.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
     @Test
     public void U_OutboundRoutes() throws InterruptedException {
@@ -326,7 +326,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(outboundRoutes.grid);
         outboundRoutes.delete.click();
         outboundRoutes.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(outboundRoutes.grid_Mask);
         Thread.sleep(1000);
         String afterDeleteLine = String.valueOf(gridLineNum(outboundRoutes.grid));
@@ -342,7 +342,7 @@ public class DeleteAll extends SwebDriver {
         ys_waitingLoading(inboundRoutes.grid_Mask);
         gridClick(inboundRoutes.grid,1,inboundRoutes.gridDelete);
         inboundRoutes.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
 
     @Test
@@ -358,7 +358,7 @@ public class DeleteAll extends SwebDriver {
         gridSeleteAll(inboundRoutes.grid);
         inboundRoutes.delete.click();
         inboundRoutes.delete_yes.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(inboundRoutes.grid_Mask);
         Thread.sleep(1000);
         String afterDeleteLine = String.valueOf(gridLineNum(inboundRoutes.grid));

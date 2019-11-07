@@ -9,6 +9,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+
 import static com.codeborne.selenide.Selenide.$;
 
 /**
@@ -18,44 +20,75 @@ public class ExtensionPractice extends SwebDriver{
     @BeforeClass
     public void BeforeClass() {
         pjsip.Pj_Init();
-        Reporter.infoBeforeClass("打开浏览器并登录设备_ExtensionTest"); //执行操作
+        Reporter.infoBeforeClass("开始执行：======前置环境设置—BeforeTest======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        pageDeskTop.settings.shouldBe(Condition.exist);
-        pageDeskTop.CDRandRecording.shouldBe(Condition.exist);
-        pageDeskTop.maintenance.shouldBe(Condition.exist);
-        if(!PRODUCT.equals(S300)){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+            ys_waitingMask();
             mySettings.close.click();
         }
+        m_extension.showCDRClounm();
 
     }
 
-    //    创建分机1000、1100~1105
-    @Test
-    public void A1_addExtension() throws InterruptedException {
-        pageDeskTop.settings.click();
-        settings.extensions_panel.click();
-
-//        deletes(" 删除所有分机",extensions.grid,extensions.delete,extensions.delete_yes,extensions.grid_Mask);
-//        Reporter.infoExec(" 添加分机1000");
-//        m_extension.addSipExtension(1000, EXTENSION_PASSWORD);
-//        Reporter.infoExec(" 添加分机1017");
-        Reporter.infoExec(" 主测设备注册分机1000，1100"); //执行操作
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,1);
-        pjsip.Pj_CreateAccount(1100,EXTENSION_PASSWORD,"UDP",UDP_PORT,2);
-
-        pjsip.Pj_Register_Account(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account(1100,DEVICE_IP_LAN);
-
-//        pjsip.Pj_Register_Account(1001,DEVICE_IP_LAN);
-
-//        pjsip.Pj_Answer_Call(1000,1108,false);
-//        pjsip.Pj_Make_Call_No_Answer(1000,"1100",DEVICE_IP_LAN,false);
-        pjsip.Pj_Make_Call_Auto_Answer(1000,"1100", DEVICE_IP_LAN,true);
-        Thread.sleep(8000);
-        pjsip.Pj_Hangup_All();
-//        m_extension.checkCDR("1001 <1001>","1000 <1000>","Answered");
-    }
+        @Test
+        public void O1_setRecord()  {
+            if (PRODUCT.equals(CLOUD_PBX)) {
+                return;
+            }
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
+            settings.storage_panel.click();
+            preference.preference.click();
+            ys_waitingLoading(preference.grid_Mask);
+            if (!NETWORK_DEVICE_NAME.equals("null")) {
+                int rows = Integer.parseInt(String.valueOf(gridLineNum(preference.grid)));
+                int row = gridFindRowByColumn(preference.grid, preference.gridColumn_Name, NETWORK_DEVICE_NAME, sort_ascendingOrder);
+                System.out.println("rows:" + rows);
+                System.out.println("row:" + row);
+                if (row > rows) {
+                    Reporter.infoExec(" 添加网络磁盘" + NETWORK_DEVICE_NAME); //执行操作
+                    m_storage.AddNetworkDrive(NETWORK_DEVICE_NAME, NETWORK_DEVICE_IP, NETWORK_DEVICE_SHARE_NAME, NETWORK_DEVICE_USER_NAME, NETWORK_DEVICE_USER_PASSWORD);
+                }
+            }
+        }
+        @Test
+        public void O2_setRecord()  {
+            if (PRODUCT.equals(CLOUD_PBX)) {
+                return;
+            }
+            String value = "null";
+            if (!DEVICE_RECORD_NAME.equals("null")) {
+                Reporter.infoExec(" 设置录音存储在：" + DEVICE_RECORD_NAME);
+                if (DEVICE_RECORD_NAME.equals("SD") || DEVICE_RECORD_NAME.equals("TF") || DEVICE_RECORD_NAME.equals("TF/SD")) {
+                    value = "tf/sd-1";
+                } else if (DEVICE_RECORD_NAME.equals("HD") || DEVICE_RECORD_NAME.equals("hd")) {
+                    value = "hd-1";
+                } else if (DEVICE_RECORD_NAME.equals("USB") || DEVICE_RECORD_NAME.equals("usb")) {
+                    value = "usb-1";
+                } else if (DEVICE_RECORD_NAME.equals("Local") || DEVICE_RECORD_NAME.equals("local")) {
+                    value = "local-1";
+                } else {
+                    value = DEVICE_RECORD_NAME;
+                }
+                comboboxSelect(preference.recordings, value);
+                if (preference.storage_yes.isDisplayed()){
+                    preference.storage_yes.click();
+                }
+                preference.save.click();
+            }
+            preference.recordingSettings.click();
+            ys_waitingMask();
+            Reporter.infoExec(" 选择全部外线、分机、会议室进行录音");
+            ArrayList<String> arrayex = new ArrayList<>();
+            arrayex.add("all");
+            ArrayList<String> arraytrunk = new ArrayList<>();
+            arraytrunk.add("all");
+            ArrayList<String> arraycon = new ArrayList<>();
+            arraycon.add("all");
+            m_storage.selectRecord(arraytrunk, arrayex, arraycon);
+            closeSetting();
+        }
     @AfterClass
     public void AfterClass() throws InterruptedException {
         Thread.sleep(5000);

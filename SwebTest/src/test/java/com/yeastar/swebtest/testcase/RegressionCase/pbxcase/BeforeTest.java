@@ -7,7 +7,6 @@ import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.testng.annotations.*;
 
 import java.util.ArrayList;
-
 import static com.codeborne.selenide.Selenide.refresh;
 import static com.codeborne.selenide.Selenide.sleep;
 
@@ -23,7 +22,7 @@ public class BeforeTest extends SwebDriver{
         Reporter.infoBeforeClass("开始执行：======前置环境设置—BeforeTest======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -39,7 +38,7 @@ public class BeforeTest extends SwebDriver{
         m_general.setExPreferencesDefault();
         closeSetting();
 
-        if(PRODUCT.equals(CLOUD_PBX)){
+		if(PRODUCT.equals(CLOUD_PBX)){
             return;
         }
         pageDeskTop.taskBar_Main.click();
@@ -195,12 +194,18 @@ public class BeforeTest extends SwebDriver{
                 "","","","","");
     }
     @Test
-    public void E_addtrunk() throws InterruptedException {
+    public void E1_addtrunk() throws InterruptedException {
         Reporter.infoExec(" 添加spx外线"+SPX);
         m_trunks.addTrunk("IAX",add_voIP_trunk_basic.PeerToPeer,SPX,DEVICE_ASSIST_2,"4569",DEVICE_ASSIST_2,
                 "","","","","");
     }
-
+    @Test
+    public void E2_addtrunk() {
+        if (!DEVICE_ASSIST_3.equals("null")) {
+            Reporter.infoExec(" 添加Account外线" + ACCOUNTTRUNK); //执行操作
+            m_trunks.addAccountTrunk(ACCOUNTTRUNK,"6100","6100", EXTENSION_PASSWORD);
+        }
+    }
 //    创建呼入路由
     @Test
     public void F_addInRoute() throws InterruptedException {
@@ -416,6 +421,9 @@ public class BeforeTest extends SwebDriver{
                 value= DEVICE_RECORD_NAME;
             }
             comboboxSelect(preference.recordings,value);
+            if (preference.storage_yes.isDisplayed()){
+                preference.storage_yes.click();
+            }
             preference.save.click();
         }
         preference.recordingSettings.click();

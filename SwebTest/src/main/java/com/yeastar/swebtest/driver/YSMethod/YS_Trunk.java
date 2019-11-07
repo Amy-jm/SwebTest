@@ -90,7 +90,7 @@ public class YS_Trunk {
 //            }
 //        }
 //        Thread.sleep(500);
-////        pageDeskTop.apply.click();
+////        ys_apply();
 ////        closeSettingWindow();
 //    }
 
@@ -185,7 +185,7 @@ public class YS_Trunk {
             executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
         }
         add_voIP_trunk_basic.save.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(trunks.grid_Mask);
 
         String lineNum = String.valueOf(gridLineNum(trunks.grid));
@@ -288,7 +288,7 @@ public class YS_Trunk {
             executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
         }
         add_voIP_trunk_basic.save.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(trunks.grid_Mask);
 
         String lineNum = String.valueOf(gridLineNum(trunks.grid));
@@ -336,7 +336,7 @@ public class YS_Trunk {
             executeJs("Ext.getCmp('allowcodec').setValue('alaw,ulaw,g729,ilbc')");
         }
         add_voIP_trunk_basic.save.click();
-        pageDeskTop.apply.click();
+        ys_apply();
         ys_waitingLoading(trunks.grid_Mask);
 
         String lineNum = String.valueOf(gridLineNum(trunks.grid));

@@ -197,6 +197,7 @@ public class Config extends DataReader {
 //    public static boolean Single_Device_Test = true;
 //    public static boolean Single_Init = false;
 
+
     //通讯类型定义
     public static String communication_outRoute = "Outbound";
     public static String communication_inbound = "Inbound";

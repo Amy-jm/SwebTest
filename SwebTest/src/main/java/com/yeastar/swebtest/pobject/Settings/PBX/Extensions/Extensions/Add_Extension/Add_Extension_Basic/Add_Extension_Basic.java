@@ -22,7 +22,7 @@ public class Add_Extension_Basic {
     public SelenideElement FXS = $(By.id("type-fxs-displayEl"));
     public SelenideElement FXS_port_picker = $(By.id("pbxport-trigger-picker"));
     public String FXS_port = "pbxport";
-    public SelenideElement extensions = $(By.id("username-inputEl"));
+    public SelenideElement extensions = $(By.id("st-exten-username-inputEl"));
     public SelenideElement callerID = $(By.id("callerid-inputEl"));
     public SelenideElement registrationName = $(By.id("registername-inputEl"));
     public SelenideElement registrationPassword = $(By.id("registerpassword-inputEl"));

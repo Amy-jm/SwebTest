@@ -15,7 +15,7 @@ public class SpeedDial extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：======  SpeedDial  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -34,7 +34,7 @@ public class SpeedDial extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
     }
-//    @Test
+    @Test
     public void A_add_1()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -69,7 +69,7 @@ public class SpeedDial extends SwebDriver {
 
     }
 
-//    @Test
+    @Test
     public void A_add_2()  {
         Reporter.infoExec(" 1000拨打*9991234567通过sps外线呼出");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"*9991234567",DEVICE_IP_LAN,false);
@@ -80,7 +80,7 @@ public class SpeedDial extends SwebDriver {
     }
 
 //    导出、导入
-//    @Test
+    @Test
     public void B_export()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -88,7 +88,7 @@ public class SpeedDial extends SwebDriver {
         speedDial.export.click();
     }
 
-//    @Test
+    @Test
     public void C_delete()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -138,7 +138,7 @@ public class SpeedDial extends SwebDriver {
 
     }
 
-//    @Test
+    @Test
     public void D_import()  {
         Reporter.infoExec(" 导入速拨码"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -154,7 +154,7 @@ public class SpeedDial extends SwebDriver {
 
     }
 
-//    @AfterMethod
+    @AfterMethod
     public void AfterMethod(){
         if(cdRandRecordings.deleteCDR.isDisplayed()){
             closeCDRRecord();

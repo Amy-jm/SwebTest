@@ -151,7 +151,7 @@ public class OutboundRoutes extends SwebDriver {
         executeJs("Ext.getCmp("+add_outbound_routes.list_TimeContion1+").setValue(true)");
         add_outbound_routes.save.click();
         ys_waitingLoading(outboundRoutes.grid_Mask);
-        pageDeskTop.apply.click();
+        ys_apply();
     }
 
     @Test
@@ -417,7 +417,7 @@ public class OutboundRoutes extends SwebDriver {
         comboboxSelect(add_outbound_routes.Password,add_outbound_routes.Password_Pinset);
         comboboxSelect(add_outbound_routes.combobox_PinsetPassword,getDynamicData(add_outbound_routes.combobox_PinsetPassword,0));
         add_outbound_routes.save.click();
-        pageDeskTop.apply.click();
+        ys_apply();
 
 
     }
@@ -450,7 +450,7 @@ public class OutboundRoutes extends SwebDriver {
         ys_waitingMask();
         comboboxSelect(add_outbound_routes.Password,add_outbound_routes.Password_None);
         add_outbound_routes.save.click();
-        pageDeskTop.apply.click();
+        ys_apply();
     }
     @Test
     public void S_PinListCall() throws InterruptedException, IOException {

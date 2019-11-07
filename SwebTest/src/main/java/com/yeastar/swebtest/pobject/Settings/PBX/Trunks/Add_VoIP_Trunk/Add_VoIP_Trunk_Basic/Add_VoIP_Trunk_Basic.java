@@ -21,7 +21,7 @@ public class Add_VoIP_Trunk_Basic {
     public SelenideElement hostname = $(By.id("hostname-inputEl"));
     public SelenideElement hostnamePort = $(By.id("hostport-inputEl"));
     public SelenideElement domain = $(By.id("fromdomain-inputEl"));
-    public SelenideElement username = $(By.id("username-inputEl"));
+    public SelenideElement username = $(By.id("trunk-username-inputEl"));
     public SelenideElement authenticationName = $(By.id("ysauth-inputEl"));
     public SelenideElement calledIDNumber = $(By.id("globaldod-inputEl"));
     public String trunkType = "trunktype";

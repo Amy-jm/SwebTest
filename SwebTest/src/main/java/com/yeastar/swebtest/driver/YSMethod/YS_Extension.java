@@ -167,7 +167,6 @@ public class YS_Extension extends SwebDriver{
 
         addExtensionAdvanced.advanced.click();
         setCheckBox(addExtensionAdvanced.registerRemotely,true);
-        setCheckBox(addExtensionAdvanced.NAT,true);
         setCheckBox(addExtensionAdvanced.qualify,false);
         addExtensionBasic.save.click();
         ys_waitingLoading(extensions.grid_Mask);
@@ -186,6 +185,7 @@ public class YS_Extension extends SwebDriver{
         addBulkExtensionsAdvanced.advanced.click();
         setCheckBox(addExtensionAdvanced.registerRemotely,true);
         setCheckBox(addExtensionAdvanced.qualify,false);
+        setCheckBox(addExtensionAdvanced.NAT,false);
 //        addExtensionAdvanced.advanced.click();
 //        addExtensionAdvanced.registerRemotely.click();
         addBulkExtensionsAdvanced.save.click();

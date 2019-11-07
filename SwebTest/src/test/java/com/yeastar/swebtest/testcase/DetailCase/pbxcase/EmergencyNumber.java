@@ -41,7 +41,7 @@ public class EmergencyNumber extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：====== Emergency Number ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -707,6 +707,7 @@ public class EmergencyNumber extends SwebDriver {
             pjsip.Pj_Make_Call_Auto_Answer(1000, "52001", DEVICE_IP_LAN, false);
             ys_waitingTime(7000);
 //        接着分机1102拨通紧急号码呼出，分机1000没有被挂断电话，分机1102走SPS——分机2000接听
+            //【【三合一-S系列】紧急号码存在2条中继，当FOX忙时不会走SPS呼出】https://www.tapd.cn/40358509/bugtrace/bugs/view?bug_id=1140358509001010768
             pjsip.Pj_Make_Call_No_Answer(1102, "2000", DEVICE_IP_LAN, false);
             if (getExtensionStatus(1000, TALKING, 8) == TALKING && getExtensionStatus(2000, RING, 8) == RING) {
                 Reporter.pass(" 分机1000状态--TALKING");
@@ -768,6 +769,7 @@ public class EmergencyNumber extends SwebDriver {
             pjsip.Pj_Make_Call_Auto_Answer(1100, "52001", DEVICE_IP_LAN, false);
             ys_waitingTime(7000);
 //        接着分机1102拨通紧急号码呼出，分机1000不会被挂断电话，分机1102走BRI
+            //【【三合一-S系列】紧急号码存在2条中继，当FOX忙时不会走SPS呼出】https://www.tapd.cn/40358509/bugtrace/bugs/view?bug_id=1140358509001010768
             Reporter.pass(" 分机1102通过BRI拨打2000号码，预期2000响铃");
             pjsip.Pj_Make_Call_No_Answer(1102, "2000", DEVICE_IP_LAN, false);
             if (getExtensionStatus(1100, TALKING, 8) == TALKING && getExtensionStatus(2000, RING, 8) == RING) {

@@ -22,7 +22,7 @@ public class BeforeTest extends SwebDriver{
         Reporter.infoBeforeClass("开始执行：======前置环境设置—BeforeTest======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -490,6 +490,9 @@ public class BeforeTest extends SwebDriver{
                 value = DEVICE_RECORD_NAME;
             }
             comboboxSelect(preference.recordings, value);
+            if (preference.storage_yes.isDisplayed()){
+                preference.storage_yes.click();
+            }
             preference.save.click();
         }
         preference.recordingSettings.click();
@@ -573,7 +576,7 @@ public class BeforeTest extends SwebDriver{
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.voicePrompts_panel.click();
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes")){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && LOGIN_ADMIN.equals("yes")){
             ys_waitingMask();
         }else{
             ys_waitingTime(5000);

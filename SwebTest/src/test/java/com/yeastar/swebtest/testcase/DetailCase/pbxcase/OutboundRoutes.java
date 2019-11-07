@@ -40,7 +40,7 @@ public class OutboundRoutes extends SwebDriver {
         Reporter.infoBeforeClass("开始执行：====== OutboundRoutes ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        if(!PRODUCT.equals(CLOUD_PBX) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
+        if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && LOGIN_ADMIN.equals("yes") && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
             mySettings.close.click();
         }
@@ -49,8 +49,10 @@ public class OutboundRoutes extends SwebDriver {
 //    @Test
     public void A0_initbeforeTest(){
         //初始化beforetest
-        resetoreBeforetest("BeforeTest_Local.bak");
-
+//        resetoreBeforetest("BeforeTest_Local.bak");
+        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        ys_apply();
+        System.out.println("DDDDDDDDDDDDDDDD");
     }
     @Test
     public void A1_init1(){
@@ -140,7 +142,7 @@ public class OutboundRoutes extends SwebDriver {
     }
 
     @Test
-    public void C_call() throws InterruptedException {
+    public void C_call()  {
         //        通话测试
         Outbound outbound = new Outbound();
         outbound.A_out1_sip();
