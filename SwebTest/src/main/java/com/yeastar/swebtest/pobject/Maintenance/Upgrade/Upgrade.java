@@ -14,11 +14,12 @@ public class Upgrade {
      */
     public SelenideElement resetConfigurationtoFactoryDefault = $(By.id("mt-ug-reset-displayEl"));
 
-    public SelenideElement type = $(By.id("mt-ug-type-trigger-picker"));
+    public String type = "mt-ug-type";
     public SelenideElement file = $(By.id("mt-ug-file-inputEl"));
     public SelenideElement browse = $(By.id("mt-ug-file-button-fileInputEl"));
     public SelenideElement upload = $(By.id("mt-ug-upload-btnInnerEl"));
-
+    public SelenideElement httpInput = $(By.id("mt-ug-httpurl-inputEl"));
+    public SelenideElement httpDownload = $(By.id("mt-ug-download"));
     /**
      * Automatic Upgrade
      */

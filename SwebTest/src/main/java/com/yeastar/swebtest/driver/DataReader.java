@@ -99,6 +99,7 @@ public class DataReader {
     public static String BROWSER = readFromfile("BROWSER");
     public static String URL = readFromfile("URL");
 
+    public static String HTTP_SERVER_IMAGE = readFromfile("HTTP_SERVER_IMAGE");
     /**
      * 导入文件名称
      */

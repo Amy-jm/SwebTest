@@ -17,6 +17,7 @@ import com.yeastar.swebtest.pobject.Maintenance.Troubleshooting.EthernetCaptureT
 import com.yeastar.swebtest.pobject.Maintenance.Troubleshooting.IPPing.IPPing;
 import com.yeastar.swebtest.pobject.Maintenance.Troubleshooting.PortMonitorTool.PortMonitorTool;
 import com.yeastar.swebtest.pobject.Maintenance.Troubleshooting.Traceroute.Traceroute;
+import com.yeastar.swebtest.pobject.Maintenance.Upgrade.Upgrade;
 import com.yeastar.swebtest.pobject.Me.Me;
 import com.yeastar.swebtest.pobject.Me.Me_Blacklist_Whitelist.Me_Blacklist.Me_Add_Blacklist.Me_Add_Blacklist;
 import com.yeastar.swebtest.pobject.Me.Me_Blacklist_Whitelist.Me_Blacklist.Me_Blacklist;
@@ -477,6 +478,7 @@ public class Config extends DataReader {
     public static Create_New_Backup_File create_new_backup_file = new Create_New_Backup_File();
     public static Upload_a_Backup_File upload_a_backup_file = new Upload_a_Backup_File();
     public static OperationLog  operationLog = new OperationLog();
+    public static Upgrade upgrade = new Upgrade();
     public static Reboot reboot = new Reboot();
     public static Reset reset = new Reset();
     public static SystemLog systemLog = new SystemLog();
