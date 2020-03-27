@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="test" verbose="1" preserve-order="false" thread-count="5" parallel="methods">
+
+    <test name="test">
+        <classes>
+
+            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature">
+                <methods>
+                    <include name = "A_RingGroup"/>
+                    <include name = "B_Queue"/>
+                    <include name = "C_Conference"/>
+                    <include name = "D_PickupGroup"/>
+                    <include name = "E_PagingIntercom"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>
