@@ -32,9 +32,10 @@ public class SwebDriver extends Config {
     public static int initialDriver(String browser, String relativeOrAbsoluteUrl) {
         if (IS_RUN_REMOTE_SERVER.equals("true")) {
             System.out.println("[DEBUG]"+IS_RUN_REMOTE_SERVER);
-            initialDriver( browser,  relativeOrAbsoluteUrl,  "http://"+GRID_HUB_IP+":"+GRID_HUB_PORT+"/wd/hub");
-        }
+           return initialDriver( browser,  relativeOrAbsoluteUrl,  "http://"+GRID_HUB_IP+":"+GRID_HUB_PORT+"/wd/hub");
+        }else{
         return initialDriver(browser,relativeOrAbsoluteUrl,null);
+        }
     }
     public static int initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl) {
         //Selenide的配置信息

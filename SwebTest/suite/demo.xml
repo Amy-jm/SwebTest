@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="test" verbose="1" preserve-order="false" thread-count="5" parallel="methods">
-
+    <listeners>
+        <listener class-name="com.yeastar.untils.AllureReporterListener" />
+    </listeners>
     <test name="test">
 <!--        <classes>-->
 <!--            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature">-->
@@ -16,9 +18,9 @@
 <!--        </classes>-->
 
         <classes>
-            <class name="com.yeastar.example.LessonAllure">
+            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature">
                 <methods>
-                    <include name = "TestCase01"/>
+                    <include name = "A_RingGroup"/>
                 </methods>
             </class>
         </classes>
