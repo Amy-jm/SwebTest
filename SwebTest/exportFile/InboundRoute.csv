@@ -1,0 +1,4 @@
+Name,DID Pattern,Caller ID Pattern,Member Trunks,Destination
+InRoute1,9.,,SPS1,1000
+InRoute2,X.,,SPS1,1100
+InRoute3,91.,,SPS1,1105

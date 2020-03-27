@@ -1,0 +1,4 @@
+﻿Name,Patterns,Strip,Prpend,Member Trunks,Member Extensions,Extension Group
+OutboundRoute1,9.,2,,SIP1,1103,ExtensionGroup1
+OutboundRoute2,X.,2,,SIP2,1103,ExtensionGroup1
+OutboundRoute3,90.,2,,SPS1,1103,ExtensionGroup1
