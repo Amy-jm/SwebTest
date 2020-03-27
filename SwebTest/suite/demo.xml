@@ -3,15 +3,22 @@
 <suite name="test" verbose="1" preserve-order="false" thread-count="5" parallel="methods">
 
     <test name="test">
-        <classes>
+<!--        <classes>-->
+<!--            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature">-->
+<!--                <methods>-->
+<!--                    <include name = "A_RingGroup"/>-->
+<!--                    <include name = "B_Queue"/>-->
+<!--                    <include name = "C_Conference"/>-->
+<!--                    <include name = "D_PickupGroup"/>-->
+<!--                    <include name = "E_PagingIntercom"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--        </classes>-->
 
-            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature">
+        <classes>
+            <class name="com.yeastar.example.LessonAllure">
                 <methods>
-                    <include name = "A_RingGroup"/>
-                    <include name = "B_Queue"/>
-                    <include name = "C_Conference"/>
-                    <include name = "D_PickupGroup"/>
-                    <include name = "E_PagingIntercom"/>
+                    <include name = "TestCase01"/>
                 </methods>
             </class>
         </classes>
