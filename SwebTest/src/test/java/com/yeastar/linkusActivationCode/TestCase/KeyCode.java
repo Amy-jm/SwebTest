@@ -1,24 +1,13 @@
 package com.yeastar.linkusActivationCode.TestCase;
 
 import com.codeborne.selenide.SelenideElement;
-import com.sun.glass.ui.Robot;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
-import org.apache.xerces.xs.StringList;
-import org.openqa.selenium.interactions.Mouse;
 import org.testng.annotations.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.Keyboard;
 
-
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
