@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="GBK"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="PBXCORE">
+    <listeners>
+        <listener class-name="com.yeastar.untils.AllureReporterListener" />
+    </listeners>
     <test name="pbxcore-smoking" preserve-order="false">
         <classes>
             <class name="com.yeastar.swebtest.testcase.CheckToTest"/>
