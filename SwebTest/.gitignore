@@ -1,5 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
-.idea/*
 target
-target/
+log
+log/*
+allure-results
+allure-results/*
+localLog
