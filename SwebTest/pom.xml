@@ -18,8 +18,9 @@
                     <suiteXmlFiles>
                         <!--<suiteXmlFile>suite/smokecase/pbxcore.xml</suiteXmlFile>-->
                         <!--<suiteXmlFile>suite/smokecase/syscore.xml</suiteXmlFile>-->
-                        <suiteXmlFile>suite/regression/pbxcore.xml</suiteXmlFile>
+<!--                        <suiteXmlFile>suite/regression/pbxcore.xml</suiteXmlFile>-->
                         <!--<suiteXmlFile>suite/detailcase/pbxcore.xml</suiteXmlFile>-->
+                        <suiteXmlFile>suite/${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <properties>
                         <!-- No TestNG listeners
