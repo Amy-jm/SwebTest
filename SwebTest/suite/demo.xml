@@ -6,8 +6,8 @@
     </listeners>
     <test name="test">
         <classes>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest">
-            </class>
+<!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest">-->
+<!--            </class>-->
 
             <class name="com.yeastar.example.LessonAllure">
                 <methods>
