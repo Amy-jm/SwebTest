@@ -25,9 +25,6 @@
             </class>
 
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest">
-                <methods>
-                    <include name = "A_RingGroup"/>
-                </methods>
             </class>
         </classes>
     </test>
