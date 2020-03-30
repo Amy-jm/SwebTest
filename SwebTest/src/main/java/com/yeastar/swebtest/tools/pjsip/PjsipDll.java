@@ -5,6 +5,8 @@ import com.sun.jna.Native;
 import com.sun.jna.win32.StdCallLibrary.*;
 
 
+import java.io.File;
+
 import static com.yeastar.swebtest.driver.Config.currentPath;
 
 /**
@@ -14,7 +16,10 @@ public class PjsipDll {
 
     public interface pjsipdll extends Library {
 
-        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"src\\main\\resources\\pjsip\\pjsipDll.dll",pjsipdll.class);
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"src\\main\\resources\\pjsip\\pjsipDll.dll",pjsipdll.class);
+
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"classes"+ File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"src\\main\\resources\\pjsip\\pjsipDlld_Debug.dll",pjsipdll.class);
 
         //PjsipDll.dll的通用API

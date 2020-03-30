@@ -2,6 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="testSuite" verbose="1" preserve-order="false" thread-count="5" parallel="methods">
     <listeners>
+            <listener class-name="com.yeastar.untils.TestNGListener" />
+            <listener class-name="com.yeastar.untils.RetryListener" />
         <listener class-name="com.yeastar.untils.AllureReporterListener" />
     </listeners>
     <test name="test">
@@ -11,7 +13,7 @@
 
             <class name="com.yeastar.example.LessonAllure">
                 <methods>
-                    <include name = "TestCase01_Passed TestCase02_Failed"/>
+                    <include name = "TestCase01_Passed"/>
                     <include name = "TestCase02_Failed"/>
                 </methods>
             </class>

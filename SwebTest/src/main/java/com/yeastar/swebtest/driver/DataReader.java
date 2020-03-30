@@ -2,7 +2,10 @@ package com.yeastar.swebtest.driver;
 
 
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.*;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -13,7 +16,11 @@ import static com.yeastar.swebtest.driver.Config.currentPath;
 /**
  * Created by GaGa on 2017-05-12.
  */
+@Log4j2
 public class DataReader {
+
+    public static String DATA_PROPERTIES_FILE_PATH = "/data.properties";
+
 
     /**
      * Data.properties配置
@@ -129,8 +136,15 @@ public class DataReader {
     public static String readFromfile(String key) {
         Properties properties = new Properties();
         InputStream inputStream = null;
+//        try {
+//            inputStream = new BufferedInputStream(new FileInputStream("data.properties"));
         try {
-            inputStream = new BufferedInputStream(new FileInputStream("data.properties"));
+            String FilePath = System.getProperty("user.dir")+File.separator+"test-classes"+File.separator;
+            log.debug("[user.dir]"+System.getProperty("user.dir"));
+            log.debug("[File file]"+FilePath);
+            inputStream = new FileInputStream(new File(FilePath+"data.properties"));
+//            inputStream = DataReader.class.getResourceAsStream("data.properties");
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -145,6 +159,33 @@ public class DataReader {
         }else{
             return properties.getProperty(key);
         }
+    }
 
+    private static Properties prop;
+
+
+    /**
+     * 获取prop文件，prop需要在资源文件路径下
+     * @param propPath
+     * @return
+     */
+    public  Properties getPropertie(String propPath) {
+        prop = new Properties();
+        BufferedReader br=null;
+        try {
+            br=new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(propPath), "UTF-8"));
+            prop.load(br);
+        } catch (Exception e) {
+            log.error("读取配置文件异常！"+e);
+        }   finally {
+            try{
+                if(br!=null){
+                    br.close();
+                }
+            }catch (IOException e){
+                log.error("properties 文件关闭异常！"+e);
+            }
+        }
+        return prop;
     }
 }
