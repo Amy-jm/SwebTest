@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="test" verbose="1" preserve-order="false" thread-count="5" parallel="methods">
+<suite name="testSuite" verbose="1" preserve-order="false" thread-count="5" parallel="methods">
     <listeners>
         <listener class-name="com.yeastar.untils.AllureReporterListener" />
     </listeners>
     <test name="test">
-<!--        <classes>-->
-<!--            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature">-->
-<!--                <methods>-->
-<!--                    <include name = "A_RingGroup"/>-->
-<!--                    <include name = "B_Queue"/>-->
-<!--                    <include name = "C_Conference"/>-->
-<!--                    <include name = "D_PickupGroup"/>-->
-<!--                    <include name = "E_PagingIntercom"/>-->
-<!--                </methods>-->
-<!--            </class>-->
-<!--        </classes>-->
-
         <classes>
-            <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.CallFeature">
-                <methods>
-                    <include name = "A_RingGroup"/>
-                </methods>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest">
             </class>
 
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest">
+            <class name="com.yeastar.example.LessonAllure">
+                <methods>
+                    <include name = "TestCase01_Passed TestCase02_Failed"/>
+                    <include name = "TestCase02_Failed"/>
+                </methods>
             </class>
         </classes>
     </test>

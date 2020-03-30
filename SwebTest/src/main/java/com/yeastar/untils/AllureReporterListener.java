@@ -24,8 +24,8 @@ public class AllureReporterListener implements IHookable{
             takeScreenShot(message);
         } catch (Exception e) {
             log.error("Couldn't take screenshot. Error: " + e.getStackTrace());
+         }
         }
-    }
     }
 
     @Attachment(value = "Failure in method {0}", type = "image/png")
