@@ -1,9 +1,0 @@
-【测试类场景初始化】_2020年03月27日 13时31分35秒打开游览器并登录设备_CallFeatureTest
-  【13时32分15秒 执行操作】Extjs： return Ext.get('ys-waiting').dom.style.display
-  【13时32分20秒 执行操作】Extjs： return Ext.get('ys-waiting').dom.style.display
-  【13时32分21秒 执行操作】Extjs： return Ext.get('ys-waiting').dom.style.display
-  【13时32分22秒 执行操作】Extjs： return Ext.get('ys-waiting').dom.style.display
-  【13时32分24秒 执行操作】Extjs： return Ext.get('ys-waiting').dom.style.display
-  【13时32分25秒 执行操作】Extjs： return Ext.get('ys-waiting').dom.style.display
-  【13时32分26秒 执行操作】Extjs： return Ext.get('ys-waiting').dom.style.display
-  【13时32分28秒 执行操作】Extjs： Ext.get(Ext.query('#control-panel_header-targetEl'+ ' .x-tool-close')[0].id).dom.click()
