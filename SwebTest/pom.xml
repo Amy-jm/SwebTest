@@ -56,7 +56,7 @@
                         <systemProperties>
                             <property>
                                 <name>allure.results.directory</name>
-                                <value>./Swebtest/target/allure-results</value>
+                                <value>./SwebTest/target/allure-results</value>
                             </property>
                             <!--<property>-->
                             <!--<name>allure.link.issue.pattern</name>-->
