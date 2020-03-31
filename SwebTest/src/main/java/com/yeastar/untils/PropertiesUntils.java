@@ -97,8 +97,6 @@ public class PropertiesUntils {
         String value="";
         if(prop.containsKey(key)){
             value = prop.getProperty(key);
-        }else{
-            log.error("can not find the key");
         }
         return value;
     }
@@ -178,7 +176,7 @@ public class PropertiesUntils {
             courseFile = directory.getCanonicalPath() + File.separator+ getPropertiesValue(PNG_KEY)+ File.separator+ CorPath;
            log.debug("[Get png path]"+courseFile);
         } catch (IOException e) {
-            log.error("[ERROR] 读取失败"+e);
+            log.error("[ERROR] 读取失败"+e.getMessage());
         }
         return courseFile;
     }
