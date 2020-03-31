@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="testSuite" verbose="1" preserve-order="false" thread-count="5" parallel="methods">
+<suite name="testSuite" verbose="1" preserve-order="true" >
     <listeners>
             <listener class-name="com.yeastar.untils.TestNGListener" />
             <listener class-name="com.yeastar.untils.RetryListener" />
@@ -15,6 +15,7 @@
                 <methods>
                     <include name = "TestCase01_Passed"/>
                     <include name = "TestCase02_Failed"/>
+                    <include name = "TestCase03_PJSIP_Linux"/>
                 </methods>
             </class>
         </classes>

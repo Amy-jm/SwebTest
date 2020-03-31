@@ -7,6 +7,7 @@ import com.yeastar.swebtest.tools.pjsip.UserAccount;
 import com.yeastar.swebtest.tools.reporter.Logger;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -22,6 +23,7 @@ import static com.codeborne.selenide.WebDriverRunner.*;
 /**
  * Created by GaGa on 2017-04-16.
  */
+@Log4j2
 public class SwebDriver extends Config {
     public static WebDriver webDriver = null;
 
@@ -31,10 +33,10 @@ public class SwebDriver extends Config {
 
     public static int initialDriver(String browser, String relativeOrAbsoluteUrl) {
         if (IS_RUN_REMOTE_SERVER.equals("true")) {
-            System.out.println("[DEBUG]"+IS_RUN_REMOTE_SERVER);
-           return initialDriver( browser,  relativeOrAbsoluteUrl,  "http://"+GRID_HUB_IP+":"+GRID_HUB_PORT+"/wd/hub");
+            log.debug("[IS_RUN_REMOTE_SERVER] "+IS_RUN_REMOTE_SERVER);
+            return initialDriver( browser,  relativeOrAbsoluteUrl,  "http://"+GRID_HUB_IP+":"+GRID_HUB_PORT+"/wd/hub");
         }else{
-        return initialDriver(browser,relativeOrAbsoluteUrl,null);
+            return initialDriver(browser,relativeOrAbsoluteUrl,null);
         }
     }
     public static int initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl) {
@@ -64,14 +66,12 @@ public class SwebDriver extends Config {
         }
 //        if (hubUrl != null ) {
          if (GRID_HUB_IP != null ) {
-             System.out.println("1212121212:"+hubUrl);
+            log.debug("[GRID_HUB_IP] "+hubUrl);
                 try {
                 webDriver = new RemoteWebDriver(new URL(hubUrl),grid);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            System.out.println("hubUrl "+"No null "+hubUrl
-            );
             webDriver.get(relativeOrAbsoluteUrl);
             setWebDriver(webDriver);
         } else {

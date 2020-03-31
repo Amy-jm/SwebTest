@@ -3,6 +3,7 @@ import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.win32.StdCallLibrary.*;
+import com.yeastar.untils.PropertiesUntils;
 
 
 import java.io.File;

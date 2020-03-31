@@ -53,6 +53,7 @@ public class LessonAllure  extends SwebDriver{
     @Severity(SeverityLevel.BLOCKER)
     @Test
     public void TestCase01_Passed() throws IOException {
+        Methon_0();
         Methon_01();
         Methon_02();
         Methon_03();
@@ -68,10 +69,28 @@ public class LessonAllure  extends SwebDriver{
     @Severity(SeverityLevel.BLOCKER)
     @Test
     public void TestCase02_Failed() throws IOException {
+        Methon_0();
         Methon_01();
         Methon_02();
         Methon_03();
         Assert.assertTrue(false);
+    }
+
+    @Epic("Epic")
+    @Feature("Feature")
+    @Story("test demo story")
+    @Description("Description test pjsip on linux")
+    @Issue("BUG_YD001")
+    @TmsLink("YD001")
+    @Severity(SeverityLevel.BLOCKER)
+    @Test
+    public void TestCase03_PJSIP_Linux() throws IOException {
+        pjsip.Pj_Init();
+    }
+
+    @Step("open the chrome")
+    public void Methon_0(){
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
     }
 
     @Step("1.login pbx")
