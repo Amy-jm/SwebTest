@@ -14,14 +14,14 @@ public class TestNGRetry implements IRetryAnalyzer {
     private int count = 1;
     private static int maxRetryCount = 0;
     static{
-//        Properties p = null;
-//        try {
-//            p = new PropertiesWrap().getProper("/config/config.properties");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        maxRetryCount = Integer.valueOf(p.getProperty("maxRunCount"));
-//        log.info("[maxRunCount] " + (maxRetryCount)+"\n");
+        Properties p = null;
+        try {
+            p = new PropertiesUntils().getInstance().getPropertie("/data.properties");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        maxRetryCount = Integer.valueOf(p.getProperty("maxRunCount"));
+        log.info("[maxRunCount] " + (maxRetryCount)+"\n");
     }
 
     /**
