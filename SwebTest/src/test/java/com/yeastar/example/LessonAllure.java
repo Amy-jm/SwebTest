@@ -21,9 +21,9 @@ public class LessonAllure  extends SwebDriver{
     @Step("[BeforeClass] Init test environment·····")
     public void BeforeClass() {
 //        pjsip.Pj_Init();
-        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+//        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         //initialDriver(BROWSER,"http://192.168.4.99");
-        login("6205","GaGa6205");
+//        login("6205","GaGa6205");
     }
 
     @BeforeMethod
