@@ -175,7 +175,7 @@ import java.io.File;
 /**
  * Created by GaGa on 2017-05-19.
  */
-public class Config extends DataReader {
+public class Config extends DataReader2 {
 
     public static long TEST_TIMEOUT = 3000;  //测试过程的时间差
     public static long FINDELEMENT_TIMEOUT = 10000;  //元素查找的时间差

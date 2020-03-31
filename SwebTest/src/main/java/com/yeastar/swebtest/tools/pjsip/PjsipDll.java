@@ -14,13 +14,18 @@ import static com.yeastar.swebtest.driver.Config.currentPath;
  */
 public class PjsipDll {
 
+
     public interface pjsipdll extends Library {
 
-//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"src\\main\\resources\\pjsip\\pjsipDll.dll",pjsipdll.class);
-
+        /**
+         *  adapt testng
+         */
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+        /**
+         *  adapt maven test
+         */
         pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"classes"+ File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
 
-//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"src\\main\\resources\\pjsip\\pjsipDlld_Debug.dll",pjsipdll.class);
 
         //PjsipDll.dll的通用API
         int ys_registerAccount(String uri, String reguri, String name, String username,

@@ -18,9 +18,9 @@ import java.util.Date;
 
 import static com.yeastar.swebtest.driver.Config.DEVICE_IP_LAN;
 import static com.yeastar.swebtest.driver.Config.currentPath;
-import static com.yeastar.swebtest.driver.DataReader.AMI_LOG_FILE;
-import static com.yeastar.swebtest.driver.DataReader.AMI_PROT;
-import static com.yeastar.swebtest.driver.DataReader.LOCAL_LOG_FILE;
+import static com.yeastar.swebtest.driver.DataReader2.AMI_LOG_FILE;
+import static com.yeastar.swebtest.driver.DataReader2.AMI_PROT;
+import static com.yeastar.swebtest.driver.DataReader2.LOCAL_LOG_FILE;
 
 public class TcpSocket {
 //    public static final String IP_ADDR = DEVICE_IP_LAN;//服务器地址

@@ -5,7 +5,7 @@ import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
-import static com.yeastar.swebtest.driver.DataReader.RETRY_COUNT;
+import static com.yeastar.swebtest.driver.DataReader2.RETRY_COUNT;
 
 
 /**

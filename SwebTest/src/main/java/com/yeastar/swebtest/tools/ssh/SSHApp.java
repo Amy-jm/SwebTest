@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import static com.yeastar.swebtest.driver.DataReader.SSH_PORT;
+import static com.yeastar.swebtest.driver.DataReader2.SSH_PORT;
 import static org.apache.log4j.spi.Configurator.NULL;
 
 /**

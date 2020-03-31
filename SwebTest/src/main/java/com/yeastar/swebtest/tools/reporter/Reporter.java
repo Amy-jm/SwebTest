@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.Properties;
 
 import static com.yeastar.swebtest.driver.Config.currentPath;
-import static com.yeastar.swebtest.driver.DataReader.LOCAL_LOG_FILE;
-import static com.yeastar.swebtest.driver.DataReader.SCREENSHOT_PATH;
+import static com.yeastar.swebtest.driver.DataReader2.LOCAL_LOG_FILE;
+import static com.yeastar.swebtest.driver.DataReader2.SCREENSHOT_PATH;
 
 /**
  * Created by GaGa on 2017-06-05.
