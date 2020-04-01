@@ -10,6 +10,7 @@ import org.testng.annotations.*;
 
 import java.io.IOException;
 
+import static com.codeborne.selenide.Selenide.close;
 import static com.yeastar.swebtest.driver.SwebDriver.ys_apply;
 
 /**
@@ -36,7 +37,7 @@ public class LessonAllure  extends SwebDriver{
     @BeforeMethod
     @Step("[AfterMethod] Restore  test environment quite driver·····")
     public void AfterMethod() {
-        quitDriver();
+        close();
     }
 
     @AfterClass
