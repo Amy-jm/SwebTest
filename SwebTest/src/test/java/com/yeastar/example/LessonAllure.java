@@ -70,7 +70,7 @@ public class LessonAllure  extends SwebDriver{
     @TmsLink("YD001")
     @Severity(SeverityLevel.BLOCKER)
     @Test
-    public void TestCase02_Failed() throws IOException {
+    public void TestCase02_AssertFailed() throws IOException {
         Methon_01();
         Methon_02();
         Methon_03();
@@ -79,13 +79,25 @@ public class LessonAllure  extends SwebDriver{
 
     @Epic("Epic")
     @Feature("Feature")
-    @Story("test demo story")
+    @Story("Story 1")
+    @Description("Description")
+    @Issue("BUG_YD001")
+    @TmsLink("YD001")
+    @Severity(SeverityLevel.BLOCKER)
+    @Test
+    public void TestCase03_FailedNotFoundElement() throws IOException {
+        login(LOGIN_USERNAME,LOGIN_PASSWORD);
+    }
+
+    @Epic("Epic")
+    @Feature("Feature")
+    @Story("Story 2")
     @Description("Description test pjsip on linux")
     @Issue("BUG_YD001")
     @TmsLink("YD001")
     @Severity(SeverityLevel.BLOCKER)
     @Test
-    public void TestCase03_PJSIP_Linux() throws IOException {
+    public void TestCase04_PJSIP_Linux() throws IOException {
         pjsip.Pj_Init();
     }
 

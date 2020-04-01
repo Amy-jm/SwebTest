@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="testSuite" verbose="1" preserve-order="true" >
+<suite name="testDemoSuite" verbose="1" preserve-order="true" >
     <listeners>
             <listener class-name="com.yeastar.untils.TestNGListener" />
             <listener class-name="com.yeastar.untils.RetryListener" />
@@ -8,14 +8,12 @@
     </listeners>
     <test name="test">
         <classes>
-<!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest">-->
-<!--            </class>-->
-
             <class name="com.yeastar.example.LessonAllure">
                 <methods>
-                    <include name = "TestCase01_Passed"/>
-                    <include name = "TestCase02_Failed"/>
-                    <include name = "TestCase03_PJSIP_Linux"/>
+                     <include name = "TestCase01_Passed"/>
+                     <include name = "TestCase02_AssertFailed"/>
+                     <include name = "TestCase03_FailedNotFoundElement"/>
+                     <include name = "TestCase04_PJSIP_Linux"/>
                 </methods>
             </class>
         </classes>
