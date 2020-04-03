@@ -35,7 +35,7 @@ public class LessonAllure  extends SwebDriver{
     }
 
 
-    @BeforeMethod
+    @AfterMethod
     @Step("[AfterMethod] Restore  test environment quite driver·····")
     public void AfterMethod() {
         close();

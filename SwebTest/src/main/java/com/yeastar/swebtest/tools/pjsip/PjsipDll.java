@@ -19,18 +19,28 @@ public class PjsipDll {
     public interface pjsipdll extends Library {
 
         /**
-         *  adapt testng
+         *  adapt local testNG ok
          */
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+
+
         /**
-         *  adapt maven test
+         *  adapt local  maven test ok
          */
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"classes"+ File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+
+        ///////////////////////////////////////////
+
+        /**
+         *  adapt testNG for Linux
+         */
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"linux-x86-64"+File.separator+"libpjsip.so",pjsipdll.class);
+
 
         /**
          *  adapt maven test for jenkins
          */
-        pjsipdll instance = (pjsipdll)Native.loadLibrary(PjsipDll.class.getResource("").toString()+"libpjsip.so",pjsipdll.class);
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(PjsipDll.class.getResource("").toString()+"pjsip",pjsipdll.class);
 
 
         //PjsipDll.dll的通用API
