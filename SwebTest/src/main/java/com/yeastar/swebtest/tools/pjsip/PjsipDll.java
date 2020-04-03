@@ -30,7 +30,7 @@ public class PjsipDll {
         /**
          *  adapt maven test for jenkins
          */
-        pjsipdll instance = (pjsipdll)Native.loadLibrary(PjsipDll.class.getResource("").toString()+"pjsipDll.dll",pjsipdll.class);
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(PjsipDll.class.getResource("").toString()+"libpjsip.so",pjsipdll.class);
 
 
         //PjsipDll.dll的通用API
