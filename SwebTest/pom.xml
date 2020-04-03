@@ -27,6 +27,7 @@
                  <includes>
                      <include>**/*.properties</include>
                      <include>**/*.dll</include>
+                     <include>**/*.so</include>
                  </includes>
                  <filtering>false</filtering>
              </resource>
