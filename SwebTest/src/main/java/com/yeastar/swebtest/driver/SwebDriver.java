@@ -67,6 +67,7 @@ public class SwebDriver extends Config {
 //        if (hubUrl != null ) {
          if (GRID_HUB_IP != null ) {
             log.debug("[GRID_HUB_IP] "+hubUrl);
+             grid.setCapability("name","S Series test");
                 try {
                 webDriver = new RemoteWebDriver(new URL(hubUrl),grid);
             } catch (MalformedURLException e) {
