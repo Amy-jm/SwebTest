@@ -26,7 +26,7 @@
                  <directory>src/main/resources</directory>
                  <includes>
                      <include>**/*.properties</include>
-                     <include>**/*.dll</include>
+<!--                     <include>**/*.dll</include>-->
                      <include>**/*.so</include>
                  </includes>
                  <filtering>false</filtering>
