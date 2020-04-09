@@ -44,7 +44,9 @@ public class PjsipDll {
          */
 
 
-        pjsipdll instance = (pjsipdll)Native.loadLibrary(File.separator+"home"+File.separator+"pjsip"+File.separator+"pjproject-2.6"+File.separator+"out"+File.separator+"lib"+File.separator+"pjsip",pjsipdll.class);
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(File.separator+"home"+File.separator+"pjsip"+File.separator+"pjproject-2.6"+File.separator+"out"+File.separator+"lib"+File.separator+"pjsip",pjsipdll.class);
+
+        pjsipdll instance = (pjsipdll)Native.loadLibrary("pjsip",pjsipdll.class);
 
 
         //PjsipDll.dll的通用API
