@@ -93,6 +93,9 @@
                         <!--<value>https://example.org/issue/{}</value>-->
                         <!--</property>-->
                     </systemProperties>
+                    <systemPropertyVariables>
+                        <java.library.path>${project.build.directory}/classes</java.library.path>
+                    </systemPropertyVariables>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -102,6 +105,36 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.yeastar.autotest</groupId>
+                                    <artifactId>SwebTestPjsip</artifactId>
+                                    <version>1.0.0</version>
+                                    <type>so</type>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                    <destFileName>libpjsip.so</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
 
         </plugins>
     </build>
@@ -226,6 +259,12 @@
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <version>4.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.fommil</groupId>
+            <artifactId>jniloader</artifactId>
+            <version>1.1</version>
         </dependency>
 
     </dependencies>
