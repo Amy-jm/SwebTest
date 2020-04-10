@@ -6,5 +6,5 @@ import com.sun.jna.Native;
 public interface CLibrary extends Library {
 
     CLibrary INSTANCE = (CLibrary) Native.loadLibrary(("add"), CLibrary.class);
-    CLibrary add(int a, int b);
+    int add(int a, int b);
 }
