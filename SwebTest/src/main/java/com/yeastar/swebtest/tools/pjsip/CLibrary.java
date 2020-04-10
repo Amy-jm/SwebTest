@@ -5,6 +5,6 @@ import com.sun.jna.Native;
 
 public interface CLibrary extends Library {
 
-    CLibrary INSTANCE = (CLibrary) Native.loadLibrary(("add"), CLibrary.class);
-    int add(int a, int b);
+    CLibrary INSTANCE = (CLibrary) Native.loadLibrary(("pjsip"), CLibrary.class);
+//    int add(int a, int b);
 }
