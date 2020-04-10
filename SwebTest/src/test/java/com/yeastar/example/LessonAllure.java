@@ -114,7 +114,7 @@ public class LessonAllure  extends SwebDriver{
     @Severity(SeverityLevel.BLOCKER)
     @Test
     public void TestCase05_SO_Add() throws IOException {
-        CLibrary sum = CLibrary.INSTANCE.add( 3,4);
+        CLibrary.INSTANCE.add( 3,4);
     }
 
     @Step("1.login pbx")
