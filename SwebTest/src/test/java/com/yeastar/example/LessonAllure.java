@@ -2,7 +2,10 @@ package com.yeastar.example;
 
 //import com.google.common.base.Verify;
 
+import com.sun.jna.Native;
 import com.yeastar.swebtest.driver.SwebDriver;
+import com.yeastar.swebtest.tools.pjsip.CLibrary;
+import com.yeastar.swebtest.tools.pjsip.PjsipDll;
 import com.yeastar.untils.AllureReporterListener;
 import io.qameta.allure.*;
 import org.testng.Assert;
@@ -99,6 +102,19 @@ public class LessonAllure  extends SwebDriver{
     @Test
     public void TestCase04_PJSIP_Linux() throws IOException {
         pjsip.Pj_Init();
+    }
+
+
+    @Epic("Epic")
+    @Feature("Feature")
+    @Story("Story 2")
+    @Description("Description test pjsip on linux")
+    @Issue("BUG_YD001")
+    @TmsLink("YD001")
+    @Severity(SeverityLevel.BLOCKER)
+    @Test
+    public void TestCase05_SO_Add() throws IOException {
+        CLibrary sum = CLibrary.INSTANCE.add( 3,4);
     }
 
     @Step("1.login pbx")
