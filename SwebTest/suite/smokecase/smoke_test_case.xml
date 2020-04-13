@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="GBK"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="PBXCORE">
+<suite name="Smoke_TestCase">
     <listeners>
         <listener class-name="com.yeastar.untils.AllureReporterListener" />
     </listeners>
-    <test name="pbxcore-smoking" preserve-order="false">
+    <test name="pbxcore" preserve-order="false">
         <classes>
             <class name="com.yeastar.swebtest.testcase.CheckToTest"/>
             <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension"/>
@@ -20,6 +20,17 @@
             <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.FeatureCode"/>
             <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.EmergencyNumberTest"/>
             <class name="com.yeastar.swebtest.testcase.smokecase.pbxcase.DeleteAll"/>
+        </classes>
+    </test> <!-- YsAutoTest -->
+
+    <test name="syscore" preserve-order="true">
+        <classes>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Network"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Security"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.UserPermission"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.DateTime"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.EventCenter"/>
+            <class name="com.yeastar.swebtest.testcase.smokecase.syscase.Maintain"/>
         </classes>
     </test> <!-- YsAutoTest -->
 </suite> <!-- Default Suite -->
