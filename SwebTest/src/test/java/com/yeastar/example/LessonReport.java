@@ -5,6 +5,7 @@ package com.yeastar.example;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.pjsip.CLibrary;
 import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
 import com.yeastar.untils.TestNGListener;
 import io.qameta.allure.*;
 import org.openqa.selenium.Cookie;
@@ -21,7 +22,7 @@ import static com.codeborne.selenide.Selenide.sleep;
 /**
  * Created by Yeastar on 2018/2/9.
  */
-@Listeners({AllureReporterListener.class, TestNGListener.class})
+@Listeners({AllureReporterListener.class, TestNGListener.class, RetryListener.class})
 public class LessonReport extends SwebDriver{
     @BeforeClass
     @Step("[BeforeClass] Init test environment·····")
