@@ -112,8 +112,8 @@ public class LessonReport extends SwebDriver{
     @Test
     public void TestCase04_PJSIP_Linux() throws IOException {
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
-        pjsip.Pj_Register_Account(1000,"192.168.3.204");
+        pjsip.Pj_CreateAccount(1004,"Yeastar202","UDP",UDP_PORT,1);
+        pjsip.Pj_Register_Account(1004,"192.168.3.204");
     }
 
 
