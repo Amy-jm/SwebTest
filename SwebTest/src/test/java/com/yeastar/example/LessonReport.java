@@ -2,11 +2,10 @@ package com.yeastar.example;
 
 //import com.google.common.base.Verify;
 
-import com.sun.jna.Native;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.pjsip.CLibrary;
-import com.yeastar.swebtest.tools.pjsip.PjsipDll;
 import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.TestNGListener;
 import io.qameta.allure.*;
 import org.openqa.selenium.Cookie;
 import org.testng.Assert;
@@ -17,13 +16,13 @@ import java.lang.reflect.Method;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.close;
-import static com.yeastar.swebtest.driver.SwebDriver.ys_apply;
+import static com.codeborne.selenide.Selenide.sleep;
 
 /**
  * Created by Yeastar on 2018/2/9.
  */
-@Listeners({AllureReporterListener.class})
-public class LessonAllure  extends SwebDriver{
+@Listeners({AllureReporterListener.class, TestNGListener.class})
+public class LessonReport extends SwebDriver{
     @BeforeClass
     @Step("[BeforeClass] Init test environment·····")
     public void BeforeClass() {
@@ -37,6 +36,7 @@ public class LessonAllure  extends SwebDriver{
     @Step("[BeforeMethod] Config test environment·····")
     public void BeforeMethod(Method method) {
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/",method);
+        step("open chrome start to test..........");
     }
 
 
@@ -56,17 +56,12 @@ public class LessonAllure  extends SwebDriver{
     @Feature("Feature")
     @Story("Story 1")
     @Description("Description")
-    @Issue("1023550")
-    @TmsLink("YD001")
     @Severity(SeverityLevel.BLOCKER)
     @Test
-    public void TestCase01_Passed() throws IOException {
-
-
-        Methon_01();
-        Methon_02();
-        Methon_03();
-        Assert.assertTrue(true);
+    public void TestCase01() {
+        Cookie cookie = new Cookie("zaleniumTestName", "TestCase01");
+        webDriver.manage().addCookie(cookie);
+        //TODO 调整到 SwebDriver中通过method统一新增，减少原有代码的带动
     }
 
     @Epic("Epic")
@@ -77,11 +72,20 @@ public class LessonAllure  extends SwebDriver{
     @TmsLink("YD001")
     @Severity(SeverityLevel.BLOCKER)
     @Test
-    public void TestCase02_AssertFailed() throws IOException {
+    public void TestCase02() throws IOException {
+//        Cookie cookie = new Cookie("zaleniumTestName", "anyName");
+//        webDriver.manage().addCookie(cookie);
+        step("1. login pbx .....................");
         Methon_01();
+
+        step("2. start method 2 ...................");
         Methon_02();
+
+        step("3. start method 3 ..................");
         Methon_03();
-        Assert.assertTrue(false);
+
+        step("[Assert] expect true");
+        Assert.assertTrue(true);
     }
 
     @Epic("Epic")
@@ -121,20 +125,24 @@ public class LessonAllure  extends SwebDriver{
         CLibrary.INSTANCE.toString();
     }
 
-//    @Step("1.login pbx")
+    @Step("1.login pbx")
     public void Methon_01(){
+        //更新用例状态 zalenium
+        Cookie cookie = new Cookie("zaleniumTestPassed", "false");
+        webDriver.manage().addCookie(cookie);
         login(LOGIN_USERNAME,LOGIN_PASSWORD,"english");
     }
 
-//    @Step("2.setting ")
+    @Step("2.setting ")
     public void Methon_02(){
 
     }
 
-//    @Step("3.assert ")
+    @Step("3.assert ")
     public void Methon_03(){
 
     }
+
 
     /**
      * 可选语言登录S系列设备

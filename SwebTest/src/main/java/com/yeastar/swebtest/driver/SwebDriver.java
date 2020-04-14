@@ -4,14 +4,18 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.testng.ScreenShooter;
 import com.yeastar.swebtest.tools.pjsip.UserAccount;
-import com.yeastar.swebtest.tools.reporter.Logger;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,19 +31,28 @@ import static com.codeborne.selenide.WebDriverRunner.*;
 public class SwebDriver extends Config {
     public static WebDriver webDriver = null;
 
-    public static int initialDriver(String browser) {
+    public  int initialDriver(String browser) {
         return initialDriver(browser,"");
     }
 
-    public static int initialDriver(String browser, String relativeOrAbsoluteUrl) {
+    public  int initialDriver(String browser, String relativeOrAbsoluteUrl) {
         if (IS_RUN_REMOTE_SERVER.equals("true")) {
             log.debug("[IS_RUN_REMOTE_SERVER] "+IS_RUN_REMOTE_SERVER);
             return initialDriver( browser,  relativeOrAbsoluteUrl,  "http://"+GRID_HUB_IP+":"+GRID_HUB_PORT+"/wd/hub");
         }else{
-            return initialDriver(browser,relativeOrAbsoluteUrl,null);
+            return initialDriver(browser,relativeOrAbsoluteUrl,"");
         }
     }
-    public static int initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl) {
+
+    public  int initialDriver(String browser, String relativeOrAbsoluteUrl,Method method) {
+        if (IS_RUN_REMOTE_SERVER.equals("true")) {
+            log.debug("[IS_RUN_REMOTE_SERVER] "+IS_RUN_REMOTE_SERVER);
+            return initialDriver( browser,  relativeOrAbsoluteUrl,  "http://"+GRID_HUB_IP+":"+GRID_HUB_PORT+"/wd/hub",method);
+        }else{
+            return initialDriver(browser,relativeOrAbsoluteUrl,"");
+        }
+    }
+    public  int initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl) {
         //Selenide的配置信息
         Configuration.timeout = FINDELEMENT_TIMEOUT;
         Configuration.collectionsTimeout = FINDELEMENT_TIMEOUT;
@@ -48,7 +61,7 @@ public class SwebDriver extends Config {
 //        ScreenShooter.captureSuccessfulTests = true; //每个test后都截图，不论失败或成功
         Configuration.captureJavascriptErrors=false;//捕获js错误
         Configuration.savePageSource = false;
-        DesiredCapabilities grid;
+        DesiredCapabilities desiredCapabilities;
         //选择测试浏览器
         //这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
         if (browser.equals("chrome")) {
@@ -56,20 +69,75 @@ public class SwebDriver extends Config {
 //            Configuration.browserBinary = CHROME_PATH;
 //            Configuration.browserVersion = 谷歌版本
             System.setProperty("webdriver.chrome.driver", CHROME_PATH);
-            grid = DesiredCapabilities.chrome();
+            desiredCapabilities = DesiredCapabilities.chrome();
         } else if (browser.equals("firefox")) {
             System.setProperty("webdriver.firefox.bin",FIREFOX_PATH);
-            grid = DesiredCapabilities.firefox();
+            desiredCapabilities = DesiredCapabilities.firefox();
         } else {
-            Logger.error("浏览器参数有误："+browser);
+            log.error("浏览器参数有误："+browser);
             return 0;
         }
 //        if (hubUrl != null ) {
-         if (GRID_HUB_IP != null ) {
+         if (GRID_HUB_IP != "" ) {
             log.debug("[GRID_HUB_IP] "+hubUrl);
-             grid.setCapability("name","S Series test");
-                try {
-                webDriver = new RemoteWebDriver(new URL(hubUrl),grid);
+             desiredCapabilities.setCapability("name","testName");
+             desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
+             desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
+             try {
+                webDriver = new RemoteWebDriver(new URL(hubUrl),desiredCapabilities);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            webDriver.get(relativeOrAbsoluteUrl);
+            setWebDriver(webDriver);
+        } else {
+//            如果指定，则打开被测服务器
+            open(relativeOrAbsoluteUrl);
+            webDriver = getWebDriver();
+        }
+
+        return 1;
+    }
+
+    public  int initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl,Method method) {
+        //Selenide的配置信息
+        Configuration.timeout = FINDELEMENT_TIMEOUT;
+        Configuration.collectionsTimeout = FINDELEMENT_TIMEOUT;
+        Configuration.startMaximized = true;
+        Configuration.reportsFolder=SCREENSHOT_PATH;
+//        ScreenShooter.captureSuccessfulTests = true; //每个test后都截图，不论失败或成功
+        Configuration.captureJavascriptErrors=false;//捕获js错误
+        Configuration.savePageSource = false;
+        DesiredCapabilities desiredCapabilities;
+        //选择测试浏览器
+        //这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
+        if (browser.equals("chrome")) {
+            Configuration.browser=CHROME;
+//            Configuration.browserBinary = CHROME_PATH;
+//            Configuration.browserVersion = 谷歌版本
+            System.setProperty("webdriver.chrome.driver", CHROME_PATH);
+            desiredCapabilities = DesiredCapabilities.chrome();
+        } else if (browser.equals("firefox")) {
+            System.setProperty("webdriver.firefox.bin",FIREFOX_PATH);
+            desiredCapabilities = DesiredCapabilities.firefox();
+        } else {
+            log.error("浏览器参数有误："+browser);
+            return 0;
+        }
+//        if (hubUrl != null ) {
+        if (GRID_HUB_IP != null ) {
+            log.debug("[GRID_HUB_IP] "+hubUrl);
+            desiredCapabilities.setCapability("name",getTestName(method));
+            desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
+            //Build Name    String serviceName = System.getProperty("serviceName");
+//            desiredCapabilities.setCapability("build", "AutoTestBuild_Seven");
+            desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
+            //Idle TimeOut
+            desiredCapabilities.setCapability("idleTimeout", 150);
+            //Screen Resolution
+            desiredCapabilities.setCapability("screenResolution", "1280x720");
+            try {
+                webDriver = new RemoteWebDriver(new URL(hubUrl),desiredCapabilities);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -99,7 +167,7 @@ public class SwebDriver extends Config {
 //            System.setProperty("webdriver.firefox.bin",FIREFOX_PATH);
 //            grid = DesiredCapabilities.firefox();
 //        } else {
-//            Logger.error("浏览器参数有误："+browser);
+//            log.error("浏览器参数有误："+browser);
 //            return 0;
 //        }
 //
@@ -139,6 +207,17 @@ public class SwebDriver extends Config {
         }
 
     }
+
+
+    /**
+     * get test name
+     * @param method
+     * @return
+     */
+    public String getTestName(Method method){
+        return this.getClass().getSimpleName()+"."+method.getName();
+    }
+
     /**
      * 登录S系列设备，默认语言为英文
      * @param username
@@ -1003,6 +1082,13 @@ public class SwebDriver extends Config {
         }
         System.out.println("分机通话状态："+status);
         return status;
+    }
+
+    @Step("{0}")
+    public void step(String desc){
+        sleep(5);
+        Cookie cookie = new Cookie("zaleniumMessage", desc);
+        webDriver.manage().addCookie(cookie);
     }
 
 

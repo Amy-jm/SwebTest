@@ -1,10 +1,13 @@
 package com.yeastar.untils;
 
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.Cookie;
 import org.testng.*;
 
 
 import java.util.Iterator;
+
+import static com.yeastar.swebtest.driver.SwebDriver.webDriver;
 
 /**
  * Created by user on 2017/11/3.
@@ -17,6 +20,8 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
      */
     @Override
     public  void onTestSuccess(ITestResult tr) {
+        Cookie cookie = new Cookie("zaleniumTestPassed", "true");
+        webDriver.manage().addCookie(cookie);
         super.onTestSuccess(tr);
         log.info( "[Success] "+tr.getName());
     }
@@ -34,6 +39,10 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
          **/
         super.onTestFailure(tr);
         log.info("[Failure] "+tr.getName());
+
+        //更新用例状态 zalenium
+        Cookie cookie = new Cookie("zaleniumTestPassed", "false");
+        webDriver.manage().addCookie(cookie);
     }
 
 

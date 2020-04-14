@@ -88,13 +88,10 @@
                             <name>allure.results.directory</name>
                             <value>./allure-results</value>
                         </property>
-                        <!--<property>-->
-                        <!--<name>allure.link.issue.pattern</name>-->
-                        <!--<value>https://example.org/issue/{}</value>-->
-                        <!--</property>-->
                     </systemProperties>
                     <systemPropertyVariables>
                         <java.library.path>${project.build.directory}/classes</java.library.path>
+                        <serviceBuildName>${serviceBuildName}</serviceBuildName>
                     </systemPropertyVariables>
                 </configuration>
                 <dependencies>
