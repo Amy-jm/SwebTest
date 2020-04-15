@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- log4j2 配置文件 -->
 <!-- 日志级别 trace<debug<info<warn<error<fatal -->
-<configuration status="info">
+<configuration status="error">
     <!-- 自定义属性 -->
     <Properties>
         <!-- 日志格式 -->
