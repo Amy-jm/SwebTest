@@ -8,12 +8,13 @@
     </listeners>
     <test name="test">
         <classes>
-            <class name="com.yeastar.example.LessonAllure">
+            <class name="com.yeastar.example.LessonReport">
                 <methods>
-                     <include name = "TestCase01_Passed"/>
-                     <include name = "TestCase02_AssertFailed"/>
-                     <include name = "TestCase03_FailedNotFoundElement"/>
-                     <include name = "TestCase04_PJSIP_Linux"/>
+                     <include name = "TestCase01" />
+                     <include name = "TestCase02" />
+                     <include name = "TestCase05_SO_Add" />
+                     <include name = "TestCase04_PJSIP_Linux" />
+                     <include name = "TestCase03_FailedNotFoundElement" />
                 </methods>
             </class>
         </classes>
