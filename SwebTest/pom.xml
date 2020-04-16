@@ -67,6 +67,7 @@
                 <configuration>
 <!--                    add usersystemclassloader for vm crash-->
                     <useSystemClassLoader>false</useSystemClassLoader>
+<!--                    关闭并发-->
                     <forkMode>once</forkMode>
                     <suiteXmlFiles>
                         <suiteXmlFile>suite/${suiteXmlFile}</suiteXmlFile>
