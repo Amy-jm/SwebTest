@@ -65,6 +65,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20.1</version>
                 <configuration>
+<!--                    add usersystemclassloader for vm crash-->
+                    <useSystemClassLoader>false</useSystemClassLoader>
                     <forkMode>once</forkMode>
                     <suiteXmlFiles>
                         <suiteXmlFile>suite/${suiteXmlFile}</suiteXmlFile>
