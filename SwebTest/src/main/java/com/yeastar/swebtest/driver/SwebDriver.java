@@ -1084,12 +1084,7 @@ public class SwebDriver extends Config {
         return status;
     }
 
-    @Step("{0}")
-    public void step(String desc){
-        sleep(5);
-        Cookie cookie = new Cookie("zaleniumMessage", desc);
-        webDriver.manage().addCookie(cookie);
-    }
+
 
 
 }

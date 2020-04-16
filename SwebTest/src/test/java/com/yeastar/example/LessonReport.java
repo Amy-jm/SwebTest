@@ -182,5 +182,10 @@ public class LessonReport extends SwebDriver{
 
     }
 
-
+    @Step("{0}")
+    public void step(String desc){
+        sleep(5);
+        Cookie cookie = new Cookie("zaleniumMessage", desc);
+        webDriver.manage().addCookie(cookie);
+    }
 }
