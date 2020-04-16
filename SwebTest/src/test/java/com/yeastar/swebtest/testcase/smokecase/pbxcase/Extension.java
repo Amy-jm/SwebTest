@@ -6,6 +6,8 @@ import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
+import com.yeastar.untils.TestNGRetry;
 import org.testng.annotations.*;
 
 
@@ -14,7 +16,7 @@ import org.testng.annotations.*;
 /**
  * Created by GaGa on 2017-05-15.
  */
-@Listeners({AllureReporterListener.class, RetryListener.class})
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class Extension extends SwebDriver {
 
     @BeforeClass
