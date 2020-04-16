@@ -4,6 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
 import org.testng.annotations.*;
 
 
@@ -12,7 +14,7 @@ import org.testng.annotations.*;
 /**
  * Created by GaGa on 2017-05-15.
  */
-
+@Listeners({AllureReporterListener.class, RetryListener.class})
 public class Extension extends SwebDriver {
 
     @BeforeClass
