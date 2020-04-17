@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="testDemoSuite" verbose="1" preserve-order="true" >
+<suite name="test" verbose="1" preserve-order="false" thread-count="1" parallel="methods">
     <listeners>
-            <listener class-name="com.yeastar.untils.TestNGListener" />
-            <listener class-name="com.yeastar.untils.RetryListener" />
-        <listener class-name="com.yeastar.untils.AllureReporterListener" />
+        <listener class-name="com.yeastar.untils.TestNGListener"/>
+        <listener class-name="com.yeastar.untils.RetryListener"/>
+        <listener class-name="com.yeastar.untils.AllureReporterListener"/>
     </listeners>
     <test name="test">
         <classes>
             <class name="com.yeastar.example.LessonReport">
                 <methods>
-                     <include name = "TestCase01" />
-                     <include name = "TestCase02" />
-                     <include name = "TestCase05_SO_Add" />
-                     <include name = "TestCase04_PJSIP_Linux" />
-                     <include name = "TestCase03_FailedNotFoundElement" />
+                    <include name="TestCase01"/>
                 </methods>
             </class>
         </classes>
+
     </test>
 
 </suite>
