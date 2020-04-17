@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="GBK"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="PBXCORE" parallel="methods" thread-count="1">
+
+    <listeners>
+        <listener class-name="com.yeastar.untils.TestNGListener" />
+        <listener class-name="com.yeastar.untils.RetryListener" />
+        <listener class-name="com.yeastar.untils.AllureReporterListener" />
+    </listeners>
     <test name="pbxcore" preserve-order="true">
         <classes>
 
