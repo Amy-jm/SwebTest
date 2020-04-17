@@ -632,6 +632,7 @@ public class SwebDriver extends Config {
      * 调用Windows系统弹出的窗口
      * @param filePath  插件所处路径
      */
+    //TODO adapt linux
     public static void importFile(String filePath){
         String path = System.getProperty("user.dir");
         try {
