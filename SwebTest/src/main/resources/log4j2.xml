@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- log4j2 配置文件 -->
 <!-- 日志级别 trace<debug<info<warn<error<fatal -->
-<configuration status="error">
+<configuration status="trace">
     <!-- 自定义属性 -->
     <Properties>
         <!-- 日志格式 -->
@@ -108,7 +108,7 @@
 
         <!-- 定义根logger -->
         <!-- 日志级别设备为debug 具体日志级别由appender限制 -->
-        <Root level="error">
+        <Root level="trace">
             <!-- 输出控制台 -->
             <AppenderRef ref="console"/>
             <!-- 输出debug级别日志文件 -->
