@@ -66,7 +66,7 @@
                 <version>2.20.1</version>
                 <configuration>
 <!--                    add usersystemclassloader for vm crash-->
-                    <useSystemClassLoader>false</useSystemClassLoader>
+<!--                    <useSystemClassLoader>false</useSystemClassLoader>-->
 <!--                    关闭并发-->
                     <forkMode>once</forkMode>
                     <suiteXmlFiles>
