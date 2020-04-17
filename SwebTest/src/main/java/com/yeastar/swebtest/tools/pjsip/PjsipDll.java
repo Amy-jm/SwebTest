@@ -48,7 +48,7 @@ public class PjsipDll {
 
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary("pjsip",pjsipdll.class);
 
-        pjsipdll instance = (pjsipdll)Native.loadLibrary("YsAutoTestPjsua",pjsipdll.class);
+        pjsipdll instance = (pjsipdll)Native.loadLibrary("pjsip",pjsipdll.class);
 
 
 
