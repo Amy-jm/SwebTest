@@ -4,6 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
 import org.testng.annotations.*;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import static com.codeborne.selenide.Selenide.sleep;
  * Created by xlq on 2017/9/26.
  * 功能：执行PBXcore测试的前置设置
  */
+@Listeners({AllureReporterListener.class, RetryListener.class})
 public class BeforeTest extends SwebDriver{
     String[] version = DEVICE_VERSION.split("\\.");
     @BeforeClass
