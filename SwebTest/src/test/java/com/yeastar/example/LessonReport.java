@@ -9,6 +9,7 @@ import com.yeastar.untils.RetryListener;
 import com.yeastar.untils.TestNGListener;
 import com.yeastar.untils.TestNGRetry;
 import io.qameta.allure.*;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Cookie;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -24,6 +25,7 @@ import static com.codeborne.selenide.Selenide.sleep;
  * Created by Yeastar on 2018/2/9.
  */
 @Listeners({AllureReporterListener.class, RetryListener.class})
+@Log4j2
 public class LessonReport extends SwebDriver{
     @BeforeClass
     @Step("[BeforeClass] Init test environment·····")
@@ -192,6 +194,7 @@ public class LessonReport extends SwebDriver{
 
     @Step("{0}")
     public void step(String desc){
+        log.debug("[step] "+desc);
         sleep(5);
         Cookie cookie = new Cookie("zaleniumMessage", desc);
         webDriver.manage().addCookie(cookie);
