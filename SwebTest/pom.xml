@@ -70,7 +70,7 @@
 <!--                    关闭并发-->
                     <forkMode>once</forkMode>
                     <suiteXmlFiles>
-                        <suiteXmlFile>suite\${suiteXmlFile}</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                         <!--<testng outputDir="test-output/html/"/>-->
                     </suiteXmlFiles>
                     <testFailureIgnore>true</testFailureIgnore>
