@@ -2,13 +2,10 @@ package com.yeastar.example;
 
 //import com.google.common.base.Verify;
 
-import com.sun.jna.Native;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.pjsip.CLibrary;
-import com.yeastar.swebtest.tools.pjsip.PjsipDll;
 import com.yeastar.untils.AllureReporterListener;
 import io.qameta.allure.*;
-import org.openqa.selenium.Cookie;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -17,13 +14,43 @@ import java.lang.reflect.Method;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.close;
-import static com.yeastar.swebtest.driver.SwebDriver.ys_apply;
 
 /**
  * Created by Yeastar on 2018/2/9.
  */
 @Listeners({AllureReporterListener.class})
-public class LessonAllure  extends SwebDriver{
+public class LessonAllure extends SwebDriver {
+    /**
+     * 可选语言登录S系列设备
+     *
+     * @param username
+     * @param password
+     * @param language
+     */
+    public static void login(String username, String password, String language) {
+        if (language != null) { //不修改语言
+            if (language.equalsIgnoreCase("english")) { //修改语言，暂时就中文，英文
+                select(pageLogin.language, pageLogin.english);
+            } else {
+                select(pageLogin.language, pageLogin.chineseSimpleFied);
+            }
+        }
+        pageLogin.username.setValue(username);
+        pageLogin.password.setValue(password);
+        ys_waitingTime(1000);
+        pageLogin.login.click();
+
+        if (pageDeskTop.pp_comfirm.isDisplayed()) {
+            setCheckBox(pageDeskTop.pp_agreement_checkBox, true);
+            pageDeskTop.pp_comfirm.click();
+        }
+        pageDeskTop.taskBar_User.should(exist);
+
+
+
+
+    }
+
     @BeforeClass
     @Step("[BeforeClass] Init test environment·····")
     public void BeforeClass() {
@@ -36,9 +63,8 @@ public class LessonAllure  extends SwebDriver{
     @BeforeMethod
     @Step("[BeforeMethod] Config test environment·····")
     public void BeforeMethod(Method method) {
-        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/",method);
+        initialDriver(BROWSER, "https://" + DEVICE_IP_LAN + ":" + DEVICE_PORT + "/", method);
     }
-
 
     @AfterMethod
     @Step("[AfterMethod] Restore  test environment quite driver·····")
@@ -93,7 +119,7 @@ public class LessonAllure  extends SwebDriver{
     @Severity(SeverityLevel.BLOCKER)
     @Test
     public void TestCase03_FailedNotFoundElement() throws IOException {
-        login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        login(LOGIN_USERNAME, LOGIN_PASSWORD);
     }
 
     @Epic("Epic")
@@ -108,7 +134,6 @@ public class LessonAllure  extends SwebDriver{
         pjsip.Pj_Init();
     }
 
-
     @Epic("Epic")
     @Feature("Feature")
     @Story("Story 2")
@@ -121,45 +146,18 @@ public class LessonAllure  extends SwebDriver{
         CLibrary.INSTANCE.toString();
     }
 
-//    @Step("1.login pbx")
-    public void Methon_01(){
-        login(LOGIN_USERNAME,LOGIN_PASSWORD,"english");
+    //    @Step("1.login pbx")
+    public void Methon_01() {
+        login(LOGIN_USERNAME, LOGIN_PASSWORD, "english");
     }
 
-//    @Step("2.setting ")
-    public void Methon_02(){
-
-    }
-
-//    @Step("3.assert ")
-    public void Methon_03(){
+    //    @Step("2.setting ")
+    public void Methon_02() {
 
     }
 
-    /**
-     * 可选语言登录S系列设备
-     * @param username
-     * @param password
-     * @param language
-     */
-    public static void login(String username,String password,String language) {
-        if (language != null) { //不修改语言
-            if (language.equalsIgnoreCase("english")) { //修改语言，暂时就中文，英文
-                select(pageLogin.language, pageLogin.english);
-            } else {
-                select(pageLogin.language, pageLogin.chineseSimpleFied);
-            }
-        }
-        pageLogin.username.setValue(username);
-        pageLogin.password.setValue(password);
-        ys_waitingTime(1000);
-        pageLogin.login.click();
-
-        if(pageDeskTop.pp_comfirm.isDisplayed()){
-            setCheckBox(pageDeskTop.pp_agreement_checkBox,true);
-            pageDeskTop.pp_comfirm.click();
-        }
-        pageDeskTop.taskBar_User.should(exist);
+    //    @Step("3.assert ")
+    public void Methon_03() {
 
     }
 

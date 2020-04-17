@@ -20,10 +20,11 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
      */
     @Override
     public  void onTestSuccess(ITestResult tr) {
-        Cookie cookie = new Cookie("zaleniumTestPassed", "true");
-        webDriver.manage().addCookie(cookie);
         super.onTestSuccess(tr);
         log.info( "[Success] "+tr.getName());
+
+        Cookie cookie = new Cookie("zaleniumTestPassed", "true");
+        webDriver.manage().addCookie(cookie);
     }
 
     /**
