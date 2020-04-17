@@ -111,16 +111,24 @@ public class LessonReport extends SwebDriver{
     @Severity(SeverityLevel.BLOCKER)
     @Test
     public void TestCase04_PJSIP_Linux() throws IOException {
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1004,"Yeastar202","UDP",UDP_PORT,1);
-        System.out.println("before register wait....");
-        sleep(10000);
-        System.out.println("before register....");
-        pjsip.Pj_Register_Account_WithoutAssist(1004,"192.168.11.199");
-        System.out.println("before wait....");
-        sleep(10000);
-        System.out.println("after wait.....");
-        pjsip.Pj_Destory();
+
+         step("1.pjsip init ....");
+         pjsip.Pj_Init();
+
+         step("2.create account 1000 and 1001....");
+         pjsip.Pj_CreateAccount(1000,"Yeastar202","UDP",UDP_PORT,1);
+         pjsip.Pj_CreateAccount(1001,"Yeastar202","UDP",UDP_PORT,1);
+
+         step("3.register account 1000 and 1001....");
+         pjsip.Pj_Register_Account_WithoutAssist(1000,"192.168.11.199");
+         pjsip.Pj_Register_Account_WithoutAssist(1001,"192.168.11.199");
+
+         step("4.maker call 1000 to 1001....");
+         pjsip.Pj_Make_Call_Auto_Answer(1000,"1001","192.168.11.199",false);
+
+         sleep(10000);
+         step("5.pjsip destory....");
+         pjsip.Pj_Destory();
     }
 
 
