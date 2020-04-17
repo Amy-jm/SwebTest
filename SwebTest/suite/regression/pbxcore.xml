@@ -12,7 +12,7 @@
 <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.UpdateVersion"/>-->
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest"/>
             <!--20180724 起TimeCondition、Holiday\CustomPrompts合并到BeforeTest中-->
-        <!--    <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound"/>
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound"/>
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction"/>
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.AutoCLIP"/>
@@ -26,7 +26,7 @@
 
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference"/>
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Callback"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Extension"/>-->
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Extension"/>
 <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Disa_PinList"/>-->
 <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber"/>-->
 <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Blacklist_Whitelist"/>-->
