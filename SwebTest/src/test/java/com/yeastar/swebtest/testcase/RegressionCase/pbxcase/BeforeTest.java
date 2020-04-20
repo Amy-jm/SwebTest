@@ -8,6 +8,7 @@ import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.RetryListener;
 import org.testng.annotations.*;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import static com.codeborne.selenide.Selenide.refresh;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -20,10 +21,10 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class BeforeTest extends SwebDriver{
     String[] version = DEVICE_VERSION.split("\\.");
     @BeforeClass
-    public void BeforeClass() {
+    public void BeforeClass(Method method) {
         pjsip.Pj_Init();
         Reporter.infoBeforeClass("开始执行：======前置环境设置—BeforeTest======"); //执行操作
-        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
+        initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/",method);
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC) && Integer.valueOf(VERSION_SPLIT[1]) <= 9){
             ys_waitingMask();
