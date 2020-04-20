@@ -1055,7 +1055,7 @@ public class SwebDriver extends Config {
 //        if (hubUrl != null ) {
         if (GRID_HUB_IP != "") {
             log.debug("[GRID_HUB_IP] " + hubUrl);
-            desiredCapabilities.setCapability("name", "testName");
+            desiredCapabilities.setCapability("name", Thread.currentThread().getStackTrace()[2].getMethodName());
             desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
             desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
             desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
