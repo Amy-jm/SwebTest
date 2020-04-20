@@ -11,18 +11,24 @@ import java.util.Properties;
  **/
 @Log4j2
 public class TestNGRetry implements IRetryAnalyzer {
-    private int count = 1;
     private static int maxRetryCount = 0;
-    static{
+
+    static {
         Properties p = null;
         try {
-            p = new PropertiesUntils().getInstance().getPropertie("/data.properties");
+            p = new PropertiesUntils().getInstance().getPropertie("/config.properties");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("can not find config properties file " +e);
         }
-        maxRetryCount = Integer.valueOf(p.getProperty("maxRunCount"));
-        log.info("[maxRunCount] " + (maxRetryCount)+"\n");
+        try {
+            maxRetryCount = Integer.valueOf(p.getProperty("maxRunCount"));
+        } catch (java.lang.NumberFormatException e) {
+            log.error("can not find retry key maxRunCount on " +e);
+        }
+        log.info("[maxRunCount] " + (maxRetryCount) + "\n");
     }
+
+    private int count = 1;
 
     /**
      * Returns true if the test method has to be retried, false otherwise.
@@ -32,7 +38,7 @@ public class TestNGRetry implements IRetryAnalyzer {
      */
     @Override
     public boolean retry(ITestResult result) {
-        if(count <= maxRetryCount){
+        if (count <= maxRetryCount) {
 //            log.info("[maxRunCount -> retryCount] " + maxRetryCount +"->"+count+"\n");
             result.setAttribute("RETRY", new Integer(count));
             count++;

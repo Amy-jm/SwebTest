@@ -29,6 +29,7 @@
                      <include>**/*.dll</include>
                      <include>**/*.so</include>
                      <include>**/*.2</include>
+                     <include>**/*.xml</include>
                  </includes>
                  <filtering>false</filtering>
              </resource>
@@ -65,15 +66,15 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20.1</version>
                 <configuration>
-<!--                    add usersystemclassloader for vm crash-->
-<!--                    <useSystemClassLoader>false</useSystemClassLoader>-->
-<!--                    关闭并发-->
-                    <forkMode>once</forkMode>
                     <suiteXmlFiles>
                         <suiteXmlFile>suite/${suiteXmlFile}</suiteXmlFile>
                         <!--<testng outputDir="test-output/html/"/>-->
                     </suiteXmlFiles>
                     <testFailureIgnore>true</testFailureIgnore>
+                    <!--                    add usersystemclassloader for vm crash-->
+                    <!--                    <useSystemClassLoader>false</useSystemClassLoader>-->
+                    <!--                    关闭并发-->
+                    <forkMode>once</forkMode>
                     <!--                    <forkMode>once</forkMode>-->
 <!--                    <forkCount>2.0C</forkCount>-->
 <!--                    <parallel>methods</parallel>-->
