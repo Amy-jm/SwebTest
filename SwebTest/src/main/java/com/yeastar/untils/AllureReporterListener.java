@@ -32,6 +32,5 @@ public class AllureReporterListener implements IHookable{
     private byte[] takeScreenShot(String methodName) {
 
         return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
-
     }
 }

@@ -141,6 +141,7 @@ public class SwebDriver extends Config {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+            webDriver.manage().window().maximize();
             webDriver.get(relativeOrAbsoluteUrl);
             setWebDriver(webDriver);
         } else {
