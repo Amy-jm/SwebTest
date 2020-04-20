@@ -43,11 +43,6 @@ public class PjsipDll {
          *   home/pjsip/pjproject-2.6/out/lib
          */
 
-
-//        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjproject-2.6"+File.separator+"out"+File.separator+"lib"+File.separator+"libpjsip.so",pjsipdll.class);
-
-//        pjsipdll instance = (pjsipdll)Native.loadLibrary("pjsip",pjsipdll.class);
-
         pjsipdll instance = (pjsipdll)Native.loadLibrary("YsAutoTestPjsua",pjsipdll.class);
 
 
