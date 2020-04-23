@@ -17,7 +17,9 @@ import java.util.ArrayList;
  * Created by xlq on 2017/9/26.
  * 功能：执行PBXcore测试的前置设置
  */
-@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
+@Listeners({AllureReporterListener.class,
+            RetryListener.class,
+            TestNGListener.class})
 public class BeforeTest extends SwebDriver{
     String[] version = DEVICE_VERSION.split("\\.");
     @BeforeClass
