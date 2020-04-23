@@ -7,6 +7,9 @@ import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.Codec.Codec;
 import com.yeastar.swebtest.tools.ScreenShot;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
 import org.testng.annotations.*;
 import java.util.ArrayList;
 
@@ -14,6 +17,7 @@ import java.util.ArrayList;
  * Created by xlq on 2017/9/26.
  * 功能：执行PBXcore测试的前置设置
  */
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class BeforeTest extends SwebDriver{
     String[] version = DEVICE_VERSION.split("\\.");
     @BeforeClass
