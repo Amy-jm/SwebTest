@@ -24,7 +24,7 @@ import static com.codeborne.selenide.Selenide.sleep;
 /**
  * Created by Yeastar on 2018/2/9.
  */
-@Listeners({AllureReporterListener.class, RetryListener.class})
+@Listeners({AllureReporterListener.class, RetryListener.class,TestNGListener.class})
 @Log4j2
 public class LessonReport extends SwebDriver{
     @BeforeClass
