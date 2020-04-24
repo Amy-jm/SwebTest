@@ -6,6 +6,7 @@ import com.yeastar.swebtest.tools.pjsip.UserAccount;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
@@ -1059,6 +1060,8 @@ public class SwebDriver extends Config {
             desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
             desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
             desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
+            desiredCapabilities.setCapability("network", true);
+
             try {
                 webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
             } catch (MalformedURLException e) {
@@ -1106,6 +1109,7 @@ public class SwebDriver extends Config {
             log.debug("[GRID_HUB_IP] " + hubUrl);
             desiredCapabilities.setCapability("name", getTestName(method));
             desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
+            desiredCapabilities.setCapability("network", true);
             //Build Name    String serviceName = System.getProperty("serviceName");
 //            desiredCapabilities.setCapability("build", "AutoTestBuild_Seven");
             desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));

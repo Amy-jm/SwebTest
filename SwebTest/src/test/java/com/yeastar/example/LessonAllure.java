@@ -146,6 +146,15 @@ public class LessonAllure extends SwebDriver {
         CLibrary.INSTANCE.toString();
     }
 
+
+
+
+    @Description("ignore assert exception")
+    @Test(expectedExceptions = AssertionError.class)
+    public void TestCase06() throws IOException {
+      Assert.assertTrue(false);
+    }
+
     //    @Step("1.login pbx")
     public void Methon_01() {
         login(LOGIN_USERNAME, LOGIN_PASSWORD, "english");
@@ -153,7 +162,8 @@ public class LessonAllure extends SwebDriver {
 
     //    @Step("2.setting ")
     public void Methon_02() {
-
+        //debug
+//        CapabilityType.PLATFORM.trim();
     }
 
     //    @Step("3.assert ")
