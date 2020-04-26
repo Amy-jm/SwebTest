@@ -8,14 +8,7 @@
     </listeners>
     <test name="test">
         <classes>
-            <class name="com.yeastar.example.LessonReport">
-                <methods>
-                    <include name="TestCase01"/>
-                    <include name="TestCase04_PJSIP_Linux"/>
-                    <include name="TestCase03_FailedNotFoundElement"/>
-                    <include name="TestCase02"/>
-                    <include name="TestCase01"/>
-                </methods>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup">
             </class>
         </classes>
 
