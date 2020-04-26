@@ -1,5 +1,6 @@
 package com.yeastar.swebtest.tools.reporter;
 
+import io.qameta.allure.Step;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.io.*;
@@ -104,7 +105,7 @@ public class Reporter  {
         String tmpname = "【测试方法场景恢复】";
         reporterOut(tmpname,message,2);
     }
-
+    @Step("{0}")
     public static void infoExec(String message) {
         SimpleDateFormat sdf = new SimpleDateFormat("HH时mm分ss秒");
         String currentTime = String.valueOf(sdf.format(new Date()));
