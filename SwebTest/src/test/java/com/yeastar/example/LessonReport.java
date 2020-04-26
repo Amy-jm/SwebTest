@@ -4,13 +4,11 @@ package com.yeastar.example;
 
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.pjsip.CLibrary;
-import com.yeastar.untils.AllureReporterListener;
-import com.yeastar.untils.RetryListener;
-import com.yeastar.untils.TestNGListener;
-import com.yeastar.untils.TestNGRetry;
+import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.Platform;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -39,6 +37,7 @@ public class LessonReport extends SwebDriver{
     @BeforeMethod
     @Step("[BeforeMethod] Config test environment·····")
     public void BeforeMethod(Method method) {
+        log.info("[BeforeMethod] "+method.getName());
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/",method);
         step("open chrome start to test..........");
     }
@@ -63,6 +62,7 @@ public class LessonReport extends SwebDriver{
     @Severity(SeverityLevel.BLOCKER)
     @Test
     public void TestCase01() {
+        log.info("[Platform] "+ Platform.getCurrent());
         Cookie cookie = new Cookie("zaleniumTestName", "TestCase01");
         webDriver.manage().addCookie(cookie);
         //TODO 调整到 SwebDriver中通过method统一新增，减少原有代码的带动
