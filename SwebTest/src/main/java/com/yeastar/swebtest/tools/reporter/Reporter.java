@@ -2,6 +2,7 @@ package com.yeastar.swebtest.tools.reporter;
 
 import io.qameta.allure.Step;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.Cookie;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import java.util.Properties;
 import static com.yeastar.swebtest.driver.Config.currentPath;
 import static com.yeastar.swebtest.driver.DataReader2.LOCAL_LOG_FILE;
 import static com.yeastar.swebtest.driver.DataReader2.SCREENSHOT_PATH;
+import static com.yeastar.swebtest.driver.SwebDriver.webDriver;
 
 /**
  * Created by GaGa on 2017-06-05.
@@ -110,7 +112,8 @@ public class Reporter  {
         SimpleDateFormat sdf = new SimpleDateFormat("HH时mm分ss秒");
         String currentTime = String.valueOf(sdf.format(new Date()));
         String tmpname = "【"+currentTime+" 执行操作】";
-
+        Cookie cookie = new Cookie("zaleniumMessage", message);
+        webDriver.manage().addCookie(cookie);
         reporterOut(tmpname,message,2);
     }
 
