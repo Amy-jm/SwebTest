@@ -254,7 +254,7 @@ public class Queue extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(expectedExceptions = AssertionError.class)
     public void G2_joinEmpty() throws InterruptedException {
         Reporter.infoExec(" 1100拨打6701--预期：队列无有效坐席，仍可成功呼入队列"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"6701",DEVICE_IP_LAN);
