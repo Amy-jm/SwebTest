@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import static com.yeastar.swebtest.driver.Config.currentPath;
+import static com.yeastar.swebtest.driver.Config.editSelectedExtensionsCallPermission;
 import static com.yeastar.swebtest.driver.DataReader2.LOCAL_LOG_FILE;
 import static com.yeastar.swebtest.driver.DataReader2.SCREENSHOT_PATH;
 import static com.yeastar.swebtest.driver.SwebDriver.webDriver;
@@ -109,6 +110,11 @@ public class Reporter  {
     }
     @Step("{0}")
     public static void infoExec(String message) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("HH时mm分ss秒");
         String currentTime = String.valueOf(sdf.format(new Date()));
         String tmpname = "【"+currentTime+" 执行操作】";
