@@ -92,6 +92,7 @@ public class SwebDriver extends Config {
             pageDeskTop.settingShortcut.click();
             settings.extensions_panel.click();
             extensions.add.click();
+            sleep(3000);//not delete ; may crash with devices not found with zalenium message
             ys_waitingMask();
             closeSetting();
         }
