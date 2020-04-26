@@ -111,7 +111,7 @@ public class Reporter  {
     @Step("{0}")
     public static void infoExec(String message) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -120,6 +120,11 @@ public class Reporter  {
         String tmpname = "【"+currentTime+" 执行操作】";
         Cookie cookie = new Cookie("zaleniumMessage", message);
         webDriver.manage().addCookie(cookie);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         reporterOut(tmpname,message,2);
     }
 
