@@ -4,9 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
-import com.yeastar.untils.AllureReporterListener;
-import com.yeastar.untils.RetryListener;
-import com.yeastar.untils.TestNGListener;
+import com.yeastar.untils.*;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Platform;
 import org.testng.annotations.*;
 
@@ -20,7 +19,8 @@ import static com.codeborne.selenide.Selenide.sleep;
  * Created by xlq on 2017/9/26.
  * 功能：执行PBXcore测试的前置设置
  */
-@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
+@Log4j2
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class, MethodInterceptors.class})
 public class BeforeTest extends SwebDriver{
     String[] version = DEVICE_VERSION.split("\\.");
     @BeforeClass
@@ -733,7 +733,8 @@ public class BeforeTest extends SwebDriver{
         ys_waitingTime(2000);
     }
     //    播放
-    @Test
+    //TODO adapt linux update file
+    @Test(enabled = false)
     public void S5_play() throws InterruptedException {
         Reporter.infoExec(" 分机1000播放提示音prompt1"); //执行操作
         gridClick(customPrompts.grid,1,customPrompts.gridPlay);
@@ -753,13 +754,15 @@ public class BeforeTest extends SwebDriver{
     //    上传
     @Test(enabled = false)
     public void S6_upload_autotestprompt() throws InterruptedException {
-        Reporter.infoExec(" 上传提示音autotestprompt"); //执行操作
-        pageDeskTop.taskBar_Main.click();
-        pageDeskTop.settingShortcut.click();
-        customPrompts.recordNew.shouldBe(Condition.exist);
         if (Platform.getCurrent().equals(Platform.LINUX)) {
             //TODO adapt linux update file
         }else{
+            Reporter.infoExec(" 上传提示音autotestprompt"); //执行操作
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
+            customPrompts.recordNew.shouldBe(Condition.exist);
+            log.info("[Platform] "+Platform.getCurrent());
+
             customPrompts.upload.click();
             upload_a_prompt.broese.click();
             ys_waitingTime(2000);
@@ -767,8 +770,8 @@ public class BeforeTest extends SwebDriver{
             ys_waitingTime(2000);
             upload_a_prompt.upload.click();
             ys_waitingTime(2000);
+            YsAssert.assertEquals(String.valueOf(gridLineNum(customPrompts.grid)), "2", "导入提示音autotestprompt");
         }
-        YsAssert.assertEquals(String.valueOf(gridLineNum(customPrompts.grid)), "2", "导入提示音autotestprompt");
     }
 
     @Test
@@ -814,7 +817,7 @@ public class BeforeTest extends SwebDriver{
         extensions.add.click();
         ys_waitingMask();
         closeSetting();
-        backupEnviroment("Regression_"+this.getClass().getSimpleName());
+        backupEnviroment("Regression_"+this.getClass().getSimpleName()+ "_"+DataUtils.getCurrentTime());
     }
 
     @AfterMethod
