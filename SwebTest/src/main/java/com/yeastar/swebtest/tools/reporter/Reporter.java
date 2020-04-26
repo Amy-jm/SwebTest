@@ -111,7 +111,7 @@ public class Reporter  {
     @Step("{0}")
     public static void infoExec(String message) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
