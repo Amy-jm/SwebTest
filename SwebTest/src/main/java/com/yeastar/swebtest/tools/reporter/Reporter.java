@@ -110,21 +110,12 @@ public class Reporter  {
     }
     @Step("{0}")
     public static void infoExec(String message) {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         SimpleDateFormat sdf = new SimpleDateFormat("HH时mm分ss秒");
         String currentTime = String.valueOf(sdf.format(new Date()));
         String tmpname = "【"+currentTime+" 执行操作】";
-        Cookie cookie = new Cookie("zaleniumMessage", message);
-        webDriver.manage().addCookie(cookie);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //may caused devices no found
+//        Cookie cookie = new Cookie("zaleniumMessage", message);
+//        webDriver.manage().addCookie(cookie);
         reporterOut(tmpname,message,2);
     }
 
