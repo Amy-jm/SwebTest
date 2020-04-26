@@ -20,7 +20,7 @@ import static com.codeborne.selenide.Selenide.sleep;
  * 功能：执行PBXcore测试的前置设置
  */
 @Log4j2
-@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class, MethodInterceptors.class})
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class BeforeTest extends SwebDriver{
     String[] version = DEVICE_VERSION.split("\\.");
     @BeforeClass
