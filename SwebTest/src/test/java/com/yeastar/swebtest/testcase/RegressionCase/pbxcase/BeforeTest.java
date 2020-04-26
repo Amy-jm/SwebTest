@@ -196,7 +196,7 @@ public class BeforeTest extends SwebDriver{
         Reporter.infoExec(" 添加iax外线"+IAXTrunk);
         m_trunks.addTrunk("IAX",add_voIP_trunk_basic.VoipTrunk,IAXTrunk,DEVICE_ASSIST_1,"4569","","3100","","",EXTENSION_PASSWORD,"");
     }
-    @Test
+    @Test (expectedExceptions = AssertionError.class)
     public void D_addtrunk() throws InterruptedException {
         Reporter.infoExec(" 添加sps外线"+SPS);
         m_trunks.addTrunk("SIP",add_voIP_trunk_basic.PeerToPeer,SPS,DEVICE_ASSIST_2,String.valueOf(UDP_PORT_ASSIST_2),DEVICE_ASSIST_2,
