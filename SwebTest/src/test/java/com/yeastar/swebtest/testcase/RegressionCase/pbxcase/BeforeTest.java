@@ -721,8 +721,11 @@ public class BeforeTest extends SwebDriver{
         ys_apply();
     }
 
-    @Test
+    @Test(enabled = false)
     public void S4_upload_prompt1() {
+        if (Platform.getCurrent().equals(Platform.LINUX)) {
+            //TODO adapt linux update file
+        }else{
         Reporter.infoExec(" 上传提示音prompt1"); //执行操作
         customPrompts.upload.click();
         upload_a_prompt.broese.click();
@@ -731,6 +734,7 @@ public class BeforeTest extends SwebDriver{
         ys_waitingTime(2000);
         upload_a_prompt.upload.click();
         ys_waitingTime(2000);
+        }
     }
     //    播放
     //TODO adapt linux update file
