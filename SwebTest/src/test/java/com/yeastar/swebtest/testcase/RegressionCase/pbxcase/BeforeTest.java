@@ -171,7 +171,7 @@ public class BeforeTest extends SwebDriver{
 
     //    创建外线
 //TODO 0424 ignore assert exception
-    @Test(expectedExceptions = AssertionError.class)
+    @Test(expectedExceptions =java.lang.AssertionError.class)
     public void B_addtrunk() throws InterruptedException {
         settings.trunks_tree.click();
         Reporter.infoExec(" 删除所有VoIP外线"); //执行操作
