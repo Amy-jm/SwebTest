@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="GBK"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="PBXCORE" parallel="methods" thread-count="1">
+<suite name="PBXCORE" parallel="false" preserve-order="true">
     <listeners>
         <listener class-name="com.yeastar.untils.TestNGListener" />
         <listener class-name="com.yeastar.untils.RetryListener" />
