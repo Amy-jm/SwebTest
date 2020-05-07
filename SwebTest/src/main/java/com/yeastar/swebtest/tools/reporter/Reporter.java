@@ -73,14 +73,14 @@ public class Reporter  {
         String tmpname = "【场景恢复】";
         reporterOut(tmpname,message,1);
     }
-
+    @Step("{0}")
     public static void infoBeforeClass(String message) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
         String currentTime = String.valueOf(sdf.format(new Date()));
         String tmpname = "【测试类场景初始化】_"+currentTime;
         reporterOut(tmpname,message,1);
     }
-
+    @Step("{0}")
     public static void infoAfterClass(String message) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
         String currentTime = String.valueOf(sdf.format(new Date()));
@@ -123,7 +123,7 @@ public class Reporter  {
         String tmpname = "【结束操作】";
         reporterOut(tmpname,message,2);
     }
-
+    @Step("{0}")
     public static void infoCheck(String message) {
         String tmpname = "【执行检查】";
         reporterOut(tmpname,message,2);
