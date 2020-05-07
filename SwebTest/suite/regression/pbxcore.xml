@@ -6,7 +6,7 @@
         <listener class-name="com.yeastar.untils.RetryListener" />
         <listener class-name="com.yeastar.untils.AllureReporterListener" />
     </listeners>
-    <test name="pbxcore">
+    <test name="pbxcore" preserve-order="true">
         <classes>
 
 <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.UpdateVersion"/>-->

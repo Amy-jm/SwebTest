@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import io.qameta.allure.Description;
 import org.testng.annotations.*;
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class Outbound extends SwebDriver{
         m_extension.showCDRClounm();
 
     }
-    @Test
+    @Test(priority = 0)
     public void A0_init(){
         pjsip.Pj_Init();
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000
@@ -47,7 +48,7 @@ public class Outbound extends SwebDriver{
         outboundRoutes.add.should(Condition.exist);
     }
 //    测试各种外线呼出
-    @Test
+    @Test(priority = 1)
     public void A_out1_sip()  {
         Reporter.infoExec(" 1000拨打13001通过sip外线呼出"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"13001",DEVICE_IP_LAN);
@@ -74,7 +75,7 @@ public class Outbound extends SwebDriver{
 
     }
 
-    @Test
+    @Test(priority = 2)
     public void A_out2_iax()  {
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
@@ -88,7 +89,7 @@ public class Outbound extends SwebDriver{
 
     }
 
-    @Test
+    @Test(priority = 3)
     public void A_out3_sps()  {
         Reporter.infoExec(" 1000拨打32000通过sps外线呼出"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"32000",DEVICE_IP_LAN);
@@ -98,7 +99,7 @@ public class Outbound extends SwebDriver{
         m_extension.checkCDR("1000 <1000>","32000","Answered"," ",SPS,communication_outRoute);
     }
 
-    @Test
+    @Test(priority = 4)
     public void A_out4_spx()  {
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
@@ -111,7 +112,7 @@ public class Outbound extends SwebDriver{
         m_extension.checkCDR("1000 <1000>","42000","Answered"," ",SPX,communication_outRoute);
     }
 
-    @Test
+    @Test(priority = 5)
     public void A_out5_fxo()  {
         if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
             return;
@@ -130,7 +131,7 @@ public class Outbound extends SwebDriver{
         }
     }
 
-    @Test
+    @Test(priority = 6)
     public void A_out6_bri()  {
         if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
             return;
@@ -145,7 +146,7 @@ public class Outbound extends SwebDriver{
         }
     }
 
-    @Test
+    @Test(priority = 7)
     public void A_out7_E1()  {
         if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
             return;
@@ -160,7 +161,7 @@ public class Outbound extends SwebDriver{
         }
     }
 
-    @Test
+    @Test(priority = 8)
     public void A_out8_gsm()  {
         if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
             return;
@@ -177,7 +178,8 @@ public class Outbound extends SwebDriver{
 
 
 //  Dial Patterns 测试
-    @Test
+    @Description("Dial Patterns 测试")
+    @Test(priority = 9)
     public void B1_Prepend()  {
         Reporter.infoExec(" 新建呼出路由DialPattern，Pattern:01.，strip：2，Prepend：123456，选择SIP外线/所有分机"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -192,7 +194,8 @@ public class Outbound extends SwebDriver{
     }
 
     //      Dial Patterns 通话测试
-    @Test
+    @Description("Dial Patterns 通话测试")
+    @Test(priority = 10)
     public void B2_Prepend()  {
         Reporter.infoExec(" 1000拨打0101通过sip外线呼出");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"0101",DEVICE_IP_LAN);
@@ -203,7 +206,8 @@ public class Outbound extends SwebDriver{
     }
 
 //    Password测试
-    @Test
+    @Description("Dial Patterns Password测试")
+    @Test(priority = 11)
     public void C1_password()  {
         Reporter.infoExec(" 新建呼出路由Password，Pattern:02.，strip：2，外线:SPS，分机：1000"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -228,7 +232,8 @@ public class Outbound extends SwebDriver{
     }
 
     //       通话测试
-    @Test
+    @Description("Dial Patterns 通话测试")
+    @Test(priority = 12)
     public void C2_password()  {
         Reporter.infoExec(" 1000拨打028888通过SPS外线呼出");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"028888", DEVICE_IP_LAN,false);
@@ -243,7 +248,8 @@ public class Outbound extends SwebDriver{
     }
 
 //    循环抓取
-    @Test
+    @Description("Dial Patterns 循环抓取")
+    @Test(priority = 13)
     public void D1_rrmemory_hunt()  {
         Reporter.infoExec(" 新建呼出路由Rrmemory_hunt，Pattern:03.，strip：2，外线:SPS、SIP，分机：1000"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -267,7 +273,8 @@ public class Outbound extends SwebDriver{
     }
 
     //        通话测试循环抓取
-    @Test
+    @Description("Dial Patterns 通话测试循环抓取")
+    @Test(priority = 14)
     public void D2_rrmemory_hunt()  {
         Reporter.infoExec(" 1000拨打033001，第1次预期通过SPS外线呼出");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"033001",DEVICE_IP_LAN,false);
@@ -292,7 +299,8 @@ public class Outbound extends SwebDriver{
     }
 
 //    TimeCondition
-    @Test
+    @Description("Dial Patterns TimeCondition")
+    @Test(priority = 15)
     public void E_timecondition()  {
         Reporter.infoExec(" 编辑呼出路由Password：取消密码设置，TimeCondition选择Outbound"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -334,7 +342,7 @@ public class Outbound extends SwebDriver{
         m_extension.checkCDR("1000 <1000>","0299999","Answered"," ",SPS,communication_outRoute);
     }
     
-    @Test
+    @Test(priority = 16)
     public void F_delete()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
