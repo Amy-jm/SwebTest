@@ -275,7 +275,7 @@ public class PjsipApp extends PjsipDll{
         uri = "sip:"+Callee+"@"+ ServerIp+":"+CallerAccount.port;
 
         log.debug("uri/./.........."+uri+"  "+CallerAccount.accId);
-        long retMakecall= pjsipdll.instance.ys_makeCall(CallerAccount.accId,uri,true);
+        int retMakecall= pjsipdll.instance.ys_makeCall(CallerAccount.accId,uri,true);
         log.debug("[Make call Auto] "+ retMakecall);
         if(Assert){
             pageDeskTop.taskBar_Main.click();

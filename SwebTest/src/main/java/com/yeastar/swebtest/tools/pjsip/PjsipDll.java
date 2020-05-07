@@ -53,7 +53,7 @@ public class PjsipDll {
         int ys_init();
         int ys_main();
         int ys_destroy_pjsua();
-        long ys_makeCall(int accountId,String uri, boolean isAutoAnswer);
+        int ys_makeCall(int accountId,String uri, boolean isAutoAnswer);
         int ys_hangup_all_call();
         int ys_setCurrentAccount();
         void ys_printlog();
