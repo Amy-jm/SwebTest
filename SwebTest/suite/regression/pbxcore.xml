@@ -2,40 +2,248 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="PBXCORE" parallel="false" preserve-order="true">
     <listeners>
-        <listener class-name="com.yeastar.untils.TestNGListener" />
-        <listener class-name="com.yeastar.untils.RetryListener" />
-        <listener class-name="com.yeastar.untils.AllureReporterListener" />
+        <listener class-name="com.yeastar.untils.TestNGListener"/>
+        <listener class-name="com.yeastar.untils.RetryListener"/>
+        <listener class-name="com.yeastar.untils.AllureReporterListener"/>
     </listeners>
     <test name="pbxcore" preserve-order="true">
         <classes>
 
-<!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.UpdateVersion"/>-->
-<!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest"/>-->
+            <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.UpdateVersion"/>-->
+            <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.BeforeTest"/>-->
             <!--20180724 起TimeCondition、Holiday\CustomPrompts合并到BeforeTest中-->
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.AutoCLIP"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.PickupGroup"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.PagingIntercom"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.SpeedDial"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound">
+                <methods>
+                    <include name="A0_init"/>
+                    <include name="A_callfrom1_sip"/>
+                    <include name="A_callfrom2_iax"/>
+                    <include name="A_callfrom3_sps"/>
+                    <include name="A_callfrom4_spx"/>
+                    <include name="A_callfrom5_fxo"/>
+                    <include name="A_callfrom6_bri"/>
+                    <include name="A_callfrom7_e1"/>
+                    <include name="A_callfrom8_gsm"/>
+                    <include name="B1_callerid"/>
+                    <include name="B2_callerid"/>
+                    <include name="C1_did1_sps"/>
+                    <include name="C2_did1_sps"/>
+                    <include name="F_timecondition1"/>
+                    <include name="F_timecondition2"/>
+                    <include name="F_timecondition3"/>
+                    <include name="F_timecondition4"/>
+                    <include name="F_timecondition5"/>
+                    <include name="G_delete1"/>
+                    <include name="H_recovery"/>
+                </methods>
+            </class>
 
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.IVR"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Queue"/>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Outbound">
+                <methods>
+                    <include name="A0_init"/>
+                    <include name="A_out1_sip"/>
+                    <include name="A_out2_iax"/>
+                    <include name="A_out3_sps"/>
+                    <include name="A_out4_spx"/>
+                    <include name="A_out5_fxo"/>
+                    <include name="A_out6_bri"/>
+                    <include name="A_out7_E1"/>
+                    <include name="A_out8_gsm"/>
+                    <include name="B1_Prepend"/>
+                    <include name="B2_Prepend"/>
+                    <include name="C1_password"/>
+                    <include name="C2_password"/>
+                    <include name="D1_rrmemory_hunt"/>
+                    <include name="D2_rrmemory_hunt"/>
+                    <include name="E_timecondition"/>
+                    <include name="F_delete"/>
+                </methods>
+            </class>
 
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Callback"/>
-            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Extension"/>
-<!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Disa_PinList"/>-->
-<!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber"/>-->
-<!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Blacklist_Whitelist"/>-->
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.OutboundRestriction">
+                <methods>
+                    <include name="A0_init"/>
+                    <include name="A1_add_1_all"/>
+                    <include name="A_add_3_cancelCall"/>
+                    <include name="A_add_2_cancel"/>
+                    <include name="B_add_1_exten1102"/>
+                    <include name="B_add_2_exten1102_cancel"/>
+                    <include name="B_add_3_exten1102_cancelCall"/>
+                    <include name="C_delete"/>
+                </methods>
+            </class>
+
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.AutoCLIP">
+                <methods>
+                    <include name="A0_init"/>
+                    <include name="A1_clip_default"/>
+                    <include name="A2_makeCall"/>
+                    <include name="A3_makeCall"/>
+                    <include name="B_deleteUsedRecords"/>
+                    <include name="C_OnlyKeepMissedCallRecords"/>
+                    <include name="D_MatchOutgoingTrunk"/>
+                    <include name="E_Disable_AutoCLIP"/>
+                </methods>
+            </class>
+
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.PickupGroup">
+                <methods>
+                    <include name="A0_init"/>
+                    <include name="A1_add_pickupgroup1"/>
+                    <include name="A_add_pickupgroup2"/>
+                    <include name="A_add_pickupgroup3"/>
+                    <include name="B_add_pickupgroup2"/>
+                    <include name="C_delete"/>
+                </methods>
+            </class>
+
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.PagingIntercom">
+                <methods>
+
+                    <include name="A0_Regist"/>
+                    <include name="A_add_paging1"/>
+                    <include name="A_add_paging2"/>
+                    <include name="B_intercom"/>
+                    <include name="C_delete"/>
+                </methods>
+            </class>
+
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.SpeedDial">
+                <methods>
+                    <include name="A0_init"/>
+                    <include name="A_add_1"/>
+                    <include name="A_add_2"/>
+                    <include name="B_export"/>
+                    <include name="C_delete"/>
+                    <include name="D_import"/>
+                </methods>
+            </class>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup">
+                <methods>
+                    <include name="A0_Register"/>
+                    <include name="A1_add_RingGroup1"/>
+                    <include name="B_edit_RingGroup1"/>
+                    <include name="C_add_RingGroup2"/>
+                    <include name="D_delete"/>
+                </methods>
+            </class>
+
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.IVR">
+                <methods>
+                    <include name="A0_Register"/>
+                    <include name="A1_add"/>
+                    <include name="B_editInbound1"/>
+                    <include name="C_dialextensions"/>
+                    <include name="D_dialoutbound"/>
+                    <include name="E_key0toExtension"/>
+                    <include name="F_key1toVoicemail"/>
+                    <include name="G_key5toDialName"/>
+                    <include name="H_keytoHangup"/>
+                    <include name="I_keytoSelectOption"/>
+                    <include name="J_keytoTimeout"/>
+                    <include name="K_keytoInvalid"/>
+                    <include name="L_checkvoicemail"/>
+                    <include name="M_delete"/>
+                    <include name="N_editInbound2"/>
+                </methods>
+            </class>
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Queue">
+                <methods>
+                    <include name="A0_Register"/>
+                    <include name="A1_add_queue6701"/>
+                    <include name="A_add_queue6702"/>
+                    <include name="A_editInbound"/>
+                    <include name="B_failtoextension"/>
+                    <include name="C_agent1"/>
+                    <include name="C_agent2"/>
+                    <include name="C_agent3"/>
+                    <include name="C_agent4"/>
+                    <include name="D_RingAll1"/>
+                    <include name="E_maxWaitTime"/>
+                    <include name="F_key"/>
+                    <include name="G1_edit6701_1"/>
+                    <include name="G2_joinEmpty"/>
+                    <include name="G3_edit6701_2"/>
+                    <include name="G4_leaveWhenEmpty"/>
+                    <include name="H1_Linear"/>
+                    <include name="H2_Linear"/>
+                    <include name="I_delete"/>
+                    <include name="J_Recovery"/>
+                </methods>
+            </class>
+
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Conference">
+                <methods>
+                    <include name="AA0_Register"/>
+                    <include name="AA1_InitConference"/>
+                    <include name="A_add_conference1"/>
+                    <include name="A_add_conference2"/>
+                    <include name="B_editInRoute1"/>
+                    <include name="C_CallIn1"/>
+                    <include name="C_CallIn2"/>
+                    <include name="C_CallIn3"/>
+                    <include name="C_CallIn4"/>
+                    <include name="C_CallIn5"/>
+                    <include name="D_callin1"/>
+                    <include name="D_callin2"/>
+                    <include name="D_callin3"/>
+                    <include name="D_callin4"/>
+                    <include name="D_callin5"/>
+                    <include name="E_invite"/>
+                    <include name="F_delete"/>
+                    <include name="G_recovery"/>
+                </methods>
+            </class>
+
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Callback">
+                <methods>
+                    <include name="A0_Register"/>
+                    <include name="A1_add_callback"/>
+                    <include name="B_editInbound1"/>
+                    <include name="C_calldefault1_sip"/>
+                    <include name="C_calldefault2_sps"/>
+                    <include name="D_editInbound1"/>
+                    <include name="E_callbackThroughSPS"/>
+                    <include name="F_delete"/>
+                    <include name="G_Recovery"/>
+                </methods>
+            </class>
+
+            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Extension">
+                <methods>
+                    <include name="A0_Register"/>
+                    <include name="A1_sip"/>
+                    <include name="A2_sip"/>
+                    <include name="A3_fxs"/>
+                    <include name="A4_fxs"/>
+                    <include name="B1_AttendTranfer"/>
+                    <include name="B2_AttendTranferTimeout"/>
+                    <include name="B3_BlindTransfer"/>
+                    <include name="C1_callpark"/>
+                    <include name="C2_callpark"/>
+                    <include name="D1_callforward"/>
+                    <include name="D2_cancellForward"/>
+                    <include name="E1_whenbusy"/>
+                    <include name="E2_cancelWhenBusy"/>
+                    <include name="F1_NoAnswer"/>
+                    <include name="F2_NoAnswer"/>
+                    <include name="G1_dnd"/>
+                    <include name="G2_canceldnd"/>
+                    <include name="H1_resetToDefault"/>
+                    <include name="I_Voicemail"/>
+                    <include name="J_internal"/>
+                    <include name="K1_check_Voicemail"/>
+                    <include name="K2_Check_OneTouchRecord"/>
+                </methods>
+            </class>
+            <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Disa_PinList"/>-->
+            <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.EmergencyNumber"/>-->
+            <!--            <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Blacklist_Whitelist"/>-->
         </classes>
     </test> <!-- YsAutoTest -->
 </suite> <!-- Default Suite -->
 
         <!--<class name="com.yeastar.swebtest.testcase.CheckToTest"/>-->
         <!--<class name="com.yeastar.swebtest.testcase.test"/>-->
-<!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.TimeCondition"/>-->
-<!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Holiday"/>-->
-<!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.CustomPrompts"/>-->
+        <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.TimeCondition"/>-->
+        <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Holiday"/>-->
+        <!--<class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.CustomPrompts"/>-->
