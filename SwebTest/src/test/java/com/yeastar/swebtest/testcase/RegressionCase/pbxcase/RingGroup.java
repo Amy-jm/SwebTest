@@ -4,12 +4,14 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.*;
 
 /**
  * 回归测试--响铃组功能
  * Created by AutoTest on 2017/10/16.
  */
+@Log4j2
 public class RingGroup extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
@@ -42,7 +44,7 @@ public class RingGroup extends SwebDriver {
         m_callFeature.addRingGroup("RingGroup1","6200",add_ring_group.rs_ringall,1000,1100,1105);
     }
 
-    @Test
+    @Test(priority =0 )
     public void A0_Register() throws InterruptedException {
         //        注册分机
 //        被测设备注册分机1000、1100、1101、1102、1105，辅助1：分机3001，辅助2：分机2000
@@ -64,7 +66,7 @@ public class RingGroup extends SwebDriver {
     }
 
 //    新建响铃组
-    @Test
+    @Test(priority = 1)
     public void A1_add_RingGroup1 () throws InterruptedException {
         Reporter.infoExec(" 新建RingGroup6201,Mem:ExtensionGroup1,其它默认"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -90,7 +92,7 @@ public class RingGroup extends SwebDriver {
         }
     }
 
-    @Test
+    @Test(priority = 2)
     public void B_edit_RingGroup1() throws InterruptedException {
         Reporter.infoExec(" 编辑RingGroup6201，成员响铃时间：15s，Failover：分机1102"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -141,14 +143,13 @@ public class RingGroup extends SwebDriver {
     }
 
 //    呼入到响铃组测试
-    @Test
+    @Test(priority = 3)
     public void C_add_RingGroup2() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         ringGroup.add.shouldBe(Condition.exist);
         Reporter.infoExec(" 新建响铃组RingSequentially6202，Sequentially,每个成员20s,成员：1000、1100、1101、1105"); //执行操作
         m_callFeature.addRingGroup("RingSequentially6202","6202",add_ring_group.rs_sequentially,1000,1100,1101,1105);
-
 //        编辑呼入路由Inroute1到RingSequentially6202
         Reporter.infoExec(" 编辑呼入路由Inroute1到RingSequentially6202");
         settings.callControl_tree.click();
@@ -161,7 +162,6 @@ public class RingGroup extends SwebDriver {
         add_inbound_route.save.click();
         ys_waitingTime(1000);
         ys_apply();
-
 //        通话测试
         Reporter.infoExec(" 2000拨打99999通过sps外线呼入到RingSequentially6202");
         pjsip.Pj_Make_Call_No_Answer(2000,"99999",DEVICE_ASSIST_2,false);
@@ -177,6 +177,7 @@ public class RingGroup extends SwebDriver {
                         pjsip.Pj_Answer_Call(1105,false);
                         ys_waitingTime(5000);
                         pjsip.Pj_Hangup_All();
+                        log.debug("[getExtensionStatus(1105,RING,10)==RING]"+getExtensionStatus(1105,RING,10));
                         m_extension.checkCDR("2000 <2000>","1105 <6202(1105)>","Answered",SPS," ",communication_inbound);
                     }else {
                         YsAssert.fail(" 预期：1105响铃20s后挂断");
@@ -188,13 +189,15 @@ public class RingGroup extends SwebDriver {
                 YsAssert.fail(" 预期：1100响铃20s后挂断");
             }
         }else{
+            log.debug("[getExtensionStatus(1000,RING,20)]==2 :"+getExtensionStatus(1000,RING,20));
+            log.debug(" [getExtensionStatus(1000,HUNGUP,25)]==4 :"+ getExtensionStatus(1000,HUNGUP,25));
             YsAssert.fail(" 预期：1000响铃20s后挂断");
         }
 
     }
 
 //    删除测试
-    @Test
+    @Test(priority =4 )
     public void D_delete() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
