@@ -3,6 +3,7 @@ package com.yeastar.swebtest.tools.pjsip;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 //import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import io.qameta.allure.Step;
 
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class PjsipApp extends PjsipDll{
         this.accounts = accounts;
     }
     //初始化PJSIP
+    @Step("【pjsip】初始化PJSIP")
     public  void Pj_Init(){
         accounts = new ArrayList<UserAccount>();
         Reporter.infoExec("pjsip init "+pjsipdll.instance.ys_init());
@@ -47,10 +49,12 @@ public class PjsipApp extends PjsipDll{
 
     }
     //释放PJSIP
+    @Step("【pjsip】释放PJSIP")
     public void Pj_Destory(){
         pjsipdll.instance.ys_destroy_pjsua();
     }
-    //在Accout数组中创建分机
+    //在Account数组中创建分机
+    @Step("【pjsip】在Account数组中创建分机")
     public void Pj_CreateAccount(int username, String password,String type,int pos){
         Pj_CreateAccount(type,username,password,pos,"",5060);
     }
@@ -78,6 +82,7 @@ public class PjsipApp extends PjsipDll{
     }
 
     //注册分机
+    @Step("【pjsip】注册分机, type:{0}, username:{1},  ip:{2}, password:{3}, port:{4}, isAsserst:{5}")
     public UserAccount Pj_Register_Account(String type,int username, String ip,String password,int port,boolean isAsserst) {
 
         UserAccount account ;
@@ -136,6 +141,7 @@ public class PjsipApp extends PjsipDll{
      * @param port
      * @
      */
+    @Step("【pjsip】账号注册 username：{0} , ip：{1},password：{2},port：{3} ")
     public void Pj_Register_Account(int username , String ip,String password,int port)  {
         Pj_Register_Account("UDP",username,ip, password,port,true);
     }
@@ -149,6 +155,7 @@ public class PjsipApp extends PjsipDll{
      * @param port
      * @
      */
+    @Step("【pjsip】账号注册 type：{0}, username：{1} , ip：{2},password：{3},port：{4} ")
     public void Pj_Register_Account(String type,int username , String ip,String password,int port)  {
         Pj_Register_Account(type,username,ip, password,port,true);
     }
@@ -170,6 +177,7 @@ public class PjsipApp extends PjsipDll{
      * @param username
      * @return
      */
+    @Step("【pjsip】取消注册：{0}")
     public int Pj_Unregister_Account(int username){
         int suc = -1;
         suc = pjsipdll.instance.ys_unregister_account(findAccountByUsername(String.valueOf(username)).accId);
@@ -181,6 +189,7 @@ public class PjsipApp extends PjsipDll{
      * 取消全部分机注册
      * @return
      */
+    @Step("【pjsip】取消全部分机注册：{0}")
     public int Pj_Unregister_Accounts(){
         int suc = -1;
         suc = pjsipdll.instance.ys_removeAccounts();
@@ -191,6 +200,7 @@ public class PjsipApp extends PjsipDll{
     }
 
     //拨号 不会自动应答  特殊呼出号码
+    @Step("【pjsip】拨号 不会自动应答 特殊呼出号码： callerNum：{0} , Callee：{1} , ServerIp：{2} , Assert：{3}")
     public String Pj_Make_Call_No_Answer(int CallerNum, String Callee,String ServerIp,boolean Assert){
         UserAccount CallerAccount ;
         CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
@@ -207,10 +217,12 @@ public class PjsipApp extends PjsipDll{
         return Pj_Make_Call_No_Answer(CallerNum,Callee,ServerIp,true);
     }
     //   //被叫方手动接听 默认 code =  200
+    @Step("【pjsip】被叫方手动接听 默认 code =  200： callerNum：{0} , Assert：{1")
     public int Pj_Answer_Call(int CalleeNum ,boolean Assert){
         return Pj_Answer_Call(CalleeNum,200,Assert);
     }
     //被叫方手动接听 可以自定义 code   486 （Busy )  200(ok)  180(ring)
+    @Step("【pjsip】被叫方手动接听 可以自定义 code   486 （Busy )  200(ok)  180(ring)： callerNum：{0} , code：{1} , Assert：{2}")
     public int Pj_Answer_Call(int CalleeNum, int code,boolean Assert) {
         int suc=-1;
         UserAccount CalleeAccount ;
@@ -247,6 +259,7 @@ public class PjsipApp extends PjsipDll{
     }
 
     //拨号 自动应答  特殊呼出号码
+    @Step("【pjsip】拨号 自动应答 特殊呼出号码： callerNum：{0} , Callee：{1} , ServerIp：{2} , Assert：{3}")
     public String Pj_Make_Call_Auto_Answer(int CallerNum, String Callee,String ServerIp,boolean Assert)  {
         UserAccount CallerAccount ;
 
@@ -289,6 +302,7 @@ public class PjsipApp extends PjsipDll{
     }
 
     //通话全部挂断
+    @Step("【pjsip】通话全部挂断")
     public int Pj_Hangup_All(){
         int suc=-1;
         suc = pjsipdll.instance.ys_hangup_all_call();
@@ -296,6 +310,7 @@ public class PjsipApp extends PjsipDll{
         return suc;
     }
     //挂断指定通话
+    @Step("【pjsip】挂断指定通话: caller:{0} , callee:{1}")
     public int Pj_hangupCall(int caller,int callee)  {
         int suc = -1;
         UserAccount account = null;
@@ -329,6 +344,7 @@ public class PjsipApp extends PjsipDll{
     }
 
     //发送DTMF
+    @Step("【pjsip】发送DTMF: username:{0} , dtmf:{1}")
     public int Pj_Send_Dtmf(int username, String... dtmf) {
         ys_waitingTime(3000);//等待输入DTMF的提示出现
         ArrayList<String> dtmfList = new ArrayList<>();
