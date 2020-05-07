@@ -1,5 +1,6 @@
 package com.yeastar.swebtest.driver;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.yeastar.swebtest.tools.pjsip.UserAccount;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.*;
 
@@ -39,14 +41,14 @@ public class SwebDriver extends Config {
     }
 
     public static void killChromePid() {
-
-        try {
-            Runtime.getRuntime().exec("taskkill /im chrome.exe /f");
+        if (!Platform.getCurrent().equals(Platform.LINUX)) {
+            try {
+                Runtime.getRuntime().exec("taskkill /im chrome.exe /f");
 //            Runtime.getRuntime().exec("taskkill /im chromedriver.exe /f");
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     /**
@@ -102,11 +104,11 @@ public class SwebDriver extends Config {
      * 注销登录
      */
     public static void logout() {
-        pageDeskTop.taskBar_User.click();
+        pageDeskTop.taskBar_User.shouldBe(visible).click();
         ys_waitingTime(1000);
-        pageDeskTop.taskBar_User_Logout.click();
+        pageDeskTop.taskBar_User_Logout.shouldBe(visible).click();
         ys_waitingTime(1000);
-        pageDeskTop.messageBox_Yes.click();
+        pageDeskTop.messageBox_Yes.shouldBe(visible).click();
         pageLogin.username.should(exist);
     }
 
@@ -934,6 +936,11 @@ public class SwebDriver extends Config {
         System.out.println("current grid row: " + gridLineNum(backupandRestore.grid).toString());
         if (!gridLineNum(backupandRestore.grid).toString().equals("0")) {
             //Thread.currentThread().getStackTrace()[1].getMethodName();
+            //delete all
+            gridSeleteAll(backupandRestore.grid);
+            backupandRestore.delete.shouldBe(Condition.visible).click();
+            backupandRestore.delete_yes.shouldBe(Condition.visible).click();
+
             int row = gridFindRowByColumn(backupandRestore.grid, backupandRestore.gridColumn_Name, className + "_Local.bak", sort_ascendingOrder);
             System.out.println("backupEnviroment row :" + row);
             if (row != -1) {
@@ -1055,7 +1062,7 @@ public class SwebDriver extends Config {
             return 0;
         }
 //        if (hubUrl != null ) {
-        if (GRID_HUB_IP != "") {
+        if (GRID_HUB_IP != "" && hubUrl!="") {
             log.debug("[GRID_HUB_IP] " + hubUrl);
             desiredCapabilities.setCapability("name", Thread.currentThread().getStackTrace()[3].getMethodName());
             desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
