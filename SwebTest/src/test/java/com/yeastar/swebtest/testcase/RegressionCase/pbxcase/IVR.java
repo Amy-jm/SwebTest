@@ -53,7 +53,7 @@ public class IVR extends SwebDriver {
         m_callFeature.addIVR("IVR6502","6502");
     }
 
-    @Test
+    @Test(priority = 0)
     public void A0_Register() {
         pjsip.Pj_Init();
         //        被测设备注册分机1000、1103、1105，辅助1：分机3001，辅助2：分机2000、2001
@@ -71,7 +71,7 @@ public class IVR extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
     }
 
-    @Test
+    @Test(priority =1 )
     public void A1_add() {
         Reporter.infoExec(" 新建IVRtest1，提示音选择autotestprompt，勾选Dial Extensions，勾选Dial Outbound Routes，勾选Dial to Check Voicemail" +
                 "按0到分机1000，按1到1000的Voicemail，按5到Dial by Name，按#到hungup，按*到Select an Option，Timeout到customPrompt：prompt1，Invalid到分机1105"); //执行操作
@@ -114,7 +114,7 @@ public class IVR extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(priority =2)
     public void B_editInbound1() {
         Reporter.infoExec(" 编辑呼入路由Inbound1，呼入到IVRtest1"); //执行操作
         settings.callControl_tree.click();
@@ -130,7 +130,7 @@ public class IVR extends SwebDriver {
     }
 
 //    Dial Extensions
-    @Test
+    @Test(priority = 3)
     public void C_dialextensions() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入IVRtest1,直拨分机1103"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
@@ -144,7 +144,7 @@ public class IVR extends SwebDriver {
     }
 
 //    Dial Outbound Routes
-    @Test
+    @Test(priority = 4)
     public void D_dialoutbound() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入IVRtest1,直拨3333通过sps外线呼出"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
@@ -158,7 +158,7 @@ public class IVR extends SwebDriver {
         m_extension.checkCDR("3001 <3001>","6501(33333)","Answered", SIPTrunk,SPS,communication_outRoute);
     }
 
-    @Test
+    @Test(priority = 5)
     public void E_key0toExtension() {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1,按0到分机1000"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
@@ -172,7 +172,7 @@ public class IVR extends SwebDriver {
         m_extension.checkCDR("2001 <2001>","1000 <6501(1000)>","Answered",SPS," ",communication_inbound);
     }
 
-    @Test
+    @Test(priority = 6)
     public void F_key1toVoicemail() {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1,按1到voicemail-1000"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
@@ -183,7 +183,7 @@ public class IVR extends SwebDriver {
         m_extension.checkCDR("2001 <2001>","6501(1000)","Voicemail",SPS," ",communication_inbound);
     }
 
-    @Test
+    @Test(priority = 7)
     public void G_key5toDialName() {
         Reporter.infoExec(" 1000拨打6501，按5到DialbyName,按957到分机1103"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"6501",DEVICE_IP_LAN,true);
@@ -200,7 +200,7 @@ public class IVR extends SwebDriver {
         m_extension.checkCDR("1000 <1000>","xlq <6501(1103)>","Answered","","",communication_internal);
     }
 
-    @Test
+    @Test(priority = 8)
     public void H_keytoHangup() {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1,按#挂断通话"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
@@ -212,7 +212,7 @@ public class IVR extends SwebDriver {
         m_extension.checkCDR("2001 <2001>","6501(h)","Answered",SPS,"",communication_inbound);
     }
 
-    @Test
+    @Test(priority = 9)
     public void I_keytoSelectOption() {
         pjsip.Pj_Hangup_All();
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1，按*到SelecttoOption--预期1105响铃"); //执行操作
@@ -228,7 +228,7 @@ public class IVR extends SwebDriver {
         m_extension.checkCDR("2001 <2001>","1105 <6501(1105)>","Answered",SPS,"",communication_inbound);
     }
 
-    @Test
+    @Test(priority =10 )
     public void J_keytoTimeout() {
         Reporter.infoExec(" 1103拨打6501，超时到prompt1"); //执行操作
         tcpSocket.connectToDevice(50000);
@@ -250,7 +250,7 @@ public class IVR extends SwebDriver {
         pjsip.Pj_Hangup_All();
     }
 
-    @Test
+    @Test(priority = 11)
     public void K_keytoInvalid() {
         Reporter.infoExec(" 1000拨打6501，按a错误按键到分机1105"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"6501",DEVICE_IP_LAN);
@@ -265,7 +265,7 @@ public class IVR extends SwebDriver {
     }
 
 //Dial to Check Voicemail
-    @Test
+    @Test(priority = 12)
     public void L_checkvoicemail() {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入IVRtest1,直接拨打*02查看1000的语音留言"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
@@ -281,7 +281,7 @@ public class IVR extends SwebDriver {
     }
 
 //    Delete
-    @Test
+    @Test(priority = 13)
     public void M_delete() {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -331,7 +331,7 @@ public class IVR extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(priority = 14)
     public void N_editInbound2() {
         Reporter.infoExec(" 编辑呼入路由Inbound1，呼入到分机1000"); //执行操作
         settings.callControl_tree.click();
