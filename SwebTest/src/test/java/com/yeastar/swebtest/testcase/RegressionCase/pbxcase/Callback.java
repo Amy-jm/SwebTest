@@ -23,7 +23,7 @@ public class Callback extends SwebDriver {
         m_extension.showCDRClounm();
     }
     
-    @Test
+    @Test(priority =0)
     public void A0_Register() throws InterruptedException {
         pjsip.Pj_Init();
         Reporter.infoExec(" 被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000"); //执行操作
@@ -35,7 +35,7 @@ public class Callback extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
     }
 
-    @Test
+    @Test(priority =1)
     public void A1_add_callback() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -67,7 +67,7 @@ public class Callback extends SwebDriver {
         ys_waitingTime(3000);
     }
 
-    @Test
+    @Test(priority =2)
     public void B_editInbound1() throws InterruptedException {
         Reporter.infoExec(" 编辑呼入路由Inbound1到Callback1"); //执行操作
         settings.callControl_tree.click();
@@ -81,7 +81,7 @@ public class Callback extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(priority =3)
     public void C_calldefault1_sip() throws InterruptedException {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入，等待2秒挂断通话"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1);
@@ -96,7 +96,7 @@ public class Callback extends SwebDriver {
         m_extension.checkCDR("callback3001","1000 <1000>","Answered",SIPTrunk,"",communication_callback);
     }
 
-    @Test
+    @Test(priority =4)
     public void C_calldefault2_sps() throws InterruptedException {
         Reporter.infoExec(" 2000拨打99999通过sps外线呼入，等待2秒挂断通话"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2000,"99999",DEVICE_ASSIST_2);
@@ -113,7 +113,7 @@ public class Callback extends SwebDriver {
 
 
 
-    @Test
+    @Test(priority =5)
     public void D_editInbound1() throws InterruptedException {
         Reporter.infoExec(" 编辑呼入路由Inbound1到Callback2"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -129,7 +129,7 @@ public class Callback extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(priority =6)
     public void E_callbackThroughSPS() throws InterruptedException {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入,等待2秒挂断通话--预期通过sps外线回拨到分机2000"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
@@ -148,7 +148,7 @@ public class Callback extends SwebDriver {
     }
     
 //    删除
-    @Test
+    @Test(priority =7)
     public void F_delete() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -197,7 +197,7 @@ public class Callback extends SwebDriver {
         YsAssert.assertEquals(row5,row7,"删除：Callback2-确定删除");
     }
     
-    @Test
+    @Test(priority =8)
     public void G_Recovery() throws InterruptedException {
         Reporter.infoExec(" 恢复呼入路由InRoute1到分机1000");
         settings.callControl_tree.click();
