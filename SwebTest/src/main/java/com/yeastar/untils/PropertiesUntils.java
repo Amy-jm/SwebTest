@@ -159,7 +159,7 @@ public class PropertiesUntils {
         if(prop.containsKey(key)){
             value = prop.getProperty(key);
         }else{
-            log.error("can not find the key");
+            log.error("[getPropertiesValue]can not find the key from path"+propPath + "key="+key);
         }
         return value;
     }
