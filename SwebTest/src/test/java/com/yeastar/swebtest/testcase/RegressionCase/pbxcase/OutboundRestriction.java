@@ -23,7 +23,7 @@ public class OutboundRestriction extends SwebDriver {
         m_extension.showCDRClounm();
 
     }
-    @Test
+    @Test(priority = 0)
     public void A0_init(){
         pjsip.Pj_Init();
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000
@@ -43,7 +43,7 @@ public class OutboundRestriction extends SwebDriver {
         outboundRestriction.add.should(Condition.exist);
     }
 //    新建呼出限制
-    @Test
+    @Test(priority =1 )
     public void A1_add_1_all() throws InterruptedException {
         deletes("  删除所有Outbound Restriction",outboundRestriction.grid,outboundRestriction.delete,outboundRestriction.delete_yes,outboundRestriction.grid_Mask);
         Reporter.infoExec(" 新建呼出限制OutRestriction1，2分钟不能超过5通");
@@ -79,7 +79,7 @@ public class OutboundRestriction extends SwebDriver {
     }
 
 //    检查分机1100被限制呼出
-    @Test
+    @Test(priority = 2)
     public void A_add_2_cancel() throws InterruptedException {
         Reporter.infoExec(" 检查分机1100被限制呼出，取消呼出限制"); //执行操作
 //        closeSetting();
@@ -101,7 +101,7 @@ public class OutboundRestriction extends SwebDriver {
         ys_waitingTime(5000);
     }
 
-    @Test
+    @Test(expectedExceptions = AssertionError.class,priority = 3)
     public void A_add_3_cancelCall() throws InterruptedException {
         Reporter.infoExec(" 分机1100取消呼出限制后能正常呼出"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1100, "13001", DEVICE_IP_LAN, false);
@@ -111,7 +111,7 @@ public class OutboundRestriction extends SwebDriver {
     }
 
 //    新建呼出限制，自定义分机
-    @Test
+    @Test(priority = 4)
     public void B_add_1_exten1102() throws InterruptedException {
         Reporter.infoExec(" 新建呼出限制：OutRestriction2，分机1102，2分钟呼出不能超过2通"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -151,7 +151,7 @@ public class OutboundRestriction extends SwebDriver {
     }
 
 //    检查分机1102被限制呼出
-    @Test
+    @Test(priority = 5)
     public void B_add_2_exten1102_cancel() throws InterruptedException {
         Reporter.infoExec(" 检查分机1102被限制呼出，取消呼出限制"); //执行操作
         closeSetting();
@@ -171,7 +171,7 @@ public class OutboundRestriction extends SwebDriver {
         ys_waitingTime(5000);
     }
 
-    @Test
+    @Test(priority = 6)
     public void B_add_3_exten1102_cancelCall() throws InterruptedException {
         Reporter.infoExec(" 分机1102取消呼出限制后能正常呼出"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1102, "13001", DEVICE_IP_LAN, false);
@@ -182,7 +182,7 @@ public class OutboundRestriction extends SwebDriver {
     }
 
 //    删除
-    @Test
+    @Test(priority = 7)
     public void C_delete() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
