@@ -46,7 +46,7 @@ public class SwebDriver extends Config {
                 Runtime.getRuntime().exec("taskkill /im chrome.exe /f");
 //            Runtime.getRuntime().exec("taskkill /im chromedriver.exe /f");
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("[error]killChromePid----IOException"+e.getMessage()+e.getStackTrace());
             }
         }
     }
