@@ -36,6 +36,7 @@ public class SwebDriver extends Config {
     public static void quitDriver() {
 //        webDriver.quit();
         logout();
+        webDriver.quit();
         if(webDriver!=null) {
             close();
         }
