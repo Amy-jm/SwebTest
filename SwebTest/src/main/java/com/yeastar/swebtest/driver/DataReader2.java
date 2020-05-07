@@ -17,8 +17,8 @@ import java.util.Properties;
 @Log4j2
 public class DataReader2 {
     
-    final static String DATA_PROPERTIES_FILE_PATH =  "/data.properties";
-    final static String loginName = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "loginName");
+    final static String DATA_PROPERTIES_FILE_PATH ="/data.properties";
+//    final static String loginName = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "loginName");
 
     /**
      * Data.properties配置
