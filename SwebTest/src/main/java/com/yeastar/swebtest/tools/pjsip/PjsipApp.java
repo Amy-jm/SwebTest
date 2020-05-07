@@ -60,9 +60,11 @@ public class PjsipApp extends PjsipDll{
     public void Pj_CreateAccount(int username, String password,String type,int pos){
         Pj_CreateAccount(type,username,password,pos,"",5060);
     }
+    @Step("【pjsip】创建分机, username：{0},  password:{1},  type:{2}, port:{3}, pos:{4} ")
     public void Pj_CreateAccount(int username, String password,String type,int port,int pos){
         Pj_CreateAccount(type,username,password,pos,"",port);
     }
+    @Step("【pjsip】创建分机,type:{0}, username：{1},  password:{2},  pos:{3}, ip:{4}, port:{5} ")
     public void Pj_CreateAccount(String type,int username, String password,int pos,String ip,int port){
         UserAccount account = new UserAccount();
         account.username = String.valueOf(username);
@@ -167,10 +169,12 @@ public class PjsipApp extends PjsipDll{
      * @param ip
      * @
      */
+    @Step("【pjsip】账号注册  username：{0} , ip：{1}")
     public void Pj_Register_Account(int username,String ip) {
         Pj_Register_Account("UDP",username,ip, "",5060,true);
     }
 
+    @Step("【pjsip】账号注册  username：{0} , ip：{1} ,port:{2}")
     public void Pj_Register_Account(int username,String ip,int port) {
         Pj_Register_Account("UDP",username,ip, "",port,true);
     }
@@ -215,6 +219,7 @@ public class PjsipApp extends PjsipDll{
 
         return "";
     }
+    @Step("【pjsip】拨号 不会自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2} ")
     public String Pj_Make_Call_No_Answer(int CallerNum,String Callee,String ServerIp ){
         return Pj_Make_Call_No_Answer(CallerNum,Callee,ServerIp,true);
     }
@@ -299,6 +304,8 @@ public class PjsipApp extends PjsipDll{
 //        pageDeskTop.CDRandRecording.click();
         return callee_status;
     }
+
+    @Step("【pjsip】拨号 自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2}")
     public String Pj_Make_Call_Auto_Answer(int CallerNum, String CalleeNum,String ServerIp)  {
         return Pj_Make_Call_Auto_Answer(CallerNum,CalleeNum,ServerIp,true);
     }

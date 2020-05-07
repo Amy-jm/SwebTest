@@ -21,7 +21,7 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
     @Override
     public  void onTestSuccess(ITestResult tr) {
         super.onTestSuccess(tr);
-        log.info( "[Success] "+tr.getName());
+        log.debug( "[Success] "+tr.getTestClass()+tr.getName());
 
         Cookie cookie = new Cookie("zaleniumTestPassed", "true");
         webDriver.manage().addCookie(cookie);
@@ -39,7 +39,7 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
         new ReportUtils().step("[Test Failure Screenshot]",true);
          **/
         super.onTestFailure(tr);
-        log.info("[Failure] "+tr.getName());
+        log.debug("[Failure] "+tr.getTestClass()+tr.getName());
 
         //更新用例状态 zalenium
         Cookie cookie = new Cookie("zaleniumTestPassed", "false");
@@ -54,7 +54,7 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
     @Override
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
-        log.info("[Skipped] "+tr.getName());
+        log.debug("[Skipped] "+tr.getTestClass()+tr.getName());
     }
 
     /**
@@ -82,13 +82,13 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
 
     /**
      * onTestStart
-     * @param result
+     * @param tr
      */
     @Override
-    public void onTestStart(ITestResult result) {
-        super.onTestStart(result);
-        log.info( "[Start test] " +result.getName());
-        Cookie cookie = new Cookie("zaleniumMessage","[Start test] " + result.getName());
+    public void onTestStart(ITestResult tr) {
+        super.onTestStart(tr);
+        log.debug( "[Start test] " +tr.getTestClass()+tr.getName());
+        Cookie cookie = new Cookie("zaleniumMessage","[Start test] " + tr.getName());
         webDriver.manage().addCookie(cookie);
     }
 
