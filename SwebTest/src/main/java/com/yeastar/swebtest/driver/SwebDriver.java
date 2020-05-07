@@ -36,7 +36,9 @@ public class SwebDriver extends Config {
     public static void quitDriver() {
 //        webDriver.quit();
         logout();
-        close();
+        if(webDriver!=null) {
+            close();
+        }
 //        ys_waitingTime(5000);
     }
 
