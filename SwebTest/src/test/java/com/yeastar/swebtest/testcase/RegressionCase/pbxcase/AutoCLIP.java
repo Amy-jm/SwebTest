@@ -27,7 +27,7 @@ public class AutoCLIP extends SwebDriver {
 
     }
 
-    @Test(groups = "A1")
+    @Test(groups = "A1",priority = 0)
     public void A0_init(){
         pjsip.Pj_Init();
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2001
@@ -39,7 +39,7 @@ public class AutoCLIP extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
     }
 //    默认选择所有外线
-    @Test(groups = "A1")
+    @Test(groups = "A1", priority = 1)
     public void A1_clip_default() throws InterruptedException {
 
         Reporter.infoExec(" ----AutoCLIP选择所有外线,其它默认----"); //执行操作
@@ -81,7 +81,7 @@ public class AutoCLIP extends SwebDriver {
         ys_apply();
     }
 
-    @Test(groups = "A1")
+    @Test(groups = "A1",priority = 2)
     public void A2_makeCall() throws InterruptedException {
         //        通话测试
         Reporter.infoExec(" 1101拨打13001通过sip外线呼出");
@@ -99,7 +99,7 @@ public class AutoCLIP extends SwebDriver {
 
     }
 
-    @Test(dependsOnGroups = {"A1"})
+    @Test(priority = 3)
     public void A3_makeCall() throws InterruptedException {
         //        删除AutoCLIP list的记录
         Reporter.infoExec(" 删除AutoCLIP List的所有记录");
@@ -110,7 +110,13 @@ public class AutoCLIP extends SwebDriver {
         ys_waitingLoading(autoCLIPRoutes.grid_Mask);
         gridSeleteAll(autoCLIPRoutes.grid);
         autoCLIPRoutes.delete.click();
-        autoCLIPRoutes.delete_yes.click();
+        ys_waitingTime(3000);
+        if (autoCLIPRoutes.delete_yes.isDisplayed()){
+            autoCLIPRoutes.delete_yes.click();
+        }
+        if (autoCLIPRoutes.delete_ok.isDisplayed()){
+            autoCLIPRoutes.delete_ok.click();
+        }
         ys_waitingLoading(autoCLIPRoutes.grid_Mask);
         autoCLIPRoutes.closeAutoClIP_List();
         ys_waitingTime(3000);
@@ -127,7 +133,7 @@ public class AutoCLIP extends SwebDriver {
 
 
 //    Delete Used Records
-    @Test
+    @Test(priority = 4)
     public void B_deleteUsedRecords() throws InterruptedException {
         Reporter.infoExec(" ----启用Delete Used Records----"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -163,7 +169,7 @@ public class AutoCLIP extends SwebDriver {
     }
 
 //    Only Keep Missed Call Records
-    @Test
+    @Test(priority = 5)
     public void C_OnlyKeepMissedCallRecords() throws InterruptedException {
         Reporter.infoExec(" ----启用Only Keep Missed Call Records----"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -211,7 +217,7 @@ public class AutoCLIP extends SwebDriver {
     }
 
 //    Match Outgoing Trunk
-    @Test
+    @Test(priority = 6)
     public void D_MatchOutgoingTrunk() throws InterruptedException {
         Reporter.infoExec(" ----启用Match Outgoing Trunk----"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -249,7 +255,7 @@ public class AutoCLIP extends SwebDriver {
     }
 
 //    取消AutoCLIP
-    @Test
+    @Test(priority = 7)
     public void E_Disable_AutoCLIP() throws InterruptedException {
         Reporter.infoExec(" ----不启用AutoCLIP----"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -264,7 +270,13 @@ public class AutoCLIP extends SwebDriver {
         ys_waitingLoading(autoCLIPRoutes.grid_Mask);
         gridSeleteAll(autoCLIPRoutes.grid);
         autoCLIPRoutes.delete.click();
-        autoCLIPRoutes.delete_yes.click();
+        ys_waitingTime(3000);
+        if (autoCLIPRoutes.delete_yes.isDisplayed()){
+            autoCLIPRoutes.delete_yes.click();
+        }
+        if (autoCLIPRoutes.delete_ok.isDisplayed()){
+            autoCLIPRoutes.delete_ok.click();
+        }
         ys_waitingLoading(autoCLIPRoutes.grid_Mask);
         autoCLIPRoutes.closeAutoClIP_List();
         ys_waitingTime(3000);
