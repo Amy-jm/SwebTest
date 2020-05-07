@@ -35,7 +35,7 @@ public class PagingIntercom extends SwebDriver{
 
 
     }
-    @Test
+    @Test(priority = 0)
     public void A0_Regist(){
         pjsip.Pj_Init();
         //        被测设备注册分机1000，1100,1101,1105
@@ -49,7 +49,7 @@ public class PagingIntercom extends SwebDriver{
         pjsip.Pj_Register_Account(1105,DEVICE_IP_LAN,UDP_PORT);
     }
 //    新建广播组Paging6300：单工，不启用*Answer，成员：1100,1105
-    @Test
+    @Test(priority = 1)
     public void A_add_paging1() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -90,7 +90,7 @@ public class PagingIntercom extends SwebDriver{
     }
 
 //    新建广播组Paging6301:双工，启用*Answer，成员：ExtensionGroup1
-    @Test
+    @Test(priority = 2)
     public void A_add_paging2() throws InterruptedException {
         Reporter.infoExec(" 新建广播组Paging6301：双工，启用*Answer成员：ExtensionGroup1"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -146,7 +146,7 @@ public class PagingIntercom extends SwebDriver{
     }
 
 //    对讲
-    @Test
+    @Test(priority = 3)
     public void B_intercom() throws InterruptedException {
         Reporter.infoExec(" 1000拨打*51105"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000,"*51105",DEVICE_IP_LAN);
@@ -156,7 +156,7 @@ public class PagingIntercom extends SwebDriver{
     }
 
 //    删除
-    @Test
+    @Test(priority = 4)
     public void C_delete() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
