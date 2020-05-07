@@ -87,7 +87,9 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
     @Override
     public void onTestStart(ITestResult result) {
         super.onTestStart(result);
-        log.info( "[Start] " +result.getName());
+        log.info( "[Start test] " +result.getName());
+        Cookie cookie = new Cookie("zaleniumMessage","[Start test] " + result.getName());
+        webDriver.manage().addCookie(cookie);
     }
 
 //    @Override
@@ -106,27 +108,12 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
 //    }
 
     @Override
-    public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-//        if (method.isTestMethod()) {
-//            RemoteWebDriver driver = DriverWrap.getDriver();
-//            if (driver != null) {
-//                driver.quit();
-//            }
-//        }
+    public void afterInvocation(IInvokedMethod method, ITestResult iTestResult) {
+       log.debug("[afterInvocation]"+iTestResult.getName());
     }
 
     @Override
     public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-//        System.out.println( "********************* beforeInvocation ************************");
-//        if (iInvokedMethod.isTestMethod()) {
-//            try {
-//                RemoteWebDriver driver = DriverFactory.getRemoteBrowser();
-//                new DriverWrap().setWebDriver(driver);
-//                System.out.println( "Session: "+driver.getSessionId());
-//
-//            } catch (Exception e) {
-//                System.out.println( "********************* create RemoteWebDriver exception ************************");
-//            }
-//        }
+        log.debug("[beforeInvocation]"+iTestResult.getName());
     }
 }
