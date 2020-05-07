@@ -3,12 +3,16 @@ package com.yeastar.swebtest.testcase.RegressionCase.pbxcase;
 import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
 import org.testng.annotations.*;
 
 /**
  * Created by AutoTest on 2017/10/13.
  * Record Keep Time 、Digits Match 未测试！！！
  */
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class AutoCLIP extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
@@ -23,7 +27,7 @@ public class AutoCLIP extends SwebDriver {
 
     }
 
-    @Test
+    @Test(groups = "A1")
     public void A0_init(){
         pjsip.Pj_Init();
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2001
@@ -35,7 +39,7 @@ public class AutoCLIP extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
     }
 //    默认选择所有外线
-    @Test
+    @Test(groups = "A1")
     public void A1_clip_default() throws InterruptedException {
 
         Reporter.infoExec(" ----AutoCLIP选择所有外线,其它默认----"); //执行操作
@@ -61,6 +65,7 @@ public class AutoCLIP extends SwebDriver {
         ys_waitingLoading(autoCLIPRoutes.grid_Mask);
         gridSeleteAll(autoCLIPRoutes.grid);
         autoCLIPRoutes.delete.click();
+        ys_waitingTime(3000);
         if (autoCLIPRoutes.delete_yes.isDisplayed()){
             autoCLIPRoutes.delete_yes.click();
         }
@@ -76,7 +81,7 @@ public class AutoCLIP extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(groups = "A1")
     public void A2_makeCall() throws InterruptedException {
         //        通话测试
         Reporter.infoExec(" 1101拨打13001通过sip外线呼出");
@@ -94,7 +99,7 @@ public class AutoCLIP extends SwebDriver {
 
     }
 
-    @Test
+    @Test(dependsOnGroups = {"A1"})
     public void A3_makeCall() throws InterruptedException {
         //        删除AutoCLIP list的记录
         Reporter.infoExec(" 删除AutoCLIP List的所有记录");
