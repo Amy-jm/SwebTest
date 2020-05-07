@@ -37,6 +37,7 @@ public class PageDeskTop {
     public SelenideElement autopShortcut = $(By.id("autop-shortcut"));
     public SelenideElement guideShortcut = $(By.id("guide-specification-shortcut"));
     public SelenideElement linkusShortcut = $(By.id("linkus-shortcut"));
+    public SelenideElement call_Control = $(By.id("menucallcontrol"));
 
     //reboot
     public SelenideElement reboot_Yes = $(By.xpath(".//div[starts-with(@id,'notifaction')]//span[text()=\"Yes\"]"));
