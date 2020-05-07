@@ -43,7 +43,7 @@ public class Queue extends SwebDriver {
         m_callFeature.addQueue("Queue1","6700",1000,1100,1105);
     }
 
-    @Test
+    @Test(priority = 0)
     public void A0_Register() throws InterruptedException {
         pjsip.Pj_Init();
         //        被测设备注册分机1000、1100、1101、1102、1105，辅助1：分机3001，辅助2：分机2000、2001
@@ -65,7 +65,7 @@ public class Queue extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
     }
 
-    @Test
+    @Test(priority = 1)
     public void A1_add_queue6701() throws InterruptedException {
         Reporter.infoExec(" 新建Queue6701,Password:123，FailoverDestination：分机1000，Static Agents：空"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -85,7 +85,7 @@ public class Queue extends SwebDriver {
         ys_waitingLoading(queue.grid_Mask);
     }
 
-    @Test
+    @Test(priority = 2)
     public void A_add_queue6702() throws InterruptedException {
         Reporter.infoExec(" 新建Queue6702,Ring Strategy：RingAll，Static Agents：ExtensionGroup1，Agent Announcement：prompt1，" +
                 "Caller Max Wait Time:100,按9到分机1000"); //执行操作
@@ -108,7 +108,7 @@ public class Queue extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(priority = 3)
     public void A_editInbound() throws InterruptedException {
         Reporter.infoExec(" 编辑呼入路由Inbound1到Queue6702"); //执行操作
         settings.callControl_tree.click();
@@ -123,7 +123,7 @@ public class Queue extends SwebDriver {
     }
 
 //    Failover Destination /leave when empty /Join Empty
-   @Test
+   @Test(priority = 4)
     public void B_failtoextension() throws InterruptedException {
         Reporter.infoExec(" 1105拨打6701，预期到FailDestination--1000"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1105,"6701",DEVICE_IP_LAN,false);
@@ -134,7 +134,7 @@ public class Queue extends SwebDriver {
     }
 
 //    动态坐席 & Password
-    @Test(dependsOnMethods = {"A0_Register"})
+    @Test(priority = 5)
     public void C_agent1(Method method) throws InterruptedException {
         Reporter.infoExec(" 1100拨打6701*加入队列6701，密码：123"); //执行操作
         tcpSocket.connectToDevice(100000);
@@ -156,7 +156,7 @@ public class Queue extends SwebDriver {
         ys_waitingTime(10000);
     }
 
-    @Test(dependsOnMethods = {"A0_Register"})
+    @Test(priority = 6)
     public void C_agent2() throws InterruptedException {
         Reporter.infoExec(" 1105拨打6701，预期动态坐席1100接听"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1105,"6701",DEVICE_IP_LAN,false);
@@ -167,7 +167,7 @@ public class Queue extends SwebDriver {
     }
 
     //    退出动态坐席
-    @Test
+    @Test(priority = 7)
     public void C_agent3() throws InterruptedException {
         Reporter.infoExec(" 1100拨打6701**退出队列6701"); //执行操作
         tcpSocket.connectToDevice(40000);
@@ -178,7 +178,7 @@ public class Queue extends SwebDriver {
         YsAssert.assertEquals(showKeyWord,true,"动态坐席1100退出队列6701");
     }
 
-    @Test
+    @Test(priority = 8)
     public void C_agent4() throws InterruptedException {
         Reporter.infoExec(" 1105拨打6701，预期FailDestina-1000接听"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1105,"6701",DEVICE_IP_LAN,false);
@@ -189,7 +189,7 @@ public class Queue extends SwebDriver {
     }
 
 //    Ring All & Agent Announcement & ExtentionGroup
-    @Test(dependsOnMethods = {"A0_Register"})
+    @Test(priority = 9)
     public void D_RingAll1() throws InterruptedException {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到Queue6702,1100接听"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
@@ -208,7 +208,7 @@ public class Queue extends SwebDriver {
     }
 
 //    Caller Max Wait Time
-    @Test(dependsOnMethods = {"A0_Register"})
+    @Test(priority = 10)
     public void E_maxWaitTime() throws InterruptedException {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入到Queue6702,100s内无人接就挂断通话"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
@@ -221,7 +221,7 @@ public class Queue extends SwebDriver {
     }
 
 //    key to 1000
-    @Test(dependsOnMethods = {"A0_Register"})
+    @Test(priority = 11)
     public void F_key() throws InterruptedException {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入到Queue6702,按9到分机1000"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
@@ -241,7 +241,7 @@ public class Queue extends SwebDriver {
     }
 
 //    Join Empty & Leave When Empty
-    @Test
+    @Test(priority =12)
     public void G1_edit6701_1() throws InterruptedException {
         Reporter.infoExec(" 编辑Queue6701,启用Empty，不启用Leave When Empty"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -258,7 +258,7 @@ public class Queue extends SwebDriver {
         ys_apply();
     }
 
-    @Test(expectedExceptions = AssertionError.class,dependsOnMethods = {"A0_Register"})
+    @Test(expectedExceptions = AssertionError.class,priority = 13)
     public void G2_joinEmpty() throws InterruptedException {
         Reporter.infoExec(" 1100拨打6701--预期：队列无有效坐席，仍可成功呼入队列"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"6701",DEVICE_IP_LAN);
@@ -270,7 +270,7 @@ public class Queue extends SwebDriver {
     }
 
 //    Leave When Empty
-    @Test
+    @Test(priority = 14)
     public void G3_edit6701_2() throws InterruptedException {
         Reporter.infoExec(" 编辑Queue6701，启用Empty，启用Leave When Empty"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -287,7 +287,7 @@ public class Queue extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(priority = 15)
     public void G4_leaveWhenEmpty() throws InterruptedException {
         Reporter.infoExec(" 1100拨打6701--预期：队列无有效坐席--failover 1000分机响铃"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"6701",DEVICE_IP_LAN);
@@ -300,7 +300,7 @@ public class Queue extends SwebDriver {
     }
 
 //    编辑6701，成员选择1105，1000,1101，响铃策略线性响铃
-    @Test
+    @Test(priority = 16)
     public void H1_Linear() throws InterruptedException {
         Reporter.infoExec(" 编辑6701，成员选择1105，1101,1102，响铃策略线性响铃"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -319,7 +319,7 @@ public class Queue extends SwebDriver {
         ys_apply();
     }
 
-    @Test(dependsOnMethods = {"A0_Register"})
+    @Test(priority = 17)
     public void H2_Linear() throws InterruptedException {
         Reporter.infoExec(" 1000拨打6701，轮到1102响铃时接听"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"6701",DEVICE_IP_LAN);
@@ -336,7 +336,7 @@ public class Queue extends SwebDriver {
     }
 
 //    删除
-    @Test
+    @Test(priority =18 )
     public void I_delete() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -386,7 +386,7 @@ public class Queue extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(priority =19 )
     public void J_Recovery() throws InterruptedException {
         Reporter.infoExec(" 恢复呼入路由InRoute1到分机1000");
         settings.callControl_tree.click();
