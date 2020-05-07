@@ -23,7 +23,7 @@ public class SpeedDial extends SwebDriver {
 
 
     }
-    @Test
+    @Test(priority = 0)
     public void A0_init(){
         pjsip.Pj_Init();
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000
@@ -34,7 +34,7 @@ public class SpeedDial extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
     }
-    @Test
+    @Test(priority = 1)
     public void A_add_1()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -69,7 +69,7 @@ public class SpeedDial extends SwebDriver {
 
     }
 
-    @Test
+    @Test(priority = 2)
     public void A_add_2()  {
         Reporter.infoExec(" 1000拨打*9991234567通过sps外线呼出");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"*9991234567",DEVICE_IP_LAN,false);
@@ -80,7 +80,7 @@ public class SpeedDial extends SwebDriver {
     }
 
 //    导出、导入
-    @Test
+    @Test(priority = 3)
     public void B_export()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -88,7 +88,7 @@ public class SpeedDial extends SwebDriver {
         speedDial.export.click();
     }
 
-    @Test
+    @Test(priority = 4)
     public void C_delete()  {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -138,7 +138,7 @@ public class SpeedDial extends SwebDriver {
 
     }
 
-    @Test
+    @Test(priority = 5)
     public void D_import()  {
         Reporter.infoExec(" 导入速拨码"); //执行操作
         pageDeskTop.taskBar_Main.click();
