@@ -4,6 +4,7 @@ import com.yeastar.swebtest.tools.reporter.Reporter;
 //import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import static com.yeastar.swebtest.driver.SwebDriver.*;
 /**
  * Created by Yeastar on 2017/6/7.
  */
+@Log4j2
 public class PjsipApp extends PjsipDll{
 
     final static int PJSIP_INV_STATE_NULL=0;	        /**< Before INVITE is sent or received  0*/
@@ -272,9 +274,9 @@ public class PjsipApp extends PjsipDll{
 //        uri = CalleeAccount.uriHead+CalleeAccount.username+"@"+ServerIp;
         uri = "sip:"+Callee+"@"+ ServerIp+":"+CallerAccount.port;
 
-        System.out.println("uri/./.........."+uri+"  "+CallerAccount.accId);
-        int retMakecall= pjsipdll.instance.ys_makeCall(CallerAccount.accId,uri,true);
-        System.out.println("Make call Auto "+ retMakecall);
+        log.debug("uri/./.........."+uri+"  "+CallerAccount.accId);
+        long retMakecall= pjsipdll.instance.ys_makeCall(CallerAccount.accId,uri,true);
+        log.debug("[Make call Auto] "+ retMakecall);
         if(Assert){
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();
