@@ -71,9 +71,8 @@
                         <!--<testng outputDir="test-output/html/"/>-->
                     </suiteXmlFiles>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <reuseForks>false</reuseForks>
                     <!--                    add usersystemclassloader for vm crash-->
-                    <!--                    <useSystemClassLoader>false</useSystemClassLoader>-->
+                                        <useSystemClassLoader>false</useSystemClassLoader>
                     <!--                    关闭并发-->
                     <forkMode>once</forkMode>
                     <!--                    <forkMode>once</forkMode>-->
