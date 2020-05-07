@@ -26,7 +26,7 @@ public class Conference extends SwebDriver {
         m_extension.showCDRClounm();
     }
 
-    @Test
+    @Test(priority = 0)
     public void AA0_Register() throws InterruptedException {
         pjsip.Pj_Init();
         Reporter.infoExec(" 被测设备注册分机1000、1100、1105，辅助1：分机3001，辅助2：分机2001"); //执行操作
@@ -42,7 +42,7 @@ public class Conference extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
     }
 
-    @Test
+    @Test(priority =1)
     public void AA1_InitConference() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -59,7 +59,7 @@ public class Conference extends SwebDriver {
         m_callFeature.addConference("6400","Conference1");
     }
 
-    @Test
+    @Test(priority =2)
     public void A_add_conference1() throws InterruptedException {
         Reporter.infoExec(" 新建Conference6401，默认设置"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -68,7 +68,7 @@ public class Conference extends SwebDriver {
         m_callFeature.addConference("6401","Conference6401");
     }
 
-    @Test
+    @Test(priority =3)
     public void A_add_conference2() throws InterruptedException {
         Reporter.infoExec(" 新建Conference6402，与会者密码123，启用等候管理员，提示音：分机号码，Allow Participant to Invite：不启用，" +
                 "管理员密码：456，管理员：1000、1100"); //执行操作
@@ -89,7 +89,7 @@ public class Conference extends SwebDriver {
         ys_waitingTime(3000);
     }
 
-    @Test
+    @Test(priority =4)
     public void B_editInRoute1() throws InterruptedException {
         Reporter.infoExec(" 编辑呼入路由InRoute1到Conference6402"); //执行操作
         settings.callControl_tree.click();
@@ -104,7 +104,7 @@ public class Conference extends SwebDriver {
         ys_apply();
     }
 
-    @Test
+    @Test(priority =5)
     public void C_CallIn1() throws InterruptedException {
         Reporter.infoExec(" 1000拨打6401呼入到会议室6401"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1000,"6401",DEVICE_IP_LAN);
@@ -114,7 +114,7 @@ public class Conference extends SwebDriver {
         System.out.println("会议室成员数："+num);
     }
 
-    @Test
+    @Test(priority =6)
     public void C_CallIn2() throws InterruptedException {
         Reporter.infoExec(" 1100拨打6401呼入到会议室6401"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1100,"6401",DEVICE_IP_LAN);
@@ -124,7 +124,7 @@ public class Conference extends SwebDriver {
         System.out.println("会议室成员数："+num);
     }
 
-    @Test
+    @Test(priority =7)
     public void C_CallIn3() throws InterruptedException {
         Reporter.infoExec(" 1105拨打6401呼入到会议室6401"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1105,"6401",DEVICE_IP_LAN);
@@ -134,7 +134,7 @@ public class Conference extends SwebDriver {
     }
 
 
-    @Test
+    @Test(priority =8)
     public void C_CallIn4() throws InterruptedException {
         Reporter.infoExec(" 1000退出会议室6401"); //执行操作
         pjsip.Pj_hangupCall(1000,1000);
@@ -144,7 +144,7 @@ public class Conference extends SwebDriver {
         System.out.println("会议室成员数："+num);
     }
 
-    @Test
+    @Test(priority =9)
     public void C_CallIn5() throws InterruptedException {
         num=1;
         pjsip.Pj_Hangup_All();
@@ -153,7 +153,7 @@ public class Conference extends SwebDriver {
     }
 
 
-    @Test
+    @Test(priority =10)
     public void D_callin1() throws InterruptedException {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入6402，输入与会密码123"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(3001,"3000",DEVICE_ASSIST_1,false);
@@ -165,7 +165,7 @@ public class Conference extends SwebDriver {
         System.out.println("会议室成员数："+num);
     }
 
-    @Test
+    @Test(priority =11)
     public void D_callin2() throws InterruptedException {
         Reporter.infoExec(" 2001拨打99999通过sps外线呼入6402，输入管理员密码456"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(2001,"99999",DEVICE_ASSIST_2,false);
@@ -177,7 +177,7 @@ public class Conference extends SwebDriver {
         System.out.println("会议室成员数："+num);
     }
 
-    @Test
+    @Test(priority =12)
     public void D_callin3() throws InterruptedException {
         ys_waitingTime(2000);
         Reporter.infoExec(" 1000拨打6402呼入6402，无需密码"); //执行操作
@@ -188,7 +188,7 @@ public class Conference extends SwebDriver {
         System.out.println("会议室成员数："+num);
     }
 
-    @Test
+    @Test(priority =13)
     public void D_callin4() throws InterruptedException {
         Reporter.infoExec(" 1105拨打6402呼入6402，输入与会者密码123"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1105,"6402",DEVICE_IP_LAN,false);
@@ -204,7 +204,7 @@ public class Conference extends SwebDriver {
         System.out.println("会议室成员数："+num);
     }
 
-    @Test
+    @Test(priority =14)
     public void D_callin5() throws InterruptedException {
         Reporter.infoExec(" 挂断所有通话,所有成员退出会议室6402"); //执行操作
         pjsip.Pj_Hangup_All();
@@ -214,7 +214,7 @@ public class Conference extends SwebDriver {
     }
 
 //    按#邀请
-    @Test
+    @Test(priority =15)
     public void E_invite() throws InterruptedException {
         Reporter.infoExec(" 1105呼入到会议室6401"); //执行操作
         pjsip.Pj_Make_Call_No_Answer(1105,"6401",DEVICE_IP_LAN,false);
@@ -229,7 +229,7 @@ public class Conference extends SwebDriver {
     }
     
 //    删除
-    @Test
+    @Test(priority =16)
     public void F_delete() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -278,7 +278,7 @@ public class Conference extends SwebDriver {
         YsAssert.assertEquals(row5,row7,"删除：Conference6402-确定删除");
     }
 
-    @Test
+    @Test(priority =17)
     public void G_recovery() throws InterruptedException {
         Reporter.infoExec(" 恢复呼入路由InRoute1到分机1000");
         settings.callControl_tree.click();
