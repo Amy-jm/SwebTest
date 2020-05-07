@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import java.util.ArrayList;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.actions;
 import static com.yeastar.swebtest.driver.SwebDriver.*;
 
 /**
@@ -43,7 +44,7 @@ public class Add_Inbound_Route {
     public SelenideElement name = $(By.id("st-ir-name-inputEl"));
     public SelenideElement DIDPatem = $(By.id("st-ir-didprefix-inputEl"));
     public SelenideElement callIDPattem = $(By.id("st-ir-calleridprefix-inputEl"));
-
+    public SelenideElement enable_time_condition= $(By.id("st-ir-enabletimecondition-inputEl"));
     public String enableTimeCondition ="st-ir-enabletimecondition";
     public SelenideElement addTimeCondition = $(By.id("st-ir-addtimecondition"));
     public String destinationType = "st-ir-desttype";
@@ -56,7 +57,15 @@ public class Add_Inbound_Route {
     public SelenideElement save = $(By.xpath(".//div[starts-with(@id,'inrouter-edit-')]//span[text()='Save']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'inrouter-edit-')]//span[text()='Cancel']"));
 
-
+    /**
+     * setting enable time Condition
+     * true is check
+     */
+    public void set_enable_time_condition_status(boolean boo){
+        if(!enable_time_condition.getAttribute("aria-checked").equals(boo)){
+          actions().click(enable_time_condition).build().perform();
+        }
+    }
 
     public void SetTimeConditionTableviewDestination(int row, int column, String des)  {
         ys_waitingTime(2000);
