@@ -32,7 +32,7 @@ public class PickupGroup extends SwebDriver{
         m_general.setPickup(true,"*4",true,"*04");
 
     }
-    @Test
+    @Test(priority = 0)
     public void A0_init(){
         pjsip.Pj_Init();
         //        被测设备注册分机1000/1100/1105，辅助1：分机3001
@@ -47,7 +47,7 @@ public class PickupGroup extends SwebDriver{
     }
 
 //内部分机互打截答、指定截答
-    @Test
+    @Test(priority = 1)
     public void A1_add_pickupgroup1() throws InterruptedException {
 
         pageDeskTop.taskBar_Main.click();
@@ -79,7 +79,7 @@ public class PickupGroup extends SwebDriver{
 
     }
 
-    @Test
+    @Test(priority = 2)
     public void A_add_pickupgroup2() throws InterruptedException {
         Reporter.infoExec(" 1000拨打1100,1105按*4截答--预期截答失败");
         pjsip.Pj_Make_Call_No_Answer(1000,"1100",DEVICE_IP_LAN);
@@ -94,7 +94,7 @@ public class PickupGroup extends SwebDriver{
 
     }
 
-    @Test
+    @Test(priority = 3)
     public void A_add_pickupgroup3() throws InterruptedException {
         Reporter.infoExec(" 1000拨打1100,1105按*041100截答--预期截答成功");
         pjsip.Pj_Make_Call_No_Answer(1000,"1100",DEVICE_IP_LAN);
@@ -111,7 +111,7 @@ public class PickupGroup extends SwebDriver{
 
 
 //    分机组、外线呼入截答
-    @Test
+    @Test(priority = 4)
     public void B_add_pickupgroup2() throws InterruptedException {
         Reporter.infoExec(" 新建截答组PickupExGroup,成员：ExtensionGroup1"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -134,7 +134,7 @@ public class PickupGroup extends SwebDriver{
     }
 
 //    删除
-    @Test
+    @Test(priority = 5)
     public void C_delete() throws InterruptedException {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
