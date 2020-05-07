@@ -80,7 +80,7 @@
 <!--                    <parallel>methods</parallel>-->
 <!--                    <threadCount>5</threadCount>-->
                     <argLine>-Dfile.encoding=UTF-8 </argLine>
-                    <argLine>-Xmx1024m -Xms1024m -XX:PermSize=1024 -XX:MaxPermSize=1024</argLine>
+                    <argLine>-Xmx1024m -Xms256m -XX:PermSize=256 -XX:MaxPermSize=1024</argLine>
                     <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
 
                     <workingDirectory>${project.build.directory}</workingDirectory>
