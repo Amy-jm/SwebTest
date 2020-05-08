@@ -49,4 +49,7 @@ public class PageDeskTop {
     //Privacy Policy Agreement
     public String pp_agreement_checkBox = "pp-nevernotify";
     public SelenideElement pp_comfirm = $(By.id("pp-save"));
+    //restore notification
+    public SelenideElement restore_alert_yes = $(By.xpath("//span[text()=\"Yes\"]"));
+
 }
