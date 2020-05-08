@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.yeastar.swebtest.tools.pjsip.UserAccount;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -38,6 +39,7 @@ public class SwebDriver extends Config {
         logout();
         webDriver.quit();
         if(webDriver!=null) {
+            log.debug("webdriver is not null");
             close();
         }
 //        ys_waitingTime(5000);
@@ -90,8 +92,7 @@ public class SwebDriver extends Config {
         }
         pageDeskTop.taskBar_User.should(exist);
 //        mySettings.close.click();
-        sleep(1000);
-
+//        sleep(1000);
         if (Integer.valueOf(VERSION_SPLIT[1]) > 9 || PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)) {
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.settingShortcut.click();
@@ -545,6 +546,7 @@ public class SwebDriver extends Config {
     /**
      * please wait 页面等待
      */
+    @Step("等待页面加载")
     public static void ys_waitingMask() {
         Date date = new Date();
         long time = date.getTime();
@@ -603,11 +605,12 @@ public class SwebDriver extends Config {
      * 等待重启
      * param sec 默认300 S
      */
+
     public static void waitReboot() {
         waitReboot(300);
 
     }
-
+    @Step("等待重启 {0}")
     public static void waitReboot(int sec) {
 //        new WebDriverWait(webDriver,sec).until(ExpectedConditions.presenceOfElementLocated(By.id("login-btn-btnEl")));
         while (true) {
@@ -622,7 +625,7 @@ public class SwebDriver extends Config {
             }
         }
         boolean rebootSuc = pageLogin.username.isDisplayed();
-        System.out.println("waitReboot ..check " + rebootSuc);
+        log.debug("waitReboot ..check " + rebootSuc);
         YsAssert.assertEquals(rebootSuc, true, "waitReboot重启");
     }
 

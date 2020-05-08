@@ -730,6 +730,8 @@ public class BeforeTest extends SwebDriver{
     @Test(enabled = false)
     public void S4_upload_prompt1() {
         if (Platform.getCurrent().equals(Platform.LINUX)) {
+            executeJs("Ext.getCmp('st-exten-filename').setRawValue('/home/autotest/exportFile/prompt1.wav')");
+//            /home/autotest/exportFile
             //TODO adapt linux update file
         }else{
         Reporter.infoExec(" 上传提示音prompt1"); //执行操作
