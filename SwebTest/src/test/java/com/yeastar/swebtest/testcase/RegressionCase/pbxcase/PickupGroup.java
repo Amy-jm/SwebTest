@@ -4,11 +4,15 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
 import org.testng.annotations.*;
 
 /**
  * Created by AutoTest on 2017/10/16.
  */
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class PickupGroup extends SwebDriver{
 
     @BeforeClass

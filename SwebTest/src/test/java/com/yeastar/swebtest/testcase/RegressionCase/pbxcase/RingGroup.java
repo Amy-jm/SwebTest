@@ -4,6 +4,9 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
 import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.*;
 
@@ -12,6 +15,7 @@ import org.testng.annotations.*;
  * Created by AutoTest on 2017/10/16.
  */
 @Log4j2
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class RingGroup extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {

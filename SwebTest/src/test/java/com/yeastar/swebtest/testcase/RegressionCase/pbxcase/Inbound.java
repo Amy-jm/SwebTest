@@ -4,6 +4,10 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
+import io.qameta.allure.Description;
 import org.testng.annotations.*;
 import java.util.ArrayList;
 
@@ -13,6 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by AutoTest on 2017/10/9.
  */
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class Inbound extends SwebDriver {
     @BeforeClass
     public void BeforeClass()  {
@@ -254,7 +259,7 @@ public class Inbound extends SwebDriver {
         m_general.setExtensionPermission(true,"*8","1000");
 }
 
-    @Test(priority = 14)
+    @Test(priority = 14,dependsOnMethods = "A0_init")
     public void F_timecondition2()  {
         Reporter.infoExec(" 编辑InRoute1,启用时间条件，workday_24hour到分机1101"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -268,6 +273,7 @@ public class Inbound extends SwebDriver {
         setCheckBox(add_inbound_route.enableTimeCondition,true);
         ys_waitingTime(1000);
         add_inbound_route.addTimeCondition.click();
+        //todo 添加前判断是否已经存在 workday
         add_inbound_route.SetTimeConditionTableviewDestition(1,1,"workday_24hour");
         add_inbound_route.SetTimeConditionTableviewDestination(1,2,add_inbound_route.s_extensin);
         add_inbound_route.SetTimeConditionTableviewDestitionEx(1,3,"1101");
@@ -399,7 +405,7 @@ public class Inbound extends SwebDriver {
         System.out.println("row7:"+row7);
         YsAssert.assertEquals(row5,row7,"删除：InRoute1-确定删除");
     }
-
+    @Description("删除所有呼入路由")
     @Test(priority = 19)
     public void H_recovery()  {
         deletes(" 删除所有呼入路由",inboundRoutes.grid,inboundRoutes.delete,inboundRoutes.delete_yes,inboundRoutes.grid_Mask);

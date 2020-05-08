@@ -4,12 +4,16 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
 import org.testng.annotations.*;
 
 /**
  * 会议室：提示音相关都未进行测试，无法判断
  * Created by AutoTest on 2017/10/16.
  */
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class Conference extends SwebDriver {
     public int num = 1;
     @BeforeClass

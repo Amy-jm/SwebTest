@@ -4,12 +4,16 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
 import org.testng.annotations.*;
 
 /**
  * 自定义提示音
  * Created by AutoTest on 2017/10/18.
  */
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class CustomPrompts extends SwebDriver{
     String[] version = DEVICE_VERSION.split("\\.");
     @BeforeClass

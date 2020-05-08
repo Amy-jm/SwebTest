@@ -3,6 +3,9 @@ package com.yeastar.swebtest.testcase.RegressionCase.pbxcase;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
 import org.testng.annotations.*;
 
 
@@ -10,6 +13,7 @@ import org.testng.annotations.*;
 /**
  * Created by AutoTest on 2017/9/28.
  */
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class TimeCondition extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {

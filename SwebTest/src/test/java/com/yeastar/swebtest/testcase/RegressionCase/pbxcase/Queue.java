@@ -4,6 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
 import com.yeastar.untils.TestNGListener;
 import org.testng.annotations.*;
 
@@ -12,7 +14,7 @@ import java.lang.reflect.Method;
 /**
  * Created by AutoTest on 2017/10/20.
  */
-@Listeners(TestNGListener.class)
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class Queue extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {

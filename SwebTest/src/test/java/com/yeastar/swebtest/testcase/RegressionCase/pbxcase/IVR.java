@@ -59,7 +59,7 @@ public class IVR extends SwebDriver {
         m_callFeature.addIVR("IVR6502","6502");
     }
 
-    @Test(priority = 0)
+    @Test(priority = 0,groups = "A")
     public void A0_Register() {
         pjsip.Pj_Init();
         //        被测设备注册分机1000、1103、1105，辅助1：分机3001，辅助2：分机2000、2001
@@ -77,7 +77,7 @@ public class IVR extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
     }
 
-    @Test(priority =1 )
+    @Test(priority =1,groups = "A" )
     public void A1_add() {
         Reporter.infoExec(" 新建IVRtest1，提示音选择autotestprompt，勾选Dial Extensions，勾选Dial Outbound Routes，勾选Dial to Check Voicemail" +
                 "按0到分机1000，按1到1000的Voicemail，按5到Dial by Name，按#到hungup，按*到Select an Option，Timeout到customPrompt：prompt1，Invalid到分机1105"); //执行操作
@@ -120,7 +120,7 @@ public class IVR extends SwebDriver {
         ys_apply();
     }
 
-    @Test(priority =2)
+    @Test(priority =2,groups = "A")
     public void B_editInbound1() {
         Reporter.infoExec(" 编辑呼入路由Inbound1，呼入到IVRtest1"); //执行操作
         settings.callControl_tree.click();

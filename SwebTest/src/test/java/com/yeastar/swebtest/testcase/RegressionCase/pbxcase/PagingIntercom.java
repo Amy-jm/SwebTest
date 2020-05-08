@@ -4,6 +4,9 @@ import com.yeastar.swebtest.driver.SwebDriver;
 import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
+import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.TestNGListener;
 import org.testng.annotations.*;
 
 /**
@@ -12,6 +15,7 @@ import org.testng.annotations.*;
  * ONISPAGING=6300 不启用*Answer
  * ISPAGING=6300 启用*Answer
  */
+@Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
 public class PagingIntercom extends SwebDriver{
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
