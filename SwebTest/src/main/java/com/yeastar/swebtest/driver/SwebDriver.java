@@ -1075,8 +1075,8 @@ public class SwebDriver extends Config {
             desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
             desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
             desiredCapabilities.setCapability("network", true);
-            desiredCapabilities.setCapability("idleTimeout", 150);
-            desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 180);
+            desiredCapabilities.setCapability("idleTimeout", 100);//150-100
+            desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
 
             try {
                 webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
@@ -1130,8 +1130,8 @@ public class SwebDriver extends Config {
 //            desiredCapabilities.setCapability("build", "AutoTestBuild_Seven");
             desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
             //Idle TimeOut
-            desiredCapabilities.setCapability("idleTimeout", 150);
-            desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 180);
+            desiredCapabilities.setCapability("idleTimeout", 100);//150-100
+            desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
             //Screen Resolution
             desiredCapabilities.setCapability("screenResolution", "1280x720");
             desiredCapabilities.setCapability("network", true);
