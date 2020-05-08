@@ -175,9 +175,9 @@ public class BeforeTest extends SwebDriver{
     @Test
     public void B_addtrunk() throws InterruptedException {
         //DEBUG
-        pageDeskTop.taskBar_Main.click();
-        pageDeskTop.settingShortcut.click();
-        settings.trunks_panel.click();
+//        pageDeskTop.taskBar_Main.click();
+//        pageDeskTop.settingShortcut.click();
+//        settings.trunks_panel.click();
         //
         settings.trunks_tree.click();
         Reporter.infoExec(" 删除所有VoIP外线"); //执行操作
