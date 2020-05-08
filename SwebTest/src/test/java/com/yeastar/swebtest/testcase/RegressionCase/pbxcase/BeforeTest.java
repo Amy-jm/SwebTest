@@ -197,26 +197,26 @@ public class BeforeTest extends SwebDriver{
     }
 
     //TODO 0424 ignore assert exception
-    @Test  (expectedExceptions = AssertionError.class)
+    @Test
     public void C_addtrunk() throws InterruptedException {
         Reporter.infoExec(" 添加iax外线"+IAXTrunk);
         m_trunks.addTrunk("IAX",add_voIP_trunk_basic.VoipTrunk,IAXTrunk,DEVICE_ASSIST_1,"4569","","3100","","",EXTENSION_PASSWORD,"");
     }
-    @Test (expectedExceptions = AssertionError.class)
+    @Test
     public void D_addtrunk() throws InterruptedException {
         Reporter.infoExec(" 添加sps外线"+SPS);
         m_trunks.addTrunk("SIP",add_voIP_trunk_basic.PeerToPeer,SPS,DEVICE_ASSIST_2,String.valueOf(UDP_PORT_ASSIST_2),DEVICE_ASSIST_2,
                 "","","","","");
     }
     //TODO 0424 ignore assert exception
-    @Test  (expectedExceptions = AssertionError.class)
+    @Test
     public void E1_addtrunk() throws InterruptedException {
         Reporter.infoExec(" 添加spx外线"+SPX);
         m_trunks.addTrunk("IAX",add_voIP_trunk_basic.PeerToPeer,SPX,DEVICE_ASSIST_2,"4569",DEVICE_ASSIST_2,
                 "","","","","");
     }
     //TODO 0424 ignore assert exception
-    @Test  (expectedExceptions = AssertionError.class)
+    @Test
     public void E2_addtrunk() {
         if (!DEVICE_ASSIST_3.equals("null")) {
             Reporter.infoExec(" 添加Account外线" + ACCOUNTTRUNK); //执行操作
