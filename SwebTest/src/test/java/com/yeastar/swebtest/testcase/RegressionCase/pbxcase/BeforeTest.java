@@ -120,6 +120,7 @@ public class BeforeTest extends SwebDriver{
             return;
         }
         if (!FXS_1.equals("null")) {
+            Reporter.infoExec("创建FXS分机1106");
             m_extension.addFxsExtension(1106, EXTENSION_PASSWORD, FXS_1);
         }
     }
@@ -171,8 +172,13 @@ public class BeforeTest extends SwebDriver{
 
     //    创建外线
 //TODO 0424 ignore assert exception
-    @Test(expectedExceptions =java.lang.AssertionError.class)
+    @Test
     public void B_addtrunk() throws InterruptedException {
+        //DEBUG
+        pageDeskTop.taskBar_Main.click();
+        pageDeskTop.settingShortcut.click();
+        settings.trunks_panel.click();
+        //
         settings.trunks_tree.click();
         Reporter.infoExec(" 删除所有VoIP外线"); //执行操作
         setPageShowNum(trunks.grid, 100);
@@ -813,7 +819,7 @@ public class BeforeTest extends SwebDriver{
     }
 
 //    删除--后续IVR等需要用到提示音，暂不删除
-    @Test
+//    @Test
     public void  Z_backup(){
         //
         pageDeskTop.taskBar_Main.click();
