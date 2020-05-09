@@ -7,6 +7,7 @@ import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.RetryListener;
 import com.yeastar.untils.TestNGListener;
+import io.qameta.allure.Description;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
@@ -44,8 +45,8 @@ public class Queue extends SwebDriver {
         Reporter.infoExec(" 添加Queue1：6700，选择分机1000、1100、1105，其它默认 "); //执行操作
         m_callFeature.addQueue("Queue1","6700",1000,1100,1105);
     }
-
-    @Test(priority = 0)
+    @Description("被测设备注册分机1000、1100、1101、1102、1105，辅助1：分机3001，辅助2：分机2000、2001")
+    @Test(priority = 0,groups = "A")
     public void A0_Register() throws InterruptedException {
         pjsip.Pj_Init();
         //        被测设备注册分机1000、1100、1101、1102、1105，辅助1：分机3001，辅助2：分机2000、2001
@@ -66,8 +67,8 @@ public class Queue extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
     }
-
-    @Test(priority = 1)
+    @Description("新建Queue6701,Password:123，FailoverDestination：分机1000，Static Agents：空")
+    @Test(priority = 1,groups = "A")
     public void A1_add_queue6701() throws InterruptedException {
         Reporter.infoExec(" 新建Queue6701,Password:123，FailoverDestination：分机1000，Static Agents：空"); //执行操作
         pageDeskTop.taskBar_Main.click();
@@ -87,7 +88,8 @@ public class Queue extends SwebDriver {
         ys_waitingLoading(queue.grid_Mask);
     }
 
-    @Test(priority = 2)
+    @Description("新建Queue6702,Ring Strategy：RingAll，Static Agents：ExtensionGroup1，Agent Announcement：prompt1，Caller Max Wait Time:100,按9到分机1000")
+    @Test(priority = 2,groups = "A")
     public void A_add_queue6702() throws InterruptedException {
         Reporter.infoExec(" 新建Queue6702,Ring Strategy：RingAll，Static Agents：ExtensionGroup1，Agent Announcement：prompt1，" +
                 "Caller Max Wait Time:100,按9到分机1000"); //执行操作
@@ -110,7 +112,8 @@ public class Queue extends SwebDriver {
         ys_apply();
     }
 
-    @Test(priority = 3)
+    @Description("编辑呼入路由Inbound1到Queue6702")
+    @Test(priority = 3,groups = "A")
     public void A_editInbound() throws InterruptedException {
         Reporter.infoExec(" 编辑呼入路由Inbound1到Queue6702"); //执行操作
         settings.callControl_tree.click();
@@ -125,18 +128,20 @@ public class Queue extends SwebDriver {
     }
 
 //    Failover Destination /leave when empty /Join Empty
-   @Test(priority = 4)
+    @Description("1105拨打6701，预期到FailDestination--1000")
+   @Test(priority = 4,groups = "A")
     public void B_failtoextension() throws InterruptedException {
         Reporter.infoExec(" 1105拨打6701，预期到FailDestination--1000"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1105,"6701",DEVICE_IP_LAN,false);
         ys_waitingTime(10000);
-       YsAssert.assertEquals(getExtensionStatus(1000,TALKING,10),TALKING,"预期1000为Talking状态");
-       pjsip.Pj_Hangup_All();
+        YsAssert.assertEquals(getExtensionStatus(1000,TALKING,10),TALKING,"预期1000为Talking状态");
+        pjsip.Pj_Hangup_All();
         m_extension.checkCDR("1105 <1105>","1000 <6701(1000)>","Answered","","",communication_internal);
     }
 
 //    动态坐席 & Password
-    @Test(priority = 5)
+    @Description(" 动态坐席 & Password")
+    @Test(priority = 5,dependsOnGroups = "A")
     public void C_agent1(Method method) throws InterruptedException {
         Reporter.infoExec(" 1100拨打6701*加入队列6701，密码：123"); //执行操作
         tcpSocket.connectToDevice(100000);
