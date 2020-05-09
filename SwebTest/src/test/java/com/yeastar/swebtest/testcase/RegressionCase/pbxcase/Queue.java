@@ -10,8 +10,6 @@ import com.yeastar.untils.TestNGListener;
 import io.qameta.allure.Description;
 import org.testng.annotations.*;
 
-import java.lang.reflect.Method;
-
 /**
  * Created by AutoTest on 2017/10/20.
  */
@@ -141,8 +139,9 @@ public class Queue extends SwebDriver {
 
 //    动态坐席 & Password
     @Description(" 动态坐席 & Password")
-    @Test(priority = 5,dependsOnGroups = "A")
-    public void C_agent1(Method method) throws InterruptedException {
+    @Test(priority = 5,groups = "debug")
+    //TODO delete dependsOnGroiups
+    public void C_agent1(){
         Reporter.infoExec(" 1100拨打6701*加入队列6701，密码：123"); //执行操作
         tcpSocket.connectToDevice(100000);
         pjsip.Pj_Make_Call_Auto_Answer(1100,"6701*",DEVICE_IP_LAN);
