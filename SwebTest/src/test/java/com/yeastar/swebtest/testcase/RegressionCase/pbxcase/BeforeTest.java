@@ -737,7 +737,7 @@ public class BeforeTest extends SwebDriver{
             settings.voicePrompts_panel.click();
             customPrompts.customPrompts.click();
             customPrompts.upload.click();
-            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('/home/seluser/exportFile/prompt1.wav')");
+            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('c:\\fakepath\\prompt1.wav')");
 
             ys_waitingTime(2000);
             upload_a_prompt.upload.click();
@@ -776,7 +776,15 @@ public class BeforeTest extends SwebDriver{
     @Test(enabled = false)
     public void S6_upload_autotestprompt() throws InterruptedException {
         if (Platform.getCurrent().equals(Platform.LINUX)) {
-            //TODO adapt linux update file
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
+            settings.voicePrompts_panel.click();
+            customPrompts.customPrompts.click();
+            customPrompts.upload.click();
+            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('/home/seluser/exportFile/autotestprompt.wav')");
+
+            ys_waitingTime(2000);
+            upload_a_prompt.upload.click();
         }else{
             Reporter.infoExec(" 上传提示音autotestprompt"); //执行操作
             pageDeskTop.taskBar_Main.click();
