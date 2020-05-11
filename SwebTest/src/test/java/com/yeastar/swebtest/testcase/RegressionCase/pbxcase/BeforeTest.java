@@ -5,6 +5,7 @@ import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.*;
+import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Platform;
 import org.testng.annotations.*;
@@ -727,26 +728,33 @@ public class BeforeTest extends SwebDriver{
         ys_apply();
     }
 
-    @Test(enabled = false)
+    @Description("上传自定义提示音")
+    @Test
     public void S4_upload_prompt1() {
         if (Platform.getCurrent().equals(Platform.LINUX)) {
-            executeJs("Ext.getCmp('st-exten-filename').setRawValue('/home/autotest/exportFile/prompt1.wav')");
-//            /home/autotest/exportFile
-            //TODO adapt linux update file
+            pageDeskTop.taskBar_Main.click();
+            pageDeskTop.settingShortcut.click();
+            settings.voicePrompts_panel.click();
+            customPrompts.customPrompts.click();
+            customPrompts.upload.click();
+            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('/home/autotest/exportFile/prompt1.wav')");
+
+            ys_waitingTime(2000);
+            upload_a_prompt.upload.click();
+
         }else{
-        Reporter.infoExec(" 上传提示音prompt1"); //执行操作
-        customPrompts.upload.click();
-        upload_a_prompt.broese.click();
-        ys_waitingTime(2000);
-        importFile(EXPORT_PATH +"prompt1.wav");
-        ys_waitingTime(2000);
-        upload_a_prompt.upload.click();
-        ys_waitingTime(2000);
+            Reporter.infoExec(" 上传提示音prompt1"); //执行操作
+            customPrompts.upload.click();
+            upload_a_prompt.broese.click();
+            ys_waitingTime(2000);
+            importFile(EXPORT_PATH +"prompt1.wav");
+            ys_waitingTime(2000);
+            upload_a_prompt.upload.click();
+            ys_waitingTime(2000);
         }
     }
     //    播放
-    //TODO adapt linux update file
-    @Test(enabled = false)
+    @Test
     public void S5_play() throws InterruptedException {
         Reporter.infoExec(" 分机1000播放提示音prompt1"); //执行操作
         gridClick(customPrompts.grid,1,customPrompts.gridPlay);
@@ -764,6 +772,7 @@ public class BeforeTest extends SwebDriver{
     }
 
     //    上传
+    @Description("上传提示音autotestprompt")
     @Test(enabled = false)
     public void S6_upload_autotestprompt() throws InterruptedException {
         if (Platform.getCurrent().equals(Platform.LINUX)) {
