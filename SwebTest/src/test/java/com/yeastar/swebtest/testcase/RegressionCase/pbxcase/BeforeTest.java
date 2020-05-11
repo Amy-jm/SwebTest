@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Platform;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -737,7 +738,8 @@ public class BeforeTest extends SwebDriver{
             settings.voicePrompts_panel.click();
             customPrompts.customPrompts.click();
             customPrompts.upload.click();
-            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('c:/fakepath/prompt1.wav')");
+            String PROMPT1_PATH = "c:"+ File.separator+"fakepath"+File.separator+"prompt1.wav";
+            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('"+PROMPT1_PATH+"')");
 
             ys_waitingTime(2000);
             upload_a_prompt.upload.click();
