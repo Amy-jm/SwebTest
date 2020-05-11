@@ -739,7 +739,7 @@ public class BeforeTest extends SwebDriver{
             customPrompts.customPrompts.click();
             customPrompts.upload.click();
             String PROMPT1_PATH = "c:"+ File.separator+"fakepath"+File.separator+"prompt1.wav";
-            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('"+PROMPT1_PATH+"')");
+            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('c:\\\\fakepath\\\\prompt1.wav')");
 
             ys_waitingTime(2000);
             upload_a_prompt.upload.click();
