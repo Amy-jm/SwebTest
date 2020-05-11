@@ -737,7 +737,7 @@ public class BeforeTest extends SwebDriver{
             settings.voicePrompts_panel.click();
             customPrompts.customPrompts.click();
             customPrompts.upload.click();
-            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('/home/autotest/exportFile/prompt1.wav')");
+            executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('/home/seluser/exportFile/prompt1.wav')");
 
             ys_waitingTime(2000);
             upload_a_prompt.upload.click();
