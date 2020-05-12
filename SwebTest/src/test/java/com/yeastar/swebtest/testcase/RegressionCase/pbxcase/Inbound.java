@@ -32,7 +32,7 @@ public class Inbound extends SwebDriver {
         }
         m_extension.showCDRClounm();
     }
-    @Test(priority = 0)
+    @Test(priority = 0,groups = "A")
     public void A0_init(){
         pjsip.Pj_Init();
 //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2001
@@ -142,7 +142,7 @@ public class Inbound extends SwebDriver {
         }
     }
 
-    @Test(priority = 7)
+    @Test(priority = 7,dependsOnGroups = "A")
     public void A_callfrom7_e1()  {
         if(PRODUCT.equals(CLOUD_PBX) ||PRODUCT.equals(PC) ){
             return;
@@ -276,7 +276,7 @@ public class Inbound extends SwebDriver {
         //todo 添加前判断是否已经存在 workday
         add_inbound_route.SetTimeConditionTableviewDestition(1,1,"workday_24hour");
         add_inbound_route.SetTimeConditionTableviewDestination(1,2,add_inbound_route.s_extensin);
-        add_inbound_route.SetTimeConditionTableviewDestitionEx(1,3,"1101");
+        add_inbound_route.SetTimeConditionTableviewDestitionEx(1,4,"1101");
         add_inbound_route.save.click();
         ys_apply();
 
@@ -304,7 +304,7 @@ public class Inbound extends SwebDriver {
         ys_waitingTime(1000);
         add_inbound_route.SetTimeConditionTableviewDestition(2,1,"[Holiday]");
         add_inbound_route.SetTimeConditionTableviewDestination(2,2,add_inbound_route.s_conference);
-        add_inbound_route.SetTimeConditionTableviewDestition(2,3,"Conference1");
+        add_inbound_route.SetTimeConditionTableviewDestition(2,4,"Conference1");
         add_inbound_route.save.click();
         ys_apply();
         ys_waitingTime(5000);
