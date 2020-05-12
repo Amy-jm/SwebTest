@@ -7,6 +7,7 @@ import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.*;
 import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Platform;
 import org.testng.annotations.*;
 
@@ -14,8 +15,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import static com.codeborne.selenide.Selenide.refresh;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 
 /**
  * Created by xlq on 2017/9/26.
@@ -738,12 +738,20 @@ public class BeforeTest extends SwebDriver{
             settings.voicePrompts_panel.click();
             customPrompts.customPrompts.click();
             customPrompts.upload.click();
-            String PROMPT1_PATH = "c:"+ File.separator+"fakepath"+File.separator+"prompt1.wav";
+            //通过两次enter 设置默认值，绕过安全验证
+            upload_a_prompt.broese.click();
+            actions().sendKeys(Keys.ENTER).build().perform();
+            sleep(1000);
+            actions().sendKeys(Keys.ENTER).build().perform();
             executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('c:\\\\fakepath\\\\prompt1.wav')");
 
             ys_waitingTime(2000);
             upload_a_prompt.upload.click();
-
+            ys_waitingTime(2000);
+            if(upload_a_prompt.alert_yes.isDisplayed()){
+                upload_a_prompt.alert_yes.click();
+            }
+            ys_waitingTime(3000);
         }else{
             Reporter.infoExec(" 上传提示音prompt1"); //执行操作
             customPrompts.upload.click();
@@ -756,7 +764,7 @@ public class BeforeTest extends SwebDriver{
         }
     }
     //    播放
-    @Test
+    @Test(enabled = false)
     public void S5_play() throws InterruptedException {
         Reporter.infoExec(" 分机1000播放提示音prompt1"); //执行操作
         gridClick(customPrompts.grid,1,customPrompts.gridPlay);
