@@ -740,8 +740,9 @@ public class BeforeTest extends SwebDriver{
             customPrompts.upload.click();
             //通过两次enter 设置默认值，绕过安全验证
             upload_a_prompt.broese.click();
+            sleep(2000);
             actions().sendKeys(Keys.ENTER).build().perform();
-            sleep(1000);
+            sleep(2000);
             actions().sendKeys(Keys.ENTER).build().perform();
             executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('c:\\\\fakepath\\\\prompt1.wav')");
 

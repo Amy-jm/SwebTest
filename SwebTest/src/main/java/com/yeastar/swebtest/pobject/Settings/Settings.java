@@ -46,7 +46,7 @@ public class Settings {
     public SelenideElement extensions_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()='Extensions']"));
     public SelenideElement trunks_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()='Trunks']"));
     public SelenideElement multisiteInterconnect_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()='Multisite Interconnect']"));
-    public SelenideElement callControl_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Call Control\"]"));
+    public SelenideElement callControl_tree = $(By.xpath("//span[contains(text(),\"Call Control\")]"));
     public SelenideElement callFeatures_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Call Features\"]"));
     public SelenideElement voicePrompts_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"Voice Prompts\"]"));
     public SelenideElement general_tree = $(By.xpath(".//div[starts-with(@id,\"control-panel\")]//div[starts-with(@id,\"set-lefttree\")]//span[text()=\"General\"]"));

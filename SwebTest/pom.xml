@@ -68,7 +68,7 @@
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>suite/${suiteXmlFile}</suiteXmlFile>
-                        <!--<testng outputDir="test-output/html/"/>-->
+                        <!--<testng outputDir="test-output/html/"/>-->0
                     </suiteXmlFiles>
                     <testFailureIgnore>true</testFailureIgnore>
                     <!--                    add usersystemclassloader for vm crash-->

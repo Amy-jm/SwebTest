@@ -50,7 +50,7 @@ public class SSHApp {
             return 0;
         }catch (IOException e){
             e.printStackTrace(System.err);
-            System.exit(2);
+            //System.exit(2);
             return -1;
         }
     }
@@ -126,7 +126,7 @@ public class SSHApp {
             return ret;
         }catch (IOException e){
             e.printStackTrace(System.err);
-            System.exit(2);
+//            System.exit(2);
             return new StringBuilder("error");
         } catch (InterruptedException e) {
             e.printStackTrace();

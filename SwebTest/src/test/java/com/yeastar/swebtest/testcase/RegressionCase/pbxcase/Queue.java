@@ -139,7 +139,7 @@ public class Queue extends SwebDriver {
 
 //    动态坐席 & Password
     @Description(" 动态坐席 & Password")
-    @Test(priority = 5,groups = "debug")
+    @Test(priority = 5,groups = "debug",dependsOnGroups = "A")
     //TODO delete dependsOnGroiups
     public void C_agent1(){
         Reporter.infoExec(" 1100拨打6701*加入队列6701，密码：123"); //执行操作

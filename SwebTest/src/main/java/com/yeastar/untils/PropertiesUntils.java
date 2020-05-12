@@ -117,7 +117,6 @@ public class PropertiesUntils {
         for(Iterator it = strKey.iterator(); it.hasNext();){
             keyTemp = (String)it.next();
             newKeyTemp = keyTemp.split("\\.")[0];
-//            if(keyTemp.contains(key)){ //因现在四种案例的命名，太相近，固不能用包含的用法
             if(newKeyTemp.equals(key) || newKeyTemp == key){
                 value =prop.getProperty(keyTemp);
                 break;
@@ -154,7 +153,6 @@ public class PropertiesUntils {
      */
     public String getPropertiesValue(String propPath, String key){
         prop=  getPropertie(propPath);
-        //System.out.println("propPath:"+propPath);
         String value="";
         if(prop.containsKey(key)){
             value = prop.getProperty(key);

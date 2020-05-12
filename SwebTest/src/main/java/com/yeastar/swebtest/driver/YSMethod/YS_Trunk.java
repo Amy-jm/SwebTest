@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 
 import static com.codeborne.selenide.Selenide.$;

@@ -117,6 +117,7 @@
                     <include name="D_import"/>
                 </methods>
             </class>
+
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.RingGroup">
                 <methods>
                     <include name="A0_Register"/>
@@ -146,6 +147,7 @@
                     <include name="N_editInbound2"/>
                 </methods>
             </class>
+            
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Queue">
                 <methods>
                     <include name="A0_Register"/>
