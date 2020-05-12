@@ -731,7 +731,7 @@ public class BeforeTest extends SwebDriver{
     }
 
     @Description("上传自定义提示音")
-    @Test
+    @Test(enabled = false)
     public void S4_upload_prompt1() {
         if (Platform.getCurrent().equals(Platform.LINUX)) {
             pageDeskTop.taskBar_Main.click();
