@@ -13,5 +13,6 @@ public class Upload_a_Prompt {
     public SelenideElement broese = $(By.id("st-cp-choosefile-trigger-filebutton"));
     public SelenideElement upload = $(By.xpath(".//div[starts-with(@id,'customprompt-upload-')]//span[text()='Upload']"));
     public SelenideElement cancel = $(By.xpath(".//div[starts-with(@id,'customprompt-upload-')]//span[text()='Cancel']"));
+    public SelenideElement alert_yes = $(By.xpath("//span[contains(text(),'Yes')]"));
 
 }
