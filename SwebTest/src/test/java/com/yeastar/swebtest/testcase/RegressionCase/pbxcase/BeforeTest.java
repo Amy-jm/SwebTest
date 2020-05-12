@@ -743,6 +743,7 @@ public class BeforeTest extends SwebDriver{
             upload_a_prompt.broese.click();
             sleep(3000);
 //            actions().sendKeys(Keys.ENTER).build().perform();
+            new Actions(webDriver).sendKeys(Keys.TAB).build().perform();
             new Actions(webDriver).sendKeys(Keys.ENTER).build().perform();
             sleep(2000);
             new Actions(webDriver).sendKeys(Keys.ENTER).build().perform();
