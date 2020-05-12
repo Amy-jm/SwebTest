@@ -278,6 +278,7 @@ public class Inbound extends SwebDriver {
         add_inbound_route.SetTimeConditionTableviewDestination(1,2,add_inbound_route.s_extensin);
         add_inbound_route.SetTimeConditionTableviewDestitionEx(1,4,"1101");
         add_inbound_route.save.click();
+        ys_waitingTime(3000);
         ys_apply();
 
 //      workday通话验证
