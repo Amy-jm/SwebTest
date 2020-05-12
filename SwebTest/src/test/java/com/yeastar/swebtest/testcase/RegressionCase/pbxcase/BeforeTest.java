@@ -9,6 +9,7 @@ import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.*;
 
 import java.io.File;
@@ -740,10 +741,11 @@ public class BeforeTest extends SwebDriver{
             customPrompts.upload.click();
             //通过两次enter 设置默认值，绕过安全验证
             upload_a_prompt.broese.click();
+            sleep(3000);
+//            actions().sendKeys(Keys.ENTER).build().perform();
+            new Actions(webDriver).sendKeys(Keys.ENTER).build().perform();
             sleep(2000);
-            actions().sendKeys(Keys.ENTER).build().perform();
-            sleep(2000);
-            actions().sendKeys(Keys.ENTER).build().perform();
+            new Actions(webDriver).sendKeys(Keys.ENTER).build().perform();
             executeJs("Ext.getCmp('st-cp-choosefile').setRawValue('c:\\\\fakepath\\\\prompt1.wav')");
 
             ys_waitingTime(2000);
