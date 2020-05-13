@@ -39,6 +39,7 @@ public class Outbound extends SwebDriver{
         }
         m_extension.showCDRClounm();
 
+        log.debug("START-[取消分机注册并重启设备]");
         //取消分机注册并重启设备
         try {
             SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1,PJSIP_TCP_PORT,PJSIP_SSH_USER,PJSIP_SSH_PASSWORD,PJSIP_COMMAND_DELTREE_REGISTRAR);
@@ -53,8 +54,8 @@ public class Outbound extends SwebDriver{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        log.debug("END-[取消分机注册并重启设备]");
         ys_waitingTime(30000);
-
 
     }
     @Test(priority = 0)
