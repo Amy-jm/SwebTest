@@ -133,7 +133,7 @@ public class OutboundRestriction extends SwebDriver {
         ys_waitingTime(5000);
     }
 
-    @Test(expectedExceptions = AssertionError.class,priority = 3)
+    @Test(priority = 3)
     public void A_add_3_cancelCall() throws InterruptedException {
         Reporter.infoExec(" 分机1100取消呼出限制后能正常呼出"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1100, "13001", DEVICE_IP_LAN, false);
