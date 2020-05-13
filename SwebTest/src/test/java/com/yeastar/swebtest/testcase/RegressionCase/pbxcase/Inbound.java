@@ -27,16 +27,17 @@ public class Inbound extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {
         Reporter.infoBeforeClass("开始执行：======  Inbound  ======"); //执行操作
-
         //取消分机注册并重启设备
         try {
             if (DEVICE_ASSIST_1 != null) {
+                log.debug("start unregistrar and reboot device 1 :"+DEVICE_ASSIST_1);
                 SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
                 ys_waitingTime(3000);
                 SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
             }
 
             if (DEVICE_ASSIST_2 != null) {
+                log.debug("start unregistrar and reboot device 2 :"+DEVICE_ASSIST_1);
                 SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
                 ys_waitingTime(3000);
                 SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
