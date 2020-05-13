@@ -43,7 +43,7 @@ public class Inbound extends SwebDriver {
                 SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
             }
         } catch (JSchException e) {
-            log.error("SSH error" + e.getMessage());
+            log.error("SSH error" + e.getMessage()+e.getStackTrace());
         } catch (IOException e) {
             e.printStackTrace();
         }

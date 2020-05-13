@@ -24,6 +24,29 @@ public class OutboundRestriction extends SwebDriver {
     @BeforeClass
     public void BeforeClass() throws InterruptedException {
         Reporter.infoBeforeClass("开始执行：======  OutboundRestriction  ======"); //执行操作
+        //取消分机注册并重启设备
+        try {
+            if (DEVICE_ASSIST_1 != null) {
+                log.debug("start unregistrar and reboot device 1 :"+DEVICE_ASSIST_1);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
+                ys_waitingTime(3000);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
+            }
+
+            if (DEVICE_ASSIST_2 != null) {
+                log.debug("start unregistrar and reboot device 2 :"+DEVICE_ASSIST_2);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
+                ys_waitingTime(3000);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
+            }
+        } catch (JSchException e) {
+            log.error("SSH error" + e.getMessage()+e.getStackTrace());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ys_waitingTime(90000);
+        log.debug("END-[取消分机注册并重启设备]");
+
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
         if(!PRODUCT.equals(CLOUD_PBX) && !PRODUCT.equals(PC)&& Integer.valueOf(VERSION_SPLIT[1]) <= 9){
@@ -31,22 +54,6 @@ public class OutboundRestriction extends SwebDriver {
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
-        //取消分机注册并重启设备
-        try {
-            SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1,PJSIP_TCP_PORT,PJSIP_SSH_USER,PJSIP_SSH_PASSWORD,PJSIP_COMMAND_DELTREE_REGISTRAR);
-            ys_waitingTime(3000);
-            SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1,PJSIP_TCP_PORT,PJSIP_SSH_USER,PJSIP_SSH_PASSWORD,PJSIP_COMMAND_reboot);
-
-            SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2,PJSIP_TCP_PORT,PJSIP_SSH_USER,PJSIP_SSH_PASSWORD,PJSIP_COMMAND_DELTREE_REGISTRAR);
-            ys_waitingTime(3000);
-            SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2,PJSIP_TCP_PORT,PJSIP_SSH_USER,PJSIP_SSH_PASSWORD,PJSIP_COMMAND_reboot);
-        } catch (JSchException e) {
-            log.error("SSH error"+e.getMessage());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ys_waitingTime(30000);
-
     }
     @Test(priority = 0)
     public void A0_init(){
