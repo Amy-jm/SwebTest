@@ -1,14 +1,19 @@
 package com.yeastar.swebtest.testcase.RegressionCase.pbxcase;
 
 import com.codeborne.selenide.Condition;
+import com.jcraft.jsch.JSchException;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.SSHLinuxUntils;
 import com.yeastar.untils.TestNGListener;
 import io.qameta.allure.Description;
+import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.codeborne.selenide.Condition.text;
@@ -18,6 +23,7 @@ import static com.codeborne.selenide.Selenide.$$;
  * Created by AutoTest on 2017/10/12.
  */
 @Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
+@Log4j2
 public class Outbound extends SwebDriver{
 
     @BeforeClass
@@ -32,6 +38,23 @@ public class Outbound extends SwebDriver{
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
+
+        //取消分机注册并重启设备
+        try {
+            SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1,PJSIP_TCP_PORT,PJSIP_SSH_USER,PJSIP_SSH_PASSWORD,PJSIP_COMMAND_DELTREE_REGISTRAR);
+            ys_waitingTime(3000);
+            SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1,PJSIP_TCP_PORT,PJSIP_SSH_USER,PJSIP_SSH_PASSWORD,PJSIP_COMMAND_reboot);
+
+            SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2,PJSIP_TCP_PORT,PJSIP_SSH_USER,PJSIP_SSH_PASSWORD,PJSIP_COMMAND_DELTREE_REGISTRAR);
+            ys_waitingTime(3000);
+            SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2,PJSIP_TCP_PORT,PJSIP_SSH_USER,PJSIP_SSH_PASSWORD,PJSIP_COMMAND_reboot);
+        } catch (JSchException e) {
+            log.error("SSH error"+e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ys_waitingTime(30000);
+
 
     }
     @Test(priority = 0)
