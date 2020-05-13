@@ -53,7 +53,8 @@ public class Inbound extends SwebDriver {
             e.printStackTrace();
         }
         log.debug("END-[取消分机注册并重启设备]");
-        ys_waitingTime(30000);
+        ys_waitingTime(120000);
+        log.debug("END-[取消分机注册并重启设备]");
 
     }
     @Test(priority = 0,groups = "A")
