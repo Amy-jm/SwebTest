@@ -21,6 +21,9 @@ public class DataReader2 {
 //    final static String loginName = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "loginName");
     public final String PJSIP_COMMAND_DELTREE_REGISTRAR = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"database deltree registrar\"";
     public final String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
+    public final int PJSIP_TCP_PORT = 8022;
+    public final String PJSIP_SSH_PASSWORD = "";
+    public final String PJSIP_SSH_USER = "ls@yf";
 
     /**
      * Data.properties配置
