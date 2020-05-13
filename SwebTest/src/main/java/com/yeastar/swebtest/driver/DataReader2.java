@@ -19,6 +19,8 @@ public class DataReader2 {
     
     final static String DATA_PROPERTIES_FILE_PATH ="/data.properties";
 //    final static String loginName = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "loginName");
+    public final String PJSIP_COMMAND_DELTREE_REGISTRAR = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"database deltree registrar\"";
+    public final String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
 
     /**
      * Data.properties配置
