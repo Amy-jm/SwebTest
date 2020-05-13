@@ -72,6 +72,7 @@ public class Inbound extends SwebDriver {
         pjsip.Pj_CreateAccount(1101, EXTENSION_PASSWORD, "UDP", UDP_PORT, 3);
         pjsip.Pj_CreateAccount(1105, EXTENSION_PASSWORD, "UDP", UDP_PORT, 7);
         pjsip.Pj_CreateAccount(3001, EXTENSION_PASSWORD, "UDP", UDP_PORT_ASSIST_1, -1);
+        pjsip.Pj_CreateAccount(3000, EXTENSION_PASSWORD, "UDP", UDP_PORT_ASSIST_1, -1);
         pjsip.Pj_CreateAccount(2001, EXTENSION_PASSWORD, "UDP", UDP_PORT_ASSIST_2, -1);
         pjsip.Pj_CreateAccount(2002, EXTENSION_PASSWORD, "UDP", UDP_PORT_ASSIST_2, -1);
         pjsip.Pj_Register_Account(1000, DEVICE_IP_LAN);
@@ -79,6 +80,7 @@ public class Inbound extends SwebDriver {
         pjsip.Pj_Register_Account(1105, DEVICE_IP_LAN);
         System.out.println("after. createAccount..");
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist(3000, DEVICE_ASSIST_1, UDP_PORT_ASSIST_1);
         System.out.println("after. Pj_Register_Account  1000..");
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2002, DEVICE_ASSIST_2);
