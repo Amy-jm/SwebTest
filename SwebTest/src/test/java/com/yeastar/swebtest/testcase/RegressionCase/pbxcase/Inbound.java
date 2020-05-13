@@ -37,7 +37,7 @@ public class Inbound extends SwebDriver {
             }
 
             if (DEVICE_ASSIST_2 != null) {
-                log.debug("start unregistrar and reboot device 2 :"+DEVICE_ASSIST_1);
+                log.debug("start unregistrar and reboot device 2 :"+DEVICE_ASSIST_2);
                 SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
                 ys_waitingTime(3000);
                 SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
