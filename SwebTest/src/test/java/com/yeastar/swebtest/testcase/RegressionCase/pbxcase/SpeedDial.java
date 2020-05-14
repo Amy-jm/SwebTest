@@ -43,7 +43,7 @@ public class SpeedDial extends SwebDriver {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ys_waitingTime(120000);
+        ys_waitingTime(90000);
         log.debug("END-[取消分机注册并重启设备]");
 
         Reporter.infoBeforeClass("开始执行：======  SpeedDial  ======"); //执行操作
