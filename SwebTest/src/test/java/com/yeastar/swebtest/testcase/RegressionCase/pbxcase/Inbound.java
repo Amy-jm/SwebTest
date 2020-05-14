@@ -176,7 +176,7 @@ public class Inbound extends SwebDriver {
         }
     }
 
-    @Test(priority = 7, dependsOnGroups = "A")
+    @Test(priority = 7)
     public void H_A_callfrom7_e1() {
         if (PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)) {
             return;
