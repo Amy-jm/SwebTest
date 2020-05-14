@@ -64,7 +64,7 @@ public class Inbound extends SwebDriver {
 
     }
 
-    @Test(priority = 1000, groups = "A")
+    @Test(priority = 0, groups = "A")
     public void A0_init() {
         ys_waitingTime(30000);
         pjsip.Pj_Init();
