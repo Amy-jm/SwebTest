@@ -14,26 +14,26 @@
             <!--20180724 起TimeCondition、Holiday\CustomPrompts合并到BeforeTest中-->
             <class name="com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound">
                 <methods>
-                    <include name="A0_init"/>
-                    <include name="A_callfrom1_sip"/>
-                    <include name="A_callfrom2_iax"/>
-                    <include name="A_callfrom3_sps"/>
-                    <include name="A_callfrom4_spx"/>
-                    <include name="A_callfrom5_fxo"/>
-                    <include name="A_callfrom6_bri"/>
-                    <include name="A_callfrom7_e1"/>
-                    <include name="A_callfrom8_gsm"/>
-                    <include name="B1_callerid"/>
-                    <include name="B2_callerid"/>
-                    <include name="C1_did1_sps"/>
-                    <include name="C2_did1_sps"/>
-                    <include name="F_timecondition1"/>
-                    <include name="F_timecondition2"/>
-                    <include name="F_timecondition3"/>
-                    <include name="F_timecondition4"/>
-                    <include name="F_timecondition5"/>
-                    <include name="G_delete1"/>
-                    <include name="H_recovery"/>
+                    <include name="A_A0_init"/>
+                    <include name="B_A_callfrom1_sip"/>
+                    <include name="C_A_callfrom2_iax"/>
+                    <include name="D_A_callfrom3_sps"/>
+                    <include name="E_A_callfrom4_spx"/>
+                    <include name="F_A_callfrom5_fxo"/>
+                    <include name="G_A_callfrom6_bri"/>
+                    <include name="H_A_callfrom7_e1"/>
+                    <include name="I_A_callfrom8_gsm"/>
+                    <include name="G_B1_callerid"/>
+                    <include name="K_B2_callerid"/>
+                    <include name="L_C1_did1_sps"/>
+                    <include name="M_C2_did1_sps"/>
+                    <include name="N_F_timecondition1"/>
+                    <include name="O_F_timecondition2"/>
+                    <include name="P_F_timecondition3"/>
+                    <include name="Q_F_timecondition4"/>
+                    <include name="R_F_timecondition5"/>
+                    <include name="S_G_delete1"/>
+                    <include name="T_H_recovery"/>
                 </methods>
             </class>
 

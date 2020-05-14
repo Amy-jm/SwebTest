@@ -162,7 +162,7 @@ public class Inbound extends SwebDriver {
     }
 
     @Test(priority = 6)
-    public void H_A_callfrom6_bri() {
+    public void G_A_callfrom6_bri() {
         if (PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)) {
             return;
         }
@@ -177,7 +177,7 @@ public class Inbound extends SwebDriver {
     }
 
     @Test(priority = 7, dependsOnGroups = "A")
-    public void I_A_callfrom7_e1() {
+    public void H_A_callfrom7_e1() {
         if (PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)) {
             return;
         }
@@ -191,7 +191,7 @@ public class Inbound extends SwebDriver {
     }
 
     @Test(priority = 8)
-    public void J_A_callfrom8_gsm() {
+    public void I_A_callfrom8_gsm() {
         if (PRODUCT.equals(CLOUD_PBX) || PRODUCT.equals(PC)) {
             return;
         }
@@ -206,7 +206,7 @@ public class Inbound extends SwebDriver {
 
     //    Caller ID测试
     @Test(priority = 9)
-    public void K_B1_callerid() {
+    public void J_B1_callerid() {
         Reporter.infoExec(" 编辑呼入路由InRoute1，Caller ID：2002"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -229,7 +229,7 @@ public class Inbound extends SwebDriver {
     }
 
     @Test(priority = 10)
-    public void L_B2_callerid() {
+    public void K_B2_callerid() {
         ys_waitingTime(5000);
 //        Caller ID通话测试
         Reporter.infoExec(" 2002拨打99999通过sps外线呼入到分机1000");
@@ -250,7 +250,7 @@ public class Inbound extends SwebDriver {
     //    DID Pattern：SPS外线-DID：5503301-5503305，Extension Range：1100-1105
 
     @Test(priority = 11)
-    public void M_C1_did1_sps() {
+    public void L_C1_did1_sps() {
         Reporter.infoExec(" 新建呼入路由DIDtest，DID Pattern：5503301-5503305，选择SPS外线，Extension Range：1101-1105"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -266,7 +266,7 @@ public class Inbound extends SwebDriver {
 
     //      DID 通话测试
     @Test(priority = 12)
-    public void N_C2_did1_sps() {
+    public void M_C2_did1_sps() {
 //        注意CDR的正确与否！！！
         Reporter.infoExec(" 2001拨打995503301通过sps外线呼入到分机1101"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(2001, "995503301", DEVICE_ASSIST_2);
@@ -285,7 +285,7 @@ public class Inbound extends SwebDriver {
 
     //    TimeCondition测试
     @Test(priority = 13)
-    public void O_F_timecondition1() {
+    public void N_F_timecondition1() {
         Reporter.infoExec(" 设置分机1000具有拨打时间特征码的权限"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -294,7 +294,7 @@ public class Inbound extends SwebDriver {
     }
 
     @Test(priority = 14, dependsOnMethods = "A0_init")
-    public void P_F_timecondition2() {
+    public void O_F_timecondition2() {
         Reporter.infoExec(" 编辑InRoute1,启用时间条件，workday_24hour到分机1101"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -324,7 +324,7 @@ public class Inbound extends SwebDriver {
     }
 
     @Test(priority = 15)
-    public void Q_F_timecondition3() {
+    public void P_F_timecondition3() {
         Reporter.infoExec(" 编辑InRoute1，添加[Holiday]到会议室Conference1");
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -357,7 +357,7 @@ public class Inbound extends SwebDriver {
     }
 
     @Test(priority = 16)
-    public void R_F_timecondition4() {
+    public void Q_F_timecondition4() {
         Reporter.infoExec(" 分机1000拨打特征码*802强制启用工作时间"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(1000, "*802", DEVICE_IP_LAN);
         ys_waitingTime(5000);
@@ -372,7 +372,7 @@ public class Inbound extends SwebDriver {
     }
 
     @Test(priority = 17)
-    public void S_F_timecondition5() {
+    public void R_F_timecondition5() {
         Reporter.infoExec(" 编辑InRoute1禁用时间条件"); //执行操作
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
@@ -395,7 +395,7 @@ public class Inbound extends SwebDriver {
 
     //    删除操作
     @Test(priority = 18)
-    public void T_G_delete1() {
+    public void S_G_delete1() {
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.callControl_tree.click();
@@ -447,7 +447,7 @@ public class Inbound extends SwebDriver {
 
     @Description("删除所有呼入路由")
     @Test(priority = 19)
-    public void U_H_recovery() {
+    public void T_H_recovery() {
         deletes(" 删除所有呼入路由", inboundRoutes.grid, inboundRoutes.delete, inboundRoutes.delete_yes, inboundRoutes.grid_Mask);
         Reporter.infoExec(" 添加呼入路由InRoute1"); //执行操作
         ArrayList<String> arraytrunk1 = new ArrayList<>();
