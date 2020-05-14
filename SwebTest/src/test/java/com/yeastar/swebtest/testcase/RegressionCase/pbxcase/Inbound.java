@@ -293,7 +293,7 @@ public class Inbound extends SwebDriver {
         m_general.setExtensionPermission(true, "*8", "1000");
     }
 
-    @Test(priority = 14, dependsOnMethods = "A0_init")
+    @Test(priority = 14)
     public void O_F_timecondition2() {
         Reporter.infoExec(" 编辑InRoute1,启用时间条件，workday_24hour到分机1101"); //执行操作
         pageDeskTop.taskBar_Main.click();
