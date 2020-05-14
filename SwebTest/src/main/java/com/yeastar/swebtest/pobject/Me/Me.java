@@ -41,7 +41,7 @@ public class Me {
     /**
      * CDR And Recording
      */
-    public SelenideElement me_CDRandRecording = $(By.xpath(".//div[starts-with(@id,'mesetting-')]//span[text()='CDR & One Touch Recording']"));
+    public SelenideElement me_CDRandRecording = $(By.xpath("//span[contains(text(),'One Touch Recording')]"));
 
     /**
      * Voicemail
