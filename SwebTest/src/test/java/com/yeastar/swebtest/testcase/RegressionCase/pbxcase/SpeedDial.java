@@ -1,21 +1,51 @@
 package com.yeastar.swebtest.testcase.RegressionCase.pbxcase;
 
 import com.codeborne.selenide.Condition;
+import com.jcraft.jsch.JSchException;
 import com.yeastar.swebtest.driver.SwebDriver;
 import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.RetryListener;
+import com.yeastar.untils.SSHLinuxUntils;
 import com.yeastar.untils.TestNGListener;
+import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.*;
+
+import java.io.IOException;
 
 /**
  * Created by AutoTest on 2017/10/17.
  */
 @Listeners({AllureReporterListener.class, RetryListener.class, TestNGListener.class})
+@Log4j2
 public class SpeedDial extends SwebDriver {
     @BeforeClass
     public void BeforeClass()  {
+
+        //取消分机注册并重启设备
+        try {
+            if (DEVICE_ASSIST_1 != null) {
+                log.debug("start unregistrar and reboot device 1 :"+DEVICE_ASSIST_1);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
+                ys_waitingTime(3000);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
+            }
+
+            if (DEVICE_ASSIST_2 != null) {
+                log.debug("start unregistrar and reboot device 2 :"+DEVICE_ASSIST_2);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
+                ys_waitingTime(3000);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
+            }
+        } catch (JSchException e) {
+            log.error("SSH error" + e.getMessage()+e.getStackTrace());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ys_waitingTime(90000);
+        log.debug("END-[取消分机注册并重启设备]");
+
         Reporter.infoBeforeClass("开始执行：======  SpeedDial  ======"); //执行操作
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
         login(LOGIN_USERNAME,LOGIN_PASSWORD);
