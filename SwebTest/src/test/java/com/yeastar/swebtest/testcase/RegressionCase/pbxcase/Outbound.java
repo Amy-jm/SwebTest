@@ -50,7 +50,7 @@ public class Outbound extends SwebDriver{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ys_waitingTime(90000);
+        ys_waitingTime(120000);
         log.debug("END-[取消分机注册并重启设备]");
 
         initialDriver(BROWSER,"https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/");
@@ -62,7 +62,7 @@ public class Outbound extends SwebDriver{
         }
         m_extension.showCDRClounm();
     }
-    @Test(priority = 0)
+    @Test(priority = 0,groups = "A")
     public void A0_init(){
         pjsip.Pj_Init();
         //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2000
