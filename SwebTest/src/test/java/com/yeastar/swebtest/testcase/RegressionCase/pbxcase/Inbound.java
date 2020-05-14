@@ -382,6 +382,7 @@ public class Inbound extends SwebDriver {
         ys_waitingMask();
         setCheckBox(add_inbound_route.enableTimeCondition, false);
         add_inbound_route.save.click();
+        ys_waitingTime(3000);
         ys_apply();
 
 //        通话验证时间条件禁用成功
