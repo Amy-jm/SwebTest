@@ -124,9 +124,9 @@ public class InboundRoutes extends SwebDriver {
     @Test
     public void B1_checkTrunk() throws InterruptedException {
         Inbound inbound = new Inbound();
-        inbound.A_callfrom1_sip();
-        inbound.A_callfrom2_iax();
-        inbound.A_callfrom3_sps();
+        inbound.B_A_callfrom1_sip();
+        inbound.C_A_callfrom2_iax();
+        inbound.D_A_callfrom3_sps();
         if(PRODUCT.equals(CLOUD_PBX)){
             return;
         }else {
@@ -145,10 +145,10 @@ public class InboundRoutes extends SwebDriver {
             pjsip.Pj_Hangup_All();
             m_extension.checkCDR("2001 <2001>", "1000 <1000>", "Answered", SPX, " ", communication_inbound);
         }
-        inbound.A_callfrom5_fxo();
-        inbound.A_callfrom6_bri();
-        inbound.A_callfrom7_e1();
-        inbound.A_callfrom8_gsm();
+        inbound.F_A_callfrom5_fxo();
+        inbound.G_A_callfrom6_bri();
+        inbound.H_A_callfrom7_e1();
+        inbound.I_A_callfrom8_gsm();
 //        考虑account的呼入
         if (!DEVICE_ASSIST_3.equals("null")) {
             Reporter.infoExec(" 4001拨打1111通过account外线呼入到分机1000"); //执行操作
@@ -1012,13 +1012,13 @@ public class InboundRoutes extends SwebDriver {
         m_extension.checkCDR("3001 <3001>","1000 <1000>","No Answer",SIPTrunk," ",communication_inbound);
 //       开启TimeCondition后，不同的外线可以正常的呼入到目的地，分机1000接听
         Inbound inbound2 = new Inbound();
-        inbound2.A_callfrom2_iax();
-        inbound2.A_callfrom3_sps();
-        inbound2.A_callfrom4_spx();
-        inbound2.A_callfrom5_fxo();
-        inbound2.A_callfrom6_bri();
-        inbound2.A_callfrom7_e1();
-        inbound2.A_callfrom8_gsm();
+        inbound2.C_A_callfrom2_iax();
+        inbound2.D_A_callfrom3_sps();
+        inbound2.E_A_callfrom4_spx();
+        inbound2.F_A_callfrom5_fxo();
+        inbound2.G_A_callfrom6_bri();
+        inbound2.H_A_callfrom7_e1();
+        inbound2.I_A_callfrom8_gsm();
 //        考虑account的呼入
         if (!DEVICE_ASSIST_3.equals("null")) {
             Reporter.infoExec(" 4001拨打11000通过account外线呼入到分机1000"); //执行操作
