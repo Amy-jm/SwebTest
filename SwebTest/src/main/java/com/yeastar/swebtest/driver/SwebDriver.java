@@ -703,11 +703,12 @@ public class SwebDriver extends Config {
      * 页面apply 点击
      */
     public static void ys_apply() {
+        ys_waitingTime(2000);
         if (versionCompare(DEVICE_VERSION, "30.11.0.25").equals(">")) {
             System.out.println("1111");
             if (pageDeskTop.apply_new.isDisplayed()) {
                 System.out.println("2222");
-                pageDeskTop.apply_new.click();
+                pageDeskTop.apply_new.shouldBe(visible).click();
             } else {
                 System.out.println("3333");
                 return;
@@ -716,7 +717,7 @@ public class SwebDriver extends Config {
             System.out.println("7777");
             if (pageDeskTop.apply.isDisplayed()) {
                 System.out.println("8888");
-                pageDeskTop.apply.click();
+                pageDeskTop.apply.shouldBe(visible).click();
             } else {
                 System.out.println("9999");
                 return;
