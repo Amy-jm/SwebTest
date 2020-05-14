@@ -87,7 +87,7 @@ public class Inbound extends SwebDriver {
     //    验证各种外线都能正常呼入到分机1000
     @Test(priority = 1)
     public void A_callfrom1_sip() {
-//        ys_waitingTime(10000);
+        ys_waitingTime(30000);
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到分机1000"); //执行操作
         pjsip.Pj_Make_Call_Auto_Answer(3001, "3000", DEVICE_ASSIST_1);
         ys_waitingTime(10000);
@@ -327,28 +327,32 @@ public class Inbound extends SwebDriver {
         Reporter.infoExec(" 编辑InRoute1，添加[Holiday]到会议室Conference1");
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
-        pageDeskTop.call_Control.click();
         settings.callControl_tree.click();
         inboundRoutes.add.should(Condition.exist);
-        gridClick(inboundRoutes.grid, gridFindRowByColumn(inboundRoutes.grid, inboundRoutes.gridcolumn_Name, "InRoute1", sort_ascendingOrder), inboundRoutes.gridEdit);
+        gridClick(inboundRoutes.grid,gridFindRowByColumn(inboundRoutes.grid,inboundRoutes.gridcolumn_Name,"InRoute1",sort_ascendingOrder),inboundRoutes.gridEdit);
         ys_waitingMask();
         ys_waitingTime(1000);
-        add_inbound_route.set_enable_time_condition_status(true);
         add_inbound_route.addTimeCondition.click();
-        ys_waitingTime(1000);
-        add_inbound_route.SetTimeConditionTableviewDestition(2, 1, "[Holiday]");
-        add_inbound_route.SetTimeConditionTableviewDestination(2, 2, add_inbound_route.s_conference);
-        add_inbound_route.SetTimeConditionTableviewDestition(2, 4, "Conference1");
+        ys_waitingTime(2000);
+        add_inbound_route.SetTimeConditionTableviewDestition(2,1,"[Holiday]");
+        add_inbound_route.SetTimeConditionTableviewDestination(2,2,add_inbound_route.s_conference);
+        //  add_inbound_route.SetTimeConditionTableviewDestition(2,3,"Conference1");
+        if (Integer.valueOf(VERSION_SPLIT[1]) >= 13 ) {
+            add_inbound_route.SetTimeConditionTableviewDestition(2, 4, "Conference1");
+        }else {
+            add_inbound_route.SetTimeConditionTableviewDestition(2, 3, "Conference1");
+        }
         add_inbound_route.save.click();
-        ys_apply();
         ys_waitingTime(5000);
+        ys_apply();
+
 
 //        Holiday通话验证
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入到会议室6400");
-        pjsip.Pj_Make_Call_Auto_Answer(3001, "3000", DEVICE_ASSIST_1);
+        pjsip.Pj_Make_Call_Auto_Answer(3001,"3000",DEVICE_ASSIST_1);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("3001 <3001>", "6400", "Answered", SIPTrunk, " ", communication_inbound);
+        m_extension.checkCDR("3001 <3001>","6400","Answered",SIPTrunk," ",communication_inbound);
     }
 
     @Test(priority = 16)
