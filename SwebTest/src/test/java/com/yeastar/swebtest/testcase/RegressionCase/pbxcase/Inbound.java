@@ -27,28 +27,28 @@ public class Inbound extends SwebDriver {
     @BeforeClass
     public void BeforeClass() {
         Reporter.infoBeforeClass("开始执行：======  Inbound  ======"); //执行操作
-//        //取消分机注册并重启设备
-//        try {
-//            if (DEVICE_ASSIST_1 != null) {
-//                log.debug("start unregistrar and reboot device 1 :"+DEVICE_ASSIST_1);
-//                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
-//                ys_waitingTime(3000);
-//                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
-//            }
-//
-//            if (DEVICE_ASSIST_2 != null) {
-//                log.debug("start unregistrar and reboot device 2 :"+DEVICE_ASSIST_2);
-//                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
-//                ys_waitingTime(3000);
-//                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
-//            }
-//        } catch (JSchException e) {
-//            log.error("SSH error" + e.getMessage()+e.getStackTrace());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        ys_waitingTime(120000);
-//        log.debug("END-[取消分机注册并重启设备]");
+        //取消分机注册并重启设备
+        try {
+            if (DEVICE_ASSIST_1 != null) {
+                log.debug("start unregistrar and reboot device 1 :"+DEVICE_ASSIST_1);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
+                ys_waitingTime(3000);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
+            }
+
+            if (DEVICE_ASSIST_2 != null) {
+                log.debug("start unregistrar and reboot device 2 :"+DEVICE_ASSIST_2);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_DELTREE_REGISTRAR);
+                ys_waitingTime(3000);
+                SSHLinuxUntils.exeCommand(DEVICE_ASSIST_2, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, PJSIP_COMMAND_reboot);
+            }
+        } catch (JSchException e) {
+            log.error("SSH error" + e.getMessage()+e.getStackTrace());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ys_waitingTime(120000);
+        log.debug("END-[取消分机注册并重启设备]");
 
 
         initialDriver(BROWSER, "https://" + DEVICE_IP_LAN + ":" + DEVICE_PORT + "/");
@@ -66,6 +66,7 @@ public class Inbound extends SwebDriver {
 
     @Test(priority = 1000, groups = "A")
     public void A0_init() {
+        ys_waitingTime(30000);
         pjsip.Pj_Init();
 //        被测设备注册分机1000，辅助1：分机3001，辅助2：分机2001
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, 1);
