@@ -263,7 +263,7 @@ public class YS_Extension extends SwebDriver{
     public void showCDRClounm(){
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.CDRandRecordShortcut.click();
-        cdRandRecordings.CDR_set.click();
+        cdRandRecordings.CDR_set.shouldBe(Condition.visible).click();
 //        String id = String.valueOf(return_executeJs("Ext.query('#'+Ext.query('#'+Ext.getCmp(\"cdr-record\").down('cdrandrecord-edit').down('checkboxgroup').id +' tr td')["+r+"].id + ' div')["+c+"].id"));
 //        System.out.println("aaaaa id "+id +"Ext.query('#'+Ext.query('#'+Ext.getCmp(\"cdr-record\").down('cdrandrecord-edit').down('checkboxgroup').id +' tr td')["+r+"].id + ' div')["+c+"].id");
 //        setCheckBox(id,b);
