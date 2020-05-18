@@ -101,10 +101,12 @@ public class Extension extends SwebDriver{
         featureCode.barge_in.clear();
         featureCode.barge_in.setValue("*92");
         featureCode.save.click();
-        ys_waitingTime(3000);
+        ys_waitingTime(5000);
+          ys_apply();
+
     }
 
-    @Test(groups = {"A1"},priority =0)
+    @Test(groups = {"A"},priority =0)
     public void A0_Register(){
         pjsip.Pj_Init();
         Reporter.infoExec(" 被测设备注册分机1000,1100,1101,1105，辅助2:2000"); //执行操作
@@ -413,7 +415,7 @@ public class Extension extends SwebDriver{
 
     //监听，怎么验证？
 
-    @Test(priority =19)
+    @Test(priority =19,groups = "A")
     public void I_Voicemail(){
         Reporter.infoExec(" 1000拨打1105，1105未接，到voicemail");
         pjsip.Pj_Make_Call_No_Answer(1000,"1105",DEVICE_IP_LAN);
@@ -422,7 +424,7 @@ public class Extension extends SwebDriver{
         m_extension.checkCDR("1000 <1000>","1105 <1105>","Voicemail","","","Internal");
     }
 
-    @Test(priority =20)
+    @Test(priority =20,groups = "A")
     public void J_internal(){
         Reporter.infoExec(" 1000拨打1105，1105接听，1105按*1进行一键录音");
         pjsip.Pj_Make_Call_Auto_Answer(1000,"1105",DEVICE_IP_LAN);
@@ -435,7 +437,7 @@ public class Extension extends SwebDriver{
 
     }
 
-    @Test(priority =21)
+    @Test(priority =21,dependsOnGroups = "A")
     public void K1_check_Voicemail(){
         Reporter.infoExec(" 分机1105登录，查看存在1000留下的语音留言"); //执行操作
         logout();
@@ -481,6 +483,7 @@ public class Extension extends SwebDriver{
     public void AfterClass(){
         ys_waitingTime(5000);
         Reporter.infoAfterClass("执行完毕：======  Extension  ======"); //执行操作
+        pjsip.Pj_Unregister_Account(3000);
         pjsip.Pj_Destory();
         quitDriver();
         ys_waitingTime(10000);
