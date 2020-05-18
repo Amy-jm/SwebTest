@@ -98,8 +98,7 @@ public class IVR extends SwebDriver{
         comboboxSelect(add_ivr_basic.promptRepeatCount,data.get("RepeatCount"));
         add_ivr_basic.responseTimeout.setValue(data.get("Response"));
         add_ivr_basic.dightTimeout.setValue(data.get("Digit"));
-        //setCheckBox(add_ivr_basic.dialExtensions,Boolean.valueOf(data.get("DialExtension")));
-        add_ivr_basic.choiceEnableNumber(Boolean.valueOf(data.get("DialExtension")));
+        setCheckBox(add_ivr_basic.dialExtensions,Boolean.valueOf(data.get("DialExtension")));
         setCheckBox(add_ivr_basic.dialOutboundRoutes,Boolean.valueOf(data.get("DialOutbound")));
         if(data.get("DialOutbound").equals("true")){
             listSelectAll(add_ivr_basic.listOutboundRoutes);
