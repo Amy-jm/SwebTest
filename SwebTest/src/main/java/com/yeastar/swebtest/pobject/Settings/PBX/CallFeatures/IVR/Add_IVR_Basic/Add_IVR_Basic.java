@@ -33,7 +33,7 @@ public class Add_IVR_Basic {
 
     //允许所有分机 下拉列表
     public SelenideElement enablenumberTrigger =  $(By.xpath("//*[@id=\"st-ivr-enablenumber-trigger-picker\"]"));
-    public SelenideElement allowExtension =  $(By.xpath("//li[contains(text(),\"允许所有分机\")]"));
+    public SelenideElement allowExtension =  $(By.xpath("//li[contains(text(),\"Allow All Extensions\")]"));
 
     /**
      * 适配不同不同版本，小于30.14.0.A 为checkbox，大于30.14.0.A为list

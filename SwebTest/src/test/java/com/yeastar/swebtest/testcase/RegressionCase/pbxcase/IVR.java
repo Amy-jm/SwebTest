@@ -118,6 +118,7 @@ public class IVR extends SwebDriver {
         comboboxSet(add_ivr_keyPressEvent.d_invalid,extensionList,"1105");
         add_ivr_keyPressEvent.save.click();
         ys_waitingLoading(ivr.grid_Mask);
+        ys_waitingTime(3000);
         ys_apply();
     }
 
