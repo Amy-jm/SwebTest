@@ -91,7 +91,8 @@ public class IVR extends SwebDriver {
         add_ivr_basic.name.clear();
         add_ivr_basic.name.setValue("IVRtest1");
         comboboxSelect(add_ivr_basic.prompt,"autotestprompt");
-        setCheckBox(add_ivr_basic.dialExtensions,true);
+//        setCheckBox(add_ivr_basic.dialExtensions,true);
+        add_ivr_basic.choiceEnableNumber(true);
         setCheckBox(add_ivr_basic.dialOutboundRoutes,true);
         ys_waitingTime(1000);
 //        全选呼出路由
