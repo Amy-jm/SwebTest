@@ -29,6 +29,7 @@ public class PagingIntercom extends SwebDriver{
             mySettings.close.click();
         }
         m_extension.showCDRClounm();
+
         pageDeskTop.taskBar_Main.click();
         pageDeskTop.settingShortcut.click();
         settings.general_panel.click();
@@ -37,6 +38,7 @@ public class PagingIntercom extends SwebDriver{
         }
         m_general.setIntercom(true,"*5");
 
+        ys_apply();
 
     }
     @Test(priority = 0)
