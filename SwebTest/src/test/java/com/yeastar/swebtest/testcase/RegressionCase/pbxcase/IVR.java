@@ -75,6 +75,8 @@ public class IVR extends SwebDriver {
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
+        ys_waitingTime(3000);
+        ys_apply();
     }
 
     @Test(priority =1,groups = "A" )
