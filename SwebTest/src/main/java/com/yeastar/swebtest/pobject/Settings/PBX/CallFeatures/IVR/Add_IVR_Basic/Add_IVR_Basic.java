@@ -37,6 +37,8 @@ public class Add_IVR_Basic {
 
     /**
      * 适配不同不同版本，小于30.14.0.A 为checkbox，大于30.14.0.A为list
+     *
+     * js: Ext.getCmp('st-ivr-enablenumber').setValue('yes');
      */
     public void choiceEnableNumber(Boolean boo){
         //大于30.14.0.A为list

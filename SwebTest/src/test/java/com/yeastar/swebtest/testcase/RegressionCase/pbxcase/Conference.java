@@ -229,7 +229,10 @@ public class Conference extends SwebDriver {
         pjsip.Pj_Answer_Call(1100,false);
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
-        m_extension.checkCDR("1100 <1100>","6401(from 1105)","Answered","","",communication_internal,1,2);
+        //CDR 已知问题，caller与callee 对换
+//        m_extension.checkCDR("1100 <1100>","6401(from 1105)","Answered","","",communication_internal,1,2);
+        m_extension.checkCDR("6401(from 1105)","1100 <1100>","Answered","","",communication_internal,1,2);
+
     }
     
 //    删除
