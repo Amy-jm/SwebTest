@@ -181,7 +181,7 @@ public class Extension extends SwebDriver{
         if(!FXS_1.equals(null)){
             Reporter.infoExec(" FXS分机：2000拨打51000，预期1000分机接听"); //执行操作
             pjsip.Pj_Make_Call_Auto_Answer(2000,"51000",DEVICE_ASSIST_2);
-            ys_waitingTime(40000);
+            ys_waitingTime(20000);
             pjsip.Pj_Hangup_All();
             m_extension.checkCDR("1106 <1106>","1000 <1000>","Answered","","",communication_internal);
         }
