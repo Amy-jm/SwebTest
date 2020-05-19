@@ -1077,8 +1077,8 @@ public class SwebDriver extends Config {
             desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
             desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
             desiredCapabilities.setCapability("network", true);
-            desiredCapabilities.setCapability("idleTimeout", 100);//150-100
-            desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 180);//180-90
+            desiredCapabilities.setCapability("idleTimeout", 240);//150-100
+            desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
 
             try {
                 webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
