@@ -163,16 +163,16 @@ public class OutboundRestriction extends SwebDriver {
         ys_waitingTime(5000);
 
 //        通话测试
-        for (int i=1;i<=4;i++) {
-            if(i==4) {
+        for (int i=1;i<=3;i++) {
+            if(i==3) {
                 ys_waitingTime(80000);
             }
             pjsip.Pj_Make_Call_Auto_Answer(1102, "13001", DEVICE_IP_LAN, false);
-            ys_waitingTime(8000);
+            ys_waitingTime(10000);
             System.out.println("=============================第"+i+"次循环打电话========================");
             System.out.println("1100的通话状态："+getExtensionStatus(1102,TALKING,1));
 //            呼出限制无法实时生效，大概要1分钟
-            if(i==4) {
+            if(i==3) {
                 YsAssert.assertEquals(getExtensionStatus(1102,HUNGUP,10),HUNGUP,"预期第"+i+"通电话1102呼出失败");
             }else {
                 YsAssert.assertEquals(getExtensionStatus(1102,TALKING,10),TALKING,"预期第"+i+"通电话1102呼出成功");
