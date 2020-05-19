@@ -179,7 +179,7 @@ public class OutboundRestriction extends SwebDriver {
             }
             pjsip.Pj_Hangup_All();
         }
-//        m_extension.checkCDR("1102 <1102>","13001","Failed"," "," ",communication_internal);
+        m_extension.checkCDR("1102 <1102>","13001","Failed"," "," ",communication_internal);
     }
 
 //    检查分机1102被限制呼出
