@@ -891,6 +891,7 @@ public class SwebDriver extends Config {
         setPageShowNum(grid, 100);
         ys_waitingLoading(grid_Mask);
 //        System.out.println("deletes "+message +": "+Integer.parseInt(String.valueOf(gridLineNum(grid))));
+        ys_waitingTime(3000);
         Reporter.infoExec("deletes " + message + ": " + Integer.parseInt(String.valueOf(gridLineNum(grid))));
         while (Integer.parseInt(String.valueOf(gridLineNum(grid))) > 0) {
             gridSeleteAll(grid);
