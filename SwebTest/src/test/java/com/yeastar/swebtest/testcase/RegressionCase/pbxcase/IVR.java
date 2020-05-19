@@ -7,6 +7,7 @@ import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.RetryListener;
 import com.yeastar.untils.TestNGListener;
+import io.qameta.allure.Issue;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
@@ -154,6 +155,7 @@ public class IVR extends SwebDriver {
     }
 
 //    Dial Outbound Routes
+    @Issue("30.14.0.5 发现的CDR显示问题 【预期：6501(33333) 实际：3001 [6501(33333)]】")
     @Test(priority = 4)
     public void D_dialoutbound() {
         Reporter.infoExec(" 3001拨打3000通过sip外线呼入IVRtest1,直拨3333通过sps外线呼出"); //执行操作
