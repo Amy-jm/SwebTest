@@ -27,27 +27,23 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.*;
+import static com.yeastar.swebtest.driver.Config.sort_ascendingOrder;
+import static com.yeastar.swebtest.driver.ConfigP.pageLogin;
+import static com.yeastar.swebtest.driver.ConfigP.pageLogin;
+import static com.yeastar.swebtest.driver.ConfigP.pageLogin;
+import static com.yeastar.swebtest.driver.ConfigP.pageLogin;
 
 /**
  * Created by GaGa on 2017-04-16.
  */
 @Log4j2
-public class SwebDriverP extends Config {
+public class SwebDriverP extends ConfigP {
     public static WebDriver webDriver = null;
 
-    @Step("{0}")
-    public void step(String desc){
-        log.debug("[step] "+desc);
-        sleep(5);
-        Cookie cookie = new Cookie("zaleniumMessage", desc);
-        webDriver.manage().addCookie(cookie);
-    }
 
     public static void quitDriver() {
-
         webDriver.quit();
         if(webDriver!=null) {
-            log.debug("webdriver is not null");
             close();
         }
     }
@@ -1047,6 +1043,7 @@ public class SwebDriverP extends Config {
             log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
             return initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub", method);
         } else {
+            log.debug("init_driver_with_method");
             return initialDriver(browser, relativeOrAbsoluteUrl, "");
         }
     }
@@ -1067,7 +1064,7 @@ public class SwebDriverP extends Config {
             Configuration.browser = CHROME;
 //            Configuration.browserBinary = CHROME_PATH;
 //            Configuration.browserVersion = 谷歌版本
-            System.setProperty("webdriver.chrome.driver", CHROME_PATH);
+//            System.setProperty("webdriver.chrome.driver", CHROME_PATH);
             desiredCapabilities = DesiredCapabilities.chrome();
         } else if (browser.equals("firefox")) {
             System.setProperty("webdriver.firefox.bin", FIREFOX_PATH);
@@ -1139,10 +1136,10 @@ public class SwebDriverP extends Config {
 //            desiredCapabilities.setCapability("build", "AutoTestBuild_Seven");
             desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
             //Idle TimeOut
-            desiredCapabilities.setCapability("idleTimeout", 240);//150-100
+            desiredCapabilities.setCapability("idleTimeout", 120);//150-100
             desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
             //Screen Resolution
-            desiredCapabilities.setCapability("screenResolution", "1280x720");
+            desiredCapabilities.setCapability("screenResolution", "1920x1080");
             desiredCapabilities.setCapability("network", true);
             try {
                 webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);

@@ -29,7 +29,7 @@
                      <include>**/*.dll</include>
                      <include>**/*.so</include>
                      <include>**/*.2</include>
-                     <include>**/*.xml</include>
+                     <include>**/*</include>
                  </includes>
                  <filtering>false</filtering>
              </resource>

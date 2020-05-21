@@ -1135,7 +1135,7 @@ public class SwebDriver extends Config {
             desiredCapabilities.setCapability("idleTimeout", 100);//150-100
             desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
             //Screen Resolution
-            desiredCapabilities.setCapability("screenResolution", "1280x720");
+            desiredCapabilities.setCapability("screenResolution", "1920x1080");
             desiredCapabilities.setCapability("network", true);
             try {
                 webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);

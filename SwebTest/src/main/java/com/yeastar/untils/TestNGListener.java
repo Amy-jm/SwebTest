@@ -33,11 +33,7 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
      */
     @Override
     public void onTestFailure(ITestResult tr) {
-        /** 并发测试关闭
-        log.error("Test Failure");
-        super.onTestFailure(tr);
-        new ReportUtils().step("[Test Failure Screenshot]",true);
-         **/
+
         super.onTestFailure(tr);
         log.debug("[Failure] "+tr.getTestClass()+tr.getName());
 
@@ -55,6 +51,10 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
         log.debug("[Skipped] "+tr.getTestClass()+tr.getName());
+
+        //更新用例状态 zalenium
+        Cookie cookie = new Cookie("zaleniumTestPassed", "skip");
+        webDriver.manage().addCookie(cookie);
     }
 
     /**
@@ -92,28 +92,24 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
         webDriver.manage().addCookie(cookie);
     }
 
-//    @Override
-//    public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-//        System.out.println( "********************* beforeInvocation ************************");
-//        if (method.isTestMethod()) {
-////            String browserName = method.getTestMethod().getXmlTest().getLocalParameters().get("browserName");
-////            String gridURL = method.getTestMethod().getXmlTest().getLocalParameters().get("gridURL");
-//            try {
-//                RemoteWebDriver driver = DriverFactory.getRemoteBrowser();
-//                DriverWrap.setWebDriver(driver);
-//            } catch (Exception e) {
-//                System.out.println( "********************* create RemoteWebDriver exception ************************");
-//            }
-//        }
-//    }
-
-    @Override
-    public void afterInvocation(IInvokedMethod method, ITestResult iTestResult) {
-       log.debug("[afterInvocation]"+iTestResult.getName());
-    }
-
     @Override
     public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-        log.debug("[beforeInvocation]"+iTestResult.getName());
+
     }
+
+    @Override
+    public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
+
+    }
+
+
+//    @Override
+//    public void afterInvocation(IInvokedMethod method, ITestResult iTestResult) {
+//       log.debug("[afterInvocation]"+iTestResult.getName());
+//    }
+//
+//    @Override
+//    public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
+//        log.debug("[beforeInvocation]"+iTestResult.getName());
+//    }
 }

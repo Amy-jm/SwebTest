@@ -178,8 +178,8 @@ public class Reporter  {
 //            clearDirFiles(currentPath+"build\\reports\\tests",300);
             clearDirFiles(currentPath+"localLog",500);
         }
-        WriteStringToFilePath(currentPath+"localLog\\"+LOCAL_LOG_FILE,emptynum+tmpname+message+"\r\n");
-        org.testng.Reporter.log(emptynum+tmpname+message);
+//        WriteStringToFilePath(currentPath+"localLog\\"+LOCAL_LOG_FILE,emptynum+tmpname+message+"\r\n");
+//        org.testng.Reporter.log(emptynum+tmpname+message);
     }
 
     /**
