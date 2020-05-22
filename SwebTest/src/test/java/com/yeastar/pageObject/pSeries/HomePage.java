@@ -83,6 +83,16 @@ public class HomePage {
 
     public SelenideElement search = $(By.id("search"));
 
+    /** 菜单 login user -- **/
+    public SelenideElement menu_first_level_user = $(By.xpath("//span[contains(text(),'Security')]"));
+    public SelenideElement user_tree_setting = $(By.linkText("Setting"));
+    public SelenideElement user_tree_change_password = $(By.linkText("Change Password"));
+    public SelenideElement user_tree_privacy_policy_agreement = $(By.linkText("Privacy Policy Agreement"));
+    public SelenideElement user_tree_language = $(By.linkText("Language"));
+    public SelenideElement user_tree_language_english = $(By.linkText("English"));
+    public SelenideElement user_tree_language_china = $(By.linkText("简体中文"));
+    public SelenideElement user_tree_logout = $(By.linkText("Logout"));
+
 
 
 }
