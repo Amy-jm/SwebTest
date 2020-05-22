@@ -25,6 +25,8 @@ public class DataReader2 {
     public final String PJSIP_SSH_PASSWORD = "";
     public final String PJSIP_SSH_USER = "ls@yf";
 
+    public final String PBX_URL = "https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/";
+
     /**
      * Data.properties配置
      */

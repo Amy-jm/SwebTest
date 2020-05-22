@@ -8,6 +8,8 @@ import org.testng.IHookable;
 import org.testng.ITestResult;
 import io.qameta.allure.*;
 
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.yeastar.controllers.WebDriverFactory.getDriver;
 import static com.yeastar.swebtest.driver.SwebDriver.webDriver;
 
 
@@ -31,6 +33,6 @@ public class AllureReporterListener implements IHookable{
     @Attachment(value = "Failure in method {0}", type = "image/png")
     private byte[] takeScreenShot(String methodName) {
 
-        return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot)  getWebDriver()).getScreenshotAs(OutputType.BYTES);
     }
 }

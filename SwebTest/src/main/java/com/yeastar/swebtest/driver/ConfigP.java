@@ -168,7 +168,6 @@ import com.yeastar.swebtest.pobject.Settings.System.UserPermission.Grant_Privile
 import com.yeastar.swebtest.pobject.Settings.System.UserPermission.Grant_Privilege_Others.Grant_Privilege_Others;
 import com.yeastar.swebtest.pobject.Settings.System.UserPermission.Grant_Privilege_Settings.Grant_Privilege_Settings;
 import com.yeastar.swebtest.pobject.Settings.System.UserPermission.UserPermission;
-import com.yeastar.swebtest.pseries.pages.LoginPage;
 import com.yeastar.swebtest.tools.TcpSocket.TcpSocket;
 import com.yeastar.swebtest.tools.pjsip.PjsipApp;
 import com.yeastar.swebtest.tools.ssh.SSHApp;
@@ -289,8 +288,6 @@ public class ConfigP extends DataReader2 {
     //ExtensionGroup
     public static ExtensionGroup extensionGroup = new ExtensionGroup();
     public static Add_Extension_Group add_extension_group = new Add_Extension_Group();
-
-    public static LoginPage loginPage = new LoginPage();
 
 
 
