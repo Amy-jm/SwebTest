@@ -1,6 +1,7 @@
 package com.yeastar.testcase.pseries;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.pageObject.pSeries.HomePage;
 import com.yeastar.pageObject.pSeries.LoginPage;
 import com.yeastar.pageObject.pSeries.TestCaseBase;
 //import com.yeastar.swebtest.tools.reporter.Reporter;
@@ -33,10 +34,15 @@ public class Extension extends TestCaseBase {
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
         step("2:创建分机号1000");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
         step("3:验证保存成功");
-//        Assert.assertTrue(false);
-        step("4-5：loginMe");
+
+        step("4：loginMe");
+//        auto.homePage().logout();
+
+        step("5：logout");
+        auto.homePage().logout();
     }
 
 }

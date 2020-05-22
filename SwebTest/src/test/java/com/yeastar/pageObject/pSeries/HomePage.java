@@ -2,33 +2,38 @@ package com.yeastar.pageObject.pSeries;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.sleep;
 
 @Log4j2
 public class HomePage {
 
-    /** 左侧菜单 -- Dashboard **/
+    /**
+     * 左侧菜单 -- Dashboard
+     **/
     public SelenideElement left_menu_dashboard = $(By.linkText("Dashboard"));
-    /** 左侧菜单 -- Extension/Trunk **/
+    /**
+     * 左侧菜单 -- Extension/Trunk
+     **/
     public SelenideElement left_menu_first_level_extension_trunk = $(By.xpath("//span[contains(text(),'Extension/Trunk')]"));
     public SelenideElement extension_trunk_tree_extensions = $(By.linkText("Extensions"));
     public SelenideElement extension_trunk_tree_extension_group = $(By.linkText("Extension Group"));
     public SelenideElement extension_trunk_tree_trunks = $(By.linkText("Trunks"));
     public SelenideElement extension_trunk_tree_management = $(By.linkText("Role Management"));
-
-    /** 左侧菜单 -- Call Control **/
+    /**
+     * 左侧菜单 -- Call Control
+     **/
     public SelenideElement left_menu_first_level_call_control = $(By.xpath("//span[contains(text(),'Call Control')]"));
     public SelenideElement call_control_tree_inbound_routes = $(By.linkText("Inbound Routes"));
     public SelenideElement call_control_tree_outbound_routes = $(By.linkText("Outbound Routes"));
     public SelenideElement call_control_tree_office_time_and_holidays = $(By.linkText("Office Time and Holidays"));
     public SelenideElement call_control_tree_emergency_number = $(By.linkText("Emergency Number"));
 
-    /** 左侧菜单 -- Call Feature **/
+    /**
+     * 左侧菜单 -- Call Feature
+     **/
     public SelenideElement left_menu_first_level_call_feature = $(By.xpath("//span[contains(text(),'Call Feature')]"));
     public SelenideElement call_feature_tree_voicemail = $(By.linkText("Voicemail"));
     public SelenideElement call_feature_tree_feature_codes = $(By.linkText("Feature Codes"));
@@ -40,14 +45,18 @@ public class HomePage {
     public SelenideElement call_feature_tree_recording = $(By.linkText("Recording"));
 
 
-    /** 左侧菜单 -- PBX Settings **/
+    /**
+     * 左侧菜单 -- PBX Settings
+     **/
     public SelenideElement left_menu_first_level_pbx_settings = $(By.xpath("//span[contains(text(),'PBX Settings')]"));
     public SelenideElement pbx_settings_tree_preferences = $(By.linkText("Preferences"));
     public SelenideElement pbx_settings_tree_voice_prompt = $(By.linkText("Voice Prompt"));
     public SelenideElement pbx_settings_tree_sip_settings = $(By.linkText("SIP Settings"));
     public SelenideElement pbx_settings_tree_jitter_buffer = $(By.linkText("Jitter Buffer"));
 
-    /** 左侧菜单 -- System **/
+    /**
+     * 左侧菜单 -- System
+     **/
     public SelenideElement left_menu_first_level_system = $(By.xpath("//span[contains(text(),'System')]"));
     public SelenideElement system_tree_network = $(By.linkText("Network"));
     public SelenideElement system_tree_date_and_time = $(By.linkText("Date and Time"));
@@ -58,13 +67,17 @@ public class HomePage {
     public SelenideElement system_tree_remote_management = $(By.linkText("Remote Management"));
     public SelenideElement system_tree_integration = $(By.linkText("Integration"));
 
-    /** 左侧菜单 -- Security **/
+    /**
+     * 左侧菜单 -- Security
+     **/
     public SelenideElement left_menu_first_level_security = $(By.xpath("//span[contains(text(),'Security')]"));
     public SelenideElement security_tree_security_rules = $(By.linkText("Security Rules"));
     public SelenideElement security_tree_security_settings = $(By.linkText("Security Settings"));
 
 
-    /** 左侧菜单 -- Maintenance **/
+    /**
+     * 左侧菜单 -- Maintenance
+     **/
     public SelenideElement left_menu_first_level_maintenance = $(By.xpath("//span[contains(text(),'Maintenance')]"));
     public SelenideElement maintenance_tree_upgrade = $(By.linkText("Upgrade"));
     public SelenideElement maintenance_tree_backup_and_restore = $(By.linkText("Backup And Restore"));
@@ -74,7 +87,9 @@ public class HomePage {
     public SelenideElement maintenance_tree_trouble_shooting = $(By.linkText("Trouble Shooting"));
 
 
-    /** 左侧菜单 -- CDR/Recording **/
+    /**
+     * 左侧菜单 -- CDR/Recording
+     **/
     public SelenideElement left_menu_first_level_cdr_recording = $(By.xpath("//span[contains(text(),'CDR/Recording')]"));
     public SelenideElement cdr_recording_tree_cdr = $(By.linkText("CDR"));
     public SelenideElement cdr_recording_tree_recording = $(By.linkText("Recording"));
@@ -83,9 +98,13 @@ public class HomePage {
 
     public SelenideElement search = $(By.id("search"));
 
-    /** 菜单 login user -- **/
-    public SelenideElement menu_first_level_user = $(By.xpath("//span[contains(text(),'Security')]"));
-    public SelenideElement user_tree_setting = $(By.linkText("Setting"));
+    /**
+     * 菜单 login user --
+     **/
+    public SelenideElement header_box_name = $(By.xpath("//span[contains(@class,'header-box')]"));//login username
+
+    public SelenideElement menu_first_level_user_dropdown = $(By.xpath("//div[@class=\"ant-dropdown-link ant-dropdown-trigger ant-dropdown-open\"]//i[contains(@class,\"anticon anticon-down\")]"));
+    public SelenideElement user_tree_setting = $(By.xpath("//div[@class=\"ant-dropdown ant-dropdown-placement-bottomRight\"]//li[contains(text(),'Setting')]"));
     public SelenideElement user_tree_change_password = $(By.linkText("Change Password"));
     public SelenideElement user_tree_privacy_policy_agreement = $(By.linkText("Privacy Policy Agreement"));
     public SelenideElement user_tree_language = $(By.linkText("Language"));
@@ -93,6 +112,219 @@ public class HomePage {
     public SelenideElement user_tree_language_china = $(By.linkText("简体中文"));
     public SelenideElement user_tree_logout = $(By.linkText("Logout"));
 
+    /**
+     * logout pbx
+     */
+    public void logout() {
+        menu_first_level_user_dropdown.click();
+        user_tree_logout.shouldBe(Condition.visible).click();
+    }
 
+    /**
+     * 菜单选择
+     */
+    public void intoPage(Menu_Level_1 level_1, Menu_Level_2 level_2) {
+        //左侧一级菜单
+        switch (level_1) {
+            case extension_trunk:
+                left_menu_first_level_extension_trunk.click();
+                break;
+            case call_control:
+                left_menu_first_level_call_control.click();
+                break;
+            case call_feature:
+                left_menu_first_level_call_feature.click();
+                break;
+            case pbx_settings:
+                left_menu_first_level_pbx_settings.click();
+                break;
+            case security:
+                left_menu_first_level_security.click();
+                break;
+            case maintenance:
+                left_menu_first_level_maintenance.click();
+                break;
+            case cdr_recording:
+                left_menu_first_level_cdr_recording.click();
+                break;
+        }
+
+        //左侧二级菜单
+        switch (level_2) {
+            case extension_trunk_tree_extensions:
+                extension_trunk_tree_extensions.click();
+                break;
+            case extension_trunk_tree_extension_group:
+                extension_trunk_tree_extension_group.click();
+                break;
+            case extension_trunk_tree_trunks:
+                extension_trunk_tree_trunks.click();
+                break;
+            case extension_trunk_tree_management:
+                extension_trunk_tree_management.click();
+                break;
+            case call_control_tree_inbound_routes:
+                call_control_tree_inbound_routes.click();
+                break;
+            case call_control_tree_outbound_routes:
+                call_control_tree_outbound_routes.click();
+                break;
+            case call_control_tree_office_time_and_holidays:
+                call_control_tree_office_time_and_holidays.click();
+                break;
+            case call_control_tree_emergency_number:
+                call_control_tree_emergency_number.click();
+                break;
+            case call_feature_tree_voicemail:
+                call_feature_tree_voicemail.click();
+                break;
+            case call_feature_tree_feature_codes:
+                call_feature_tree_feature_codes.click();
+                break;
+            case call_feature_tree_ivr:
+                call_feature_tree_ivr.click();
+                break;
+            case call_feature_tree_ring_group:
+                call_feature_tree_ring_group.click();
+                break;
+            case call_feature_tree_queue:
+                call_feature_tree_queue.click();
+                break;
+            case call_feature_tree_conference:
+                call_feature_tree_conference.click();
+                break;
+            case pbx_settings_tree_preferences:
+                pbx_settings_tree_preferences.click();
+                break;
+            case pbx_settings_tree_voice_prompt:
+                pbx_settings_tree_voice_prompt.click();
+                break;
+            case pbx_settings_tree_sip_settings:
+                pbx_settings_tree_sip_settings.click();
+                break;
+            case pbx_settings_tree_jitter_buffer:
+                pbx_settings_tree_jitter_buffer.click();
+                break;
+            case system_tree_network:
+                system_tree_network.click();
+                break;
+            case system_tree_date_and_time:
+                system_tree_date_and_time.click();
+                break;
+            case system_tree_email:
+                system_tree_email.click();
+                break;
+            case system_tree_storage:
+                system_tree_storage.click();
+                break;
+            case system_tree_event_notification:
+                system_tree_event_notification.click();
+                break;
+            case system_tree_host_standby:
+                system_tree_host_standby.click();
+                break;
+            case system_tree_remote_management:
+                system_tree_remote_management.click();
+                break;
+            case system_tree_integration:
+                system_tree_integration.click();
+                break;
+            case security_tree_security_rules:
+                security_tree_security_rules.click();
+                break;
+            case security_tree_security_settings:
+                security_tree_security_settings.click();
+                break;
+            case maintenance_tree_upgrade:
+                maintenance_tree_upgrade.click();
+                break;
+            case maintenance_tree_backup_and_restore:
+                maintenance_tree_backup_and_restore.click();
+                break;
+            case maintenance_tree_reboot:
+                maintenance_tree_reboot.click();
+                break;
+            case maintenance_tree_factory_reset:
+                maintenance_tree_factory_reset.click();
+                break;
+            case maintenance_tree_operation_logs:
+                maintenance_tree_operation_logs.click();
+                break;
+            case maintenance_tree_trouble_shooting:
+                maintenance_tree_trouble_shooting.click();
+                break;
+            case cdr_recording_tree_cdr:
+                cdr_recording_tree_cdr.click();
+                break;
+            case cdr_recording_tree_recording:
+                cdr_recording_tree_recording.click();
+                break;
+            case cdr_recording_tree_call_report:
+                cdr_recording_tree_call_report.click();
+                break;
+        }
+    }
+
+
+    /**
+     * 左侧 一 二级菜单
+     **/
+    public enum Menu_Level_1 {
+        extension_trunk,
+        call_control,
+        call_feature,
+        pbx_settings,
+        security,
+        maintenance,
+        cdr_recording;
+    }
+
+    public enum Menu_Level_2 {
+        extension_trunk_tree_extensions,
+        extension_trunk_tree_extension_group,
+        extension_trunk_tree_trunks,
+        extension_trunk_tree_management,
+
+        call_control_tree_inbound_routes,
+        call_control_tree_outbound_routes,
+        call_control_tree_office_time_and_holidays,
+        call_control_tree_emergency_number,
+
+        call_feature_tree_voicemail,
+        call_feature_tree_feature_codes,
+        call_feature_tree_ivr,
+        call_feature_tree_ring_group,
+        call_feature_tree_queue,
+        call_feature_tree_conference,
+
+        pbx_settings_tree_preferences,
+        pbx_settings_tree_voice_prompt,
+        pbx_settings_tree_sip_settings,
+        pbx_settings_tree_jitter_buffer,
+
+        system_tree_network,
+        system_tree_date_and_time,
+        system_tree_email,
+        system_tree_storage,
+        system_tree_event_notification,
+        system_tree_host_standby,
+        system_tree_remote_management,
+        system_tree_integration,
+
+
+        security_tree_security_rules,
+        security_tree_security_settings,
+
+        maintenance_tree_upgrade,
+        maintenance_tree_backup_and_restore,
+        maintenance_tree_reboot,
+        maintenance_tree_factory_reset,
+        maintenance_tree_operation_logs,
+        maintenance_tree_trouble_shooting,
+
+        cdr_recording_tree_cdr,
+        cdr_recording_tree_recording,
+        cdr_recording_tree_call_report;
+    }
 
 }
