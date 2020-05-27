@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 
 @Log4j2
 public class HomePage {
@@ -101,24 +102,34 @@ public class HomePage {
     /**
      * 菜单 login user --
      **/
-    public SelenideElement header_box_name = $(By.xpath("//span[contains(@class,'header-box')]"));//login username
 
-    public SelenideElement menu_first_level_user_dropdown = $(By.xpath("//div[@class=\"ant-dropdown-link ant-dropdown-trigger ant-dropdown-open\"]//i[contains(@class,\"anticon anticon-down\")]"));
+    public String link_comm_xpath = "//li[contains(text(),'%s')]";
+//    public SelenideElement header_box_name = $(By.xpath("//span[contains(@class,'header-box')]"));//login username
+     public SelenideElement header_box_name = $(By.xpath("//span[contains(@class,'ant-avatar')]/following-sibling::span"));//login username   //span[contains(@class,'ant-avatar')]/following-sibling::span
+
+
+    public SelenideElement menu_first_level_user_dropdown = $(By.xpath("//div[contains(@class,'ant-dropdown-link ant-dropdown-trigger')]//i[contains(@class,\"anticon anticon-down\")]"));
     public SelenideElement user_tree_setting = $(By.xpath("//div[@class=\"ant-dropdown ant-dropdown-placement-bottomRight\"]//li[contains(text(),'Setting')]"));
-    public SelenideElement user_tree_change_password = $(By.linkText("Change Password"));
-    public SelenideElement user_tree_privacy_policy_agreement = $(By.linkText("Privacy Policy Agreement"));
-    public SelenideElement user_tree_language = $(By.linkText("Language"));
-    public SelenideElement user_tree_language_english = $(By.linkText("English"));
-    public SelenideElement user_tree_language_china = $(By.linkText("简体中文"));
-    public SelenideElement user_tree_logout = $(By.linkText("Logout"));
+    public SelenideElement user_tree_change_password = $(By.xpath(String.format(link_comm_xpath,"Change Password")));
+    public SelenideElement user_tree_privacy_policy_agreement =  $(By.xpath(String.format(link_comm_xpath,"Privacy Policy Agreement")));
+    public SelenideElement user_tree_language = $(By.xpath(String.format(link_comm_xpath,"Language")));
+    public SelenideElement user_tree_language_english =  $(By.xpath(String.format(link_comm_xpath,"English")));
+    public SelenideElement user_tree_language_china =  $(By.xpath(String.format(link_comm_xpath,"简体中文")));
+    public SelenideElement user_tree_logout = $(By.xpath(String.format(link_comm_xpath,"Logout")));
 
     /**
      * logout pbx
      */
     public void logout() {
         menu_first_level_user_dropdown.click();
-        user_tree_logout.shouldBe(Condition.visible).click();
+        user_tree_logout.waitUntil(Condition.visible,3*1000).click();
     }
+
+
+    /**
+     * 系统提示信息
+     */
+    public SelenideElement system_alert_message = $(By.xpath("//a[contains(@class,'close')]"));
 
     /**
      * 菜单选择
@@ -263,6 +274,13 @@ public class HomePage {
                 cdr_recording_tree_call_report.click();
                 break;
         }
+        sleep(3000);
+        //close alert
+        while(system_alert_message.exists()){
+            system_alert_message.click();
+            sleep(2000);
+        }
+
     }
 
 

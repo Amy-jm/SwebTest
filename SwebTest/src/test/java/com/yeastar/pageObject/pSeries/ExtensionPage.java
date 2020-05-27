@@ -1,22 +1,131 @@
 package com.yeastar.pageObject.pSeries;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
+import static com.yeastar.pageObject.pSeries.IButton.OKAlertBtn;
 
 @Log4j2
-public class ExtensionPage {
+public class ExtensionPage extends BasePage implements ExtensionPageElementImpl {
 
-    private SelenideElement extension_user_first_name = $(By.id("extension_user_first_name"));
-    private SelenideElement extension_user_number = $(By.id("extension_user_number"));
-    private SelenideElement extension_user_caller_id = $(By.id("extension_user_caller_id"));
-    private SelenideElement extension_user_user_password = $(By.xpath("extension_user_user_password"));
 
+    /**
+     * 密码强度不够提示框，选择OK
+     * @return
+     */
+    public ExtensionPage registration_Password_Alert_Exist_And_GoOn(){
+        registration_password_not_strong_alert.shouldBe(Condition.exist);
+        OKAlertBtn.shouldBe(Condition.enabled).click();
+        return this;
+    }
+
+
+    public void isCheckBox(Boolean isSelected,SelenideElement elementCheckBox){
+        if(isSelected && !executeJs("document.getElementById('"+elementCheckBox.getAttribute("id")+"').checked").equals("false")){
+            Selenide.actions().click(elementCheckBox).perform();
+        }
+    }
+
+    /**
+     * 创建Sip 分机
+     * @param extensionNumber
+     * @param UserPassword
+     * @return
+     */
+    public ExtensionPage createSipExtension(String extensionNumber, String UserPassword) {
+        addBtn.shouldBe(Condition.enabled).click();
+        add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        inputComm("First Name", extensionNumber);
+        inputComm("User Password", UserPassword);
+        inputComm("Extension Number", extensionNumber);
+        inputComm("Caller ID (Internal)", extensionNumber);
+        saveBtn.click();
+        return this;
+    }
+
+    /**
+     * 创建SIP 分机
+     * @param extensionNumber
+     * @param UserPassword
+     * @param registrationPassword
+     * @return
+     */
+    @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
+    public ExtensionPage createSipExtension(String extensionNumber, String UserPassword,String registrationPassword) {
+        addBtn.shouldBe(Condition.enabled).click();
+        add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        inputComm("First Name", extensionNumber);
+        inputComm("User Password", UserPassword);
+        inputComm("Extension Number", extensionNumber);
+        inputComm("Caller ID (Internal)", extensionNumber);
+        inputComm("Registration Password", registrationPassword);
+        saveBtn.click();
+        return this;
+    }
+
+
+    @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
+    public ExtensionPage createSipExtensionAndConf(String extensionNumber, String UserPassword,String registrationPassword) {
+        addBtn.shouldBe(Condition.enabled).click();
+        add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        inputComm("First Name", extensionNumber);
+        inputComm("User Password", UserPassword);
+        inputComm("Extension Number", extensionNumber);
+        inputComm("Caller ID (Internal)", extensionNumber);
+        inputComm("Registration Password", registrationPassword);
+        return this;
+    }
+
+    /**
+     * 配置Config
+     * @param extensionNumber
+     * @param UserPassword
+     * @param registrationPassword
+     * @return
+     */
+    @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
+    public ExtensionPage configPresence() {
+        switchTab(TABLE_MENU.PRESENCE.getAlias());
+        isCheckBox(true,extension_presence_forward_enb_in_always_forward_checkBox);
+        return this;
+    }
+
+    /**
+     * 删除所有分机
+     * @return
+     */
+    @Step("删除所有分机")
+    public ExtensionPage deleAllExtension() {
+        if (delete_all_checkbox.isEnabled()) {
+            Selenide.actions().click(delete_all_checkbox).perform();
+            deleteBtn.shouldBe(Condition.visible).click();
+            OKAlertBtn.shouldBe(Condition.visible).click();
+            sleep(WaitUntils.RETRY_WAIT);
+        }
+        return this;
+    }
+
+
+
+    /** Tab 菜单切换 **/
+    public ExtensionPage switchTab(String enumTabMenu){
+        $(By.xpath(String.format(TAB_COMM_XPATH,enumTabMenu))).shouldBe(Condition.visible).click();
+        return this;
+    }
+
+
+
+    public void checkAndSelect(Boolean isChecked,String Select){
+    }
+    //user OutBound Caller ID(DOD)
 
 
 }
