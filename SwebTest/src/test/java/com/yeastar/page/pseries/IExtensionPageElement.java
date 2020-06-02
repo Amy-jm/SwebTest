@@ -1,12 +1,15 @@
-package com.yeastar.pageObject.pSeries;
+package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public interface ExtensionPageElementImpl {
-    SelenideElement searchInput = $(By.xpath("//input[@placeholder=\"Search\"]"));
+public interface IExtensionPageElement {
+    /**查询输入框*/
+    SelenideElement searchIpt = $(By.xpath("//input[@placeholder=\"Search\"]"));
+
+
     SelenideElement add_DropDown_bulk_add_Btn = $(By.xpath("//li[text()='Bulk Add']"));
     SelenideElement add_DropDown_add_Btn = $(By.xpath("//li[text()='Add']"));
     SelenideElement delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));

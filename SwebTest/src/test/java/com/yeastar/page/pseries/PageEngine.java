@@ -1,5 +1,5 @@
 
-package com.yeastar.pageObject.pSeries;
+package com.yeastar.page.pseries;
 
 
 public class PageEngine {

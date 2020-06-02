@@ -1,4 +1,4 @@
-package com.yeastar.pageObject.pSeries;
+package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
@@ -11,10 +11,15 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
-import static com.yeastar.pageObject.pSeries.IButton.OKAlertBtn;
 
+/**
+ * @program: P Series
+ * @description: 分机配置页面
+ * @author: huangjx@yeastar.com
+ * @create: 2020/05/27
+ */
 @Log4j2
-public class ExtensionPage extends BasePage implements ExtensionPageElementImpl {
+public class ExtensionPage extends BasePage implements IExtensionPageElement {
 
 
     /**
@@ -35,16 +40,17 @@ public class ExtensionPage extends BasePage implements ExtensionPageElementImpl 
     }
 
     /**
-     * 创建Sip 分机
-     * @param extensionNumber
-     * @param UserPassword
-     * @return
+     * 创建SIP extensionNumber分机，密码为 userPassword，
+     * @param extensionNumber 分机号，同时默认修改 FirstName,ExtensionNumber,Caller ID(Internal)字段为分机号
+     * @param userPassword 用户密码
+     * @return 返回分机页面实例，ExtensionPage
      */
-    public ExtensionPage createSipExtension(String extensionNumber, String UserPassword) {
+    @Step("extensionNumber:{0},userPassword:{1}")
+    public ExtensionPage createSipExtension(String extensionNumber, String userPassword) {
         addBtn.shouldBe(Condition.enabled).click();
         add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         inputComm("First Name", extensionNumber);
-        inputComm("User Password", UserPassword);
+        inputComm("User Password", userPassword);
         inputComm("Extension Number", extensionNumber);
         inputComm("Caller ID (Internal)", extensionNumber);
         saveBtn.click();

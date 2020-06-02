@@ -1,13 +1,9 @@
-package com.yeastar.pageObject.pSeries;
+package com.yeastar.page.pseries;
 
 import com.yeastar.controllers.BaseMethod;
-import com.yeastar.controllers.WebDriverFactory;
-import com.yeastar.pageObject.pSeries.LoginPage;
-import com.yeastar.swebtest.driver.SwebDriverP;
 import com.yeastar.untils.DataUtils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 

@@ -1,4 +1,4 @@
-package com.yeastar.pageObject.pSeries;
+package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;

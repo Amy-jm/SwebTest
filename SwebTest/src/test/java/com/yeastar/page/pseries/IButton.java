@@ -1,4 +1,4 @@
-package com.yeastar.pageObject.pSeries;
+package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;

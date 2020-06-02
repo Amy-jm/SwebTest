@@ -1,8 +1,8 @@
 package com.yeastar.testcase.pseries;
 
 import com.codeborne.selenide.Condition;
-import com.yeastar.pageObject.pSeries.HomePage;
-import com.yeastar.pageObject.pSeries.TestCaseBase;
+import com.yeastar.page.pseries.HomePage;
+import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.RetryListener;
 import com.yeastar.untils.TestNGListenerP;
@@ -13,15 +13,17 @@ import org.testng.annotations.*;
 
 @Listeners({AllureReporterListener.class, RetryListener.class, TestNGListenerP.class})
 @Log4j2
-public class Extension extends TestCaseBase {
+public class TestExtension extends TestCaseBase {
 
     @Epic("Extension")
     @Feature("新增分机1001，能正常loginMe")
     @Story("注册相关->User->Extension number->默认值")
     @Description("1:login PBX->2:创建分机号1001->3:验证保存成功->4:loginMe->5:分机login success")
     @Severity(SeverityLevel.BLOCKER)
-    @Test
-    public void A_loginMe(){
+    @TmsLink("")
+    @Issue("BUG_00001")
+    @Test(groups = "P0,testLoginMe,Extension,Regression,PSeries")
+    public void testLoginMe(){
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
