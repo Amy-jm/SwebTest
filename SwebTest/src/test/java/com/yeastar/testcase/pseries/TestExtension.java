@@ -8,6 +8,7 @@ import com.yeastar.untils.RetryListener;
 import com.yeastar.untils.TestNGListenerP;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 
@@ -15,9 +16,9 @@ import org.testng.annotations.*;
 @Log4j2
 public class TestExtension extends TestCaseBase {
 
-    @Epic("Extension")
-    @Feature("新增分机1001，能正常loginMe")
-    @Story("注册相关->User->Extension number->默认值")
+    @Epic("P_Series")
+    @Feature("Extension")
+    @Story("新增分机1001，能正常loginMe")
     @Description("1:login PBX->2:创建分机号1001->3:验证保存成功->4:loginMe->5:分机login success")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
@@ -33,7 +34,7 @@ public class TestExtension extends TestCaseBase {
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD);
 
         assertStep("3:验证保存成功");
-        auto.extensionPage().saveSuccessAlertAppear();
+        Assert.assertTrue(auto.extensionPage().isSaveSuccessAlertAppear());
 
         step("4:loginMe");
         auto.homePage().logout();
@@ -41,7 +42,7 @@ public class TestExtension extends TestCaseBase {
         auto.loginPage().login("1001",EXTENSION_PASSWORD);
 
         assertStep("5:分机login success");
-        auto.homePage().header_box_name.shouldHave(Condition.text("1001"));
+        Assert.assertTrue(auto.homePage().header_box_name.shouldHave(Condition.text("1001")).isDisplayed());
     }
 
 
@@ -61,7 +62,7 @@ public class TestExtension extends TestCaseBase {
         auto.extensionPage().deleAllExtension().createSipExtension("1001", EXTENSION_PASSWORD, "ABCDEFGHIJK");
 
         assertStep("3:提示注册密码强度不够，继续保存成功");
-        auto.extensionPage().registration_Password_Alert_Exist_And_GoOn().saveSuccessAlertAppear();
+        auto.extensionPage().registration_Password_Alert_Exist_And_GoOn().isSaveSuccessAlertAppear();
 
         assertStep("4:分机列表，有提示注册密码强度不够图标显示");
         auto.extensionPage().extension_list_warning_registration_warning_img.shouldBe(Condition.exist);
@@ -92,7 +93,7 @@ public class TestExtension extends TestCaseBase {
         step("2:创建IVR 6002");
 
         assertStep("3:提示注册密码强度不够，继续保存成功");
-        auto.extensionPage().registration_Password_Alert_Exist_And_GoOn().saveSuccessAlertAppear();
+        auto.extensionPage().registration_Password_Alert_Exist_And_GoOn().isSaveSuccessAlertAppear();
 
         assertStep("4:分机列表，有提示注册密码强度不够图标显示");
         auto.extensionPage().extension_list_warning_registration_warning_img.shouldBe(Condition.exist);

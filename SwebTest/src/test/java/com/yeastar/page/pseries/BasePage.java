@@ -27,8 +27,8 @@ public class BasePage implements IButton{
         $(By.xpath(String.format(INPUT_COMM_XPATH,label))).shouldHave(Condition.visible).setValue(input);
     }
 
-    public void saveSuccessAlertAppear(){
-        $(By.xpath("//span[text()=\"添加成功\"]")).waitUntil(Condition.appear,10*1000);
+    public Boolean isSaveSuccessAlertAppear(){
+        return $(By.xpath("//span[text()=\"添加成功\"]")).waitUntil(Condition.appear,10*1000).isDisplayed();
     }
 
     public boolean waitElementDisplay(SelenideElement selenideElement,long waitTime){
