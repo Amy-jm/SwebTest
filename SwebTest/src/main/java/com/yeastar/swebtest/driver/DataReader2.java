@@ -22,6 +22,7 @@ public class DataReader2 {
     final static String PJSIP_PROPERTIES_FILE_PATH ="/pjsip.properties";
 //    final static String loginName = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "loginName");
     public final String PJSIP_COMMAND_DELTREE_REGISTRAR = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"database deltree registrar\"";
+    public final String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"%s\"";
     public final String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
     public final int PJSIP_TCP_PORT = 8022;
     public final String PJSIP_SSH_PASSWORD = "";
@@ -135,7 +136,7 @@ public class DataReader2 {
     /**
      * PJSIP指令
      */
-    public static String PJSIP_SHOW_AOR = PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"PJSIP_SHOW_AOR");
+    public static String PJSIP_SHOW_AOR = PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"PJSIP_SHOW_AOR")+" ";
 
 
     /**

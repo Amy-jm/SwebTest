@@ -8,6 +8,7 @@ import static com.codeborne.selenide.Selenide.$;
 public interface IButton {
     String buttonLocationXpath = "//button//span[contains(text(),'%s')]/..";
     SelenideElement addBtn = $(By.xpath(String.format(buttonLocationXpath,"Add")));
+    SelenideElement applyBtn = $(By.xpath(String.format(buttonLocationXpath,"Apply")));
     SelenideElement importBtn = $(By.xpath(String.format(buttonLocationXpath,"Import")));
     SelenideElement exportBtn = $(By.xpath(String.format(buttonLocationXpath,"Export")));
     public static SelenideElement deleteBtn = $(By.xpath(String.format(buttonLocationXpath,"Delete")));

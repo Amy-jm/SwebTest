@@ -52,8 +52,12 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         inputComm("First Name", extensionNumber);
         inputComm("User Password", userPassword);
         inputComm("Extension Number", extensionNumber);
-        inputComm("Caller ID (Internal)", extensionNumber);
+//        inputComm("Caller ID (Internal)", extensionNumber);
+        extension_user_caller_id.setValue(extensionNumber);
         saveBtn.click();
+        sleep(WaitUntils.SHORT_WAIT);
+        applyBtn.shouldBe(Condition.visible).click();
+        sleep(WaitUntils.SHORT_WAIT*3);
         return this;
     }
 
@@ -90,13 +94,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         return this;
     }
 
-    /**
-     * 配置Config
-     * @param extensionNumber
-     * @param UserPassword
-     * @param registrationPassword
-     * @return
-     */
+
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage configPresence() {
         switchTab(TABLE_MENU.PRESENCE.getAlias());
@@ -115,7 +113,10 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             deleteBtn.shouldBe(Condition.visible).click();
             OKAlertBtn.shouldBe(Condition.visible).click();
             sleep(WaitUntils.RETRY_WAIT);
+            applyBtn.shouldBe(Condition.visible).click();
+            sleep(WaitUntils.SHORT_WAIT*3);
         }
+
         return this;
     }
 

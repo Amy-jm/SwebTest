@@ -11,6 +11,7 @@ import static com.codeborne.selenide.Selenide.sleep;
 @Log4j2
 public class HomePage {
 
+    String LI_XPATH = "//li[@title=\"%s\"]";
     /**
      * 左侧菜单 -- Dashboard
      **/
@@ -18,8 +19,8 @@ public class HomePage {
     /**
      * 左侧菜单 -- Extension/Trunk
      **/
-    public SelenideElement left_menu_first_level_extension_trunk = $(By.xpath("//span[contains(text(),'Extension/Trunk')]"));
-    public SelenideElement extension_trunk_tree_extensions = $(By.linkText("Extensions"));
+    public SelenideElement left_menu_first_level_extension_trunk = $(By.xpath("//span[contains(text(),'Extension and Trunk')]"));
+    public SelenideElement extension_trunk_tree_extensions = $(By.xpath(String.format(LI_XPATH,"Extension")));
     public SelenideElement extension_trunk_tree_extension_group = $(By.linkText("Extension Group"));
     public SelenideElement extension_trunk_tree_trunks = $(By.linkText("Trunks"));
     public SelenideElement extension_trunk_tree_management = $(By.linkText("Role Management"));
@@ -135,6 +136,12 @@ public class HomePage {
      * 菜单选择
      */
     public void intoPage(Menu_Level_1 level_1, Menu_Level_2 level_2) {
+        sleep(5000);
+        //close alert
+        while(system_alert_message.exists()){
+            system_alert_message.click();
+            sleep(2000);
+        }
         //左侧一级菜单
         switch (level_1) {
             case extension_trunk:
@@ -274,12 +281,12 @@ public class HomePage {
                 cdr_recording_tree_call_report.click();
                 break;
         }
-        sleep(3000);
-        //close alert
-        while(system_alert_message.exists()){
-            system_alert_message.click();
-            sleep(2000);
-        }
+//        sleep(3000);
+//        //close alert
+//        while(system_alert_message.exists()){
+//            system_alert_message.click();
+//            sleep(2000);
+//        }
 
     }
 

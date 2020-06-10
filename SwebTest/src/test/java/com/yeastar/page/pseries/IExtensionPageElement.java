@@ -28,6 +28,12 @@ public interface IExtensionPageElement {
     SelenideElement sip_extension_selection = $(By.xpath("//div[contains(text(),\"SIP Extension\")]"));
     SelenideElement fxs_extension_selection = $(By.xpath("//div[contains(text(),\"FXS Extension\")]"));
 
+    //User
+    SelenideElement extension_user_caller_id = $(By.id("extension_user_caller_id"));
+    SelenideElement extension_user_user_password = $(By.id("extension_user_user_password"));
+    SelenideElement extension_user_number = $(By.id("extension_user_number"));
+    SelenideElement extension_user_reg_name = $(By.id("extension_user_reg_name"));
+    SelenideElement extension_user_reg_password = $(By.id("extension_user_reg_password"));
 
     //密码强度不够弹框
      SelenideElement registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\"Registration Password is not strong, continue to save\")]"));
