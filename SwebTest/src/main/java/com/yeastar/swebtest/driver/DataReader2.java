@@ -90,12 +90,7 @@ public class DataReader2 {
     public static String IAXTrunk = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "IAXTRUNK");
     public static String SPS = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"SPS");
     public static String SPX = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"SPX");
-    /**
-     * gridhub
-     */
-    public  static String IS_RUN_REMOTE_SERVER = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"IS_RUN_REMOTE_SERVER");
-    public  static String GRID_HUB_IP = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"GRID_HUB_IP");
-    public  static String GRID_HUB_PORT = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"GRID_HUB_PORT");
+
 
     /**
      * 存储设备
@@ -146,7 +141,9 @@ public class DataReader2 {
     /**
      * 框架相关配置 config
      */
-
+    public  static String IS_RUN_REMOTE_SERVER = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"IS_RUN_REMOTE_SERVER");
+    public  static String GRID_HUB_IP = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"GRID_HUB_IP");
+    public  static String GRID_HUB_PORT = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"GRID_HUB_PORT");
 
 
     /**
