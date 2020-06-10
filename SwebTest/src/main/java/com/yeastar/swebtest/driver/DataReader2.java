@@ -18,6 +18,8 @@ import java.util.Properties;
 public class DataReader2 {
     
     final static String DATA_PROPERTIES_FILE_PATH ="/data.properties";
+    final static String CONFIG_PROPERTIES_FILE_PATH ="/config.properties";
+    final static String PJSIP_PROPERTIES_FILE_PATH ="/pjsip.properties";
 //    final static String loginName = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "loginName");
     public final String PJSIP_COMMAND_DELTREE_REGISTRAR = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"database deltree registrar\"";
     public final String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
@@ -133,6 +135,20 @@ public class DataReader2 {
      * 定义出错重跑
      */
     public static String RETRY_COUNT = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"RETRY_COUNT");
+
+
+    /**
+     * PJSIP指令
+     */
+    public static String PJSIP_SHOW_AOR = PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"PJSIP_SHOW_AOR");
+
+
+    /**
+     * 框架相关配置 config
+     */
+
+
+
     /**
      * 根据key返回key值
      * @param key

@@ -4,34 +4,34 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.AllureReporterListener;
-import com.yeastar.untils.RetryListener;
 import com.yeastar.untils.TestNGListenerP;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 
 
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
-public class TestExtension extends TestCaseBase {
+public class TestExtensionList extends TestCaseBase {
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("新增分机1001，能正常loginMe")
-    @Description("1:login PBX->2:创建分机号1001->3:验证保存成功->4:loginMe->5:分机login success")
+    @Story("List")
+    @Description("删除分机功能：1:login PBX->2:创建分机号1000->3:验证保存成功")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("ID1001628")
+    @TmsLink("ID1001507")
     @Issue("BUG_00001")
     @Test(groups = "P0,testLoginMe,Extension,Regression,PSeries")
-    public void testLoginMe(){
+    public void testDeleteExtension(){
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001");
+        step("2:创建分机号1000");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD);
+        auto.extensionPage().deleAllExtension().createSipExtension("1000",EXTENSION_PASSWORD);
 
         assertStep("3:验证保存成功");
         Assert.assertTrue(auto.extensionPage().isSaveSuccessAlertAppear());
