@@ -55,9 +55,10 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
 //        inputComm("Caller ID (Internal)", extensionNumber);
         extension_user_caller_id.setValue(extensionNumber);
         saveBtn.click();
-        sleep(WaitUntils.SHORT_WAIT);
-        applyBtn.shouldBe(Condition.visible).click();
-        sleep(WaitUntils.SHORT_WAIT*3);
+        clickApply();
+//        sleep(WaitUntils.SHORT_WAIT);
+//        applyBtn.shouldBe(Condition.visible).click();
+//        sleep(WaitUntils.SHORT_WAIT*3);
         return this;
     }
 

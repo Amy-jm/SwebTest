@@ -9,6 +9,9 @@ public interface IButton {
     String buttonLocationXpath = "//button//span[contains(text(),'%s')]/..";
     SelenideElement addBtn = $(By.xpath(String.format(buttonLocationXpath,"Add")));
     SelenideElement applyBtn = $(By.xpath(String.format(buttonLocationXpath,"Apply")));
+    SelenideElement applyLoadingBtn = $(By.xpath(String.format(buttonLocationXpath,"Loading")));
+    SelenideElement applyLoadedBtn = $(By.xpath(String.format(buttonLocationXpath,"Loaded")));
+
     SelenideElement importBtn = $(By.xpath(String.format(buttonLocationXpath,"Import")));
     SelenideElement exportBtn = $(By.xpath(String.format(buttonLocationXpath,"Export")));
     public static SelenideElement deleteBtn = $(By.xpath(String.format(buttonLocationXpath,"Delete")));
@@ -40,6 +43,10 @@ public interface IButton {
     SelenideElement OKAlertBtn = $(By.xpath("//button/span[contains(text(),'OK')]/.."));
     SelenideElement CancelAlertBtn = $(By.xpath("//button/span[contains(text(),'Cancel')]/.."));
     SelenideElement ConfrimAlertBtn = $(By.xpath("//button/span[contains(text(),'Confrim')]/.."));
+
+
+    //表格第一行删除图标
+    SelenideElement deleteImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'delete')]"));
 
 
 

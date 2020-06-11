@@ -2,6 +2,7 @@ package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 
@@ -136,8 +137,9 @@ public class HomePage {
      * 菜单选择
      */
     public void intoPage(Menu_Level_1 level_1, Menu_Level_2 level_2) {
-        sleep(5000);
+        sleep(WaitUntils.SHORT_WAIT*2);
         //close alert
+        // todo need to delete sleep
         while(system_alert_message.exists()){
             system_alert_message.click();
             sleep(2000);

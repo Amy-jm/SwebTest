@@ -2,12 +2,13 @@ package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Condition.value;
+import static com.codeborne.selenide.Selenide.*;
 
 @Log4j2
 public class BasePage implements IButton{
@@ -57,6 +58,15 @@ public class BasePage implements IButton{
         log.debug("[executeJS] "+js);
         Object result = executeJavaScript(js);
         return result;
+    }
+
+    /**
+     * 点击 apply button
+     */
+    public void clickApply(){
+        applyBtn.shouldBe(Condition.enabled).click();
+        applyLoadingBtn.shouldBe(Condition.visible);
+        applyLoadedBtn.shouldBe(Condition.visible);
     }
 
 }
