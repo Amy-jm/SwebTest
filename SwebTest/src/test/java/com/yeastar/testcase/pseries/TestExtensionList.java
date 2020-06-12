@@ -26,8 +26,8 @@ public class TestExtensionList extends TestCaseBase {
     @Description("删除分机功能：1:login PBX->2:创建分机号1000->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001507")
-    @Issue("BUG_00001")
-    @Test(groups = "P0,testLoginMe,Extension,Regression,PSeries")
+    @Issue("")
+    @Test(groups = "P0,testDeleteExtension,Extension,Regression,PSeries")
     public void testDeleteExtension() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -56,9 +56,9 @@ public class TestExtensionList extends TestCaseBase {
     @Story("List")
     @Description("批量删除分机功能：1:login PBX->2:创建分机号1000，10001->3:验证保存成功")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("ID1001507")
-    @Issue("BUG_00001")
-    @Test(groups = "P0,testLoginMe,Extension,Regression,PSeries")
+    @TmsLink("ID1001508")
+    @Issue("")
+    @Test(groups = "P0,testBulkDeleteExtension,Extension,Regression,PSeries")
     public void testBulkDeleteExtension() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
