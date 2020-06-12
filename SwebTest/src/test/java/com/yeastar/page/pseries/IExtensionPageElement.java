@@ -10,34 +10,34 @@ public interface IExtensionPageElement {
     SelenideElement searchIpt = $(By.xpath("//input[@placeholder=\"Search\"]"));
 
 
-    SelenideElement add_DropDown_bulk_add_Btn = $(By.xpath("//li[text()='Bulk Add']"));
-    SelenideElement add_DropDown_add_Btn = $(By.xpath("//li[text()='Add']"));
-    SelenideElement delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
+    SelenideElement ele_add_DropDown_bulk_add_Btn = $(By.xpath("//li[text()='Bulk Add']"));
+    SelenideElement ele_add_DropDown_add_Btn = $(By.xpath("//li[text()='Add']"));
+    SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
 
     //Tab标签
     String TAB_COMM_XPATH = "//div[contains(@role,'tab') and contains(text(),\"%s\")]";
-    SelenideElement tab_user = $(By.xpath(String.format(TAB_COMM_XPATH, "User")));
-    SelenideElement tab_presence = $(By.xpath(String.format(TAB_COMM_XPATH, "Presence")));
-    SelenideElement tab_voicemail = $(By.xpath(String.format(TAB_COMM_XPATH, "Voicemail")));
-    SelenideElement tab_features = $(By.xpath(String.format(TAB_COMM_XPATH, "Features")));
-    SelenideElement tab_advanced = $(By.xpath(String.format(TAB_COMM_XPATH, "Advanced")));
-    SelenideElement tab_security = $(By.xpath(String.format(TAB_COMM_XPATH, "Security")));
-    SelenideElement tab_linkus_clients = $(By.xpath(String.format(TAB_COMM_XPATH, "Linkus Clients")));
+    SelenideElement ele_tab_user = $(By.xpath(String.format(TAB_COMM_XPATH, "User")));
+    SelenideElement ele_tab_presence = $(By.xpath(String.format(TAB_COMM_XPATH, "Presence")));
+    SelenideElement ele_tab_voicemail = $(By.xpath(String.format(TAB_COMM_XPATH, "Voicemail")));
+    SelenideElement ele_tab_features = $(By.xpath(String.format(TAB_COMM_XPATH, "Features")));
+    SelenideElement ele_tab_advanced = $(By.xpath(String.format(TAB_COMM_XPATH, "Advanced")));
+    SelenideElement ele_tab_security = $(By.xpath(String.format(TAB_COMM_XPATH, "Security")));
+    SelenideElement ele_tab_linkus_clients = $(By.xpath(String.format(TAB_COMM_XPATH, "Linkus Clients")));
 
     //Tab User basic
-    SelenideElement sip_extension_selection = $(By.xpath("//div[contains(text(),\"SIP Extension\")]"));
-    SelenideElement fxs_extension_selection = $(By.xpath("//div[contains(text(),\"FXS Extension\")]"));
+    SelenideElement ele_sip_extension_selection = $(By.xpath("//div[contains(text(),\"SIP Extension\")]"));
+    SelenideElement ele_fxs_extension_selection = $(By.xpath("//div[contains(text(),\"FXS Extension\")]"));
 
     //User
-    SelenideElement extension_user_caller_id = $(By.id("extension_user_caller_id"));
-    SelenideElement extension_user_user_password = $(By.id("extension_user_user_password"));
-    SelenideElement extension_user_number = $(By.id("extension_user_number"));
-    SelenideElement extension_user_reg_name = $(By.id("extension_user_reg_name"));
-    SelenideElement extension_user_reg_password = $(By.id("extension_user_reg_password"));
+   public SelenideElement ele_extension_user_caller_id = $(By.id("extension_user_caller_id"));
+   public SelenideElement ele_extension_user_user_password = $(By.id("extension_user_user_password"));
+   public SelenideElement ele_extension_user_number = $(By.id("extension_user_number"));
+   public SelenideElement ele_extension_user_reg_name = $(By.id("extension_user_reg_name"));
+   public SelenideElement ele_extension_user_reg_password = $(By.id("extension_user_reg_password"));
 
     //密码强度不够弹框
-     SelenideElement registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\"Registration Password is not strong, continue to save\")]"));
-     SelenideElement extension_list_warning_registration_warning_img = $(By.xpath("//i[contains(@aria-label,\"icon: warning\") and contains(@title,\"注册密码强度弱\")]"));
+     SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\"Registration Password is not strong, continue to save\")]"));
+     SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//i[contains(@aria-label,\"icon: warning\") and contains(@title,\"注册密码强度弱\")]"));
 
 
     /** 用户角色 **/
@@ -89,17 +89,17 @@ public interface IExtensionPageElement {
     //Tab Presence
     SelenideElement extension_presence_information_input = $(By.id("extension_presence_information"));
     //Tab Presence->Internal Calls
-    SelenideElement extension_presence_forward_enb_in_always_forward_checkBox = $(By.id("extension_presence_forward_enb_in_always_forward"));
-    SelenideElement extension_presence_forward_enb_in_no_answer_forward_checkBox = $(By.id("extension_presence_forward_enb_in_no_answer_forward"));
-    SelenideElement extension_presence_forward_enb_in_busy_forward_checkBox = $(By.id("extension_presence_forward_enb_in_busy_forward"));
+    SelenideElement ele_extension_presence_forward_enb_in_always_forward_checkBox = $(By.id("extension_presence_forward_enb_in_always_forward"));
+    SelenideElement ele_extension_presence_forward_enb_in_no_answer_forward_checkBox = $(By.id("extension_presence_forward_enb_in_no_answer_forward"));
+    SelenideElement ele_extension_presence_forward_enb_in_busy_forward_checkBox = $(By.id("extension_presence_forward_enb_in_busy_forward"));
     //Tab Presence->External Calls
-    SelenideElement extension_presence_forward_enb_ex_always_forward_checkBox = $(By.id("extension_presence_forward_enb_ex_always_forward"));
-    SelenideElement extension_presence_forward_enb_ex_no_answer_forward_checkBox = $(By.id("extension_presence_forward_enb_ex_no_answer_forward"));
-    SelenideElement extension_presence_forward_enb_ex_busy_forward_checkBox = $(By.id("extension_presence_forward_enb_ex_busy_forward"));
+    SelenideElement ele_extension_presence_forward_enb_ex_always_forward_checkBox = $(By.id("extension_presence_forward_enb_ex_always_forward"));
+    SelenideElement ele_extension_presence_forward_enb_ex_no_answer_forward_checkBox = $(By.id("extension_presence_forward_enb_ex_no_answer_forward"));
+    SelenideElement ele_extension_presence_forward_enb_ex_busy_forward_checkBox = $(By.id("extension_presence_forward_enb_ex_busy_forward"));
     //Tab Presence->Ring Strategy
-    SelenideElement extension_presence_enb_ring1_endpoints_checkBox = $(By.id("extension_presence_enb_ring1_endpoints"));
-    SelenideElement extension_presence_enb_ring1_mobile_client_checkBox = $(By.id("extension_presence_enb_ring1_mobile_client"));
-    SelenideElement extension_presence_enb_ring1_desktop_client_checkBox = $(By.id("extension_presence_enb_ring1_desktop_client_forward"));
+    SelenideElement ele_extension_presence_enb_ring1_endpoints_checkBox = $(By.id("extension_presence_enb_ring1_endpoints"));
+    SelenideElement ele_extension_presence_enb_ring1_mobile_client_checkBox = $(By.id("extension_presence_enb_ring1_mobile_client"));
+    SelenideElement ele_extension_presence_enb_ring1_desktop_client_checkBox = $(By.id("extension_presence_enb_ring1_desktop_client_forward"));
 
     //目的地
      enum DESTINATION {

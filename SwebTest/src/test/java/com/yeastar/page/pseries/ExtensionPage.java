@@ -48,11 +48,11 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},userPassword:{1}")
     public ExtensionPage createSipExtension(String extensionNumber, String userPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-        add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         inputComm("First Name", extensionNumber);
         inputComm("User Password", userPassword);
         inputComm("Extension Number", extensionNumber);
-        extension_user_caller_id.setValue(extensionNumber);
+        ele_extension_user_caller_id.setValue(extensionNumber);
         saveBtn.click();
         clickApply();
         return this;
@@ -68,7 +68,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage createSipExtension(String extensionNumber, String UserPassword,String registrationPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-        add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         inputComm("First Name", extensionNumber);
         inputComm("User Password", UserPassword);
         inputComm("Extension Number", extensionNumber);
@@ -82,7 +82,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage createSipExtensionAndConf(String extensionNumber, String UserPassword,String registrationPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-        add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         inputComm("First Name", extensionNumber);
         inputComm("User Password", UserPassword);
         inputComm("Extension Number", extensionNumber);
@@ -95,7 +95,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage configPresence() {
         switchTab(TABLE_MENU.PRESENCE.getAlias());
-        isCheckBox(true,extension_presence_forward_enb_in_always_forward_checkBox);
+        isCheckBox(true, ele_extension_presence_forward_enb_in_always_forward_checkBox);
         return this;
     }
 
@@ -105,8 +105,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      */
     @Step("删除所有分机")
     public ExtensionPage deleAllExtension() {
-        if (delete_all_checkbox.isEnabled()) {
-            Selenide.actions().click(delete_all_checkbox).perform();
+        if (ele_delete_all_checkbox.isEnabled()) {
+            Selenide.actions().click(ele_delete_all_checkbox).perform();
             deleteBtn.shouldBe(Condition.visible).click();
             OKAlertBtn.shouldBe(Condition.visible).click();
             sleep(WaitUntils.RETRY_WAIT);
