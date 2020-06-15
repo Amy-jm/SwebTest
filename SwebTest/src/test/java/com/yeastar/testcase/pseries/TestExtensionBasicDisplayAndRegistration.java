@@ -14,6 +14,8 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
+import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
+
 
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
@@ -22,49 +24,116 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
     @Story("BasicDisplayAndRegistration")
-    @Description("添加分机0：1:login PBX->2:创建分机号1000->3:验证保存成功->4:删除分机->5:验证删除成功")
+    @Description("添加分机0：1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001513")
     @Issue("")
-    @Test(groups = "P0,TestExtensionBasicDisplayAndRegistration,Extension,Regression,PSeries")
-    public void testDeleteExtension() throws IOException, JSchException {
+    @Test(groups = "P0,TestExtensionBasicDisplayAndRegistration,testAddExtension_0,Regression,PSeries")
+    public void testAddExtension_0() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
         step("2:创建分机号0:" +
-                "[first name]:Yeastar_Test0 " +
+                "[extension number] 0 "+
+                "[first name]:Yeastar Test0 " +
                 "[last name]:朗视信息科技 " +
                 "[caller id]:(0591)-Ys.0 " +
                 "[register name]:YeastarTest0 " +
                 "[register password]:Yeastar202");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1000",EXTENSION_PASSWORD);
-//        auto.extensionPage().
+        //todo pbx settings->preference->User Extension 字段保持默认，1000-5999；
+        //todo pbx settings->preference->display name format字段保持默认设置为：first name last name with space
+        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","YeastarTest0","Yeastar202");
 
         assertStep("3:验证保存成功");
-        Assert.assertTrue(execAsterisk(PJSIP_SHOW_AOR+"1000").contains("1000"));
+        String strResult = execAsterisk(PJSIP_SHOW_ENDPOINT+"0");
+        Assert.assertTrue(strResult.contains("CALLERNAME                    : Yeastar Test0 朗视信息科技"),"[Assert,CALLERNAME]");
+        Assert.assertTrue(strResult.contains("CALLERNUM                     : (0591)-Ys.0"),"[Assert CALLERNUM]");
 
-        step("4:删除分机");
-        auto.extensionPage().deleteImageForTableFirstTr.shouldBe(Condition.enabled).click();
-        auto.extensionPage().OKAlertBtn.shouldBe(Condition.visible).click();
-        auto.extensionPage().clickApply();
-
-        assertStep("5:验证删除成功");
-        assertStep("[AsteriskAssert]"+PJSIP_SHOW_AOR+"1000");
-        Assert.assertTrue(execAsterisk(PJSIP_SHOW_AOR+"1000").contains("Unable to find object 1000"));
     }
 
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("List")
-    @Description("批量删除分机功能：1:login PBX->2:创建分机号1000，10001->3:验证保存成功")
+    @Story("BasicDisplayAndRegistration")
+    @Description("添加分机9999999：1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("ID1001508")
+    @TmsLink("ID1001514")
     @Issue("")
-    @Test(groups = "P0,testBulkDeleteExtension,Extension,Regression,PSeries")
-    public void testBulkDeleteExtension() throws IOException, JSchException {
+    @Test(groups = "P0,TestExtensionBasicDisplayAndRegistration,testAddExtension_9999999,Regression,PSeries")
+    public void testAddExtension_9999999() throws IOException, JSchException {
+        step("1:login PBX");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("2:创建分机号9999999:" +
+                "[extension number]：9999999"+
+                "[first name]:Yeastar Test0 " +
+                "[last name]:朗视信息科技 " +
+                "[caller id]:(0591)-Ys.9999999 " +
+                "[register name]:YeastarTest9999999 " +
+                "[register password]:Yeastar202");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        //todo pbx settings->preference->User Extension 字段保持默认，1000-5999；
+        //todo pbx settings->preference->display name format字段保持默认设置为：first name last name with space
+        auto.extensionPage().deleAllExtension().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","YeastarTest9999999","Yeastar202");
+
+        assertStep("3:验证保存成功");
+        String strResult = execAsterisk(PJSIP_SHOW_ENDPOINT+"9999999");
+        Assert.assertTrue(strResult.contains("CALLERNAME                    : Yeastar Test9999999 朗视信息科技"),"[Assert,CALLERNAME]");
+        Assert.assertTrue(strResult.contains("CALLERNUM                     : (0591)-Ys.9999999"),"[Assert CALLERNUM]");
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Extension")
+    @Story("BasicDisplayAndRegistration")
+    @Description("分机0呼叫分机999999：1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink("ID1001514")
+    @Issue("")
+    @Test(groups = "P0,TestExtensionBasicDisplayAndRegistration,testCalled0To9999999,Regression,PSeries")
+    public void testCalled0To9999999() throws IOException, JSchException {
+        step("1:login PBX");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("2:创建分机号0:" +
+                "[extension number] 0 "+
+                "[first name]:Yeastar Test0 " +
+                "[last name]:朗视信息科技 " +
+                "[caller id]:(0591)-Ys.0 " +
+                "[register name]:YeastarTest0 " +
+                "[register password]:Yeastar202"+
+                "3:创建分机号9999999:" +
+                "[extension number]：9999999"+
+                "[first name]:Yeastar Test0 " +
+                "[last name]:朗视信息科技 " +
+                "[caller id]:(0591)-Ys.9999999 " +
+                "[register name]:YeastarTest9999999 " +
+                "[register password]:Yeastar202");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().
+                deleAllExtension().
+                createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0","Yeastar202").
+                createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999","Yeastar202");
+
+        assertStep("3:[PJSIP注册]]");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(9999999,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(9999999,DEVICE_IP_LAN);
+
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"9999999",DEVICE_IP_LAN,false);
+        ys_waitingTime(10000);
+        pjsip.Pj_Hangup_All();
+
+        assertStep("3:验证CDR");
+        //todo cdr 显示全选
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
 
     }
 }

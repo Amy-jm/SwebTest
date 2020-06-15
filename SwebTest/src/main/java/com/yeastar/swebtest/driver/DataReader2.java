@@ -137,6 +137,7 @@ public class DataReader2 {
      * PJSIP指令
      */
     public static String PJSIP_SHOW_AOR = PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"PJSIP_SHOW_AOR")+" ";
+    public static String PJSIP_SHOW_ENDPOINT = PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"PJSIP_SHOW_ENDPOINT")+" ";
 
 
     /**

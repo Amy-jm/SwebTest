@@ -27,7 +27,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @return
      */
     public ExtensionPage registration_Password_Alert_Exist_And_GoOn(){
-        registration_password_not_strong_alert.shouldBe(Condition.exist);
+        ele_registration_password_not_strong_alert.shouldBe(Condition.exist);
         OKAlertBtn.shouldBe(Condition.enabled).click();
         return this;
     }
@@ -49,10 +49,43 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     public ExtensionPage createSipExtension(String extensionNumber, String userPassword) {
         addBtn.shouldBe(Condition.enabled).click();
         ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
-        inputComm("First Name", extensionNumber);
-        inputComm("User Password", userPassword);
-        inputComm("Extension Number", extensionNumber);
+        ele_extension_user_first_name.setValue(extensionNumber);
+        ele_extension_user_user_password.setValue(userPassword);
+        ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_caller_id.setValue(extensionNumber);
+        ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
+        saveBtn.click();
+        clickApply();
+        return this;
+    }
+
+    /**
+     * 创建SIP extensionNumber分机，密码为 userPassword，
+     * @param extensionNumber 分机号，同时默认修改 FirstName,ExtensionNumber,Caller ID(Internal)字段为分机号
+     * @param userPassword 用户密码
+     * @return 返回分机页面实例，ExtensionPage
+     */
+
+    /**
+     * 创建SIP 分机
+     * @param firstName
+     * @param lastName
+     * @param calledID
+     * @param registerName
+     * @param userPassword
+     * @return
+     */
+    @Step("extensionNumber:{0},firstName:{1},lastName:{2},calledID:{3},registerName:{4},registerPassword:{5}")
+    public ExtensionPage createSipExtension(String extensionNumber,String firstName, String lastName,String calledID,String registerName,String userPassword) {
+        addBtn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_extension_user_first_name.setValue(firstName);
+        ele_extension_user_last_name.setValue(lastName);
+        ele_extension_user_caller_id.setValue(calledID);
+        ele_extension_user_reg_name.setValue(registerName);
+        ele_extension_user_user_password.setValue(userPassword);
+        ele_extension_user_number.setValue(extensionNumber);
+        ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
         saveBtn.click();
         clickApply();
         return this;
@@ -61,19 +94,19 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     /**
      * 创建SIP 分机
      * @param extensionNumber
-     * @param UserPassword
+     * @param userPassword
      * @param registrationPassword
      * @return
      */
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
-    public ExtensionPage createSipExtension(String extensionNumber, String UserPassword,String registrationPassword) {
+    public ExtensionPage createSipExtension(String extensionNumber, String userPassword,String registrationPassword) {
         addBtn.shouldBe(Condition.enabled).click();
         ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
-        inputComm("First Name", extensionNumber);
-        inputComm("User Password", UserPassword);
-        inputComm("Extension Number", extensionNumber);
-        inputComm("Caller ID (Internal)", extensionNumber);
-        inputComm("Registration Password", registrationPassword);
+        ele_extension_user_first_name.setValue(extensionNumber);
+        ele_extension_user_user_password.setValue(userPassword);
+        ele_extension_user_number.setValue(extensionNumber);
+        ele_extension_user_caller_id.setValue(extensionNumber);
+        ele_extension_user_reg_password.setValue(registrationPassword);
         saveBtn.click();
         return this;
     }
