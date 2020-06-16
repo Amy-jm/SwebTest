@@ -1,18 +1,26 @@
 package com.yeastar.testcase.pseries;
 
+import co.boorse.seleniumtable.SeleniumTable;
+import co.boorse.seleniumtable.SeleniumTableCell;
+import co.boorse.seleniumtable.SeleniumTableRow;
 import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.TestNGListenerP;
+import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 
@@ -91,7 +99,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
     @Story("BasicDisplayAndRegistration")
     @Description("分机0呼叫分机999999：1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("ID1001514")
+    @TmsLink("1001515")
     @Issue("")
     @Test(groups = "P0,TestExtensionBasicDisplayAndRegistration,testCalled0To9999999,Regression,PSeries")
     public void testCalled0To9999999() throws IOException, JSchException {
@@ -119,7 +127,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
                 createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0","Yeastar202").
                 createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999","Yeastar202");
 
-        assertStep("3:[PJSIP注册]]");
+        assertStep("3:[PJSIP注册]] 注册分机0,分机 9999999");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(9999999,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -130,12 +138,14 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
 
-        assertStep("3:验证CDR");
+        assertStep("4:验证CDR，第一条记录：Communication Type=Internal ");
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-
-
+        //todo delete sleep
+        ys_waitingTime(WaitUntils.SHORT_WAIT);
+        Assert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Communication Type",0),"Internal");
     }
+
 }
 
 
