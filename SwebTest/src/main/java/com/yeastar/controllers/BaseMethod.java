@@ -125,7 +125,9 @@ public class BaseMethod extends WebDriverFactory {
 
 	public  String execAsterisk(String asteriskCommand) throws IOException, JSchException {
 		String asterisk_commond = String.format(ASTERISK_CLI,asteriskCommand);
-		log.debug("[asterisk_commond]"+asterisk_commond);
-		return SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
+		log.debug("[asterisk_command]"+asterisk_commond);
+		String str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
+		log.debug("[asterisk_command_return_string] "+str);
+		return str;
 	}
 }

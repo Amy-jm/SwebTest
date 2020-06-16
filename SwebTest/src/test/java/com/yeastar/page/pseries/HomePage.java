@@ -20,8 +20,12 @@ public class HomePage {
     /**
      * 左侧菜单 -- Extension/Trunk
      **/
-    public SelenideElement left_menu_first_level_extension_trunk = $(By.xpath("//span[contains(text(),'Extension and Trunk')]"));
-    public SelenideElement extension_trunk_tree_extensions = $(By.xpath(String.format(LI_XPATH,"Extension")));
+//    public SelenideElement left_menu_first_level_extension_trunk = $(By.xpath("//span[contains(text(),'Extension and Trunk')]"));//m_extension_trunk
+    public SelenideElement left_menu_first_level_extension_trunk = $(By.id("m_extension_trunk"));//m_extension_trunk
+
+//    public SelenideElement extension_trunk_tree_extensions = $(By.xpath(String.format(LI_XPATH,"Extension")));//m_extensions
+    public SelenideElement extension_trunk_tree_extensions = $(By.id("m_extensions"));//m_extensions
+
     public SelenideElement extension_trunk_tree_extension_group = $(By.linkText("Extension Group"));
     public SelenideElement extension_trunk_tree_trunks = $(By.linkText("Trunks"));
     public SelenideElement extension_trunk_tree_management = $(By.linkText("Role Management"));
@@ -93,8 +97,8 @@ public class HomePage {
     /**
      * 左侧菜单 -- CDR/Recording
      **/
-    public SelenideElement left_menu_first_level_cdr_recording = $(By.xpath("//span[contains(text(),'CDR/Recording')]"));
-    public SelenideElement cdr_recording_tree_cdr = $(By.linkText("CDR"));
+    public SelenideElement left_menu_first_level_cdr_recording = $(By.id("m_cdr_recording"));
+    public SelenideElement cdr_recording_tree_cdr = $(By.id("m_cdr"));
     public SelenideElement cdr_recording_tree_recording = $(By.linkText("Recording"));
     public SelenideElement cdr_recording_tree_call_report = $(By.linkText("Call Report"));
 

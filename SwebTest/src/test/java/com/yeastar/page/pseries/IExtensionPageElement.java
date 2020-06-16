@@ -29,11 +29,13 @@ public interface IExtensionPageElement {
     SelenideElement ele_fxs_extension_selection = $(By.xpath("//div[contains(text(),\"FXS Extension\")]"));
 
     //User
-   public SelenideElement ele_extension_user_caller_id = $(By.id("extension_user_caller_id"));
-   public SelenideElement ele_extension_user_user_password = $(By.id("extension_user_user_password"));
-   public SelenideElement ele_extension_user_number = $(By.id("extension_user_number"));
-   public SelenideElement ele_extension_user_reg_name = $(By.id("extension_user_reg_name"));
-   public SelenideElement ele_extension_user_reg_password = $(By.id("extension_user_reg_password"));
+    SelenideElement ele_extension_user_caller_id = $(By.id("extension_user_caller_id"));
+    SelenideElement ele_extension_user_user_password = $(By.id("extension_user_user_password"));
+    SelenideElement ele_extension_user_first_name = $(By.id("extension_user_first_name"));
+    SelenideElement ele_extension_user_last_name = $(By.id("extension_user_last_name"));
+    SelenideElement ele_extension_user_number = $(By.id("extension_user_number"));
+    SelenideElement ele_extension_user_reg_name = $(By.id("extension_user_reg_name"));
+    SelenideElement ele_extension_user_reg_password = $(By.id("extension_user_reg_password"));
 
     //密码强度不够弹框
      SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\"Registration Password is not strong, continue to save\")]"));

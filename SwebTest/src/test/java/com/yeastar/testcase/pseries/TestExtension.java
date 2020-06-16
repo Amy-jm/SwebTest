@@ -65,7 +65,7 @@ public class TestExtension extends TestCaseBase {
         auto.extensionPage().registration_Password_Alert_Exist_And_GoOn().isSaveSuccessAlertAppear();
 
         assertStep("4:分机列表，有提示注册密码强度不够图标显示");
-        auto.extensionPage().extension_list_warning_registration_warning_img.shouldBe(Condition.exist);
+        auto.extensionPage().ele_extension_list_warning_registration_warning_img.shouldBe(Condition.exist);
     }
 
     @Epic("Extension")
@@ -96,7 +96,7 @@ public class TestExtension extends TestCaseBase {
         auto.extensionPage().registration_Password_Alert_Exist_And_GoOn().isSaveSuccessAlertAppear();
 
         assertStep("4:分机列表，有提示注册密码强度不够图标显示");
-        auto.extensionPage().extension_list_warning_registration_warning_img.shouldBe(Condition.exist);
+        auto.extensionPage().ele_extension_list_warning_registration_warning_img.shouldBe(Condition.exist);
     }
 
 }
