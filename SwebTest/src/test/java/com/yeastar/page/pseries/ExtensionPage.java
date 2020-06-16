@@ -127,7 +127,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
 
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage configPresence() {
-        switchTab(TABLE_MENU.PRESENCE.getAlias());
+        switchToTab(TABLE_MENU.PRESENCE.getAlias());
         isCheckBox(true, ele_extension_presence_forward_enb_in_always_forward_checkBox);
         return this;
     }
@@ -153,16 +153,26 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
 
 
     /** Tab 菜单切换 **/
-    public ExtensionPage switchTab(String enumTabMenu){
+    public ExtensionPage switchToTab(String enumTabMenu){
         $(By.xpath(String.format(TAB_COMM_XPATH,enumTabMenu))).shouldBe(Condition.visible).click();
         return this;
     }
 
 
-
-    public void checkAndSelect(Boolean isChecked,String Select){
+    /**
+     * 选择表中的第一条数据，编辑
+     * @return
+     */
+    public ExtensionPage editFirstData(){
+        ele_editImageForTableFirstTr.shouldBe(Condition.enabled).click();
+        return this;
     }
-    //user OutBound Caller ID(DOD)
+
+
+    public ExtensionPage select_DTMF_Mode(DTMF_MODE dtmf_mode){
+        ele_extension_advanced_dtmf_mode.shouldBe(Condition.enabled).selectOptionByValue(dtmf_mode.getAlias());
+        return this;
+    }
 
 
 }

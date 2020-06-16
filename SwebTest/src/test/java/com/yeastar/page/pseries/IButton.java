@@ -39,6 +39,7 @@ public interface IButton {
     SelenideElement downloadRecordingsBtn = $(By.xpath(String.format(buttonLocationXpath,"Download Recordings")));
 
 
+
     //alert
     SelenideElement OKAlertBtn = $(By.xpath("//button/span[contains(text(),'OK')]/.."));
     SelenideElement CancelAlertBtn = $(By.xpath("//button/span[contains(text(),'Cancel')]/.."));
@@ -46,7 +47,8 @@ public interface IButton {
 
 
     //表格第一行删除图标
-    SelenideElement deleteImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'delete')]"));
+    SelenideElement ele_deleteImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'delete')]"));
+    SelenideElement ele_editImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'edit')]"));
 
 
 

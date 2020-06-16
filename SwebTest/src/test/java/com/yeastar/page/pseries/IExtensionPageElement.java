@@ -2,6 +2,7 @@ package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
 import static com.codeborne.selenide.Selenide.$;
 
@@ -42,6 +43,9 @@ public interface IExtensionPageElement {
      SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//i[contains(@aria-label,\"icon: warning\") and contains(@title,\"注册密码强度弱\")]"));
 
 
+     //Advanced标签
+     SelenideElement  ele_extension_advanced_dtmf_mode = $(By.id("extension_advanced_dtmf_mode"));
+
     /** 用户角色 **/
     enum TABLE_MENU {
         USER("User"),
@@ -77,6 +81,25 @@ public interface IExtensionPageElement {
         private final String alias;
 
         USER_ROLE(String alias) {
+            this.alias = alias;
+        }
+
+
+        public String getAlias() {
+            return alias;
+        }
+    }
+
+    /** DTMF_MODE **/
+    enum DTMF_MODE {
+        RFC4733RFC2833("RFC4733(RFC2833)"),
+        INFO("Info"),
+        INBAND("Inband"),
+        AUTO("Auto");
+
+        private final String alias;
+
+        DTMF_MODE(String alias) {
             this.alias = alias;
         }
 

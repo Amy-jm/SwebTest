@@ -41,7 +41,7 @@ public class TestExtensionList extends TestCaseBase {
         Assert.assertTrue(execAsterisk(PJSIP_SHOW_AOR+"1000").contains("1000"));
 
         step("4:删除分机");
-        auto.extensionPage().deleteImageForTableFirstTr.shouldBe(Condition.enabled).click();
+        auto.extensionPage().ele_deleteImageForTableFirstTr.shouldBe(Condition.enabled).click();
         auto.extensionPage().OKAlertBtn.shouldBe(Condition.visible).click();
         auto.extensionPage().clickApply();
 
