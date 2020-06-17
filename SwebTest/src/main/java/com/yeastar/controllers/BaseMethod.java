@@ -35,8 +35,13 @@ public class BaseMethod extends WebDriverFactory {
 	public void assertStep(String desc){
 		log.debug("[Assert] "+desc);
 		sleep(5);
-		Cookie cookie = new Cookie("zaleniumMessage", desc);
-		getWebDriver().manage().addCookie(cookie);
+		try{
+			Cookie cookie = new Cookie("zaleniumMessage", desc);
+			getWebDriver().manage().addCookie(cookie);
+		}catch (org.openqa.selenium.WebDriverException exception){
+			log.error("[org.openqa.selenium.WebDriverException: unable to set cookie]");
+		}
+
 	}
 
 	/**
