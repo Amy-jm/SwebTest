@@ -44,11 +44,19 @@ public interface IExtensionPageElement {
      SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//i[contains(@aria-label,\"icon: warning\") and contains(@title,\"注册密码强度弱\")]"));
 
 
+     /********advance ***/
      //下拉列表 DTMF_MODE
      SelenideElement  ele_extension_advanced_dtmf_mode = $(By.id("extension_advanced_dtmf_mode"));
-
-    //下拉列表 Transport
-    SelenideElement  ele_extension_advanced_transport = $(By.id("extension_advanced_transport"));
+     //下拉列表 Transport
+     SelenideElement  ele_extension_advanced_transport = $(By.id("extension_advanced_transport"));
+     //Qualify check_box
+     SelenideElement ele_extension_advanced_enb_qualify_checkbox =$(By.id("extension_advanced_enb_qualify"));
+    //T.38 Support check_box
+    SelenideElement ele_extension_advanced_enb_t38_support_checkbox =$(By.id("extension_advanced_enb_t38_support"));
+    //NAT check_box
+    SelenideElement ele_extension_advanced_enb_nat_checkbox =$(By.id("extension_advanced_enb_nat"));
+    //Enable SRTP check_box
+    SelenideElement ele_extension_advanced_enb_srtp_checkbox =$(By.id("extension_advanced_enb_srtp"));
 
     /** 下拉列表 用户角色 **/
     enum TABLE_MENU {
@@ -146,7 +154,7 @@ public interface IExtensionPageElement {
     SelenideElement ele_extension_presence_enb_ring1_mobile_client_checkBox = $(By.id("extension_presence_enb_ring1_mobile_client"));
     SelenideElement ele_extension_presence_enb_ring1_desktop_client_checkBox = $(By.id("extension_presence_enb_ring1_desktop_client_forward"));
 
-    //目的地
+    /** 下拉列表 目的地********/
      enum DESTINATION {
         END_CALL("End Call"),
         EXTENSION("Extension"),

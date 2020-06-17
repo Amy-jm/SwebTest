@@ -7,10 +7,12 @@ import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Actions;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 /**
  * @program: P Series
@@ -180,11 +182,31 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
 
     /**
      * 选择Transport
-     * @param dtmf_mode
+     * @param transport
      * @return
      */
-    public ExtensionPage select_Transport(DTMF_MODE dtmf_mode){
-        $(By.xpath(String.format(SELECT_COMM_XPATH,dtmf_mode.getAlias()))).click();
+    public ExtensionPage select_Transport(TRANSPORT transport){
+        $(By.xpath(String.format(SELECT_COMM_XPATH,transport.getAlias()))).click();
+        return this;
+    }
+
+    /**
+     * checkbox 设置
+     * @param element
+     * @param isChecked
+     * @return
+     */
+    public ExtensionPage isCheckbox(SelenideElement element,boolean isChecked){
+        if(element.getAttribute("checked")==null){
+            if(isChecked){
+                new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
+            }
+        }else{
+            if(!isChecked){
+                new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
+            }
+        }
+
         return this;
     }
 
