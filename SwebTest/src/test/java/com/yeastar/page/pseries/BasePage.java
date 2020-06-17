@@ -10,14 +10,21 @@ import org.openqa.selenium.TimeoutException;
 import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Selenide.*;
 
+/**
+ * BasePage 通用方法
+ */
 @Log4j2
 public class BasePage implements IButton{
 
 
 
     public SelenideElement searchOnHome = $(By.id("search"));
-
+    //input 通用定位
     public String INPUT_COMM_XPATH = "//label[contains(text(),'%s')]/../following-sibling::div//input";
+    //li 下拉选项通用定位
+    public String SELECT_COMM_XPATH = "//li[contains(text(),'%s')]";
+
+
 
     /**
      * 通过标题输入，label定位对应的input
@@ -64,9 +71,18 @@ public class BasePage implements IButton{
      * 点击 apply button
      */
     public void clickApply(){
-        applyBtn.shouldBe(Condition.enabled).click();
+        applyBtn.waitUntil(Condition.enabled,WaitUntils.TIME_OUT_SECOND).click();
+//        applyBtn.shouldBe(Condition.enabled).click();
         applyLoadingBtn.shouldBe(Condition.visible);
         applyLoadedBtn.shouldBe(Condition.visible);
+    }
+
+    /**
+     * 点击保存并应用
+     */
+    public void clickSaveAndApply(){
+        saveBtn.shouldBe(Condition.enabled).click();
+        clickApply();
     }
 
 }

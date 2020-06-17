@@ -108,7 +108,7 @@
 
         <!-- 定义根logger -->
         <!-- 日志级别设备为debug 具体日志级别由appender限制 -->
-        <Root level="trace">
+        <Root level="debug">
             <!-- 输出控制台 -->
             <AppenderRef ref="console"/>
             <!-- 输出debug级别日志文件 -->

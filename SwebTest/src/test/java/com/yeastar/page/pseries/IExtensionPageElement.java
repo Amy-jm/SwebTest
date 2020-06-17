@@ -1,5 +1,6 @@
 package com.yeastar.page.pseries;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
@@ -43,10 +44,13 @@ public interface IExtensionPageElement {
      SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//i[contains(@aria-label,\"icon: warning\") and contains(@title,\"注册密码强度弱\")]"));
 
 
-     //Advanced标签
+     //下拉列表 DTMF_MODE
      SelenideElement  ele_extension_advanced_dtmf_mode = $(By.id("extension_advanced_dtmf_mode"));
 
-    /** 用户角色 **/
+    //下拉列表 Transport
+    SelenideElement  ele_extension_advanced_transport = $(By.id("extension_advanced_transport"));
+
+    /** 下拉列表 用户角色 **/
     enum TABLE_MENU {
         USER("User"),
         PRESENCE("Presence"),
@@ -68,7 +72,7 @@ public interface IExtensionPageElement {
         }
     }
 
-    /** 用户角色 **/
+    /** 下拉列表 用户角色 **/
     enum USER_ROLE {
         None("None"),
         Administrator("Administrator"),
@@ -90,7 +94,7 @@ public interface IExtensionPageElement {
         }
     }
 
-    /** DTMF_MODE **/
+    /** 下拉列表 DTMF_MODE **/
     enum DTMF_MODE {
         RFC4733RFC2833("RFC4733(RFC2833)"),
         INFO("Info"),
@@ -103,8 +107,24 @@ public interface IExtensionPageElement {
             this.alias = alias;
         }
 
-
         public String getAlias() {
+            ele_extension_advanced_dtmf_mode.shouldBe(Condition.enabled).click();
+            return alias;
+        }
+    }
+    /** 下拉列表 TRANSPORT **/
+    enum TRANSPORT{
+        UDP("UDP"),
+        TCP("TCP"),
+        TLS("TLS");
+
+        private final String alias;
+
+        TRANSPORT(String alias) {
+            this.alias = alias;
+        }
+        public String getAlias() {
+            ele_extension_advanced_transport.shouldBe(Condition.enabled).click();
             return alias;
         }
     }

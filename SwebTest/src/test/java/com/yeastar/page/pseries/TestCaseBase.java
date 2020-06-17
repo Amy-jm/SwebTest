@@ -1,11 +1,13 @@
 package com.yeastar.page.pseries;
 
 import com.yeastar.controllers.BaseMethod;
+import com.yeastar.untils.BrowserUtils;
 import com.yeastar.untils.DataUtils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.asserts.SoftAssert;
 
 import java.lang.reflect.Method;
 
@@ -16,9 +18,15 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class TestCaseBase extends BaseMethod {
     public PageEngine auto;
     private WebDriver webDriver;
+    public SoftAssert softAssert;
+
+    public TestCaseBase(){
+        softAssert = new SoftAssert();
+    }
 
 
-    @BeforeMethod
+
+    @BeforeMethod(alwaysRun = true)
     public void setUp(Method method) throws Exception
     {
         log.info("====== [SetUp] " + getTestName(method) + " [Times] " + DataUtils
@@ -30,10 +38,12 @@ public class TestCaseBase extends BaseMethod {
         auto = new PageEngine();
     }
 
-    @AfterMethod
-    public void afterMethod() throws Exception
+    @AfterMethod(alwaysRun = true)
+    public void afterMethod(Method method) throws Exception
     {
+        new BrowserUtils().getLogType_Browser(method,webDriver);
         getWebDriver().quit();
+        log.info( "****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
 
 

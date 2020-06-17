@@ -168,9 +168,23 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         return this;
     }
 
-
+    /**
+     * 选择DTMF_MODE
+     * @param dtmf_mode
+     * @return
+     */
     public ExtensionPage select_DTMF_Mode(DTMF_MODE dtmf_mode){
-        ele_extension_advanced_dtmf_mode.shouldBe(Condition.enabled).selectOptionByValue(dtmf_mode.getAlias());
+        $(By.xpath(String.format(SELECT_COMM_XPATH,dtmf_mode.getAlias()))).click();
+        return this;
+    }
+
+    /**
+     * 选择Transport
+     * @param dtmf_mode
+     * @return
+     */
+    public ExtensionPage select_Transport(DTMF_MODE dtmf_mode){
+        $(By.xpath(String.format(SELECT_COMM_XPATH,dtmf_mode.getAlias()))).click();
         return this;
     }
 
