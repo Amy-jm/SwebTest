@@ -55,6 +55,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_caller_id.setValue(extensionNumber);
+        ele_extension_user_reg_name.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
         saveBtn.click();
         clickApply();

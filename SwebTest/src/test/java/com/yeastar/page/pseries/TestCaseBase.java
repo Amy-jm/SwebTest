@@ -3,6 +3,7 @@ package com.yeastar.page.pseries;
 import com.yeastar.controllers.BaseMethod;
 import com.yeastar.untils.BrowserUtils;
 import com.yeastar.untils.DataUtils;
+import com.yeastar.untils.EmptyUtil;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -41,6 +42,10 @@ public class TestCaseBase extends BaseMethod {
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) throws Exception
     {
+        if(EmptyUtil.isNotEmpty(pjsip)){
+            log.debug("[start destroy pjsip]");
+            pjsip.Pj_Destory();
+        }
         new BrowserUtils().getLogType_Browser(method,webDriver);
         getWebDriver().quit();
         log.info( "****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");

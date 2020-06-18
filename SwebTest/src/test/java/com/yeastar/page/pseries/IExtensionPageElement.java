@@ -58,6 +58,39 @@ public interface IExtensionPageElement {
     //Enable SRTP check_box
     SelenideElement ele_extension_advanced_enb_srtp_checkbox =$(By.id("extension_advanced_enb_srtp"));
 
+    /*********Security *****/
+    //Allow Register
+    SelenideElement ele_extension_security_allow_reg_remotely_checkbox = $(By.id("extension_security_allow_reg_remotely"));
+    //Enable User Agent Registration Authorization
+    SelenideElement ele_extension_security_enb_user_agent_ident_checkbox = $(By.id("extension_security_enb_user_agent_ident"));
+    //Enable IP Restriction
+    SelenideElement ele_extension_security_enb_ip_rstr_checkbox = $(By.id("extension_security_enb_ip_rstr"));
+    //Disable Outbound Calls
+    SelenideElement ele_extension_security_disable_outb_call_checkbox = $(By.id("extension_security_disable_outb_call"));
+    //Disable Outbound Calls outside Business
+    SelenideElement ele_extension_security_disable_office_time_outb_call_checkbox = $(By.id("extension_security_disable_office_time_outb_call"));
+    //Max Outbound Call Durations
+    SelenideElement ele_extension_security_max_outb_call_duration_select = $(By.id("extension_security_max_outb_call_duration"));
+
+   /** 下拉列表 Max Outbound Call Duration(s) **/
+   enum MAX_OUTBOUND_CALL_DURATIONS{
+       FOLLOWSYSTEM("[Follow System]"),
+       UNLIMITED("Unlimited"),
+       S_60("60"),
+       S_300("300"),
+       S_600("600"),
+       S_900("900");
+
+       private final String alias;
+       MAX_OUTBOUND_CALL_DURATIONS(String alias) {
+           this.alias = alias;
+       }
+       public String getAlias() {
+           ele_extension_security_max_outb_call_duration_select.shouldBe(Condition.enabled).click();
+           return alias;
+       }
+   }
+
     /** 下拉列表 用户角色 **/
     enum TABLE_MENU {
         USER("User"),
@@ -69,12 +102,9 @@ public interface IExtensionPageElement {
         LINKUS_CLIENTS("Linkus Clients");
 
         private final String alias;
-
         TABLE_MENU(String alias) {
             this.alias = alias;
         }
-
-
         public String getAlias() {
             return alias;
         }

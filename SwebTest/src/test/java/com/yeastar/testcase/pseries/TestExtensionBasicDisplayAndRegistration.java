@@ -1,8 +1,5 @@
 package com.yeastar.testcase.pseries;
 
-import co.boorse.seleniumtable.SeleniumTable;
-import co.boorse.seleniumtable.SeleniumTableCell;
-import co.boorse.seleniumtable.SeleniumTableRow;
 import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.HomePage;
@@ -13,15 +10,10 @@ import com.yeastar.untils.TestNGListenerP;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import java.io.IOException;
-import java.util.List;
-
 import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 
 
@@ -138,7 +130,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
         ys_waitingTime(10000);
         pjsip.Pj_Hangup_All();
 
-        assertStep("4:验证CDR，第一条记录：Communication Type=Internal ");
+        assertStep("[CDR]4.第一条记录：Communication Type=Internal ");
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
