@@ -29,7 +29,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class BrowserFactory extends ConfigP {
 	private WebDriver webDriver;
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl) throws MalformedURLException {
-		if (IS_RUN_REMOTE_SERVER.equals("true")) {
+		if (IS_RUN_REMOTE_SERVER.trim().equalsIgnoreCase("true")) {
 			log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
 			return initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub");
 		} else {
@@ -38,7 +38,7 @@ public class BrowserFactory extends ConfigP {
 	}
 
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, Method method) throws MalformedURLException {
-		if (IS_RUN_REMOTE_SERVER.equals("true")) {
+		if (IS_RUN_REMOTE_SERVER.trim().equalsIgnoreCase("true")) {
 			log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
 			return initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub", method);
 		} else {

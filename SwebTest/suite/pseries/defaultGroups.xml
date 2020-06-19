@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="P_Series">
+    <test name="P_Series" preserve-order="true" parallel="false">
+        <groups>
+            <run>
+                <include name="testEnableDisableOutCall"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.yeastar.testcase.pseries.TestExtensionSecurity"/>
+        </classes>
+    </test> <!-- YsAutoTest -->
+</suite> <!-- Default Suite -->
