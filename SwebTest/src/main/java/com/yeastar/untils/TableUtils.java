@@ -42,17 +42,21 @@ public class TableUtils {
     /**
      * 【默认表格对象】 通过标题 及行号 获取表格数据
      * @param strHeader
-     * @param column
+     * @param row
      * @return
      */
-    public static String getCDRForHeader(WebDriver driver,String strHeader, int column){
+    public static String getCDRForHeader(WebDriver driver,String strHeader, int row){
         WebElement tableElement = driver.findElement(By.xpath(strTableXPATH));
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
         String strReturn = "";
         if (table.hasColumn(strHeader)) {
             List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
             log.debug("[headerCell Size]"+header1Cells.size());
-            strReturn = header1Cells.get(column).getText();
+            try {
+                strReturn = header1Cells.get(row).getText();
+            }catch(java.lang.IndexOutOfBoundsException ex){
+                log.debug("[表格查无数据]"+ex.getMessage());
+            }
             log.debug("[getTableData]"+strReturn);
         }
         return strReturn;
@@ -61,10 +65,10 @@ public class TableUtils {
     /**
      * 【自定义表格对象】 通过标题 及行号 获取表格数据
      * @param strHeader
-     * @param column
+     * @param row
      * @return
      */
-    public static String getCDRForHeader(WebDriver driver,WebElement tableElement, String strHeader, int column){
+    public static String getCDRForHeader(WebDriver driver,WebElement tableElement, String strHeader, int row){
         tableElement = driver.findElement(By.xpath(strTableXPATH));
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
         String strReturn = "";
@@ -72,7 +76,11 @@ public class TableUtils {
             table = SeleniumTable.getInstance(tableElement);
             List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
             log.debug("[headerCell Size]"+header1Cells.size());
-            strReturn = header1Cells.get(column).getText();
+            try {
+                strReturn = header1Cells.get(row).getText();
+            }catch(java.lang.IndexOutOfBoundsException ex){
+                log.debug("[表格查无数据]"+ex.getMessage());
+            }
             log.debug("[getTableData]"+strReturn);
         }
         return strReturn;
