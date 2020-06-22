@@ -145,8 +145,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             deleteBtn.shouldBe(Condition.visible).click();
             OKAlertBtn.shouldBe(Condition.visible).click();
             sleep(WaitUntils.RETRY_WAIT);
-            applyBtn.shouldBe(Condition.visible).click();
-            sleep(WaitUntils.SHORT_WAIT*3);
+//            applyBtn.shouldBe(Condition.visible).click();
+//            sleep(WaitUntils.SHORT_WAIT*3);
         }
 
         return this;

@@ -127,11 +127,41 @@ public class BaseMethod extends WebDriverFactory {
 	}
 
 
-
-	public  String execAsterisk(String asteriskCommand) throws IOException, JSchException {
+	/**
+	 * ssh操作执行静态命令查看
+	 * @param asteriskCommand
+	 * @return
+	 * @throws IOException
+	 * @throws JSchException
+	 */
+	public  String execAsterisk(String asteriskCommand)  {
 		String asterisk_commond = String.format(ASTERISK_CLI,asteriskCommand);
 		log.debug("[asterisk_command]"+asterisk_commond);
-		String str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
+		String str = null;
+		try {
+			str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
+		} catch (JSchException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		log.debug("[asterisk_command_return_string] "+str);
+		return str;
+	}
+
+	@Step("...清空/ysdisk/syslog/pbxlog.0文件")
+	public String clearasteriskLog()  {
+		String cmd = "echo '' > /ysdisk/syslog/pbxlog.0";
+		String asterisk_commond = String.format(ASTERISK_CLI,cmd);
+		log.debug("[asterisk_command]"+asterisk_commond);
+		String str = null;
+		try {
+			str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
+		} catch (JSchException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		log.debug("[asterisk_command_return_string] "+str);
 		return str;
 	}

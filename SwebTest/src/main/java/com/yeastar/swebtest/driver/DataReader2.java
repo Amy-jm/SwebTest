@@ -139,6 +139,7 @@ public class DataReader2 {
     public static String PJSIP_SHOW_AOR = PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"PJSIP_SHOW_AOR")+" ";
     public static String PJSIP_SHOW_ENDPOINT = PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"PJSIP_SHOW_ENDPOINT")+" ";
 
+    public static String SHOW_ASTERISK_LOG =PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"SHOW_ASTERISK_LOG")+" ";
 
     /**
      * 框架相关配置 config

@@ -73,7 +73,7 @@ public class BasePage implements IButton{
     public void clickApply(){
         applyBtn.waitUntil(Condition.enabled,WaitUntils.TIME_OUT_SECOND).click();
         applyLoadingBtn.shouldBe(Condition.visible);
-        //applyLoadedBtn.shouldBe(Condition.visible);//界面不一定会渲染出loaded
+        applyLoadedBtn.shouldBe(Condition.visible);//界面不一定会渲染出loaded
     }
 
     /**

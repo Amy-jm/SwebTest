@@ -143,7 +143,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        Assert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Communication Type",0),"Internal");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Communication Type",0),"Internal");
     }
 
 }

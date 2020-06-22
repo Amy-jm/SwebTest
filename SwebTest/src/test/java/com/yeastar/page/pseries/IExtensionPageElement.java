@@ -155,7 +155,7 @@ public interface IExtensionPageElement {
     SelenideElement ele_extension_presence_enb_ring1_desktop_client_checkBox = $(By.id("extension_presence_enb_ring1_desktop_client_forward"));
 
     /** 下拉列表 目的地********/
-     enum DESTINATION {
+    enum DESTINATION {
         END_CALL("End Call"),
         EXTENSION("Extension"),
         Voicemail("Voicemail"),
@@ -177,4 +177,22 @@ public interface IExtensionPageElement {
         }
     }
 
+    //Tab Vociemail
+    SelenideElement ele_extension_voicemail_enable = $(By.id("extension_voicemail_enb_vm"));
+    //Tab Voicemail -> Enable Voicemail
+    SelenideElement ele_extension_voicemail_pin_auth_combobox = $(By.id("extension_voicemail_enb_vm_pin"));
+    SelenideElement ele_extension_voicemail_access_pin_combobox = $(By.id("extension_voicemail_vm_pin"));
+    SelenideElement ele_extension_voicemail_new_notification_combobox = $(By.id("extension_voicemail_new_vm_notify"));
+    SelenideElement ele_extension_voicemail_after_notification_combobox = $(By.id("extension_voicemail_after_vm_notify"));
+    SelenideElement ele_extension_voicemail_play_date_time_checkbox = $(By.id("extension_voicemail_enb_vm_play_datetime"));
+    SelenideElement ele_extension_voicemail_play_caller_id_checkbox = $(By.id("extension_voicemail_enb_vm_play_caller_id"));
+    SelenideElement ele_extension_voicemail_play_message_duration_checkbox = $(By.id("extension_voicemail_enb_vm_play_duration"));
+    //Tab Voicemail -> Voicemail Greeting
+    SelenideElement ele_extension_voicemail_default_greeting_combobox = $(By.id("extension_voicemail_vm_greeting"));
+    SelenideElement ele_extension_voicemail_available = $(By.id("extension_voicemail_voicemail_available"));
+    SelenideElement ele_extension_voicemail_away = $(By.id("extension_voicemail_voicemail_away"));
+    SelenideElement ele_extension_voicemail_doNotDisturb = $(By.id("extension_voicemail_voicemail_do_not_disturb"));
+    SelenideElement ele_extension_voicemail_lunchBreak = $(By.id("extension_voicemail_voicemail_launch"));
+    SelenideElement ele_extension_voicemail_businessTrip = $(By.id("extension_voicemail_voicemail_business_trip"));
+    SelenideElement ele_extension_voicemail_offWork = $(By.id("extension_voicemail_voicemail_off_work"));
 }

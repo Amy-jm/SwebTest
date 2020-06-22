@@ -10,6 +10,8 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.controllers.WebDriverFactory.getDriver;
 
 /**
@@ -42,17 +44,17 @@ public class TableUtils {
     /**
      * 【默认表格对象】 通过标题 及行号 获取表格数据
      * @param strHeader
-     * @param column
+     * @param row
      * @return
      */
-    public static String getCDRForHeader(WebDriver driver,String strHeader, int column){
+    public static String getTableForHeader(WebDriver driver,String strHeader, int row){
         WebElement tableElement = driver.findElement(By.xpath(strTableXPATH));
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
         String strReturn = "";
         if (table.hasColumn(strHeader)) {
             List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
-            log.debug("[headerCell Size]"+header1Cells.size());
-            strReturn = header1Cells.get(column).getText();
+            log.debug("[headerCell Size] "+header1Cells.size());
+            strReturn = header1Cells.get(row).getText();
             log.debug("[getTableData]"+strReturn);
         }
         return strReturn;
@@ -64,7 +66,7 @@ public class TableUtils {
      * @param column
      * @return
      */
-    public static String getCDRForHeader(WebDriver driver,WebElement tableElement, String strHeader, int column){
+    public static String getTableForHeader(WebDriver driver,WebElement tableElement, String strHeader, int column){
         tableElement = driver.findElement(By.xpath(strTableXPATH));
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
         String strReturn = "";
@@ -79,13 +81,56 @@ public class TableUtils {
     }
 
     /**
+     * 【自定义表格对象】通过表格中的某个数据（tagName），定位到那一行，点击那一行的编辑按钮
+     * @param driver
+     * @param strHeader
+     * @param tagName
+     */
+    public static void clickTableEidtBtn(WebDriver driver, String strHeader, String tagName){
+        WebElement tableElement = driver.findElement(By.xpath(strTableXPATH));
+        SeleniumTable table = SeleniumTable.getInstance(tableElement);
+
+        if (table.hasColumn(strHeader)) {
+            List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
+            for(int row=0; row<header1Cells.size(); row++){
+                if(header1Cells.get(row).getText().endsWith(tagName)){
+                    log.debug("[clickTableEidtBtn:find table data,row=] "+row);
+                    $(By.xpath("//table/tbody/tr["+(row+1)+"]//i[contains(@class,'edit')]")).click();
+                }
+            }
+        }
+        return ;
+    }
+
+    /**
+     * 【自定义表格对象】通过表格中的表头（strHeader）某个数据（tagName），定位到那一行，点击那一行的删除按钮
+     * @param driver
+     * @param strHeader
+     * @param tagName
+     */
+    public static void clickTableDeletBtn(WebDriver driver, String strHeader, String tagName){
+        sleep(2000);//todo 判断表格显现
+        WebElement tableElement = driver.findElement(By.xpath(strTableXPATH));
+        SeleniumTable table = SeleniumTable.getInstance(tableElement);
+        if (table.hasColumn(strHeader)) {
+            List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
+            for(int row=0; row<header1Cells.size(); row++){
+                if(header1Cells.get(row).getText().endsWith(tagName)){
+                    log.debug("[clickTableDeletBtn:find table data,row=] "+row);
+                    $(By.xpath("//table/tbody/tr["+(row+1)+"]//i[contains(@class,'delete')]")).click();
+                }
+            }
+        }
+        return ;
+    }
+    /**
      * 【自定义表格对象】通过行列 获取表格数据
      * @param tableElement 表格对象
      * @param row 行
      * @param column 列
      * @return
      */
-    public String getCDR(SelenideElement tableElement, int row, int column){
+    public String getTable(SelenideElement tableElement, int row, int column){
         String strReturn = "";
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
         SeleniumTableCell cell = table.get(row, column);
@@ -93,4 +138,5 @@ public class TableUtils {
         log.debug("[getTableData]"+strReturn);
         return strReturn;
     }
+
 }
