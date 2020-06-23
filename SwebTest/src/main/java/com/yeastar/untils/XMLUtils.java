@@ -135,6 +135,8 @@ public class XMLUtils {
         listener_0.addAttribute("class-name","com.yeastar.untils.AllureReporterListener");
         listener_1.addAttribute("class-name","com.yeastar.untils.RetryListener");
         listener_2.addAttribute("class-name","com.yeastar.untils.TestNGListener");
+        listener_2.addAttribute("class-name","com.yeastar.untils.ExecutionListener");
+
 
         Element tests = suite.addElement("test");
         tests.addAttribute("name","GroupTest");

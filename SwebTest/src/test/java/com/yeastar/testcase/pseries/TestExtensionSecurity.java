@@ -174,4 +174,36 @@ public class TestExtensionSecurity extends TestCaseBase {
     }
 
 
+    @Epic("P_Series")
+    @Feature("Extension")
+    @Story("Security")
+    @Description("启动Allow Register Remotely：1:login PBX->2:创建分机号1001,启用Allow Register Remotely->3.验证通话状态")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0","testEnableAllowRegisterRemotely","Extension","Regression","PSeries","Security"})
+    public void testEnableAllowRegisterRemotely() throws IOException, JSchException {
+        step("1:login PBX");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("2:创建分机号1001,启用Allow Register Remotely");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
+                editFirstData().switchToTab("Security").
+                isCheckbox(IExtensionPageElement.ele_extension_security_allow_reg_remotely_checkbox,false).saveBtn.click();
+
+        assertStep("3:[PJSIP]期望结果：remoteregister                     : no ");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("remoteregister                : no"),"[t38_udptl false]");
+
+        step("4:修改分机号1001,remoteregister->启用");
+        auto.extensionPage().editFirstData().switchToTab("Advanced").isCheckbox(IExtensionPageElement.ele_extension_security_allow_reg_remotely_checkbox,true).clickSaveAndApply();
+
+        assertStep("5:[PJSIP]期望结果：remoteregister                     : yes");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("remoteregister                : yes"),"[t38_udptl false]");
+
+        softAssert.assertAll();
+    }
+
+
 }
