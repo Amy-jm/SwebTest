@@ -23,7 +23,7 @@ public class TestExtension extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001628")
     @Issue("BUG_00001")
-    @Test(groups = "P0,testLoginMe,Extension,Regression,PSeries")
+    @Test(groups = {"P0","testLoginMe","Extension","Regression","PSeries"})
     public void testLoginMe(){
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);

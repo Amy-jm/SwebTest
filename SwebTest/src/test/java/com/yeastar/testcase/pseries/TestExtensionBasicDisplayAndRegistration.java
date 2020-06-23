@@ -28,7 +28,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001513")
     @Issue("")
-    @Test(groups = "P0,TestExtensionBasicDisplayAndRegistration,testAddExtension_0,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testAddExtension_0","Regression","PSeries"})
     public void testAddExtension_0() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -61,7 +61,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001514")
     @Issue("")
-    @Test(groups = "P0,TestExtensionBasicDisplayAndRegistration,testAddExtension_9999999,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testAddExtension_9999999","Regression","PSeries"})
     public void testAddExtension_9999999() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -93,7 +93,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("1001515")
     @Issue("")
-    @Test(groups = "P0,TestExtensionBasicDisplayAndRegistration,testCalled0To9999999,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries"})
     public void testCalled0To9999999() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);

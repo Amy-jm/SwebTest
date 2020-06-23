@@ -33,7 +33,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "8:修改分机号1001,DTMF_MODE->info->          9:[PJSIP]期望结果:dtmf_mode   : info")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001612"), @TmsLink(value = "ID1001613"),@TmsLink(value = "ID1001614"),@TmsLink(value = "ID1001615")})
-    @Test(groups = "P0,TestExtensionAdvanced,testDTMFMode,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testDTMFMode","Regression","PSeries"})
     public void testDTMFMode() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -78,7 +78,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "6:修改分机号1001,Transport -> Tls->7:[PJSIP]期望结果：transport_name   : tls")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001618"), @TmsLink(value = "ID1001617"),@TmsLink(value = "ID1001616")})
-    @Test(groups = "P0,TestExtensionAdvanced,testTransport,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testTransport","Regression","PSeries"})
     public void testTransport() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -117,7 +117,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "4:修改分机号1001,SRTP->启用 ->5:配置生效： media_encryption : sdes ;media_encryption_optimistic   : true")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001620"), @TmsLink(value = "ID1001619")})
-    @Test(groups = "P0,TestExtensionAdvanced,testSRTP,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testSRTP","Regression","PSeries"})
     public void testSRTP() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -151,7 +151,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "4:修改分机号1001,NAT->启用 ->5:配置生效： ")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001624"), @TmsLink(value = "ID1001623")})
-    @Test(groups = "P0,TestExtensionAdvanced,testNAT,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testNAT","Regression","PSeries"})
     public void testNAT() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -191,7 +191,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "4:修改分机号1001,T38Support->启用 ->5:配置生效： t38_udptl                     : true")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001626"), @TmsLink(value = "ID1001625")})
-    @Test(groups = "P0,TestExtensionAdvanced,testT38Support,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testT38Support","Regression","PSeries"})
     public void testT38Support() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -225,7 +225,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "4:修改分机号1001,Quailty->启用 ->5:配置生效： qualify_frequency                     : 60")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001628"), @TmsLink(value = "ID1001627")})
-    @Test(groups = "P0,TestExtensionAdvanced,testQualify,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testQualify","Regression","PSeries"})
     public void testQualify() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
