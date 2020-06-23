@@ -7,19 +7,18 @@
     <listener class-name="com.yeastar.untils.RetryListener"/>
     <listener class-name="com.yeastar.untils.TestNGListener"/>
   </listeners>
-  <test name="GroupTest">
+  <test name="GroupTest" allow-return-values="true">
     <groups>
       <run>
-        <include name="P0"/>
+        <include name="testBulkDeleteExtension"/>
       </run>
     </groups>
     <classes>
       <class name="com.yeastar.testcase.pseries.TestExtension"/>
-<!--      <class name="com.yeastar.example.LessonAllure"/>-->
-<!--      <class name="com.yeastar.testcase.pseries.TestExtensionList"/>-->
-<!--      <class name="com.yeastar.testcase.pseries.TestExtensionSecurity"/>-->
-<!--      <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>-->
-<!--      <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>-->
+      <class name="com.yeastar.testcase.pseries.TestExtensionList"/>
+      <class name="com.yeastar.testcase.pseries.TestExtensionSecurity"/>
+      <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>
+      <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>
     </classes>
   </test>
 </suite>
