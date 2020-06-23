@@ -22,7 +22,7 @@ public class testCreateXml {
 
         XMLUtils xmlUtils = new XMLUtils();
        // xmlUtils.CreateXMLByDOM4J(file,args[0],args[1],classNames);
-        xmlUtils.CreateXMLByDOM4J(file,"P0",classNames);
+        xmlUtils.CreateXMLByDOM4J(file,args[0],classNames);
 
 
     }

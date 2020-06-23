@@ -112,6 +112,18 @@
     </build>
 
     <dependencies>
+        <!-- for exception [ org/w3c/dom/ElementTraversal ]-->
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
 
         <dependency>
             <groupId>co.boorse</groupId>
