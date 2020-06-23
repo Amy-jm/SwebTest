@@ -38,8 +38,12 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
         log.debug("[Failure] "+tr.getTestClass()+tr.getName());
 
         //更新用例状态 zalenium
-        Cookie cookie = new Cookie("zaleniumTestPassed", "false");
-        webDriver.manage().addCookie(cookie);
+        try {
+            Cookie cookie = new Cookie("zaleniumTestPassed", "false");
+            webDriver.manage().addCookie(cookie);
+        }catch(java.lang.NullPointerException ex){
+            log.error(ex.getMessage());
+        }
     }
 
 
@@ -88,8 +92,12 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
         log.debug( "[Start test] " +tr.getTestClass()+tr.getName());
-        Cookie cookie = new Cookie("zaleniumMessage","[Start test] " + tr.getName());
-        webDriver.manage().addCookie(cookie);
+        try {
+            Cookie cookie = new Cookie("zaleniumMessage", "[Start test] " + tr.getName());
+            webDriver.manage().addCookie(cookie);
+        }catch(java.lang.NullPointerException ex){
+            log.error(ex.getMessage());
+        }
     }
 
     @Override
