@@ -9,7 +9,8 @@ public class testCreateXml {
         File file=new File(System.getProperty("user.dir")+"\\suite\\defaultGroup.xml");
 
         String packageName = "com.yeastar.testcase.pseries";
-        String filepath = System.getProperty("user.dir")+File.separator+"src"+File.separator+"test"+File.separator+"java"+File.separator+"com"+File.separator+"yeastar"+File.separator+"testcase"+File.separator+"pseries";
+        String filepath = System.getProperty("user.dir")+File.separator+"SwebTest"+File
+        .separator+"src"+File.separator+"test"+File.separator+"java"+File.separator+"com"+File.separator+"yeastar"+File.separator+"testcase"+File.separator+"pseries";
         System.out.println("[filepath] "+ filepath);
         System.out.println("[packageName] "+ packageName);
 
