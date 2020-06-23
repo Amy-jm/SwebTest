@@ -23,6 +23,7 @@ public class testCreateXml {
 
         XMLUtils xmlUtils = new XMLUtils();
        // xmlUtils.CreateXMLByDOM4J(file,args[0],args[1],classNames);
+        System.out.println("[keyword] "+ args[0]);
         xmlUtils.CreateXMLByDOM4J(file,args[0],classNames);
 
 
