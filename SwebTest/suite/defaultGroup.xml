@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="DefaultGroupsSuite"  preserve-order="false">
+  <listeners>
+    <listener class-name="com.yeastar.untils.AllureReporterListener"/>
+    <listener class-name="com.yeastar.untils.RetryListener"/>
+    <listener class-name="com.yeastar.untils.TestNGListener"/>
+  </listeners>
+  <test name="GroupTest">
+    <groups>
+      <run>
+        <include name="P0"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.yeastar.testcase.pseries.TestExtension"/>
+<!--      <class name="com.yeastar.example.LessonAllure"/>-->
+<!--      <class name="com.yeastar.testcase.pseries.TestExtensionList"/>-->
+<!--      <class name="com.yeastar.testcase.pseries.TestExtensionSecurity"/>-->
+<!--      <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>-->
+<!--      <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>-->
+    </classes>
+  </test>
+</suite>
