@@ -23,7 +23,7 @@ public class TestExtension extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001628")
     @Issue("BUG_00001")
-    @Test(groups = {"P0","testLoginMe","Extension","Regression","PSeries"})
+    @Test
     public void testLoginMe(){
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -51,7 +51,7 @@ public class TestExtension extends TestCaseBase {
     @Story("注册相关->UserExtension nUser->User->registration password")
     @Description("1:login PBX->2:创建分机号1001->3:提示注册密码强度不够，继续保存成功->4:分机列表，有提示注册密码强度不够图标显示")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "B_")
+    @Test
     public void B_registration_password_not_strong_warning(){
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
