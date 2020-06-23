@@ -145,9 +145,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             Selenide.actions().click(ele_delete_all_checkbox).perform();
             deleteBtn.shouldBe(Condition.visible).click();
             OKAlertBtn.shouldBe(Condition.visible).click();
-            sleep(WaitUntils.RETRY_WAIT);
-            applyBtn.shouldBe(Condition.visible).click();
-            sleep(WaitUntils.SHORT_WAIT*3);
+            clickApply();
         }
 
         return this;
