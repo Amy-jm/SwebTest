@@ -195,6 +195,7 @@ public class XMLUtils {
 
         try {
             // 创建XMLWriter对象
+            System.out.println("[defaultGroup xml filePath] "+dest);
             XMLWriter writer = new XMLWriter(new FileOutputStream(dest), format);
 
             //设置不自动进行转义
