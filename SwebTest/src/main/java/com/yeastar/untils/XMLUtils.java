@@ -131,11 +131,12 @@ public class XMLUtils {
         Element listener_0 = listeners.addElement("listener");
         Element listener_1 = listeners.addElement("listener");
         Element listener_2 = listeners.addElement("listener");
+        Element listener_3= listeners.addElement("listener");
 
         listener_0.addAttribute("class-name","com.yeastar.untils.AllureReporterListener");
         listener_1.addAttribute("class-name","com.yeastar.untils.RetryListener");
         listener_2.addAttribute("class-name","com.yeastar.untils.TestNGListener");
-        listener_2.addAttribute("class-name","com.yeastar.untils.ExecutionListener");
+        listener_3.addAttribute("class-name","com.yeastar.untils.ExecutionListener");
 
 
         Element tests = suite.addElement("test");
