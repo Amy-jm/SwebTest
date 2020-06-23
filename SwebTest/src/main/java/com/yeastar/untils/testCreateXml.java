@@ -6,7 +6,7 @@ import java.util.Set;
 public class testCreateXml {
 
     public static void main(String[] args) throws Exception {
-        File file=new File(System.getProperty("user.dir")+"\\suite\\defaultGroup.xml");
+        File file=new File(System.getProperty("user.dir")+File.separator+"SwebTest"+"\\suite\\defaultGroup.xml");
 
         String packageName = "com.yeastar.testcase.pseries";
         String filepath = System.getProperty("user.dir")+File.separator+"SwebTest"+File
