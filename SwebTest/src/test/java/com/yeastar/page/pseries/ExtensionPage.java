@@ -195,17 +195,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @param isChecked
      * @return
      */
-    public ExtensionPage isCheckbox(SelenideElement element,boolean isChecked){
-        if(element.getAttribute("checked")==null){
-            if(isChecked){
-                new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
-            }
-        }else{
-            if(!isChecked){
-                new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
-            }
-        }
-
+    public ExtensionPage setCheckbox(SelenideElement element,boolean isChecked){
+        isCheckbox(element,isChecked);
         return this;
     }
 

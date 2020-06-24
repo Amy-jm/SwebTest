@@ -6,9 +6,11 @@ import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.interactions.Actions;
 
 import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 /**
  * BasePage 通用方法
@@ -87,5 +89,24 @@ public class BasePage implements IButton{
         saveBtn.shouldBe(Condition.enabled).click();
         clickApply();
     }
+    /**
+     * checkbox 设置
+     * @param element
+     * @param isChecked
+     * @return
+     */
+    public BasePage isCheckbox(SelenideElement element,boolean isChecked){
+        if(element.getAttribute("checked")==null){
+            if(isChecked){
+                new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
+            }
+        }else{
+            if(!isChecked){
+                new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
+            }
+        }
+        return  this;
+    }
+
 
 }

@@ -6,9 +6,10 @@ import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.IExtensionPageElement;
 
 import com.yeastar.page.pseries.TestCaseBase;
-import com.yeastar.untils.WaitUntils;
+import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
  * @author: huangjx@yeastar.com
  * @create: 2020/06/16
  */
+@Listeners({ExecutionListener.class,AllureReporterListener.class, TestNGListener.class})
 public class TestExtensionAdvanced extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
