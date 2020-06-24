@@ -118,6 +118,7 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("network", true);
 			//Build Name    String serviceName = System.getProperty("serviceName");
 //            desiredCapabilities.setCapability("build", "AutoTestBuild_Seven");
+			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			//Idle TimeOut
 			desiredCapabilities.setCapability("idleTimeout", 100);//150-100
