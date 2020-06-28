@@ -386,6 +386,11 @@ public class PjsipApp extends PjsipDll{
                     timeer--;
                 }
             }
+            //返回为-1时，设置没有正常注册
+            if(CallerAccount.pos == -1){
+                log.error("[CallerAccount 为-1 状态异常！！！]");
+                return null;
+            }
 
 //            YsAssert.assertEquals(caller_status,"Busy");
 //            YsAssert.assertEquals(callee_status,"Busy");

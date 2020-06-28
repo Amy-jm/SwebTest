@@ -1,11 +1,12 @@
 package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public interface IExtensionPageElement {
     /**查询输入框*/
@@ -70,7 +71,17 @@ public interface IExtensionPageElement {
     //Disable Outbound Calls outside Business
     SelenideElement ele_extension_security_disable_office_time_outb_call_checkbox = $(By.id("extension_security_disable_office_time_outb_call"));
     //Max Outbound Call Durations
-    SelenideElement ele_extension_security_max_outb_call_duration_select = $(By.id("extension_security_max_outb_call_duration"));
+    SelenideElement ele_extension_security_max_outb_call_duration_select = $(By.xpath("//*[@id=\"extension_security_max_outb_call_duration\"]//input"));
+    //-SIP User Agent Identification
+    ElementsCollection ele_list_user_agent_input = $$(By.id("user_agent"));
+    //--Add User Agent btn
+    SelenideElement ele_add_user_agent_btn =$(By.xpath("//span[contains(text(),\"Add User Agent\")]"));
+
+    //-SIP User Agent Identification
+    ElementsCollection ele_list_permitted_ip_input = $$(By.id("permitted_ip"));
+    ElementsCollection ele_list_netmask_input = $$(By.id("netmask"));
+    //--Add User Agent btn
+    SelenideElement ele_add_ip_btn =$(By.xpath("//span[contains(text(),\"Add IP\")]"));
 
    /** 下拉列表 Max Outbound Call Duration(s) **/
    enum MAX_OUTBOUND_CALL_DURATIONS{

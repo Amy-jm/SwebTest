@@ -35,7 +35,7 @@ public class HomePage {
     public SelenideElement left_menu_first_level_call_control = $(By.xpath("//span[contains(text(),'Call Control')]"));
     public SelenideElement call_control_tree_inbound_routes = $(By.linkText("Inbound Routes"));
     public SelenideElement call_control_tree_outbound_routes = $(By.linkText("Outbound Routes"));
-    public SelenideElement call_control_tree_office_time_and_holidays = $(By.linkText("Office Time and Holidays"));
+    public SelenideElement call_control_tree_office_time_and_holidays = $(By.id("m_office_time_and_holidays"));
     public SelenideElement call_control_tree_emergency_number = $(By.linkText("Emergency Number"));
 
     /**

@@ -87,7 +87,10 @@ public class BasePage implements IButton{
      */
     public void clickSaveAndApply(){
         saveBtn.shouldBe(Condition.enabled).click();
-        clickApply();
+        if(applyBtn.isDisplayed()){
+            clickApply();
+        }
+
     }
     /**
      * checkbox 设置
@@ -106,6 +109,16 @@ public class BasePage implements IButton{
             }
         }
         return  this;
+    }
+
+    /**
+     * 设置元素的值
+     * @param strValue
+     * @return
+     */
+    public BasePage setElementValue(SelenideElement element ,String strValue){
+        element.shouldBe(Condition.visible).setValue(strValue);
+        return this;
     }
 
 
