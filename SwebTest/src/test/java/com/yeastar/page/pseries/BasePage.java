@@ -87,7 +87,7 @@ public class BasePage implements IButton{
      */
     public void clickSaveAndApply(){
         saveBtn.shouldBe(Condition.enabled).click();
-        if(applyBtn.isDisplayed()){
+        if(applyBtn.is(Condition.visible)){
             clickApply();
         }
 
