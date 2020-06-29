@@ -254,7 +254,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0","testEnableUserAgentRegistrationAuthorization","Extension","Regression","PSeries","Security"})
+    @Test(groups = {"P0","testEnableUserAgentRegistrationAuthorization","Extension","Regression","PSeries","Security","Security"})
     public void testSIPRegistrationIPRestriction() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -298,7 +298,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries"})
+    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForInternalExtension() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -353,7 +353,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries"})
+    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunk() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -405,7 +405,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0","TestExtensionSecurity","testMaxCallDurationForSPSTrunkTo0","Regression","PSeries"})
+    @Test(groups = {"P0","TestExtensionSecurity","testMaxCallDurationForSPSTrunkTo0","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunkTo0() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
