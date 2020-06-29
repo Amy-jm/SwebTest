@@ -124,7 +124,7 @@ public class XMLUtils {
         suite.addAttribute("name", "DefaultGroupsSuite");
 //        suite.addAttribute("parallel", "methods");
 //        suite.addAttribute("thread-count", "5");
-        suite.addAttribute(" preserve-order", "false");
+//        suite.addAttribute(" preserve-order", "false");
         suite.addAttribute(" parallel", "false");
 
         // 创建二级子节点Listeners,test
@@ -136,7 +136,7 @@ public class XMLUtils {
 
         listener_0.addAttribute("class-name","com.yeastar.untils.AllureReporterListener");
         listener_1.addAttribute("class-name","com.yeastar.untils.RetryListener");
-        listener_2.addAttribute("class-name","com.yeastar.untils.TestNGListener");
+        listener_2.addAttribute("class-name","com.yeastar.untils.TestNGListenerP");
         listener_3.addAttribute("class-name","com.yeastar.untils.ExecutionListener");
 
 
