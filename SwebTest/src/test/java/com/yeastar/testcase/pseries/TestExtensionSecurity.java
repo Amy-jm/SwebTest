@@ -332,14 +332,16 @@ public class TestExtensionSecurity extends TestCaseBase {
         ys_waitingTime(70000);
         pjsip.Pj_Hangup_All();
 
-        assertStep("[CDR]5.第一条记录：Reason = talk_timeout ；Call Duration(s)=00:00:30");
+        assertStep("[CDR]5.第一条记录：Reason = Exceeded the max call duration(s) ；Call Duration(s)=00:00:30");
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        Assert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"talk_timeout");
-        //todo bug 实际结果为 "00:01:00"
-        Assert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
+        //todo bug 实际结果为 "00:01:00"  20200628
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
+
+        softAssert.assertAll();
     }
 
 
@@ -385,13 +387,15 @@ public class TestExtensionSecurity extends TestCaseBase {
         ys_waitingTime(70000);
         pjsip.Pj_Hangup_All();
 
-        assertStep("[CDR]5.第一条记录：Reason = talk_timeout ；Call Duration(s)=00:00:30");
+        assertStep("[CDR]5.第一条记录：Reason = Exceeded the max call duration(s) ；Call Duration(s)=00:00:30");
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        Assert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"talk_timeout");
-        Assert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
+
+        softAssert.assertAll();
     }
 
 
@@ -437,14 +441,15 @@ public class TestExtensionSecurity extends TestCaseBase {
         ys_waitingTime(70000);
         pjsip.Pj_Hangup_All();
 
-        assertStep("[CDR]5.第一条记录：Reason = talk_timeout ；Call Duration(s)=00:00:30");
+        assertStep("[CDR]5.第一条记录：Reason = Exceeded the max call duration(s) ；Call Duration(s)=00:00:30");
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        Assert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"talk_timeout");
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
         //todo bug 00:01:00
-        Assert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
+        softAssert.assertAll();
     }
 
 
@@ -456,8 +461,6 @@ public class TestExtensionSecurity extends TestCaseBase {
 
         step("2:创建分机号1001,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_office_time_and_holidays);
-
-
         auto.extensionPage().selectTime("12:30");
 
     }

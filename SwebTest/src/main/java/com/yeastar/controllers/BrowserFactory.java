@@ -73,7 +73,9 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
 			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
 			desiredCapabilities.setCapability("network", true);
+			log.debug("[idleTimeout] 20s");
 			desiredCapabilities.setCapability("idleTimeout", 240);//150-100
+			log.debug("[ZALENIUM_PROXY_CLEANUP_TIMEOUT]  90s");
 			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
 
 
@@ -121,8 +123,8 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			//Idle TimeOut
-			desiredCapabilities.setCapability("idleTimeout", 150);//150-100
-			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 100);//180-90
+//			desiredCapabilities.setCapability("idleTimeout", 150);//150-100
+//			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 100);//180-90
 			//Screen Resolution
 //			desiredCapabilities.setCapability("screenResolution", "1920x1080");
 			desiredCapabilities.setCapability("network", true);

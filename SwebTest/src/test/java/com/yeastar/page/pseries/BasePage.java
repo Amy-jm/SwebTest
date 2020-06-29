@@ -87,6 +87,7 @@ public class BasePage implements IButton{
      */
     public void clickSaveAndApply(){
         saveBtn.shouldBe(Condition.enabled).click();
+        sleep(WaitUntils.SHORT_WAIT);
         if(applyBtn.isDisplayed()){
             clickApply();
         }
