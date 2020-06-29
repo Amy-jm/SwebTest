@@ -30,7 +30,7 @@ public class TestCaseBase extends BaseMethod {
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method) throws Exception
     {
-        log.info("====== [SetUp] " + getTestName(method) + " [Times] " + DataUtils
+        log.info("\r\n====== [SetUp] " + getTestName(method) + " [Times] " + DataUtils
                 .getCurrentTime("yyyy-MM-dd hh:mm:ss") +
                 "======");
         webDriver = initialDriver(BROWSER,PBX_URL,method);
@@ -42,7 +42,7 @@ public class TestCaseBase extends BaseMethod {
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) throws Exception
     {
-        log.info("====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils
+        log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils
                 .getCurrentTime("yyyy-MM-dd hh:mm:ss") +
                 "======");
         if(EmptyUtil.isNotEmpty(pjsip)){

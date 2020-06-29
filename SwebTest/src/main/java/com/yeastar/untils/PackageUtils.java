@@ -95,10 +95,8 @@ public class PackageUtils {
                 if(fileName.endsWith(".java")){
                     className.add(packageName+ "." + fileName.replace(".java", ""));
                 }
-
             }
         }
-
         return className;
     }
 
@@ -165,7 +163,6 @@ public class PackageUtils {
                 classNames.addAll(getClassNameFromJar(jarFile.entries(), packageName, isRecursion));
             }
         }
-
         return classNames;
     }
 }
