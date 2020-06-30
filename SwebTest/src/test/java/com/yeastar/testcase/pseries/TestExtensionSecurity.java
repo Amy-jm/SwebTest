@@ -2,9 +2,11 @@ package com.yeastar.testcase.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
+import com.yeastar.page.pseries.BusinessHoursAndHolidaysPage;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.IExtensionPageElement;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
@@ -24,10 +26,25 @@ import static com.yeastar.swebtest.driver.SwebDriverP.*;
  * @create: 2020/06/17
  */
 public class TestExtensionSecurity extends TestCaseBase {
+
+    /**
+     * 前提条件
+     * 1.添加1001分机到 路由AutoTest_Route
+     */
+    public void prerequisite(){
+        //新增呼出路由
+        //添加分机1001 ，到路由AutoTest_Route
+        //todo 创建路由
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
+        auto.outBoundRoutePage().editRoute("AutoTest_Route").addExtensionOrExtensionGroup("1001").clickSaveAndApply();
+    }
+
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("启用disable outbound call：1:login PBX->2:创建分机号1001,启用disable outbound call->3.验证通话状态")
+    @Description("[前提条件] 1.sip 点对点中继" +
+            "2.呼出路由AutoTest_Route" +
+            "启用disable outbound call-呼出失败：1:login PBX->2:创建分机号1001,启用disable outbound call->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
@@ -44,6 +61,9 @@ public class TestExtensionSecurity extends TestCaseBase {
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,true).
                 clickSaveAndApply();
 
+
+        prerequisite();
+
         assertStep("3.验证通话状态,1.预期1001会Ring ,2.预期2000不会响铃");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -52,7 +72,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
 
         pjsip.Pj_Make_Call_No_Answer(1001,"2000",DEVICE_IP_LAN,false);
-        softAssert.assertEquals(getExtensionStatus(1001,HUNGUP,20),RING,"预期1001为Ring状态");
+        softAssert.assertEquals(getExtensionStatus(1001,HUNGUP,20),HUNGUP,"预期1001为HUNGUP状态");
         softAssert.assertEquals(getExtensionStatus(2000,IDLE,10),IDLE,"预期2000不会响铃");
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
@@ -61,7 +81,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("启用disable outbound call：1:login PBX->2:创建分机号1001,启用disable outbound call->3.验证通话状态")
+    @Description("禁用disable outbound call-呼出成功：1:login PBX->2:创建分机号1001,启用disable outbound call->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
@@ -76,6 +96,8 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,false).saveBtn.click();
+
+        prerequisite();
 
         assertStep("3.验证通话状态,1.预期1001会Ring ,2.预期2000不会响铃");
         pjsip.Pj_Init();
@@ -102,7 +124,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("启用disable outbound calls outside business hours功能：1:login PBX->2:创建分机号1001,启用disable outbound calls outside business hours->3.验证通话状态")
+    @Description("启用disable outbound calls outside business hours功能，则下班时间不能呼出：1:login PBX->2:创建分机号1001,启用disable outbound calls outside business hours->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
@@ -120,6 +142,16 @@ public class TestExtensionSecurity extends TestCaseBase {
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_office_time_outb_call_checkbox,true).
                 clickSaveAndApply();
 
+        prerequisite();
+        //设置下班时间为当前时间的前2小时-前3小时
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_office_time_and_holidays);
+        auto.businessHoursAndHoildaysPage().deleAllData().addBusinessHours(
+                DataUtils.getCurrentTimeAndOffset("HH:mm",-3,0),
+                DataUtils.getCurrentTimeAndOffset("HH:mm",-2,0),
+               "","",
+                DataUtils.getCurrentWeekDay()).clickSaveAndApply();
+
+
         assertStep("3.验证通话状态,1.预期1001会Ring ,2.预期2000不会响铃");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -133,12 +165,13 @@ public class TestExtensionSecurity extends TestCaseBase {
         softAssert.assertEquals(getExtensionStatus(2000,IDLE,10),IDLE,"预期2000不会响铃");
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
+        //todo bug 23版本 设置不生效，待24版本验证
     }
 
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("禁用disable outbound calls outside business hours：1:login PBX->2:创建分机号1001,禁用disable outbound calls outside business hours->3.验证通话状态")
+    @Description("禁用disable outbound calls outside business hours，下班时间可以正常呼出：1:login PBX->2:创建分机号1001,禁用disable outbound calls outside business hours->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
@@ -154,6 +187,15 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_office_time_outb_call_checkbox,false).saveBtn.click();
+
+        prerequisite();
+        //设置下班时间为当前时间的前2小时-前3小时
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_office_time_and_holidays);
+        auto.businessHoursAndHoildaysPage().deleAllData().addBusinessHours(
+                DataUtils.getCurrentTimeAndOffset("HH:mm",-3,0),
+                DataUtils.getCurrentTimeAndOffset("HH:mm",-2,0),
+                "","",
+                DataUtils.getCurrentWeekDay()).clickSaveAndApply();
 
         assertStep("3.验证通话状态,1.预期1001会Ring ,2.预期2000不会响铃");
         pjsip.Pj_Init();
@@ -453,7 +495,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     }
 
 
-//    @Test
+    @Test
     public void testSelectTime() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -461,7 +503,14 @@ public class TestExtensionSecurity extends TestCaseBase {
 
         step("2:创建分机号1001,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_office_time_and_holidays);
-        auto.extensionPage().selectTime("12:30");
+        auto.businessHoursAndHoildaysPage().deleAllData().addBusinessHours(
+                DataUtils.getCurrentTimeAndOffset("HH:mm",-3,0),
+                DataUtils.getCurrentTimeAndOffset("HH:mm",-2,0),
+                DataUtils.getCurrentTimeAndOffset("HH:mm",2,0),
+                DataUtils.getCurrentTimeAndOffset("HH:mm",3,30),
+//                BusinessHoursAndHolidaysPage.DAYS_ENUM.MON.getWeekday()+BusinessHoursAndHolidaysPage.DAYS_ENUM.FRI.getWeekday()
+                DataUtils.getCurrentWeekDay()
+        ).clickSaveAndApply();
 
     }
 

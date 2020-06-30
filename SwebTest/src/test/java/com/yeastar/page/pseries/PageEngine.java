@@ -9,6 +9,8 @@ public class PageEngine {
     BasePage basePage;
     CDRPage cdrPage;
     PreferencesPage preferencesPage;
+    OutBoundRoutePage outBoundRoutePage;
+    BusinessHoursAndHolidaysPage businessHoursAndHolidaysPage;
 
     public PageEngine() {
         basePage = new BasePage();
@@ -17,6 +19,8 @@ public class PageEngine {
         extensionPage = new ExtensionPage();
         cdrPage = new CDRPage();
         preferencesPage = new PreferencesPage();
+        outBoundRoutePage = new OutBoundRoutePage();
+        businessHoursAndHolidaysPage = new BusinessHoursAndHolidaysPage();
     }
     public BasePage basePage() { return basePage; }
     public LoginPage loginPage() { return loginPage; }
@@ -24,6 +28,7 @@ public class PageEngine {
     public ExtensionPage extensionPage() { return extensionPage; }
     public CDRPage cdrPage() { return cdrPage; }
     public PreferencesPage preferencesPage() { return preferencesPage; }
+    public OutBoundRoutePage outBoundRoutePage(){return outBoundRoutePage;}
+    public BusinessHoursAndHolidaysPage businessHoursAndHoildaysPage(){return businessHoursAndHolidaysPage;}
 
-//    public  LoginPage loginPage(){}
 }

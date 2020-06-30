@@ -32,11 +32,11 @@ public class HomePage {
     /**
      * 左侧菜单 -- Call Control
      **/
-    public SelenideElement left_menu_first_level_call_control = $(By.xpath("//span[contains(text(),'Call Control')]"));
-    public SelenideElement call_control_tree_inbound_routes = $(By.linkText("Inbound Routes"));
-    public SelenideElement call_control_tree_outbound_routes = $(By.linkText("Outbound Routes"));
+    public SelenideElement left_menu_first_level_call_control = $(By.id("m_call_control"));
+    public SelenideElement call_control_tree_inbound_routes = $(By.id("m_inbound_routes"));
+    public SelenideElement call_control_tree_outbound_routes = $(By.id("m_outbound_routes"));
     public SelenideElement call_control_tree_office_time_and_holidays = $(By.id("m_office_time_and_holidays"));
-    public SelenideElement call_control_tree_emergency_number = $(By.linkText("Emergency Number"));
+    public SelenideElement call_control_tree_emergency_number = $(By.id("m_emergency_number"));
 
     /**
      * 左侧菜单 -- Call Feature

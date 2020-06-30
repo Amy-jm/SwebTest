@@ -1,8 +1,10 @@
 package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.yeastar.untils.WaitUntils;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -25,6 +27,8 @@ public class BasePage implements IButton{
     public String INPUT_COMM_XPATH = "//label[contains(text(),'%s')]/../following-sibling::div//input";
     //li 下拉选项通用定位
     public String SELECT_COMM_XPATH = "//li[contains(text(),'%s')]";
+    //表格全选
+    SelenideElement ele_delete_all_table = $(By.xpath("//table//thead//input[1]"));
 
 
 
@@ -119,6 +123,21 @@ public class BasePage implements IButton{
      */
     public BasePage setElementValue(SelenideElement element ,String strValue){
         element.shouldBe(Condition.visible).setValue(strValue);
+        return this;
+    }
+
+    /**
+     * 删除所有表格数据
+     * @return
+     */
+    @Step("删除所有表格数据")
+    public BasePage deleAllTableData() {
+        if (ele_delete_all_table.isEnabled()) {
+            Selenide.actions().click(ele_delete_all_table).perform();
+            deleteBtn.shouldBe(Condition.visible).click();
+            OKAlertBtn.shouldBe(Condition.visible).click();
+            clickApply();
+        }
         return this;
     }
 
