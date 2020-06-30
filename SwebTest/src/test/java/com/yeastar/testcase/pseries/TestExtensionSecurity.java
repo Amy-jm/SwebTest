@@ -46,7 +46,7 @@ public class TestExtensionSecurity extends TestCaseBase {
             "2.呼出路由AutoTest_Route" +
             "启用disable outbound call-呼出失败：1:login PBX->2:创建分机号1001,启用disable outbound call->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("")
+    @TmsLink("1001596")
     @Issue("")
     @Test(groups = {"P0","testEnableDisableOutCall","Extension","Regression","PSeries","Security"})
     public void testEnableDisableOutCall() throws IOException, JSchException {
@@ -83,7 +83,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Story("Security")
     @Description("禁用disable outbound call-呼出成功：1:login PBX->2:创建分机号1001,启用disable outbound call->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("")
+    @TmsLink("1001599")
     @Issue("")
     @Test(groups = {"P0","testDisableOutCall","Extension","Regression","PSeries","Security"})
     public void testDisableOutCall() throws IOException, JSchException {
@@ -173,7 +173,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Story("Security")
     @Description("禁用disable outbound calls outside business hours，下班时间可以正常呼出：1:login PBX->2:创建分机号1001,禁用disable outbound calls outside business hours->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("")
+    @TmsLink("1001597")
     @Issue("")
     @Test(groups = {"P0","testDisableOutCallBusinessHours","Extension","Regression","PSeries","Security"})
     public void testDisableOutCallBusinessHours() throws IOException, JSchException {
@@ -225,7 +225,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Story("Security")
     @Description("启动Allow Register Remotely：1:login PBX->2:创建分机号1001,启用Allow Register Remotely->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("")
+    @TmsLinks(value = {@TmsLink(value = "ID1001600"), @TmsLink(value = "ID1001601")})
     @Issue("")
     @Test(groups = {"P0","testEnableAllowRegisterRemotely","Extension","Regression","PSeries","Security"})
     public void testEnableAllowRegisterRemotely() throws IOException, JSchException {
