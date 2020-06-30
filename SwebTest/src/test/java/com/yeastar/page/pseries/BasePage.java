@@ -6,9 +6,11 @@ import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.interactions.Actions;
 
 import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 /**
  * BasePage 通用方法
@@ -35,6 +37,16 @@ public class BasePage implements IButton{
         $(By.xpath(String.format(INPUT_COMM_XPATH,label))).shouldHave(Condition.visible).setValue(input);
     }
 
+    /**
+     * 选择下拉框
+     * @param arg 枚举类型中的参数别名
+     * @return
+     */
+    public void selectComm(String arg){
+        $(By.xpath(String.format(SELECT_COMM_XPATH,arg))).click();
+        return ;
+    }
+
     public Boolean isSaveSuccessAlertAppear(){
         return $(By.xpath("//span[text()=\"添加成功\"]")).waitUntil(Condition.appear,10*1000).isDisplayed();
     }
@@ -56,24 +68,27 @@ public class BasePage implements IButton{
         return boo;
     }
 
-    /**
-     * ExtJs 调用方法
-     * @param js
-     * @return
-     */
-    public  Object executeJs(String js) {
-        log.debug("[executeJS] "+js);
-        Object result = executeJavaScript(js);
-        return result;
-    }
 
     /**
      * 点击 apply button
      */
     public void clickApply(){
         applyBtn.waitUntil(Condition.enabled,WaitUntils.TIME_OUT_SECOND).click();
-        applyLoadingBtn.shouldBe(Condition.visible);
-        applyLoadedBtn.shouldBe(Condition.visible);//界面不一定会渲染出loaded
+//        applyLoadingBtn.shouldBe(Condition.visible);
+//        applyLoadedBtn.shouldBe(Condition.visible);//界面不一定会渲染出loaded
+        while (applyLoadingBtn.isDisplayed()){
+        }
+    }
+
+    /**
+     * ExtJs 调用方法
+     * @param js
+     * @return
+     */
+    public Object executeJs(String js) {
+        log.debug("[executeJS] "+js);
+        Object result = executeJavaScript(js);
+        return result;
     }
 
     /**

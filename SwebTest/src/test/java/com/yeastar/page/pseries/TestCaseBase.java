@@ -12,6 +12,7 @@ import org.testng.asserts.SoftAssert;
 import java.lang.reflect.Method;
 
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 @Log4j2
@@ -41,6 +42,7 @@ public class TestCaseBase extends BaseMethod {
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) throws Exception
     {
+        sleep(5000);
         new BrowserUtils().getLogType_Browser(method,webDriver);
         getWebDriver().quit();
         log.info( "****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");

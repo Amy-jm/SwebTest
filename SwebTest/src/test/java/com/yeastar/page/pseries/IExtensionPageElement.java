@@ -137,6 +137,68 @@ public interface IExtensionPageElement {
         }
     }
 
+    /** 下拉列表 Voicemail PIN Authentication **/
+    enum VOICEMAIL_PIN_AUTH{
+        ENABLED("Enabled"),
+        DISABLED("Disabled");
+
+        private final String alias;
+
+        VOICEMAIL_PIN_AUTH(String alias){
+            this.alias = alias;
+        }
+
+        public String getAlias() {
+            ele_extension_voicemail_pin_auth_combobox.shouldBe(Condition.enabled).click();
+            return alias;
+        }
+    }
+
+    /** 下拉列表 New Voicemail Notification **/
+    enum NEW_VOICEMAIL_NOTIFICATION{
+        SEND_EMAIL_NOTIFICATIONS_WITH_ATTACHMENT("Send Email Notifications with Attachment"),
+        DO_NOT_SEND_EMAIL_NOTIFICATIONS("Do Not Send Email Notifications"),
+        SEND_EMAIL_NOTIFICATIONS_WITHOUT_ATTACHMENT("Send Email Notifications without Attachment");
+        private final String alias;
+
+        NEW_VOICEMAIL_NOTIFICATION(String alias){
+            this.alias = alias;
+        }
+        public String getAlias() {
+            ele_extension_voicemail_new_notification_combobox.shouldBe(Condition.enabled).click();
+            return alias;
+        }
+    }
+    /** 下拉列表 After Notification **/
+    enum AFTER_NOTIFICATION{
+        MARK_AS_READ("Mark as Read"),
+        DELETE_VOICEMAIL("Delete Voicemail"),
+        DO_NOTHING("Do Nothing");
+        private final String alias;
+
+        AFTER_NOTIFICATION(String alias){
+            this.alias = alias;
+        }
+
+        public String getAlias() {
+            ele_extension_voicemail_after_notification_combobox.shouldBe(Condition.enabled).click();
+            return alias;
+        }
+    }
+
+    enum DEFAULT_GREETING{
+        FOLLOW_SYSTEM("[Follow System]");
+        private final String alias;
+
+        DEFAULT_GREETING(String alias){
+            this.alias = alias;
+        }
+
+        public String getAlias() {
+            ele_extension_voicemail_default_greeting_combobox.shouldBe(Condition.enabled).click();
+            return alias;
+        }
+    }
 
 
     //Tab Presence
@@ -181,7 +243,7 @@ public interface IExtensionPageElement {
     SelenideElement ele_extension_voicemail_enable = $(By.id("extension_voicemail_enb_vm"));
     //Tab Voicemail -> Enable Voicemail
     SelenideElement ele_extension_voicemail_pin_auth_combobox = $(By.id("extension_voicemail_enb_vm_pin"));
-    SelenideElement ele_extension_voicemail_access_pin_combobox = $(By.id("extension_voicemail_vm_pin"));
+    SelenideElement ele_extension_voicemail_access_pin = $(By.id("extension_voicemail_vm_pin"));
     SelenideElement ele_extension_voicemail_new_notification_combobox = $(By.id("extension_voicemail_new_vm_notify"));
     SelenideElement ele_extension_voicemail_after_notification_combobox = $(By.id("extension_voicemail_after_vm_notify"));
     SelenideElement ele_extension_voicemail_play_date_time_checkbox = $(By.id("extension_voicemail_enb_vm_play_datetime"));

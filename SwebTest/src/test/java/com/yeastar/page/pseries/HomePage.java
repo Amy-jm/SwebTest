@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -111,13 +112,13 @@ public class HomePage {
 
 
     public SelenideElement menu_first_level_user_dropdown = $(By.xpath("//div[contains(@class,'ant-dropdown-link ant-dropdown-trigger')]//i[contains(@class,\"anticon anticon-down\")]"));
-    public SelenideElement user_tree_setting = $(By.xpath("//div[@class=\"ant-dropdown ant-dropdown-placement-bottomRight\"]//li[contains(text(),'Setting')]"));
-    public SelenideElement user_tree_change_password = $(By.xpath(String.format(link_comm_xpath,"Change Password")));
-    public SelenideElement user_tree_privacy_policy_agreement =  $(By.xpath(String.format(link_comm_xpath,"Privacy Policy Agreement")));
-    public SelenideElement user_tree_language = $(By.xpath(String.format(link_comm_xpath,"Language")));
+    public SelenideElement user_tree_setting = $(By.id("h_admin_setting"));
+    public SelenideElement user_tree_change_password = $(By.id("h_change_password"));
+    public SelenideElement user_tree_privacy_policy_agreement =  $(By.id("h_privacy_policy"));
+    public SelenideElement user_tree_language = $(By.id("h_language"));
     public SelenideElement user_tree_language_english =  $(By.xpath(String.format(link_comm_xpath,"English")));
     public SelenideElement user_tree_language_china =  $(By.xpath(String.format(link_comm_xpath,"简体中文")));
-    public SelenideElement user_tree_logout = $(By.xpath(String.format(link_comm_xpath,"Logout")));
+    public SelenideElement user_tree_logout = $(By.id("h_logout"));
 
     /**
      * logout pbx
@@ -147,13 +148,13 @@ public class HomePage {
         //左侧一级菜单
         switch (level_1) {
             case extension_trunk:
-                left_menu_first_level_extension_trunk.click();
+                isLevel2Visible(left_menu_first_level_extension_trunk);
                 break;
             case call_control:
-                left_menu_first_level_call_control.click();
+                isLevel2Visible(left_menu_first_level_call_control);
                 break;
             case call_feature:
-                left_menu_first_level_call_feature.click();
+                isLevel2Visible(left_menu_first_level_call_feature);
                 break;
             case pbx_settings:
                 left_menu_first_level_pbx_settings.click();
@@ -168,7 +169,6 @@ public class HomePage {
                 left_menu_first_level_cdr_recording.click();
                 break;
         }
-
         //左侧二级菜单
         switch (level_2) {
             case extension_trunk_tree_extensions:
@@ -292,6 +292,20 @@ public class HomePage {
 
     }
 
+    public void isLevel2Visible(WebElement level1){
+
+        WebElement ele = $(By.xpath("//span[@id='"+level1.getAttribute("id")+"']/.."));
+
+        System.out.println(ele.getAttribute("aria-expanded"));
+        System.out.println("AAAAAAAAAAAAAAAAA " +
+                ele.getAttribute("aria-expanded").equals(false) +
+                ele.getAttribute("aria-expanded").equals("false"));
+
+        if(ele.getAttribute("aria-expanded").equals("false")){
+            level1.click();
+        }
+        return ;
+    }
 
     /**
      * 左侧 一 二级菜单

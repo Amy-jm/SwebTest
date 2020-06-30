@@ -2,14 +2,19 @@ package com.yeastar.testcase.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
+import com.thoughtworks.selenium.Selenium;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.ICdrPageElement;
 import com.yeastar.page.pseries.IExtensionPageElement;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.page.pseries.WebClient.Me_HomePage;
+import com.yeastar.swebtest.pobject.Me.Me;
 import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import java.io.IOException;
 
@@ -26,16 +31,35 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 public class TestExtensionVoicemail extends TestCaseBase {
 
     @Test
-    public void CaseName() {
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
-        sleep(60000);
-        pjsip.Pj_Hangup_All();
+    public void CaseName() throws InterruptedException {
+
+        auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().deleteAllInboundRoutes();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
+//        if(TableUtils.clickTableDeletBtn(getDriver(),"Name",SPS)){
+//            auto.trunkPage().OKAlertBtn.shouldBe(Condition.visible).click();
+//        }
+//
+//        auto.trunkPage().createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
+
+//        preparationSteps();
+//        auto.homePage().logout();
+//        auto.loginPage().login("0","Yeastar123");
+
+        //todo 分机webclient页面检查留言
+//        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
+//        String a = TableUtils.getTableForHeader(getDriver(),"Name",0);
+//        System.out.println("aaaaaaaaaaa  "+a);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+//        auto.extensionPage().selectExtensionPresence("0","Away");
+//        sleep(10000);
+
     }
+
+
 
     @Epic("P_Series")
     @Feature("Extension")
@@ -52,12 +76,15 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:删除spstrunk -> 创建sps trunk");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
-        sleep(3000);
-        TableUtils.clickTableDeletBtn(getDriver(),"Name",SPS);
-        auto.trunkPage().OKAlertBtn.shouldBe(Condition.visible).click();
-        auto.trunkPage().createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认");
+        preparationSteps();
 
         step("3:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
@@ -67,17 +94,18 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
-        sleep(60000);
+        sleep(20000);
         pjsip.Pj_Hangup_All();
 
         assertStep("4:cli确认播放提示音为vm-greeting-leave-after-tone.slin");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认提示音]");
 
         assertStep("5:cdr判断");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         auto.cdrPage().ele_download_cdr_btn.shouldBe(Condition.exist);
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"2000<2000>");
-        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_To.getAlias(),0),"Voicemail Yeastar Test0 朗视信息科技");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_To.getAlias(),0),"Voicemail Yeastar Test0 朗视信息科技<0>");
         Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Status.getAlias(),0),"VOICEMAIL");
         Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Reason.getAlias(),0),"2000<2000> hung up");
         Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Source_Trunk.getAlias(),0),SPS);
@@ -87,6 +115,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.homePage().logout();
         auto.loginPage().login("0","Yeastar123");
         //todo 分机webclient页面检查留言
+        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
+        String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
+        String me_time = TableUtils.getTableForHeader(getDriver(),"Time",0);
+        Assert.assertEquals(me_name,"2000");
     }
 
     @Epic("P_Series")
@@ -103,8 +135,18 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        //todo 特征码*2是否要重置设置
-        step("2:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        //todo 特征码*2要重置设置
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -117,7 +159,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         sleep(3000);
         pjsip.Pj_Hangup_All();
 
-        step("3:查看pbxlog.0，检查vm-received.gsm、vm-from-phonenumber、vm-duration.slin提示音字段");
+        step("查看pbxlog.0，检查vm-received.gsm、vm-from-phonenumber、vm-duration.slin提示音字段");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-received.slin"),"[Assert,cli确认提示音]");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-from-phonenumber.slin"),"[Assert,cli确认提示音]");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-duration.slin"),"[Assert,cli确认提示音]");
@@ -134,8 +176,25 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForAvailable(){
-        //todo 设置状态为available
-        step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("设置分机0状态为Available ");
+        auto.extensionPage().selectExtensionPresence("0","Available").clickApply();
+
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -146,7 +205,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
-        step("2:cli确认播放提示音为test2.wav");
+        step("cli确认播放提示音为test2.wav");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test2.wav"),"[Assert,cli确认提示音]");
     }
 
@@ -160,8 +219,25 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForAway(){
-        //todo 上传提示音
-        step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("设置分机0状态为Away ");
+        auto.extensionPage().selectExtensionPresence("0","Away").clickApply();
+
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -172,7 +248,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
-        step("2:cli确认播放提示音为test3.wav");
+        step("cli确认播放提示音为test3.wav");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test3.wav"),"[Assert,cli确认提示音]");
     }
 
@@ -186,8 +262,25 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForBusinessTrip(){
-        //todo 上传提示音
-        step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("设置分机0状态为Business Trip ");
+        auto.extensionPage().selectExtensionPresence("0","Business Trip").clickApply();
+
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -198,7 +291,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
-        step("2:cli确认播放提示音为test4.wav");
+        step("cli确认播放提示音为test4.wav");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test4.wav"),"[Assert,cli确认提示音]");
     }
 
@@ -212,8 +305,24 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForDnd(){
-        //todo 上传提示音
-        step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("设置分机0状态为Do Not Disturb");
+        auto.extensionPage().selectExtensionPresence("0","Do Not Disturb").clickApply();
+
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -224,7 +333,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
-        step("2:cli确认播放提示音为test5.wav");
+        step("cli确认播放提示音为test5.wav");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test5.wav"),"[Assert,cli确认提示音]");
     }
 
@@ -238,8 +347,25 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForLunch(){
-        //todo 上传提示音
-        step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("设置分机0状态为Lunch Break");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().selectExtensionPresence("0","Lunch Break").clickApply();
+
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -250,7 +376,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
-        step("2:cli确认播放提示音为test6.wav");
+        step("cli确认播放提示音为test6.wav");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test6.wav"),"[Assert,cli确认提示音]");
     }
 
@@ -264,8 +390,25 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForOffWork(){
-        //todo 上传提示音
-        step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("设置分机0状态为Off Work");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().selectExtensionPresence("0","Off Work").clickApply();
+
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -276,7 +419,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
-        step("2:cli确认播放提示音为test1.wav");
+        step("cli确认播放提示音为test1.wav");
         softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test1.wav"),"[Assert,cli确认提示音]");
     }
 
@@ -284,15 +427,53 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:设置状态为Off Work" +
-            "2:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
-            "3:cli确认播放提示音为test1.wav")
+            "修改New Voicemail Notification设置为send email notification with attachment，afternotification设置为delete voicemail")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testNotification1(){
-        step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("修改New Voicemail Notification设置为send email notification with attachment，afternotification设置为delete voicemail");
+        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.SEND_EMAIL_NOTIFICATIONS_WITH_ATTACHMENT.getAlias())
+                .selectCombobox(IExtensionPageElement.AFTER_NOTIFICATION.DELETE_VOICEMAIL.getAlias()).clickSaveAndApply();
+
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         ext2000CallVoicemail();
+
+        assertStep("cdr判断");
+        auto.cdrPage().ele_download_cdr_btn.shouldBe(Condition.exist);
+        ys_waitingTime(WaitUntils.SHORT_WAIT);
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"2000<2000>");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_To.getAlias(),0),"Voicemail Yeastar Test0 朗视信息科技");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Status.getAlias(),0),"VOICEMAIL");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Reason.getAlias(),0),"2000<2000> hung up");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Source_Trunk.getAlias(),0),SPS);
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Communication_Type.getAlias(),0),communication_inbound);
+
+        //todo 检查分机页面
+        assertStep("分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
+        auto.homePage().logout();
+        auto.loginPage().login("0","Yeastar123");
+        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
+        String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
+        String me_time = TableUtils.getTableForHeader(getDriver(),"Time",0);
+        Assert.assertEquals(me_name,"2000");
     }
 
     @Epic("P_Series")
@@ -305,9 +486,47 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testNotification2(){
-        step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("修改New Voicemail Notification设置为send email notification without attachment，afternotification设置为mark as read");
+        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.SEND_EMAIL_NOTIFICATIONS_WITHOUT_ATTACHMENT.getAlias())
+                .selectCombobox(IExtensionPageElement.AFTER_NOTIFICATION.MARK_AS_READ.getAlias()).clickSaveAndApply();
+
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         ext2000CallVoicemail();
+
+        assertStep("cdr判断");
+        auto.cdrPage().ele_download_cdr_btn.shouldBe(Condition.exist);
+        ys_waitingTime(WaitUntils.SHORT_WAIT);
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"2000<2000>");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_To.getAlias(),0),"Voicemail Yeastar Test0 朗视信息科技");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Status.getAlias(),0),"VOICEMAIL");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Reason.getAlias(),0),"2000<2000> hung up");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Source_Trunk.getAlias(),0),SPS);
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Communication_Type.getAlias(),0),communication_inbound);
+
+        assertStep("分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
+        auto.homePage().logout();
+        auto.loginPage().login("0","Yeastar123");
+        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
+        String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
+        String me_time = TableUtils.getTableForHeader(getDriver(),"Time",0);
+        Assert.assertEquals(me_name,"2000");
     }
 
     @Epic("P_Series")
@@ -320,9 +539,46 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testNotification3(){
-        step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("voicemail 环境准备" +
+                "修改分机0voicemail页面，启用voicemail，" +
+                "启用voicemail pin Authentication，" +
+                "pin码设置为1234，" +
+                "New Voicemail Notification设置为send email notification with attachment，" +
+                "afternotification设置为No action，" +
+                "勾选play date  and time/caller id/durations，" +
+                "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("修改New Voicemail Notification设置为do not send email notification");
+        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.DO_NOT_SEND_EMAIL_NOTIFICATIONS.getAlias()).clickSaveAndApply();
+
+        step(":清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         ext2000CallVoicemail();
+
+        assertStep("cdr判断");
+        auto.cdrPage().ele_download_cdr_btn.shouldBe(Condition.exist);
+        ys_waitingTime(WaitUntils.SHORT_WAIT);
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"2000<2000>");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_To.getAlias(),0),"Voicemail Yeastar Test0 朗视信息科技");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Status.getAlias(),0),"VOICEMAIL");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Reason.getAlias(),0),"2000<2000> hung up");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Source_Trunk.getAlias(),0),SPS);
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Communication_Type.getAlias(),0),communication_inbound);
+
+        assertStep("分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
+        auto.homePage().logout();
+        auto.loginPage().login("0","Yeastar123");
+        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
+        String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
+        String me_time = TableUtils.getTableForHeader(getDriver(),"Time",0);
+        Assert.assertEquals(me_name,"2000");
     }
 
     @Epic("P_Series")
@@ -336,12 +592,76 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailDisable(){
 
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("voicemail 环境准备" +
+        "修改分机0voicemail页面，启用voicemail，" +
+        "启用voicemail pin Authentication，" +
+        "pin码设置为1234，" +
+        "New Voicemail Notification设置为send email notification with attachment，" +
+        "afternotification设置为No action，" +
+        "勾选play date  and time/caller id/durations，" +
+        "voicemail greeting 默认（default为follow system，available等presence状态保持默认none）");
+        preparationSteps();
+
+        step("分机0禁用voicemail，保存并应用");
+        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,false).clickSaveAndApply();
+
         step("1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         ext2000CallVoicemail();
 
     }
 
+    /**
+     * voicemail 环境准备
+     * 修改分机0voicemail页面，启用voicemail，
+     * 启用voicemail pin Authentication，
+     * pin码设置为1234，
+     * New Voicemail Notification设置为send email notification with attachment，
+     * afternotification设置为No action，
+     * 勾选play date  and time/caller id/durations，
+     * voicemail greeting 默认（default为follow system，available等presence状态保持默认none），
+     * 保存并应用
+     */
+    public void preparationSteps() {
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        //删除所有分机
+        auto.extensionPage().deleAllExtension();
+        //创建分机0
+        auto.extensionPage().deleAllExtension()
+                .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD)
+                .clickSaveAndApply();
+
+        //编辑分机
+        TableUtils.clickTableEidtBtn(getDriver(),"Extension Number","0");
+        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
+                .selectCombobox(IExtensionPageElement.VOICEMAIL_PIN_AUTH.ENABLED.getAlias())
+                .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.DO_NOT_SEND_EMAIL_NOTIFICATIONS.getAlias())
+                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_date_time_checkbox,true)
+                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_caller_id_checkbox,true)
+                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_message_duration_checkbox,true)
+                .selectCombobox(IExtensionPageElement.DEFAULT_GREETING.FOLLOW_SYSTEM.getAlias())
+                .ele_extension_voicemail_access_pin.setValue("1234");
+        auto.extensionPage().clickSaveAndApply();
+
+//        step("删除spstrunk -> 创建sps trunk");
+//        sleep(3000);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
+//        if(TableUtils.clickTableDeletBtn(getDriver(),"Name",SPS)){
+//            auto.trunkPage().OKAlertBtn.shouldBe(Condition.visible).click();
+//        }
+//        auto.trunkPage().createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
+    }
+
+    /**
+     * 外线2000通过sps呼入
+     */
     public void ext2000CallVoicemail(){
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -351,5 +671,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
+
+
     }
 }

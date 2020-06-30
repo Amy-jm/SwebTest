@@ -1,18 +1,26 @@
 package com.yeastar.page.pseries;
 
+import co.boorse.seleniumtable.SeleniumTable;
+import co.boorse.seleniumtable.SeleniumTableCell;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.thoughtworks.selenium.Selenium;
+import com.yeastar.swebtest.testcase.smokecase.pbxcase.Extension;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import java.util.List;
+
 import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.yeastar.untils.TableUtils.strTableXPATH;
 
 /**
  * @program: P Series
@@ -25,6 +33,32 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
 
 
     /**
+     * @param extensionName
+     * 点击表格，选择分机状态 Available\Away\Business Trip\Do Not Disturb\Lunch Break\Off Work
+     * @param status
+     */
+    public ExtensionPage selectExtensionPresence(String extensionName, String status){
+        WebElement tableElement = getWebDriver().findElement(By.xpath(strTableXPATH));
+        SeleniumTable table = SeleniumTable.getInstance(tableElement);
+        if (table.hasColumn("Extension Number")) {
+            List<SeleniumTableCell> header1Cells = table.getColumn("Extension Number");
+            for(int row=0; row<header1Cells.size(); row++){
+                if(header1Cells.get(row).getText().equals(extensionName)){
+                    log.debug("[selectExtensionPresence :find table data,row=] "+row);
+                    $(By.xpath("//table/tbody/tr["+(row+1)+"]//div[contains(@class,'editable-cell-value-wrap')]")).click();
+                    sleep(500);
+                    $(By.xpath("//table/tbody/tr["+(row+1)+"]//div[contains(@class,'ant-form-item')]")).click();
+                    sleep(500);
+                    $(By.xpath(String.format(SELECT_COMM_XPATH,status))).click();
+                    $(By.xpath("//table/tbody/tr["+(row+1)+"]//div[contains(@class,'ant-form-item')]")).click();
+                    searchIpt.click();
+                }
+            }
+        }
+        return this;
+    }
+
+    /**
      * 密码强度不够提示框，选择OK
      * @return
      */
@@ -32,13 +66,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_registration_password_not_strong_alert.shouldBe(Condition.exist);
         OKAlertBtn.shouldBe(Condition.enabled).click();
         return this;
-    }
-
-
-    public void isCheckBox(Boolean isSelected,SelenideElement elementCheckBox){
-        if(isSelected && !executeJs("document.getElementById('"+elementCheckBox.getAttribute("id")+"').checked").equals("false")){
-            Selenide.actions().click(elementCheckBox).perform();
-        }
     }
 
     /**
@@ -88,8 +115,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
-        saveBtn.click();
-        clickApply();
         return this;
     }
 
@@ -130,7 +155,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage configPresence() {
         switchToTab(TABLE_MENU.PRESENCE.getAlias());
-        isCheckBox(true, ele_extension_presence_forward_enb_in_always_forward_checkBox);
+        isCheckBoxForSwitch( ele_extension_presence_forward_enb_in_always_forward_checkBox,true);
         return this;
     }
 
@@ -180,6 +205,9 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         return this;
     }
 
+
+
+
     /**
      * 选择Transport
      * @param transport
@@ -190,6 +218,22 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         return this;
     }
 
+    public ExtensionPage selectCombobox(String arg){
+        selectComm(arg);
+        return this;
+    }
+
+    public ExtensionPage isCheckBoxForSwitch(SelenideElement elementCheckBox,Boolean isChecked){
+
+        elementCheckBox.shouldBe(Condition.visible);
+        if(!isChecked && elementCheckBox.getAttribute("aria-checked").equals("true")){
+            Selenide.actions().click(elementCheckBox).perform();
+        }else if(isChecked && elementCheckBox.getAttribute("aria-checked").equals("false")){
+            Selenide.actions().click(elementCheckBox).perform();
+        }
+        return this;
+    }
+
     /**
      * checkbox 设置
      * @param element
@@ -197,6 +241,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @return
      */
     public ExtensionPage isCheckbox(SelenideElement element,boolean isChecked){
+
         if(element.getAttribute("checked")==null){
             if(isChecked){
                 new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();

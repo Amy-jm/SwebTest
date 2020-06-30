@@ -86,20 +86,22 @@ public class TableUtils {
      * @param strHeader
      * @param tagName
      */
-    public static void clickTableEidtBtn(WebDriver driver, String strHeader, String tagName){
+    public static boolean clickTableEidtBtn(WebDriver driver, String strHeader, String tagName){
+        sleep(2000);
         WebElement tableElement = driver.findElement(By.xpath(strTableXPATH));
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
-
+        System.out.println("table has col"+ strHeader+ table.hasColumn(strHeader));
         if (table.hasColumn(strHeader)) {
             List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
             for(int row=0; row<header1Cells.size(); row++){
-                if(header1Cells.get(row).getText().endsWith(tagName)){
+                if(header1Cells.get(row).getText().equals(tagName)){
                     log.debug("[clickTableEidtBtn:find table data,row=] "+row);
                     $(By.xpath("//table/tbody/tr["+(row+1)+"]//i[contains(@class,'edit')]")).click();
+                    return true;
                 }
             }
         }
-        return ;
+        return false ;
     }
 
     /**
@@ -107,21 +109,25 @@ public class TableUtils {
      * @param driver
      * @param strHeader
      * @param tagName
+     * @return
      */
-    public static void clickTableDeletBtn(WebDriver driver, String strHeader, String tagName){
+    public static boolean clickTableDeletBtn(WebDriver driver, String strHeader, String tagName){
         sleep(2000);//todo 判断表格显现
+
         WebElement tableElement = driver.findElement(By.xpath(strTableXPATH));
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
+
         if (table.hasColumn(strHeader)) {
             List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
             for(int row=0; row<header1Cells.size(); row++){
-                if(header1Cells.get(row).getText().endsWith(tagName)){
+                if(header1Cells.get(row).getText().equals(tagName)){
                     log.debug("[clickTableDeletBtn:find table data,row=] "+row);
                     $(By.xpath("//table/tbody/tr["+(row+1)+"]//i[contains(@class,'delete')]")).click();
+                    return true;
                 }
             }
         }
-        return ;
+        return false;
     }
     /**
      * 【自定义表格对象】通过行列 获取表格数据
