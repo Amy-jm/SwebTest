@@ -39,6 +39,7 @@ public interface IExtensionPageElement {
     SelenideElement ele_extension_user_number = $(By.id("extension_user_number"));
     SelenideElement ele_extension_user_reg_name = $(By.id("extension_user_reg_name"));
     SelenideElement ele_extension_user_reg_password = $(By.id("extension_user_reg_password"));
+//    SelenideElement ele_extension_user_first_name = $(By.id("extension_user_first_name"));
 
     //密码强度不够弹框
      SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\"Registration Password is not strong, continue to save\")]"));
@@ -82,6 +83,10 @@ public interface IExtensionPageElement {
     ElementsCollection ele_list_netmask_input = $$(By.id("netmask"));
     //--Add User Agent btn
     SelenideElement ele_add_ip_btn =$(By.xpath("//span[contains(text(),\"Add IP\")]"));
+
+    /** Features **/
+    SelenideElement ele_extension_feature_enb_email_pwd_chg = $(By.id("extension_feature_enb_email_pwd_chg"));
+    SelenideElement ele_extension_feature_enb_email_miss_call = $(By.id("extension_feature_enb_email_miss_call"));
 
    /** 下拉列表 Max Outbound Call Duration(s) **/
    enum MAX_OUTBOUND_CALL_DURATIONS{

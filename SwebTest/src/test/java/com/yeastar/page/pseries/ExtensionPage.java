@@ -66,6 +66,28 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @param userPassword 用户密码
      * @return 返回分机页面实例，ExtensionPage
      */
+    @Step("extensionNumber:{0},userPassword:{1},email:{3}")
+    public ExtensionPage createSipExtensionWithEmail(String extensionNumber,String userPassword,String strEmail) {
+        addBtn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_extension_user_first_name.setValue(extensionNumber);
+        inputComm("Email Address", strEmail);//todo 24版本ID新增后替换
+        ele_extension_user_user_password.setValue(userPassword);
+        ele_extension_user_number.setValue(extensionNumber);
+        ele_extension_user_caller_id.setValue(extensionNumber);
+        ele_extension_user_reg_name.setValue(extensionNumber);
+        ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
+//        saveBtn.click();
+//        clickApply();
+        return this;
+    }
+
+    /**
+     * 创建SIP extensionNumber分机，密码为 userPassword，
+     * @param extensionNumber 分机号，同时默认修改 FirstName,ExtensionNumber,Caller ID(Internal)字段为分机号
+     * @param userPassword 用户密码
+     * @return 返回分机页面实例，ExtensionPage
+     */
 
     /**
      * 创建SIP 分机

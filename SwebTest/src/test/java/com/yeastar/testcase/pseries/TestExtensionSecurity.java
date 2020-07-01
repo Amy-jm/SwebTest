@@ -127,7 +127,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Description("启用disable outbound calls outside business hours功能，则下班时间不能呼出：1:login PBX->2:创建分机号1001,启用disable outbound calls outside business hours->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
-    @Issue("")
+    @Issue(" bug 23版本 设置不生效，待24版本验证")
     @Test(groups = {"P0","testEnableDisableOutCallBusinessHours","Extension","Regression","PSeries","Security"})
     public void testEnableDisableOutCallBusinessHours() throws IOException, JSchException {
         //新增时间条件
