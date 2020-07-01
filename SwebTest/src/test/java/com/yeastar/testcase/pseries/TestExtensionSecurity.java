@@ -257,7 +257,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Story("Security")
     @Description("验证 Enable User Agent Registration Authorization：1:login PBX->2:创建分机号1001,启用Allow Register Remotely->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("")
+    @TmsLinks(value = {@TmsLink(value = "ID1001602"), @TmsLink(value = "ID1001603")})
     @Issue("")
     @Test(groups = {"P0","testEnableUserAgentRegistrationAuthorization","Extension","Regression","PSeries","Security"})
     public void testEnableUserAgentRegistrationAuthorization() throws IOException, JSchException {
@@ -294,7 +294,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Story("Security")
     @Description("验证 SIP Registration IP Restriction：1:login PBX->2:创建分机号1001,启用Allow Register Remotely->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("")
+    @TmsLinks(value = {@TmsLink(value = "ID1001604"), @TmsLink(value = "ID1001605"), @TmsLink(value = "1001606")})
     @Issue("")
     @Test(groups = {"P0","testEnableUserAgentRegistrationAuthorization","Extension","Regression","PSeries","Security","Security"})
     public void testSIPRegistrationIPRestriction() throws IOException, JSchException {
@@ -338,7 +338,7 @@ public class TestExtensionSecurity extends TestCaseBase {
                  "【验证内部分机互打】" +
                  "1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("")
+    @TmsLink("ID1001609")
     @Issue("")
     @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForInternalExtension() throws IOException, JSchException {
@@ -380,9 +380,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
-        //todo bug 实际结果为 "00:01:00"  20200628
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
-
         softAssert.assertAll();
     }
 
@@ -395,7 +393,7 @@ public class TestExtensionSecurity extends TestCaseBase {
             "【验证SPS Trunk 呼出】，0 呼叫 2000" +
             "1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("")
+    @TmsLink("ID1001610")
     @Issue("")
     @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunk() throws IOException, JSchException {
@@ -436,7 +434,6 @@ public class TestExtensionSecurity extends TestCaseBase {
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
-
         softAssert.assertAll();
     }
 
@@ -446,10 +443,10 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Story("BasicDisplayAndRegistration")
     @Description("a.分机 0，Max Call Duration -> 设置60s," +
             "b.全局  preference，Max Call Duration -> 设置30s" +
-            "【验证SPS Trunk 呼入】，2000 呼叫 0" +
+            "【验证SPS Trunk 呼入】，2000 呼叫 0-->通话时长为30S" +
             "1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("")
+    @TmsLink("ID1001611")
     @Issue("")
     @Test(groups = {"P0","TestExtensionSecurity","testMaxCallDurationForSPSTrunkTo0","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunkTo0() throws IOException, JSchException {
@@ -472,30 +469,28 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.preferencesPage().setElementValue(ele_pbx_settings_preferences_max_call_duration_select,"30")
                 .clickSaveAndApply();
 
-
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"0",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"0",DEVICE_ASSIST_1,false);
         ys_waitingTime(70000);
         pjsip.Pj_Hangup_All();
 
-        assertStep("[CDR]5.第一条记录：Reason = Exceeded the max call duration(s) ；Call Duration(s)=00:00:30");
+        assertStep("[CDR]5.第一条记录：Reason = Exceeded the max call duration(s) ; Call Duration(s)=00:00:30");
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
-        //todo bug 00:01:00
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
         softAssert.assertAll();
     }
 
 
-    @Test
+//    @Test
     public void testSelectTime() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
