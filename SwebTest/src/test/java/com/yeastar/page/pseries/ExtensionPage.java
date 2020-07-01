@@ -279,6 +279,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      */
     @Override
     public ExtensionPage setElementValue(SelenideElement element ,String strValue){
+        element.shouldBe(Condition.visible).clear();
         element.shouldBe(Condition.visible).setValue(strValue);
         return this;
     }
