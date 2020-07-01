@@ -19,7 +19,7 @@ import java.io.IOException;
  * @author: huangjx@yeastar.com
  * @create: 2020/06/16
  */
-@Listeners({ExecutionListener.class,AllureReporterListener.class, TestNGListener.class})
+@Listeners({ExecutionListener.class,AllureReporterListener.class, TestNGListenerP.class})
 public class TestExtensionAdvanced extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
