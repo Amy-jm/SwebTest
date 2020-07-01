@@ -53,7 +53,11 @@ public class ExecutionListener  extends TestListenerAdapter implements IInvokedM
                 .tag("result", status)
                 .addField("duration", (iTestResult.getEndMillis() - iTestResult.getStartMillis()))
                 .build();
-        ResultSenderUtils.send(point);
+        try {
+            ResultSenderUtils.send(point);
+        }catch(org.influxdb.InfluxDBIOException EX){
+            log.error("[InfluxDB Server connection exception]");
+        }
     }
 
     private void sendTestClassStatus(ITestContext iTestContext) {
@@ -62,7 +66,11 @@ public class ExecutionListener  extends TestListenerAdapter implements IInvokedM
                 .tag("name", iTestContext.getAllTestMethods()[0].getTestClass().getName())
                 .addField("duration", (iTestContext.getEndDate().getTime() - iTestContext.getStartDate().getTime()))
                 .build();
-        ResultSenderUtils.send(point);
+        try {
+            ResultSenderUtils.send(point);
+        }catch(org.influxdb.InfluxDBIOException EX){
+            log.error("[InfluxDB Server connection exception]");
+        }
     }
 
     @Override
