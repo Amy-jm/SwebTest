@@ -22,6 +22,7 @@ public class HomePage {
      **/
 //    public SelenideElement left_menu_first_level_extension_trunk = $(By.xpath("//span[contains(text(),'Extension and Trunk')]"));//m_extension_trunk
     public SelenideElement left_menu_first_level_extension_trunk = $(By.id("m_extension_trunk"));//m_extension_trunk
+    public SelenideElement left_menu_first_level_extension_trunk_states = $(By.xpath("//span[@id=\"m_extension_trunk\"]/.."));
 
 //    public SelenideElement extension_trunk_tree_extensions = $(By.xpath(String.format(LI_XPATH,"Extension")));//m_extensions
     public SelenideElement extension_trunk_tree_extensions = $(By.id("m_extensions"));//m_extensions
@@ -33,6 +34,7 @@ public class HomePage {
      * 左侧菜单 -- Call Control
      **/
     public SelenideElement left_menu_first_level_call_control = $(By.id("m_call_control"));
+    public SelenideElement left_menu_first_level_call_control_states = $(By.xpath("//span[@id=\"m_call_control\"]/.."));
     public SelenideElement call_control_tree_inbound_routes = $(By.id("m_inbound_routes"));
     public SelenideElement call_control_tree_outbound_routes = $(By.id("m_outbound_routes"));
     public SelenideElement call_control_tree_office_time_and_holidays = $(By.id("m_office_time_and_holidays"));
@@ -41,7 +43,8 @@ public class HomePage {
     /**
      * 左侧菜单 -- Call Feature
      **/
-    public SelenideElement left_menu_first_level_call_feature = $(By.xpath("//span[contains(text(),'Call Feature')]"));
+    public SelenideElement left_menu_first_level_call_feature = $(By.id("m_call_features"));
+    public SelenideElement left_menu_first_level_call_feature_states = $(By.xpath("//span[@id=\"m_call_features\"]/.."));
     public SelenideElement call_feature_tree_voicemail = $(By.linkText("Voicemail"));
     public SelenideElement call_feature_tree_feature_codes = $(By.linkText("Feature Codes"));
     public SelenideElement call_feature_tree_ivr = $(By.linkText("IVR"));
@@ -55,7 +58,8 @@ public class HomePage {
     /**
      * 左侧菜单 -- PBX Settings
      **/
-    public SelenideElement left_menu_first_level_pbx_settings = $(By.xpath("//span[contains(text(),'PBX Settings')]"));
+    public SelenideElement left_menu_first_level_pbx_settings = $(By.id("m_pbx_settings"));
+    public SelenideElement left_menu_first_level_pbx_settings_states = $(By.xpath("//span[@id=\"m_pbx_settings\"]/.."));
     public SelenideElement pbx_settings_tree_preferences = $(By.linkText("Preferences"));
     public SelenideElement pbx_settings_tree_voice_prompt = $(By.linkText("Voice Prompt"));
     public SelenideElement pbx_settings_tree_sip_settings = $(By.linkText("SIP Settings"));
@@ -64,7 +68,8 @@ public class HomePage {
     /**
      * 左侧菜单 -- System
      **/
-    public SelenideElement left_menu_first_level_system = $(By.xpath("//span[contains(text(),'System')]"));
+    public SelenideElement left_menu_first_level_system = $(By.id("m_system"));
+    public SelenideElement left_menu_first_level_system_states = $(By.xpath("//span[@id=\"m_system\"]/.."));
     public SelenideElement system_tree_network = $(By.linkText("Network"));
     public SelenideElement system_tree_date_and_time = $(By.linkText("Date and Time"));
     public SelenideElement system_tree_email = $(By.linkText("Email"));
@@ -77,7 +82,8 @@ public class HomePage {
     /**
      * 左侧菜单 -- Security
      **/
-    public SelenideElement left_menu_first_level_security = $(By.xpath("//span[contains(text(),'Security')]"));
+    public SelenideElement left_menu_first_level_security = $(By.id("m_security"));
+    public SelenideElement left_menu_first_level_security_states = $(By.xpath("//span[@id=\"m_security\"]/.."));
     public SelenideElement security_tree_security_rules = $(By.linkText("Security Rules"));
     public SelenideElement security_tree_security_settings = $(By.linkText("Security Settings"));
 
@@ -85,7 +91,8 @@ public class HomePage {
     /**
      * 左侧菜单 -- Maintenance
      **/
-    public SelenideElement left_menu_first_level_maintenance = $(By.xpath("//span[contains(text(),'Maintenance')]"));
+    public SelenideElement left_menu_first_level_maintenance = $(By.id("m_maintenance"));
+    public SelenideElement left_menu_first_level_maintenance_states = $(By.xpath("//span[@id=\"m_maintenance\"]/.."));
     public SelenideElement maintenance_tree_upgrade = $(By.linkText("Upgrade"));
     public SelenideElement maintenance_tree_backup_and_restore = $(By.linkText("Backup And Restore"));
     public SelenideElement maintenance_tree_reboot = $(By.linkText("Reboot"));
@@ -98,6 +105,7 @@ public class HomePage {
      * 左侧菜单 -- CDR/Recording
      **/
     public SelenideElement left_menu_first_level_cdr_recording = $(By.id("m_cdr_recording"));
+    public SelenideElement left_menu_first_level_cdr_recording_states = $(By.xpath("//span[@id=\"m_cdr_recording\"]/.."));
     public SelenideElement cdr_recording_tree_cdr = $(By.id("m_cdr"));
     public SelenideElement cdr_recording_tree_recording = $(By.linkText("Recording"));
     public SelenideElement cdr_recording_tree_call_report = $(By.linkText("Call Report"));
@@ -151,26 +159,42 @@ public class HomePage {
         //左侧一级菜单
         switch (level_1) {
             case extension_trunk:
-                left_menu_first_level_extension_trunk.click();
-                break;
+                if (!left_menu_first_level_extension_trunk_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
+                    left_menu_first_level_extension_trunk.click();
+                }break;
             case call_control:
-                left_menu_first_level_call_control.click();
+                if (!left_menu_first_level_call_control_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
+                    log.debug("start click main menu");
+                    left_menu_first_level_call_control.click();
+                }
                 break;
             case call_feature:
-                left_menu_first_level_call_feature.click();
+                if (!left_menu_first_level_call_feature_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
+                    left_menu_first_level_call_feature.click();
+                }
                 break;
             case pbx_settings:
-                left_menu_first_level_pbx_settings.click();
-                break;
+                if (!left_menu_first_level_pbx_settings_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
+                    left_menu_first_level_pbx_settings.click();
+                }break;
+            case system:
+                if(!left_menu_first_level_system_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
+                    left_menu_first_level_system.click();
+                }break;
             case security:
-                left_menu_first_level_security.click();
+                if (!left_menu_first_level_security_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
+                    left_menu_first_level_security.click();
+                }
                 break;
             case maintenance:
-                left_menu_first_level_maintenance.click();
+                if (!left_menu_first_level_maintenance_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
+                    left_menu_first_level_maintenance.click();
+                }
                 break;
             case cdr_recording:
-                left_menu_first_level_cdr_recording.click();
-                break;
+                if(!left_menu_first_level_cdr_recording_states.getAttribute("aria-expanded").equalsIgnoreCase("true")){
+                    left_menu_first_level_cdr_recording.click();
+                }break;
         }
 
         //左侧二级菜单
@@ -305,6 +329,7 @@ public class HomePage {
         call_control,
         call_feature,
         pbx_settings,
+        system,
         security,
         maintenance,
         cdr_recording;
