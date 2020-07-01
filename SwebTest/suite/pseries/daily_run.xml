@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="GBK"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="P Series Daily Run" parallel="false" preserve-order="true">
+<suite name="P Series Daily Run" parallel="false">
     <listeners>
         <listener class-name="com.yeastar.untils.AllureReporterListener"/>
         <listener class-name="com.yeastar.untils.RetryListener"/>
         <listener class-name="com.yeastar.untils.TestNGListenerP"/>
         <listener class-name="com.yeastar.untils.ExecutionListener"/>
     </listeners>
-    <test name="pbxcore" preserve-order="true">
+    <test name="pbxcore">
         <classes>
             <class name="com.yeastar.testcase.pseries.TestExtensionSecurity"/>
-            <class name="com.yeastar.testcase.pseries.TestExtension"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionList"/>
+<!--            <class name="com.yeastar.testcase.pseries.TestExtension"/>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionList"/>-->
         </classes>
     </test>
 </suite>
