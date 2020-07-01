@@ -35,7 +35,7 @@ public class TestExtensionList extends TestCaseBase {
 
         step("2:创建分机号1000");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1000",EXTENSION_PASSWORD);
+        auto.extensionPage().deleAllExtension().createSipExtension("1000",EXTENSION_PASSWORD).clickSaveAndApply();
 
         assertStep("3:验证保存成功");
         Assert.assertTrue(execAsterisk(PJSIP_SHOW_AOR+"1000").contains("1000"));
@@ -66,7 +66,7 @@ public class TestExtensionList extends TestCaseBase {
 
         step("2:创建分机号1000,1001");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1000",EXTENSION_PASSWORD).createSipExtension("1001",EXTENSION_PASSWORD);
+        auto.extensionPage().deleAllExtension().createSipExtension("1000",EXTENSION_PASSWORD).createSipExtension("1001",EXTENSION_PASSWORD).clickSaveAndApply();
 
         assertStep("3:验证保存成功");
         Assert.assertTrue(execAsterisk(PJSIP_SHOW_AOR+"1000").contains("1000"));

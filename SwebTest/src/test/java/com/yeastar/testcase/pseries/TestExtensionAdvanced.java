@@ -41,7 +41,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,DTMF_MODE->RFC4733RFC2833");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").select_DTMF_Mode(IExtensionPageElement.DTMF_MODE.RFC4733RFC2833).saveBtn.click();
+                editFirstData().switchToTab("Advanced").select_DTMF_Mode(IExtensionPageElement.DTMF_MODE.RFC4733RFC2833).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果:dtmf_mode   : rfc4733");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("dtmf_mode                     : rfc4733"),"[Assert,dtmf mode]");
@@ -125,7 +125,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,SRTP->禁用");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_srtp_checkbox,false).saveBtn.click();
+                editFirstData().switchToTab("Advanced").isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_srtp_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果： media_encryption  : no;media_encryption_optimistic   : true");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("media_encryption              : no"));

@@ -31,7 +31,7 @@ public class TestExtension extends TestCaseBase {
 
         step("2:创建分机号1001");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD);
+        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).clickSaveAndApply();
 
         assertStep("3:验证保存成功");
         Assert.assertTrue(auto.extensionPage().isSaveSuccessAlertAppear());
