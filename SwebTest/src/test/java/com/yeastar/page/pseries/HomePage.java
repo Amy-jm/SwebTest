@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
 
 @Log4j2
-public class HomePage {
+public class HomePage extends BasePage{
 
     String LI_XPATH = "//li[@title=\"%s\"]";
     /**
@@ -148,7 +148,7 @@ public class HomePage {
     /**
      * 菜单选择
      */
-    public void intoPage(Menu_Level_1 level_1, Menu_Level_2 level_2) {
+    public HomePage intoPage(Menu_Level_1 level_1, Menu_Level_2 level_2) {
         sleep(WaitUntils.SHORT_WAIT*2);
         //close alert
         // todo need to delete sleep
@@ -317,7 +317,7 @@ public class HomePage {
 //            system_alert_message.click();
 //            sleep(2000);
 //        }
-
+        return this;
     }
 
 
