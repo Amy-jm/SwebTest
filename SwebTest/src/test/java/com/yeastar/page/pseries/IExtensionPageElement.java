@@ -87,6 +87,10 @@ public interface IExtensionPageElement {
     /** Features **/
     SelenideElement ele_extension_feature_enb_email_pwd_chg = $(By.id("extension_feature_enb_email_pwd_chg"));
     SelenideElement ele_extension_feature_enb_email_miss_call = $(By.id("extension_feature_enb_email_miss_call"));
+    //Add Call Handing Rule--Caller ID
+    SelenideElement ele_call_blocking_list_caller_id = $(By.id("call_blocking_list_caller_id"));
+    //Add Call Handing Rule--Action
+    SelenideElement ele_call_blocking_list_action_dest  = $(By.id("call_blocking_list_action_dest"));
 
    /** 下拉列表 Max Outbound Call Duration(s) **/
    enum MAX_OUTBOUND_CALL_DURATIONS{

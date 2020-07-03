@@ -3,11 +3,17 @@ package com.yeastar.page.pseries;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+
+import javax.lang.model.util.Elements;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -322,6 +328,46 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     public ExtensionPage setElementValue(SelenideElement element ,String strValue){
         element.shouldBe(Condition.visible).clear();
         element.shouldBe(Condition.visible).setValue(strValue);
+        return this;
+    }
+
+    /**
+     * 点击最上层的保存按钮
+     * @return
+     */
+    public ExtensionPage clickSaveOfPOP(){
+        List<WebElement> elements = getWebDriver().findElements(By.xpath("//button/span[contains(text(),'Save')]/.."));
+        log.debug("[elements size] {}",elements.size()," number");
+        elements.get(elements.size()-1).click();
+        return this;
+    }
+
+    public ExtensionPage addCallHandingRule(String strCallerID,String strAction,String strActionKey_1,String strActionKey_2){
+        addBtn.shouldBe(Condition.visible).click();
+        ele_call_blocking_list_caller_id.shouldBe(Condition.visible).setValue(strCallerID);
+        sleep(WaitUntils.RETRY_WAIT);
+        actions().sendKeys(Keys.ENTER).perform();
+        sleep(WaitUntils.RETRY_WAIT);
+        ele_call_blocking_list_action_dest.click();
+        sleep(WaitUntils.RETRY_WAIT);
+        actions().sendKeys(strAction).perform();
+        actions().sendKeys(Keys.ENTER).perform();
+        sleep(WaitUntils.RETRY_WAIT);
+        //******todo  动态弹出的 input无法输入
+        if(strActionKey_1 != ""){
+            List<WebElement> elements_input = getWebDriver().findElements(By.xpath("//input"));
+            log.debug("[elements_input size] {}",elements_input.size()," number");
+            elements_input.get(elements_input.size()-1).sendKeys(strActionKey_1);
+            actions().sendKeys(Keys.ENTER).perform();
+            if(strActionKey_2 != ""){
+                List<WebElement> elements_last_input = getWebDriver().findElements(By.xpath("//input"));
+                log.debug("[elements_last_input size] {}",elements_last_input.size()," number");
+                elements_last_input.get(elements_last_input.size()-1).sendKeys(strActionKey_1);
+                actions().sendKeys(Keys.ENTER).perform();
+            }
+        }
+        //******
+        clickSaveOfPOP();
         return this;
     }
 
