@@ -161,10 +161,9 @@ public class TestExtensionFeature extends TestCaseBase {
     @Story("Feature")
     @Description("[验证]call backing 功能" +
             "1:login PBX" +
-            "2:创建分机号1001(带邮箱yeastarautotest@163.com)"+
-            "3.启用Send email notification when the User Password is changed 功能 ->正常接收到邮件" +
-            "4.禁用Send email notification when the User Password is changed 功能 ->无法接收到邮件"+
-            "[备] 用例失败，1.请先确认 邮件服务器是否正常;  2.DNS设置->192.168.1.1")
+            "2:创建分机号1001，编辑call blocking"+
+            "3.2000 呼叫 1001 ,1001不响铃，IVR6200 响铃" +
+            "4.2001 呼叫 1001,1001正常响铃")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
@@ -174,12 +173,12 @@ public class TestExtensionFeature extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001,启用disable outbound call");
+        step("2:创建分机号1001，编辑call blocking");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).editFirstData().
                             switchToTab("Features").addCallHandingRule("2000","IVR","","").clickSaveAndApply();
 
-        assertStep("3:[PJSIP注册]] 1002 呼叫 1001");
+        assertStep("3:[PJSIP注册]] ，2000 呼叫 1001 ");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -193,18 +192,18 @@ public class TestExtensionFeature extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
 
-        assertStep("5[CDR]验证，第二条记录status为 NO ANSWER, Call To为 \"1001<1001>\"");
+        assertStep("5[CDR]IVR6200 响铃");
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"2000<2000>");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",0),"IVR 6200<6200>");
 
-
+        assertStep("3:[PJSIP注册]] ，2001 呼叫 1001 ");
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"1001",DEVICE_ASSIST_1,false);
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
-
+        assertStep("5[CDR]1001<1001> 响铃");
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"2001<2001>");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",0),"1001<1001>");
