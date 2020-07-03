@@ -56,7 +56,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_reg_name.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
         saveBtn.click();
-        clickApply();
+//        clickApply();
         return this;
     }
 
@@ -77,7 +77,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_caller_id.setValue(extensionNumber);
         ele_extension_user_reg_name.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
-//        saveBtn.click();
+        saveBtn.click();
 //        clickApply();
         return this;
     }
@@ -188,6 +188,29 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_editImageForTableFirstTr.shouldBe(Condition.enabled).click();
         return this;
     }
+
+    /**
+     * 分机编辑
+     * extensionNumber 分机号
+     * @return
+     */
+    public ExtensionPage editDataByEditImage(String extensionNumber){
+        $(By.xpath(String.format(EDIT_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH
+        ,extensionNumber))).click();
+        return this;
+    }
+
+    /**
+     * 分机删除
+     * extensionNumber 分机号
+     * @return
+     */
+    public ExtensionPage deleDataByDeleImage(String extensionNumber){
+        $(By.xpath(String.format(EDIT_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH
+                ,extensionNumber))).click();
+        return this;
+    }
+
 
     /**
      * 选择DTMF_MODE

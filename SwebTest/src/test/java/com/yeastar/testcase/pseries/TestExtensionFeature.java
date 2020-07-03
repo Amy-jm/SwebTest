@@ -93,17 +93,16 @@ public class TestExtensionFeature extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
         auto.extensionPage().deleAllExtension().createSipExtension("1002",EXTENSION_PASSWORD).createSipExtensionWithEmail("1001",EXTENSION_PASSWORD,"yeastarautotest@163.com").
-               switchToTab("Features").setCheckbox(ele_extension_feature_enb_email_miss_call,true).clickSaveAndApply();
+               editDataByEditImage("1001").switchToTab("Features").setCheckbox(ele_extension_feature_enb_email_miss_call,true).clickSaveAndApply();
 
         int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
-        log.debug("[邮箱数量]"+emailUnreadCount_before);
+        step("3:【验证邮箱服务器是否能正常】通过修改分机1001密码，验证是否能收到邮件");
         auto.extensionPage().editFirstData().setElementValue(ele_extension_user_user_password,"NewYeastar202").clickSaveAndApply();
         sleep(30000);//等待接收邮件
         int emailUnreadCount_after = MailUtils.getEmailUnreadMessageCountFrom163();
-        log.debug("[邮箱数量] "+emailUnreadCount_before+"-->>[验证邮箱功能，数量+1] "+emailUnreadCount_after);
 
-        softAssert.assertEquals(emailUnreadCount_before+1,emailUnreadCount_after,"功能开启，邮件正常接收");
-        auto.extensionPage().editFirstData().switchToTab("Features").setCheckbox(ele_extension_feature_enb_email_miss_call,true).clickSaveAndApply();
+        log.debug("3.[邮箱服务器功能验证][测试前邮箱数量] "+emailUnreadCount_before+"-->>[验证邮箱功能，数量+1] "+emailUnreadCount_after);
+        softAssert.assertEquals(emailUnreadCount_before+1,emailUnreadCount_after,"邮箱服务器正常，邮件正常接收");
 
 
         assertStep("3:[PJSIP注册]] 1002 呼叫 1001");
@@ -114,22 +113,44 @@ public class TestExtensionFeature extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
 
         pjsip.Pj_Make_Call_No_Answer(1002,"1001",DEVICE_IP_LAN,false);
-        long startTime=System.currentTimeMillis();
         sleep(40*1000);//等待自动挂断
         pjsip.Pj_Hangup_All();
-        log.debug("[持续等待时间]{}",(System.currentTimeMillis()-startTime)/1000,"秒");
-        assertStep("[CDR] ");
+
+        assertStep("5[CDR]验证，第二条记录status为 NO ANSWER, Call To为 \"1001<1001>\"");
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         sleep(WaitUntils.SHORT_WAIT);//等待自动挂断
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Status",1),"NO ANSWER");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",1),"1001<1001>");
-//        ys_waitingTime(WaitUntils.SHORT_WAIT*10);//等待接收邮件
-//        int emailUnreadCount_last = MailUtils.getEmailUnreadMessageCountFrom163();
-//        log.debug("[邮箱数量] "+emailUnreadCount_before+"-->>[验证邮箱功能，数量+1] "+emailUnreadCount_after+"-->>[收到Miss Call邮件，数量+1] "+emailUnreadCount_last);
-//
-//        softAssert.assertEquals(emailUnreadCount_last,emailUnreadCount_after+1,"收到Miss Call邮件");//todo bug <version 23> 功能未实现
+        assertStep("[邮箱验证]收到Miss Call邮件");
+        ys_waitingTime(WaitUntils.SHORT_WAIT*10);//等待接收邮件
+        int emailUnreadCount_last = MailUtils.getEmailUnreadMessageCountFrom163();
+
+        log.debug("6 [功能开始->期望结果：邮箱数量+1][测试前邮箱数量] "+emailUnreadCount_after+"-->>[等待30s,再次查看邮箱数量] "+emailUnreadCount_last);
+        softAssert.assertEquals(emailUnreadCount_last,emailUnreadCount_after+1,"期望，收到Miss Call邮件");//todo bug <version 23> 功能未实现
+
+        step("7:禁用disable outbound call");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().editDataByEditImage("1001").switchToTab("Features").setCheckbox(ele_extension_feature_enb_email_miss_call,false).clickSaveAndApply();
+        int emailUnreadCount_close_start = MailUtils.getEmailUnreadMessageCountFrom163();
+        pjsip.Pj_Make_Call_No_Answer(1002,"1001",DEVICE_IP_LAN,false);
+        sleep(40*1000);//等待自动挂断
+        pjsip.Pj_Hangup_All();
+
+        assertStep("8 [CDR]验证，第二条记录status为 NO ANSWER, Call To为 \"1001<1001>\"");
+        //todo cdr 显示全选
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        sleep(WaitUntils.SHORT_WAIT);//等待自动挂断
+        auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Status",1),"NO ANSWER");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",1),"1001<1001>");
+
+        int emailUnreadCount_close_end = MailUtils.getEmailUnreadMessageCountFrom163();
+        log.debug("9 [功能关闭->期望结果：邮箱数量不变][测试前邮箱数量] "+emailUnreadCount_close_start+"-->>[等待30s,再次查看邮箱数量] "+emailUnreadCount_last);
+        sleep(30000);//等待接收邮件
+        softAssert.assertEquals(emailUnreadCount_close_start,emailUnreadCount_close_end,"期望，不收到Miss Call邮件");
+
         softAssert.assertAll();
     }
 }

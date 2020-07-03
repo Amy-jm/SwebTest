@@ -49,6 +49,9 @@ public interface IButton {
     //表格第一行删除图标
     SelenideElement ele_deleteImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'delete')]"));
     SelenideElement ele_editImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'edit')]"));
+    String EDIT_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH = "//table/tbody//td[contains(text(),'%s')]/following-sibling::*//i[contains(@class,'edit')]";
+    String DELETE_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH = "//table/tbody//td[contains(text(),'%s')]/following-sibling::*//i[contains(@class,'delete')]";
+
 
 
 
