@@ -154,7 +154,7 @@ public interface IExtensionPageElement {
 
     /** 下拉列表 DTMF_MODE **/
     enum DTMF_MODE {
-        RFC4733RFC2833("RFC4733(RFC2833)"),
+        RFC4733RFC2833("RFC4733"),
         INFO("Info"),
         INBAND("Inband"),
         AUTO("Auto");
