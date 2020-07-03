@@ -2,21 +2,23 @@ package com.yeastar.testcase.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
-import com.thoughtworks.selenium.Selenium;
-import com.yeastar.page.pseries.HomePage;
-import com.yeastar.page.pseries.ICdrPageElement;
-import com.yeastar.page.pseries.IExtensionPageElement;
-import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.page.pseries.*;
+import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
+import com.yeastar.page.pseries.CdrRecording.ICdrPageElement;
+import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
+import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.page.pseries.WebClient.Me_HomePage;
-import com.yeastar.swebtest.pobject.Me.Me;
+import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.TableUtils;
+import com.yeastar.untils.TestNGListenerP;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
-import org.openqa.selenium.WebDriver;
+import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
@@ -28,16 +30,24 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
  * @author: linhaoran@yeastar.com
  * @create: 2020/06/18
  */
+@Listeners({AllureReporterListener.class, TestNGListenerP.class})
+@Log4j2
 public class TestExtensionVoicemail extends TestCaseBase {
 
     @Test
     public void CaseName() throws InterruptedException {
 
-        auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
-        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
-
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
-        auto.inboundRoute().deleteAllInboundRoutes();
+//        auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
+//        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+//
+//        preparationSteps();
+//        auto.homePage().logout();
+        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+        //todo 分机webclient页面检查留言
+        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
+        String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
+        String me_time = TableUtils.getTableForHeader(getDriver(),"Time",0);
+        Assert.assertEquals(me_name,"2000\n" +"External Number");
 //        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
 //        if(TableUtils.clickTableDeletBtn(getDriver(),"Name",SPS)){
 //            auto.trunkPage().OKAlertBtn.shouldBe(Condition.visible).click();
@@ -48,14 +58,6 @@ public class TestExtensionVoicemail extends TestCaseBase {
 //        preparationSteps();
 //        auto.homePage().logout();
 //        auto.loginPage().login("0","Yeastar123");
-
-        //todo 分机webclient页面检查留言
-//        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
-//        String a = TableUtils.getTableForHeader(getDriver(),"Name",0);
-//        System.out.println("aaaaaaaaaaa  "+a);
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-//        auto.extensionPage().selectExtensionPresence("0","Away");
-//        sleep(10000);
 
     }
 
@@ -89,12 +91,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("3:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
-        sleep(20000);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
+        sleep(40000);
         pjsip.Pj_Hangup_All();
 
         assertStep("4:cli确认播放提示音为vm-greeting-leave-after-tone.slin");
@@ -104,7 +104,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         auto.cdrPage().ele_download_cdr_btn.shouldBe(Condition.exist);
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"2000<2000>");
+        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(), ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"2000<2000>");
         Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_To.getAlias(),0),"Voicemail Yeastar Test0 朗视信息科技<0>");
         Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Status.getAlias(),0),"VOICEMAIL");
         Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Reason.getAlias(),0),"2000<2000> hung up");
@@ -113,12 +113,11 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("6:分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
         auto.homePage().logout();
-        auto.loginPage().login("0","Yeastar123");
-        //todo 分机webclient页面检查留言
+        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
         String me_time = TableUtils.getTableForHeader(getDriver(),"Time",0);
-        Assert.assertEquals(me_name,"2000");
+        Assert.assertEquals(me_name,"2000\n" +"External Number");
     }
 
     @Epic("P_Series")
@@ -151,7 +150,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"*2",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(0,"*2",DEVICE_IP_LAN,false);
         sleep(2000);
         pjsip.Pj_Send_Dtmf(0,"1234");
         sleep(3000);
@@ -197,11 +196,9 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
@@ -240,11 +237,9 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
@@ -283,11 +278,9 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
@@ -325,11 +318,9 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
@@ -368,11 +359,9 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
@@ -411,11 +400,9 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
 
@@ -469,11 +456,11 @@ public class TestExtensionVoicemail extends TestCaseBase {
         //todo 检查分机页面
         assertStep("分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
         auto.homePage().logout();
-        auto.loginPage().login("0","Yeastar123");
+        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
         String me_time = TableUtils.getTableForHeader(getDriver(),"Time",0);
-        Assert.assertEquals(me_name,"2000");
+        Assert.assertEquals(me_name,"2000\n" +"External Number");
     }
 
     @Epic("P_Series")
@@ -522,11 +509,11 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
         auto.homePage().logout();
-        auto.loginPage().login("0","Yeastar123");
+        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
         String me_time = TableUtils.getTableForHeader(getDriver(),"Time",0);
-        Assert.assertEquals(me_name,"2000");
+        Assert.assertEquals(me_name,"2000\n" +"External Number");
     }
 
     @Epic("P_Series")
@@ -574,11 +561,11 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
         auto.homePage().logout();
-        auto.loginPage().login("0","Yeastar123");
+        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
         String me_time = TableUtils.getTableForHeader(getDriver(),"Time",0);
-        Assert.assertEquals(me_name,"2000");
+        Assert.assertEquals(me_name,"2000\n" +"External Number");
     }
 
     @Epic("P_Series")
@@ -629,17 +616,15 @@ public class TestExtensionVoicemail extends TestCaseBase {
      */
     public void preparationSteps() {
 
+        //设置cdr名称显示格式
+        auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
+        auto.preferences().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias()).clickSaveAndApply();
+
+        //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        //删除所有分机
-        auto.extensionPage().deleAllExtension();
-        //创建分机0
         auto.extensionPage().deleAllExtension()
                 .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD)
-                .clickSaveAndApply();
-
-        //编辑分机
-        TableUtils.clickTableEidtBtn(getDriver(),"Extension Number","0");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
                 .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
                 .selectCombobox(IExtensionPageElement.VOICEMAIL_PIN_AUTH.ENABLED.getAlias())
                 .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.DO_NOT_SEND_EMAIL_NOTIFICATIONS.getAlias())
@@ -650,6 +635,8 @@ public class TestExtensionVoicemail extends TestCaseBase {
                 .ele_extension_voicemail_access_pin.setValue("1234");
         auto.extensionPage().clickSaveAndApply();
 
+
+        //todo 网页需要修改，暂不支持创建trunk
 //        step("删除spstrunk -> 创建sps trunk");
 //        sleep(3000);
 //        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
@@ -657,6 +644,18 @@ public class TestExtensionVoicemail extends TestCaseBase {
 //            auto.trunkPage().OKAlertBtn.shouldBe(Condition.visible).click();
 //        }
 //        auto.trunkPage().createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
+
+        //清空呼入路由，创建呼入路由
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        ArrayList<String> trunklist = new ArrayList<>();
+        trunklist.add("SPS1");
+        auto.inboundRoute().deleteAllInboundRoutes()
+                .createInboundRoute("InRoute1",trunklist)
+                .editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-朗视信息科技Yeastar Test0")
+                .clickSaveAndApply();
+
+
     }
 
     /**
@@ -664,11 +663,11 @@ public class TestExtensionVoicemail extends TestCaseBase {
      */
     public void ext2000CallVoicemail(){
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+//        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
+//        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"8200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
 

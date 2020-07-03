@@ -1,6 +1,8 @@
 package com.yeastar.page.pseries;
 
+import com.codeborne.selenide.Condition;
 import com.yeastar.controllers.BaseMethod;
+import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.untils.BrowserUtils;
 import com.yeastar.untils.DataUtils;
 import lombok.extern.log4j.Log4j2;
@@ -37,17 +39,34 @@ public class TestCaseBase extends BaseMethod {
         setDriver(webDriver);
         open(PBX_URL);
         auto = new PageEngine();
+//        pjsip.Pj_Init();
     }
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) throws Exception
     {
         sleep(5000);
+//        pjsip.Pj_Destory();
         new BrowserUtils().getLogType_Browser(method,webDriver);
         getWebDriver().quit();
         log.info( "****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
 
+    /**
+     * 设置cdr名称显示格式
+     */
+    public void preparationStepNameDisplay(){
+        auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
+        auto.preferences().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias()).clickSaveAndApply();
+    }
 
+    /**
+     * admin 登录
+     */
+    public void loginWithAdmin(){
+        step("登录pbx");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+    }
 
 }

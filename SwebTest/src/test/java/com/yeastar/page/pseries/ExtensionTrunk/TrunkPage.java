@@ -1,24 +1,15 @@
-package com.yeastar.page.pseries;
+package com.yeastar.page.pseries.ExtensionTrunk;
 
-import co.boorse.seleniumtable.SeleniumTable;
-import co.boorse.seleniumtable.SeleniumTableCell;
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.TableUtils;
-import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.controllers.WebDriverFactory.getDriver;
-import static com.yeastar.page.pseries.ITrunkPageElement.Trunk_Type.PeerTrunk;
-import static com.yeastar.untils.TableUtils.*;
+import static com.yeastar.page.pseries.ExtensionTrunk.ITrunkPageElement.Trunk_Type.PeerTrunk;
 
 public class TrunkPage extends BasePage implements ITrunkPageElement
 {

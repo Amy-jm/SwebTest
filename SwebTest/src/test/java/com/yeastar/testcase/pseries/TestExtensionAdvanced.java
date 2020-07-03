@@ -3,17 +3,13 @@ package com.yeastar.testcase.pseries;
 import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.HomePage;
-import com.yeastar.page.pseries.IExtensionPageElement;
+import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 
 import com.yeastar.page.pseries.TestCaseBase;
-import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-
-import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 
 /**
  * @program: SwebTest

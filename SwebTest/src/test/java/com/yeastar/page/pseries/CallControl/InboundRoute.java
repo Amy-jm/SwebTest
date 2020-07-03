@@ -1,18 +1,18 @@
-package com.yeastar.page.pseries;
+package com.yeastar.page.pseries.CallControl;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import com.yeastar.swebtest.testcase.RegressionCase.pbxcase.Inbound;
+import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 import static com.yeastar.controllers.WebDriverFactory.getDriver;
-import static com.yeastar.swebtest.driver.DataReader2.SPS;
 
 public class InboundRoute extends BasePage implements IInboundRoutePageElement {
 
@@ -24,8 +24,15 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
      */
     @Step("创建呼入路由")
     public InboundRoute createInboundRoute(String name, List<String> trunklist){
-        ele_add_btn.click();
 
+        ele_add_btn.click();
+        ele_edit_name.setValue(name);
+        ele_edit_default_destination.scrollTo();
+        actions().moveToElement(ele_edit_trunk_toRight_btn).perform();
+        for(String trunkname: trunklist){
+            $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).click();
+        }
+        ele_edit_trunk_toRight_btn.click();
         return this;
     }
 
@@ -56,4 +63,21 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
         return this;
     }
 
+    @Step("点击编辑呼入路由")
+    public InboundRoute editInbound(String name,String title){
+        TableUtils.clickTableEidtBtn(getDriver(),title,name);
+        return this;
+    }
+
+    public InboundRoute selectDefaultDestination(String type, String dest){
+        selectCombobox(type);
+        //todo 选择呼入目的地
+
+        return this;
+    }
+
+    public InboundRoute selectCombobox(String arg){
+        selectComm(arg);
+        return this;
+    }
 }

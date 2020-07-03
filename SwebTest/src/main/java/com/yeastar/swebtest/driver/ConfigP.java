@@ -197,6 +197,7 @@ public class ConfigP extends DataReader2 {
     public static String PC = "PC";
     public static String CLOUD_PBX= "CloudPBX";
     public static String EXTENSION_PASSWORD = "Yeastar202Yeastar202";
+    public static String EXTENSION_PASSWORD_NEW = "Yeastar123";
     public static String currentPath = System.getProperty("user.dir")+ File.separator;
 
     public static boolean Single_Init = true;

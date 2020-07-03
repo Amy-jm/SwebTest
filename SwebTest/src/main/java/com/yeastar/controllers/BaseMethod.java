@@ -9,6 +9,7 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.yeastar.swebtest.tools.pjsip.UserAccount;
 import com.yeastar.untils.SSHLinuxUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
@@ -165,4 +166,37 @@ public class BaseMethod extends WebDriverFactory {
 		log.debug("[asterisk_command_return_string] "+str);
 		return str;
 	}
+
+	/**
+	 * 获取分机通话状态
+	 *
+	 * @param username
+	 */
+	@Step("获取分机通话状态")
+	public static int getExtensionStatus(int username, int expectStatus, int timeout) {
+		UserAccount account;
+		int time = 0;
+		int status = -1;
+		while (time <= timeout) {
+			sleep(1000);
+			account = pjsip.getUserAccountInfo(username);
+			if (account == null) {
+				status = -1;
+				System.out.println("first--------account is null----------");
+			}
+			if (account.status == expectStatus) {
+				status = account.status;
+				System.out.println("Second-------get status succ--------------");
+				return status;
+			}
+			if (time == timeout) {
+				status = account.status;
+				System.out.println("third-------get status Timeout----------");
+			}
+			time++;
+		}
+		System.out.println("分机通话状态：" + status);
+		return status;
+	}
+
 }

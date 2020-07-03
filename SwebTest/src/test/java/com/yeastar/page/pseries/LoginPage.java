@@ -52,6 +52,7 @@ public class LoginPage extends BasePage{
         loginBtn.click();
         if(waitElementDisplay(privacy_policy_confirmgdpr,SHORT_WAIT)){
             Selenide.actions().click(privacy_policy_confirmgdpr).perform();
+            sleep(1000);
             ConfrimAlertBtn.click();
 
         }
@@ -59,6 +60,10 @@ public class LoginPage extends BasePage{
             change_password_new_password.setValue(changePassword);
             change_password_confirm_password.setValue(changePassword);
             dail_save_btn.click();
+
+            login_username.shouldBe(Condition.visible).setValue(userName);
+            login_password.setValue(changePassword);
+            loginBtn.click();
         }
 
         //change password
