@@ -90,7 +90,10 @@ public class BasePage implements IButton{
      * 点击保存并应用
      */
     public void clickSaveAndApply(){
-        saveBtn.shouldBe(Condition.enabled).click();
+        if(saveBtn.isDisplayed()){
+            saveBtn.click();
+        }
+//        saveBtn.shouldBe(Condition.enabled).click();
         sleep(WaitUntils.SHORT_WAIT);
         if(applyBtn.isDisplayed()){
             clickApply();
