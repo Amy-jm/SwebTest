@@ -305,16 +305,12 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      */
     @Override
     public ExtensionPage isCheckbox(SelenideElement element,boolean isChecked){
-        if(element.getAttribute("checked")==null){
-            if(isChecked){
-                new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
-            }
-        }else{
-            if(!isChecked){
-                new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
-            }
+        if(element.getAttribute("checked") == null && isChecked){   //未勾选状态,isChecked为True，希望勾选
+             new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
+        }else if(element.getAttribute("checked") != null && !isChecked){  //勾选状态,isChecked为false，取消勾选
+            new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
         }
-        return  this;
+        return this;
     }
 
     /**

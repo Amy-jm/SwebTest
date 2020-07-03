@@ -86,7 +86,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,Transport->UDP");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").select_Transport(IExtensionPageElement.TRANSPORT.UDP).saveBtn.click();
+                editFirstData().switchToTab("Advanced").select_Transport(IExtensionPageElement.TRANSPORT.UDP).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：transport_name   : udp");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("transport_name                : udp"),"[Assert,transport_name]");

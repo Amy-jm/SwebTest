@@ -59,7 +59,7 @@ public class TestExtension extends TestCaseBase {
 
         step("2:创建分机号1001");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001", EXTENSION_PASSWORD, "ABCDEFGHIJK");
+        auto.extensionPage().deleAllExtension().createSipExtension("1001", EXTENSION_PASSWORD, "ABCDEFGHIJK").clickSaveAndApply();;
 
         assertStep("3:提示注册密码强度不够，继续保存成功");
         auto.extensionPage().registration_Password_Alert_Exist_And_GoOn().isSaveSuccessAlertAppear();
@@ -88,7 +88,7 @@ public class TestExtension extends TestCaseBase {
         auto.extensionPage().deleAllExtension()
                 .createSipExtension("1001", EXTENSION_PASSWORD,EXTENSION_PASSWORD)
                 .createSipExtensionAndConf("1002", EXTENSION_PASSWORD,EXTENSION_PASSWORD)
-                .configPresence();
+                .configPresence().clickSaveAndApply();;
 
         step("2:创建IVR 6002");
 

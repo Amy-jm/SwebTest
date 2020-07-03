@@ -117,7 +117,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
         auto.extensionPage().
                 deleAllExtension().
                 createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0","Yeastar202").
-                createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999","Yeastar202");
+                createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999","Yeastar202").clickSaveAndApply();;
 
         assertStep("3:[PJSIP注册]] 注册分机0,分机 9999999");
         pjsip.Pj_Init();

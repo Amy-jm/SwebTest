@@ -128,7 +128,7 @@ public class TestExtensionFeature extends TestCaseBase {
         int emailUnreadCount_last = MailUtils.getEmailUnreadMessageCountFrom163();
 
         log.debug("6 [功能开始->期望结果：邮箱数量+1][测试前邮箱数量] "+emailUnreadCount_after+"-->>[等待30s,再次查看邮箱数量] "+emailUnreadCount_last);
-        softAssert.assertEquals(emailUnreadCount_last,emailUnreadCount_after+1,"期望，收到Miss Call邮件");//todo bug <version 23> 功能未实现
+        softAssert.assertEquals(emailUnreadCount_last,emailUnreadCount_after+1,"期望，收到Miss Call邮件，功能未实现");//todo bug <version 23> 功能未实现，删除“功能未实现”注解
 
         step("7:禁用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
