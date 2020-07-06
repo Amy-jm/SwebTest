@@ -95,6 +95,32 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @param userPassword 用户密码
      * @return 返回分机页面实例，ExtensionPage
      */
+    @Step("extensionNumber:{0},userPassword:{1},email:{3}")
+    public ExtensionPage createSipExtensionWithEmail(String extensionNumber,String userPassword,String strEmail,String roleName) {
+        addBtn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_extension_user_first_name.setValue(extensionNumber);
+        inputComm("Email Address", strEmail);//todo 24版本ID新增后替换
+//        ele_extension_user_role_id.setValue(roleName);
+        ele_extension_user_role_id.click();
+        actions().sendKeys(roleName).build().perform();
+        log.debug("[userPassword] {}",userPassword);
+        ele_extension_user_user_password.setValue(userPassword);
+        ele_extension_user_number.setValue(extensionNumber);
+        ele_extension_user_caller_id.setValue(extensionNumber);
+        ele_extension_user_reg_name.setValue(extensionNumber);
+        ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
+        saveBtn.click();
+//        clickApply();
+        return this;
+    }
+
+    /**
+     * 创建SIP extensionNumber分机，密码为 userPassword，
+     * @param extensionNumber 分机号，同时默认修改 FirstName,ExtensionNumber,Caller ID(Internal)字段为分机号
+     * @param userPassword 用户密码
+     * @return 返回分机页面实例，ExtensionPage
+     */
 
     /**
      * 创建SIP 分机
@@ -213,7 +239,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @return
      */
     public ExtensionPage deleDataByDeleImage(String extensionNumber){
-        $(By.xpath(String.format(EDIT_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH
+        $(By.xpath(String.format(DELETE_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH
                 ,extensionNumber))).click();
         return this;
     }
@@ -380,6 +406,31 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         }
         //******
         clickSaveOfPOP();
+        return this;
+    }
+
+    /**
+     * 删除对应的 角色数据
+     * @param roleNmae
+     */
+    public ExtensionPage  deleRole(String roleNmae){
+       SelenideElement element =  $(By.xpath(String.format("//table/tbody//td//span[contains(text(),'%s')]/../../following-sibling::*//i[contains(@class,'delete')]",roleNmae)));
+       if(waitElementDisplay(element,WaitUntils.SHORT_WAIT)){
+           element.click();
+           OKAlertBtn.shouldBe(Condition.visible).click();
+       }
+        return this;
+    }
+
+    /**
+     * 新增角色
+     * @param roleName
+     */
+    public  ExtensionPage  addNewRole(String roleName){
+        addBtn.shouldBe(Condition.visible).click();
+        ele_role_management_name.shouldBe(Condition.visible).setValue(roleName);
+        isCheckbox(ele_role_management_enable_extension_input,true);
+        saveBtn.click();
         return this;
     }
 

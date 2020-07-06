@@ -39,6 +39,7 @@ public interface IExtensionPageElement {
     SelenideElement ele_extension_user_number = $(By.id("extension_user_number"));
     SelenideElement ele_extension_user_reg_name = $(By.id("extension_user_reg_name"));
     SelenideElement ele_extension_user_reg_password = $(By.id("extension_user_reg_password"));
+    SelenideElement ele_extension_user_role_id = $(By.id("extension_user_role_id"));
 //    SelenideElement ele_extension_user_first_name = $(By.id("extension_user_first_name"));
 
     //密码强度不够弹框
@@ -92,7 +93,12 @@ public interface IExtensionPageElement {
     //Add Call Handing Rule--Action
     SelenideElement ele_call_blocking_list_action_dest  = $(By.id("call_blocking_list_action_dest"));
 
-   /** 下拉列表 Max Outbound Call Duration(s) **/
+
+    /** Role ****/
+    SelenideElement ele_role_management_name = $(By.id("role_management_name"));
+    SelenideElement ele_role_management_enable_extension_input =  $(By.id("role_management_enable_extension"));
+
+    /** 下拉列表 Max Outbound Call Duration(s) **/
    enum MAX_OUTBOUND_CALL_DURATIONS{
        FOLLOWSYSTEM("[Follow System]"),
        UNLIMITED("Unlimited"),

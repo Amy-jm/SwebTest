@@ -401,7 +401,7 @@ public class TestExtensionSecurity extends TestCaseBase {
             "1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001610")
-    @Issue("")
+    @Issue("bug cdr 多显示一条为 call to T的记录")
     @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunk() throws IOException, JSchException {
         step("1:login PBX");
@@ -417,6 +417,10 @@ public class TestExtensionSecurity extends TestCaseBase {
         assertStep("3:设置分机0，Max Call Duration 设置60s");
         auto.extensionPage().editFirstData().switchToTab("Security").setElementValue(ele_extension_security_max_outb_call_duration_select,"60")
                 .clickSaveAndApply();
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
+        auto.outBoundRoutePage().editRoute("AutoTest_Route").addExtensionOrExtensionGroup("0").clickSaveAndApply();
+
 
         assertStep("4:全局设置 preference，Max Call Duration 设置30s");
         auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);

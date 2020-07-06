@@ -57,6 +57,7 @@ public class DataReader2 {
     public static String DEVICE_PORT = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"DEVICE_PORT");
     public static String LOGIN_USERNAME = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"LOGIN_USERNAME");
     public static String LOGIN_PASSWORD = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"LOGIN_PASSWORD");
+    public static String EMAIL = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"EMAIL");
 
     public static String LOGIN_ADMIN = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"LOGIN_ADMIN");
     public static String SSH_PORT = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"SSH_PORT");

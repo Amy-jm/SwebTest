@@ -29,7 +29,7 @@ public class HomePage extends BasePage{
 
     public SelenideElement extension_trunk_tree_extension_group = $(By.linkText("Extension Group"));
     public SelenideElement extension_trunk_tree_trunks = $(By.linkText("Trunks"));
-    public SelenideElement extension_trunk_tree_management = $(By.linkText("Role Management"));
+    public SelenideElement extension_trunk_tree_role_management = $(By.id("m_role_management"));
     /**
      * 左侧菜单 -- Call Control
      **/
@@ -129,7 +129,7 @@ public class HomePage extends BasePage{
     public SelenideElement user_tree_language = $(By.xpath(String.format(link_comm_xpath,"Language")));
     public SelenideElement user_tree_language_english =  $(By.xpath(String.format(link_comm_xpath,"English")));
     public SelenideElement user_tree_language_china =  $(By.xpath(String.format(link_comm_xpath,"简体中文")));
-    public SelenideElement user_tree_logout = $(By.xpath(String.format(link_comm_xpath,"Logout")));
+    public SelenideElement user_tree_logout = $(By.id("h_logout"));
 
     /**
      * logout pbx
@@ -208,8 +208,8 @@ public class HomePage extends BasePage{
             case extension_trunk_tree_trunks:
                 extension_trunk_tree_trunks.click();
                 break;
-            case extension_trunk_tree_management:
-                extension_trunk_tree_management.click();
+            case extension_trunk_tree_role_management:
+                extension_trunk_tree_role_management.click();
                 break;
             case call_control_tree_inbound_routes:
                 call_control_tree_inbound_routes.click();
@@ -339,7 +339,7 @@ public class HomePage extends BasePage{
         extension_trunk_tree_extensions,
         extension_trunk_tree_extension_group,
         extension_trunk_tree_trunks,
-        extension_trunk_tree_management,
+        extension_trunk_tree_role_management,
 
         call_control_tree_inbound_routes,
         call_control_tree_outbound_routes,
