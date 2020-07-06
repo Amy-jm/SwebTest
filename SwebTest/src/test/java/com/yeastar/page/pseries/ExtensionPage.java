@@ -328,7 +328,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Override
     public ExtensionPage setElementValue(SelenideElement element ,String strValue){
         element.shouldBe(Condition.visible).doubleClick();
-        actions().sendKeys(Keys.LEFT_CONTROL+"A").build().perform();
+        actions().sendKeys(Keys.LEFT_CONTROL+"a").build().perform();
         actions().sendKeys(Keys.DELETE).build().perform();
         element.setValue(strValue);
         return this;
