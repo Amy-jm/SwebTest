@@ -18,7 +18,7 @@ public class PreferencesPage extends BasePage implements IPreferencesPage{
     @Override
     public PreferencesPage setElementValue(SelenideElement element , String strValue){
         element.shouldBe(Condition.visible).clear();
-        element.shouldBe(Condition.visible).setValue(strValue);
+        element.setValue(strValue);
         return this;
     }
 }
