@@ -1,18 +1,13 @@
 package com.yeastar.testcase.pseries;
 
 import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
-import com.yeastar.page.pseries.CdrRecording.ICdrPageElement;
 import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 import com.yeastar.page.pseries.HomePage;
-import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.AllureReporterListener;
-import com.yeastar.untils.TableUtils;
-import com.yeastar.untils.TestNGListenerP;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.sleep;
@@ -22,7 +17,7 @@ import static com.codeborne.selenide.Selenide.sleep;
 @Log4j2
 public class TestExtensionPresence extends TestCaseBase{
 
-    @Test
+//    @Test
     public void CaseName() {
         //todo 队列  IVR 响铃组 提示音  voicemail通过CLI判断
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -44,7 +39,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceAvailable","Extension", "Regression", "PSeries"})
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceAvailable","Extension", "Regression", "PSeries"} ,priority = 0)
     public void testPresenceAvailable1000Call0NoAnswer(){
 
         step("登录pbx");
@@ -89,7 +84,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"},priority = 1)
     public void testPresenceAvailable1000Call0Busy(){
 
         step("登录pbx");
@@ -97,6 +92,8 @@ public class TestExtensionPresence extends TestCaseBase{
 
         step("初始化环境");
         preparationStepsAvailable();
+
+        clearasteriskLog();
 
         step("内部分机1000呼叫分机0");
         pjsip.Pj_Init();
@@ -128,6 +125,8 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
+        assertStep("判断CLI中应该存在");
+        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认voicemail提示音]");
     }
 
     @Epic("P_Series")
@@ -140,7 +139,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"},priority = 2)
     public void testPresenceAvailable2000Call0ToIVR(){
 
         step("登录pbx");
@@ -308,10 +307,10 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsAvailable();
 
-        step("设置呼入路由到响铃组");
+        step("设置呼入路由到队列6402");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
         auto.inboundRoute().editInbound("InRoute1","Name")
-                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.RING_GROUP.getAlias(),"6402-Queue");
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.QUEUE.getAlias(),"6402-6402").clickSaveAndApply();
 
         step("sps外线呼入队列6402");
         pjsip.Pj_Init();
@@ -383,14 +382,14 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
-        assertStep("CDR验证");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        auto.cdrPage().assertCDRRecord(getDriver(),0,"F1000 朗视信息科技<1000>","Yeastar Test9999999 朗视信息科技<9999999>","NO ANSWER",
-                "F1000 朗视信息科技<1000> hung up",communication_internal);
-        auto.cdrPage().assertCDRRecord(getDriver(),1,"F1000 朗视信息科技<1000>","RingGroup 6300<6300>","Answered",
-                "RingGroup 6300<6300> connected",communication_internal);
-        auto.cdrPage().assertCDRRecord(getDriver(),2,"F1000 朗视信息科技<1000>","Yeastar Test0 朗视信息科技<0>","NO ANSWER",
-                "Yeastar Test0 朗视信息科技<0> forwarded",communication_internal);
+//        assertStep("CDR验证");
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        auto.cdrPage().assertCDRRecord(getDriver(),0,"F1000 朗视信息科技<1000>","Yeastar Test9999999 朗视信息科技<9999999>","NO ANSWER",
+//                "F1000 朗视信息科技<1000> hung up",communication_internal);
+//        auto.cdrPage().assertCDRRecord(getDriver(),1,"F1000 朗视信息科技<1000>","RingGroup 6300<6300>","Answered",
+//                "RingGroup 6300<6300> connected",communication_internal);
+//        auto.cdrPage().assertCDRRecord(getDriver(),2,"F1000 朗视信息科技<1000>","Yeastar Test0 朗视信息科技<0>","NO ANSWER",
+//                "Yeastar Test0 朗视信息科技<0> forwarded",communication_internal);
     }
 
     @Epic("P_Series")
@@ -439,20 +438,9 @@ public class TestExtensionPresence extends TestCaseBase{
         assertStep("响铃10s超时无应答回复480/404,转接到队列6400，成员9999999响铃");
         sleep(11000);
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING);
-//        pjsip.Pj_Answer_Call(9999999,200,false);
-//        sleep(5000);
 
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
-
-        assertStep("CDR验证");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Yeastar Test9999999 朗视信息科技<9999999>","NO ANSWER",
-                "F1000 朗视信息科技<1000> hung up",communication_inbound,SPS,"");
-        auto.cdrPage().assertCDRRecord(getDriver(),1,"2000<2000>","Queue 6400<6400>","Answered",
-                "Queue 6400<6400> connected",communication_inbound,SPS,"");
-        auto.cdrPage().assertCDRRecord(getDriver(),2,"2000<2000>","Yeastar Test0 朗视信息科技<0>","NO ANSWER",
-                "Yeastar Test0 朗视信息科技<0> forwarded",communication_inbound,SPS,"");
     }
 
     @Epic("P_Series")
@@ -505,14 +493,6 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
-        assertStep("CDR验证");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Yeastar Test0 朗视信息科技<0>","ANSWERED",
-                "2000<2000> hung up",communication_inbound,SPS,"");
-        auto.cdrPage().assertCDRRecord(getDriver(),1,"2000<2000>","903000","NO ANSWER",
-                "903000 rejected",communication_outRoute,SPS,SPS);
-        auto.cdrPage().assertCDRRecord(getDriver(),2,"2000<2000>","Yeastar Test0 朗视信息科技<0>","NO ANSWER",
-                "Yeastar Test0 朗视信息科技<0> rejected",communication_inbound,SPS,"");
     }
 
     @Epic("P_Series")
@@ -554,12 +534,6 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
-        assertStep("CDR验证");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        auto.cdrPage().assertCDRRecord(getDriver(),0,"F1000 朗视信息科技<1000>","Yeastar Test0 朗视信息科技<0>","ANSWERED",
-                "Yeastar Test0 朗视信息科技<0> hung up",communication_internal,SPS,"");
-        auto.cdrPage().assertCDRRecord(getDriver(),1,"F1000 朗视信息科技<1000>","RingGroup 6301<6301>","ANSWERED",
-                "RingGroup 6301<6301> connected",communication_internal,SPS,"");
     }
 
     @Epic("P_Series")
@@ -604,12 +578,6 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
-        assertStep("CDR验证");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Yeastar Test0 朗视信息科技<0>","ANSWERED",
-                "Yeastar Test0 朗视信息科技<0> hung up",communication_inbound,SPS,"");
-        auto.cdrPage().assertCDRRecord(getDriver(),1,"2000<2000>","Queue 6401<6401>","ANSWERED",
-                "Queue 6401<6401> connected",communication_inbound,SPS,"");
     }
 
     @Epic("P_Series")
@@ -773,6 +741,11 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsBusinessTrip();
 
+        step("编辑呼入路由，目的地到分机0");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSaveAndApply();
+
         step("sps 外线呼入分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -821,6 +794,13 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsBusinessTrip();
 
+        step("编辑呼入路由，目的地到分机0");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSaveAndApply();
+
+        clearasteriskLog();
+
         step("sps 外线呼入分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -847,6 +827,8 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
+        assertStep("判断CLI中应该存在");
+        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认voicemail提示音]");
     }
 
     @Epic("P_Series")
@@ -951,6 +933,11 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsDoNotDisturb();
 
+        step("编辑呼入路由，目的地到分机0");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSaveAndApply();
+
         step("sps 外线呼入分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1034,7 +1021,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("设置呼入路由到队列6401");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
         auto.inboundRoute().editInbound("InRoute1","Name")
-                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.RING_GROUP.getAlias(),"6401-6401").clickSaveAndApply();
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.QUEUE.getAlias(),"6401-6401").clickSaveAndApply();
 
         step("SPS 外线呼入到队列6401");
         pjsip.Pj_Init();
@@ -1076,8 +1063,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsDoNotDisturb();
 
-
-        step("SPS 外线呼入到队列6401");
+        step("内部分机1000呼入到队列6402");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1123,6 +1109,8 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsLunchBreak();
 
+        clearasteriskLog();
+
         step("内部分机1000呼叫分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1144,10 +1132,11 @@ public class TestExtensionPresence extends TestCaseBase{
 
         sleep(60000);
 
-
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
+        assertStep("判断CLI中应该存在");
+        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认voicemail提示音]");
     }
     @Epic("P_Series")
     @Feature("Extension")
@@ -1216,6 +1205,11 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsLunchBreak();
 
+        step("编辑呼入路由，目的地到分机0");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSaveAndApply();
+
         step("sps 外线呼入分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1263,6 +1257,11 @@ public class TestExtensionPresence extends TestCaseBase{
 
         step("初始化环境");
         preparationStepsLunchBreak();
+
+        step("编辑呼入路由，目的地到分机0");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSaveAndApply();
 
         step("sps 外线呼入分机0");
         pjsip.Pj_Init();
@@ -1312,8 +1311,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsLunchBreak();
 
-
-        step("SPS 外线呼入到队列6402");
+        step("内部分机呼入到队列6402");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1456,6 +1454,11 @@ public class TestExtensionPresence extends TestCaseBase{
 
         step("初始化环境");
         preparationStepsOffWork();
+
+        step("编辑呼入路由，目的地到分机0");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSaveAndApply();
 
         step("sps 外线呼入分机0");
         pjsip.Pj_Init();
@@ -1666,7 +1669,7 @@ public class TestExtensionPresence extends TestCaseBase{
                 .configCallForwardExternalBusy(false)
                 .isCheckbox(IExtensionPageElement.ele_extension_presence_ring_simultaneously_checkBox,true)
                 .selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.LOGOUT.getAlias())
-                .selectComm(auto.extensionPage().ele_extension_presence_ring_timeout_combobox,"40");
+                .ele_extension_presence_ring_timeout_input.setValue("40");
 
         auto.extensionPage().clickSave();
 
