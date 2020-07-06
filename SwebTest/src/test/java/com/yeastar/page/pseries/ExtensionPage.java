@@ -327,11 +327,19 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      */
     @Override
     public ExtensionPage setElementValue(SelenideElement element ,String strValue){
-        element.shouldBe(Condition.visible).doubleClick();
-        actions().sendKeys(Keys.LEFT_CONTROL+"a").build().perform();
-        actions().sendKeys(Keys.DELETE).build().perform();
-        sleep(WaitUntils.RETRY_WAIT);
-        element.setValue(strValue);
+//        System-60  unwork
+//        element.shouldBe(Condition.visible).doubleClick();
+//        actions().sendKeys(Keys.DELETE).perform();//adapt linux
+//        element.setValue(strValue);
+
+        element.shouldBe(Condition.visible).click();
+        actions().keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).perform();
+        actions().sendKeys(Keys.DELETE).clickAndHold().build().perform();
+        sleep(WaitUntils.SHORT_WAIT);
+        element.click();
+        sleep(WaitUntils.SHORT_WAIT);
+        actions().sendKeys(strValue).build().perform();
+        actions().sendKeys(Keys.ENTER).build().perform();
         return this;
     }
 

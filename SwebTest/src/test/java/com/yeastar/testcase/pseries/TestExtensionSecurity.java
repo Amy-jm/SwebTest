@@ -457,7 +457,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Issue("")
     @Test(groups = {"P0","TestExtensionSecurity","testMaxCallDurationForSPSTrunkTo0","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunkTo0() throws IOException, JSchException {
-        step("1:login PBX");
+        step("1.login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
