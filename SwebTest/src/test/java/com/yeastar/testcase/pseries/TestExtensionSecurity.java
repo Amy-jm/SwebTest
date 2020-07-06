@@ -303,7 +303,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001604"), @TmsLink(value = "ID1001605"), @TmsLink(value = "1001606")})
     @Issue("")
-    @Test(groups = {"P0","testEnableUserAgentRegistrationAuthorization","Extension","Regression","PSeries","Security","Security"})
+    @Test(groups = {"P0","testSIPRegistrationIPRestriction","Extension","Regression","PSeries","Security","Security"})
     public void testSIPRegistrationIPRestriction() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);

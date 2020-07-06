@@ -98,6 +98,10 @@ public interface IExtensionPageElement {
     SelenideElement ele_role_management_name = $(By.id("role_management_name"));
     SelenideElement ele_role_management_enable_extension_input =  $(By.id("role_management_enable_extension"));
 
+    /** Linkus Server ****/
+    SelenideElement ele_extension_server_enable_extension_login_checkbox  = $(By.id("extension_server_enable_extension_login"));// Extension Number
+    SelenideElement ele_extension_server_enable_email_login_checkbox =$(By.id("extension_server_enable_email_login"));// Email Address
+
     /** 下拉列表 Max Outbound Call Duration(s) **/
    enum MAX_OUTBOUND_CALL_DURATIONS{
        FOLLOWSYSTEM("[Follow System]"),
