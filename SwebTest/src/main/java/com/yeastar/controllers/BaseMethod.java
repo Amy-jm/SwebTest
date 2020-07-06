@@ -4,20 +4,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.yeastar.untils.SSHLinuxUntils;
+import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 @Log4j2

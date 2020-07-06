@@ -1,20 +1,26 @@
 package com.yeastar.testcase.pseries;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.BusinessHoursAndHolidaysPage;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.IExtensionPageElement;
 import com.yeastar.page.pseries.TestCaseBase;
-import com.yeastar.untils.DataUtils;
-import com.yeastar.untils.TableUtils;
-import com.yeastar.untils.WaitUntils;
+import com.yeastar.untils.*;
 import io.qameta.allure.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.List;
 
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.yeastar.page.pseries.IExtensionPageElement.ele_extension_security_max_outb_call_duration_select;
 import static com.yeastar.page.pseries.IPreferencesPage.ele_pbx_settings_preferences_max_call_duration_select;
 import static com.yeastar.swebtest.driver.SwebDriverP.*;
@@ -25,6 +31,7 @@ import static com.yeastar.swebtest.driver.SwebDriverP.*;
  * @author: huangjx@yeastar.com
  * @create: 2020/06/17
  */
+@Listeners({AllureReporterListener.class, TestNGListenerP.class})
 public class TestExtensionSecurity extends TestCaseBase {
 
     /**
@@ -490,22 +497,30 @@ public class TestExtensionSecurity extends TestCaseBase {
     }
 
 
-//    @Test
+    //@Test
     public void testSelectTime() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
         step("2:创建分机号1001,启用Allow Register Remotely");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_office_time_and_holidays);
-        auto.businessHoursAndHoildaysPage().deleAllData().addBusinessHours(
-                DataUtils.getCurrentTimeAndOffset("HH:mm",-3,0),
-                DataUtils.getCurrentTimeAndOffset("HH:mm",-2,0),
-                DataUtils.getCurrentTimeAndOffset("HH:mm",2,0),
-                DataUtils.getCurrentTimeAndOffset("HH:mm",3,30),
-//                BusinessHoursAndHolidaysPage.DAYS_ENUM.MON.getWeekday()+BusinessHoursAndHolidaysPage.DAYS_ENUM.FRI.getWeekday()
-                DataUtils.getCurrentWeekDay()
-        ).clickSaveAndApply();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.system, HomePage.Menu_Level_2.system_tree_email);
+        auto.extensionPage().testBtn.shouldBe(Condition.enabled).click();
+
+        sleep(3000);
+        List<WebElement> elements_input = getWebDriver().findElements(By.xpath("//input"));
+        elements_input.get(elements_input.size()-1).sendKeys("yeastarautotest@163.com");
+        actions().sendKeys(Keys.ENTER).perform();
+
+        sleep(3000);
+//        List<WebElement> elements_Test = getWebDriver().findElements(By.xpath("//span[contains(text(),'Test')]"));
+//        actions().moveToElement(elements_Test.get(elements_Test.size()-1),2,2).click().build().perform();
+//        elements_input.get(elements_Test.size()-1).click();
+
+       // auto.extensionPage().getLastElementOffsetAndClick(auto.extensionPage().testBtn,2,2);
+
+        SelenideElement element_success = $(By.xpath("//span[contains(text(),'Success')]"));
+        auto.extensionPage().waitElementDisplay(element_success,WaitUntils.TIME_OUT_SECOND);
 
     }
 

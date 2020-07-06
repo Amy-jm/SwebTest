@@ -1,6 +1,7 @@
 package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.yeastar.untils.WaitUntils;
@@ -10,7 +11,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.interactions.Actions;
 
-import static com.codeborne.selenide.Condition.value;
+import java.util.Collections;
+import java.util.List;
+
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -144,5 +147,14 @@ public class BasePage implements IButton{
         return this;
     }
 
-
+    /**
+     * 获取最后一个元素位置，并通过偏移单击
+     * @param elementList
+     * @param x
+     * @param y
+     */
+    public void getLastElementOffsetAndClick(String strXpath,int x,int y){
+        ElementsCollection elements_Test = $$(By.xpath(strXpath));
+        actions().moveToElement(elements_Test.get(elements_Test.size()-1),x,y).click().build().perform();
+    }
 }

@@ -38,12 +38,15 @@ public interface IButton {
     SelenideElement refreshBtn = $(By.xpath(String.format(buttonLocationXpath,"Refresh")));
     SelenideElement downloadRecordingsBtn = $(By.xpath(String.format(buttonLocationXpath,"Download Recordings")));
 
+    SelenideElement testBtn = $(By.xpath(String.format(buttonLocationXpath,"Test")));
+
 
 
     //alert
     SelenideElement OKAlertBtn = $(By.xpath("//button/span[contains(text(),'OK')]/.."));
     SelenideElement CancelAlertBtn = $(By.xpath("//button/span[contains(text(),'Cancel')]/.."));
     SelenideElement ConfrimAlertBtn = $(By.xpath("//button/span[contains(text(),'Confrim')]/.."));
+
 
 
     //表格第一行删除图标

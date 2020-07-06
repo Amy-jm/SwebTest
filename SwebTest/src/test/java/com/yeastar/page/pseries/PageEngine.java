@@ -11,6 +11,7 @@ public class PageEngine {
     PreferencesPage preferencesPage;
     OutBoundRoutePage outBoundRoutePage;
     BusinessHoursAndHolidaysPage businessHoursAndHolidaysPage;
+    EmailPage emailPage;
 
 
     public PageEngine() {
@@ -22,6 +23,7 @@ public class PageEngine {
         preferencesPage = new PreferencesPage();
         outBoundRoutePage = new OutBoundRoutePage();
         businessHoursAndHolidaysPage = new BusinessHoursAndHolidaysPage();
+        emailPage = new EmailPage();
 
     }
     public BasePage basePage() { return basePage; }
@@ -32,6 +34,7 @@ public class PageEngine {
     public PreferencesPage preferencesPage() { return preferencesPage; }
     public OutBoundRoutePage outBoundRoutePage(){return outBoundRoutePage;}
     public BusinessHoursAndHolidaysPage businessHoursAndHoildaysPage(){return businessHoursAndHolidaysPage;}
+    public EmailPage emailPage(){return emailPage;}
 
 
 }
