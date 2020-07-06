@@ -11,7 +11,7 @@ public interface ICdrPageElement {
     SelenideElement ele_download_cdr_btn = $(By.xpath("//span[contains(text(),'Download CDR')]"));
     SelenideElement ele_delete_cdr_btn =$(By.xpath("//span[contains(text(),'Delete')]"));
     SelenideElement ele_refresh_cdr_btn = $(By.xpath("//span[contains(text(),'Refresh')]"));
-
+    SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
     enum  CDR_HEADER{
         ID("ID"),
         Time("Time"),

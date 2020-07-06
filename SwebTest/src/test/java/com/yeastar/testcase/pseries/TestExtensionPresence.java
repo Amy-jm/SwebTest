@@ -1,6 +1,5 @@
 package com.yeastar.testcase.pseries;
 
-import com.codeborne.selenide.Condition;
 import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
 import com.yeastar.page.pseries.CdrRecording.ICdrPageElement;
 import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
@@ -25,19 +24,27 @@ public class TestExtensionPresence extends TestCaseBase{
 
     @Test
     public void CaseName() {
-
+        //todo 队列  IVR 响铃组 提示音  voicemail通过CLI判断
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
-        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
-        preparationStepsAway();
+
+        step("编辑呼入路由，目的地到分机0");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSave();
 
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Available：" +
+            "内部分机1000呼叫分机0" +
+            "移动分机和分机0 同时振铃" +
+            "响铃30s超时无应答回复480/404，分机9999999响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceAvailable","Extension", "Regression", "PSeries"})
     public void testPresenceAvailable1000Call0NoAnswer(){
 
         step("登录pbx");
@@ -63,12 +70,10 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(pjsip.getUserAccountInfo(1000).status,RING);
         softAssert.assertEquals(pjsip.getUserAccountInfo(3000).status,RING);
 
-
         assertStep("响铃30s超时无应答，分机9999999振铃");
         sleep(30000);
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
@@ -76,10 +81,15 @@ public class TestExtensionPresence extends TestCaseBase{
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Available：" +
+            "内部分机1000呼叫分机0" +
+            "移动分机和分机0 同时振铃" +
+            "分机0拒接回复486、600，进入分机0 voicemail（cli确认进入voicemail）" )
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable1000Call0Busy(){
 
         step("登录pbx");
@@ -107,31 +117,30 @@ public class TestExtensionPresence extends TestCaseBase{
 
         assertStep("3000挂断，0回复486拒接，3000和0处于挂断状态");
         pjsip.Pj_Answer_Call(3000,603,false);
+        sleep(1000);
         pjsip.Pj_Answer_Call(0,486,false);
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(1000, TALKING, 8),TALKING);
 
         sleep(20000);
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
-
-        //todo 待验证
-        assertStep("判断CDR");
-        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(), ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"F1000 朗视信息科技<1000>");
-//        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_To.getAlias(),0),"Voicemail Yeastar Test0 朗视信息科技<0>");
-        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Status.getAlias(),0),"VOICEMAIL");
-        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Reason.getAlias(),0),"F1000 朗视信息科技<1000> hung up");
 
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Available：" +
+            "sps 外线呼入分机0" +
+            "分机0、移动分机均未响铃" +
+            "转接到Ivr6200，按0，分机9999999响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000Call0ToIVR(){
 
         step("登录pbx");
@@ -139,6 +148,11 @@ public class TestExtensionPresence extends TestCaseBase{
 
         step("初始化环境");
         preparationStepsAvailable();
+
+        step("编辑呼入路由，目的地到分机0");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSaveAndApply();
 
         step("sps 外线呼入分机0");
         pjsip.Pj_Init();
@@ -152,7 +166,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("分机0、移动分机3000均未响铃");
@@ -164,26 +178,26 @@ public class TestExtensionPresence extends TestCaseBase{
 
         assertStep("分机9999999响铃");
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING);
+        pjsip.Pj_Answer_Call(9999999,200,false);
+        softAssert.assertEquals(getExtensionStatus(9999999, TALKING, 8),TALKING);
+        sleep(5000);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
-
-        //todo 待验证
-//        assertStep("判断CDR");
-//        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(), ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"F1000 朗视信息科技<1000>");
-//        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_To.getAlias(),0),"Voicemail Yeastar Test0 朗视信息科技<0>");
-//        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Status.getAlias(),0),"VOICEMAIL");
-//        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Reason.getAlias(),0),"F1000 朗视信息科技<1000> hung up");
 
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Available：" +
+            "sps外线呼入响铃组6301" +
+            "移动分机和分机0 同时振铃" +
+            "分机0响铃20s后应答,移动分机不再响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000CallRingGroup(){
 
         step("登录pbx");
@@ -192,10 +206,10 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsAvailable();
 
-        step("设置呼入路由到响铃组");
+        step("编辑呼入路由，目的地到响铃组6301");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
         auto.inboundRoute().editInbound("InRoute1","Name")
-                           .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.RING_GROUP.getAlias(),"6300-RingGroup");
+                           .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.RING_GROUP.getAlias(),"6301-6301").clickSaveAndApply();
 
         step("sps外线呼入响铃组6300");
         pjsip.Pj_Init();
@@ -205,7 +219,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机3000和分机0 同时振铃");
@@ -219,38 +233,34 @@ public class TestExtensionPresence extends TestCaseBase{
         assertStep("移动分机3000不再响铃");
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
-
-        //todo 待验证
-//        assertStep("判断CDR");
-//        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(), ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"F1000 朗视信息科技<1000>");
-//        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_To.getAlias(),0),"Voicemail Yeastar Test0 朗视信息科技<0>");
-//        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Status.getAlias(),0),"VOICEMAIL");
-//        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Reason.getAlias(),0),"F1000 朗视信息科技<1000> hung up");
-
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Available：" +
+            "sps 外线呼入队列6401" +
+            "移动分机和分机0 同时振铃" +
+            "移动分机响铃20s应答,分机0不再响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
-    public void testPresenceAvailable2000CallQueue1(){
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
+    public void testPresenceAvailable2000CallQueue6401(){
         step("登录pbx");
         loginWithAdmin();
 
         step("初始化环境");
         preparationStepsAvailable();
 
-        step("设置呼入路由到队列6400");
+        step("设置呼入路由到队列6401");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
         auto.inboundRoute().editInbound("InRoute1","Name")
-                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.RING_GROUP.getAlias(),"6400-Queue");
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.QUEUE.getAlias(),"6401-6401").clickSaveAndApply();
 
-        step("sps外线呼入响铃组6400");
+        step("sps外线呼入队列6401");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -258,7 +268,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机3000和分机0 同时振铃");
@@ -272,20 +282,26 @@ public class TestExtensionPresence extends TestCaseBase{
         assertStep("分机0不再响铃");
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
-        //todo 待验证
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Available：" +
+            "sps 外线呼入队列6401" +
+            "移动分机响铃20s应答" +
+            "分机0不再响铃，cdr记录正确")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("设备功能没完成")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "PresenceAvailable", "Extension", "Regression", "PSeries"})
+    //todo  设备功能没完成
     public void testPresenceAvailable2000CallQueue2(){
+
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -305,7 +321,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机3000和分机0 同时振铃");
@@ -315,7 +331,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("分机0应答");
         pjsip.Pj_Answer_Call(0,200,false);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
@@ -324,28 +340,34 @@ public class TestExtensionPresence extends TestCaseBase{
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Away：" +
+            "内部分机1000呼叫分机0" +
+            "分机0响铃、移动分机未响铃" +
+            "响铃10s超时无应答回复480/404" +
+            "转接到队列6400，成员9999999响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway1000Call0(){
         step("登录pbx");
         loginWithAdmin();
 
-        //todo 创建响铃组，设置
-        step("编辑响铃组6300，分机9999999");
-
         step("初始化环境");
         preparationStepsAway();
-
 
         step("内部分机1000呼叫分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(9999999,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
         pjsip.Pj_Make_Call_No_Answer(1000,"0",DEVICE_IP_LAN,false);
         sleep(1000);
@@ -354,20 +376,35 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE);
         softAssert.assertEquals(getExtensionStatus(3000, IDLE, 8),IDLE);
 
-        assertStep("分机9999999均未响铃");
+        assertStep("分机9999999响铃");
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
+
+        assertStep("CDR验证");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"F1000 朗视信息科技<1000>","Yeastar Test9999999 朗视信息科技<9999999>","NO ANSWER",
+                "F1000 朗视信息科技<1000> hung up",communication_internal);
+        auto.cdrPage().assertCDRRecord(getDriver(),1,"F1000 朗视信息科技<1000>","RingGroup 6300<6300>","Answered",
+                "RingGroup 6300<6300> connected",communication_internal);
+        auto.cdrPage().assertCDRRecord(getDriver(),2,"F1000 朗视信息科技<1000>","Yeastar Test0 朗视信息科技<0>","NO ANSWER",
+                "Yeastar Test0 朗视信息科技<0> forwarded",communication_internal);
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Away：" +
+            "sps 外线呼入分机0" +
+            "检查分机0和移动分机状态" +
+            "分机0响铃、移动分机未响铃" +
+            "响铃10s超时无应答回复480/404 转接到队列6400，成员9999999响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway2000Call0ToNoAnswer(){
         step("登录pbx");
         loginWithAdmin();
@@ -375,14 +412,10 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsAway();
 
-        //todo 编辑队列，成员9999999
-        step("编辑队列，成员9999999");
-
-
         step("设置呼入路由到分机0");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
         auto.inboundRoute().editInbound("InRoute1","Name")
-                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技");
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSaveAndApply();
 
         step("sps 外线呼入分机0");
         pjsip.Pj_Init();
@@ -396,28 +429,44 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
-        assertStep("移动分机3000和分机0 均未响铃");
+        assertStep("分机0响铃、移动分机3000未响铃");
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING);
         softAssert.assertEquals(getExtensionStatus(3000, IDLE, 8),IDLE);
 
         assertStep("响铃10s超时无应答回复480/404,转接到队列6400，成员9999999响铃");
         sleep(11000);
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING);
+//        pjsip.Pj_Answer_Call(9999999,200,false);
+//        sleep(5000);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
+
+        assertStep("CDR验证");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Yeastar Test9999999 朗视信息科技<9999999>","NO ANSWER",
+                "F1000 朗视信息科技<1000> hung up",communication_inbound,SPS,"");
+        auto.cdrPage().assertCDRRecord(getDriver(),1,"2000<2000>","Queue 6400<6400>","Answered",
+                "Queue 6400<6400> connected",communication_inbound,SPS,"");
+        auto.cdrPage().assertCDRRecord(getDriver(),2,"2000<2000>","Yeastar Test0 朗视信息科技<0>","NO ANSWER",
+                "Yeastar Test0 朗视信息科技<0> forwarded",communication_inbound,SPS,"");
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Away：" +
+            "sps 外线呼入分机0" +
+            "检查分机0和移动分机状态" +
+            "分机0拒接回复486、600" +
+            "转接呼叫mobile，移动分机3000响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway2000Call0ToBusy(){
         step("登录pbx");
         loginWithAdmin();
@@ -428,7 +477,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("设置呼入路由到分机0");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
         auto.inboundRoute().editInbound("InRoute1","Name")
-                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技");
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技").clickSaveAndApply();
 
         step("sps 外线呼入分机0");
         pjsip.Pj_Init();
@@ -442,28 +491,40 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
-        assertStep("移动分机3000和分机0 均未响铃");
+        assertStep("分机0响铃、移动分机3000未响铃");
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING);
         softAssert.assertEquals(getExtensionStatus(3000, IDLE, 8),IDLE);
 
         assertStep("分机0拒接回复486、600,转接呼叫mobile，移动分机3000响铃");
-        pjsip.Pj_Answer_Call(2000,486,false);
+        pjsip.Pj_Answer_Call(0,486,false);
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
+
+        assertStep("CDR验证");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Yeastar Test0 朗视信息科技<0>","ANSWERED",
+                "2000<2000> hung up",communication_inbound,SPS,"");
+        auto.cdrPage().assertCDRRecord(getDriver(),1,"2000<2000>","903000","NO ANSWER",
+                "903000 rejected",communication_outRoute,SPS,SPS);
+        auto.cdrPage().assertCDRRecord(getDriver(),2,"2000<2000>","Yeastar Test0 朗视信息科技<0>","NO ANSWER",
+                "Yeastar Test0 朗视信息科技<0> rejected",communication_inbound,SPS,"");
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Away：" +
+            "分机1000呼入响铃组6301" +
+            "分机0响铃20s后应答")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway1000CallRingGroup(){
         step("登录pbx");
         loginWithAdmin();
@@ -471,10 +532,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsAway();
 
-        //todo 编辑响铃组，成员0
-        step("编辑响铃组，成员0");
-
-        step("sps 外线呼入分机0");
+        step("分机1000呼入响铃组6301");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -486,34 +544,43 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(1000,"6300",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(1000,"6301",DEVICE_IP_LAN,false);
         sleep(1000);
 
         assertStep("分机0响铃");
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING);
+        pjsip.Pj_Answer_Call(0,200,false);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
+
+        assertStep("CDR验证");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"F1000 朗视信息科技<1000>","Yeastar Test0 朗视信息科技<0>","ANSWERED",
+                "Yeastar Test0 朗视信息科技<0> hung up",communication_internal,SPS,"");
+        auto.cdrPage().assertCDRRecord(getDriver(),1,"F1000 朗视信息科技<1000>","RingGroup 6301<6301>","ANSWERED",
+                "RingGroup 6301<6301> connected",communication_internal,SPS,"");
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Away：" +
+            "分机1000呼入队列6401" +
+            "分机0响铃20s后应答" +
+            "cdr记录正确")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
-    public void testPresenceAway1000CallQueue1(){
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceAway","Extension", "Regression", "PSeries"})
+    public void testPresenceAway1000CallQueue6401(){
         step("登录pbx");
         loginWithAdmin();
 
         step("初始化环境");
         preparationStepsAway();
 
-        //todo 编辑队列6401，成员0
-        step("编辑队列，成员0");
-
-        step("sps 外线呼入分机0");
+        step("分机1000呼入队列6401");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -530,26 +597,40 @@ public class TestExtensionPresence extends TestCaseBase{
 
         assertStep("分机0响铃");
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING);
+        sleep(20000);
+        pjsip.Pj_Answer_Call(0,200,false);
+        sleep(5000);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
+
+        assertStep("CDR验证");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Yeastar Test0 朗视信息科技<0>","ANSWERED",
+                "Yeastar Test0 朗视信息科技<0> hung up",communication_inbound,SPS,"");
+        auto.cdrPage().assertCDRRecord(getDriver(),1,"2000<2000>","Queue 6401<6401>","ANSWERED",
+                "Queue 6401<6401> connected",communication_inbound,SPS,"");
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Away：" +
+            "内部分机呼入到队列6402" +
+            "分机0不会响铃" +
+            "queue show queue 6402 确认分机0状态为pause")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
-    public void testPresenceAway1000CallQueue2(){
+    @TmsLink("")
+    @Issue("功能没有完成")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
+    public void testPresenceAway1000CallQueue6402(){
         step("登录pbx");
         loginWithAdmin();
 
         step("初始化环境");
         preparationStepsAway();
 
-        step("sps 外线呼入分机0");
+        step("内部分机呼入到队列6402");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -571,17 +652,23 @@ public class TestExtensionPresence extends TestCaseBase{
         assertStep("CLI验证：queue show queue 6402 确认分机0状态为pause");
         Assert.assertTrue(execAsterisk("queue show queue-6402").contains("pause"));
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Business Trip：" +
+            "内部分机1000呼叫分机0" +
+            "分机0、移动分机同时响铃" +
+            "响铃10s超时无应答回复480/404" +
+            "转接到自定义号码903000,辅助设备3000分机响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceBusinessTrip","Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip1000Call0ToNoAnswer(){
         step("登录pbx");
         loginWithAdmin();
@@ -589,7 +676,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsBusinessTrip();
 
-        step("sps 外线呼入分机0");
+        step("内部分机1000呼叫分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -613,7 +700,6 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
@@ -622,10 +708,16 @@ public class TestExtensionPresence extends TestCaseBase{
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Business Trip：" +
+            "内部分机1000呼叫分机0" +
+            "分机0、移动分机同时响铃" +
+            "分机0拒接回复486、600" +
+            "转接到播放两次提示音test.wav，播放两次后通话挂断,cdr")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip1000Call0ToBusy(){
         step("登录pbx");
         loginWithAdmin();
@@ -633,7 +725,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsBusinessTrip();
 
-        step("sps 外线呼入分机0");
+        step("内部分机1000呼叫分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -652,22 +744,28 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING);
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING);
 
-        step("响铃10s超时无应答回复486/600");
+        step("分机0拒接回复486、600");
         pjsip.Pj_Answer_Call(0,486,false);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
-
+        //todo 判断音频
         assertStep("CDR 转接到播放两次提示音test.wav，播放两次后通话挂断");
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Business Trip：" +
+            "sps 外线呼入分机0" +
+            "移动分机和分机0 同时振铃" +
+            "响铃10s超时无应答回复480/404" +
+            "转接到hangup，通话直接被挂断")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip2000Call0ToNoAnswer(){
         step("登录pbx");
         loginWithAdmin();
@@ -687,7 +785,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
         sleep(3000);
 
         assertStep("分机0、移动分机同时响铃");
@@ -699,19 +797,23 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
-
 
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Business Trip：" +
+            "sps 外线呼入分机0" +
+            "移动分机和分机0 同时振铃" +
+            "分机0拒接回复486、600" +
+            "转接到voicemail")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip2000Call0ToBusy(){
         step("登录pbx");
         loginWithAdmin();
@@ -731,7 +833,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
         sleep(3000);
 
         assertStep("分机0、移动分机同时响铃");
@@ -742,7 +844,6 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Answer_Call(2000,486,false);
         sleep(20000);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
@@ -750,10 +851,15 @@ public class TestExtensionPresence extends TestCaseBase{
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Business Trip：" +
+            "内部分机呼入到队列6402" +
+            "分机0不会响铃" +
+            "queue show queue 6402 确认分机0不在队列6402中")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip1000CallQueue6402(){
         step("登录pbx");
         loginWithAdmin();
@@ -761,7 +867,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsBusinessTrip();
 
-        step("sps 外线呼入分机0");
+        step("内部分机呼入到队列6402");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -773,13 +879,12 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(1000,"0",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(1000,"6402",DEVICE_IP_LAN,false);
         sleep(3000);
 
-        assertStep("分机0、移动分机同时响铃");
+        assertStep("分机0不会响铃");
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
@@ -791,10 +896,14 @@ public class TestExtensionPresence extends TestCaseBase{
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Do Not Disturb：" +
+            "内部分机1000呼叫分机0" +
+            "分机0及移动分机均不响铃，通话被直接挂断")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb1000Call0(){
         step("登录pbx");
         loginWithAdmin();
@@ -802,7 +911,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsDoNotDisturb();
 
-        step("sps 外线呼入分机0");
+        step("内部分机1000呼叫分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -817,21 +926,24 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Make_Call_No_Answer(1000,"0",DEVICE_IP_LAN,false);
         sleep(3000);
 
-        assertStep("分机0、移动分机同时响铃");
+        assertStep("分机0及移动分机均不响铃，通话被直接挂断");
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE);
         softAssert.assertEquals(getExtensionStatus(3000, IDLE, 8),IDLE);
         softAssert.assertEquals(getExtensionStatus(1000, HUNGUP, 8),HUNGUP);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Do Not Disturb：" +
+            "sps 外线呼入分机0" +
+            "分机0及移动分机均不响铃，通话被转移到手机90 3000")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb2000Call0(){
         step("登录pbx");
         loginWithAdmin();
@@ -855,21 +967,24 @@ public class TestExtensionPresence extends TestCaseBase{
         sleep(3000);
 
         assertStep("分机0及移动分机均不响铃，通话被转移到手机90 3000");
-        //TODO 3000分机重复
+
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE);
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Do Not Disturb：" +
+            "内部分机呼入到队列6401" +
+            "分机0不会响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb1000CallQueue6401(){
         step("登录pbx");
         loginWithAdmin();
@@ -895,17 +1010,20 @@ public class TestExtensionPresence extends TestCaseBase{
         assertStep("分机0不会响铃");
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Do Not Disturb：" +
+            "SPS 外线呼入到队列6401" +
+            "分机0不会响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb2000CallQueue6401(){
         step("登录pbx");
         loginWithAdmin();
@@ -916,7 +1034,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("设置呼入路由到队列6401");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
         auto.inboundRoute().editInbound("InRoute1","Name")
-                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.RING_GROUP.getAlias(),"6401-6401");
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.RING_GROUP.getAlias(),"6401-6401").clickSaveAndApply();
 
         step("SPS 外线呼入到队列6401");
         pjsip.Pj_Init();
@@ -936,17 +1054,21 @@ public class TestExtensionPresence extends TestCaseBase{
         assertStep("分机0不会响铃");
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE);
 
-        step("挂断所有通话，注销pjsip");
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Do Not Disturb：" +
+            "内部分机呼入到队列6402" +
+            "分机0不会响铃" +
+            "queue show queue 6402 确认分机0不在队列6402中")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb",  "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb1000CallQueue6402(){
         step("登录pbx");
         loginWithAdmin();
@@ -973,7 +1095,7 @@ public class TestExtensionPresence extends TestCaseBase{
         assertStep("分机0不会响铃");
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
@@ -985,10 +1107,15 @@ public class TestExtensionPresence extends TestCaseBase{
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Lunch：" +
+            "内部分机1000呼叫分机0" +
+            "移动分机和分机0 同时振铃" +
+            "响铃40s超时无应答回复480/404,转接到voicemail")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000Call0ToNoAnswer(){
         step("登录pbx");
         loginWithAdmin();
@@ -1017,17 +1144,23 @@ public class TestExtensionPresence extends TestCaseBase{
 
         sleep(60000);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
     }
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Lunch：" +
+            "内部分机1000呼叫分机0" +
+            "移动分机和分机0 同时振铃" +
+            "分机0拒接回复486、600" +
+            "通话直接被挂断")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceLunch",  "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000Call0ToBusy(){
         step("登录pbx");
         loginWithAdmin();
@@ -1055,21 +1188,27 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING);
 
         pjsip.Pj_Answer_Call(1000,486,false);
+        assertStep("分机0拒接回复486、600，通话直接被挂断");
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(1000, HUNGUP, 8),HUNGUP);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Lunch：" +
+            "sps 外线呼入分机0" +
+            "移动分机和分机0 同时振铃" +
+            "响铃40s超时无应答回复480/404,通话直接被挂断")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch2000Call0ToNoAnswer(){
         step("登录pbx");
         loginWithAdmin();
@@ -1077,7 +1216,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsLunchBreak();
 
-        step("内部分机1000呼叫分机0");
+        step("sps 外线呼入分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1089,7 +1228,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(1000,"0",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机和分机0 同时振铃");
@@ -1097,22 +1236,27 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING);
 
         assertStep("响铃40s超时无应答回复480/404,通话直接被挂断");
-        sleep(4000);
+        sleep(40000);
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(1000, HUNGUP, 8),HUNGUP);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Lunch：" +
+            "sps 外线呼入分机0" +
+            "移动分机和分机0 同时振铃" +
+            "分机0拒接回复486、600,通话直接被挂断")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceLunch",  "Extension", "Regression", "PSeries"})
     public void testPresenceLunch2000Call0ToBusy(){
         step("登录pbx");
         loginWithAdmin();
@@ -1120,7 +1264,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsLunchBreak();
 
-        step("内部分机1000呼叫分机0");
+        step("sps 外线呼入分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1132,19 +1276,20 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(1000,"0",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"85503300",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机和分机0 同时振铃");
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING);
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING);
 
-        pjsip.Pj_Answer_Call(1000,486,false);
+        assertStep("分机0拒接回复486、600，通话直接被挂断");
+        pjsip.Pj_Answer_Call(0,486,false);
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(1000, HUNGUP, 8),HUNGUP);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
@@ -1152,10 +1297,14 @@ public class TestExtensionPresence extends TestCaseBase{
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Lunch：" +
+            "内部分机呼入到队列6402" +
+            "分机0不会响铃,queue show queue 6402 确认分机0不在队列6402中")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000CallQueue6402(){
         step("登录pbx");
         loginWithAdmin();
@@ -1182,7 +1331,7 @@ public class TestExtensionPresence extends TestCaseBase{
         assertStep("分机0不会响铃");
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
@@ -1195,10 +1344,16 @@ public class TestExtensionPresence extends TestCaseBase{
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Off Work：" +
+            "内部分机1000呼叫分机0" +
+            "检查分机0和移动分机状态" +
+            "分机0响铃，移动分机不会响铃" +
+            "响铃25s超时无应答回复480/404,通话直接被挂断")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceOffWork","Extension", "Regression", "PSeries"})
     public void testPresenceOffWork1000Call0ToNoAnswer(){
         step("登录pbx");
         loginWithAdmin();
@@ -1225,22 +1380,28 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING);
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING);
 
+        assertStep("响铃25s超时无应答回复480/404，通话直接被挂断");
         sleep(25000);
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(1000, HUNGUP, 8),HUNGUP);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
     }
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Off Work：" +
+            "内部分机1000呼叫分机0" +
+            "分机0响铃，移动分机不会响铃" +
+            "分机0拒接回复486、600,通话直接被挂断")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork1000Call0ToBusy(){
         step("登录pbx");
         loginWithAdmin();
@@ -1267,22 +1428,28 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING);
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING);
 
-        pjsip.Pj_Answer_Call(1000,486,false);
+        assertStep("分机0拒接回复486、600，通话直接被挂断");
+        pjsip.Pj_Answer_Call(0,486,false);
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP);
         softAssert.assertEquals(getExtensionStatus(1000, HUNGUP, 8),HUNGUP);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Off Work：" +
+            "sps 外线呼入分机0" +
+            "分机0、移动分机均不会响铃" +
+            "通话转接到分机9999999,9999999分机响铃")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork2000Call0(){
         step("登录pbx");
         loginWithAdmin();
@@ -1290,7 +1457,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsOffWork();
 
-        step("内部分机1000呼叫分机0");
+        step("sps 外线呼入分机0");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1302,27 +1469,33 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(1000,"0",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_IP_LAN,false);
         sleep(1000);
 
-        assertStep("移动分机和分机0 同时振铃");
+        assertStep("分机0、移动分机均不会响铃");
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE);
         softAssert.assertEquals(getExtensionStatus(3000, IDLE, 8),IDLE);
 
+        assertStep("通话转接到分机9999999,9999999分机响铃");
         sleep(2000);
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
     }
 
     @Epic("P_Series")
     @Feature("Extension")
-    @Story("Voicemail")
-    @Description("Presence MODE 功能验证：")
+    @Story("Presence")
+    @Description("Presence->Off Work：" +
+            "内部分机呼入到队列6402" +
+            "分机0会响铃" +
+            "queue show queue 6402 确认分机0在队列6402中")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionPresence,testPresenceModel,Regression,PSeries")
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork1000CallQueue6402(){
         step("登录pbx");
         loginWithAdmin();
@@ -1330,8 +1503,7 @@ public class TestExtensionPresence extends TestCaseBase{
         step("初始化环境");
         preparationStepsOffWork();
 
-
-        step("SPS 外线呼入到队列6402");
+        step("内部分机呼入到队列6402");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1346,10 +1518,10 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Make_Call_No_Answer(1000,"6402",DEVICE_IP_LAN,false);
         sleep(3000);
 
-        assertStep("分机0不会响铃");
+        assertStep("分机0会响铃");
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING);
 
-        step("挂断所有通话，注销pjsip");
+
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
 
@@ -1359,6 +1531,14 @@ public class TestExtensionPresence extends TestCaseBase{
     }
 
 
+    /**
+     * 创建0 9999999 1000分机
+     */
+    void createExts(){
+//        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD).clickSave();
+//        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
+//        auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
+    }
 
     /**
      * Available模式前置步骤
@@ -1369,9 +1549,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
+        createExts();
 
         auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
         auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_available_tab.click();
@@ -1392,14 +1570,12 @@ public class TestExtensionPresence extends TestCaseBase{
      * Away模式前置步骤
      */
     void preparationStepsAway(){
-            //TODO 创建分机队列IVR
+
         preparationStepNameDisplay();
 
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
+        createExts();
 
         auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
         auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_away_tab.click();
@@ -1427,9 +1603,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
+        createExts();
 
         auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
         auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_businessTrip_tab.click();
@@ -1457,9 +1631,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
+        createExts();
 
         auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
         auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_doNotDisturb_tab.click();
@@ -1483,9 +1655,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
+        createExts();
 
         auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
         auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_launch_tab.click();
@@ -1514,9 +1684,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
-        auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
+        createExts();
 
         auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
         auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_off_work_tab.click();

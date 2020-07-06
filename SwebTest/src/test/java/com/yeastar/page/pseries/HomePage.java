@@ -157,16 +157,16 @@ public class HomePage {
                 isLevel2Visible(left_menu_first_level_call_feature);
                 break;
             case pbx_settings:
-                left_menu_first_level_pbx_settings.click();
+                isLevel2Visible(left_menu_first_level_pbx_settings);
                 break;
             case security:
-                left_menu_first_level_security.click();
+                isLevel2Visible(left_menu_first_level_security);
                 break;
             case maintenance:
-                left_menu_first_level_maintenance.click();
+                isLevel2Visible(left_menu_first_level_maintenance);
                 break;
             case cdr_recording:
-                left_menu_first_level_cdr_recording.click();
+                isLevel2Visible(left_menu_first_level_cdr_recording);
                 break;
         }
         //左侧二级菜单
@@ -295,11 +295,6 @@ public class HomePage {
     public void isLevel2Visible(WebElement level1){
 
         WebElement ele = $(By.xpath("//span[@id='"+level1.getAttribute("id")+"']/.."));
-
-        System.out.println(ele.getAttribute("aria-expanded"));
-        System.out.println("AAAAAAAAAAAAAAAAA " +
-                ele.getAttribute("aria-expanded").equals(false) +
-                ele.getAttribute("aria-expanded").equals("false"));
 
         if(ele.getAttribute("aria-expanded").equals("false")){
             level1.click();

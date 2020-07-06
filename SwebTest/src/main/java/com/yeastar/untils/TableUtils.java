@@ -81,6 +81,17 @@ public class TableUtils {
     }
 
     /**
+     * 获取表格数量
+     * @param driver
+     * @return
+     */
+    public static int getTableDataNum(WebDriver driver){
+        WebElement tableElement = driver.findElement(By.xpath(strTableXPATH));
+        SeleniumTable table = SeleniumTable.getInstance(tableElement);
+        return table.rowCount();
+    }
+
+    /**
      * 【自定义表格对象】通过表格中的某个数据（tagName），定位到那一行，点击那一行的编辑按钮
      * @param driver
      * @param strHeader

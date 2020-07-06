@@ -423,7 +423,6 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-
         step("voicemail 环境准备" +
                 "修改分机0voicemail页面，启用voicemail，" +
                 "启用voicemail pin Authentication，" +
@@ -444,6 +443,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         ext2000CallVoicemail();
 
         assertStep("cdr判断");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         auto.cdrPage().ele_download_cdr_btn.shouldBe(Condition.exist);
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),ICdrPageElement.CDR_HEADER.Call_From.getAlias(),0),"2000<2000>");

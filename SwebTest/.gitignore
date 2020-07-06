@@ -3,6 +3,7 @@
 target
 log
 log/*
+build/*
 allure-results
 allure-results/*
 localLog
