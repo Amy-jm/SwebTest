@@ -20,7 +20,7 @@ public class PreferencesPage extends BasePage implements IPreferencesPage{
      */
     @Override
     public PreferencesPage setElementValue(SelenideElement element , String strValue){
-        element.shouldBe(Condition.visible).click();
+        element.shouldBe(Condition.visible).doubleClick();
         actions().sendKeys(Keys.DELETE).perform();//adapt linux
         element.setValue(strValue);
         return this;
