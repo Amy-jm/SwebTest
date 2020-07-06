@@ -68,13 +68,11 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("[前提条件] 1.sip 点对点中继" +
-            "2.呼出路由AutoTest_Route" +
-            "启用disable outbound call-呼出失败：1:login PBX->2:创建分机号1001,启用disable outbound call->3.验证通话状态")
+    @Description("[前提条件] 1.sip ")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink("1001596")
+    @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0","testEnableDisableOutCall","Extension","Regression","PSeries","Security"})
+    @Test(groups = {"P0","testLoginWithEmail","Extension","Regression","PSeries","UserPasswordAndLoginModel"})
     public void testLoginWithEmail() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
@@ -86,12 +84,98 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
         auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("1001", LOGIN_PASSWORD, EMAIL, "extension").
                 clickSaveAndApply();
 
-
         assertStep("3.邮箱登录");
         auto.homePage().logout();
         auto.loginPage().loginWithExtension(EMAIL, LOGIN_PASSWORD, EXTENSION_PASSWORD);
 //        auto.loginPage().login("1001", EXTENSION_PASSWORD);
 
-        assertStep("5:分机login success");
+        assertStep("4:功能菜单中只显示extension，可正常添加、编辑、删除、导入、导出分机");
+    }
+
+    @Epic("P_Series")
+    @Feature("Extension")
+    @Story("Security")
+    @Description("[前提条件] 1.sip ")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0","testLoginWithExtensionNumber","Extension","Regression","PSeries","UserPasswordAndLoginModel"})
+    public void testLoginWithExtensionNumber() throws IOException, JSchException {
+        step("1:login PBX");
+        auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
+
+        prerequisite();
+
+        step("2:创建分机号1001,启用disable outbound call");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("1001", LOGIN_PASSWORD, EMAIL, "extension").
+                clickSaveAndApply();
+
+        assertStep("3.账号登录,O");
+        auto.homePage().logout();
+        auto.loginPage().loginWithExtension(EMAIL, LOGIN_PASSWORD, EXTENSION_PASSWORD);
+//        auto.loginPage().login("1001", EXTENSION_PASSWORD);
+
+        assertStep("4:功能菜单中只显示extension，可正常添加、编辑、删除、导入、导出分机");
+    }
+
+    @Epic("P_Series")
+    @Feature("Extension")
+    @Story("Security")
+    @Description("[前提条件] 1.sip " +
+            "2.创建分机0，Linux Server 禁用 Email，启用 Extension number"+
+            "3.邮箱登录失败" +
+            "4.账号登录成功")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0","testLoginWithEmialWithLinkusServerUnallowEmail","Extension","Regression","PSeries","UserPasswordAndLoginModel"})
+    public void testLoginWithEmialWithLinkusServerUnallowEmail() throws IOException, JSchException {
+        step("1:login PBX");
+        auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
+
+        prerequisite();
+
+        step("2:创建分机号0,禁用login with Email");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("1001", LOGIN_PASSWORD, EMAIL, "extension").
+                clickSaveAndApply();
+
+        assertStep("3.账号登录,O");
+        auto.homePage().logout();
+        auto.loginPage().loginWithExtension(EMAIL, LOGIN_PASSWORD, EXTENSION_PASSWORD);
+//        auto.loginPage().login("1001", EXTENSION_PASSWORD);
+
+        assertStep("4:功能菜单中只显示extension，可正常添加、编辑、删除、导入、导出分机");
+    }
+
+    @Epic("P_Series")
+    @Feature("Extension")
+    @Story("Security")
+    @Description("[前提条件] 1.sip " +
+            "2.创建分机0，Linux Server 禁用 Email，启用 Extension number"+
+            "3.邮箱登录成功" +
+            "4.账号登录失败")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0","testLoginWithEmialWithLinkusServerUnallowNumber","Extension","Regression","PSeries","UserPasswordAndLoginModel"})
+    public void testLoginWithEmialWithLinkusServerUnallowNumber() throws IOException, JSchException {
+        step("1:login PBX");
+        auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
+
+        prerequisite();
+
+        step("2:创建分机号0,禁用login with Email");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("1001", LOGIN_PASSWORD, EMAIL, "extension").
+                clickSaveAndApply();
+
+        assertStep("3.账号登录,O");
+        auto.homePage().logout();
+        auto.loginPage().loginWithExtension(EMAIL, LOGIN_PASSWORD, EXTENSION_PASSWORD);
+//        auto.loginPage().login("1001", EXTENSION_PASSWORD);
+
+        assertStep("4:功能菜单中只显示extension，可正常添加、编辑、删除、导入、导出分机");
     }
 }
