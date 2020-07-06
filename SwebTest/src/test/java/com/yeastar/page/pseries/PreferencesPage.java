@@ -2,6 +2,9 @@ package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
+
+import static com.codeborne.selenide.Selenide.actions;
 
 /**
  * @program: SwebTest
@@ -18,6 +21,7 @@ public class PreferencesPage extends BasePage implements IPreferencesPage{
     @Override
     public PreferencesPage setElementValue(SelenideElement element , String strValue){
         element.shouldBe(Condition.visible).clear();
+        actions().sendKeys(Keys.DELETE).perform();//adapt linux
         element.setValue(strValue);
         return this;
     }
