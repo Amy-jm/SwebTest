@@ -330,6 +330,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         element.shouldBe(Condition.visible).doubleClick();
         actions().sendKeys(Keys.LEFT_CONTROL+"a").build().perform();
         actions().sendKeys(Keys.DELETE).build().perform();
+        sleep(WaitUntils.RETRY_WAIT);
         element.setValue(strValue);
         return this;
     }
