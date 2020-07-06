@@ -3,6 +3,7 @@ package com.yeastar.page.pseries;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.sun.jna.platform.win32.Wdm;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
@@ -327,6 +328,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Override
     public ExtensionPage setElementValue(SelenideElement element ,String strValue){
         element.shouldBe(Condition.visible).doubleClick();
+        actions().sendKeys(Keys.LEFT_CONTROL+"A").build().perform();
         actions().sendKeys(Keys.DELETE).build().perform();
         element.setValue(strValue);
         return this;
