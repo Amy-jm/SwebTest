@@ -93,7 +93,7 @@ public class BasePage implements IButton{
      * 点击保存并应用
      */
     public void clickSaveAndApply(){
-        if(saveBtn.isEnabled()){
+        if(waitElementDisplay(saveBtn,WaitUntils.SHORT_WAIT*2) && saveBtn.isEnabled()){
             saveBtn.click();
         }
 //        saveBtn.shouldBe(Condition.enabled).click();
@@ -149,7 +149,7 @@ public class BasePage implements IButton{
 
     /**
      * 获取最后一个元素位置，并通过偏移单击
-     * @param elementList
+     * @param strXpath
      * @param x
      * @param y
      */

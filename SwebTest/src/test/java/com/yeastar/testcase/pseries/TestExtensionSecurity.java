@@ -311,12 +311,12 @@ public class TestExtensionSecurity extends TestCaseBase {
 
         step("2:创建分机号1001,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_enb_ip_rstr_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：enableiprestrict               : no");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("enableiprestrict              : no"),"[enableiprestrict no]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("enableiprestrict              : no"),"[enableiprestrict no]");
 
         step("4:修改分机号1001,remoteregister->启用");
         auto.extensionPage().editFirstData().switchToTab("Security").isCheckbox(IExtensionPageElement.ele_extension_security_enb_ip_rstr_checkbox,true)
@@ -327,11 +327,11 @@ public class TestExtensionSecurity extends TestCaseBase {
                 .clickSaveAndApply();
 
         assertStep("5:[PJSIP]期望结果：enableiprestrict               : yes");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("enableiprestrict              : yes"),"[enableiprestrict yes]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("permitip1                     : 192.168.3.0/255.255.255.0"),"[permitip1 ]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("permitip2                     : 192.168.0.0/255.255.0.0"),"[permitip2 ]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("permitip3                     : 110.80.36.162/255.255.255.255"),"[permitip3 ]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("permitip4                     : 192.168.202.0/255.255.254.0"),"[permitip4 ]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("enableiprestrict              : yes"),"[enableiprestrict yes]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("permitip1                     : 192.168.3.0/255.255.255.0"),"[permitip1 ]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("permitip2                     : 192.168.0.0/255.255.0.0"),"[permitip2 ]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("permitip3                     : 110.80.36.162/255.255.255.255"),"[permitip3 ]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("permitip4                     : 192.168.202.0/255.255.254.0"),"[permitip4 ]");
         softAssert.assertAll();
     }
 

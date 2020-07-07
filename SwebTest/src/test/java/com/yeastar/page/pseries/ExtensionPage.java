@@ -105,6 +105,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_role_id.click();
         actions().sendKeys(roleName).build().perform();
         log.debug("[userPassword] {}",userPassword);
+        ele_extension_user_user_password.clear();
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_caller_id.setValue(extensionNumber);
@@ -241,6 +242,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     public ExtensionPage deleDataByDeleImage(String extensionNumber){
         $(By.xpath(String.format(DELETE_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH
                 ,extensionNumber))).click();
+        OKAlertBtn.shouldBe(Condition.visible).click();
         return this;
     }
 
@@ -434,5 +436,42 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         return this;
     }
 
+    public int menuNumber = 0;
+    public String menuStr = "";
+
+    /**
+     * 获取菜单DashBoar下个数
+     * @return
+     */
+    public ExtensionPage getMenuNumWithDashBoardBrother(){
+        List<WebElement> elements = getWebDriver().findElements(By.xpath("//li[contains(@title,'Dashboard')]//following-sibling::li"));
+        menuNumber = elements.size();
+        log.debug("[Menu number] "+ menuNumber);
+        for(int i=0;i<elements.size();i++){
+            log.debug("[Menu text] {} ",elements.get(i).getText());
+            menuStr+="--> "+elements.get(i).getText();
+        }
+        return this;
+    }
+
+    /**
+     * 分机登录切换菜单
+     * todo 后期优化 1.先判断当前状态， 2.在根据传入的值切换对应的模式  0707
+     * @return
+     */
+    public ExtensionPage switchWebClient(){
+        $(By.xpath("//section/div/i")).shouldBe(Condition.visible).click();
+        sleep(WaitUntils.SHORT_WAIT);
+        return this;
+    }
+
+    /**
+     * 选择 Linkus Server菜单
+     * @return
+     */
+    public ExtensionPage choiceLinkusServer(){
+        linkusServerBtn.shouldBe(Condition.visible).click();
+        return this;
+    }
 
 }

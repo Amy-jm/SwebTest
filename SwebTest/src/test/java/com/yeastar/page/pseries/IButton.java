@@ -15,7 +15,7 @@ public interface IButton {
     SelenideElement importBtn = $(By.xpath(String.format(buttonLocationXpath,"Import")));
     SelenideElement exportBtn = $(By.xpath(String.format(buttonLocationXpath,"Export")));
     public static SelenideElement deleteBtn = $(By.xpath(String.format(buttonLocationXpath,"Delete")));
-    SelenideElement linkusServerBtn = $(By.xpath(String.format(buttonLocationXpath,"LinkusServer")));
+    SelenideElement linkusServerBtn = $(By.xpath(String.format(buttonLocationXpath,"Linkus")));//Linkus Server
     SelenideElement copyRoleBtn = $(By.xpath(String.format(buttonLocationXpath,"Copy Role")));
     SelenideElement saveBtn = $(By.xpath(String.format(buttonLocationXpath,"Save")));
     SelenideElement cancelBtn = $(By.xpath(String.format(buttonLocationXpath,"Cancel")));
@@ -45,7 +45,7 @@ public interface IButton {
     //alert
     SelenideElement OKAlertBtn = $(By.xpath("//button/span[contains(text(),'OK')]/.."));
     SelenideElement CancelAlertBtn = $(By.xpath("//button/span[contains(text(),'Cancel')]/.."));
-    SelenideElement ConfrimAlertBtn = $(By.xpath("//button/span[contains(text(),'Confrim')]/.."));
+    SelenideElement ConfrimAlertBtn = $(By.xpath("//button/span[contains(text(),'Confirm')]/.."));
 
 
 

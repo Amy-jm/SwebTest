@@ -25,6 +25,8 @@ public class LoginPage extends BasePage{
     public SelenideElement change_password_confirm_password = $(By.id("change_password_confirm_password"));
     public SelenideElement dail_save_btn = $(By.xpath("//*[@id=\"rcDialogTitle1\"]/../..//button//span[contains(text(),'Save')]/.."));
 
+
+    public Boolean isLoginSuccess = true;
     /**
      * login PBX P
      * @param userName
@@ -35,10 +37,18 @@ public class LoginPage extends BasePage{
         login_username.shouldBe(Condition.visible).setValue(userName);
         login_password.setValue(passWord);
         loginBtn.click();
-        user_avatars.shouldBe(Condition.exist);
-        sleep(3000);
+        try {
+            user_avatars.shouldBe(Condition.exist);
+            sleep(3000);
+        }catch (com.codeborne.selenide.ex.ElementNotFound e){
+            isLoginSuccess = false;
+        }
         return this;
     }
+
+
+
+
 
     /**
      * extension login PBX P
