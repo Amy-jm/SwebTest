@@ -46,6 +46,7 @@ public class PjsipApp extends PjsipDll{
         pjsipdll.instance.onCallIncoming(incomingcallback);
         pjsipdll.instance.onCallStateCallback(callstateCallBack);
         pjsipdll.instance.onDtmfDigitCallback(dtmfCallBack);
+        pjsip.setPjsipDebugLevel(-1);//-1 关闭 1-5 递增
 //        pjsipdll.instance.ys_printlog();
 //        Reporter.infoExec("pjs_init done");
 
@@ -646,5 +647,15 @@ public class PjsipApp extends PjsipDll{
                 break;
             }
         }
+    }
+
+    /**
+     * 设置 pjsip debug level
+     * -1 关闭
+     * 1-5 递增
+     * @param debugLevel
+     */
+    public void setPjsipDebugLevel(int debugLevel){
+        pjsipdll.instance.ys_log_set_level(debugLevel);
     }
 }

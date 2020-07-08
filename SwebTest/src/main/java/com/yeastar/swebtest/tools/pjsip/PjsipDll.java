@@ -58,6 +58,7 @@ public class PjsipDll {
         int ys_hangup_all_call();
         int ys_setCurrentAccount();
         void ys_printlog();
+        int ys_log_set_level(int level);
         int ys_shutdown();
         int ys_releaseCall(int accountId);
         int ys_removeAccounts();
