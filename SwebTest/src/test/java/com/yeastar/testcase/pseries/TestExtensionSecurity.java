@@ -36,14 +36,14 @@ public class TestExtensionSecurity extends TestCaseBase {
 
     /**
      * 前提条件
-     * 1.添加1001分机到 路由AutoTest_Route
+     * 1.添加0分机到 路由AutoTest_Route
      */
     public void prerequisite(){
         //新增呼出路由
-        //添加分机1001 ，到路由AutoTest_Route
+        //添加分机0 ，到路由AutoTest_Route
         //todo 创建路由
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().editRoute("AutoTest_Route").addExtensionOrExtensionGroup("1001").clickSaveAndApply();
+        auto.outBoundRoutePage().editRoute("AutoTest_Route").addExtensionOrExtensionGroup("0").clickSaveAndApply();
     }
 
     @Epic("P_Series")
@@ -51,7 +51,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Story("Security")
     @Description("[前提条件] 1.sip 点对点中继" +
             "2.呼出路由AutoTest_Route" +
-            "启用disable outbound call-呼出失败：1:login PBX->2:创建分机号1001,启用disable outbound call->3.验证通话状态")
+            "启用disable outbound call-呼出失败：1:login PBX->2:创建分机号0,启用disable outbound call->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("1001596")
     @Issue("")
@@ -61,9 +61,9 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001,启用disable outbound call");
+        step("2:创建分机号0,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,true).
                 clickSaveAndApply();
@@ -71,15 +71,15 @@ public class TestExtensionSecurity extends TestCaseBase {
 
         prerequisite();
 
-        assertStep("3.验证通话状态,1.预期1001会Ring ,2.预期2000不会响铃");
+        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2000不会响铃");
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
 
-        pjsip.Pj_Make_Call_No_Answer(1001,"2000",DEVICE_IP_LAN,false);
-        softAssert.assertEquals(getExtensionStatus(1001,HUNGUP,20),HUNGUP,"预期1001为HUNGUP状态");
+        pjsip.Pj_Make_Call_No_Answer(0,"2000",DEVICE_IP_LAN,false);
+        softAssert.assertEquals(getExtensionStatus(0,HUNGUP,20),HUNGUP,"预期0为HUNGUP状态");
         softAssert.assertEquals(getExtensionStatus(2000,IDLE,10),IDLE,"预期2000不会响铃");
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
@@ -88,7 +88,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("禁用disable outbound call-呼出成功：1:login PBX->2:创建分机号1001,启用disable outbound call->3.验证通话状态")
+    @Description("禁用disable outbound call-呼出成功：1:login PBX->2:创建分机号0,启用disable outbound call->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("1001599")
     @Issue("")
@@ -98,23 +98,23 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001,启用disable outbound call");
+        step("2:创建分机号0,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,false).clickSaveAndApply();
 
         prerequisite();
 
-        assertStep("3.验证通话状态,1.预期1001会Ring ,2.预期2000不会响铃");
+        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2000不会响铃");
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(1001,"2000",DEVICE_IP_LAN,false);
-        softAssert.assertEquals(getExtensionStatus(1001,TALKING,10),TALKING,"预期1001为TALKING状态");
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
+        softAssert.assertEquals(getExtensionStatus(0,TALKING,10),TALKING,"预期0为TALKING状态");
         softAssert.assertEquals(getExtensionStatus(2000,TALKING,10),TALKING,"预期2000为TALKING状态");
         pjsip.Pj_Hangup_All();
 
@@ -123,7 +123,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Status",0),"ANSWERED");
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"1001<1001>");
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"0<0>");
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",0),"2000");
         softAssert.assertAll();
     }
@@ -131,7 +131,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("启用disable outbound calls outside business hours功能，则下班时间不能呼出：1:login PBX->2:创建分机号1001,启用disable outbound calls outside business hours->3.验证通话状态")
+    @Description("启用disable outbound calls outside business hours功能，则下班时间不能呼出：1:login PBX->2:创建分机号0,启用disable outbound calls outside business hours->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue(" bug 23版本 设置不生效，待24版本验证")
@@ -142,9 +142,9 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001,启用disable outbound calls outside business hours");
+        step("2:创建分机号0,启用disable outbound calls outside business hours");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_office_time_outb_call_checkbox,true).
                 clickSaveAndApply();
@@ -159,16 +159,16 @@ public class TestExtensionSecurity extends TestCaseBase {
                 DataUtils.getCurrentWeekDay()).clickSaveAndApply();
 
 
-        assertStep("3.验证通话状态,1.预期1001会Ring ,2.预期2000不会响铃");
+        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2000不会响铃");
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
 
         //勾选，下班时间不能呼出
-        pjsip.Pj_Make_Call_No_Answer(1001,"2000",DEVICE_IP_LAN,false);
-        softAssert.assertEquals(getExtensionStatus(1001,HUNGUP,10),RING,"预期1001为HUNGUP状态");
+        pjsip.Pj_Make_Call_No_Answer(0,"2000",DEVICE_IP_LAN,false);
+        softAssert.assertEquals(getExtensionStatus(0,HUNGUP,10),RING,"预期0为HUNGUP状态");
         softAssert.assertEquals(getExtensionStatus(2000,IDLE,10),IDLE,"预期2000不会响铃");
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
@@ -178,7 +178,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("禁用disable outbound calls outside business hours，下班时间可以正常呼出：1:login PBX->2:创建分机号1001,禁用disable outbound calls outside business hours->3.验证通话状态")
+    @Description("禁用disable outbound calls outside business hours，下班时间可以正常呼出：1:login PBX->2:创建分机号0,禁用disable outbound calls outside business hours->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("1001597")
     @Issue("")
@@ -189,9 +189,9 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001,禁用disable outbound calls outside business hours");
+        step("2:创建分机号0,禁用disable outbound calls outside business hours");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_office_time_outb_call_checkbox,false).clickSaveAndApply();
 
@@ -204,15 +204,15 @@ public class TestExtensionSecurity extends TestCaseBase {
                 "","",
                 DataUtils.getCurrentWeekDay()).clickSaveAndApply();
 
-        assertStep("3.验证通话状态,1.预期1001会Ring ,2.预期2000不会响铃");
+        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2000不会响铃");
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(1001,"2000",DEVICE_IP_LAN,false);
-        softAssert.assertEquals(getExtensionStatus(1001,TALKING,10),TALKING,"预期1001为TALKING状态");
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
+        softAssert.assertEquals(getExtensionStatus(0,TALKING,10),TALKING,"预期0为TALKING状态");
         softAssert.assertEquals(getExtensionStatus(2000,TALKING,10),TALKING,"预期2000为TALKING状态");
         pjsip.Pj_Hangup_All();
 
@@ -221,7 +221,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Status",0),"ANSWERED");
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"1001<1001>");
+        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"0<0>");
         softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",0),"2000");
         softAssert.assertAll();
     }
@@ -230,7 +230,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("启动Allow Register Remotely：1:login PBX->2:创建分机号1001,启用Allow Register Remotely->3.验证通话状态")
+    @Description("启动Allow Register Remotely：1:login PBX->2:创建分机号0,启用Allow Register Remotely->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001600"), @TmsLink(value = "ID1001601")})
     @Issue("")
@@ -240,20 +240,20 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001,启用Allow Register Remotely");
+        step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_allow_reg_remotely_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：remoteregister                     : no ");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains(" remoteregister                : no"),"[remoteregister no]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains(" remoteregister                : no"),"[remoteregister no]");
 
-        step("4:修改分机号1001,remoteregister->启用");
+        step("4:修改分机号0,remoteregister->启用");
         auto.extensionPage().editFirstData().switchToTab("Security").isCheckbox(IExtensionPageElement.ele_extension_security_allow_reg_remotely_checkbox,true).clickSaveAndApply();
 
         assertStep("5:[PJSIP]期望结果：remoteregister                     : yes");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains(" remoteregister                : yes"),"[remoteregister yes]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains(" remoteregister                : yes"),"[remoteregister yes]");
 
         softAssert.assertAll();
     }
@@ -262,7 +262,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("验证 Enable User Agent Registration Authorization：1:login PBX->2:创建分机号1001,启用Allow Register Remotely->3.验证通话状态")
+    @Description("验证 Enable User Agent Registration Authorization：1:login PBX->2:创建分机号0,启用Allow Register Remotely->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001602"), @TmsLink(value = "ID1001603")})
     @Issue("")
@@ -272,16 +272,16 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001,启用Allow Register Remotely");
+        step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_enb_user_agent_ident_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：enableuseragent               : no");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("enableuseragent               : no"),"[enableuseragent no]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("enableuseragent               : no"),"[enableuseragent no]");
 
-        step("4:修改分机号1001,remoteregister->启用");
+        step("4:修改分机号0,remoteregister->启用");
         auto.extensionPage().editFirstData().switchToTab("Security").isCheckbox(IExtensionPageElement.ele_extension_security_enb_user_agent_ident_checkbox,true)
                 .addUserAgent(0,"Yealink.")
                 .addUserAgent(1,"Test.")
@@ -291,15 +291,15 @@ public class TestExtensionSecurity extends TestCaseBase {
                 .clickSaveAndApply();
 
         assertStep("5:[PJSIP]期望结果：enableuseragent               : yes");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("enableuseragent               : yes"),"[enableuseragent yes]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("limituseragent                : Yealink.,Test.,Yeastar.,Zoiper.,Y."),"[limituseragent yes]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("enableuseragent               : yes"),"[enableuseragent yes]");
+        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("limituseragent                : Yealink.,Test.,Yeastar.,Zoiper.,Y."),"[limituseragent yes]");
         softAssert.assertAll();
     }
 
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Security")
-    @Description("验证 SIP Registration IP Restriction：1:login PBX->2:创建分机号1001,启用Allow Register Remotely->3.验证通话状态")
+    @Description("验证 SIP Registration IP Restriction：1:login PBX->2:创建分机号0,启用Allow Register Remotely->3.验证通话状态")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001604"), @TmsLink(value = "ID1001605"), @TmsLink(value = "1001606")})
     @Issue("")
@@ -309,7 +309,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001,启用Allow Register Remotely");
+        step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
                 editFirstData().switchToTab("Security").
@@ -318,7 +318,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         assertStep("3:[PJSIP]期望结果：enableiprestrict               : no");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"0").contains("enableiprestrict              : no"),"[enableiprestrict no]");
 
-        step("4:修改分机号1001,remoteregister->启用");
+        step("4:修改分机号0,remoteregister->启用");
         auto.extensionPage().editFirstData().switchToTab("Security").isCheckbox(IExtensionPageElement.ele_extension_security_enb_ip_rstr_checkbox,true)
                 .addIPRestriction(0,"192.168.3.0","255.255.255.0")
                 .addIPRestriction(1,"192.168.0.0","255.255.0.0")
@@ -507,7 +507,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
 
-        step("2:创建分机号1001,启用Allow Register Remotely");
+        step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.system, HomePage.Menu_Level_2.system_tree_email);
         auto.extensionPage().testBtn.shouldBe(Condition.enabled).click();
 

@@ -21,7 +21,7 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
     //Extension Extension Group 通用分机选择
     public String GROUP_EXTENSION_XPATH = "//td[contains(text(),'%s')]/..//input";
     //Extension Extension Group 通用分机选择-右移按钮
-    public String Group_EXTENSION_RIGHT_BUTTON_XPATH="//td[contains(text(),'%s')]/../../../../../../../../../../../../../../..//button[1]";
+    public String Group_EXTENSION_RIGHT_BUTTON_XPATH="//td[contains(text(),'%s')]/../../../../../../../../../../../../../../../..//button[1]";
 
     /**
      * 通过路由名，通过编辑图标，编辑
