@@ -21,9 +21,9 @@ public class TestCaseBase extends BaseMethod {
     private WebDriver webDriver;
     public SoftAssert softAssert;
 
-    public TestCaseBase(){
-        softAssert = new SoftAssert();
-    }
+//    public TestCaseBase(){
+//        softAssert = new SoftAssert();
+//    }
 
 
 
@@ -37,6 +37,7 @@ public class TestCaseBase extends BaseMethod {
         setDriver(webDriver);
         open(PBX_URL);
         auto = new PageEngine();
+        softAssert = new SoftAssert();
     }
 
     @AfterMethod(alwaysRun = true)
