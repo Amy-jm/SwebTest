@@ -444,7 +444,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @return
      */
     public ExtensionPage getMenuNumWithDashBoardBrother(){
-        List<WebElement> elements = getWebDriver().findElements(By.xpath("//li[contains(@title,'Dashboard')]//following-sibling::li"));
+        List<WebElement> elements = getWebDriver().findElements(By.xpath("//li[contains(@role,'menuitem')]"));
         menuNumber = elements.size();
         log.debug("[Menu number] "+ menuNumber);
         for(int i=0;i<elements.size();i++){

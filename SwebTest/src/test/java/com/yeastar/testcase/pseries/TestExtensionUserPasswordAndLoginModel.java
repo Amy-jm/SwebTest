@@ -84,7 +84,9 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
 
         step("2:创建分机号1001,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").
+        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").choiceLinkusServer().
+                setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,true).
+                setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,true).
                 clickSaveAndApply();
 
         assertStep("3.邮箱登录");
@@ -122,7 +124,9 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
 
         step("2:创建分机号1001,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").
+        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").choiceLinkusServer().
+                setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,true).
+                setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,true).
                 clickSaveAndApply();
 
         //获取邮箱数量
@@ -136,7 +140,7 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
         auto.loginPage().login(EMAIL, EXTENSION_PASSWORD);
 
         //再次获取邮箱数量
-        sleep(WaitUntils.SHORT_WAIT*3);
+        sleep(WaitUntils.SHORT_WAIT*10);
         int emailUnreadCount_after = MailUtils.getEmailUnreadMessageCountFrom163();
         log.debug("[修改密码，收到邮件，数量+1]"+emailUnreadCount_after);
         assertStep("4.邮箱数量");
