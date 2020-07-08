@@ -4,6 +4,7 @@ import com.yeastar.controllers.BaseMethod;
 import com.yeastar.untils.BrowserUtils;
 import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.EmptyUtil;
+import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -53,11 +54,13 @@ public class TestCaseBase extends BaseMethod {
         new BrowserUtils().getLogType_Browser(method,webDriver);
 //        log.debug("[afterMethod before session]{}",getWebDriver().manage());
         getDriver().close();
+        getWebDriver().close();
         log.debug("[afterMethod] driver close .");
         getDriver().quit();
+        getWebDriver().quit();
         log.debug("[afterMethod] driver quit .");
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
-
+        Thread.sleep(WaitUntils.TIME_OUT_SECOND);
     }
 
 
