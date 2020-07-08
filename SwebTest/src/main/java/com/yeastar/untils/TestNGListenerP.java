@@ -67,7 +67,7 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
 
         //更新用例状态 zalenium
         try{
-            Cookie cookie = new Cookie("zaleniumTestPassed", "skip");
+            Cookie cookie = new Cookie("zaleniumTestPassed", "false");
             getWebDriver().manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
         log.error(ex.getMessage());
