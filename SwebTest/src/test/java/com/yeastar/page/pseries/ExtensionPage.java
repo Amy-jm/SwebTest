@@ -195,7 +195,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      */
     @Step("删除所有分机")
     public ExtensionPage deleAllExtension() {
-        if (ele_delete_all_checkbox.isEnabled()) {
+        if (waitElementDisplay(ele_delete_all_checkbox,WaitUntils.SHORT_WAIT) && ele_delete_all_checkbox.isEnabled()) {
             Selenide.actions().click(ele_delete_all_checkbox).perform();
             deleteBtn.shouldBe(Condition.visible).click();
             OKAlertBtn.shouldBe(Condition.visible).click();
