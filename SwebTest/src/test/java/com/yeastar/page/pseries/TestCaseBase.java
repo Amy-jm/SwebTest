@@ -51,7 +51,11 @@ public class TestCaseBase extends BaseMethod {
             pjsip.Pj_Destory();
         }
         new BrowserUtils().getLogType_Browser(method,webDriver);
-        getWebDriver().quit();
+//        log.debug("[afterMethod before session]{}",getWebDriver().manage());
+        getDriver().close();
+        log.debug("[afterMethod] driver close .");
+        getDriver().quit();
+        log.debug("[afterMethod] driver quit .");
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
 
     }

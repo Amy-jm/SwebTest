@@ -49,6 +49,10 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
         }catch(java.lang.NullPointerException ex){
             log.error(ex.getMessage());
         }
+//        getWebDriver().close();
+//        log.debug("[TestNGListenerP] driver close .");
+//        getWebDriver().quit();
+//        log.debug("[TestNGListenerP] driver quit .");
     }
 
 
@@ -62,8 +66,16 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
         log.debug("[Skipped] "+tr.getTestClass()+tr.getName());
 
         //更新用例状态 zalenium
-        Cookie cookie = new Cookie("zaleniumTestPassed", "skip");
-        getWebDriver().manage().addCookie(cookie);
+        try{
+            Cookie cookie = new Cookie("zaleniumTestPassed", "skip");
+            getWebDriver().manage().addCookie(cookie);
+        }catch(java.lang.NullPointerException ex){
+        log.error(ex.getMessage());
+    }
+//        getDriver().close();
+//        log.debug("[TestNGListenerP onTestSkipped] driver close .");
+//        getDriver().quit();
+//        log.debug("[TestNGListenerP onTestSkipped] driver quit .");
     }
 
     /**
@@ -96,7 +108,7 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     @Override
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
-        log.debug( "[Start test] " +tr.getTestClass()+tr.getName());
+        log.debug( "[TestNGListenerP Start test] " +tr.getTestClass()+tr.getName());
         try {
             Cookie cookie = new Cookie("zaleniumMessage", "[Start test] " + tr.getName());
             webDriver.manage().addCookie(cookie);
