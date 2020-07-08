@@ -123,7 +123,8 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			//Idle TimeOut
-//			desiredCapabilities.setCapability("idleTimeout", 150);//150-100
+			desiredCapabilities.setCapability("idleTimeout", 150);//150-100
+			log.debug("[set idleTimeout]{}",50);
 //			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 100);//180-90
 			//Screen Resolution
 //			desiredCapabilities.setCapability("screenResolution", "1920x1080");
