@@ -69,12 +69,13 @@ public class TestCaseBase extends BaseMethod {
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
         Thread.sleep(WaitUntils.SHORT_WAIT);
         //
-        log.debug("[clean session] {}"+debugCleanSession());
+        //log.debug("[clean session] {}"+debugCleanSession());
+        Thread.sleep(WaitUntils.SHORT_WAIT);
     }
 
 
     public String debugCleanSession(){
-        String strURL="http://localhost:4444/grid/sessions?action=doCleanupActiveSessions";
+        String strURL="http://192.168.3.252:4444/grid/sessions?action=doCleanupActiveSessions";
         String result = "";
 
 
