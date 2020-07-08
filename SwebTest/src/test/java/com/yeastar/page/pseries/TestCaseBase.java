@@ -11,7 +11,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -61,6 +68,33 @@ public class TestCaseBase extends BaseMethod {
         log.debug("[afterMethod] driver quit .");
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
         Thread.sleep(WaitUntils.SHORT_WAIT);
+        //
+        log.debug("[clean session] {}"+debugCleanSession());
+    }
+
+
+    public String debugCleanSession(){
+        String strURL="http://localhost:4444/grid/sessions?action=doCleanupActiveSessions";
+        String result = "";
+
+
+        try {
+            URL url= new URL(strURL);
+            URLConnection connection = url.openConnection();
+            connection.connect();
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            while ((line = in.readLine())!= null)
+            {
+                result += line;
+            }
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+            return result;
+
     }
 
 
