@@ -54,7 +54,6 @@ public class TestCaseBase extends BaseMethod {
         new BrowserUtils().getLogType_Browser(method,webDriver);
 //        log.debug("[afterMethod before session]{}",getWebDriver().manage());
         getDriver().close();
-        getWebDriver().close();
         log.debug("[afterMethod] driver close .");
         getDriver().quit();
         getWebDriver().quit();
