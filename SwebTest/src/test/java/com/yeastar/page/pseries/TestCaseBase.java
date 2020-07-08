@@ -50,6 +50,7 @@ public class TestCaseBase extends BaseMethod {
         if(EmptyUtil.isNotEmpty(pjsip)){
             log.debug("[start destroy pjsip]");
             pjsip.Pj_Destory();
+
         }
         new BrowserUtils().getLogType_Browser(method,webDriver);
 //        log.debug("[afterMethod before session]{}",getWebDriver().manage());
@@ -59,7 +60,7 @@ public class TestCaseBase extends BaseMethod {
         getWebDriver().quit();
         log.debug("[afterMethod] driver quit .");
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
-        Thread.sleep(WaitUntils.TIME_OUT_SECOND);
+        Thread.sleep(WaitUntils.SHORT_WAIT);
     }
 
 
