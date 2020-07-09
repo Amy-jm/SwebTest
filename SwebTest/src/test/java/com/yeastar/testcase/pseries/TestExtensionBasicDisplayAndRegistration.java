@@ -44,7 +44,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         //todo pbx settings->preference->User Extension 字段保持默认，1000-5999；
         //todo pbx settings->preference->display name format字段保持默认设置为：first name last name with space
-        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","YeastarTest0","Yeastar202");
+        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","YeastarTest0","Yeastar202").clickSaveAndApply();
 
         assertStep("3:验证保存成功");
         String strResult = execAsterisk(PJSIP_SHOW_ENDPOINT+"0");
@@ -77,7 +77,7 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         //todo pbx settings->preference->User Extension 字段保持默认，1000-5999；
         //todo pbx settings->preference->display name format字段保持默认设置为：first name last name with space
-        auto.extensionPage().deleAllExtension().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","YeastarTest9999999","Yeastar202");
+        auto.extensionPage().deleAllExtension().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","YeastarTest9999999","Yeastar202").clickSaveAndApply();
 
         assertStep("3:验证保存成功");
         String strResult = execAsterisk(PJSIP_SHOW_ENDPOINT+"9999999");
