@@ -1,10 +1,8 @@
 package com.yeastar.page.pseries;
 
+import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
-import com.yeastar.untils.BrowserUtils;
-import com.yeastar.untils.DataUtils;
-import com.yeastar.untils.EmptyUtil;
-import com.yeastar.untils.WaitUntils;
+import com.yeastar.untils.*;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -75,26 +73,21 @@ public class TestCaseBase extends BaseMethod {
 
 
     public String debugCleanSession(){
-        String strURL="http://192.168.3.252:4444/grid/sessions?action=doCleanupActiveSessions";
+        String host = "192.168.3.252";
+        int port = 22;
+        String user = "root";
+        String password = "r@@t";
+        String command = "curl -sSL http://localhost:4444/grid/sessions?action=doCleanupActiveSessions";
         String result = "";
 
-
         try {
-            URL url= new URL(strURL);
-            URLConnection connection = url.openConnection();
-            connection.connect();
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String line;
-            while ((line = in.readLine())!= null)
-            {
-                result += line;
-            }
-            in.close();
+            result =  SSHLinuxUntils.exeCommand(host,port,user,password,command);
+        } catch (JSchException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-            return result;
+        return result;
 
     }
 
