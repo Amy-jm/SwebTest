@@ -4,6 +4,7 @@ import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
 import com.yeastar.untils.*;
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -58,17 +59,7 @@ public class TestCaseBase extends BaseMethod {
 
         }
         new BrowserUtils().getLogType_Browser(method,webDriver);
-//        log.debug("[afterMethod before session]{}",getWebDriver().manage());
-        getDriver().close();
-        log.debug("[afterMethod] driver close .");
-        getDriver().quit();
-        getWebDriver().quit();
-        log.debug("[afterMethod] driver quit .");
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
-        Thread.sleep(WaitUntils.SHORT_WAIT);
-        //
-        //log.debug("[clean session] {}"+debugCleanSession());
-        Thread.sleep(WaitUntils.SHORT_WAIT);
     }
 
 
