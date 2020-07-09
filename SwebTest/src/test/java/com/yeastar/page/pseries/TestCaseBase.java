@@ -2,25 +2,20 @@ package com.yeastar.page.pseries;
 
 import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
-import com.yeastar.untils.*;
+import com.yeastar.untils.BrowserUtils;
+import com.yeastar.untils.DataUtils;
+import com.yeastar.untils.EmptyUtil;
+import com.yeastar.untils.SSHLinuxUntils;
 import lombok.extern.log4j.Log4j2;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-
 
 import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 @Log4j2
 public class TestCaseBase extends BaseMethod {
