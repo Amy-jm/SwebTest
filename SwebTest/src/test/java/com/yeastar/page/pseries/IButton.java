@@ -15,7 +15,7 @@ public interface IButton {
     SelenideElement importBtn = $(By.xpath(String.format(buttonLocationXpath,"Import")));
     SelenideElement exportBtn = $(By.xpath(String.format(buttonLocationXpath,"Export")));
     public static SelenideElement deleteBtn = $(By.xpath(String.format(buttonLocationXpath,"Delete")));
-    SelenideElement linkusServerBtn = $(By.xpath(String.format(buttonLocationXpath,"LinkusServer")));
+    SelenideElement linkusServerBtn = $(By.xpath(String.format(buttonLocationXpath,"Linkus")));//Linkus Server
     SelenideElement copyRoleBtn = $(By.xpath(String.format(buttonLocationXpath,"Copy Role")));
     SelenideElement saveBtn = $(By.xpath(String.format(buttonLocationXpath,"Save")));
     SelenideElement cancelBtn = $(By.xpath(String.format(buttonLocationXpath,"Cancel")));
@@ -38,6 +38,8 @@ public interface IButton {
     SelenideElement refreshBtn = $(By.xpath(String.format(buttonLocationXpath,"Refresh")));
     SelenideElement downloadRecordingsBtn = $(By.xpath(String.format(buttonLocationXpath,"Download Recordings")));
 
+    SelenideElement testBtn = $(By.xpath(String.format(buttonLocationXpath,"Test")));
+
 
 
     //alert
@@ -49,6 +51,8 @@ public interface IButton {
     //表格第一行删除图标
     SelenideElement ele_deleteImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'delete')]"));
     SelenideElement ele_editImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'edit')]"));
+    String EDIT_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH = "//table/tbody//td[contains(text(),'%s')]/following-sibling::*//i[contains(@class,'edit')]";
+    String DELETE_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH = "//table/tbody//td[contains(text(),'%s')]/following-sibling::*//i[contains(@class,'delete')]";
 
 
 

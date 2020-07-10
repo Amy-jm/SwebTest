@@ -635,7 +635,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         //设置cdr名称显示格式
         auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
-        auto.preferences().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias()).clickSaveAndApply();
+        auto.preferencesPage().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias()).clickSaveAndApply();
 
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);

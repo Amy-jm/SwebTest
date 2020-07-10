@@ -2,14 +2,16 @@
 package com.yeastar.page.pseries;
 
 
+import com.yeastar.page.pseries.CallControl.BusinessHoursAndHolidaysPage;
 import com.yeastar.page.pseries.CallControl.InboundRoute;
+import com.yeastar.page.pseries.CallControl.OutBoundRoutePage;
 import com.yeastar.page.pseries.CallFeatures.IVRPage;
 import com.yeastar.page.pseries.CallFeatures.QueuePage;
 import com.yeastar.page.pseries.CallFeatures.RingGroupPage;
 import com.yeastar.page.pseries.CdrRecording.CDRPage;
 import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
 import com.yeastar.page.pseries.ExtensionTrunk.TrunkPage;
-import com.yeastar.page.pseries.PbxSettings.Preferences;
+import com.yeastar.page.pseries.PbxSettings.PreferencesPage;
 import com.yeastar.page.pseries.WebClient.Me_HomePage;
 
 public class PageEngine {
@@ -20,7 +22,10 @@ public class PageEngine {
     InboundRoute inboundRoutePage;
     BasePage basePage;
     CDRPage cdrPage;
-    Preferences preferences;
+    PreferencesPage preferencesPage;
+    OutBoundRoutePage outBoundRoutePage;
+    BusinessHoursAndHolidaysPage businessHoursAndHolidaysPage;
+    EmailPage emailPage;
     RingGroupPage ringGroupPage;
     IVRPage ivrPage;
     QueuePage queuePage;
@@ -34,11 +39,15 @@ public class PageEngine {
         trunkPage = new TrunkPage();
         inboundRoutePage = new InboundRoute();
         cdrPage = new CDRPage();
-        preferences = new Preferences();
+        preferencesPage = new PreferencesPage();
+        outBoundRoutePage = new OutBoundRoutePage();
+        businessHoursAndHolidaysPage = new BusinessHoursAndHolidaysPage();
+        emailPage = new EmailPage();
         ringGroupPage = new RingGroupPage();
         ivrPage = new IVRPage();
         queuePage = new QueuePage();
         me_homePage = new Me_HomePage();
+
     }
     public BasePage basePage() { return basePage; }
     public LoginPage loginPage() { return loginPage; }
@@ -50,11 +59,9 @@ public class PageEngine {
     public RingGroupPage ringGroupPage(){return ringGroupPage;}
     public IVRPage ivrPage(){return ivrPage;}
     public QueuePage queuePage(){return queuePage;}
-    public Preferences preferences(){return preferences;}
+    public PreferencesPage preferencesPage() { return preferencesPage; }
+    public OutBoundRoutePage outBoundRoutePage(){return outBoundRoutePage;}
+    public BusinessHoursAndHolidaysPage businessHoursAndHoildaysPage(){return businessHoursAndHolidaysPage;}
+    public EmailPage emailPage(){return emailPage;}
     public Me_HomePage me_homePage() { return me_homePage; }
-
-
-//    public  LoginPage loginPage(){}
-
-
 }

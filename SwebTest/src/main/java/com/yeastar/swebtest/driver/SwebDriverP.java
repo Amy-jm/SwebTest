@@ -35,14 +35,12 @@ public class SwebDriverP extends ConfigP {
     public static WebDriver webDriver = null;
 
     public static void quitDriver() {
-//        webDriver.quit();
-        logout();
+
         webDriver.quit();
         if(webDriver!=null) {
             log.debug("webdriver is not null");
             close();
         }
-//        ys_waitingTime(5000);
     }
 
     public static void killChromePid() {

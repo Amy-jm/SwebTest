@@ -23,23 +23,29 @@ public class BrowserUtils {
     public  void  getLogType_Browser(WebDriver driver) {
         try {
             LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-            System.out.println("===============BROWSER.start=====================");
+            System.out.println("\r\n===============BROWSER.start=====================");
             for (LogEntry entry : logEntries) {
                 System.out.println(entry.getLevel() + " " + entry.getMessage());
             }
-            System.out.println("===============BROWSER.end=====================");
+            System.out.println("\r\n===============BROWSER.end=====================");
         }catch(org.openqa.selenium.UnsupportedCommandException ex){
             log.error("[获取浏览器日志异常]"+ex);
         }
     }
 
+    /**
+     * 获取浏览器console
+     * @param method
+     * @param driver
+     * @throws Exception
+     */
     public  void  getLogType_Browser(Method method, WebDriver driver) throws  Exception{
         LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-        log.fatal("===["+method.getName()+"]===BROWSER.LOG.start=====================");
+        log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.start=====================");
         for (LogEntry entry : logEntries) {
             log.fatal(entry.getLevel() + " " + entry.getMessage());
         }
-        log.fatal("===["+method.getName()+"]===BROWSER.LOG.end=====================");
+        log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.end=====================");
     }
 
     public  static void getLogType_Performance(WebDriver driver){

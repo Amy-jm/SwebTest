@@ -17,19 +17,24 @@ public class HomePage extends BasePage{
     /**
      * 左侧菜单 -- Dashboard
      **/
-    public SelenideElement left_menu_dashboard = $(By.id("m_dashboard"));
+    public SelenideElement left_menu_dashboard = $(By.linkText("Dashboard"));
     /**
      * 左侧菜单 -- Extension/Trunk
      **/
+//    public SelenideElement left_menu_first_level_extension_trunk = $(By.xpath("//span[contains(text(),'Extension and Trunk')]"));//m_extension_trunk
     public SelenideElement left_menu_first_level_extension_trunk = $(By.id("m_extension_trunk"));//m_extension_trunk
+    public SelenideElement left_menu_first_level_extension_trunk_states = $(By.xpath("//span[@id=\"m_extension_trunk\"]/.."));
+
+//    public SelenideElement extension_trunk_tree_extensions = $(By.xpath(String.format(LI_XPATH,"Extension")));//m_extensions
     public SelenideElement extension_trunk_tree_extensions = $(By.id("m_extensions"));//m_extensions
     public SelenideElement extension_trunk_tree_extension_group = $(By.id("m_extension_groups"));
     public SelenideElement extension_trunk_tree_trunks = $(By.id("m_trunks"));
-    public SelenideElement extension_trunk_tree_management = $(By.id("m_role_management"));
+    public SelenideElement extension_trunk_tree_role_management = $(By.id("m_role_management"));
     /**
      * 左侧菜单 -- Call Control
      **/
     public SelenideElement left_menu_first_level_call_control = $(By.id("m_call_control"));
+    public SelenideElement left_menu_first_level_call_control_states = $(By.xpath("//span[@id=\"m_call_control\"]/.."));
     public SelenideElement call_control_tree_inbound_routes = $(By.id("m_inbound_routes"));
     public SelenideElement call_control_tree_outbound_routes = $(By.id("m_outbound_routes"));
     public SelenideElement call_control_tree_office_time_and_holidays = $(By.id("m_office_time_and_holidays"));
@@ -39,6 +44,7 @@ public class HomePage extends BasePage{
      * 左侧菜单 -- Call Feature
      **/
     public SelenideElement left_menu_first_level_call_feature = $(By.id("m_call_features"));
+    public SelenideElement left_menu_first_level_call_feature_states = $(By.xpath("//span[@id=\"m_call_features\"]/.."));
     public SelenideElement call_feature_tree_voicemail = $(By.id("m_voicemail"));
     public SelenideElement call_feature_tree_feature_codes = $(By.id("m_feature_code"));
     public SelenideElement call_feature_tree_ivr = $(By.id("m_ivr"));
@@ -53,6 +59,7 @@ public class HomePage extends BasePage{
      * 左侧菜单 -- PBX Settings
      **/
     public SelenideElement left_menu_first_level_pbx_settings = $(By.id("m_pbx_settings"));
+    public SelenideElement left_menu_first_level_pbx_settings_states = $(By.xpath("//span[@id=\"m_pbx_settings\"]/.."));
     public SelenideElement pbx_settings_tree_preferences = $(By.id("m_preference"));
     public SelenideElement pbx_settings_tree_voice_prompt = $(By.id("m_voice_prompt"));
     public SelenideElement pbx_settings_tree_sip_settings = $(By.id("m_sip_settings"));
@@ -62,6 +69,7 @@ public class HomePage extends BasePage{
      * 左侧菜单 -- System
      **/
     public SelenideElement left_menu_first_level_system = $(By.id("m_system"));
+    public SelenideElement left_menu_first_level_system_states = $(By.xpath("//span[@id=\"m_system\"]/.."));
     public SelenideElement system_tree_network = $(By.id("m_network"));
     public SelenideElement system_tree_date_and_time = $(By.id("m_date_and_time"));
     public SelenideElement system_tree_email = $(By.id("m_email"));
@@ -75,6 +83,7 @@ public class HomePage extends BasePage{
      * 左侧菜单 -- Security
      **/
     public SelenideElement left_menu_first_level_security = $(By.id("m_security"));
+    public SelenideElement left_menu_first_level_security_states = $(By.xpath("//span[@id=\"m_security\"]/.."));
     public SelenideElement security_tree_security_rules = $(By.id("m_security_rules"));
     public SelenideElement security_tree_security_settings = $(By.id("m_security_settings"));
 
@@ -83,6 +92,7 @@ public class HomePage extends BasePage{
      * 左侧菜单 -- Maintenance
      **/
     public SelenideElement left_menu_first_level_maintenance = $(By.id("m_maintenance"));
+    public SelenideElement left_menu_first_level_maintenance_states = $(By.xpath("//span[@id=\"m_maintenance\"]/.."));
     public SelenideElement maintenance_tree_upgrade = $(By.id("m_upgrade"));
     public SelenideElement maintenance_tree_backup_and_restore = $(By.id("m_backup_and_restore"));
     public SelenideElement maintenance_tree_reboot = $(By.id("m_reboot"));
@@ -95,6 +105,7 @@ public class HomePage extends BasePage{
      * 左侧菜单 -- CDR/Recording
      **/
     public SelenideElement left_menu_first_level_cdr_recording = $(By.id("m_cdr_recording"));
+    public SelenideElement left_menu_first_level_cdr_recording_states = $(By.xpath("//span[@id=\"m_cdr_recording\"]/.."));
     public SelenideElement cdr_recording_tree_cdr = $(By.id("m_cdr"));
     public SelenideElement cdr_recording_tree_recording = $(By.id("Recording"));
     public SelenideElement cdr_recording_tree_call_report = $(By.id("Call Report"));
@@ -180,8 +191,8 @@ public class HomePage extends BasePage{
             case extension_trunk_tree_trunks:
                 extension_trunk_tree_trunks.click();
                 break;
-            case extension_trunk_tree_management:
-                extension_trunk_tree_management.click();
+            case extension_trunk_tree_role_management:
+                extension_trunk_tree_role_management.click();
                 break;
             case call_control_tree_inbound_routes:
                 call_control_tree_inbound_routes.click();
@@ -310,6 +321,7 @@ public class HomePage extends BasePage{
         call_control,
         call_feature,
         pbx_settings,
+        system,
         security,
         maintenance,
         cdr_recording;
@@ -319,7 +331,7 @@ public class HomePage extends BasePage{
         extension_trunk_tree_extensions,
         extension_trunk_tree_extension_group,
         extension_trunk_tree_trunks,
-        extension_trunk_tree_management,
+        extension_trunk_tree_role_management,
 
         call_control_tree_inbound_routes,
         call_control_tree_outbound_routes,

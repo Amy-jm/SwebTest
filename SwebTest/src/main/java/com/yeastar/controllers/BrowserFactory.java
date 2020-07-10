@@ -29,7 +29,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class BrowserFactory extends ConfigP {
 	private WebDriver webDriver;
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl) throws MalformedURLException {
-		if (IS_RUN_REMOTE_SERVER.equals("true")) {
+		if (IS_RUN_REMOTE_SERVER.trim().equalsIgnoreCase("true")) {
 			log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
 			return initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub");
 		} else {
@@ -38,7 +38,7 @@ public class BrowserFactory extends ConfigP {
 	}
 
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, Method method) throws MalformedURLException {
-		if (IS_RUN_REMOTE_SERVER.equals("true")) {
+		if (IS_RUN_REMOTE_SERVER.trim().equalsIgnoreCase("true")) {
 			log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
 			return initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub", method);
 		} else {
@@ -73,7 +73,9 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
 			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
 			desiredCapabilities.setCapability("network", true);
+			log.debug("[idleTimeout] 20s");
 			desiredCapabilities.setCapability("idleTimeout", 240);//150-100
+			log.debug("[ZALENIUM_PROXY_CLEANUP_TIMEOUT]  90s");
 			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
 
 
@@ -118,12 +120,15 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("network", true);
 			//Build Name    String serviceName = System.getProperty("serviceName");
 //            desiredCapabilities.setCapability("build", "AutoTestBuild_Seven");
+			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			//Idle TimeOut
-			desiredCapabilities.setCapability("idleTimeout", 100);//150-100
+			desiredCapabilities.setCapability("idleTimeout", 150);//150-100
+			log.debug("[set idleTimeout]{}",150);
 			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
+			log.debug("[set ZALENIUM_PROXY_CLEANUP_TIMEOUT]{}",90);
 			//Screen Resolution
-			desiredCapabilities.setCapability("screenResolution", "1920x1080");
+//			desiredCapabilities.setCapability("screenResolution", "1920x1080");
 			desiredCapabilities.setCapability("network", true);
 
 			webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);

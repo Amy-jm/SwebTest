@@ -53,8 +53,12 @@ public class TableUtils {
         String strReturn = "";
         if (table.hasColumn(strHeader)) {
             List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
-            log.debug("[headerCell Size] "+header1Cells.size());
-            strReturn = header1Cells.get(row).getText();
+            log.debug("[headerCell Size]"+header1Cells.size());
+            try {
+                strReturn = header1Cells.get(row).getText();
+            }catch(java.lang.IndexOutOfBoundsException ex){
+                log.debug("[表格查无数据]"+ex.getMessage());
+            }
             log.debug("[getTableData]"+strReturn);
         }
         return strReturn;
@@ -74,7 +78,11 @@ public class TableUtils {
             table = SeleniumTable.getInstance(tableElement);
             List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
             log.debug("[headerCell Size]"+header1Cells.size());
-            strReturn = header1Cells.get(column).getText();
+            try {
+                strReturn = header1Cells.get(column).getText();
+            }catch(java.lang.IndexOutOfBoundsException ex){
+                log.debug("[表格查无数据]"+ex.getMessage());
+            }
             log.debug("[getTableData]"+strReturn);
         }
         return strReturn;

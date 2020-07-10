@@ -8,7 +8,8 @@ import static com.codeborne.selenide.Selenide.$;
 
 public interface IPreferencesPageElement {
     SelenideElement ele_name_display_format_combobox = $(By.id("pbx_settings_preferences_name_disp_fmt"));
-
+    //Max Call Duration(s)
+    SelenideElement ele_pbx_settings_preferences_max_call_duration_select = $(By.xpath("//*[@id=\"pbx_settings_preferences_max_call_duration\"]//input"));
     enum NAME_DISPLAY_FORMAT{
         FIRST_LAST_WITH_SPACE("First Name Last Name with Space Inbetween"),
         FIRST_LAST_WITHOUT_SPACE("Last Name First Name with Space Inbetween"),

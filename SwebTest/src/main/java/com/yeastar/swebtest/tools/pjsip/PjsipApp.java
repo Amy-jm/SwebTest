@@ -140,8 +140,6 @@ public class PjsipApp extends PjsipDll{
         System.out.println("sip register: "+"sip:"+ip+":"+account.port);
         System.out.println("username:"+String.valueOf(username));
         System.out.println("pwd :" +account.password);
-
-        Assert.assertNotEquals(account.accId,-1,"分机"+username+"注册失败");
         if(isAsserst){
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();
@@ -388,6 +386,11 @@ public class PjsipApp extends PjsipDll{
                     }
                     timeer--;
                 }
+            }
+            //返回为-1时，设置没有正常注册
+            if(CallerAccount.pos == -1){
+                log.error("[CallerAccount 为-1 状态异常！！！]");
+                return null;
             }
 
 //            YsAssert.assertEquals(caller_status,"Busy");

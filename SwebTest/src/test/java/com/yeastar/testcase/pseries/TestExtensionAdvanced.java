@@ -2,11 +2,12 @@ package com.yeastar.testcase.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
-import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
-
+import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.untils.*;
 import io.qameta.allure.*;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.io.IOException;
  * @author: huangjx@yeastar.com
  * @create: 2020/06/16
  */
+@Listeners({ExecutionListener.class,AllureReporterListener.class, TestNGListenerP.class})
 public class TestExtensionAdvanced extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")
@@ -29,7 +31,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "8:修改分机号1001,DTMF_MODE->info->          9:[PJSIP]期望结果:dtmf_mode   : info")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001612"), @TmsLink(value = "ID1001613"),@TmsLink(value = "ID1001614"),@TmsLink(value = "ID1001615")})
-    @Test(groups = "P0,TestExtensionAdvanced,testDTMFMode,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testDTMFMode","Regression","PSeries"})
     public void testDTMFMode() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -38,7 +40,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,DTMF_MODE->RFC4733RFC2833");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").select_DTMF_Mode(IExtensionPageElement.DTMF_MODE.RFC4733RFC2833).saveBtn.click();
+                editFirstData().switchToTab("Advanced").select_DTMF_Mode(IExtensionPageElement.DTMF_MODE.RFC4733RFC2833).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果:dtmf_mode   : rfc4733");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("dtmf_mode                     : rfc4733"),"[Assert,dtmf mode]");
@@ -74,7 +76,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "6:修改分机号1001,Transport -> Tls->7:[PJSIP]期望结果：transport_name   : tls")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001618"), @TmsLink(value = "ID1001617"),@TmsLink(value = "ID1001616")})
-    @Test(groups = "P0,TestExtensionAdvanced,testTransport,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testTransport","Regression","PSeries"})
     public void testTransport() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -83,7 +85,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,Transport->UDP");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").select_Transport(IExtensionPageElement.TRANSPORT.UDP).saveBtn.click();
+                editFirstData().switchToTab("Advanced").select_Transport(IExtensionPageElement.TRANSPORT.UDP).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：transport_name   : udp");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("transport_name                : udp"),"[Assert,transport_name]");
@@ -113,7 +115,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "4:修改分机号1001,SRTP->启用 ->5:配置生效： media_encryption : sdes ;media_encryption_optimistic   : true")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001620"), @TmsLink(value = "ID1001619")})
-    @Test(groups = "P0,TestExtensionAdvanced,testSRTP,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testSRTP","Regression","PSeries"})
     public void testSRTP() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -122,7 +124,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,SRTP->禁用");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_srtp_checkbox,false).saveBtn.click();
+                editFirstData().switchToTab("Advanced").isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_srtp_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果： media_encryption  : no;media_encryption_optimistic   : true");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("media_encryption              : no"));
@@ -147,7 +149,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "4:修改分机号1001,NAT->启用 ->5:配置生效： ")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001624"), @TmsLink(value = "ID1001623")})
-    @Test(groups = "P0,TestExtensionAdvanced,testNAT,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testNAT","Regression","PSeries"})
     public void testNAT() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -187,7 +189,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "4:修改分机号1001,T38Support->启用 ->5:配置生效： t38_udptl                     : true")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001626"), @TmsLink(value = "ID1001625")})
-    @Test(groups = "P0,TestExtensionAdvanced,testT38Support,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testT38Support","Regression","PSeries"})
     public void testT38Support() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -221,7 +223,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "4:修改分机号1001,Quailty->启用 ->5:配置生效： qualify_frequency                     : 60")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001628"), @TmsLink(value = "ID1001627")})
-    @Test(groups = "P0,TestExtensionAdvanced,testQualify,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionAdvanced","testQualify","Regression","PSeries"})
     public void testQualify() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
