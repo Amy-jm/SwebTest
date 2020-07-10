@@ -2,6 +2,8 @@ package com.yeastar.page.pseries;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.google.inject.internal.util.$Objects;
+import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
@@ -25,6 +27,8 @@ public class BasePage implements IButton {
     public String INPUT_COMM_XPATH = "//label[contains(text(),'%s')]/../following-sibling::div//input";
     //li 下拉选项通用定位
     public String SELECT_COMM_XPATH = "//li[contains(text(),'%s')]";
+    //tab标签页定位
+    public String TAB_COMM_XPATH = "//div[contains(@role,'tab') and contains(text(),\"%s\")]";
 
 
     /**
@@ -37,6 +41,10 @@ public class BasePage implements IButton {
         $(By.xpath(String.format(INPUT_COMM_XPATH, label))).shouldHave(Condition.visible).setValue(input);
     }
 
+    /** Tab 菜单切换 **/
+    public void baseSwitchToTab(String enumTabMenu){
+        $(By.xpath(String.format(TAB_COMM_XPATH,enumTabMenu))).shouldBe(Condition.visible).click();
+    }
     /**
      * 选择下拉框
      *

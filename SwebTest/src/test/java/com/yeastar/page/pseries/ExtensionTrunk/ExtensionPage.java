@@ -38,7 +38,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @param status
      */
     public ExtensionPage selectExtensionPresence(String extensionName, String status){
-        sleep(2000);//todo no sleep
+        sleep(2000);
         WebElement tableElement = getWebDriver().findElement(By.xpath(strTableXPATH));
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
         if (table.hasColumn("Extension Number")) {
@@ -53,6 +53,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                     $(By.xpath(String.format(SELECT_COMM_XPATH,status))).click();
                     $(By.xpath("//table/tbody/tr["+(row+1)+"]//div[contains(@class,'ant-form-item')]")).click();
                     searchIpt.click();
+                    sleep(500);
                     break;
                 }
             }
@@ -89,13 +90,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         clickApply();
         return this;
     }
-
-    /**
-     * 创建SIP extensionNumber分机，密码为 userPassword，
-     * @param extensionNumber 分机号，同时默认修改 FirstName,ExtensionNumber,Caller ID(Internal)字段为分机号
-     * @param userPassword 用户密码
-     * @return 返回分机页面实例，ExtensionPage
-     */
 
     /**
      * 创建SIP 分机
@@ -170,8 +164,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_always_forward_prefix_input.setValue(dest2);
                 }else {
-                    //todo 定位iD
-//                    selectComm(ele_extension_presence_forward_in_always_forward_value_combobox,dest2);
+                    selectComm(ele_extension_presence_forward_in_always_forward_value_combobox,dest2);
                 }
             }
             if(!dest3.isEmpty()){
@@ -218,8 +211,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_no_answer_forward_prefix_input.setValue(dest2);
                 }else{
-                    //todo 定位iD
-//                    selectComm(ele_extension_presence_forward_in_no_answer_forward_value_combobox,dest2);
+                    selectComm(ele_extension_presence_forward_in_no_answer_forward_value_combobox,dest2);
                 }
 
                 if(!dest3.isEmpty()){
@@ -268,8 +260,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_busy_forward_prefix_input.setValue(dest2);
                 }else{
-                    //todo 定位iD
-//                    selectComm(ele_extension_presence_forward_in_busy_forward_value_combobox,dest2);
+                    selectComm(ele_extension_presence_forward_in_busy_forward_value_combobox,dest2);
                 }
                 if(!dest3.isEmpty()){
                     if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
@@ -316,7 +307,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_always_forward_prefix_input.setValue(dest2);
                 }else{
-//                    selectComm(ele_extension_presence_forward_ex_always_forward_value_combobox,dest2);
+                    selectComm(ele_extension_presence_forward_ex_always_forward_value_combobox,dest2);
                 }
                 if(!dest3.isEmpty()){
                     if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
@@ -362,7 +353,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_no_answer_forward_prefix_input.setValue(dest2);
                 }else{
-//                    selectComm(ele_extension_presence_forward_ex_no_answer_forward_value_combobox,dest2);
+                    selectComm(ele_extension_presence_forward_ex_no_answer_forward_value_combobox,dest2);
                 }
                 if(!dest3.isEmpty()){
                     if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
@@ -410,7 +401,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_busy_forward_prefix_input.setValue(dest2);
                 }else {
-//                    selectComm(ele_extension_presence_forward_ex_busy_forward_value_combobox,dest2);
+                    selectComm(ele_extension_presence_forward_ex_busy_forward_value_combobox,dest2);
                 }
                 if(!dest3.isEmpty()){
                     if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
@@ -469,13 +460,20 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
 
     /** Tab 菜单切换 **/
     public ExtensionPage switchToTab(String enumTabMenu){
-        $(By.xpath(String.format(TAB_COMM_XPATH,enumTabMenu))).shouldBe(Condition.visible).click();
+        baseSwitchToTab(enumTabMenu);
+//        $(By.xpath(String.format(TAB_COMM_XPATH,enumTabMenu))).shouldBe(Condition.visible).click();
         return this;
     }
 
 
-    public ExtensionPage editExtension(WebDriver driver, String name){
-        TableUtils.clickTableEidtBtn(driver,"Extension Number",name);
+    /**
+     * 编辑指定分机号的分机
+     * @param driver
+     * @param extNum
+     * @return
+     */
+    public ExtensionPage editExtension(WebDriver driver, String extNum){
+        TableUtils.clickTableEidtBtn(driver,"Extension Number",extNum);
         return this;
     }
     /**
@@ -496,8 +494,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         $(By.xpath(String.format(SELECT_COMM_XPATH,dtmf_mode.getAlias()))).click();
         return this;
     }
-
-
 
 
     /**
@@ -543,7 +539,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                 new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
             }
         }
-
         return this;
     }
 

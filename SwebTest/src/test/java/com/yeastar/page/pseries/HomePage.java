@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
 
 @Log4j2
-public class HomePage {
+public class HomePage extends BasePage{
 
     String LI_XPATH = "//li[@title=\"%s\"]";
     /**

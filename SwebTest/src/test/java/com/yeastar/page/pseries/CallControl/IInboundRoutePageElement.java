@@ -25,8 +25,9 @@ public interface IInboundRoutePageElement {
 
     /**Default Destination**/
     SelenideElement ele_edit_default_destination = $(By.id("call_control_destination_def_dest"));
-    SelenideElement ele_edit_default_destination2 = $(By.xpath("//body/div/div/section[@class='ant-layout ant-layout-has-sider']/section[@class='ant-layout']/div[@class='layout-content']/div/div[@class='ant-row']/div[@class='ant-col']/div[@class='ant-card ant-card-bordered']/div[@class='ant-card-body']/div[@class='ant-card ant-card-bordered ant-card-type-inner']/div[@class='ant-card-body']/div[@class='ant-row']/div[@class='ant-col']/div/div[@class='ant-row']/div[2]/div[1]/div[2]/div[1]/span[1]/div[1]"));
+    SelenideElement ele_edit_default_destination2 =$(By.id("inbound_forward_def_dest_value"));
     SelenideElement ele_edit_time_condition = $(By.id("inbound_routes_enb_time_condition"));
+
 
     enum DEFAULT_DESTIONATON{
         NONE("[None]"),

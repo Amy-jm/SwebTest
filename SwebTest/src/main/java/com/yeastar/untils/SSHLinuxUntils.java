@@ -9,6 +9,8 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.yeastar.swebtest.driver.DataReader2.*;
+
 public class SSHLinuxUntils {
     public static void main(String[] args) throws IOException, JSchException, InterruptedException {
         // TODO Auto-generated method stub
@@ -58,6 +60,35 @@ public class SSHLinuxUntils {
         session.disconnect();
 
         return out;
+    }
+
+    public static String exeCommand(String host, String command)  {
+        JSch jsch = new JSch();
+        Session session = null;
+        try {
+            session = jsch.getSession(PJSIP_SSH_USER, host, PJSIP_TCP_PORT);
+            session.setConfig("StrictHostKeyChecking", "no");
+            //    java.util.Properties config = new java.util.Properties();
+            //   config.put("StrictHostKeyChecking", "no");
+            session.setPassword(PJSIP_SSH_PASSWORD);
+            session.connect();
+
+            ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
+            InputStream in = channelExec.getInputStream();
+            channelExec.setCommand(command);
+            channelExec.setErrStream(System.err);
+            channelExec.connect();
+            String out = IOUtils.toString(in, "UTF-8");
+
+            channelExec.disconnect();
+            session.disconnect();
+            return out;
+        } catch (JSchException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "[error]";
     }
 
     /**

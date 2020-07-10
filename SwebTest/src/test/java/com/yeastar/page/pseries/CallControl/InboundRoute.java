@@ -71,7 +71,6 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
 
     public InboundRoute selectDefaultDestination(String type, String dest){
         selectCombobox(type);
-        //todo 选择呼入目的地
         selectComm(ele_edit_default_destination2,dest);
         return this;
     }

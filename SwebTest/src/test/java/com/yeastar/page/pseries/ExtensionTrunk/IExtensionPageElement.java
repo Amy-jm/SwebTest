@@ -15,15 +15,36 @@ public interface IExtensionPageElement {
     SelenideElement ele_add_DropDown_add_Btn = $(By.xpath("//li[text()='Add']"));
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
 
+    /** 下拉列表 分机页面，分机列表中Presence可选项 **/
+    enum TABLE_PRESENCE_LIST {
+        AVAILABLE("Available"),
+        AWAY("Away"),
+        BUSINESSTRIP("Business Trip"),
+        DONotDISTURB("Do Not Disturb"),
+        LUNCHBREAK("Lunch Break"),
+        OFFWORK("Off Work");
+
+        private final String alias;
+
+        TABLE_PRESENCE_LIST(String alias) {
+            this.alias = alias;
+        }
+
+
+        public String getAlias() {
+            return alias;
+        }
+    }
+
     //Tab标签
-    String TAB_COMM_XPATH = "//div[contains(@role,'tab') and contains(text(),\"%s\")]";
-    SelenideElement ele_tab_user = $(By.xpath(String.format(TAB_COMM_XPATH, "User")));
-    SelenideElement ele_tab_presence = $(By.xpath(String.format(TAB_COMM_XPATH, "Presence")));
-    SelenideElement ele_tab_voicemail = $(By.xpath(String.format(TAB_COMM_XPATH, "Voicemail")));
-    SelenideElement ele_tab_features = $(By.xpath(String.format(TAB_COMM_XPATH, "Features")));
-    SelenideElement ele_tab_advanced = $(By.xpath(String.format(TAB_COMM_XPATH, "Advanced")));
-    SelenideElement ele_tab_security = $(By.xpath(String.format(TAB_COMM_XPATH, "Security")));
-    SelenideElement ele_tab_linkus_clients = $(By.xpath(String.format(TAB_COMM_XPATH, "Linkus Clients")));
+//    String TAB_COMM_XPATH = "//div[contains(@role,'tab') and contains(text(),\"%s\")]";
+//    SelenideElement ele_tab_user = $(By.xpath(String.format(TAB_COMM_XPATH, "User")));
+//    SelenideElement ele_tab_presence = $(By.xpath(String.format(TAB_COMM_XPATH, "Presence")));
+//    SelenideElement ele_tab_voicemail = $(By.xpath(String.format(TAB_COMM_XPATH, "Voicemail")));
+//    SelenideElement ele_tab_features = $(By.xpath(String.format(TAB_COMM_XPATH, "Features")));
+//    SelenideElement ele_tab_advanced = $(By.xpath(String.format(TAB_COMM_XPATH, "Advanced")));
+//    SelenideElement ele_tab_security = $(By.xpath(String.format(TAB_COMM_XPATH, "Security")));
+//    SelenideElement ele_tab_linkus_clients = $(By.xpath(String.format(TAB_COMM_XPATH, "Linkus Clients")));
 
     //Tab User basic
     SelenideElement ele_sip_extension_selection = $(By.xpath("//div[contains(text(),\"SIP Extension\")]"));
@@ -213,7 +234,7 @@ public interface IExtensionPageElement {
 
     /** 下拉列表 目的地********/
     enum CALL_FORWARDING_DESTINATION {
-        HANG_UP("Hang up"),
+        HANG_UP("Hang Up"),
         EXTENSION("Extension"),
         VOICEMAIL("Voicemail"),
         IVR("IVR"),

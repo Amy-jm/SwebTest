@@ -5,6 +5,7 @@ import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
+import org.testng.Assert;
 
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class PjsipApp extends PjsipDll{
         pjsipdll.instance.onCallIncoming(incomingcallback);
         pjsipdll.instance.onCallStateCallback(callstateCallBack);
         pjsipdll.instance.onDtmfDigitCallback(dtmfCallBack);
-//        pjsipdll.instance.ys_printlog();
+        pjsipdll.instance.ys_log_set_level(1);
 //        Reporter.infoExec("pjs_init done");
 
     }
@@ -139,6 +140,8 @@ public class PjsipApp extends PjsipDll{
         System.out.println("sip register: "+"sip:"+ip+":"+account.port);
         System.out.println("username:"+String.valueOf(username));
         System.out.println("pwd :" +account.password);
+
+        Assert.assertNotEquals(account.accId,-1,"分机"+username+"注册失败");
         if(isAsserst){
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();
@@ -520,6 +523,9 @@ public class PjsipApp extends PjsipDll{
     //拨号回调
     public pjsipdll.IncomingCallBack incomingcallback = new pjsipdll.IncomingCallBack() {
         @Override
+        /**
+         * number  对方送来的callid（来显？）
+         */
         public int fptr_callincoming(int id, String number,int accid) {
             System.out.println("incomingcallback"+number+"callid:"+id+"accid:"+accid+"accounts.size(): "+accounts.size());
 
@@ -527,6 +533,7 @@ public class PjsipApp extends PjsipDll{
                 if(accounts.get(i).accId == accid){
                     accounts.get(i).callId = id;
                     accounts.get(i).status = RING;
+                    accounts.get(i).callerId = number;
                 }
             }
             return 0;

@@ -18,7 +18,7 @@ public interface ITrunkPageElement {
 
     /**Trunk Type选择内容**/
     SelenideElement ele_trunk_basic_transport_combobox = $(By.id("trunk_voip_basic_transport"));
-    SelenideElement ele_trunk_basic_hostname = $(By.id("trunk_voip_basic_hostname"));
+    SelenideElement ele_trunk_basic_hostname = $(By.xpath("//div[@id='general_hostname']//input[@id='trunk_voip_basic_hostname']"));
     SelenideElement ele_trunk_basic_port = $(By.id("trunk_voip_basic_port"));
     SelenideElement ele_trunk_basic_domain = $(By.id("trunk_voip_basic_domain"));
     SelenideElement ele_trunk_basic_username = $(By.id("trunk_voip_basic_username"));

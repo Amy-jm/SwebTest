@@ -23,12 +23,6 @@ public class TestCaseBase extends BaseMethod {
     private WebDriver webDriver;
     public SoftAssert softAssert;
 
-    public TestCaseBase(){
-        softAssert = new SoftAssert();
-    }
-
-
-
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method) throws Exception
     {
@@ -39,6 +33,7 @@ public class TestCaseBase extends BaseMethod {
         setDriver(webDriver);
         open(PBX_URL);
         auto = new PageEngine();
+        softAssert = new SoftAssert();
 //        pjsip.Pj_Init();
     }
 
@@ -49,6 +44,7 @@ public class TestCaseBase extends BaseMethod {
 //        pjsip.Pj_Destory();
         new BrowserUtils().getLogType_Browser(method,webDriver);
         getWebDriver().quit();
+
         log.info( "****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
 

@@ -186,16 +186,13 @@ public class BaseMethod extends WebDriverFactory {
 			account = pjsip.getUserAccountInfo(username);
 			if (account == null) {
 				status = -1;
-				System.out.println("first--------account is null----------");
 			}
 			if (account.status == expectStatus) {
 				status = account.status;
-				System.out.println("Second-------get status succ--------------");
 				return status;
 			}
 			if (time == timeout) {
 				status = account.status;
-				System.out.println("third-------get status Timeout----------");
 			}
 			time++;
 		}

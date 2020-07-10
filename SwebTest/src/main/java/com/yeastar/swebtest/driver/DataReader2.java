@@ -21,12 +21,13 @@ public class DataReader2 {
     final static String CONFIG_PROPERTIES_FILE_PATH ="/config.properties";
     final static String PJSIP_PROPERTIES_FILE_PATH ="/pjsip.properties";
 //    final static String loginName = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "loginName");
-    public final String PJSIP_COMMAND_DELTREE_REGISTRAR = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"database deltree registrar\"";
-    public final String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"%s\"";
-    public final String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
-    public final int PJSIP_TCP_PORT = 8022;
-    public final String PJSIP_SSH_PASSWORD = "";
-    public final String PJSIP_SSH_USER = "ls@yf";
+    public final static String PJSIP_COMMAND_DELTREE_REGISTRAR = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"database deltree registrar\"";
+    public final static String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"%s\"";
+    public final static String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
+    public final static String SHOW_CLI_LOG = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;cat /ysdisk/syslog/pbxlog.0";
+    public final static int PJSIP_TCP_PORT = 8022;
+    public final static String PJSIP_SSH_PASSWORD = "";
+    public final static String PJSIP_SSH_USER = "ls@yf";
 
     public final String PBX_URL = "https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/";
 
@@ -138,8 +139,6 @@ public class DataReader2 {
      */
     public static String PJSIP_SHOW_AOR = PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"PJSIP_SHOW_AOR")+" ";
     public static String PJSIP_SHOW_ENDPOINT = PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"PJSIP_SHOW_ENDPOINT")+" ";
-
-    public static String SHOW_ASTERISK_LOG =PropertiesUntils.getInstance().getPropertiesValue(PJSIP_PROPERTIES_FILE_PATH,"SHOW_ASTERISK_LOG")+" ";
 
     /**
      * 框架相关配置 config

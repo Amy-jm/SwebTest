@@ -8,10 +8,7 @@ import com.yeastar.page.pseries.CdrRecording.ICdrPageElement;
 import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.page.pseries.WebClient.Me_HomePage;
-import com.yeastar.untils.AllureReporterListener;
-import com.yeastar.untils.TableUtils;
-import com.yeastar.untils.TestNGListenerP;
-import com.yeastar.untils.WaitUntils;
+import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
@@ -30,11 +27,11 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
  * @author: linhaoran@yeastar.com
  * @create: 2020/06/18
  */
-@Listeners({AllureReporterListener.class, TestNGListenerP.class})
+//@Listeners({AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
 public class TestExtensionVoicemail extends TestCaseBase {
 
-    @Test
+//    @Test
     public void CaseName() throws InterruptedException {
 
 //        auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
@@ -96,9 +93,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(40000);
         pjsip.Pj_Hangup_All();
+        pjsip.Pj_Destory();
 
         assertStep("4:cli确认播放提示音为vm-greeting-leave-after-tone.slin");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_ASSIST_1, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, SHOW_CLI_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认voicemail提示音]");
 
         assertStep("5:cdr判断");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -157,11 +155,14 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Send_Dtmf(0,"1");
         sleep(3000);
         pjsip.Pj_Hangup_All();
+        pjsip.Pj_Destory();
 
         step("查看pbxlog.0，检查vm-received.gsm、vm-from-phonenumber、vm-duration.slin提示音字段");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-received.slin"),"[Assert,cli确认提示音]");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-from-phonenumber.slin"),"[Assert,cli确认提示音]");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("vm-duration.slin"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认voicemail提示音]");
+
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-received.slin"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-from-phonenumber.slin"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-duration.slin"),"[Assert,cli确认提示音]");
         softAssert.assertAll();
     }
 
@@ -201,9 +202,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
+        pjsip.Pj_Destory();
 
         step("cli确认播放提示音为test2.wav");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test2.wav"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test2.wav"),"[Assert,cli确认提示音]");
     }
 
     @Epic("P_Series")
@@ -242,9 +244,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
+        pjsip.Pj_Destory();
 
         step("cli确认播放提示音为test3.wav");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test3.wav"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test3.wav"),"[Assert,cli确认提示音]");
     }
 
     @Epic("P_Series")
@@ -283,9 +286,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
+        pjsip.Pj_Destory();
 
         step("cli确认播放提示音为test4.wav");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test4.wav"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test4.wav"),"[Assert,cli确认提示音]");
     }
 
     @Epic("P_Series")
@@ -323,9 +327,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
+        pjsip.Pj_Destory();
 
         step("cli确认播放提示音为test5.wav");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test5.wav"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test5.wav"),"[Assert,cli确认提示音]");
     }
 
     @Epic("P_Series")
@@ -364,9 +369,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
+        pjsip.Pj_Destory();
 
         step("cli确认播放提示音为test6.wav");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test6.wav"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test6.wav"),"[Assert,cli确认提示音]");
     }
 
     @Epic("P_Series")
@@ -405,9 +411,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
+        pjsip.Pj_Destory();
 
         step("cli确认播放提示音为test1.wav");
-        softAssert.assertTrue(execAsterisk(SHOW_ASTERISK_LOG).contains("test1.wav"),"[Assert,cli确认提示音]");
+        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test1.wav"),"[Assert,cli确认提示音]");
     }
 
     @Epic("P_Series")
@@ -604,6 +611,16 @@ public class TestExtensionVoicemail extends TestCaseBase {
     }
 
     /**
+     * 创建0 9999999 1000分机
+     */
+    void createExts(){
+        //todo 元素ok后开启
+//        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD).clickSave();
+//        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
+//        auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
+    }
+
+    /**
      * voicemail 环境准备
      * 修改分机0voicemail页面，启用voicemail，
      * 启用voicemail pin Authentication，
@@ -622,8 +639,9 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension()
-                .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD)
+        createExts();
+
+        auto.extensionPage().editExtension(getDriver(),"0")
                 .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
                 .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
                 .selectCombobox(IExtensionPageElement.VOICEMAIL_PIN_AUTH.ENABLED.getAlias())
@@ -652,7 +670,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.inboundRoute().deleteAllInboundRoutes()
                 .createInboundRoute("InRoute1",trunklist)
                 .editInbound("InRoute1","Name")
-                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-朗视信息科技Yeastar Test0")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技")
                 .clickSaveAndApply();
 
 
@@ -670,7 +688,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"8200",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-
+        pjsip.Pj_Destory();
 
     }
 }
