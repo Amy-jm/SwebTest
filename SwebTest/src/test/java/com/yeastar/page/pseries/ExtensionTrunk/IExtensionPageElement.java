@@ -58,6 +58,7 @@ public interface IExtensionPageElement {
     SelenideElement ele_extension_user_first_name = $(By.id("extension_user_first_name"));
     SelenideElement ele_extension_user_last_name = $(By.id("extension_user_last_name"));
     SelenideElement ele_extension_user_number = $(By.id("extension_user_number"));
+    SelenideElement ele_extension_user_email_addr = $(By.xpath("//div[@id='extension_user_email_addr']//input"));
     SelenideElement ele_extension_user_mobile_number = $(By.id("extension_user_mobile_number"));
     SelenideElement ele_extension_user_reg_name = $(By.id("extension_user_reg_name"));
     SelenideElement ele_extension_user_reg_password = $(By.id("extension_user_reg_password"));
@@ -346,13 +347,31 @@ public interface IExtensionPageElement {
     SelenideElement ele_extension_voicemail_play_message_duration_checkbox = $(By.id("extension_voicemail_enb_vm_play_duration"));
     //Tab Voicemail -> Voicemail Greeting
     SelenideElement ele_extension_voicemail_default_greeting_combobox = $(By.id("extension_voicemail_vm_greeting"));
-    SelenideElement ele_extension_voicemail_available = $(By.id("extension_voicemail_voicemail_available"));
-    SelenideElement ele_extension_voicemail_away = $(By.id("extension_voicemail_voicemail_away"));
-    SelenideElement ele_extension_voicemail_doNotDisturb = $(By.id("extension_voicemail_voicemail_do_not_disturb"));
-    SelenideElement ele_extension_voicemail_lunchBreak = $(By.id("extension_voicemail_voicemail_launch"));
-    SelenideElement ele_extension_voicemail_businessTrip = $(By.id("extension_voicemail_voicemail_business_trip"));
-    SelenideElement ele_extension_voicemail_offWork = $(By.id("extension_voicemail_voicemail_off_work"));
+    SelenideElement ele_extension_voicemail_available_combobox = $(By.id("extension_voicemail_voicemail_available"));
+    SelenideElement ele_extension_voicemail_away_combobox = $(By.id("extension_voicemail_voicemail_away"));
+    SelenideElement ele_extension_voicemail_doNotDisturb_combobox = $(By.id("extension_voicemail_voicemail_do_not_disturb"));
+    SelenideElement ele_extension_voicemail_lunchBreak_combobox = $(By.id("extension_voicemail_voicemail_launch"));
+    SelenideElement ele_extension_voicemail_businessTrip_combobox = $(By.id("extension_voicemail_voicemail_business_trip"));
+    SelenideElement ele_extension_voicemail_offWork_combobox = $(By.id("extension_voicemail_voicemail_off_work"));
+    SelenideElement ele_greeting_management_btn = $(By.xpath("//a[contains(text(),'Greeting Management')]"));
+    SelenideElement ele_extension_voicemail_management_filename_input = $(By.id("extension_voicemail_management_filename"));
+    SelenideElement ele_extension_voicemail_management_record_phone_extension_combobox = $(By.id("extension_voicemail_management_record_phone_extension"));
+    SelenideElement ele_voicemail_management_save_btn = $(By.xpath("//button[@class='ant-btn modal-footer-btn ant-btn-primary']"));
+    /** 下拉列表 Greeting Management管理 **/
+    enum VOICEMAIL_GREETING_MANAGEMENT{
+        GREETING_MANAGEMENT("Greeting Management"),
+        RECORD_NEW_GREETING("Record New Greeting");
 
+        private final String alias;
+
+        VOICEMAIL_GREETING_MANAGEMENT(String alias){
+            this.alias = alias;
+        }
+
+        public String getAlias() {
+            return alias;
+        }
+    }
 
     /** 下拉列表 Voicemail PIN Authentication **/
     enum VOICEMAIL_PIN_AUTH{

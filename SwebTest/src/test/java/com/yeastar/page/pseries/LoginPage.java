@@ -23,7 +23,7 @@ public class LoginPage extends BasePage{
     public SelenideElement privacy_policy_confirmgdpr = $(By.id("privacy_policy_confirmgdpr"));
     public SelenideElement change_password_new_password = $(By.id("change_password_new_password"));
     public SelenideElement change_password_confirm_password = $(By.id("change_password_confirm_password"));
-    public SelenideElement dail_save_btn = $(By.xpath("//*[@id=\"rcDialogTitle1\"]/../..//button//span[contains(text(),'Save')]/.."));
+    public SelenideElement dail_save_btn = $(By.xpath("//button[@class='ant-btn modal-footer-btn ant-btn-primary']"));
 
 
     public Boolean isLoginSuccess = true;
@@ -75,6 +75,10 @@ public class LoginPage extends BasePage{
         //change password
 //        change_password_new_password.shouldBe(Condition.exist);
         sleep(SHORT_WAIT);
+        return this;
+    }
+    public LoginPage loginWithExtension(String userName,String passWord){
+        loginWithExtension(userName, passWord,passWord);
         return this;
     }
 

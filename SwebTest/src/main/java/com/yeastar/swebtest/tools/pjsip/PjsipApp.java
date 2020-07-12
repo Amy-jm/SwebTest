@@ -40,6 +40,11 @@ public class PjsipApp extends PjsipDll{
     //初始化PJSIP
     @Step("【pjsip】初始化PJSIP")
     public  void Pj_Init(){
+        String m_os = System.getProperty("os.name");
+        if(m_os.toLowerCase().startsWith("win")){
+            System.out.println(m_os + " can't gunzip");
+        }else{
+        }
         accounts = new ArrayList<UserAccount>();
         Reporter.infoExec("pjsip init "+pjsipdll.instance.ys_init());
         Reporter.infoExec("pjisp main " +pjsipdll.instance.ys_main());

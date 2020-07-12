@@ -6,6 +6,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.yeastar.page.pseries.BasePage;
+import com.yeastar.swebtest.pobject.Settings.PBX.VoicePrompts.CustomPrompts.Record_New_Prompt.Record_New_Prompt;
 import com.yeastar.untils.TableUtils;
 import com.sun.jna.platform.win32.Wdm;
 import com.yeastar.untils.WaitUntils;
@@ -108,7 +109,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_caller_id.setValue(extensionNumber);
         ele_extension_user_reg_name.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
-        saveBtn.click();
+
 //        clickApply();
         return this;
     }
@@ -183,6 +184,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
+        ele_extension_user_email_addr.setValue("pbxceshi@sina.com");
         return this;
     }
 
@@ -528,6 +530,16 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         return this;
     }
 
+    public ExtensionPage recordVoicemailGreeting(String extName,String recordName){
+        switchToTab(TABLE_MENU.VOICEMAIL.getAlias());
+        ele_greeting_management_btn.click();
+        switchToTab(VOICEMAIL_GREETING_MANAGEMENT.RECORD_NEW_GREETING.getAlias());
+        ele_extension_voicemail_management_filename_input.setValue(recordName);
+        selectComm(ele_extension_voicemail_management_record_phone_extension_combobox,extName);
+        ele_voicemail_management_save_btn.click();
+
+        return this;
+    }
 
 
     /** Tab 菜单切换 **/

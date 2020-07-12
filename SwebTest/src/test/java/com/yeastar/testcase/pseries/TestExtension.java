@@ -38,8 +38,8 @@ public class TestExtension extends TestCaseBase {
 
         step("4:loginMe");
         auto.homePage().logout();
-        auto.loginPage().loginWithExtension("1001",EXTENSION_PASSWORD,EXTENSION_PASSWORD);
-        auto.loginPage().login("1001",EXTENSION_PASSWORD);
+        auto.loginPage().loginWithExtension("1001",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+        auto.loginPage().login("1001",EXTENSION_PASSWORD_NEW);
 
         assertStep("5:分机login success");
         Assert.assertTrue(auto.homePage().header_box_name.shouldHave(Condition.text("1001")).isDisplayed());

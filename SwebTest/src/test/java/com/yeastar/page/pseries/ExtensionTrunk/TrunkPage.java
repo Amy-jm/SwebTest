@@ -1,15 +1,18 @@
 package com.yeastar.page.pseries.ExtensionTrunk;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.yeastar.page.pseries.BasePage;
+import com.yeastar.page.pseries.CallFeatures.RingGroupPage;
 import com.yeastar.untils.TableUtils;
+import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.yeastar.controllers.WebDriverFactory.getDriver;
-import static com.yeastar.page.pseries.ExtensionTrunk.ITrunkPageElement.Trunk_Type.PeerTrunk;
+import static com.yeastar.page.pseries.ExtensionTrunk.ITrunkPageElement.TRUNK_TYPE.PeerTrunk;
+
 
 public class TrunkPage extends BasePage implements ITrunkPageElement
 {
@@ -19,18 +22,12 @@ public class TrunkPage extends BasePage implements ITrunkPageElement
      * @return
      */
     @Step("删除指定中继")
-    public TrunkPage deleTrunk(WebDriver driver,String trunkName){
+    public TrunkPage deleteTrunk(WebDriver driver,String trunkName){
 
         addBtn.shouldBe(Condition.visible);
-//        Selenide.actions().click(ele_delete_all_checkbox).perform();
-//        deleteBtn.shouldBe(Condition.visible).click();
-//        OKAlertBtn.shouldBe(Condition.visible).click();
-//        sleep(WaitUntils.RETRY_WAIT);
-//        applyBtn.shouldBe(Condition.visible).click();
-//        sleep(WaitUntils.SHORT_WAIT*3);
-
-        TableUtils.clickTableEidtBtn(getDriver(),"Name",trunkName);
-//        TableUtils.getCDRForHeader(getDriver(),"Communication Type",0);
+        if(TableUtils.clickTableDeletBtn(driver,"Name",trunkName)){
+            OKAlertBtn.shouldBe(Condition.visible).click();
+        }
         return this;
     }
 
@@ -45,7 +42,9 @@ public class TrunkPage extends BasePage implements ITrunkPageElement
         selectTrunkType(PeerTrunk);
         ele_trunk_basic_name.setValue(trunkName);
         ele_trunk_basic_hostname.setValue(hostname);
-        ele_trunk_basic_domain.setValue(hostname);
+        ele_trunk_basic_domain.setValue(domain);
+        baseSwitchToTab(TRUNK_TAB.OUTBOUND_CALLER_ID.getAlias());
+        ele_trunk_outbound_cid_list_def_outbound_cid.setValue("spsOutCallId");
         return this;
     }
 
@@ -64,7 +63,7 @@ public class TrunkPage extends BasePage implements ITrunkPageElement
      * @param trunk_type
      * @return
      */
-    public TrunkPage selectTrunkType(Trunk_Type trunk_type){
+    public TrunkPage selectTrunkType(TRUNK_TYPE trunk_type){
         $(By.xpath(String.format(SELECT_COMM_XPATH,trunk_type.getAlias()))).click();
         return this;
     }

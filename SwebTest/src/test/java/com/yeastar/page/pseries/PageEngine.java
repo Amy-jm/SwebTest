@@ -13,6 +13,7 @@ import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
 import com.yeastar.page.pseries.ExtensionTrunk.TrunkPage;
 import com.yeastar.page.pseries.PbxSettings.PreferencesPage;
 import com.yeastar.page.pseries.WebClient.Me_HomePage;
+import org.testng.asserts.SoftAssert;
 
 public class PageEngine {
     LoginPage loginPage ;

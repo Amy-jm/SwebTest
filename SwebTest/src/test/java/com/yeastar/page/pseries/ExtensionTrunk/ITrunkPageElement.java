@@ -31,16 +31,31 @@ public interface ITrunkPageElement {
     /**Account Trunk 选择内容**/
     SelenideElement ele_trunk_basic_accountTrunk_number = $(By.id("trunk_voip_basic_number"));
 
+    /**Outbound Caller ID**/
+    SelenideElement ele_trunk_outbound_cid_list_def_outbound_cid = $(By.id("trunk_outbound_cid_list_def_outbound_cid"));
+    enum TRUNK_TAB{
+        BASIC("Basic"),
+        ADVANCED("Advanced"),
+        DIDS_DDIS("DIDs/DDIs"),
+        INBOUND_CALLER_ID_REFORMATTING("Inbound Caller ID Reformatting"),
+        OUTBOUND_CALLER_ID("Outbound Caller ID"),
+        SIP_HEADERS("SIP_HEADERS");
+        private final String alias;
+        TRUNK_TAB(String alias){this.alias = alias;}
+        public String getAlias(){
+            return alias;
+        }
+    }
 
     /** 下拉列表 用户角色 **/
-    enum Trunk_Type {
+    enum TRUNK_TYPE {
         RegisterTrunk("Register Trunk"),
         PeerTrunk("Peer Trunk"),
         AccountTrunk("Account Trunk");
 
         private final String alias;
 
-        Trunk_Type(String alias) {
+        TRUNK_TYPE(String alias) {
             this.alias = alias;
         }
 

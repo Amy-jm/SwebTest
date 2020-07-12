@@ -89,7 +89,6 @@ public class TestCaseBase extends BaseMethod {
      * admin 登录
      */
     public void loginWithAdmin(){
-        step("登录pbx");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
     }

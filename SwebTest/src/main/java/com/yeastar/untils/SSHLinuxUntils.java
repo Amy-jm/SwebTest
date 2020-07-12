@@ -41,6 +41,7 @@ public class SSHLinuxUntils {
      * @throws IOException
      */
     public static String exeCommand(String host, int port, String user, String password, String command) throws JSchException, IOException {
+        System.out.println("host:"+host+ "  port:"+port+ "  user:"+user+"   password:"+password+"   cmd:"+command);
         JSch jsch = new JSch();
         Session session = jsch.getSession(user, host, port);
         session.setConfig("StrictHostKeyChecking", "no");
@@ -82,6 +83,7 @@ public class SSHLinuxUntils {
 
             channelExec.disconnect();
             session.disconnect();
+//            System.out.println(out);
             return out;
         } catch (JSchException e) {
             e.printStackTrace();
