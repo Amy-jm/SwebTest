@@ -32,7 +32,7 @@ public class TestExtensionPresence extends TestCaseBase{
     private boolean runRecoveryEnvFlag=true;
     @BeforeMethod
     public void A_RecoveryEnv() {
-        if(!runRecoveryEnvFlag){
+        if(runRecoveryEnvFlag){
             ArrayList<String> list = new ArrayList<>();
 
             step("【环境准备】1、登录pbx");
@@ -135,7 +135,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING,"响铃30s超时无应答，分机9999999预期振铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -188,7 +188,7 @@ public class TestExtensionPresence extends TestCaseBase{
         sleep(20000);
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
 
         assertStep("判断CLI中应该存在判断CLI中应该存在");
         softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认voicemail提示音]");
@@ -232,7 +232,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("分机0、移动分机3000均未响铃");
@@ -249,7 +249,7 @@ public class TestExtensionPresence extends TestCaseBase{
         sleep(5000);
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -285,7 +285,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机3000和分机0 同时振铃");
@@ -300,7 +300,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP,"预期移动分机3000挂断");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -335,7 +335,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机3000和分机0 同时振铃");
@@ -350,7 +350,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(0, HUNGUP, 8),HUNGUP,"预期分机0不再响铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -387,7 +387,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机3000和分机0 同时振铃");
@@ -399,7 +399,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -446,7 +446,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -486,7 +486,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("分机0响铃、移动分机3000未响铃");
@@ -498,7 +498,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING,"预期分机9999999响铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -538,7 +538,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("分机0响铃、移动分机3000未响铃");
@@ -550,7 +550,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING,"预期移动分机3000响铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -591,7 +591,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Answer_Call(0,200,false);
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -635,7 +635,7 @@ public class TestExtensionPresence extends TestCaseBase{
 //        sleep(5000);
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -680,7 +680,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -728,7 +728,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(2000, RING, 8),RING,"分机0响铃10s超时，预期分机2000响铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
 
     }
@@ -778,7 +778,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Answer_Call(0,486,false);
         sleep(10000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
 
         assertStep("CDR 转接到播放两次提示音test.wav，播放两次后通话挂断");
         softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test.slin"),"[Assert,cli确认提示音]");
@@ -821,7 +821,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(3000);
 
         assertStep("分机0、移动分机同时响铃");
@@ -834,7 +834,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP,"分机0响铃超时10s后，移动分机3000预期挂断");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -876,7 +876,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(3000);
 
         assertStep("分机0、移动分机3000同时响铃");
@@ -889,7 +889,7 @@ public class TestExtensionPresence extends TestCaseBase{
         sleep(20000);
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
 
         assertStep("转接到voicemail，判断CLI中应该存在");
         softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认voicemail提示音]");
@@ -933,7 +933,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE,"预期分机0不响铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
 
         assertStep("CLI验证：queue show queue 6402 确认分机0不在队列6402中");
         softAssert.assertFalse(execAsterisk("queue show queue-6402").contains("Yeastar Test0 朗视信息科技"));
@@ -978,7 +978,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(1000, HUNGUP, 8),HUNGUP,"预期分机1000挂断");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
     @Epic("P_Series")
@@ -1015,7 +1015,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(3000);
 
         assertStep("分机0及移动分机均不响铃，通话被转移到手机90 3000");
@@ -1024,7 +1024,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(3000, RING, 8),RING,"预期移动分机3000响铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -1064,7 +1064,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE,"预期分机0不响铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -1102,14 +1102,14 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(3000);
 
         assertStep("分机0不会响铃");
         softAssert.assertEquals(getExtensionStatus(0, IDLE, 8),IDLE,"预期分机0不响铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -1151,7 +1151,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
 
         assertStep("CLI验证：queue show queue 6402 确认分机0不在队列6402中");
         softAssert.assertTrue(!execAsterisk("queue show queue-6402").contains("Yeastar Test0"));
@@ -1201,7 +1201,7 @@ public class TestExtensionPresence extends TestCaseBase{
         sleep(60000);
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
 
         assertStep("判断CLI中应该存在语音留言提示音");
         softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认voicemail提示音]");
@@ -1253,7 +1253,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(1000, HUNGUP, 8),HUNGUP,"预期分机1000挂断");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -1292,7 +1292,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机和分机0 同时振铃");
@@ -1305,7 +1305,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(3000, HUNGUP, 8),HUNGUP,"分机0响铃40s超时无应答后，预期分机3000挂断");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -1344,7 +1344,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"85503300",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"995503300",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("移动分机和分机0 同时振铃");
@@ -1359,7 +1359,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(2000, HUNGUP, 8),HUNGUP,"分机3000拒接回复486,分机0挂断");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -1401,7 +1401,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
 
         assertStep("CLI验证：queue show queue 6402 确认分机0不在队列6402中");
         softAssert.assertTrue(!execAsterisk("queue show queue-6402").contains("Yeastar Test0"));
@@ -1456,7 +1456,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
     @Epic("P_Series")
@@ -1503,7 +1503,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(1000, HUNGUP, 8),HUNGUP,"分机1000挂断");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -1542,7 +1542,7 @@ public class TestExtensionPresence extends TestCaseBase{
         pjsip.Pj_Register_Account_WithoutAssist(9999999,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(1000);
 
         assertStep("分机0、移动分机均不会响铃");
@@ -1553,7 +1553,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING,"分机9999999预期响铃");
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
@@ -1595,7 +1595,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
 
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+        //pjsip.Pj_Destory();
 
         assertStep("CLI验证：queue show queue 6402 确认分机0在队列6402中");
         softAssert.assertTrue(execAsterisk("queue show queue-6402").contains("Local/0@only-dialextension-q6402"));

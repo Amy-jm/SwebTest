@@ -132,7 +132,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(30000);
         pjsip.Pj_Hangup_All();
 
@@ -204,7 +204,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
@@ -242,7 +242,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
@@ -280,7 +280,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
@@ -317,7 +317,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
@@ -354,7 +354,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
@@ -391,7 +391,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
@@ -428,7 +428,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2001,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2001,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
@@ -480,7 +480,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2002,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2002,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2002,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
@@ -524,7 +524,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2002,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2002,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2002,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
@@ -566,7 +566,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
-        pjsip.Pj_Make_Call_No_Answer(2000,"8550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
 
         softAssert.assertEquals(getExtensionStatus(2000, HUNGUP, 8),HUNGUP,"预期分机2000直接被挂断");
         pjsip.Pj_Hangup_All();

@@ -184,7 +184,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
-        ele_extension_user_email_addr.setValue("pbxceshi@sina.com");
+//        ele_extension_user_email_addr.setValue("pbxceshi@sina.com");
         return this;
     }
 
