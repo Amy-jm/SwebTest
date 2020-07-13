@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import com.codeborne.selenide.Configuration;
+import com.sun.glass.ui.View;
 import com.yeastar.swebtest.driver.ConfigP;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
@@ -130,6 +131,8 @@ public class BrowserFactory extends ConfigP {
 			//Screen Resolution
 //			desiredCapabilities.setCapability("screenResolution", "1920x1080");
 			desiredCapabilities.setCapability("network", true);
+			log.debug("[add chrome no sandbox]");
+			desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, "no-sandbox");
 
 
 
