@@ -55,6 +55,8 @@ public class TestCaseBase extends BaseMethod {
         }
         new BrowserUtils().getLogType_Browser(method,webDriver);
         getDriver().quit();
+        log.debug("[clean all session] ...");
+        debugCleanSession();
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
 
@@ -64,7 +66,7 @@ public class TestCaseBase extends BaseMethod {
         int port = 22;
         String user = "root";
         String password = "r@@t";
-        String command = "curl -sSL http://localhost:4444/grid/sessions?action=doCleanupActiveSessions";
+        String command = "curl -sSL http://192.168.3.252:4444/grid/sessions?action=doCleanupActiveSessions";
         String result = "";
 
         try {
