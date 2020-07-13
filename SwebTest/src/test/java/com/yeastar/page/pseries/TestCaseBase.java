@@ -35,6 +35,7 @@ public class TestCaseBase extends BaseMethod {
                 "======");
         webDriver = initialDriver(BROWSER,PBX_URL,method);
         setDriver(webDriver);
+        log.debug("[PBX_URL]{}"+PBX_URL);
         open(PBX_URL);
         auto = new PageEngine();
         softAssert = new SoftAssert();
