@@ -8,6 +8,7 @@ import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -30,6 +32,7 @@ import static com.yeastar.swebtest.driver.SwebDriverP.*;
  * @create: 2020/06/17
  */
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
+@Log4j2
 public class TestExtensionSecurity extends TestCaseBase {
 
     /**
@@ -39,9 +42,16 @@ public class TestExtensionSecurity extends TestCaseBase {
     public void prerequisite(){
         //新增呼出路由
         //添加分机0 ，到路由AutoTest_Route
+        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
+        list.clear();
+        list.add("SPS1");
+        list2.clear();
+        list2.add("0");
         //todo 创建路由
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().editOutbound("AutoTest_Route","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
+        auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("AutoTest_Route",".","0",list,list2).clickSaveAndApply();
+
     }
 
     @Epic("P_Series")
@@ -74,7 +84,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(0,"2000",DEVICE_IP_LAN,false);
         softAssert.assertEquals(getExtensionStatus(0,HUNGUP,20),HUNGUP,"预期0为HUNGUP状态");
@@ -109,7 +119,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
         softAssert.assertEquals(getExtensionStatus(0,TALKING,10),TALKING,"预期0为TALKING状态");
@@ -162,11 +172,11 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         //勾选，下班时间不能呼出
         pjsip.Pj_Make_Call_No_Answer(0,"2000",DEVICE_IP_LAN,false);
-        softAssert.assertEquals(getExtensionStatus(0,HUNGUP,10),RING,"预期0为HUNGUP状态");
+        softAssert.assertEquals(getExtensionStatus(0,HUNGUP,10),HUNGUP,"预期0为HUNGUP状态");
         softAssert.assertEquals(getExtensionStatus(2000,IDLE,10),IDLE,"预期2000不会响铃");
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
@@ -207,7 +217,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
         softAssert.assertEquals(getExtensionStatus(0,TALKING,10),TALKING,"预期0为TALKING状态");
@@ -428,7 +438,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
         ys_waitingTime(70000);
@@ -480,9 +490,9 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"0",DEVICE_ASSIST_1,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"0",DEVICE_ASSIST_2,false);
         ys_waitingTime(70000);
         pjsip.Pj_Hangup_All();
 

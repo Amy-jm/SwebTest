@@ -8,6 +8,7 @@ import com.yeastar.page.pseries.CdrRecording.ICdrPageElement;
 import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.page.pseries.WebClient.Me_HomePage;
+import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
@@ -36,9 +37,9 @@ public class TestExtensionVoicemail extends TestCaseBase {
 //    @Test
     public void CaseName() throws InterruptedException {
 
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
-
+        Assert.fail();
         step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         preparationSteps();
 
@@ -113,21 +114,21 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:login PBX" +
-            "2:删除spstrunk -> 创建sps trunk" +
-            "3:辅助设备分机2000通过sps trunk呼入，进入分机0的voicemial"+
-            "4:cli确认播放提示音为vm-greeting-leave-after-tone.slin")
+            "login PBX" +
+            "删除spstrunk -> 创建sps trunk" +
+            "辅助设备分机2000通过sps trunk呼入，进入分机0的voicemial"+
+            "cli确认播放提示音为vm-greeting-leave-after-tone.slin")
     @Issue("V26分机voicemail页面消失 ")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void test2000To0Voicemail() throws IOException, JSchException {
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
-        step("3:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
+        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -136,23 +137,15 @@ public class TestExtensionVoicemail extends TestCaseBase {
         sleep(30000);
         pjsip.Pj_Hangup_All();
 
-        assertStep("4:cli确认播放提示音为vm-greeting-leave-after-tone.slin");
+        assertStep("cli确认播放提示音为vm-greeting-leave-after-tone.slin");
         softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, SHOW_CLI_LOG).contains("vm-greeting-leave-after-tone.slin"),"[Assert,cli确认voicemail提示音]");
 
-        assertStep("5:cdr判断");
+        assertStep("cdr判断");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         auto.cdrPage().ele_download_cdr_btn.shouldBe(Condition.exist);
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Voicemail Yeastar Test0 朗视信息科技<0>","VOICEMAIL","2000<2000> hung up",communication_inbound,SPS,"");
         softAssert.assertAll();
-        auto.homePage().logout();
-
-        assertStep("6:分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
-        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
-        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
-        String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
-        Assert.assertEquals(me_name,"2000\n" +"External Number");
 
         //todo 特征码*2要重置设置
         step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
@@ -172,24 +165,32 @@ public class TestExtensionVoicemail extends TestCaseBase {
         softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-from-phonenumber"),"[Assert,cli确认提示音vm-from-phonenumber]");
         softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-duration"),"[Assert,cli确认提示音vm-duration]");
         softAssert.assertAll();
-
+        
+        auto.homePage().logout();
+        assertStep("分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
+        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
+        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
+        String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
+        Assert.assertEquals(me_name,"2000\n" +"External Number");
+        
     }
 
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:设置状态为available" +
-            "1:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
-            "2:cli确认播放提示音为test.slin")
+            "设置状态为available" +
+            "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
+            "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForAvailable(){
 
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
         step("设置分机0状态为Available ");
@@ -217,17 +218,17 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:设置状态为away" +
-            "2:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
-            "3:cli确认播放提示音为test.slin")
+            "设置状态为away" +
+            "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
+            "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForAway(){
 
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
         step("设置分机0状态为Away ");
@@ -255,17 +256,17 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:设置状态为Bussiness trip" +
-            "2:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
-            "3:cli确认播放提示音为test.slin")
+            "设置状态为Bussiness trip" +
+            "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
+            "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForBusinessTrip(){
 
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
         step("设置分机0状态为Business Trip ");
@@ -293,16 +294,16 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:设置状态为dnd" +
-            "2:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
-            "3:cli确认播放提示音为test.slin")
+            "设置状态为dnd" +
+            "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
+            "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForDnd(){
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
         step("设置分机0状态为Do Not Disturb");
@@ -330,16 +331,16 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:设置状态为Lunch" +
-            "2:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
-            "3:cli确认播放提示音为test.slin")
+            "设置状态为Lunch" +
+            "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
+            "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForLunch(){
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
         step("设置分机0状态为Lunch Break");
@@ -367,16 +368,16 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:设置状态为Off Work" +
-            "2:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
-            "3:cli确认播放提示音为test1.wav")
+            "设置状态为Off Work" +
+            "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
+            "cli确认播放提示音为test1.wav")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailGreetingForOffWork(){
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
         step("设置分机0状态为Off Work");
@@ -409,10 +410,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testNotification1(){
 
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
         step("修改New Voicemail Notification设置为send email notification with attachment，afternotification设置为delete voicemail");
@@ -458,17 +459,17 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:设置状态为Off Work" +
-            "2:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
-            "3:cli确认播放提示音为test1.wav")
+            "设置状态为Off Work" +
+            "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
+            "cli确认播放提示音为test1.wav")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testNotification2(){
 
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
         step("修改New Voicemail Notification设置为send email notification without attachment，afternotification设置为mark as read");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
@@ -501,17 +502,17 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Feature("Extension")
     @Story("Voicemail")
     @Description("Voicemail MODE 功能验证：" +
-            "1:设置状态为Off Work" +
-            "2:清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
-            "3:cli确认播放提示音为test1.wav")
+            "设置状态为Off Work" +
+            "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
+            "cli确认播放提示音为test1.wav")
     @Severity(SeverityLevel.BLOCKER)
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testNotification3(){
 
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
         step("修改New Voicemail Notification设置为do not send email notification");
@@ -551,10 +552,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
     public void testVoicemailDisable(){
 
-        step("1:登录 PBX");
+        step("登录 PBX");
         loginWithAdmin();
 
-        step("2:环境准备");
+        step("环境准备");
         preparationSteps();
 
         step("分机0禁用voicemail，保存并应用");

@@ -66,8 +66,8 @@ public interface IExtensionPageElement {
 //    SelenideElement ele_extension_user_first_name = $(By.id("extension_user_first_name"));
 
     //密码强度不够弹框
-    SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\"Registration Password is not strong, continue to save\")]"));
-    SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//i[contains(@aria-label,\"icon: warning\") and contains(@title,\"注册密码强度弱\")]"));
+    SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\"Registration Password is NOT strong enough. Continue to save?\")]"));
+    SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//span[contains(@title,\"The registration password is too weak.\")]"));
 
 
     /********advance ***/
@@ -187,7 +187,7 @@ public interface IExtensionPageElement {
 
     /** 下拉列表 DTMF_MODE **/
     enum DTMF_MODE {
-        RFC4733RFC2833("RFC4733(RFC2833)"),
+        RFC4733RFC2833("RFC4733 (RFC2833)"),
         INFO("Info"),
         INBAND("Inband"),
         AUTO("Auto");

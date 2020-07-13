@@ -5,12 +5,11 @@ import com.codeborne.selenide.Selenide;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
-import com.yeastar.untils.MailUtils;
-import com.yeastar.untils.TableUtils;
-import com.yeastar.untils.WaitUntils;
+import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import javax.xml.soap.SAAJMetaFactory;
@@ -27,6 +26,7 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
  * @author: huangjx@yeastar.com
  * @create: 2020/07/01
  */
+@Listeners({ExecutionListener.class, AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
 public class TestExtensionFeature extends TestCaseBase {
 
@@ -185,10 +185,10 @@ public class TestExtensionFeature extends TestCaseBase {
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"1001",DEVICE_ASSIST_1,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"1001",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
 
@@ -200,7 +200,7 @@ public class TestExtensionFeature extends TestCaseBase {
         softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"IVR 6200<6200>");
 
         assertStep("3:[PJSIP注册]] ，2001 呼叫 1001 ");
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"1001",DEVICE_ASSIST_1,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"1001",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
         assertStep("5[CDR]1001<1001> 响铃");

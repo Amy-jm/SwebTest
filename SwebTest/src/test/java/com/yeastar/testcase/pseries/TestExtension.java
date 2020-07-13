@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.AllureReporterListener;
+import com.yeastar.untils.ExecutionListener;
 import com.yeastar.untils.RetryListener;
 import com.yeastar.untils.TestNGListenerP;
 import io.qameta.allure.*;
@@ -12,7 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 
-@Listeners({AllureReporterListener.class, TestNGListenerP.class})
+@Listeners({ExecutionListener.class,AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
 public class TestExtension extends TestCaseBase {
 
@@ -34,7 +35,7 @@ public class TestExtension extends TestCaseBase {
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).clickSaveAndApply();
 
         assertStep("3:验证保存成功");
-        Assert.assertTrue(auto.extensionPage().isSaveSuccessAlertAppear());
+        Assert.assertTrue(execAsterisk(PJSIP_SHOW_AOR+"1001").contains("1001"));
 
         step("4:loginMe");
         auto.homePage().logout();
@@ -59,10 +60,10 @@ public class TestExtension extends TestCaseBase {
 
         step("2:创建分机号1001");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001", EXTENSION_PASSWORD, "ABCDEFGHIJK").clickSaveAndApply();;
+        auto.extensionPage().deleAllExtension().createSipExtension("1001", EXTENSION_PASSWORD, "ABCDEFGHIJK").clickSave();
 
         assertStep("3:提示注册密码强度不够，继续保存成功");
-        auto.extensionPage().registration_Password_Alert_Exist_And_GoOn().isSaveSuccessAlertAppear();
+        auto.extensionPage().registration_Password_Alert_Exist_And_GoOn();
 
         assertStep("4:分机列表，有提示注册密码强度不够图标显示");
         auto.extensionPage().ele_extension_list_warning_registration_warning_img.shouldBe(Condition.exist);
@@ -88,12 +89,14 @@ public class TestExtension extends TestCaseBase {
         auto.extensionPage().deleAllExtension()
                 .createSipExtension("1001", EXTENSION_PASSWORD,EXTENSION_PASSWORD)
                 .createSipExtensionAndConf("1002", EXTENSION_PASSWORD,EXTENSION_PASSWORD)
-                .configPresence().clickSaveAndApply();;
+                .configPresence().clickSave();
 
-        step("2:创建IVR 6002");
+        step("2:创建IVR 6200");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
+        auto.ivrPage().deleAllIVR().createIVR("6200","6200","Yeastar Test9999999 朗视信息科技").clickSaveAndApply();
 
         assertStep("3:提示注册密码强度不够，继续保存成功");
-        auto.extensionPage().registration_Password_Alert_Exist_And_GoOn().isSaveSuccessAlertAppear();
+        auto.extensionPage().registration_Password_Alert_Exist_And_GoOn();
 
         assertStep("4:分机列表，有提示注册密码强度不够图标显示");
         auto.extensionPage().ele_extension_list_warning_registration_warning_img.shouldBe(Condition.exist);

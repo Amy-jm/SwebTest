@@ -7,6 +7,7 @@ import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
+import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -19,6 +20,7 @@ import java.io.IOException;
  * @create: 2020/06/16
  */
 @Listeners({ExecutionListener.class,AllureReporterListener.class, TestNGListenerP.class})
+@Log4j2
 public class TestExtensionAdvanced extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Extension")

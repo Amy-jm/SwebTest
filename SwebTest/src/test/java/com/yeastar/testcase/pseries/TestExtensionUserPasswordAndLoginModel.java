@@ -7,7 +7,9 @@ import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.swebtest.pobject.Settings.System.Email.Email;
+import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.MailUtils;
+import com.yeastar.untils.TestNGListenerP;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
@@ -15,6 +17,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -29,6 +32,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
  * @author: huangjx@yeastar.com
  * @create: 2020/07/06
  */
+@Listeners({AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
 public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
     /**
@@ -84,7 +88,8 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
 
         step("2:创建分机号1001,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").choiceLinkusServer().
+        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").clickSave();
+        auto.extensionPage().choiceLinkusServer().
                 setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,true).
                 setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,true).
                 clickSaveAndApply();
@@ -98,7 +103,7 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
         assertStep("4:功能菜单中只显示extension，可正常添加、编辑、删除");
 
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().createSipExtension("1003", LOGIN_PASSWORD).editDataByEditImage("1003").setElementValue(auto.extensionPage().ele_extension_user_last_name,"test").clickSaveAndApply();
+        auto.extensionPage().createSipExtension("1003", LOGIN_PASSWORD).setElementValue(auto.extensionPage().ele_extension_user_last_name,"test").clickSaveAndApply();
         auto.extensionPage().deleDataByDeleImage("1003").clickSaveAndApply();
 
         softAssert.assertAll();
@@ -124,7 +129,8 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
 
         step("2:创建分机号1001,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").choiceLinkusServer().
+        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").clickSave();
+        auto.extensionPage().choiceLinkusServer().
                 setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,true).
                 setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,true).
                 clickSaveAndApply();
@@ -167,7 +173,8 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
 
         step("2:创建分机号0,禁用login with Email");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").choiceLinkusServer().
+        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").clickSave();
+        auto.extensionPage().choiceLinkusServer().
                 setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,true).
                 setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,false).
                 clickSaveAndApply();
@@ -200,7 +207,8 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
 
         step("2:创建分机号0,禁用login with Email");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").choiceLinkusServer().
+        auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("0", LOGIN_PASSWORD, EMAIL, "extension").clickSave();
+        auto.extensionPage().choiceLinkusServer().
                 setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,false).
                 setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,true).
                 clickSaveAndApply();
