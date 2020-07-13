@@ -44,7 +44,7 @@ public class TestCaseBase extends BaseMethod {
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) throws Exception
-    {  new BrowserUtils().getLogType_Browser(method,webDriver);
+    {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils
                 .getCurrentTime("yyyy-MM-dd hh:mm:ss") +
                 "======");
@@ -55,6 +55,7 @@ public class TestCaseBase extends BaseMethod {
         }
 //        new BrowserUtils().getLogType_Browser(method,webDriver);
         if(getDriver() != null){
+            new BrowserUtils().getLogType_Browser(method,webDriver);
             getDriver().quit();
         }
 
