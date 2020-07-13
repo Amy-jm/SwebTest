@@ -34,6 +34,7 @@ public class TestExtensionPresence extends TestCaseBase{
     public void A_RecoveryEnv() {
         if(runRecoveryEnvFlag){
             ArrayList<String> list = new ArrayList<>();
+            ArrayList<String> list2 = new ArrayList<>();
 
             step("【环境准备】1、登录pbx");
             loginWithAdmin();
@@ -85,7 +86,12 @@ public class TestExtensionPresence extends TestCaseBase{
 
             step("【环境准备】8、创建呼出路由");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-
+            list.clear();
+            list.add("SPS1");
+            list2.clear();
+            list2.add("Yeastar Test0 朗视信息科技");
+            list2.add("Yeastar Test9999999 朗视信息科技");
+            auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("Outbound1","90.","2",list,list2).clickSave();
             auto.ringGroupPage().clickApply();
 
             auto.homePage().logout();

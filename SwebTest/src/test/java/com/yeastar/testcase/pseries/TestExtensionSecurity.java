@@ -41,7 +41,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         //添加分机0 ，到路由AutoTest_Route
         //todo 创建路由
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().editRoute("AutoTest_Route").addExtensionOrExtensionGroup("0").clickSaveAndApply();
+        auto.outBoundRoutePage().editOutbound("AutoTest_Route","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
     }
 
     @Epic("P_Series")
@@ -417,7 +417,7 @@ public class TestExtensionSecurity extends TestCaseBase {
                 .clickSaveAndApply();
 
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().editRoute("AutoTest_Route").addExtensionOrExtensionGroup("0").clickSaveAndApply();
+        auto.outBoundRoutePage().editOutbound("AutoTest_Route","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
 
 
         assertStep("4:全局设置 preference，Max Call Duration 设置30s");
