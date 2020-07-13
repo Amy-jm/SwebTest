@@ -24,10 +24,11 @@
 
             </methods>
             </class>
-<!--            <class name="com.yeastar.testcase.pseries.TestExtension"/>-->
-<!--            <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>-->
-<!--            <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>-->
-<!--            <class name="com.yeastar.testcase.pseries.TestExtensionList"/>-->
+            <class name="com.yeastar.testcase.pseries.TestExtension"/>
+            <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>
+            <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>
+            <class name="com.yeastar.testcase.pseries.TestExtensionList"/>
+            <class name="com.yeastar.testcase.pseries.TestExtensionUserPasswordAndLoginModel"/>
         </classes>
     </test>
 </suite>
