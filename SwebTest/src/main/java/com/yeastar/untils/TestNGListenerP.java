@@ -47,6 +47,8 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
         }catch(java.lang.NullPointerException ex){
             log.error(ex.getMessage());
         }
+        WebDriverFactory.getDriver().quit();
+        log.debug("[TestNGListenerP Failure and driver quit] ...");
 //        getWebDriver().close();
 //        log.debug("[TestNGListenerP] driver close .");
 //        getWebDriver().quit();
@@ -69,6 +71,8 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
             WebDriverFactory.getDriver().manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
         log.error(ex.getMessage());
+        WebDriverFactory.getDriver().quit();
+        log.debug("[TestNGListenerP Failure and driver quit] ...");
     }
 //        getDriver().close();
 //        log.debug("[TestNGListenerP onTestSkipped] driver close .");

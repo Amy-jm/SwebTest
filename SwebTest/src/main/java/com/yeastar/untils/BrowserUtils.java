@@ -40,12 +40,19 @@ public class BrowserUtils {
      * @throws Exception
      */
     public  void  getLogType_Browser(Method method, WebDriver driver) throws  Exception{
-        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-        log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.start=====================");
-        for (LogEntry entry : logEntries) {
-            log.fatal(entry.getLevel() + " " + entry.getMessage());
+
+        try {
+            LogEntries logEntries= driver.manage().logs().get(LogType.BROWSER);
+            log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.start=====================");
+            for (LogEntry entry : logEntries) {
+                log.fatal(entry.getLevel() + " " + entry.getMessage());
+            }
+            log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.end=====================");
+        }catch (Exception e){
+
         }
-        log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.end=====================");
+
+
     }
 
     public  static void getLogType_Performance(WebDriver driver){

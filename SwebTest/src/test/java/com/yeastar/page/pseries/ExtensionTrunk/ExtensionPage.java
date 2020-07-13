@@ -109,7 +109,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_caller_id.setValue(extensionNumber);
         ele_extension_user_reg_name.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
-
 //        clickApply();
         return this;
     }
@@ -131,7 +130,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_caller_id.setValue(extensionNumber);
         ele_extension_user_reg_name.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
-        saveBtn.click();
 //        clickApply();
         return this;
     }
@@ -158,7 +156,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_caller_id.setValue(extensionNumber);
         ele_extension_user_reg_name.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
-        saveBtn.click();
 //        clickApply();
         return this;
     }
@@ -204,7 +201,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_caller_id.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue(registrationPassword);
-        saveBtn.click();
         return this;
     }
 
@@ -786,7 +782,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         addBtn.shouldBe(Condition.visible).click();
         ele_role_management_name.shouldBe(Condition.visible).setValue(roleName);
         isCheckbox(ele_role_management_enable_extension_input,true);
-        saveBtn.click();
         return this;
     }
 

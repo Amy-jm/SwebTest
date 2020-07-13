@@ -1,12 +1,18 @@
 package com.yeastar.page.pseries.CallControl;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.yeastar.page.pseries.BasePage;
+import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.sleep;
+import java.util.List;
+
+import static com.codeborne.selenide.Selenide.*;
+import static com.yeastar.controllers.WebDriverFactory.getDriver;
 
 /**
  * @program: SwebTest
@@ -24,15 +30,47 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
     public String Group_EXTENSION_RIGHT_BUTTON_XPATH="//td[contains(text(),'%s')]/../../../../../../../../../../../../../../../..//button[1]";
 
     /**
-     * 通过路由名，通过编辑图标，编辑
-     * @param routeName
+     * 删除所有呼入路由
      * @return
      */
-    public OutBoundRoutePage editRoute(String routeName){
-        $(By.xpath(String.format(ROUTE_LIST_TABLE_XAPTH,routeName))).click();
-        return  this;
+    @Step("删除所有呼出路由")
+    public OutBoundRoutePage deleteAllOutboundRoutes(){
+        if (ele_delete_all_checkbox.isEnabled()) {
+            Selenide.actions().click(ele_delete_all_checkbox).perform();
+            deleteBtn.shouldBe(Condition.visible).click();
+            OKAlertBtn.shouldBe(Condition.visible).click();
+            sleep(WaitUntils.RETRY_WAIT);
+        }
+        return this;
     }
 
+
+    @Step("删除指定呼chu路由")
+    public OutBoundRoutePage deleteOutboundRoute(WebDriver devier, String name){
+        if(TableUtils.clickTableDeletBtn(devier,"Name",name)){
+            OKAlertBtn.shouldBe(Condition.visible).click();
+        }
+        return this;
+    }
+
+
+    public OutBoundRoutePage createOutbound(String name, String pattern, String strip, List<String> trunklist, List<String> extlist){
+        ele_add_btn.click();
+        ele_outbound_routes_name_input.setValue(name);
+        ele_outbound_routes_dial_pattern_add_btn.click();
+        ele_outbound_routes_dial_pattern_input.setValue(pattern);
+        ele_outbound_routes_strip_input.setValue(strip);
+        for(String trunkname: trunklist){
+            $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).click();
+        }
+        ele_outbound_routes_add_trunk_btn.click();
+
+        for(String extname: extlist){
+            $(By.xpath("//td[contains(text(),'"+extname+"')]")).click();
+        }
+        ele_outbound_routes_add_extension_btn.click();
+        return this;
+    }
     /**
      * 添加分机到路由中
      * @param extension
@@ -43,6 +81,12 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
         Selenide.actions().moveToElement($(By.xpath(String.format(GROUP_EXTENSION_XPATH,extension))),3,3).click().perform();
         sleep(WaitUntils.RETRY_WAIT);
         $(By.xpath(String.format(Group_EXTENSION_RIGHT_BUTTON_XPATH,extension))).click();
+        return this;
+    }
+
+    @Step("点击编辑呼入路由")
+    public OutBoundRoutePage editOutbound(String name,String title){
+        TableUtils.clickTableEidtBtn(getDriver(),title,name);
         return this;
     }
 

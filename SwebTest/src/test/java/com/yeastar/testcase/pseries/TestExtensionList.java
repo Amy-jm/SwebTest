@@ -15,6 +15,8 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
+import static com.codeborne.selenide.Selenide.sleep;
+
 
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
@@ -27,7 +29,7 @@ public class TestExtensionList extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001507")
     @Issue("")
-    @Test(groups = {"P0","testDeleteExtension","Extension","Regression","PSeries"})
+    @Test(groups = {"P0","testDeleteExtension","Extension","TestExtensionList","Regression","PSeries"})
     public void testDeleteExtension() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -58,7 +60,7 @@ public class TestExtensionList extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001508")
     @Issue("")
-    @Test(groups = {"P0","testBulkDeleteExtension","Extension","Regression","PSeries"})
+    @Test(groups = {"P0","testBulkDeleteExtension","Extension","TestExtensionList","Regression","PSeries"})
     public void testBulkDeleteExtension() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -66,14 +68,15 @@ public class TestExtensionList extends TestCaseBase {
 
         step("2:创建分机号1000,1001");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1000",EXTENSION_PASSWORD).createSipExtension("1001",EXTENSION_PASSWORD).clickSaveAndApply();
+        auto.extensionPage().deleAllExtension().createSipExtension("1000",EXTENSION_PASSWORD).clickSave();
+        auto.extensionPage().createSipExtension("1001",EXTENSION_PASSWORD).clickSaveAndApply();
 
         assertStep("3:验证保存成功");
         Assert.assertTrue(execAsterisk(PJSIP_SHOW_AOR+"1000").contains("1000"));
         Assert.assertTrue(execAsterisk(PJSIP_SHOW_AOR+"1001").contains("1001"));
 
         step("4:批量删除");
-        auto.extensionPage().deleAllExtension();
+        auto.extensionPage().deleAllExtension().clickApply();
 
         assertStep("5.[AsteriskAssert]"+PJSIP_SHOW_AOR+"1000");
         Assert.assertTrue(execAsterisk(PJSIP_SHOW_AOR+"1000").contains("Unable to find object 1000"));
