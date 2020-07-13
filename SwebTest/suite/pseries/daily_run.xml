@@ -9,22 +9,22 @@
     </listeners>
     <test name="pbxcore">
         <classes>
-            <class name="com.yeastar.testcase.pseries.TestExtensionSecurity">
-            <methods>
-                <include name="testDisableOutCall"/>
-                <include name="testDisableOutCallBusinessHours"/>
-                <include name="testEnableAllowRegisterRemotely"/>
-                <include name="testEnableDisableOutCall"/>
-                <include name="testEnableDisableOutCallBusinessHours"/>
-                <include name="testEnableUserAgentRegistrationAuthorization"/>
-                <include name="testMaxCallDurationForInternalExtension"/>
-                <include name="testMaxCallDurationForSPSTrunk"/>
-                <include name="testMaxCallDurationForSPSTrunkTo0"/>
-                <include name="testSIPRegistrationIPRestriction"/>
+            <class name="com.yeastar.testcase.pseries.TestExtensionSecurity"/>
+<!--            <methods>-->
+<!--                <include name="testDisableOutCall"/>-->
+<!--                <include name="testDisableOutCallBusinessHours"/>-->
+<!--                <include name="testEnableAllowRegisterRemotely"/>-->
+<!--                <include name="testEnableDisableOutCall"/>-->
+<!--                <include name="testEnableDisableOutCallBusinessHours"/>-->
+<!--                <include name="testEnableUserAgentRegistrationAuthorization"/>-->
+<!--                <include name="testMaxCallDurationForInternalExtension"/>-->
+<!--                <include name="testMaxCallDurationForSPSTrunk"/>-->
+<!--                <include name="testMaxCallDurationForSPSTrunkTo0"/>-->
+<!--                <include name="testSIPRegistrationIPRestriction"/>-->
 
-            </methods>
-            </class>
-            <class name="com.yeastar.testcase.pseries.TestExtension"/>
+<!--            </methods>-->
+<!--            </class>-->
+            <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionList"/>
