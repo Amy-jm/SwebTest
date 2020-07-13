@@ -31,7 +31,7 @@ import static com.yeastar.swebtest.driver.SwebDriverP.*;
  * @author: huangjx@yeastar.com
  * @create: 2020/06/17
  */
-@Listeners({AllureReporterListener.class, TestNGListenerP.class})
+//@Listeners({AllureReporterListener.class, TestNGListenerP.class})
 public class TestExtensionSecurity extends TestCaseBase {
 
     /**
