@@ -54,7 +54,7 @@ public class TestCaseBase extends BaseMethod {
 
         }
 //        new BrowserUtils().getLogType_Browser(method,webDriver);
-        if(getDriver() != null){
+        if(getDriver() != null && webDriver!=null){
             new BrowserUtils().getLogType_Browser(method,webDriver);
             getDriver().quit();
         }
