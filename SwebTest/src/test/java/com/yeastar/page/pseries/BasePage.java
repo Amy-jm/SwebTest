@@ -108,6 +108,7 @@ public class BasePage implements IButton{
      * 点击 apply button
      */
     public void clickApply() {
+        sleep(1000);
         if(applyBtn.isDisplayed()){
             applyBtn.waitUntil(Condition.enabled, WaitUntils.TIME_OUT_SECOND).click();
             applyLoadingBtn.shouldBe(Condition.visible);

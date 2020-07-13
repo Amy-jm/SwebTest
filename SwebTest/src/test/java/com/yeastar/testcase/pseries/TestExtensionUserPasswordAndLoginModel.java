@@ -37,7 +37,7 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
      */
     public void prerequisite(){
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_role_management);
-        auto.extensionPage().deleRole("extension").addNewRole("extension");
+        auto.extensionPage().deleRole("extension").addNewRole("extension").clickSave();
     }
 
 

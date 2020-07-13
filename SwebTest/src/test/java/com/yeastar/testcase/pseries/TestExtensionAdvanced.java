@@ -40,7 +40,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,DTMF_MODE->RFC4733RFC2833");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").select_DTMF_Mode(IExtensionPageElement.DTMF_MODE.RFC4733RFC2833).clickSaveAndApply();
+                switchToTab("Advanced").select_DTMF_Mode(IExtensionPageElement.DTMF_MODE.RFC4733RFC2833).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果:dtmf_mode   : rfc4733");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("dtmf_mode                     : rfc4733"),"[Assert,dtmf mode]");
@@ -85,7 +85,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,Transport->UDP");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").select_Transport(IExtensionPageElement.TRANSPORT.UDP).clickSaveAndApply();
+                switchToTab("Advanced").select_Transport(IExtensionPageElement.TRANSPORT.UDP).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：transport_name   : udp");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("transport_name                : udp"),"[Assert,transport_name]");
@@ -124,7 +124,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,SRTP->禁用");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_srtp_checkbox,false).clickSaveAndApply();
+                switchToTab("Advanced").isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_srtp_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果： media_encryption  : no;media_encryption_optimistic   : true");
         softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("media_encryption              : no"));
@@ -158,7 +158,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,NAT->禁用");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").
+                switchToTab("Advanced").
                 isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_nat_checkbox,false).
                 clickSaveAndApply();
 
@@ -198,7 +198,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,T38Support->禁用");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").
+                switchToTab("Advanced").
                 isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_t38_support_checkbox,true).
                 clickSaveAndApply();
 
@@ -232,7 +232,7 @@ public class TestExtensionAdvanced extends TestCaseBase {
         step("2:创建分机号1001,Quailty->禁用");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Advanced").
+                switchToTab("Advanced").
                 isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_qualify_checkbox,false).
                 clickSaveAndApply();
 

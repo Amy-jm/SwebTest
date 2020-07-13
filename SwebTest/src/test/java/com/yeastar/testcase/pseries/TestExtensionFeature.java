@@ -92,8 +92,9 @@ public class TestExtensionFeature extends TestCaseBase {
         step("2:创建分机号1001,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().deleAllExtension().createSipExtension("1002",EXTENSION_PASSWORD).createSipExtensionWithEmail("1001",EXTENSION_PASSWORD,"yeastarautotest@163.com").
-               editDataByEditImage("1001").switchToTab("Features").setCheckbox(ele_extension_feature_enb_email_miss_call,true).clickSaveAndApply();
+        auto.extensionPage().deleAllExtension().createSipExtension("1002",EXTENSION_PASSWORD).clickSave();
+        auto.extensionPage().createSipExtensionWithEmail("1001",EXTENSION_PASSWORD,"yeastarautotest@163.com").
+               switchToTab("Features").setCheckbox(ele_extension_feature_enb_email_miss_call,true).clickSaveAndApply();
 
         int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
         step("3:【验证邮箱服务器是否能正常】通过修改分机1001密码，验证是否能收到邮件");
@@ -174,7 +175,7 @@ public class TestExtensionFeature extends TestCaseBase {
 
         step("2:创建分机号1001，编辑call blocking");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).editFirstData().
+        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
                             switchToTab("Features").addCallHandingRule("2000","IVR","","").clickSaveAndApply();
 
         assertStep("3:[PJSIP注册]] ，2000 呼叫 1001 ");

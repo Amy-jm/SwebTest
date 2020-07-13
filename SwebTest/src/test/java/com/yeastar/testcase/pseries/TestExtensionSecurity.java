@@ -62,7 +62,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,true).
                 clickSaveAndApply();
 
@@ -99,7 +99,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,false).clickSaveAndApply();
 
         prerequisite();
@@ -143,7 +143,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用disable outbound calls outside business hours");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_office_time_outb_call_checkbox,true).
                 clickSaveAndApply();
 
@@ -190,7 +190,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,禁用disable outbound calls outside business hours");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_office_time_outb_call_checkbox,false).clickSaveAndApply();
 
         prerequisite();
@@ -241,7 +241,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_allow_reg_remotely_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：remoteregister                     : no ");
@@ -273,7 +273,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_enb_user_agent_ident_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：enableuseragent               : no");
@@ -310,7 +310,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_enb_ip_rstr_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：enableiprestrict               : no");
@@ -353,10 +353,8 @@ public class TestExtensionSecurity extends TestCaseBase {
 
         step("2.创建分机：0，分机：9999999");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().
-                deleAllExtension().
-                createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0","Yeastar202").
-                createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999","Yeastar202").clickSaveAndApply();;
+        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0","Yeastar202").clickSave();
+        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999","Yeastar202").clickSaveAndApply();;
 
         assertStep("3:设置分机0，Max Call Duration 设置60s");
         auto.extensionPage().editFirstData().switchToTab("Security").setElementValue(ele_extension_security_max_outb_call_duration_select,"60")
