@@ -44,11 +44,11 @@ public class BrowserUtils {
     public  void  getLogType_Browser(Method method, WebDriver driver) throws  Exception{
         LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
         log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.start=====================");
-        log.debug("[BrowserUtils getDriver]{}",getDriver());
+        log.debug("[BrowserUtils remote session]{}",getDriver());
         for (LogEntry entry : logEntries) {
             log.fatal(entry.getLevel() + " " + entry.getMessage());
         }
-        log.debug("[BrowserUtils getDriver]{}",getDriver());
+        log.debug("[BrowserUtils remote session]{}",getDriver());
         log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.end=====================");
     }
 
