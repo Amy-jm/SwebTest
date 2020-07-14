@@ -55,10 +55,10 @@ public class TestCaseBase extends BaseMethod {
 
         }
         new BrowserUtils().getLogType_Browser(method,webDriver);
-        getDriver().quit();
-
-        log.debug("[getDriver]{}",getDriver());
+        log.debug("[getDriver]{}",webDriver);
+        webDriver.quit();
         log.debug("[getDriver quit] ...");
+        log.debug("[getDriver]{}",webDriver);
 //        debugCleanSession();
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
