@@ -37,6 +37,7 @@ public class TestCaseBase extends BaseMethod {
                 "======");
         webDriver = initialDriver(BROWSER,PBX_URL,method);
         setDriver(webDriver);
+        log.debug("[PBX_URL]{}",PBX_URL);
         open(PBX_URL);
         auto = new PageEngine();
         softAssert = new SoftAssert();
@@ -53,12 +54,10 @@ public class TestCaseBase extends BaseMethod {
             pjsip.Pj_Destory();
 
         }
-//        new BrowserUtils().getLogType_Browser(method,webDriver);
+        new BrowserUtils().getLogType_Browser(method,webDriver);
+        getDriver().quit();
 
-            new BrowserUtils().getLogType_Browser(method,webDriver);
-            getDriver().quit();
-
-
+        log.debug("[getDriver]{}",getDriver());
         log.debug("[getDriver quit] ...");
 //        debugCleanSession();
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");

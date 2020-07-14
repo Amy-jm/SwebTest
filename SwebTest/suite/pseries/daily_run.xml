@@ -17,10 +17,10 @@
                 <include name="testEnableDisableOutCall"/>
                 <include name="testEnableDisableOutCallBusinessHours"/>
                 <include name="testEnableUserAgentRegistrationAuthorization"/>
-                <include name="testMaxCallDurationForInternalExtension"/>
-                <include name="testMaxCallDurationForSPSTrunk"/>
-                <include name="testMaxCallDurationForSPSTrunkTo0"/>
-                <include name="testSIPRegistrationIPRestriction"/>
+                <exclude name="testMaxCallDurationForInternalExtension"/>
+                <exclude name="testMaxCallDurationForSPSTrunk"/>
+                <exclude name="testMaxCallDurationForSPSTrunkTo0"/>
+                <exclude name="testSIPRegistrationIPRestriction"/>
 
             </methods>
             </class>
