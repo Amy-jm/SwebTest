@@ -120,7 +120,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "cli确认播放提示音为vm-greeting-leave-after-tone.slin")
     @Issue("V26分机voicemail页面消失 ")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void test2000To0Voicemail() throws IOException, JSchException {
         step("登录 PBX");
         loginWithAdmin();
@@ -184,7 +184,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testVoicemailGreetingForAvailable(){
 
         step("登录 PBX");
@@ -222,7 +222,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testVoicemailGreetingForAway(){
 
         step("登录 PBX");
@@ -260,7 +260,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testVoicemailGreetingForBusinessTrip(){
 
         step("登录 PBX");
@@ -298,7 +298,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testVoicemailGreetingForDnd(){
         step("登录 PBX");
         loginWithAdmin();
@@ -335,7 +335,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testVoicemailGreetingForLunch(){
         step("登录 PBX");
         loginWithAdmin();
@@ -372,7 +372,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test1.wav")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testVoicemailGreetingForOffWork(){
         step("登录 PBX");
         loginWithAdmin();
@@ -407,7 +407,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Description("Voicemail MODE 功能验证：" +
             "修改New Voicemail Notification设置为send email notification with attachment，afternotification设置为delete voicemail")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testNotification1(){
 
         step("登录 PBX");
@@ -463,7 +463,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test1.wav")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testNotification2(){
 
         step("登录 PBX");
@@ -506,7 +506,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test1.wav")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testNotification3(){
 
         step("登录 PBX");
@@ -549,7 +549,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "分机0禁用voicemail，保存并应用" +
             "辅助设备分机2000通过sps trunk呼入，未进入voicemial")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = "P0,TestExtensionVoicemail,testVoicemailModel,Regression,PSeries")
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
     public void testVoicemailDisable(){
 
         step("登录 PBX");

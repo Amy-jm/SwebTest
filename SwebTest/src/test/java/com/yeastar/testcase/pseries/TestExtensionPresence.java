@@ -30,7 +30,16 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class TestExtensionPresence extends TestCaseBase{
 
     private boolean runRecoveryEnvFlag=true;
-    @BeforeMethod
+//    @BeforeMethod
+
+    @Epic("P_Series")
+    @Feature("Extension")
+    @Story("Presence")
+    @Description("Presence->前置条件")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","Extension", "Regression", "PSeries"},priority =0 )
     public void A_RecoveryEnv() {
         if(runRecoveryEnvFlag){
             ArrayList<String> list = new ArrayList<>();
@@ -95,7 +104,7 @@ public class TestExtensionPresence extends TestCaseBase{
             auto.ringGroupPage().clickApply();
 
             auto.homePage().logout();
-            runRecoveryEnvFlag = false;
+//            runRecoveryEnvFlag = false;
         }
 
     }
