@@ -29,7 +29,7 @@ public class ExecutionListener  extends TestListenerAdapter implements IInvokedM
            Cookie cookie = new Cookie("zaleniumTestPassed", "true");
            getDriver().manage().addCookie(cookie);
        }catch(java.lang.NullPointerException ex){
-           log.error(ex.getMessage());
+           log.error("[ExecutionListener onTestSuccess add cookie to zalenium --> NullPointerException] {}",ex.getMessage());
        }
        this.sendTestMethodStatus(iTestResult, "PASS");
     }
@@ -41,7 +41,7 @@ public class ExecutionListener  extends TestListenerAdapter implements IInvokedM
             Cookie cookie = new Cookie("zaleniumTestPassed", "false");
             getDriver().manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
-            log.error(ex.getMessage());
+            log.error("[ExecutionListener Failure add cookie to zalenium --> NullPointerException] {}",ex.getMessage());
         }
         this.sendTestMethodStatus(iTestResult, "FAIL");
     }
@@ -53,7 +53,7 @@ public class ExecutionListener  extends TestListenerAdapter implements IInvokedM
             Cookie cookie = new Cookie("zaleniumTestPassed", "false");
             getDriver().manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
-            log.error(ex.getMessage());
+            log.error("[ExecutionListener Skipped add cookie to zalenium --> NullPointerException] {}",ex.getMessage());
         }
         this.sendTestMethodStatus(iTestResult, "SKIPPED");
     }
