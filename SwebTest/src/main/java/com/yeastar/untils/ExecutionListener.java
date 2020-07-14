@@ -2,9 +2,12 @@ package com.yeastar.untils;
 
 import lombok.extern.log4j.Log4j2;
 import org.influxdb.dto.Point;
+import org.openqa.selenium.Cookie;
 import org.testng.*;
 
 import java.util.concurrent.TimeUnit;
+
+import static com.yeastar.controllers.WebDriverFactory.getDriver;
 
 /**
  * @program: SwebTest
@@ -16,19 +19,42 @@ import java.util.concurrent.TimeUnit;
 public class ExecutionListener  extends TestListenerAdapter implements IInvokedMethodListener {
     @Override
     public void onTestStart(ITestResult iTestResult) {
+        log.debug( "[ExecutionListener onTestStart] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
 
     }
    @Override
     public void onTestSuccess(ITestResult iTestResult) {
-       log.debug( "[ExecutionListener] "+iTestResult.getTestClass()+iTestResult.getName());
-        this.sendTestMethodStatus(iTestResult, "PASS");
+       log.debug( "[ExecutionListener Success] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
+       try {
+           Cookie cookie = new Cookie("zaleniumTestPassed", "true");
+           getDriver().manage().addCookie(cookie);
+       }catch(java.lang.NullPointerException ex){
+           log.error(ex.getMessage());
+       }
+       this.sendTestMethodStatus(iTestResult, "PASS");
     }
     @Override
     public void onTestFailure(ITestResult iTestResult) {
+        log.debug("[ExecutionListener Failure] "+iTestResult.getTestClass()+iTestResult.getName());
+        //更新用例状态 zalenium
+        try {
+            Cookie cookie = new Cookie("zaleniumTestPassed", "false");
+            getDriver().manage().addCookie(cookie);
+        }catch(java.lang.NullPointerException ex){
+            log.error(ex.getMessage());
+        }
         this.sendTestMethodStatus(iTestResult, "FAIL");
     }
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
+        log.debug("[ExecutionListener SKIPPED] "+iTestResult.getTestClass()+iTestResult.getName());
+        //更新用例状态 zalenium
+        try {
+            Cookie cookie = new Cookie("zaleniumTestPassed", "false");
+            getDriver().manage().addCookie(cookie);
+        }catch(java.lang.NullPointerException ex){
+            log.error(ex.getMessage());
+        }
         this.sendTestMethodStatus(iTestResult, "SKIPPED");
     }
 
