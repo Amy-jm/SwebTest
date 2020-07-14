@@ -59,7 +59,9 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
         ele_outbound_routes_name_input.setValue(name);
         ele_outbound_routes_dial_pattern_add_btn.click();
         sleep(2000);
+        ele_outbound_routes_dial_pattern_input.click();
         ele_outbound_routes_dial_pattern_input.setValue(pattern);
+        ele_outbound_routes_strip_input.click();
         ele_outbound_routes_strip_input.setValue(strip);
         for(String trunkname: trunklist){
             $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).click();
