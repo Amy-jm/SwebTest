@@ -110,12 +110,12 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     @Override
     public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
         log.debug( "[TestNGListenerP beforeInvocation getTestClass] " +iTestResult.getTestClass());
-        log.debug("[beforeInvocation getDriver]{}",getDriver());
+        log.debug(" [TestNGListenerP beforeInvocation getDriver]{}",getDriver());
     }
 
     @Override
     public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
         log.debug( "[TestNGListenerP afterInvocation getTestClass] " +iTestResult.getTestClass());
-        log.debug("[afterInvocation getDriver]{}",getDriver());
+        log.debug("[TestNGListenerP afterInvocation getDriver]{}",getDriver());
     }
 }
