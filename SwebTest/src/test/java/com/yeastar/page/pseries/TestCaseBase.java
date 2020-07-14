@@ -57,6 +57,7 @@ public class TestCaseBase extends BaseMethod {
         new BrowserUtils().getLogType_Browser(method,webDriver);
         log.debug("[getDriver]{}",webDriver);
         webDriver.quit();
+        getDriver().quit();
         log.debug("[getDriver quit] ...");
         log.debug("[getDriver]{}",webDriver);
 //        debugCleanSession();
