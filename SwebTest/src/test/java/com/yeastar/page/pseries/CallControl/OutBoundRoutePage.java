@@ -58,6 +58,7 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
         ele_add_btn.click();
         ele_outbound_routes_name_input.setValue(name);
         ele_outbound_routes_dial_pattern_add_btn.click();
+        sleep(2000);
         ele_outbound_routes_dial_pattern_input.setValue(pattern);
         ele_outbound_routes_strip_input.setValue(strip);
         for(String trunkname: trunklist){

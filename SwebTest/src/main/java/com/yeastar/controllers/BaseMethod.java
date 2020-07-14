@@ -164,12 +164,10 @@ public class BaseMethod extends WebDriverFactory {
 
 	@Step("...清空/ysdisk/syslog/pbxlog.0文件")
 	public String clearasteriskLog()  {
-		String cmd = "echo '' > /ysdisk/syslog/pbxlog.0";
-		String asterisk_commond = String.format(ASTERISK_CLI,cmd);
-		log.debug("[asterisk_command]"+asterisk_commond);
+		log.debug("[CLEAR_CLI_LOG_command]"+CLEAR_CLI_LOG);
 		String str = null;
 		try {
-			str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
+			str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, CLEAR_CLI_LOG);
 		} catch (JSchException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

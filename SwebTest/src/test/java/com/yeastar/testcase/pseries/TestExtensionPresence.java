@@ -39,7 +39,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0", "TestExtensionPresence", "Presence","Extension", "Regression", "PSeries"},priority =0 )
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","Extension", "Regression", "PSeries","A_RecoveryEnv"},priority =0 )
     public void A_RecoveryEnv() {
         if(runRecoveryEnvFlag){
             ArrayList<String> list = new ArrayList<>();
@@ -104,7 +104,8 @@ public class TestExtensionPresence extends TestCaseBase{
             auto.ringGroupPage().clickApply();
 
             auto.homePage().logout();
-//            runRecoveryEnvFlag = false;
+            runRecoveryEnvFlag = false;
+            pjsip.Pj_Init();
         }
 
     }
@@ -121,6 +122,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceAvailable","Extension", "Regression", "PSeries"} )
     public void testPresenceAvailable1000Call0NoAnswer(){
+
+        A_RecoveryEnv();
 
         step("登录pbx");
         loginWithAdmin();
@@ -166,6 +169,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable1000Call0Busy() {
+
+        A_RecoveryEnv();
 
         step("登录pbx");
         loginWithAdmin();
@@ -224,6 +229,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000Call0ToIVR(){
 
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -281,6 +288,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000CallRingGroup(){
 
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -331,6 +340,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000CallQueue6401(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -382,6 +393,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000CallQueue6402(){
 
+        A_RecoveryEnv();
 
         step("登录pbx");
         loginWithAdmin();
@@ -431,6 +443,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway1000Call0(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -478,6 +492,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway2000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -530,6 +546,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway2000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -580,6 +598,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway1000CallRingGroup(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -622,6 +642,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceAway","Extension", "Regression", "PSeries"})
     public void testPresenceAway1000CallQueue6401(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -666,6 +688,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("功能没有完成")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -712,6 +736,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceBusinessTrip","Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip1000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -761,6 +787,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("分机486后走到noanser")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip1000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -813,6 +841,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip2000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -865,7 +895,9 @@ public class TestExtensionPresence extends TestCaseBase{
     @TmsLink("")
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
-    public void testPresenceBusinessTrip2000Call0ToBusy() throws IOException, JSchException {
+    public void testPresenceBusinessTrip2000Call0ToBusy() {
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -923,6 +955,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -966,6 +1000,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb1000Call0(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1007,6 +1043,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb2000Call0(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1054,6 +1092,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb1000CallQueue6401(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1094,6 +1134,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb2000CallQueue6401(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1140,6 +1182,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb",  "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1186,6 +1230,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000Call0ToNoAnswer() {
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1235,6 +1281,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("zoudao vm")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceLunch",  "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1284,6 +1332,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch2000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1336,6 +1386,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceLunch",  "Extension", "Regression", "PSeries"})
     public void testPresenceLunch2000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1390,6 +1442,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1438,6 +1492,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceOffWork","Extension", "Regression", "PSeries"})
     public void testPresenceOffWork1000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1486,6 +1542,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork1000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1534,6 +1592,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork2000Call0(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1584,6 +1644,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
