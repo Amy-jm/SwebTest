@@ -12,7 +12,7 @@
             <class name="com.yeastar.testcase.pseries.TestExtensionSecurity">
             <methods>
                 <include name="testDisableOutCall"/>
-                <include name="testDisableOutCallBusinessHours"/>
+                <exclude name="testDisableOutCallBusinessHours"/>
                 <include name="testEnableAllowRegisterRemotely"/>
                 <include name="testEnableDisableOutCall"/>
                 <include name="testEnableDisableOutCallBusinessHours"/>
@@ -25,7 +25,18 @@
             </methods>
             </class>
 <!--            <class name="com.yeastar.testcase.pseries.TestExtension"/>-->
-<!--            <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>-->
+            <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced">
+                <methods>
+                    <include name="testDTMFMode"/>
+                    <exclude name="testQualify"/>
+                    <exclude name="testT38Support"/>
+                    <exclude name="testNAT"/>
+                    <exclude name="testSRTP"/>
+                    <exclude name="testTransport"/>
+
+
+                </methods>
+            </class>
 <!--            <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>-->
 <!--            <class name="com.yeastar.testcase.pseries.TestExtensionList"/>-->
         </classes>
