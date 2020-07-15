@@ -108,11 +108,10 @@ public class BrowserFactory extends ConfigP {
 		}
 		if (GRID_HUB_IP != null) {
 			log.debug("[GRID_HUB_IP] " + hubUrl);
+			log.debug("[test name]{}", getTestName(method));
 			desiredCapabilities.setCapability("name", getTestName(method));
 			desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
 			desiredCapabilities.setCapability("network", true);
-			//Build Name    String serviceName = System.getProperty("serviceName");
-//            desiredCapabilities.setCapability("build", "AutoTestBuild_Seven");
 			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			//Idle TimeOut
