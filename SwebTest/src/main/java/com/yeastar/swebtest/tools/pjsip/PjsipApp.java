@@ -52,7 +52,7 @@ public class PjsipApp extends PjsipDll{
         pjsipdll.instance.onCallIncoming(incomingcallback);
         pjsipdll.instance.onCallStateCallback(callstateCallBack);
         pjsipdll.instance.onDtmfDigitCallback(dtmfCallBack);
-        pjsipdll.instance.ys_log_set_level(1);
+//        pjsipdll.instance.ys_log_set_level(1);
 //        Reporter.infoExec("pjs_init done");
 
     }
