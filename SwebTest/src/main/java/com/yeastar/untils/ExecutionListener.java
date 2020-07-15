@@ -2,9 +2,12 @@ package com.yeastar.untils;
 
 import lombok.extern.log4j.Log4j2;
 import org.influxdb.dto.Point;
+import org.openqa.selenium.Cookie;
 import org.testng.*;
 
 import java.util.concurrent.TimeUnit;
+
+import static com.yeastar.controllers.WebDriverFactory.getDriver;
 
 /**
  * @program: SwebTest
@@ -13,22 +16,24 @@ import java.util.concurrent.TimeUnit;
  * @create: 2020/06/23
  */
 @Log4j2
-public class ExecutionListener  extends TestListenerAdapter implements IInvokedMethodListener {
-    @Override
-    public void onTestStart(ITestResult iTestResult) {
+public class ExecutionListener implements ITestListener {
 
+    public void onTestStart(ITestResult iTestResult) {
+        log.debug( "[ExecutionListener onTestStart] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
     }
-   @Override
+
     public void onTestSuccess(ITestResult iTestResult) {
-       log.debug( "[ExecutionListener] "+iTestResult.getTestClass()+iTestResult.getName());
-        this.sendTestMethodStatus(iTestResult, "PASS");
+       log.debug( "[ExecutionListener Success] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
+       this.sendTestMethodStatus(iTestResult, "PASS");
     }
-    @Override
+
     public void onTestFailure(ITestResult iTestResult) {
+        log.debug("[ExecutionListener Failure] "+iTestResult.getTestClass()+iTestResult.getName());
         this.sendTestMethodStatus(iTestResult, "FAIL");
     }
-    @Override
+
     public void onTestSkipped(ITestResult iTestResult) {
+        log.debug("[ExecutionListener SKIPPED] "+iTestResult.getTestClass()+iTestResult.getName());
         this.sendTestMethodStatus(iTestResult, "SKIPPED");
     }
 
@@ -71,15 +76,5 @@ public class ExecutionListener  extends TestListenerAdapter implements IInvokedM
         }catch(org.influxdb.InfluxDBIOException EX){
             log.error("[InfluxDB Server connection exception]");
         }
-    }
-
-    @Override
-    public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-
-    }
-
-    @Override
-    public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-
     }
 }

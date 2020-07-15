@@ -2,10 +2,7 @@ package com.yeastar.page.pseries;
 
 import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
-import com.yeastar.untils.BrowserUtils;
-import com.yeastar.untils.DataUtils;
-import com.yeastar.untils.EmptyUtil;
-import com.yeastar.untils.SSHLinuxUntils;
+import com.yeastar.untils.*;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -16,6 +13,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 
 @Log4j2
 public class TestCaseBase extends BaseMethod {
@@ -37,6 +35,7 @@ public class TestCaseBase extends BaseMethod {
                 "======");
         webDriver = initialDriver(BROWSER,PBX_URL,method);
         setDriver(webDriver);
+        log.debug("[PBX_URL]{}",PBX_URL);
         open(PBX_URL);
         auto = new PageEngine();
         softAssert = new SoftAssert();
@@ -51,11 +50,14 @@ public class TestCaseBase extends BaseMethod {
         if(EmptyUtil.isNotEmpty(pjsip)){
             log.debug("[start destroy pjsip]");
             pjsip.Pj_Destory();
-
         }
+        sleep(WaitUntils.SHORT_WAIT);
         new BrowserUtils().getLogType_Browser(method,webDriver);
+        log.debug("[remote session]{}",webDriver);
+        webDriver.quit();
         getDriver().quit();
         log.debug("[getDriver quit] ...");
+        log.debug("[remote session]{}",webDriver);
 //        debugCleanSession();
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }

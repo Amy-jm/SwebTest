@@ -7,6 +7,8 @@ import org.testng.*;
 
 import java.util.Iterator;
 
+import static com.yeastar.controllers.WebDriverFactory.getDriver;
+
 
 /**
  * Created by user on 2017/11/3.
@@ -20,12 +22,12 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     @Override
     public  void onTestSuccess(ITestResult tr) {
         super.onTestSuccess(tr);
-        log.debug( "[TestNGListenerP Success] "+tr.getTestClass()+tr.getName());
+        log.debug( "[TestNGListenerP onTestSuccess] "+tr.getTestClass()+tr.getName());
         try {
             Cookie cookie = new Cookie("zaleniumTestPassed", "true");
-            WebDriverFactory.getDriver().manage().addCookie(cookie);
+            getDriver().manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
-            log.error(ex.getMessage());
+            log.error("[TestNGListenerP onTestSuccess send message to zalenium exception ]"+ex.getStackTrace()+"--->>[driver session] "+getDriver());
         }
     }
 
@@ -37,22 +39,14 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     public void onTestFailure(ITestResult tr) {
 
         super.onTestFailure(tr);
-        log.debug("[TestNGListenerP Failure] "+tr.getTestClass()+tr.getName());
-
-        //更新用例状态 zalenium
+        log.debug("[TestNGListenerP onTestFailure] "+tr.getTestClass()+tr.getName());
         //更新用例状态 zalenium
         try {
             Cookie cookie = new Cookie("zaleniumTestPassed", "false");
-            WebDriverFactory.getDriver().manage().addCookie(cookie);
+            getDriver().manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
-            log.error(ex.getMessage());
+            log.error("[TestNGListenerP onTestFailure send message to zalenium exception ]"+ex.getStackTrace()+"--->>[driver session] "+getDriver());
         }
-//        WebDriverFactory.getDriver().quit();
-//        log.debug("[TestNGListenerP Failure and driver quit] ...");
-//        getWebDriver().close();
-//        log.debug("[TestNGListenerP] driver close .");
-//        getWebDriver().quit();
-//        log.debug("[TestNGListenerP] driver quit .");
     }
 
 
@@ -63,21 +57,15 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     @Override
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
-        log.debug("[TestNGListenerP Skipped] "+tr.getTestClass()+tr.getName());
+        log.debug("[TestNGListenerP onTestSkipped] "+tr.getTestClass()+tr.getName());
 
         //更新用例状态 zalenium
         try{
             Cookie cookie = new Cookie("zaleniumTestPassed", "false");
-            WebDriverFactory.getDriver().manage().addCookie(cookie);
+            getDriver().manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
-        log.error(ex.getMessage());
-    }
-//        WebDriverFactory.getDriver().quit();
-//        log.debug("[TestNGListenerP Failure and driver quit] ...");
-//        getDriver().close();
-//        log.debug("[TestNGListenerP onTestSkipped] driver close .");
-//        getDriver().quit();
-//        log.debug("[TestNGListenerP onTestSkipped] driver quit .");
+            log.error("[TestNGListenerP onTestSkipped send message to zalenium exception ]"+ex.getStackTrace()+"--->>[driver session] "+getDriver());
+        }
     }
 
     /**
@@ -110,33 +98,22 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     @Override
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
-        log.debug( "[TestNGListenerP Start test] " +tr.getTestClass()+tr.getName());
+        log.debug( "[TestNGListenerP onTestStart] " +tr.getTestClass()+tr.getName());
         try {
             Cookie cookie = new Cookie("zaleniumMessage", "[Start test] " + tr.getName());
-            WebDriverFactory.getDriver().manage().addCookie(cookie);
+            getDriver().manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
-            log.error(ex.getMessage());
+            log.error("[TestNGListenerP onTestStart send message to zalenium exception ]"+ex.getStackTrace()+"--->>[driver session] "+getDriver());
         }
     }
 
     @Override
     public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-
+//        log.debug( "[TestNGListenerP beforeInvocation]: "+"getTestClass ->> " +iTestResult.getName()+"driver session ->> "+getDriver());
     }
 
     @Override
     public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-
+//        log.debug( "[TestNGListenerP afterInvocation]: "+"getTestClass ->> " +iTestResult.getName()+"driver session ->> "+getDriver());
     }
-
-
-//    @Override
-//    public void afterInvocation(IInvokedMethod method, ITestResult iTestResult) {
-//       log.debug("[afterInvocation]"+iTestResult.getName());
-//    }
-//
-//    @Override
-//    public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-//        log.debug("[beforeInvocation]"+iTestResult.getName());
-//    }
 }
