@@ -74,9 +74,9 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
     public OutBoundRoutePage addPatternAndStrip(int row, String pattern, String strip){
         ele_outbound_routes_dial_pattern_add_btn.click();
         sleep(2000);
-//        ele_outbound_routes_dial_pattern_input.get(row).click();
-//        ele_outbound_routes_dial_pattern_input.get(row).setValue(pattern);
-//        ele_outbound_routes_strip_input.get(row).setValue(strip);
+        ele_outbound_routes_dial_pattern_input.get(row).click();
+        ele_outbound_routes_dial_pattern_input.get(row).setValue(pattern);
+        ele_outbound_routes_strip_input.get(row).setValue(strip);
         $(By.xpath("//tr["+(row+1)+"]//td[1]//div[1]//div[1]//div[1]//span[1]//input[1]")).setValue(pattern);
         $(By.xpath("//tr["+(row+1)+"]//td[2]//div[1]//div[1]//div[1]//span[1]//input[1]")).setValue(strip);
         return this;
@@ -91,6 +91,20 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
         Selenide.actions().moveToElement($(By.xpath(String.format(GROUP_EXTENSION_XPATH,extension))),3,3).click().perform();
         sleep(WaitUntils.RETRY_WAIT);
         $(By.xpath(String.format(Group_EXTENSION_RIGHT_BUTTON_XPATH,extension))).click();
+        return this;
+    }
+
+    public OutBoundRoutePage addExtension(List<String> extlist){
+        for(String extname: extlist){
+            $(By.xpath("//td[contains(text(),'"+extname+"')]")).click();
+        }
+        return this;
+    }
+
+    public OutBoundRoutePage addTrunk(List<String> trunklist){
+        for(String trunkname: trunklist){
+            $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).click();
+        }
         return this;
     }
 
