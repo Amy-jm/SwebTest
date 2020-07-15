@@ -61,7 +61,9 @@ public class BrowserFactory extends ConfigP {
 
 		if (GRID_HUB_IP != "" && hubUrl != "") {
 			log.debug("[GRID_HUB_IP] " + hubUrl);
-			desiredCapabilities.setCapability("name", Thread.currentThread().getStackTrace()[3].getMethodName());
+			String zaleniumTestName =  Thread.currentThread().getStackTrace()[3].getMethodName();
+			desiredCapabilities.setCapability("name",zaleniumTestName);
+			log.debug("[zalenium test name ]{}",zaleniumTestName);
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
 			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
@@ -70,8 +72,6 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("idleTimeout", 240);//150-100
 			log.debug("[ZALENIUM_PROXY_CLEANUP_TIMEOUT]  90s");
 			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
-
-
 			webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
 
 			webDriver.get(relativeOrAbsoluteUrl);
@@ -125,8 +125,6 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("network", true);
 			log.debug("[add chrome no sandbox]");
 			desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, "no-sandbox");
-
-
 
 			webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
 		}
