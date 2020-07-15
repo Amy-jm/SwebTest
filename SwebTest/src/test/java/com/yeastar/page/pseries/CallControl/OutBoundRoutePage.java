@@ -54,14 +54,10 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
     }
 
 
-    public OutBoundRoutePage createOutbound(String name, String pattern, String strip, List<String> trunklist, List<String> extlist){
+    public OutBoundRoutePage createOutbound(String name, List<String> trunklist, List<String> extlist){
         ele_add_btn.click();
         ele_outbound_routes_name_input.setValue(name);
-        ele_outbound_routes_dial_pattern_add_btn.click();
-        sleep(2000);
-        ele_outbound_routes_dial_pattern_input.get(0).click();
-        ele_outbound_routes_dial_pattern_input.get(0).setValue(pattern);
-        ele_outbound_routes_strip_input.get(0).setValue(strip);
+
         for(String trunkname: trunklist){
             $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).click();
         }
@@ -71,6 +67,15 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
             $(By.xpath("//td[contains(text(),'"+extname+"')]")).click();
         }
         ele_outbound_routes_add_extension_btn.click();
+        return this;
+    }
+
+    public OutBoundRoutePage addPatternAndStrip(int row, String pattern, String strip){
+        ele_outbound_routes_dial_pattern_add_btn.click();
+        sleep(2000);
+        ele_outbound_routes_dial_pattern_input.get(row).click();
+        ele_outbound_routes_dial_pattern_input.get(row).setValue(pattern);
+        ele_outbound_routes_strip_input.get(row).setValue(strip);
         return this;
     }
     /**
