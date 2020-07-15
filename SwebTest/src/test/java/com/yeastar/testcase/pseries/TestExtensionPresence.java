@@ -47,8 +47,8 @@ public class TestExtensionPresence extends TestCaseBase{
             ArrayList<String> list = new ArrayList<>();
             ArrayList<String> list2 = new ArrayList<>();
 
-//            step("【环境准备】1、登录pbx");
-//            loginWithAdmin();
+            step("【环境准备】1、登录pbx");
+            loginWithAdmin();
 //
 //            step("【环境准备】1、设置名称显示格式");
 //            preparationStepNameDisplay();
