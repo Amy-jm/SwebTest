@@ -22,7 +22,7 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     @Override
     public  void onTestSuccess(ITestResult tr) {
         super.onTestSuccess(tr);
-        log.debug( "[TestNGListenerP Success] "+tr.getTestClass()+tr.getName());
+        log.debug( "[TestNGListenerP onTestSuccess] "+tr.getTestClass()+tr.getName());
         try {
             Cookie cookie = new Cookie("zaleniumTestPassed", "true");
             getDriver().manage().addCookie(cookie);
@@ -39,7 +39,7 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     public void onTestFailure(ITestResult tr) {
 
         super.onTestFailure(tr);
-        log.debug("[TestNGListenerP Failure] "+tr.getTestClass()+tr.getName());
+        log.debug("[TestNGListenerP onTestFailure] "+tr.getTestClass()+tr.getName());
         //更新用例状态 zalenium
         try {
             Cookie cookie = new Cookie("zaleniumTestPassed", "false");
@@ -57,7 +57,7 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     @Override
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
-        log.debug("[TestNGListenerP Skipped] "+tr.getTestClass()+tr.getName());
+        log.debug("[TestNGListenerP onTestSkipped] "+tr.getTestClass()+tr.getName());
 
         //更新用例状态 zalenium
         try{
@@ -98,7 +98,7 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
     @Override
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
-        log.debug( "[TestNGListenerP Start test] " +tr.getTestClass()+tr.getName());
+        log.debug( "[TestNGListenerP onTestStart] " +tr.getTestClass()+tr.getName());
         try {
             Cookie cookie = new Cookie("zaleniumMessage", "[Start test] " + tr.getName());
             getDriver().manage().addCookie(cookie);
