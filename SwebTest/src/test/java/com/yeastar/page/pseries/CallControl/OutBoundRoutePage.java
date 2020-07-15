@@ -8,6 +8,7 @@ import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
@@ -62,23 +63,22 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
         for(String trunkname: trunklist){
             $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).click();
         }
+        sleep(500);
         ele_outbound_routes_add_trunk_btn.click();
 
         for(String extname: extlist){
             $(By.xpath("//td[contains(text(),'"+extname+"')]")).click();
         }
+        sleep(500);
         ele_outbound_routes_add_extension_btn.click();
         return this;
     }
 
     public OutBoundRoutePage addPatternAndStrip(int row, String pattern, String strip){
         ele_outbound_routes_dial_pattern_add_btn.click();
-        sleep(2000);
-        ele_outbound_routes_dial_pattern_input.get(row).click();
-        ele_outbound_routes_dial_pattern_input.get(row).setValue(pattern);
-        ele_outbound_routes_strip_input.get(row).setValue(strip);
-        $(By.xpath("//tr["+(row+1)+"]//td[1]//div[1]//div[1]//div[1]//span[1]//input[1]")).setValue(pattern);
-        $(By.xpath("//tr["+(row+1)+"]//td[2]//div[1]//div[1]//div[1]//span[1]//input[1]")).setValue(strip);
+        sleep(1000);
+        ele_outbound_routes_dial_pattern_input.get(row).pressEnter().sendKeys(Keys.chord(Keys.CONTROL,"a"),pattern);
+        ele_outbound_routes_strip_input.get(row).pressEnter().sendKeys(Keys.chord(Keys.CONTROL,"a"),strip);
         return this;
     }
     /**
