@@ -1,5 +1,6 @@
 package com.yeastar.page.pseries.CallControl;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
@@ -7,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.yeastar.page.pseries.IButton.buttonLocationXpath;
 
 public interface IOutBoundRoutePageElement {
@@ -23,8 +25,8 @@ public interface IOutBoundRoutePageElement {
     SelenideElement ele_outbound_routes_outb_cid_input = $(By.id("outbound_routes_outb_cid"));
     SelenideElement ele_outbound_routes_role_list_combobox = $(By.id("outbound_routes_role_list"));
     SelenideElement ele_outbound_routes_dial_pattern_add_btn = $(By.xpath("//div[@class='add-footer']//span[contains(text(),'Add')]"));
-    SelenideElement ele_outbound_routes_dial_pattern_input = $(By.id("dial_pattern"));
-    SelenideElement ele_outbound_routes_strip_input = $(By.id("strip"));
+    ElementsCollection ele_outbound_routes_dial_pattern_input = $$(By.id("dial_pattern"));
+    ElementsCollection ele_outbound_routes_strip_input = $$(By.id("strip"));
     SelenideElement ele_outbound_routes_prepend_input = $(By.id("prepend"));
     SelenideElement ele_outbound_routes_add_trunk_btn = $(By.xpath("//div[3]//div[2]//div[1]//div[1]//div[1]//div[1]//div[1]//div[1]//div[2]//button[1]"));
     SelenideElement ele_outbound_routes_del_trunk_btn = $(By.xpath("//div[3]//div[2]//div[1]//div[1]//div[1]//div[1]//div[1]//div[1]//div[2]//button[2]"));
