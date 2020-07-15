@@ -1701,6 +1701,7 @@ public class TestExtensionPresence extends TestCaseBase{
                 .ele_extension_presence_ring_simultaneously_prefix_input.setValue("90");
         auto.extensionPage().clickSave();
 
+        auto.extensionPage().selectExtensionPresence("0",IExtensionPageElement.TABLE_PRESENCE_LIST.AWAY.getAlias()).clickApply();
         auto.extensionPage().selectExtensionPresence("0",IExtensionPageElement.TABLE_PRESENCE_LIST.AVAILABLE.getAlias()).clickApply();
 
         auto.extensionPage().clickApply();
