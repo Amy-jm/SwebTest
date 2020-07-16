@@ -50,7 +50,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         list2.add("0");
         //todo 创建路由
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("AutoTest_Route",".","0",list,list2).clickSaveAndApply();
+        auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("AutoTest_Route",list,list2).clickSaveAndApply();
 
     }
 

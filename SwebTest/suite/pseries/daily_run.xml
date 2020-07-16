@@ -21,14 +21,53 @@
 <!--                    <include name="testMaxCallDurationForSPSTrunk"/>-->
 <!--                    <include name="testMaxCallDurationForSPSTrunkTo0"/>-->
 <!--                    <include name="testSIPRegistrationIPRestriction"/>-->
-
 <!--                </methods>-->
             </class>
             <class name="com.yeastar.testcase.pseries.TestExtension"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionList"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionPresence"/>
+            <class name="com.yeastar.testcase.pseries.TestExtensionPresence">
+<!--                <methods>-->
+<!--                    <include name="A_RecoveryEnv"/>-->
+<!--                    <exclude name="testPresenceAvailable1000Call0NoAnswer"/>-->
+<!--                    <exclude name="testPresenceAvailable1000Call0Busy"/>-->
+<!--                    <exclude name="testPresenceAvailable2000Call0ToIVR"/>-->
+<!--                    <exclude name="testPresenceAvailable2000CallRingGroup"/>-->
+<!--                    <exclude name="testPresenceAvailable2000CallQueue6401"/>-->
+<!--                    <exclude name="testPresenceAvailable2000CallQueue6402"/>-->
+
+<!--                    <exclude name="testPresenceAway1000Call0"/>-->
+<!--                    <exclude name="testPresenceAway2000Call0ToNoAnswer"/>-->
+<!--                    <exclude name="testPresenceAway2000Call0ToBusy"/>-->
+<!--                    <exclude name="testPresenceAway1000CallRingGroup"/>-->
+<!--                    <exclude name="testPresenceAway1000CallQueue6401"/>-->
+<!--                    <exclude name="testPresenceAway1000CallQueue6402"/>-->
+
+<!--                    <exclude name="testPresenceBusinessTrip1000Call0ToNoAnswer"/>-->
+<!--                    <exclude name="testPresenceBusinessTrip1000Call0ToBusy"/>-->
+<!--                    <exclude name="testPresenceBusinessTrip2000Call0ToNoAnswer"/>-->
+<!--                    <exclude name="testPresenceBusinessTrip2000Call0ToBusy"/>-->
+<!--                    <exclude name="testPresenceBusinessTrip1000CallQueue6402"/>-->
+
+<!--                    <exclude name="testPresenceDoNotDisturb1000Call0"/>-->
+<!--                    <exclude name="testPresenceDoNotDisturb2000Call0"/>-->
+<!--                    <exclude name="testPresenceDoNotDisturb1000CallQueue6401"/>-->
+<!--                    <exclude name="testPresenceDoNotDisturb2000CallQueue6401"/>-->
+<!--                    <exclude name="testPresenceDoNotDisturb1000CallQueue6402"/>-->
+
+<!--                    <exclude name="testPresenceLunch1000Call0ToNoAnswer"/>-->
+<!--                    <exclude name="testPresenceLunch1000Call0ToBusy"/>-->
+<!--                    <exclude name="testPresenceLunch2000Call0ToNoAnswer"/>-->
+<!--                    <exclude name="testPresenceLunch2000Call0ToBusy"/>-->
+<!--                    <exclude name="testPresenceLunch1000CallQueue6402"/>-->
+
+<!--                    <exclude name="testPresenceOffWork1000Call0ToNoAnswer"/>-->
+<!--                    <exclude name="testPresenceOffWork1000Call0ToBusy"/>-->
+<!--                    <exclude name="testPresenceOffWork2000Call0"/>-->
+<!--                    <exclude name="testPresenceOffWork1000CallQueue6402"/>-->
+<!--                </methods>-->
+            </class>
             <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>
         </classes>

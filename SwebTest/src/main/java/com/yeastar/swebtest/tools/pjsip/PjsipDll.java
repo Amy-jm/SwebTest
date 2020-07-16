@@ -69,7 +69,7 @@ public class PjsipDll {
          * @param level
          * @return
          */
-        int ys_log_set_level(int level);
+//        int ys_log_set_level(int level);
         int ys_shutdown();
         int ys_releaseCall(int accountId);
         int ys_removeAccounts();

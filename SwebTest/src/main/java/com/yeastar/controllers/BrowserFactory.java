@@ -125,8 +125,8 @@ public class BrowserFactory extends ConfigP {
 			//Idle TimeOut
 			desiredCapabilities.setCapability("idleTimeout", 150);//150-100
 			log.debug("[set idleTimeout]{}",150);
-			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
-			log.debug("[set ZALENIUM_PROXY_CLEANUP_TIMEOUT]{}",90);
+			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 180);//180-90
+			log.debug("[set ZALENIUM_PROXY_CLEANUP_TIMEOUT]{}",180);
 			//Screen Resolution
 //			desiredCapabilities.setCapability("screenResolution", "1920x1080");
 			desiredCapabilities.setCapability("network", true);

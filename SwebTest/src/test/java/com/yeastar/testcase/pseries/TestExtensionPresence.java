@@ -1,8 +1,5 @@
 package com.yeastar.testcase.pseries;
 
-import com.codeborne.selenide.Condition;
-import com.jcraft.jsch.JSchException;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
 import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 import com.yeastar.page.pseries.HomePage;
@@ -11,18 +8,11 @@ import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-
-import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
 
 //移动分机3000  外线分机2000
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
@@ -30,7 +20,16 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class TestExtensionPresence extends TestCaseBase{
 
     private boolean runRecoveryEnvFlag=true;
-    @BeforeMethod
+//    @BeforeMethod
+
+    @Epic("P_Series")
+    @Feature("Extension")
+    @Story("Presence")
+    @Description("Presence->前置条件")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink("")
+    @Issue("")
+    @Test(groups = {"P0", "TestExtensionPresence", "Presence","Extension", "Regression", "PSeries","A_RecoveryEnv"},priority =0 )
     public void A_RecoveryEnv() {
         if(runRecoveryEnvFlag){
             ArrayList<String> list = new ArrayList<>();
@@ -91,7 +90,8 @@ public class TestExtensionPresence extends TestCaseBase{
             list2.clear();
             list2.add("Yeastar Test0 朗视信息科技");
             list2.add("Yeastar Test9999999 朗视信息科技");
-            auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("Outbound1","90.","2",list,list2).clickSave();
+            auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("Outbound1",list,list2)
+                    .addPatternAndStrip(0,"90.","2").clickSave();
             auto.ringGroupPage().clickApply();
 
             auto.homePage().logout();
@@ -112,6 +112,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceAvailable","Extension", "Regression", "PSeries"} )
     public void testPresenceAvailable1000Call0NoAnswer(){
+
+        A_RecoveryEnv();
 
         step("登录pbx");
         loginWithAdmin();
@@ -157,6 +159,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable1000Call0Busy() {
+
+        A_RecoveryEnv();
 
         step("登录pbx");
         loginWithAdmin();
@@ -215,6 +219,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000Call0ToIVR(){
 
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -272,6 +278,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000CallRingGroup(){
 
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -322,6 +330,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000CallQueue6401(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -373,6 +383,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000CallQueue6402(){
 
+        A_RecoveryEnv();
 
         step("登录pbx");
         loginWithAdmin();
@@ -422,6 +433,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway1000Call0(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -469,6 +482,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway2000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -521,6 +536,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway2000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -571,6 +588,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway1000CallRingGroup(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -613,6 +632,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceAway","Extension", "Regression", "PSeries"})
     public void testPresenceAway1000CallQueue6401(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -657,6 +678,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("功能没有完成")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAway", "Extension", "Regression", "PSeries"})
     public void testPresenceAway1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -703,6 +726,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceBusinessTrip","Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip1000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -752,6 +777,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("分机486后走到noanser")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip1000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -804,6 +831,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip2000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -856,7 +885,9 @@ public class TestExtensionPresence extends TestCaseBase{
     @TmsLink("")
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
-    public void testPresenceBusinessTrip2000Call0ToBusy() throws IOException, JSchException {
+    public void testPresenceBusinessTrip2000Call0ToBusy() {
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -914,6 +945,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceBusinessTrip", "Extension", "Regression", "PSeries"})
     public void testPresenceBusinessTrip1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -957,6 +990,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb1000Call0(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -998,6 +1033,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb2000Call0(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1045,6 +1082,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb1000CallQueue6401(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1085,6 +1124,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb", "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb2000CallQueue6401(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1131,6 +1172,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceDoNotDisturb",  "Extension", "Regression", "PSeries"})
     public void testPresenceDoNotDisturb1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1177,6 +1220,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000Call0ToNoAnswer() {
+//        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1226,6 +1271,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("zoudao vm")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceLunch",  "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1275,6 +1322,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch2000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1327,6 +1376,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceLunch",  "Extension", "Regression", "PSeries"})
     public void testPresenceLunch2000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1381,6 +1432,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1429,6 +1482,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceOffWork","Extension", "Regression", "PSeries"})
     public void testPresenceOffWork1000Call0ToNoAnswer(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1477,6 +1532,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork1000Call0ToBusy(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1525,6 +1582,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork2000Call0(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1575,6 +1634,8 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork1000CallQueue6402(){
+        A_RecoveryEnv();
+
         step("登录pbx");
         loginWithAdmin();
 
@@ -1617,8 +1678,9 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_available_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0")
+                .setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_available_tab.click();
         auto.extensionPage().configCallForwardInternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.EXTENSION.getAlias(),"9999999-Yeastar Test9999999 朗视信息科技")
                 .configCallForwardInternalBusy(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.VOICEMAIL.getAlias())
                 .configCallForwardExternalAlways(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.IVR.getAlias(),"6200-6200")
@@ -1627,6 +1689,7 @@ public class TestExtensionPresence extends TestCaseBase{
                 .ele_extension_presence_ring_simultaneously_prefix_input.setValue("90");
         auto.extensionPage().clickSave();
 
+//        auto.extensionPage().selectExtensionPresence("0",IExtensionPageElement.TABLE_PRESENCE_LIST.AWAY.getAlias()).clickApply();
         auto.extensionPage().selectExtensionPresence("0",IExtensionPageElement.TABLE_PRESENCE_LIST.AVAILABLE.getAlias()).clickApply();
 
         auto.extensionPage().clickApply();
@@ -1640,8 +1703,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_away_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_away_tab.click();
         auto.extensionPage().configCallForwardInternalAlways(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.RING_GROUP.getAlias(),"6300-6300")
                 .configCallForwardExternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.QUEUE.getAlias(),"6400-6400")
                 .configCallForwardExternalBusy(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias(),"90")
@@ -1665,8 +1728,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_businessTrip_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_businessTrip_tab.click();
         auto.extensionPage().configCallForwardInternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias(),"90","2000")
                 .configCallForwardInternalBusy(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.PLAY_GREETING_THEN_HANG_UP.getAlias(),"test.wav","2")
                 .configCallForwardExternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.HANG_UP.getAlias())
@@ -1690,8 +1753,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_doNotDisturb_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_doNotDisturb_tab.click();
         auto.extensionPage().configCallForwardInternalAlways(false)
                 .configCallForwardExternalAlways(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias(),"90")
                 .selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.DO_NOTHING.getAlias());
@@ -1711,8 +1774,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_launch_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_launch_tab.click();
         auto.extensionPage().configCallForwardInternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.VOICEMAIL.getAlias())
                 .configCallForwardInternalBusy(false)
                 .configCallForwardExternalAlways(false)
@@ -1720,9 +1783,8 @@ public class TestExtensionPresence extends TestCaseBase{
                 .configCallForwardExternalBusy(false)
                 .isCheckbox(IExtensionPageElement.ele_extension_presence_ring_simultaneously_checkBox,true)
                 .selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.LOGOUT.getAlias())
-                .ele_extension_presence_ring_timeout_input.setValue("40");
+                .setElementValue(ele_extension_presence_ring_timeout_input,"40").clickSave();
 
-        auto.extensionPage().clickSave();
 
         auto.extensionPage().selectExtensionPresence("0", IExtensionPageElement.TABLE_PRESENCE_LIST.AVAILABLE.getAlias()).clickApply();
         sleep(3000);
@@ -1738,8 +1800,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_available_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_available_tab.click();
         auto.extensionPage().selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.LOGIN.getAlias());
 
         auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_off_work_tab.click();
@@ -1749,7 +1811,7 @@ public class TestExtensionPresence extends TestCaseBase{
                 .configCallForwardExternalAlways(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.EXTENSION.getAlias(),"9999999-Yeastar Test9999999 朗视信息科技")
                 .isCheckbox(IExtensionPageElement.ele_extension_presence_ring_simultaneously_checkBox,false)
                 .selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.DO_NOTHING.getAlias())
-                .ele_extension_presence_ring_timeout_input.setValue("25");
+                .setElementValue(ele_extension_presence_ring_timeout_input,"25").clickSave();
 
         auto.extensionPage().clickSave();
 

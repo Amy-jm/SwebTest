@@ -2,11 +2,13 @@ package com.yeastar.page.pseries.CallControl;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
@@ -54,21 +56,29 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
     }
 
 
-    public OutBoundRoutePage createOutbound(String name, String pattern, String strip, List<String> trunklist, List<String> extlist){
+    public OutBoundRoutePage createOutbound(String name, List<String> trunklist, List<String> extlist){
         ele_add_btn.click();
         ele_outbound_routes_name_input.setValue(name);
-        ele_outbound_routes_dial_pattern_add_btn.click();
-        ele_outbound_routes_dial_pattern_input.setValue(pattern);
-        ele_outbound_routes_strip_input.setValue(strip);
+
         for(String trunkname: trunklist){
             $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).click();
         }
+        sleep(500);
         ele_outbound_routes_add_trunk_btn.click();
 
         for(String extname: extlist){
             $(By.xpath("//td[contains(text(),'"+extname+"')]")).click();
         }
+        sleep(500);
         ele_outbound_routes_add_extension_btn.click();
+        return this;
+    }
+
+    public OutBoundRoutePage addPatternAndStrip(int row, String pattern, String strip){
+        ele_outbound_routes_dial_pattern_add_btn.click();
+        sleep(1000);
+        ele_outbound_routes_dial_pattern_input.get(row).pressEnter().sendKeys(Keys.chord(Keys.CONTROL,"a"),pattern);
+        ele_outbound_routes_strip_input.get(row).pressEnter().sendKeys(Keys.chord(Keys.CONTROL,"a"),strip);
         return this;
     }
     /**
@@ -81,6 +91,20 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
         Selenide.actions().moveToElement($(By.xpath(String.format(GROUP_EXTENSION_XPATH,extension))),3,3).click().perform();
         sleep(WaitUntils.RETRY_WAIT);
         $(By.xpath(String.format(Group_EXTENSION_RIGHT_BUTTON_XPATH,extension))).click();
+        return this;
+    }
+
+    public OutBoundRoutePage addExtension(List<String> extlist){
+        for(String extname: extlist){
+            $(By.xpath("//td[contains(text(),'"+extname+"')]")).click();
+        }
+        return this;
+    }
+
+    public OutBoundRoutePage addTrunk(List<String> trunklist){
+        for(String trunkname: trunklist){
+            $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).click();
+        }
         return this;
     }
 

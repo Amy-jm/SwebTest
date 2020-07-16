@@ -23,6 +23,7 @@ public class DataReader2 {
 //    final static String loginName = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "loginName");
     public final static String PJSIP_COMMAND_DELTREE_REGISTRAR = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"database deltree registrar\"";
     public final static String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"%s\"";
+    public final static String CLEAR_CLI_LOG = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;echo '' > /ysdisk/syslog/pbxlog.0";
     public final static String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
     public final static String SHOW_CLI_LOG = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;cat /ysdisk/syslog/pbxlog.0";
     public final static int PJSIP_TCP_PORT = 8022;
