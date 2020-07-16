@@ -3,6 +3,8 @@ package com.yeastar.controllers;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import com.codeborne.selenide.Configuration;
@@ -90,7 +92,7 @@ public class BrowserFactory extends ConfigP {
 			}
 		return webDriver;
 	}
-	
+
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl, Method method) throws MalformedURLException {
 		//Selenide的配置信息
 		Configuration.timeout = FINDELEMENT_TIMEOUT;
@@ -115,25 +117,48 @@ public class BrowserFactory extends ConfigP {
 		}
 		if (GRID_HUB_IP != null) {
 			log.debug("[GRID_HUB_IP] " + hubUrl);
+			log.debug("[test name]{}", getTestName(method));
 			desiredCapabilities.setCapability("name", getTestName(method));
 			desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
 			desiredCapabilities.setCapability("network", true);
-			//Build Name    String serviceName = System.getProperty("serviceName");
-//            desiredCapabilities.setCapability("build", "AutoTestBuild_Seven");
 			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			//Idle TimeOut
 			desiredCapabilities.setCapability("idleTimeout", 150);//150-100
 			log.debug("[set idleTimeout]{}",150);
-			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 180);//180-90
-			log.debug("[set ZALENIUM_PROXY_CLEANUP_TIMEOUT]{}",180);
+			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 360);//180-90
+			log.debug("[set ZALENIUM_PROXY_CLEANUP_TIMEOUT]{}",360);
+			desiredCapabilities.setCapability("WAIT_FOR_AVAILABLE_NODES",false);//不等待回收node，直接创建
+			log.debug("[set WAIT_FOR_AVAILABLE_NODES]{}",false);
+			if (RECORD_VIDEO.trim().equalsIgnoreCase("false")) {
+				log.debug("[set recordVideo]{}",RECORD_VIDEO.trim());
+				desiredCapabilities.setCapability("recordVideo", false);
+			}
 			//Screen Resolution
 //			desiredCapabilities.setCapability("screenResolution", "1920x1080");
 			desiredCapabilities.setCapability("network", true);
+			//unknown error: DevToolsActivePort file doesn't exist
+			log.debug("[add config for DevToolsActivePort issue start...]");
 
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("disable-infobars");
+			options.addArguments("--no-sandbox");// 以最高权限运行
+			options.addArguments("--disable-gpu");//硬件加速，谷歌文档提到需要加上这个属性来规避bug
+			options.addArguments("--start-maximized");//默认启动最大化，避免最大化过程失败
+
+			options.addArguments("blink-settings=imagesEnabled=false");//不加载图片, 提升速度
+			Map<String, Object> prefs = new HashMap<String, Object>();
+			prefs.put("credentials_enable_service", false);
+			prefs.put("profile.password_manager_enabled", false);
+			prefs.put("profile.default_content_settings.popups", 0);
+			prefs.put("download.prompt_for_download", false);
+			prefs.put("--user-data-dir","/home/seluser/chrome-user-data-dir");
+			options.setExperimentalOption("prefs", prefs);
+			desiredCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+			desiredCapabilities.setCapability("goog:"+ChromeOptions.CAPABILITY, options);
+			log.debug("[add config for DevToolsActivePort issue end...]");
 			webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
 		}
-		webDriver.manage().window().maximize();
 		return webDriver;
 	}
 
