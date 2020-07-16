@@ -418,7 +418,9 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         step("修改New Voicemail Notification设置为send email notification with attachment，afternotification设置为delete voicemail");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().editExtension(getDriver(),"0").switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+        auto.extensionPage().editExtension(getDriver(),"0")
+                .setElementValue(ele_extension_user_email_addr,"lhr@yeastar.com")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
                 .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.SEND_EMAIL_NOTIFICATIONS_WITH_ATTACHMENT.getAlias())
                 .selectCombobox(IExtensionPageElement.AFTER_NOTIFICATION.DELETE_VOICEMAIL.getAlias()).clickSaveAndApply();
 
