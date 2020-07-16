@@ -1,9 +1,5 @@
 package com.yeastar.testcase.pseries;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
-import com.jcraft.jsch.JSchException;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
 import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 import com.yeastar.page.pseries.HomePage;
@@ -12,19 +8,11 @@ import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-
-import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
 
 //移动分机3000  外线分机2000
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
@@ -1232,7 +1220,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence", "PresenceLunch", "Extension", "Regression", "PSeries"})
     public void testPresenceLunch1000Call0ToNoAnswer() {
-        A_RecoveryEnv();
+//        A_RecoveryEnv();
 
         step("登录pbx");
         loginWithAdmin();
@@ -1690,8 +1678,9 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_available_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0")
+                .setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_available_tab.click();
         auto.extensionPage().configCallForwardInternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.EXTENSION.getAlias(),"9999999-Yeastar Test9999999 朗视信息科技")
                 .configCallForwardInternalBusy(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.VOICEMAIL.getAlias())
                 .configCallForwardExternalAlways(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.IVR.getAlias(),"6200-6200")
@@ -1714,8 +1703,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_away_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_away_tab.click();
         auto.extensionPage().configCallForwardInternalAlways(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.RING_GROUP.getAlias(),"6300-6300")
                 .configCallForwardExternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.QUEUE.getAlias(),"6400-6400")
                 .configCallForwardExternalBusy(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias(),"90")
@@ -1739,8 +1728,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_businessTrip_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_businessTrip_tab.click();
         auto.extensionPage().configCallForwardInternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias(),"90","2000")
                 .configCallForwardInternalBusy(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.PLAY_GREETING_THEN_HANG_UP.getAlias(),"test.wav","2")
                 .configCallForwardExternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.HANG_UP.getAlias())
@@ -1764,8 +1753,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_doNotDisturb_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_doNotDisturb_tab.click();
         auto.extensionPage().configCallForwardInternalAlways(false)
                 .configCallForwardExternalAlways(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias(),"90")
                 .selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.DO_NOTHING.getAlias());
@@ -1785,8 +1774,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_launch_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_launch_tab.click();
         auto.extensionPage().configCallForwardInternalNoAnswer(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.VOICEMAIL.getAlias())
                 .configCallForwardInternalBusy(false)
                 .configCallForwardExternalAlways(false)
@@ -1794,9 +1783,8 @@ public class TestExtensionPresence extends TestCaseBase{
                 .configCallForwardExternalBusy(false)
                 .isCheckbox(IExtensionPageElement.ele_extension_presence_ring_simultaneously_checkBox,true)
                 .selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.LOGOUT.getAlias())
-                .ele_extension_presence_ring_timeout_input.setValue("40");
+                .setElementValue(ele_extension_presence_ring_timeout_input,"40").clickSave();
 
-        auto.extensionPage().clickSave();
 
         auto.extensionPage().selectExtensionPresence("0", IExtensionPageElement.TABLE_PRESENCE_LIST.AVAILABLE.getAlias()).clickApply();
         sleep(3000);
@@ -1812,8 +1800,8 @@ public class TestExtensionPresence extends TestCaseBase{
         //删除所有分机 创建分机0
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().editExtension(getDriver(),"0").ele_extension_user_mobile_number.setValue("3000");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_available_tab.click();
+        auto.extensionPage().editExtension(getDriver(),"0").setElementValue(ele_extension_user_mobile_number,"3000")
+                .switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_available_tab.click();
         auto.extensionPage().selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.LOGIN.getAlias());
 
         auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_off_work_tab.click();
@@ -1823,7 +1811,7 @@ public class TestExtensionPresence extends TestCaseBase{
                 .configCallForwardExternalAlways(true, IExtensionPageElement.CALL_FORWARDING_DESTINATION.EXTENSION.getAlias(),"9999999-Yeastar Test9999999 朗视信息科技")
                 .isCheckbox(IExtensionPageElement.ele_extension_presence_ring_simultaneously_checkBox,false)
                 .selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.DO_NOTHING.getAlias())
-                .ele_extension_presence_ring_timeout_input.setValue("25");
+                .setElementValue(ele_extension_presence_ring_timeout_input,"25").clickSave();
 
         auto.extensionPage().clickSave();
 
