@@ -43,9 +43,9 @@ public interface IButton {
 
 
     //alert
-    SelenideElement OKAlertBtn = $(By.xpath("//span[contains(text(),'OK')]/.."));
-    SelenideElement CancelAlertBtn = $(By.xpath("//span[contains(text(),'Cancel')]/.."));
-    SelenideElement ConfrimAlertBtn = $(By.xpath("//span[contains(text(),'Confirm')]/.."));
+    SelenideElement OKAlertBtn = $(By.xpath("//button/span[contains(text(),'OK')]/.."));
+    SelenideElement CancelAlertBtn = $(By.xpath("//button/span[contains(text(),'Cancel')]/.."));
+    SelenideElement ConfrimAlertBtn = $(By.xpath("//button/span[contains(text(),'Confirm')]/.."));
 
 
     //表格第一行删除图标
