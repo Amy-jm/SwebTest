@@ -187,8 +187,9 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
-        switchToTab(TABLE_MENU.SECURITY.getAlias());
-        setCheckbox(ele_extension_security_allow_reg_remotely_checkbox,true);
+        saveBtn.click();
+//        switchToTab(TABLE_MENU.SECURITY.getAlias());
+//        setCheckbox(ele_extension_security_allow_reg_remotely_checkbox,true);
 //        ele_extension_user_email_addr.setValue("pbxceshi@sina.com");
         return this;
     }
@@ -209,8 +210,9 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_caller_id.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue(registrationPassword);
-        switchToTab(TABLE_MENU.SECURITY.getAlias());
-        setCheckbox(ele_extension_security_allow_reg_remotely_checkbox,true);
+//        switchToTab(TABLE_MENU.SECURITY.getAlias());
+//        setCheckbox(ele_extension_security_allow_reg_remotely_checkbox,true);
+        saveBtn.click();
         return this;
     }
 
@@ -224,8 +226,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         inputComm("Extension Number", extensionNumber);
         inputComm("Caller ID (Internal)", extensionNumber);
         inputComm("Registration Password", registrationPassword);
-        switchToTab(TABLE_MENU.SECURITY.getAlias());
-        setCheckbox(ele_extension_security_allow_reg_remotely_checkbox,true);
+//        switchToTab(TABLE_MENU.SECURITY.getAlias());
+//        setCheckbox(ele_extension_security_allow_reg_remotely_checkbox,true);
         return this;
     }
 

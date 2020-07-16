@@ -89,7 +89,7 @@ public class TestExtension extends TestCaseBase {
         auto.extensionPage().deleAllExtension()
                 .createSipExtension("1001", EXTENSION_PASSWORD,EXTENSION_PASSWORD)
                 .createSipExtensionAndConf("1002", EXTENSION_PASSWORD,EXTENSION_PASSWORD)
-                .configPresence().clickSave();
+                .configPresence().clickSaveAndApply();
 
         step("2:创建IVR 6200");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
