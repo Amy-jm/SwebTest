@@ -65,9 +65,8 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("删除所有分机 -> 创建分机0");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension()
-                .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD);
-//                .ele_extension_user_email_addr.setValue("pbxceshi@sina.com");
-        auto.extensionPage().switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD)
+                .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
                 .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
                 .selectCombobox(IExtensionPageElement.VOICEMAIL_PIN_AUTH.ENABLED.getAlias())
                 .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.DO_NOT_SEND_EMAIL_NOTIFICATIONS.getAlias())
@@ -77,6 +76,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
                 .selectCombobox(IExtensionPageElement.DEFAULT_GREETING.FOLLOW_SYSTEM.getAlias())
                 .ele_extension_voicemail_access_pin.setValue("1234");
         auto.extensionPage().clickSaveAndApply();
+        sleep(5000);
 
         //todo 26版本bug，删除分机提示音不会删除，此处手动兼容此问题
         step("录制voicemail greeting");
@@ -87,7 +87,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.extensionPage().editExtension(getDriver(),"0").recordVoicemailGreeting("0-Yeastar Test0 朗视信息科技","test");
         softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING,"预期分机0响铃");
         pjsip.Pj_Answer_Call(0,200,false);
-        sleep(5000);
+        sleep(15000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
         auto.extensionPage().clickSave();
@@ -97,7 +97,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         sleep(3000);
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
         auto.trunkPage().deleteTrunk(getDriver(),SPS).createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
-//
+
         step("删除呼入路由 -> 创建呼入路由InRoute1");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
         ArrayList<String> trunklist = new ArrayList<>();
@@ -157,7 +157,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Send_Dtmf(0,"1234#");
         sleep(3000);
         pjsip.Pj_Send_Dtmf(0,"1");
-        sleep(30000);
+        sleep(60000);
         pjsip.Pj_Hangup_All();
         pjsip.Pj_Destory();
         step("查看pbxlog.0，检查vm-received.gsm、vm-from-phonenumber、vm-duration.slin提示音字段");
