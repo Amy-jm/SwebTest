@@ -25,7 +25,7 @@ public class AllureReporterListener implements IHookable{
                     testResultThrowable.getCause().getMessage();
             takeScreenShot(message+"\r\n\r\n"+"[getMethod]"+testResult.getMethod());
         } catch (Exception e) {
-            log.error("Couldn't take screenshot. Error: " + e.getStackTrace());
+            log.error("[Couldn't take screenshot]" + e.getStackTrace());
          }
         }
     }

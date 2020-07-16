@@ -45,7 +45,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         ArrayList<String> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
         list.clear();
-        list.add("SPS1");
+        list.add(SPS);
         list2.clear();
         list2.add("0");
         //todo 创建路由
