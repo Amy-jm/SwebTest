@@ -3,6 +3,7 @@ package com.yeastar.testcase.pseries;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.jcraft.jsch.JSchException;
+import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.*;
@@ -14,6 +15,7 @@ import org.testng.annotations.Test;
 
 import javax.xml.soap.SAAJMetaFactory;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
@@ -176,7 +178,17 @@ public class TestExtensionFeature extends TestCaseBase {
         step("2:创建分机号1001，编辑call blocking");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                            switchToTab("Features").addCallHandingRule("2000","IVR","","").clickSaveAndApply();
+                            switchToTab(TABLE_MENU.FEATURES.getAlias()).addCallHandingRule("2000","IVR","","").clickSave();
+
+        step("删除呼入路由 -> 创建呼入路由InRoute1");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        ArrayList<String> trunklist = new ArrayList<>();
+        trunklist.add(SPS);
+        auto.inboundRoute().deleteAllInboundRoutes()
+                .createInboundRoute("InRoute1",trunklist)
+                .editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"1001-1001")
+                .clickSaveAndApply();
 
         assertStep("3:[PJSIP注册]] ，2000 呼叫 1001 ");
         pjsip.Pj_Init();
@@ -188,7 +200,7 @@ public class TestExtensionFeature extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"1001",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
 
@@ -196,17 +208,16 @@ public class TestExtensionFeature extends TestCaseBase {
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call From",0),"2000<2000>");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"IVR 6200<6200>");
+        //CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","IVR 6200<6200>","ANSWERED","2000<2000> hung up",communication_inbound,SPS,"");
 
         assertStep("3:[PJSIP注册]] ，2001 呼叫 1001 ");
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"1001",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"99550330",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
         assertStep("5[CDR]1001<1001> 响铃");
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call From",0),"2001<2001>");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"1001<1001>");
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2001<2001>","1001<1001>","NO ANSWER","2001<2001> hung up",communication_inbound,SPS,"");
 
         softAssert.assertAll();
     }

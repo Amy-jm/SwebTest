@@ -86,10 +86,8 @@ public class TestExtension extends TestCaseBase {
 
         step("2:创建分机号1001，1002");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension()
-                .createSipExtension("1001", EXTENSION_PASSWORD,EXTENSION_PASSWORD)
-                .createSipExtensionAndConf("1002", EXTENSION_PASSWORD,EXTENSION_PASSWORD)
-                .configPresence().clickSaveAndApply();
+        auto.extensionPage().deleAllExtension().createSipExtension("1001", EXTENSION_PASSWORD,EXTENSION_PASSWORD).clickSave();
+        auto.extensionPage().createSipExtensionAndConf("1002", EXTENSION_PASSWORD,EXTENSION_PASSWORD).configPresence().clickSaveAndApply();
 
         step("2:创建IVR 6200");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);

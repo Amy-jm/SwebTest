@@ -60,10 +60,17 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         //设置cdr名称显示格式
         auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
-        auto.preferencesPage().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias()).clickSaveAndApply();
+        auto.preferencesPage().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias())
+                .setElementValue(IPreferencesPageElement.ele_pbx_settings_preferences_max_call_duration_select,"1800")
+                .clickSaveAndApply();
 
         step("删除所有分机 -> 创建分机0");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().choiceLinkusServer().
+                setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,true).
+                setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,true).
+                clickSaveAndApply();
+
         auto.extensionPage().deleAllExtension()
                 .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD)
                 .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
@@ -101,7 +108,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("删除呼入路由 -> 创建呼入路由InRoute1");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
         ArrayList<String> trunklist = new ArrayList<>();
-        trunklist.add("SPS1");
+        trunklist.add(SPS);
         auto.inboundRoute().deleteAllInboundRoutes()
                 .createInboundRoute("InRoute1",trunklist)
                 .editInbound("InRoute1","Name")

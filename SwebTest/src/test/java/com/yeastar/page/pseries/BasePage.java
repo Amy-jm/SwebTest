@@ -8,6 +8,7 @@ import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.interactions.Actions;
 
@@ -159,7 +160,8 @@ public class BasePage implements IButton{
      * @return
      */
     public BasePage setElementValue(SelenideElement element ,String strValue){
-        element.shouldBe(Condition.visible).setValue(strValue);
+        element.shouldBe(Condition.visible).click();
+        element.sendKeys(Keys.chord(Keys.CONTROL,"a"),strValue);
         return this;
     }
 

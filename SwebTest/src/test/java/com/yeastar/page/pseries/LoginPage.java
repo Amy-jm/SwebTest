@@ -35,7 +35,7 @@ public class LoginPage extends BasePage{
     @Step("login with userName:{0} , password:{1}")
     public LoginPage login(String userName,String passWord){
         login_username.shouldBe(Condition.visible).setValue(userName);
-        login_password.setValue(passWord);
+        setElementValue(login_password,passWord);
         loginBtn.click();
         try {
             user_avatars.shouldBe(Condition.exist);
@@ -58,7 +58,7 @@ public class LoginPage extends BasePage{
     @Step("login with userName:{0} , password:{1},changePassword:{2}")
     public LoginPage loginWithExtension(String userName,String passWord,String changePassword){
         login_username.shouldBe(Condition.visible).setValue(userName);
-        login_password.setValue(passWord);
+        setElementValue(login_password,passWord);
         loginBtn.click();
         if(waitElementDisplay(privacy_policy_confirmgdpr,SHORT_WAIT)){
             Selenide.actions().click(privacy_policy_confirmgdpr).perform();

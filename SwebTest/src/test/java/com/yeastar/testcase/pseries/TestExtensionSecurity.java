@@ -37,20 +37,19 @@ public class TestExtensionSecurity extends TestCaseBase {
 
     /**
      * 前提条件
-     * 1.添加0分机到 路由AutoTest_Route
+     * 1.添加0分机和sps中继到 路由AutoTest_Route
      */
     public void prerequisite(){
-        //新增呼出路由
-        //添加分机0 ，到路由AutoTest_Route
+        //新增呼出路由 添加分机0 ，到路由AutoTest_Route
         ArrayList<String> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
         list.clear();
         list.add(SPS);
         list2.clear();
         list2.add("0");
-        //todo 创建路由
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("AutoTest_Route",list,list2).clickSaveAndApply();
+        auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("AutoTest_Route",list,list2)
+                .addPatternAndStrip(0,"X.","").clickSaveAndApply();
 
     }
 
@@ -492,7 +491,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"0",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"995550330",DEVICE_ASSIST_2,false);
         ys_waitingTime(70000);
         pjsip.Pj_Hangup_All();
 
@@ -502,7 +501,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
         softAssert.assertAll();
     }
 

@@ -187,7 +187,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
         ele_extension_user_reg_password.setValue("Yeastar202Yeastar202");
-        saveBtn.click();
+//        saveBtn.click();
 //        switchToTab(TABLE_MENU.SECURITY.getAlias());
 //        setCheckbox(ele_extension_security_allow_reg_remotely_checkbox,true);
 //        ele_extension_user_email_addr.setValue("pbxceshi@sina.com");
@@ -212,7 +212,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         ele_extension_user_reg_password.setValue(registrationPassword);
 //        switchToTab(TABLE_MENU.SECURITY.getAlias());
 //        setCheckbox(ele_extension_security_allow_reg_remotely_checkbox,true);
-        saveBtn.click();
+//        saveBtn.click();
         return this;
     }
 
@@ -823,7 +823,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @return
      */
     public ExtensionPage switchWebClient(){
-        $(By.xpath("//section/div/i")).shouldBe(Condition.visible).click();
+        $(By.xpath("//section/div")).shouldBe(Condition.visible).click();
         sleep(WaitUntils.SHORT_WAIT);
         return this;
     }
