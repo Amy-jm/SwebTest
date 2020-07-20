@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.codeborne.selenide.Configuration;
 import com.yeastar.swebtest.driver.ConfigP;
+import com.yeastar.untils.DataUtils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -73,7 +74,9 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("name", Thread.currentThread().getStackTrace()[3].getMethodName());
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
-			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
+			String testFileNameTemplate = DataUtils.getCurrentTime()+"_{browser}_{testStatus}";
+			log.debug("[testFileNameTemplate]{}",testFileNameTemplate);
+			desiredCapabilities.setCapability("testFileNameTemplate", testFileNameTemplate);
 			desiredCapabilities.setCapability("network", true);
 			log.debug("[idleTimeout] 20s");
 			desiredCapabilities.setCapability("idleTimeout", 240);//150-100
@@ -121,7 +124,9 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("name", getTestName(method));
 			desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
 			desiredCapabilities.setCapability("network", true);
-			desiredCapabilities.setCapability("testFileNameTemplate", "myID_{browser}_{testStatus}");
+			String testFileNameTemplate = DataUtils.getCurrentTime()+"_{browser}_{testStatus}";
+			log.debug("[testFileNameTemplate]{}",testFileNameTemplate);
+			desiredCapabilities.setCapability("testFileNameTemplate", testFileNameTemplate);
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			//Idle TimeOut
 			desiredCapabilities.setCapability("idleTimeout", 150);//150-100
