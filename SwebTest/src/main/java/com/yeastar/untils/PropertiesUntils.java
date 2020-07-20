@@ -155,7 +155,7 @@ public class PropertiesUntils {
         prop=  getPropertie(propPath);
         String value="";
         if(prop.containsKey(key)){
-            value = prop.getProperty(key);
+            value = prop.getProperty(key).trim();
         }else{
             log.error("[getPropertiesValue]can not find the key from path"+propPath + "key="+key);
         }
