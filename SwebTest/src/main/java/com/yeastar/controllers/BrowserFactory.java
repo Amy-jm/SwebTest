@@ -163,6 +163,7 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("goog:"+ChromeOptions.CAPABILITY, options);
 			log.debug("[add config for DevToolsActivePort issue end...]");
 			webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
+			webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		}
 		return webDriver;
 	}
