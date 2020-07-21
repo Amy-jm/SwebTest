@@ -52,7 +52,8 @@ public class PjsipApp extends PjsipDll{
         String m_os = System.getProperty("os.name");
         log.debug("[System Property:]" + m_os);
         if(m_os.toLowerCase().startsWith("win")){
-//            pjsipdll.instance.ys_log_set_level(1);
+            log.debug("[System is Windows]");
+            pjsipdll.instance.ys_log_set_level(1);
         }else{
         }
 //
