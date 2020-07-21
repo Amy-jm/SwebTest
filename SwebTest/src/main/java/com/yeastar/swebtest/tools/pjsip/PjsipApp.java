@@ -5,6 +5,7 @@ import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
+import org.testng.Assert;
 
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class PjsipApp extends PjsipDll{
     //初始化PJSIP
     @Step("【pjsip】初始化PJSIP")
     public  void Pj_Init(){
+
         accounts = new ArrayList<UserAccount>();
         Reporter.infoExec("pjsip init "+pjsipdll.instance.ys_init());
         Reporter.infoExec("pjisp main " +pjsipdll.instance.ys_main());
@@ -46,8 +48,15 @@ public class PjsipApp extends PjsipDll{
         pjsipdll.instance.onCallIncoming(incomingcallback);
         pjsipdll.instance.onCallStateCallback(callstateCallBack);
         pjsipdll.instance.onDtmfDigitCallback(dtmfCallBack);
-//        pjsip.setPjsipDebugLevel(-1);//-1 关闭 1-5 递增
-//        pjsipdll.instance.ys_printlog();
+
+        String m_os = System.getProperty("os.name");
+        log.debug("[System Property:]" + m_os);
+        if(m_os.toLowerCase().startsWith("win")){
+            log.debug("[System is Windows]");
+            pjsipdll.instance.ys_log_set_level(1);
+        }else{
+        }
+//
 //        Reporter.infoExec("pjs_init done");
 
     }
@@ -526,6 +535,9 @@ public class PjsipApp extends PjsipDll{
     //拨号回调
     public pjsipdll.IncomingCallBack incomingcallback = new pjsipdll.IncomingCallBack() {
         @Override
+        /**
+         * number  对方送来的callid（来显？）
+         */
         public int fptr_callincoming(int id, String number,int accid) {
             System.out.println("incomingcallback"+number+"callid:"+id+"accid:"+accid+"accounts.size(): "+accounts.size());
 
@@ -533,6 +545,7 @@ public class PjsipApp extends PjsipDll{
                 if(accounts.get(i).accId == accid){
                     accounts.get(i).callId = id;
                     accounts.get(i).status = RING;
+                    accounts.get(i).callerId = number;
                 }
             }
             return 0;
@@ -648,14 +661,4 @@ public class PjsipApp extends PjsipDll{
             }
         }
     }
-
-    /**
-     * 设置 pjsip debug level
-     * -1 关闭
-     * 1-5 递增
-     * @param debugLevel
-     */
-//    public void setPjsipDebugLevel(int debugLevel){
-//        pjsipdll.instance.ys_log_set_level(debugLevel);
-//    }
 }

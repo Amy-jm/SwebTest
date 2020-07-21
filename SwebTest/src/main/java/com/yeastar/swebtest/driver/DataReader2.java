@@ -21,12 +21,14 @@ public class DataReader2 {
     final static String CONFIG_PROPERTIES_FILE_PATH ="/config.properties";
     final static String PJSIP_PROPERTIES_FILE_PATH ="/pjsip.properties";
 //    final static String loginName = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "loginName");
-    public final String PJSIP_COMMAND_DELTREE_REGISTRAR = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"database deltree registrar\"";
-    public final String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"%s\"";
-    public final String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
-    public final int PJSIP_TCP_PORT = 8022;
-    public final String PJSIP_SSH_PASSWORD = "";
-    public final String PJSIP_SSH_USER = "ls@yf";
+    public final static String PJSIP_COMMAND_DELTREE_REGISTRAR = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"database deltree registrar\"";
+    public final static String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx \"%s\"";
+    public final static String CLEAR_CLI_LOG = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;echo '' > /ysdisk/syslog/pbxlog.0";
+    public final static String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
+    public final static String SHOW_CLI_LOG = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;cat /ysdisk/syslog/pbxlog.0";
+    public final static int PJSIP_TCP_PORT = 8022;
+    public final static String PJSIP_SSH_PASSWORD = "";
+    public final static String PJSIP_SSH_USER = "ls@yf";
 
     public final String PBX_URL = "https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/";
 
@@ -147,6 +149,7 @@ public class DataReader2 {
     public  static String IS_RUN_REMOTE_SERVER = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"IS_RUN_REMOTE_SERVER");
     public  static String GRID_HUB_IP = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"GRID_HUB_IP");
     public  static String GRID_HUB_PORT = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"GRID_HUB_PORT");
+    public  static String RECORD_VIDEO = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"RECORD_VIDEO");
 
 
     /**

@@ -18,6 +18,7 @@ public class PjsipDll {
 
     public interface pjsipdll extends Library {
 
+
         /**
          *  adapt local testNG ok
          */
@@ -44,8 +45,11 @@ public class PjsipDll {
          */
 
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary("YsAutoTestPjsua_sound",pjsipdll.class);
-
+//
         pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
+
+
+
 
 
         //PjsipDll.dll的通用API
@@ -58,6 +62,13 @@ public class PjsipDll {
         int ys_hangup_all_call();
         int ys_setCurrentAccount();
         void ys_printlog();
+
+        /**
+         * 关闭debug：-1 ，debug等级从1-5递增
+         * 在初始化pjsip后调用
+         * @param level
+         * @return
+         */
         int ys_log_set_level(int level);
         int ys_shutdown();
         int ys_releaseCall(int accountId);

@@ -23,7 +23,7 @@ public class LoginPage extends BasePage{
     public SelenideElement privacy_policy_confirmgdpr = $(By.id("privacy_policy_confirmgdpr"));
     public SelenideElement change_password_new_password = $(By.id("change_password_new_password"));
     public SelenideElement change_password_confirm_password = $(By.id("change_password_confirm_password"));
-    public SelenideElement dail_save_btn = $(By.xpath("//*[@id=\"rcDialogTitle1\"]/../..//button//span[contains(text(),'Save')]/.."));
+    public SelenideElement dail_save_btn = $(By.xpath("//button[@class='ant-btn modal-footer-btn ant-btn-primary']"));
 
 
     public Boolean isLoginSuccess = true;
@@ -35,7 +35,7 @@ public class LoginPage extends BasePage{
     @Step("login with userName:{0} , password:{1}")
     public LoginPage login(String userName,String passWord){
         login_username.shouldBe(Condition.visible).setValue(userName);
-        login_password.setValue(passWord);
+        setElementValue(login_password,passWord);
         loginBtn.click();
         try {
             user_avatars.shouldBe(Condition.exist);
@@ -58,10 +58,11 @@ public class LoginPage extends BasePage{
     @Step("login with userName:{0} , password:{1},changePassword:{2}")
     public LoginPage loginWithExtension(String userName,String passWord,String changePassword){
         login_username.shouldBe(Condition.visible).setValue(userName);
-        login_password.setValue(passWord);
+        setElementValue(login_password,passWord);
         loginBtn.click();
         if(waitElementDisplay(privacy_policy_confirmgdpr,SHORT_WAIT)){
             Selenide.actions().click(privacy_policy_confirmgdpr).perform();
+            sleep(1000);
             ConfrimAlertBtn.click();
 
         }
@@ -74,6 +75,10 @@ public class LoginPage extends BasePage{
         //change password
 //        change_password_new_password.shouldBe(Condition.exist);
         sleep(SHORT_WAIT);
+        return this;
+    }
+    public LoginPage loginWithExtension(String userName,String passWord){
+        loginWithExtension(userName, passWord,passWord);
         return this;
     }
 

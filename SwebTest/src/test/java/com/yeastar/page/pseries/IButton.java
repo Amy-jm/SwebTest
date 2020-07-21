@@ -48,7 +48,6 @@ public interface IButton {
     SelenideElement ConfrimAlertBtn = $(By.xpath("//button/span[contains(text(),'Confirm')]/.."));
 
 
-
     //表格第一行删除图标
     SelenideElement ele_deleteImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'delete')]"));
     SelenideElement ele_editImageForTableFirstTr = $(By.xpath("//table/tbody/tr[1]//i[contains(@class,'edit')]"));

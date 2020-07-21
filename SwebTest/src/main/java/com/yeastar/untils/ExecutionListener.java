@@ -2,12 +2,11 @@ package com.yeastar.untils;
 
 import lombok.extern.log4j.Log4j2;
 import org.influxdb.dto.Point;
-import org.openqa.selenium.Cookie;
-import org.testng.*;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
 
 import java.util.concurrent.TimeUnit;
-
-import static com.yeastar.controllers.WebDriverFactory.getDriver;
 
 /**
  * @program: SwebTest
@@ -23,8 +22,8 @@ public class ExecutionListener implements ITestListener {
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
-       log.debug( "[ExecutionListener Success] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
-       this.sendTestMethodStatus(iTestResult, "PASS");
+        log.debug( "[ExecutionListener Success] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
+        this.sendTestMethodStatus(iTestResult, "PASS");
     }
 
     public void onTestFailure(ITestResult iTestResult) {

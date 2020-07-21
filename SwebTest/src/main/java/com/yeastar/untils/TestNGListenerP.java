@@ -1,6 +1,5 @@
 package com.yeastar.untils;
 
-import com.yeastar.controllers.WebDriverFactory;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Cookie;
 import org.testng.*;
@@ -40,7 +39,7 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
 
         super.onTestFailure(tr);
         log.debug("[TestNGListenerP onTestFailure] "+tr.getTestClass()+tr.getName());
-        //更新用例状态 zalenium
+        // 更新用例状态 zalenium
         try {
             Cookie cookie = new Cookie("zaleniumTestPassed", "false");
             getDriver().manage().addCookie(cookie);
@@ -89,7 +88,7 @@ public class TestNGListenerP extends TestListenerAdapter implements IInvokedMeth
 
             }
         }
-}
+    }
 
     /**
      * onTestStart

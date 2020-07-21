@@ -3,22 +3,22 @@ package com.yeastar.testcase.pseries;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.jcraft.jsch.JSchException;
+import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
 import com.yeastar.page.pseries.HomePage;
-import com.yeastar.page.pseries.IExtensionPageElement;
 import com.yeastar.page.pseries.TestCaseBase;
-import com.yeastar.untils.MailUtils;
-import com.yeastar.untils.TableUtils;
-import com.yeastar.untils.WaitUntils;
+import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import javax.xml.soap.SAAJMetaFactory;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.codeborne.selenide.Selenide.sleep;
-import static com.yeastar.page.pseries.IExtensionPageElement.*;
+import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
 import static com.yeastar.swebtest.driver.SwebDriverP.getExtensionStatus;
 import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 
@@ -28,6 +28,7 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
  * @author: huangjx@yeastar.com
  * @create: 2020/07/01
  */
+@Listeners({ExecutionListener.class, AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
 public class TestExtensionFeature extends TestCaseBase {
 
@@ -93,8 +94,9 @@ public class TestExtensionFeature extends TestCaseBase {
         step("2:创建分机号1001,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
 
-        auto.extensionPage().deleAllExtension().createSipExtension("1002",EXTENSION_PASSWORD).createSipExtensionWithEmail("1001",EXTENSION_PASSWORD,"yeastarautotest@163.com").
-               editDataByEditImage("1001").switchToTab("Features").setCheckbox(ele_extension_feature_enb_email_miss_call,true).clickSaveAndApply();
+        auto.extensionPage().deleAllExtension().createSipExtension("1002",EXTENSION_PASSWORD).clickSave();
+        auto.extensionPage().createSipExtensionWithEmail("1001",EXTENSION_PASSWORD,"yeastarautotest@163.com").
+               switchToTab("Features").setCheckbox(ele_extension_feature_enb_email_miss_call,true).clickSaveAndApply();
 
         int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
         step("3:【验证邮箱服务器是否能正常】通过修改分机1001密码，验证是否能收到邮件");
@@ -122,8 +124,8 @@ public class TestExtensionFeature extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         sleep(WaitUntils.SHORT_WAIT);//等待自动挂断
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Status",1),"NO ANSWER");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",1),"1001<1001>");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Status",1),"NO ANSWER");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",1),"1001<1001>");
         assertStep("[邮箱验证]收到Miss Call邮件");
         ys_waitingTime(WaitUntils.SHORT_WAIT*10);//等待接收邮件
         int emailUnreadCount_last = MailUtils.getEmailUnreadMessageCountFrom163();
@@ -144,8 +146,8 @@ public class TestExtensionFeature extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         sleep(WaitUntils.SHORT_WAIT);//等待自动挂断
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Status",1),"NO ANSWER");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",1),"1001<1001>");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Status",1),"NO ANSWER");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",1),"1001<1001>");
 
         int emailUnreadCount_close_end = MailUtils.getEmailUnreadMessageCountFrom163();
         log.debug("9 [功能关闭->期望结果：邮箱数量不变][测试前邮箱数量] "+emailUnreadCount_close_start+"-->>[等待30s,再次查看邮箱数量] "+emailUnreadCount_last);
@@ -175,8 +177,18 @@ public class TestExtensionFeature extends TestCaseBase {
 
         step("2:创建分机号1001，编辑call blocking");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).editFirstData().
-                            switchToTab("Features").addCallHandingRule("2000","IVR","","").clickSaveAndApply();
+        auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
+                            switchToTab(TABLE_MENU.FEATURES.getAlias()).addCallHandingRule("2000","IVR","","").clickSave();
+
+        step("删除呼入路由 -> 创建呼入路由InRoute1");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        ArrayList<String> trunklist = new ArrayList<>();
+        trunklist.add(SPS);
+        auto.inboundRoute().deleteAllInboundRoutes()
+                .createInboundRoute("InRoute1",trunklist)
+                .editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"1001-1001")
+                .clickSaveAndApply();
 
         assertStep("3:[PJSIP注册]] ，2000 呼叫 1001 ");
         pjsip.Pj_Init();
@@ -185,10 +197,10 @@ public class TestExtensionFeature extends TestCaseBase {
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"1001",DEVICE_ASSIST_1,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
 
@@ -196,17 +208,16 @@ public class TestExtensionFeature extends TestCaseBase {
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"2000<2000>");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",0),"IVR 6200<6200>");
+        //CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","IVR 6200<6200>","ANSWERED","2000<2000> hung up",communication_inbound,SPS,"");
 
         assertStep("3:[PJSIP注册]] ，2001 呼叫 1001 ");
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"1001",DEVICE_ASSIST_1,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"99550330",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
         assertStep("5[CDR]1001<1001> 响铃");
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"2001<2001>");//CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",0),"1001<1001>");
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2001<2001>","1001<1001>","NO ANSWER","2001<2001> hung up",communication_inbound,SPS,"");
 
         softAssert.assertAll();
     }

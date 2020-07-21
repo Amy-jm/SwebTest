@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -26,9 +27,8 @@ public class HomePage extends BasePage{
 
 //    public SelenideElement extension_trunk_tree_extensions = $(By.xpath(String.format(LI_XPATH,"Extension")));//m_extensions
     public SelenideElement extension_trunk_tree_extensions = $(By.id("m_extensions"));//m_extensions
-
-    public SelenideElement extension_trunk_tree_extension_group = $(By.linkText("Extension Group"));
-    public SelenideElement extension_trunk_tree_trunks = $(By.linkText("Trunks"));
+    public SelenideElement extension_trunk_tree_extension_group = $(By.id("m_extension_groups"));
+    public SelenideElement extension_trunk_tree_trunks = $(By.id("m_trunks"));
     public SelenideElement extension_trunk_tree_role_management = $(By.id("m_role_management"));
     /**
      * 左侧菜单 -- Call Control
@@ -45,14 +45,14 @@ public class HomePage extends BasePage{
      **/
     public SelenideElement left_menu_first_level_call_feature = $(By.id("m_call_features"));
     public SelenideElement left_menu_first_level_call_feature_states = $(By.xpath("//span[@id=\"m_call_features\"]/.."));
-    public SelenideElement call_feature_tree_voicemail = $(By.linkText("Voicemail"));
-    public SelenideElement call_feature_tree_feature_codes = $(By.linkText("Feature Codes"));
-    public SelenideElement call_feature_tree_ivr = $(By.linkText("IVR"));
-    public SelenideElement call_feature_tree_ring_group = $(By.linkText("Ring Group"));
-    public SelenideElement call_feature_tree_queue = $(By.linkText("Queue"));
-    public SelenideElement call_feature_tree_conference = $(By.linkText("Conference"));
-    public SelenideElement call_feature_tree_speed_dial = $(By.linkText("Speed Dial"));
-    public SelenideElement call_feature_tree_recording = $(By.linkText("Recording"));
+    public SelenideElement call_feature_tree_voicemail = $(By.id("m_voicemail"));
+    public SelenideElement call_feature_tree_feature_codes = $(By.id("m_feature_code"));
+    public SelenideElement call_feature_tree_ivr = $(By.id("m_ivr"));
+    public SelenideElement call_feature_tree_ring_group = $(By.id("m_ring_group"));
+    public SelenideElement call_feature_tree_queue = $(By.id("m_queue"));
+    public SelenideElement call_feature_tree_conference = $(By.id("m_conference"));
+    public SelenideElement call_feature_tree_speed_dial = $(By.id("m_speed_dial"));
+    public SelenideElement call_feature_tree_recording = $(By.id("m_auto_record"));
 
 
     /**
@@ -60,32 +60,32 @@ public class HomePage extends BasePage{
      **/
     public SelenideElement left_menu_first_level_pbx_settings = $(By.id("m_pbx_settings"));
     public SelenideElement left_menu_first_level_pbx_settings_states = $(By.xpath("//span[@id=\"m_pbx_settings\"]/.."));
-    public SelenideElement pbx_settings_tree_preferences = $(By.linkText("Preferences"));
-    public SelenideElement pbx_settings_tree_voice_prompt = $(By.linkText("Voice Prompt"));
-    public SelenideElement pbx_settings_tree_sip_settings = $(By.linkText("SIP Settings"));
-    public SelenideElement pbx_settings_tree_jitter_buffer = $(By.linkText("Jitter Buffer"));
+    public SelenideElement pbx_settings_tree_preferences = $(By.id("m_preference"));
+    public SelenideElement pbx_settings_tree_voice_prompt = $(By.id("m_voice_prompt"));
+    public SelenideElement pbx_settings_tree_sip_settings = $(By.id("m_sip_settings"));
+    public SelenideElement pbx_settings_tree_jitter_buffer = $(By.id("m_jitter_buffer"));
 
     /**
      * 左侧菜单 -- System
      **/
     public SelenideElement left_menu_first_level_system = $(By.id("m_system"));
     public SelenideElement left_menu_first_level_system_states = $(By.xpath("//span[@id=\"m_system\"]/.."));
-    public SelenideElement system_tree_network = $(By.linkText("Network"));
-    public SelenideElement system_tree_date_and_time = $(By.linkText("Date and Time"));
-    public SelenideElement system_tree_email = $(By.linkText("Email"));
-    public SelenideElement system_tree_storage = $(By.linkText("Storage"));
-    public SelenideElement system_tree_event_notification = $(By.linkText("Event Notification"));
-    public SelenideElement system_tree_host_standby = $(By.linkText("Hot Standby"));
-    public SelenideElement system_tree_remote_management = $(By.linkText("Remote Management"));
-    public SelenideElement system_tree_integration = $(By.linkText("Integration"));
+    public SelenideElement system_tree_network = $(By.id("m_network"));
+    public SelenideElement system_tree_date_and_time = $(By.id("m_date_and_time"));
+    public SelenideElement system_tree_email = $(By.id("m_email"));
+    public SelenideElement system_tree_storage = $(By.id("m_storage"));
+    public SelenideElement system_tree_event_notification = $(By.id("m_event_notification"));
+    public SelenideElement system_tree_host_standby = $(By.id("m_hot_standby"));
+    public SelenideElement system_tree_remote_management = $(By.id("m_remote_management"));
+    public SelenideElement system_tree_integration = $(By.id("m_integration"));
 
     /**
      * 左侧菜单 -- Security
      **/
     public SelenideElement left_menu_first_level_security = $(By.id("m_security"));
     public SelenideElement left_menu_first_level_security_states = $(By.xpath("//span[@id=\"m_security\"]/.."));
-    public SelenideElement security_tree_security_rules = $(By.linkText("Security Rules"));
-    public SelenideElement security_tree_security_settings = $(By.linkText("Security Settings"));
+    public SelenideElement security_tree_security_rules = $(By.id("m_security_rules"));
+    public SelenideElement security_tree_security_settings = $(By.id("m_security_settings"));
 
 
     /**
@@ -93,12 +93,12 @@ public class HomePage extends BasePage{
      **/
     public SelenideElement left_menu_first_level_maintenance = $(By.id("m_maintenance"));
     public SelenideElement left_menu_first_level_maintenance_states = $(By.xpath("//span[@id=\"m_maintenance\"]/.."));
-    public SelenideElement maintenance_tree_upgrade = $(By.linkText("Upgrade"));
-    public SelenideElement maintenance_tree_backup_and_restore = $(By.linkText("Backup And Restore"));
-    public SelenideElement maintenance_tree_reboot = $(By.linkText("Reboot"));
-    public SelenideElement maintenance_tree_factory_reset = $(By.linkText("Factory Reset"));
-    public SelenideElement maintenance_tree_operation_logs = $(By.linkText("Operation Logs"));
-    public SelenideElement maintenance_tree_trouble_shooting = $(By.linkText("Trouble Shooting"));
+    public SelenideElement maintenance_tree_upgrade = $(By.id("m_upgrade"));
+    public SelenideElement maintenance_tree_backup_and_restore = $(By.id("m_backup_and_restore"));
+    public SelenideElement maintenance_tree_reboot = $(By.id("m_reboot"));
+    public SelenideElement maintenance_tree_factory_reset = $(By.id("m_factory_reset"));
+    public SelenideElement maintenance_tree_operation_logs = $(By.id("m_operation_logs"));
+    public SelenideElement maintenance_tree_trouble_shooting = $(By.id("m_trouble_shooting"));
 
 
     /**
@@ -107,8 +107,8 @@ public class HomePage extends BasePage{
     public SelenideElement left_menu_first_level_cdr_recording = $(By.id("m_cdr_recording"));
     public SelenideElement left_menu_first_level_cdr_recording_states = $(By.xpath("//span[@id=\"m_cdr_recording\"]/.."));
     public SelenideElement cdr_recording_tree_cdr = $(By.id("m_cdr"));
-    public SelenideElement cdr_recording_tree_recording = $(By.linkText("Recording"));
-    public SelenideElement cdr_recording_tree_call_report = $(By.linkText("Call Report"));
+    public SelenideElement cdr_recording_tree_recording = $(By.id("Recording"));
+    public SelenideElement cdr_recording_tree_call_report = $(By.id("Call Report"));
 
 
     public SelenideElement search = $(By.id("search"));
@@ -123,10 +123,10 @@ public class HomePage extends BasePage{
 
 
     public SelenideElement menu_first_level_user_dropdown = $(By.xpath("//div[contains(@class,'ant-dropdown-link ant-dropdown-trigger')]//i[contains(@class,\"anticon anticon-down\")]"));
-    public SelenideElement user_tree_setting = $(By.xpath("//div[@class=\"ant-dropdown ant-dropdown-placement-bottomRight\"]//li[contains(text(),'Setting')]"));
-    public SelenideElement user_tree_change_password = $(By.xpath(String.format(link_comm_xpath,"Change Password")));
-    public SelenideElement user_tree_privacy_policy_agreement =  $(By.xpath(String.format(link_comm_xpath,"Privacy Policy Agreement")));
-    public SelenideElement user_tree_language = $(By.xpath(String.format(link_comm_xpath,"Language")));
+    public SelenideElement user_tree_setting = $(By.id("h_admin_setting"));
+    public SelenideElement user_tree_change_password = $(By.id("h_change_password"));
+    public SelenideElement user_tree_privacy_policy_agreement =  $(By.id("h_privacy_policy"));
+    public SelenideElement user_tree_language = $(By.id("h_language"));
     public SelenideElement user_tree_language_english =  $(By.xpath(String.format(link_comm_xpath,"English")));
     public SelenideElement user_tree_language_china =  $(By.xpath(String.format(link_comm_xpath,"简体中文")));
     public SelenideElement user_tree_logout = $(By.id("h_logout"));
@@ -148,7 +148,7 @@ public class HomePage extends BasePage{
     /**
      * 菜单选择
      */
-    public HomePage intoPage(Menu_Level_1 level_1, Menu_Level_2 level_2) {
+    public void intoPage(Menu_Level_1 level_1, Menu_Level_2 level_2) {
         sleep(WaitUntils.SHORT_WAIT*2);
         //close alert
         // todo need to delete sleep
@@ -159,44 +159,27 @@ public class HomePage extends BasePage{
         //左侧一级菜单
         switch (level_1) {
             case extension_trunk:
-                if (!left_menu_first_level_extension_trunk_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
-                    left_menu_first_level_extension_trunk.click();
-                }break;
+                isLevel2Visible(left_menu_first_level_extension_trunk);
+                break;
             case call_control:
-                if (!left_menu_first_level_call_control_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
-                    log.debug("start click main menu");
-                    left_menu_first_level_call_control.click();
-                }
+                isLevel2Visible(left_menu_first_level_call_control);
                 break;
             case call_feature:
-                if (!left_menu_first_level_call_feature_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
-                    left_menu_first_level_call_feature.click();
-                }
+                isLevel2Visible(left_menu_first_level_call_feature);
                 break;
             case pbx_settings:
-                if (!left_menu_first_level_pbx_settings_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
-                    left_menu_first_level_pbx_settings.click();
-                }break;
-            case system:
-                if(!left_menu_first_level_system_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
-                    left_menu_first_level_system.click();
-                }break;
+                isLevel2Visible(left_menu_first_level_pbx_settings);
+                break;
             case security:
-                if (!left_menu_first_level_security_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
-                    left_menu_first_level_security.click();
-                }
+                isLevel2Visible(left_menu_first_level_security);
                 break;
             case maintenance:
-                if (!left_menu_first_level_maintenance_states.getAttribute("aria-expanded").equalsIgnoreCase("true")) {
-                    left_menu_first_level_maintenance.click();
-                }
+                isLevel2Visible(left_menu_first_level_maintenance);
                 break;
             case cdr_recording:
-                if(!left_menu_first_level_cdr_recording_states.getAttribute("aria-expanded").equalsIgnoreCase("true")){
-                    left_menu_first_level_cdr_recording.click();
-                }break;
+                isLevel2Visible(left_menu_first_level_cdr_recording);
+                break;
         }
-
         //左侧二级菜单
         switch (level_2) {
             case extension_trunk_tree_extensions:
@@ -317,9 +300,18 @@ public class HomePage extends BasePage{
 //            system_alert_message.click();
 //            sleep(2000);
 //        }
-        return this;
+
     }
 
+    public void isLevel2Visible(WebElement level1){
+
+        WebElement ele = $(By.xpath("//span[@id='"+level1.getAttribute("id")+"']/.."));
+
+        if(ele.getAttribute("aria-expanded").equals("false")){
+            level1.click();
+        }
+        return ;
+    }
 
     /**
      * 左侧 一 二级菜单

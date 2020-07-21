@@ -3,26 +3,26 @@ package com.yeastar.testcase.pseries;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.jcraft.jsch.JSchException;
-import com.yeastar.page.pseries.BusinessHoursAndHolidaysPage;
+import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 import com.yeastar.page.pseries.HomePage;
-import com.yeastar.page.pseries.IExtensionPageElement;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static com.yeastar.page.pseries.IExtensionPageElement.ele_extension_security_max_outb_call_duration_select;
-import static com.yeastar.page.pseries.IPreferencesPage.ele_pbx_settings_preferences_max_call_duration_select;
+import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
+import static com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement.*;
 import static com.yeastar.swebtest.driver.SwebDriverP.*;
 
 /**
@@ -31,19 +31,26 @@ import static com.yeastar.swebtest.driver.SwebDriverP.*;
  * @author: huangjx@yeastar.com
  * @create: 2020/06/17
  */
-//@Listeners({AllureReporterListener.class, TestNGListenerP.class})
+@Listeners({AllureReporterListener.class, TestNGListenerP.class})
+@Log4j2
 public class TestExtensionSecurity extends TestCaseBase {
 
     /**
      * 前提条件
-     * 1.添加0分机到 路由AutoTest_Route
+     * 1.添加0分机和sps中继到 路由AutoTest_Route
      */
     public void prerequisite(){
-        //新增呼出路由
-        //添加分机0 ，到路由AutoTest_Route
-        //todo 创建路由
+        //新增呼出路由 添加分机0 ，到路由AutoTest_Route
+        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
+        list.clear();
+        list.add(SPS);
+        list2.clear();
+        list2.add("0");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().editRoute("AutoTest_Route").addExtensionOrExtensionGroup("0").clickSaveAndApply();
+        auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("AutoTest_Route",list,list2)
+                .addPatternAndStrip(0,"X.","").clickSaveAndApply();
+
     }
 
     @Epic("P_Series")
@@ -64,7 +71,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,true).
                 clickSaveAndApply();
 
@@ -76,7 +83,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(0,"2000",DEVICE_IP_LAN,false);
         softAssert.assertEquals(getExtensionStatus(0,HUNGUP,20),HUNGUP,"预期0为HUNGUP状态");
@@ -101,7 +108,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,false).clickSaveAndApply();
 
         prerequisite();
@@ -111,7 +118,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
         softAssert.assertEquals(getExtensionStatus(0,TALKING,10),TALKING,"预期0为TALKING状态");
@@ -122,9 +129,9 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Status",0),"ANSWERED");
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"0<0>");
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",0),"2000");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Status",0),"ANSWERED");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call From",0),"0<0>");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"2000");
         softAssert.assertAll();
     }
 
@@ -145,7 +152,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用disable outbound calls outside business hours");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_office_time_outb_call_checkbox,true).
                 clickSaveAndApply();
 
@@ -164,11 +171,11 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         //勾选，下班时间不能呼出
         pjsip.Pj_Make_Call_No_Answer(0,"2000",DEVICE_IP_LAN,false);
-        softAssert.assertEquals(getExtensionStatus(0,HUNGUP,10),RING,"预期0为HUNGUP状态");
+        softAssert.assertEquals(getExtensionStatus(0,HUNGUP,10),HUNGUP,"预期0为HUNGUP状态");
         softAssert.assertEquals(getExtensionStatus(2000,IDLE,10),IDLE,"预期2000不会响铃");
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
@@ -192,7 +199,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,禁用disable outbound calls outside business hours");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_office_time_outb_call_checkbox,false).clickSaveAndApply();
 
         prerequisite();
@@ -209,7 +216,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
         softAssert.assertEquals(getExtensionStatus(0,TALKING,10),TALKING,"预期0为TALKING状态");
@@ -220,9 +227,9 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Status",0),"ANSWERED");
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call From",0),"0<0>");
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call To",0),"2000");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Status",0),"ANSWERED");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call From",0),"0<0>");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"2000");
         softAssert.assertAll();
     }
 
@@ -243,7 +250,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_allow_reg_remotely_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：remoteregister                     : no ");
@@ -275,7 +282,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_enb_user_agent_ident_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：enableuseragent               : no");
@@ -312,7 +319,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("2:创建分机号0,启用Allow Register Remotely");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
-                editFirstData().switchToTab("Security").
+                switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_enb_ip_rstr_checkbox,false).clickSaveAndApply();
 
         assertStep("3:[PJSIP]期望结果：enableiprestrict               : no");
@@ -355,10 +362,8 @@ public class TestExtensionSecurity extends TestCaseBase {
 
         step("2.创建分机：0，分机：9999999");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().
-                deleAllExtension().
-                createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0","Yeastar202").
-                createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999","Yeastar202").clickSaveAndApply();;
+        auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0","Yeastar202").clickSave();
+        auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999","Yeastar202").clickSaveAndApply();;
 
         assertStep("3:设置分机0，Max Call Duration 设置60s");
         auto.extensionPage().editFirstData().switchToTab("Security").setElementValue(ele_extension_security_max_outb_call_duration_select,"60")
@@ -386,8 +391,8 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
         softAssert.assertAll();
     }
 
@@ -419,7 +424,7 @@ public class TestExtensionSecurity extends TestCaseBase {
                 .clickSaveAndApply();
 
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().editRoute("AutoTest_Route").addExtensionOrExtensionGroup("0").clickSaveAndApply();
+        auto.outBoundRoutePage().editOutbound("AutoTest_Route","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
 
 
         assertStep("4:全局设置 preference，Max Call Duration 设置30s");
@@ -432,7 +437,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
         ys_waitingTime(70000);
@@ -443,8 +448,8 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
         softAssert.assertAll();
     }
 
@@ -484,9 +489,9 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"0",DEVICE_ASSIST_1,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"995550330",DEVICE_ASSIST_2,false);
         ys_waitingTime(70000);
         pjsip.Pj_Hangup_All();
 
@@ -495,8 +500,8 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
         ys_waitingTime(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
-        softAssert.assertEquals(TableUtils.getCDRForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
         softAssert.assertAll();
     }
 

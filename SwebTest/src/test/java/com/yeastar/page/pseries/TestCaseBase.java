@@ -1,7 +1,9 @@
 package com.yeastar.page.pseries;
 
+import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
+import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.untils.*;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
@@ -14,18 +16,13 @@ import java.lang.reflect.Method;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 @Log4j2
 public class TestCaseBase extends BaseMethod {
     public PageEngine auto;
     private WebDriver webDriver;
     public SoftAssert softAssert;
-
-//    public TestCaseBase(){
-//        softAssert = new SoftAssert();
-//    }
-
-
 
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method) throws Exception
@@ -35,7 +32,7 @@ public class TestCaseBase extends BaseMethod {
                 "======");
         webDriver = initialDriver(BROWSER,PBX_URL,method);
         setDriver(webDriver);
-        log.debug("[PBX_URL]{}",PBX_URL);
+        log.debug("[PBX_URL]{}"+PBX_URL);
         open(PBX_URL);
         auto = new PageEngine();
         softAssert = new SoftAssert();
@@ -55,7 +52,6 @@ public class TestCaseBase extends BaseMethod {
         new BrowserUtils().getLogType_Browser(method,webDriver);
         log.debug("[remote session]{}",webDriver);
         webDriver.quit();
-        getDriver().quit();
         log.debug("[getDriver quit] ...");
         log.debug("[remote session]{}",webDriver);
 //        debugCleanSession();
@@ -68,7 +64,7 @@ public class TestCaseBase extends BaseMethod {
         int port = 22;
         String user = "root";
         String password = "r@@t";
-        String command = "curl -sSL http://192.168.3.252:4444/grid/sessions?action=doCleanupActiveSessions";
+        String command = "curl -sSL http://localhost:4444/grid/sessions?action=doCleanupActiveSessions";
         String result = "";
 
         try {
@@ -82,6 +78,20 @@ public class TestCaseBase extends BaseMethod {
 
     }
 
+    /**
+     * 设置cdr名称显示格式
+     */
+    public void preparationStepNameDisplay(){
+        auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
+        auto.preferencesPage().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias()).clickSaveAndApply();
+    }
 
+    /**
+     * admin 登录
+     */
+    public void loginWithAdmin(){
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+    }
 
 }

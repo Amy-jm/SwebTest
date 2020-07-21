@@ -8,6 +8,7 @@ import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.interactions.Actions;
 
@@ -30,6 +31,8 @@ public class BasePage implements IButton{
     public String INPUT_COMM_XPATH = "//label[contains(text(),'%s')]/../following-sibling::div//input";
     //li 下拉选项通用定位
     public String SELECT_COMM_XPATH = "//li[contains(text(),'%s')]";
+    //tab标签页定位
+    public String TAB_COMM_XPATH = "//div[contains(@role,'tab') and contains(text(),\"%s\")]";
     //表格全选
     SelenideElement ele_delete_all_table = $(By.xpath("//table//thead//input[1]"));
 
@@ -42,6 +45,32 @@ public class BasePage implements IButton{
      */
     public void inputComm(String label,String input){
         $(By.xpath(String.format(INPUT_COMM_XPATH,label))).shouldHave(Condition.visible).setValue(input);
+    }
+
+    /** Tab 菜单切换 **/
+    public void baseSwitchToTab(String enumTabMenu){
+        $(By.xpath(String.format(TAB_COMM_XPATH,enumTabMenu))).shouldBe(Condition.visible).click();
+    }
+    /**
+     * 选择下拉框
+     *
+     * @param arg 枚举类型中的参数别名
+     * @return
+     */
+    public void selectComm(String arg) {
+        $(By.xpath(String.format(SELECT_COMM_XPATH, arg))).click();
+        return;
+    }
+
+    /**
+     * 选择下拉框中内容
+     * @param ele 下拉框元素
+     * @param arg 需要选择的文本
+     */
+    public void selectComm(SelenideElement ele, String arg) {
+        ele.click();
+        $(By.xpath(String.format(SELECT_COMM_XPATH, arg))).click();
+        return;
     }
 
     public Boolean isSaveSuccessAlertAppear(){
@@ -79,15 +108,18 @@ public class BasePage implements IButton{
     /**
      * 点击 apply button
      */
-    public void clickApply(){
-        applyBtn.waitUntil(Condition.enabled,WaitUntils.TIME_OUT_SECOND).click();
-        applyLoadingBtn.shouldBe(Condition.visible);
-        applyLoadingBtn.shouldBe(Condition.disappear);
-        if(applyLoadedBtn.isDisplayed()){
-            applyLoadedBtn.shouldBe(Condition.disappear);
+    public void clickApply() {
+        sleep(1000);
+        if(applyBtn.isDisplayed()){
+            applyBtn.waitUntil(Condition.enabled, WaitUntils.TIME_OUT_SECOND).click();
+            applyLoadingBtn.shouldBe(Condition.visible);
+            applyLoadingBtn.shouldBe(Condition.disappear);
+            if (applyLoadedBtn.isDisplayed()) {
+                applyLoadedBtn.shouldBe(Condition.disappear);
+            }
         }
-        //applyLoadedBtn.shouldBe(Condition.visible);//界面不一定会渲染出loaded
     }
+
 
     /**
      * 点击保存并应用
@@ -128,8 +160,17 @@ public class BasePage implements IButton{
      * @return
      */
     public BasePage setElementValue(SelenideElement element ,String strValue){
-        element.shouldBe(Condition.visible).setValue(strValue);
+        element.shouldBe(Condition.visible).click();
+        element.sendKeys(Keys.chord(Keys.CONTROL,"a"),strValue);
         return this;
+    }
+
+    /**
+     * 点击保存
+     * @return
+     */
+    public void clickSave() {
+        saveBtn.shouldBe(Condition.enabled).click();
     }
 
     /**
