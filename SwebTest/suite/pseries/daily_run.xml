@@ -9,7 +9,7 @@
     </listeners>
     <test name="pbxcore">
         <classes>
-<!--            <class name="com.yeastar.testcase.pseries.TestExtensionSecurity">-->
+            <class name="com.yeastar.testcase.pseries.TestExtensionSecurity"/>
 <!--                <methods>-->
 <!--                    <include name="testDisableOutCall"/>-->
 <!--                    <include name="testDisableOutCallBusinessHours"/>-->
@@ -68,8 +68,8 @@
 <!--                    <exclude name="testPresenceOffWork1000CallQueue6402"/>-->
 <!--                </methods>-->
             </class>
-<!--            <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>-->
-<!--            <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>-->
+            <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>
+            <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>
         </classes>
     </test>
 </suite>
