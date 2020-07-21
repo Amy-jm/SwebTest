@@ -68,8 +68,8 @@
 <!--                    <exclude name="testPresenceOffWork1000CallQueue6402"/>-->
 <!--                </methods>-->
             </class>
-            <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>-->
         </classes>
     </test>
 </suite>
