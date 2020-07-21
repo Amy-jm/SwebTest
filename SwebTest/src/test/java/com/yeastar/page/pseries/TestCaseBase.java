@@ -32,7 +32,7 @@ public class TestCaseBase extends BaseMethod {
                 "======");
         webDriver = initialDriver(BROWSER,PBX_URL,method);
         setDriver(webDriver);
-        log.debug("[PBX_URL]{}"+PBX_URL);
+        log.debug("[Test PBX_URL]"+PBX_URL);
         open(PBX_URL);
         auto = new PageEngine();
         softAssert = new SoftAssert();
@@ -51,7 +51,14 @@ public class TestCaseBase extends BaseMethod {
         sleep(WaitUntils.SHORT_WAIT);
         new BrowserUtils().getLogType_Browser(method,webDriver);
         log.debug("[remote session]{}",webDriver);
-        webDriver.quit();
+        try{
+            if(webDriver!=null){
+                webDriver.quit();
+            }
+        }catch(Exception ex){
+            log.error("[driver quite exception]"+ex.getMessage()+ex.getStackTrace());
+        }
+
         log.debug("[getDriver quit] ...");
         log.debug("[remote session]{}",webDriver);
 //        debugCleanSession();
