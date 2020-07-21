@@ -23,11 +23,11 @@
 <!--                    <include name="testSIPRegistrationIPRestriction"/>-->
 <!--                </methods>-->
             </class>
-            <class name="com.yeastar.testcase.pseries.TestExtension"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionList"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionPresence">
+<!--            <class name="com.yeastar.testcase.pseries.TestExtension"/>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionList"/>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionPresence">-->
 <!--                <methods>-->
 <!--                    <include name="A_RecoveryEnv"/>-->
 <!--                    <exclude name="testPresenceAvailable1000Call0NoAnswer"/>-->
@@ -67,9 +67,9 @@
 <!--                    <exclude name="testPresenceOffWork2000Call0"/>-->
 <!--                    <exclude name="testPresenceOffWork1000CallQueue6402"/>-->
 <!--                </methods>-->
-            </class>
-            <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>
-            <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>
+<!--            </class>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>-->
+<!--            <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>-->
         </classes>
     </test>
 </suite>
