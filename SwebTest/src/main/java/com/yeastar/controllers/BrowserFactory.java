@@ -40,7 +40,7 @@ public class BrowserFactory extends ConfigP {
 		}
 	}
 
-	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, Method method) throws MalformedURLException {
+	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, Method method) {
 		if (IS_RUN_REMOTE_SERVER.trim().equalsIgnoreCase("true")) {
 			log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
 			return initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub", method);
@@ -49,7 +49,7 @@ public class BrowserFactory extends ConfigP {
 		}
 	}
 
-	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl) throws MalformedURLException {
+	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl){
 		//Selenide的配置信息
 		Configuration.timeout = FINDELEMENT_TIMEOUT;
 		Configuration.collectionsTimeout = FINDELEMENT_TIMEOUT;
@@ -84,7 +84,11 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
 
 
-			webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
+			try {
+				webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
+			} catch (MalformedURLException e) {
+				log.error("[init remote webdriver error]{}",e.getMessage()+e.getStackTrace());
+			}
 
 			webDriver.get(relativeOrAbsoluteUrl);
 			webDriver.manage().window().maximize();
@@ -96,7 +100,7 @@ public class BrowserFactory extends ConfigP {
 		return webDriver;
 	}
 
-	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl, Method method) throws MalformedURLException {
+	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl, Method method){
 		//Selenide的配置信息
 		Configuration.timeout = FINDELEMENT_TIMEOUT;
 		Configuration.collectionsTimeout = FINDELEMENT_TIMEOUT;
@@ -162,8 +166,11 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 			desiredCapabilities.setCapability("goog:"+ChromeOptions.CAPABILITY, options);
 			log.debug("[add config for DevToolsActivePort issue end...]");
-			webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
-//			webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			try {
+				webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
+			} catch (MalformedURLException e) {
+				log.error("[init remote webdriver error]{}",e.getMessage()+e.getStackTrace());
+			}
 		}
 		return webDriver;
 	}

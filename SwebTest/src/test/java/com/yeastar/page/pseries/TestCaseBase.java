@@ -25,11 +25,9 @@ public class TestCaseBase extends BaseMethod {
     public SoftAssert softAssert;
 
     @BeforeMethod(alwaysRun = true)
-    public void setUp(Method method) throws Exception
-    {
-        log.info("\r\n====== [SetUp] " + getTestName(method) + " [Times] " + DataUtils
-                .getCurrentTime("yyyy-MM-dd hh:mm:ss") +
-                "======");
+    public void setUp(Method method){
+        log.info("\r\n====== [SetUp] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
+
         webDriver = initialDriver(BROWSER,PBX_URL,method);
         setDriver(webDriver);
         log.debug("[Test PBX_URL]"+PBX_URL);
@@ -39,33 +37,33 @@ public class TestCaseBase extends BaseMethod {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void afterMethod(Method method) throws Exception
-    {
-        log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils
-                .getCurrentTime("yyyy-MM-dd hh:mm:ss") +
-                "======");
+    public void afterMethod(Method method) {
+        log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
+
         if(EmptyUtil.isNotEmpty(pjsip)){
             log.debug("[start destroy pjsip]");
             pjsip.Pj_Destory();
+            log.debug("[end destroy pjsip]");
         }
-        sleep(WaitUntils.SHORT_WAIT);
-        new BrowserUtils().getLogType_Browser(method,webDriver);
+
         log.debug("[remote session]{}",webDriver);
         try{
-            if(webDriver!=null){
+            if(EmptyUtil.isNotEmpty(webDriver)){
+                new BrowserUtils().getLogType_Browser(method,webDriver);
                 webDriver.quit();
             }
         }catch(Exception ex){
             log.error("[driver quite exception]"+ex.getMessage()+ex.getStackTrace());
         }
+        log.debug("[clean remote session to null]{}",webDriver);
 
-        log.debug("[getDriver quit] ...");
-        log.debug("[remote session]{}",webDriver);
-//        debugCleanSession();
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
 
-
+    /**
+     * clean zalenium cheome session
+     * @return
+     */
     public String debugCleanSession(){
         String host = "192.168.3.252";
         int port = 22;

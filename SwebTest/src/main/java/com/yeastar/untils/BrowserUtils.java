@@ -41,7 +41,7 @@ public class BrowserUtils {
      * @param driver
      * @throws Exception
      */
-    public  void  getLogType_Browser(Method method, WebDriver driver) throws  Exception{
+    public  void  getLogType_Browser(Method method, WebDriver driver){
 
         try {
             LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
