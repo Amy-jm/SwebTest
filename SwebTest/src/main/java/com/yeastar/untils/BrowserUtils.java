@@ -13,6 +13,8 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
+import static com.yeastar.controllers.WebDriverFactory.getDriver;
+
 
 /**
  * @author huangjx
@@ -42,17 +44,17 @@ public class BrowserUtils {
     public  void  getLogType_Browser(Method method, WebDriver driver) throws  Exception{
 
         try {
-            LogEntries logEntries= driver.manage().logs().get(LogType.BROWSER);
+            LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
             log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.start=====================");
+            log.debug("[BrowserUtils remote session]{}",driver);
             for (LogEntry entry : logEntries) {
                 log.fatal(entry.getLevel() + " " + entry.getMessage());
             }
+            log.debug("[BrowserUtils remote session]{}",driver);
             log.fatal("\r\n===["+method.getName()+"]===BROWSER.LOG.end=====================");
         }catch (Exception e){
-
+            log.error("[getLogType_Browser error]{}",e.getMessage()+e.getStackTrace());
         }
-
-
     }
 
     public  static void getLogType_Performance(WebDriver driver){
