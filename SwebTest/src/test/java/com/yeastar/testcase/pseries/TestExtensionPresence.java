@@ -1582,7 +1582,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceOffWork", "Extension", "Regression", "PSeries"})
     public void testPresenceOffWork2000Call0(){
-        A_RecoveryEnv();
+//        A_RecoveryEnv();
 
         step("登录pbx");
         loginWithAdmin();
@@ -1812,8 +1812,6 @@ public class TestExtensionPresence extends TestCaseBase{
                 .isCheckbox(IExtensionPageElement.ele_extension_presence_ring_simultaneously_checkBox,false)
                 .selectCombobox(IExtensionPageElement.AGENT_STATUS_AUTO_SWITCH.DO_NOTHING.getAlias())
                 .setElementValue(ele_extension_presence_ring_timeout_input,"25").clickSave();
-
-        auto.extensionPage().clickSave();
 
         auto.extensionPage().selectExtensionPresence("0", IExtensionPageElement.TABLE_PRESENCE_LIST.AVAILABLE.getAlias()).clickApply();
         sleep(1000);
