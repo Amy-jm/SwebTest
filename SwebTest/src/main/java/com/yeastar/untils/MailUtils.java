@@ -144,7 +144,8 @@ public class MailUtils {
                 });
             }
             if(folder != null) {folder.open(Folder.READ_WRITE);}
-            log.debug("[未读邮件]{}" , +folder.getMessageCount());
+            sunEmail = folder.getMessageCount();
+            log.debug("[未读邮件]{}" , +sunEmail);
         } catch (NoSuchProviderException ex) {
             log.error("[connect 163 email server error]"+ex.getCause()+ ex.getMessage());
         } catch (MessagingException ex) {
