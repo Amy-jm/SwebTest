@@ -20,7 +20,7 @@ import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
 public class TestExtensionPresence extends TestCaseBase{
 
     private boolean runRecoveryEnvFlag=true;
-//    @BeforeMethod
+
 
     @Epic("P_Series")
     @Feature("Extension")
@@ -76,7 +76,7 @@ public class TestExtensionPresence extends TestCaseBase{
             step("【环境准备】7、创建呼入路由");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
             list.clear();
-            list.add("SPS1");
+            list.add(SPS);
             auto.inboundRoute().deleteAllInboundRoutes()
                     .createInboundRoute("InRoute1",list)
                     .editInbound("InRoute1","Name")
@@ -86,7 +86,7 @@ public class TestExtensionPresence extends TestCaseBase{
             step("【环境准备】8、创建呼出路由");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
             list.clear();
-            list.add("SPS1");
+            list.add(SPS);
             list2.clear();
             list2.add("Yeastar Test0 朗视信息科技");
             list2.add("Yeastar Test9999999 朗视信息科技");

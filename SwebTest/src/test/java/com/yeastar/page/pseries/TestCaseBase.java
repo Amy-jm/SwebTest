@@ -88,7 +88,9 @@ public class TestCaseBase extends BaseMethod {
      */
     public void preparationStepNameDisplay(){
         auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
-        auto.preferencesPage().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias()).clickSaveAndApply();
+        auto.preferencesPage().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias())
+                .setElementValue(IPreferencesPageElement.ele_pbx_settings_preferences_max_call_duration_select,"1800")
+                .clickSaveAndApply();
     }
 
     /**
