@@ -70,7 +70,7 @@ public class MailUtils {
         try {
             Session session = Session.getInstance(props);// 设置环境信息
             Store store = session.getStore("pop3");//指定接收邮件协议
-            store.connect("pop.163.com", "yeastarautotest@163.com", "AYWETMHBOFQQSPMB");//密码为网页端的，开启SMTP服务，验证码
+            store.connect("pop.163.com", "yeastarautotest@163.com", "ZNASFTEUAJLZDBON");//密码为网页端的，开启SMTP服务，验证码
             //获得名为默认"inbox"的邮件夹当你自己有定义其他的邮件夹也可以写上去
             Folder folder = store.getFolder("inbox");
             //打开邮件夹
@@ -111,7 +111,8 @@ public class MailUtils {
                 }
             }
         } catch (Exception ex) {
-            ex.getMessage();
+            log.error("[connect 163 email server error]"+ex.getCause()+
+            ex.getMessage()+"-->[stackTrace]");
         }
 
         return unreadMessageCount;
