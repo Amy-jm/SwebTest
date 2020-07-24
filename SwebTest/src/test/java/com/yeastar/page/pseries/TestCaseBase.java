@@ -32,7 +32,8 @@ public class TestCaseBase extends BaseMethod {
         setDriver(webDriver);
         log.debug("[Test PBX_URL]"+PBX_URL);
         open(PBX_URL);
-        auto = new PageEngine();
+        auto = PageEngine.getInstance();
+
         softAssert = new SoftAssert();
     }
 
@@ -49,7 +50,7 @@ public class TestCaseBase extends BaseMethod {
         log.debug("[remote session]{}",webDriver);
         try{
             if(EmptyUtil.isNotEmpty(webDriver)){
-                new BrowserUtils().getLogType_Browser(method,webDriver);
+                BrowserUtils.getInstance().getLogType_Browser(method,webDriver);
                 webDriver.quit();
             }
         }catch(Exception ex){

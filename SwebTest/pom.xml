@@ -116,6 +116,7 @@
             </build>
         </profile>
 
+
         <profile>
             <id>jenkins-xml</id>
             <build>
@@ -165,7 +166,7 @@
                             <argLine>-Dfile.encoding=UTF-8 </argLine>
                             <argLine>-Xmx1024m -Xms256m -XX:PermSize=256 -XX:MaxPermSize=1024</argLine>
                             <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
-
+                            <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                             <workingDirectory>${project.build.directory}</workingDirectory>
 
                             <!--  让allure-results，在target文件下生成-->
@@ -189,6 +190,70 @@
                         </dependencies>
                     </plugin>
 
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>jenkins-xml-debug</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+
+                        <executions>
+                            <execution>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <echo>TEST_PBX_IP ${env.Test_PBX_IP}</echo>
+                                        <echo>Using ${test-user-prperties}</echo>
+                                        <echo>directory ${env.WORKSPACE}</echo>
+                                        <copy file="${env.WORKSPACE}/SwebTest/src/test/resources/testUserProperties/${test-user-prperties}" tofile="${env.WORKSPACE}/SwebTest/src/test/resources/data.properties" overwrite="true"/>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M5</version>
+                        <configuration>
+                            <runOrder>alphabetical</runOrder>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>suite/${suiteXmlFile}</suiteXmlFile>
+                            </suiteXmlFiles>
+                            <testFailureIgnore>true</testFailureIgnore>
+                            <forkMode>once</forkMode>
+                            <argLine>-Dfile.encoding=UTF-8 </argLine>
+                            <argLine>-Xmx1024m -Xms256m -XX:PermSize=256 -XX:MaxPermSize=1024</argLine>
+                            <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
+                            <!--  让allure-results，在target文件下生成-->
+                            <systemProperties>
+                                <property>
+                                    <name>allure.results.directory</name>
+                                    <value>./allure-results</value>
+                                </property>
+                            </systemProperties>
+                            <systemPropertyVariables>
+                                <java.library.path>${project.build.directory}/classes</java.library.path>
+                                <serviceBuildName>${serviceBuildName}</serviceBuildName>
+                            </systemPropertyVariables>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.aspectj</groupId>
+                                <artifactId>aspectjweaver</artifactId>
+                                <version>${aspectj.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
                 </plugins>
             </build>
         </profile>

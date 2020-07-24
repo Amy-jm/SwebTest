@@ -13,9 +13,22 @@ import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
 import com.yeastar.page.pseries.ExtensionTrunk.TrunkPage;
 import com.yeastar.page.pseries.PbxSettings.PreferencesPage;
 import com.yeastar.page.pseries.WebClient.Me_HomePage;
+import com.yeastar.untils.BrowserUtils;
+import lombok.extern.log4j.Log4j2;
 import org.testng.asserts.SoftAssert;
 
+@Log4j2
 public class PageEngine {
+
+
+    public static PageEngine instance;
+    public static synchronized PageEngine getInstance(){
+        log.debug("【synchronized PageEngine getInstance()】。。。。");
+        if(instance == null)
+            instance = new PageEngine();
+        return instance;
+    }
+
     LoginPage loginPage ;
     HomePage homePage;
     ExtensionPage extensionPage;
@@ -33,6 +46,7 @@ public class PageEngine {
     Me_HomePage me_homePage;
 
     public PageEngine() {
+        log.debug("【PageEngine】。。。。");
         basePage = new BasePage();
         loginPage = new LoginPage();
         homePage =  new HomePage();

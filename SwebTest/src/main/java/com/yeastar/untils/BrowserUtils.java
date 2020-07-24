@@ -22,6 +22,14 @@ import static com.yeastar.controllers.WebDriverFactory.getDriver;
  **/
 @Log4j2
 public class BrowserUtils {
+
+    public static BrowserUtils instance;
+    public static synchronized BrowserUtils getInstance(){
+        if(instance == null)
+            instance = new BrowserUtils();
+        return instance;
+    }
+
     public  void  getLogType_Browser(WebDriver driver) {
         try {
             LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
