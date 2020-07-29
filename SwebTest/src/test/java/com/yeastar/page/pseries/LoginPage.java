@@ -3,10 +3,14 @@ package com.yeastar.page.pseries;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.html5.Location;
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.*;
 import static com.yeastar.untils.WaitUntils.SHORT_WAIT;
 
@@ -18,6 +22,9 @@ public class LoginPage extends BasePage{
     public SelenideElement loginBtn = $(By.xpath("//button[@type='submit']"));
     public SelenideElement user_avatars = $(By.xpath("//i[contains(@aria-label,'user')]"));
     public SelenideElement header_box_name = $(By.xpath("//span[contains(@class,'header-box')]"));
+    public SelenideElement china_title = $(By.xpath("//div[contains(@title,'简体中文')]"));
+    public SelenideElement english_title = $(By.xpath("//div[contains(@title,'English')]"));
+    //div[contains(@aria-expanded,'false')]
 
     //分机 Privacy Policy Agreement
     public SelenideElement privacy_policy_confirmgdpr = $(By.id("privacy_policy_confirmgdpr"));
@@ -34,6 +41,7 @@ public class LoginPage extends BasePage{
      */
     @Step("login with userName:{0} , password:{1}")
     public LoginPage login(String userName,String passWord){
+        switchToEnglish();
         login_username.shouldBe(Condition.visible).setValue(userName);
         setElementValue(login_password,passWord);
         loginBtn.click();
@@ -44,6 +52,18 @@ public class LoginPage extends BasePage{
             isLoginSuccess = false;
         }
         return this;
+    }
+
+    /**
+     *  切换到英文
+     */
+    public void switchToEnglish(){
+        if(china_title.isDisplayed()){
+            china_title.click();
+            sleep(WaitUntils.RETRY_WAIT*2);
+            actions().moveToElement(china_title,5,80).click().perform();
+
+        }
     }
 
 

@@ -11,11 +11,10 @@ import com.yeastar.page.pseries.CallFeatures.RingGroupPage;
 import com.yeastar.page.pseries.CdrRecording.CDRPage;
 import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
 import com.yeastar.page.pseries.ExtensionTrunk.TrunkPage;
+import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.PbxSettings.PreferencesPage;
 import com.yeastar.page.pseries.WebClient.Me_HomePage;
-import com.yeastar.untils.BrowserUtils;
 import lombok.extern.log4j.Log4j2;
-import org.testng.asserts.SoftAssert;
 
 @Log4j2
 public class PageEngine {
@@ -44,6 +43,7 @@ public class PageEngine {
     IVRPage ivrPage;
     QueuePage queuePage;
     Me_HomePage me_homePage;
+    OperatorPanelPage operatorPanelPage;
 
     public PageEngine() {
         log.debug("【PageEngine】。。。。");
@@ -62,6 +62,7 @@ public class PageEngine {
         ivrPage = new IVRPage();
         queuePage = new QueuePage();
         me_homePage = new Me_HomePage();
+        operatorPanelPage = new OperatorPanelPage();
 
     }
     public BasePage basePage() { return basePage; }
@@ -79,4 +80,5 @@ public class PageEngine {
     public BusinessHoursAndHolidaysPage businessHoursAndHoildaysPage(){return businessHoursAndHolidaysPage;}
     public EmailPage emailPage(){return emailPage;}
     public Me_HomePage me_homePage() { return me_homePage; }
+    public OperatorPanelPage operatorPanelPage(){return  operatorPanelPage;}
 }
