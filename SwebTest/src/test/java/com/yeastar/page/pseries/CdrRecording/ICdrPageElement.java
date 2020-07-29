@@ -5,11 +5,12 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface ICdrPageElement {
 
-    SelenideElement ele_download_cdr_btn = $(By.xpath("//span[contains(text(),'Download CDR')]"));
-    SelenideElement ele_delete_cdr_btn =$(By.xpath("//span[contains(text(),'Delete')]"));
+    SelenideElement ele_download_cdr_btn = $(By.xpath("//span[contains(text(),'"+UI_MAP.getString("cdr_recording.cdr.download_cdr")+"')]"));
+    SelenideElement ele_delete_cdr_btn =$(By.xpath("//span[contains(text(),'"+UI_MAP.getString("common.delete")+"')]"));
     SelenideElement ele_refresh_cdr_btn = $(By.xpath("//body//button[3]"));
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
     enum  CDR_HEADER{

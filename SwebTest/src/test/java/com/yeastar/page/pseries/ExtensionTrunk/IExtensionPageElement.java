@@ -3,17 +3,19 @@ package com.yeastar.page.pseries.ExtensionTrunk;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.untils.UIMapUtils;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface IExtensionPageElement {
     /**查询输入框*/
-    SelenideElement searchIpt = $(By.xpath("//input[@placeholder=\"Search\"]"));
+    SelenideElement searchIpt = $(By.xpath("//input[@placeholder="+UI_MAP.getString("header.search_placeholder")+"]"));
 
 
-    SelenideElement ele_add_DropDown_bulk_add_Btn = $(By.xpath("//li[text()='Bulk Add']"));
+    SelenideElement ele_add_DropDown_bulk_add_Btn = $(By.xpath("//li[text()='"+UI_MAP.getString("common.bulk_add")+"']"));
     SelenideElement ele_add_DropDown_add_Btn = $(By.xpath("//li[text()='Add']"));
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
 
@@ -49,8 +51,8 @@ public interface IExtensionPageElement {
     SelenideElement ele_tab_linkus_clients = $(By.xpath(String.format(TAB_COMM_XPATH, "Linkus Clients")));
 
     //Tab User basic
-    SelenideElement ele_sip_extension_selection = $(By.xpath("//div[contains(text(),\"SIP Extension\")]"));
-    SelenideElement ele_fxs_extension_selection = $(By.xpath("//div[contains(text(),\"FXS Extension\")]"));
+    SelenideElement ele_sip_extension_selection = $(By.xpath("//div[contains(text(),"+UI_MAP.getString("extension_trunk.extensions.SIP")+")]"));
+    SelenideElement ele_fxs_extension_selection = $(By.xpath("//div[contains(text(),"+UI_MAP.getString("extension_trunk.extensions.FXS")+")]"));
 
     //User
     SelenideElement ele_extension_user_caller_id = $(By.id("extension_user_caller_id"));
@@ -66,8 +68,8 @@ public interface IExtensionPageElement {
 //    SelenideElement ele_extension_user_first_name = $(By.id("extension_user_first_name"));
 
     //密码强度不够弹框
-    SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\"Registration Password is NOT strong enough. Continue to save?\")]"));
-    SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//span[contains(@title,\"The registration password is too weak.\")]"));
+    SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),"+UI_MAP.getString("extension_trunk.extensions.pwd_weak_continue")+")]"));
+    SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//span[contains(@title,"+UI_MAP.getString("extension_trunk.extensions.weak_reg_password")+")]"));
 
 
     /********advance ***/
@@ -100,13 +102,13 @@ public interface IExtensionPageElement {
     //-SIP User Agent Identification
     ElementsCollection ele_list_user_agent_input = $$(By.id("user_agent"));
     //--Add User Agent btn
-    SelenideElement ele_add_user_agent_btn =$(By.xpath("//span[contains(text(),\"Add User Agent\")]"));
+    SelenideElement ele_add_user_agent_btn =$(By.xpath("//span[contains(text(),"+UI_MAP.getString("extension_trunk.extensions.add_user_agent")+")]"));
 
     //-SIP User Agent Identification
     ElementsCollection ele_list_permitted_ip_input = $$(By.id("permitted_ip"));
     ElementsCollection ele_list_netmask_input = $$(By.id("netmask"));
     //--Add User Agent btn
-    SelenideElement ele_add_ip_btn =$(By.xpath("//span[contains(text(),\"Add IP\")]"));
+    SelenideElement ele_add_ip_btn =$(By.xpath("//span[contains(text(),"+UI_MAP.getString("extension_trunk.extensions.add_ip")+")]"));
 
     /** Features **/
     SelenideElement ele_extension_feature_enb_email_pwd_chg = $(By.id("extension_feature_enb_email_pwd_chg"));
@@ -127,8 +129,8 @@ public interface IExtensionPageElement {
 
     /** 下拉列表 Max Outbound Call Duration(s) **/
    enum MAX_OUTBOUND_CALL_DURATIONS{
-       FOLLOWSYSTEM("[Follow System]"),
-       UNLIMITED("Unlimited"),
+       FOLLOWSYSTEM(UI_MAP.getString("extension_trunk.extensions.follow_system")),
+       UNLIMITED(UI_MAP.getString("extension_trunk.extensions.unlimited")),
        S_60("60"),
        S_300("300"),
        S_600("600"),
@@ -146,12 +148,12 @@ public interface IExtensionPageElement {
 
     /** 下拉列表 用户角色 **/
     enum TABLE_MENU {
-        USER("User"),
-        PRESENCE("Presence"),
-        VOICEMAIL("Voicemail"),
-        FEATURES("Features"),
-        ADVANCED("Advanced"),
-        SECURITY("Security"),
+        USER(UI_MAP.getString("extension_trunk.extensions.user")),
+        PRESENCE(UI_MAP.getString("extension_trunk.extensions.presence")),
+        VOICEMAIL(UI_MAP.getString("extension_trunk.extensions.voicemail")),
+        FEATURES(UI_MAP.getString("extension_trunk.extensions.features")),
+        ADVANCED(UI_MAP.getString("extension_trunk.extensions.advanced")),
+        SECURITY(UI_MAP.getString("extension_trunk.extensions.security")),
         LINKUS_CLIENTS("Linkus Clients");
 
         private final String alias;
@@ -319,10 +321,10 @@ public interface IExtensionPageElement {
     }
 
     enum AGENT_STATUS_AUTO_SWITCH{
-        DO_NOTHING("Do Nothing"),
-        LOGIN("Login"),
-        LOGOUT("Logout"),
-        PAUSE("Pause");
+        DO_NOTHING(UI_MAP.getString("extension_trunk.extensions.no_action")),
+        LOGIN(UI_MAP.getString("extension_trunk.extensions.login")),
+        LOGOUT(UI_MAP.getString("extension_trunk.extensions.logout")),
+        PAUSE(UI_MAP.getString("extension_trunk.extensions.pause"));
 
         private final String alias;
 
@@ -353,14 +355,14 @@ public interface IExtensionPageElement {
     SelenideElement ele_extension_voicemail_lunchBreak_combobox = $(By.id("extension_voicemail_voicemail_launch"));
     SelenideElement ele_extension_voicemail_businessTrip_combobox = $(By.id("extension_voicemail_voicemail_business_trip"));
     SelenideElement ele_extension_voicemail_offWork_combobox = $(By.id("extension_voicemail_voicemail_off_work"));
-    SelenideElement ele_greeting_management_btn = $(By.xpath("//a[contains(text(),'Greeting Management')]"));
+    SelenideElement ele_greeting_management_btn = $(By.xpath("//a[contains(text(),'"+UI_MAP.getString("extension_trunk.extensions.greeting_management")+"')]"));
     SelenideElement ele_extension_voicemail_management_filename_input = $(By.id("extension_voicemail_management_filename"));
     SelenideElement ele_extension_voicemail_management_record_phone_extension_combobox = $(By.id("extension_voicemail_management_record_phone_extension"));
     SelenideElement ele_voicemail_management_save_btn = $(By.xpath("//button[@class='ant-btn modal-footer-btn ant-btn-primary']"));
     /** 下拉列表 Greeting Management管理 **/
     enum VOICEMAIL_GREETING_MANAGEMENT{
-        GREETING_MANAGEMENT("Greeting Management"),
-        RECORD_NEW_GREETING("Record New Greeting");
+        GREETING_MANAGEMENT(UI_MAP.getString("extension_trunk.extensions.greeting_management")),
+        RECORD_NEW_GREETING(UI_MAP.getString("extension_trunk.extensions.record_phone"));
 
         private final String alias;
 
@@ -392,9 +394,9 @@ public interface IExtensionPageElement {
 
     /** 下拉列表 New Voicemail Notification **/
     enum NEW_VOICEMAIL_NOTIFICATION{
-        SEND_EMAIL_NOTIFICATIONS_WITH_ATTACHMENT("Send Email Notifications with Attachment"),
-        DO_NOT_SEND_EMAIL_NOTIFICATIONS("Do Not Send Email Notifications"),
-        SEND_EMAIL_NOTIFICATIONS_WITHOUT_ATTACHMENT("Send Email Notifications without Attachment");
+        SEND_EMAIL_NOTIFICATIONS_WITH_ATTACHMENT(UI_MAP.getString("extension_trunk.extensions.with_attach")),
+        DO_NOT_SEND_EMAIL_NOTIFICATIONS(UI_MAP.getString("extension_trunk.extensions.no")),
+        SEND_EMAIL_NOTIFICATIONS_WITHOUT_ATTACHMENT(UI_MAP.getString("extension_trunk.extensions.without_attach"));
         private final String alias;
 
         NEW_VOICEMAIL_NOTIFICATION(String alias){
@@ -407,9 +409,9 @@ public interface IExtensionPageElement {
     }
     /** 下拉列表 After Notification **/
     enum AFTER_NOTIFICATION{
-        MARK_AS_READ("Mark as Read"),
-        DELETE_VOICEMAIL("Delete Voicemail"),
-        DO_NOTHING("Do Nothing");
+        MARK_AS_READ(UI_MAP.getString("extension_trunk.extensions.mark_read")),
+        DELETE_VOICEMAIL(UI_MAP.getString("extension_trunk.extensions.delete")),
+        DO_NOTHING(UI_MAP.getString("extension_trunk.extensions.no_action"));
         private final String alias;
 
         AFTER_NOTIFICATION(String alias){
