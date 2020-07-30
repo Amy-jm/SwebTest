@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import sun.management.Sensor;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface ITrunkPageElement {
 
@@ -34,12 +35,12 @@ public interface ITrunkPageElement {
     /**Outbound Caller ID**/
     SelenideElement ele_trunk_outbound_cid_list_def_outbound_cid = $(By.id("trunk_outbound_cid_list_def_outbound_cid"));
     enum TRUNK_TAB{
-        BASIC("Basic"),
-        ADVANCED("Advanced"),
-        DIDS_DDIS("DIDs/DDIs"),
-        INBOUND_CALLER_ID_REFORMATTING("Inbound Caller ID Reformatting"),
-        OUTBOUND_CALLER_ID("Outbound Caller ID"),
-        SIP_HEADERS("SIP_HEADERS");
+        BASIC(UI_MAP.getString("extension_trunk.extensions.basic")),
+        ADVANCED(UI_MAP.getString("extension_trunk.extensions.advanced")),
+        DIDS_DDIS(UI_MAP.getString("extension_trunk.trunks.did_list")),
+        INBOUND_CALLER_ID_REFORMATTING(UI_MAP.getString("extension_trunk.trunks.inbound_cid")),
+        OUTBOUND_CALLER_ID(UI_MAP.getString(UI_MAP.getString("call_control.outbound_routes.outb_cid"))),
+        SIP_HEADERS(UI_MAP.getString(UI_MAP.getString("extension_trunk.trunks.sip_headers")));
         private final String alias;
         TRUNK_TAB(String alias){this.alias = alias;}
         public String getAlias(){
@@ -49,9 +50,9 @@ public interface ITrunkPageElement {
 
     /** 下拉列表 用户角色 **/
     enum TRUNK_TYPE {
-        RegisterTrunk("Register Trunk"),
-        PeerTrunk("Peer Trunk"),
-        AccountTrunk("Account Trunk");
+        RegisterTrunk(UI_MAP.getString("extension_trunk.trunks.register")),
+        PeerTrunk(UI_MAP.getString("extension_trunk.trunks.peer")),
+        AccountTrunk(UI_MAP.getString("extension_trunk.trunks.account"));
 
         private final String alias;
 

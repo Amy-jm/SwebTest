@@ -2,15 +2,20 @@ package com.yeastar.page.pseries.CallControl;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.swebtest.driver.DataReader2;
+import com.yeastar.untils.UIMapUtils;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface IInboundRoutePageElement {
 
     String buttonLocationXpath = "//button//span[contains(text(),'%s')]/..";
     /**查询输入框*/
-    SelenideElement searchIpt = $(By.xpath("//input[@placeholder='Name/DID/Caller ID...']"));
+
+//    SelenideElement searchIpt = $(By.xpath("//input[@placeholder='Name/DID/Caller ID...']"));
+    SelenideElement searchIpt = $(By.xpath("//input[@placeholder='"+UI_MAP.getString("call_control.inbound_routes.search_placeholder")+"']"));
 
     SelenideElement ele_import_btn = $(By.xpath(String.format(buttonLocationXpath,"Import")));
     SelenideElement ele_add_btn = $(By.xpath(String.format(buttonLocationXpath,"Add")));

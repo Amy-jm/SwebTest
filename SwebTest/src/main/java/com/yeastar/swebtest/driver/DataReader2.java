@@ -3,7 +3,9 @@ package com.yeastar.swebtest.driver;
 
 
 import com.yeastar.untils.PropertiesUntils;
+import com.yeastar.untils.UIMapUtils;
 import lombok.extern.log4j.Log4j2;
+import top.jfunc.json.impl.JSONObject;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -32,6 +34,7 @@ public class DataReader2 {
 
     public final String PBX_URL = "https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/";
 
+    public static JSONObject UI_MAP = UIMapUtils.getUIMapHandle();
     /**
      * Data.properties配置
      */

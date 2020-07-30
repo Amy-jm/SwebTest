@@ -5,13 +5,14 @@ import org.apache.tools.ant.taskdefs.Sleep;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface IIVRPageElement {
 
     /** IVR编辑页面Tab选项 **/
     enum IVR_TAB {
         BASIC("Basic"),
-        KEY_PRESS_EVENT("Key Press Event");
+        KEY_PRESS_EVENT(UI_MAP.getString("call_features.ivr.key_press_event"));
 
         private final String alias;
 
@@ -27,15 +28,15 @@ public interface IIVRPageElement {
     /** IVR Key Press Event选项**/
     enum IVR_KEY_PRESS_EVENT{
         NONE("[None]"),
-        HANGUP("Hang Up"),
-        EXTENSION("Extension"),
-        EXTENSION_VOICEMAIL("Extension Voicemail"),
-        IVR("IVR"),
+        HANGUP(UI_MAP.getString("call_features.ivr.end_call")),
+        EXTENSION(UI_MAP.getString("call_features.ivr.extension")),
+        EXTENSION_VOICEMAIL(UI_MAP.getString("call_features.ivr.ext_vm")),
+        IVR(UI_MAP.getString("call_features.ivr.ivr")),
         RING_GROUP("Ring Group"),
         QUEUE("Queue"),
-        DIAL_BY_NAME("Dial by Name"),
-        EXTERNAL_NUMBER("External Number"),
-        PLAY_PROMPT_AND_EXIT("Play Prompt and Exit");
+        DIAL_BY_NAME(UI_MAP.getString("call_features.ivr.dial_by_name")),
+        EXTERNAL_NUMBER(UI_MAP.getString("call_features.ivr.external_num")),
+        PLAY_PROMPT_AND_EXIT(UI_MAP.getString("call_features.ivr.play_greeting"));
 
         private final String alias;
 
@@ -48,7 +49,7 @@ public interface IIVRPageElement {
         }
     }
 
-    SelenideElement searchIpt = $(By.xpath("//input[@placeholder=\"Search\"]"));
+    SelenideElement searchIpt = $(By.xpath("//input[@placeholder="+UI_MAP.getString("header.search_placeholder")+"]"));
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
 
     SelenideElement ele_ivr_basic_number = $(By.id("ivr_basic_number"));
