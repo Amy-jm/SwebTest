@@ -56,7 +56,8 @@ public class OperatorPanelPage extends BasePage {
         PARKED("Parked"),
         Barge_IN("Barge In"),
         LISTEN("Listen"),
-        WHISPER("Whisper");
+        WHISPER("Whisper"),
+        RETRIEVE("Retrieve");
 
         private final String alias;
 
