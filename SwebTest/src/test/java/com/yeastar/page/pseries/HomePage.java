@@ -132,6 +132,16 @@ public class HomePage extends BasePage{
     public SelenideElement user_tree_logout = $(By.id("h_logout"));
 
     /**
+     * web client 菜单
+     */
+     public SelenideElement left_menu_first_level_operator_panel = $(By.id("m_w_visual_control_panel"));
+     public SelenideElement left_menu_first_level_call_log = $(By.id("m_w_call_log"));
+     public SelenideElement left_menu_first_level_voicemails = $(By.id("m_w_voicemail"));
+     public SelenideElement left_menu_first_level_recordings = $(By.id("m_w_recordings"));
+     public SelenideElement left_menu_first_level_preferences = $(By.id("m_w_preferences"));
+
+
+    /**
      * logout pbx
      */
     public void logout() {
@@ -178,6 +188,21 @@ public class HomePage extends BasePage{
                 break;
             case cdr_recording:
                 isLevel2Visible(left_menu_first_level_cdr_recording);
+                break;
+            case operator_panel:
+                left_menu_first_level_operator_panel.click();
+                break;
+            case call_log:
+                left_menu_first_level_call_log.click();
+                break;
+            case voicemails:
+                left_menu_first_level_voicemails.click();
+                break;
+            case recordings:
+                left_menu_first_level_recordings.click();
+                break;
+            case preferences:
+                left_menu_first_level_preferences.click();
                 break;
         }
         //左侧二级菜单
@@ -303,6 +328,58 @@ public class HomePage extends BasePage{
 
     }
 
+    /**
+     * 菜单选择
+     */
+    public void intoPage(Menu_Level_1 level_1) {
+        sleep(WaitUntils.SHORT_WAIT*2);
+        //close alert
+        // todo need to delete sleep
+        while(system_alert_message.exists()){
+            system_alert_message.click();
+            sleep(2000);
+        }
+        //左侧一级菜单
+        switch (level_1) {
+            case extension_trunk:
+                isLevel2Visible(left_menu_first_level_extension_trunk);
+                break;
+            case call_control:
+                isLevel2Visible(left_menu_first_level_call_control);
+                break;
+            case call_feature:
+                isLevel2Visible(left_menu_first_level_call_feature);
+                break;
+            case pbx_settings:
+                isLevel2Visible(left_menu_first_level_pbx_settings);
+                break;
+            case security:
+                isLevel2Visible(left_menu_first_level_security);
+                break;
+            case maintenance:
+                isLevel2Visible(left_menu_first_level_maintenance);
+                break;
+            case cdr_recording:
+                isLevel2Visible(left_menu_first_level_cdr_recording);
+                break;
+            case operator_panel:
+                left_menu_first_level_operator_panel.click();
+                break;
+            case call_log:
+                left_menu_first_level_call_log.click();
+                break;
+            case voicemails:
+                left_menu_first_level_voicemails.click();
+                break;
+            case recordings:
+                left_menu_first_level_recordings.click();
+                break;
+            case preferences:
+                left_menu_first_level_preferences.click();
+                break;
+        }
+    }
+
     public void isLevel2Visible(WebElement level1){
 
         WebElement ele = $(By.xpath("//span[@id='"+level1.getAttribute("id")+"']/.."));
@@ -324,7 +401,12 @@ public class HomePage extends BasePage{
         system,
         security,
         maintenance,
-        cdr_recording;
+        cdr_recording,
+        operator_panel,
+        call_log,
+        voicemails,
+        recordings,
+        preferences;
     }
 
     public enum Menu_Level_2 {

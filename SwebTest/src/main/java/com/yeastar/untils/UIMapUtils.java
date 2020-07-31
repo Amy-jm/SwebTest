@@ -39,7 +39,7 @@ public class UIMapUtils {
     }
 
     public static JSONObject getUIMapHandle(){
-        File file = new File("./en.ts");
+        File file = new File("./src/test/resources/p_language/en.ts");
         JSONObject jsonObject;
         if(!file.exists()){
             log.error("文案文件en.ts不存在，请检查文件是否在项目根目录");
