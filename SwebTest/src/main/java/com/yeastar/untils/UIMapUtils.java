@@ -10,7 +10,7 @@ import java.io.IOException;
 @Log4j2
 public class UIMapUtils {
 
-    private static String FILE_PATH = System.getProperty("user.dir")+File.separator+"src"+File.separator+"test"+File.separator+"resources"+File.separator+"p_language"+File.separator;
+    private static String FILE_PATH = File.separator+"src"+File.separator+"test"+File.separator+"resources"+File.separator+"p_language"+File.separator;
     private static String FILE_NAME = "en.ts";
 
     /**
@@ -44,12 +44,12 @@ public class UIMapUtils {
     public static JSONObject getUIMapHandle(){
         File file = null;
 
-        file=new File(FILE_PATH+FILE_NAME);
+        file=new File(System.getProperty("user.dir")+FILE_PATH+FILE_NAME);
         if(!file.exists()){
             log.error("文案文件en.ts不存在，请检查文件是否在项目根目录-->"+FILE_PATH+FILE_NAME);
-            file = new File(System.getProperty("user.dir")+FILE_PATH+FILE_NAME);
+            file = new File(System.getProperty("user.dir")+"target"+FILE_PATH+FILE_NAME);
             if(!file.exists()){
-                log.error("文案文件en.ts不存在，请检查文件是否在项目根目录-->"+"target"+FILE_PATH+FILE_NAME);
+                log.error("文案文件en.ts不存在，请检查文件是否在项目根目录-->"+System.getProperty("user.dir")+"target"+FILE_PATH+FILE_NAME);
             }
         }
 
