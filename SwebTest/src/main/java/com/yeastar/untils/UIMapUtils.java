@@ -46,10 +46,10 @@ public class UIMapUtils {
 
         file=new File(System.getProperty("user.dir")+FILE_PATH+FILE_NAME);
         if(!file.exists()){
-            log.error("文案文件en.ts不存在，请检查文件是否在项目根目录-->"+FILE_PATH+FILE_NAME);
-            file = new File(System.getProperty("user.dir")+"target"+FILE_PATH+FILE_NAME);
+            log.error("文案文件en.ts不存在，请检查文件是否在项目根目录-->"+System.getProperty("user.dir")+FILE_PATH+FILE_NAME);
+            file = new File(System.getProperty("user.dir")+FILE_PATH+FILE_NAME);
             if(!file.exists()){
-                log.error("文案文件en.ts不存在，请检查文件是否在项目根目录-->"+System.getProperty("user.dir")+"target"+FILE_PATH+FILE_NAME);
+                log.error("文案文件en.ts不存在，请检查文件是否在项目根目录-->"+System.getProperty("user.dir")+FILE_PATH+FILE_NAME);
             }
         }
 
