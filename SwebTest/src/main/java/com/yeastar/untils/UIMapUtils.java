@@ -10,6 +10,9 @@ import java.io.IOException;
 @Log4j2
 public class UIMapUtils {
 
+    private static String FILE_PATH = System.getProperty("user.dir")+File.separator+"src"+File.separator+"test"+File.separator+"resources"+File.separator+"p_language"+File.separator;
+    private static String FILE_NAME = "en.ts";
+
     /**
      * 从语言文件en.ts中 根据key提取对应的value，en.ts默认放在根目录
      * @param key
@@ -39,11 +42,19 @@ public class UIMapUtils {
     }
 
     public static JSONObject getUIMapHandle(){
-        File file = new File("./src/test/resources/p_language/en.ts");
-        JSONObject jsonObject;
-        if(!file.exists()){
-            log.error("文案文件en.ts不存在，请检查文件是否在项目根目录");
+        File file = null;
+        if(true){
+            file=new File(FILE_PATH+FILE_NAME);
+            if(!file.exists()){
+                log.error("文案文件en.ts不存在，请检查文件是否在项目根目录-->"+FILE_PATH+FILE_NAME);
+                file = new File("target"+FILE_PATH+FILE_NAME);
+                if(!file.exists()){
+                    log.error("文案文件en.ts不存在，请检查文件是否在项目根目录-->"+"target"+FILE_PATH+FILE_NAME);
+                }
+            }
         }
+        JSONObject jsonObject;
+
         String jsonString = null;
         try {
             jsonString = FileUtils.readFileToString(file);
