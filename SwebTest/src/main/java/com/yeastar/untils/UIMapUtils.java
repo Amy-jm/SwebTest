@@ -9,6 +9,10 @@ import java.io.IOException;
 
 @Log4j2
 public class UIMapUtils {
+    private static String FILE_NAME = "en.ts";
+    private static String FILE_PATH = System.getProperty("user.dir")+File.separator+"src"+File.separator+"test"+File.separator+"resources"+File.separator+"p_language"+File.separator;
+    private static String CI_FILE_PATH = System.getProperty("user.dir")+File.separator+"test-classes"+File.separator+"p_language"+File.separator;
+
 
     /**
      * 从语言文件en.ts中 根据key提取对应的value，en.ts默认放在根目录
@@ -18,12 +22,7 @@ public class UIMapUtils {
      */
     public static String getValueByKey(String key) throws IOException {
 
-        File file = new File("p_language/en.ts");
-
-        if(!file.exists()){
-            log.error("文案文件en.ts不存在，请检查文件是否在项目根目录");
-            return "";
-        }
+        File file = getSourceFile();
         String jsonString = FileUtils.readFileToString(file);
         JSONObject jsonObject = new JSONObject(jsonString.substring(jsonString.indexOf("{"), jsonString.lastIndexOf("}")+1));
 
@@ -39,11 +38,9 @@ public class UIMapUtils {
     }
 
     public static JSONObject getUIMapHandle(){
-        File file = new File("p_language/en.ts");
+        File file = getSourceFile();
         JSONObject jsonObject;
-        if(!file.exists()){
-            log.error("文案文件en.ts不存在，请检查文件是否在项目根目录");
-        }
+
         String jsonString = null;
         try {
             jsonString = FileUtils.readFileToString(file);
@@ -52,5 +49,19 @@ public class UIMapUtils {
         }
         jsonObject = new JSONObject(jsonString.substring(jsonString.indexOf("{"), jsonString.lastIndexOf("}")+1));
         return  jsonObject;
+    }
+
+
+    public static File getSourceFile(){
+        File file = null;
+        file=new File(FILE_PATH+FILE_NAME);
+        if(!file.exists()){
+            log.error("Local 文案文件en.ts不存在，请检查文件是否在项目根目录-->"+FILE_PATH+FILE_NAME);
+            file = new File(CI_FILE_PATH+FILE_NAME);
+            if(!file.exists()){
+                log.error("CI 文案文件en.ts不存在，请检查文件是否在项目根目录-->"+CI_FILE_PATH+FILE_NAME);
+            }
+        }
+        return file;
     }
 }
