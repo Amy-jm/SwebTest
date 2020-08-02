@@ -62,7 +62,14 @@ public class BrowserFactory extends ConfigP {
 		if (browser.equals("chrome")) {
 			Configuration.browser = CHROME;
 			System.setProperty("webdriver.chrome.driver", CHROME_PATH);
-			desiredCapabilities = DesiredCapabilities.chrome();
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("disable-infobars");
+			options.addArguments("--no-sandbox");// 以最高权限运行
+			options.addArguments("--disable-gpu");//硬件加速，谷歌文档提到需要加上这个属性来规避bug
+			options.addArguments("--start-maximized");//默认启动最大化，避免最大化过程失败
+			options.addArguments("--lang=en");
+			return webDriver = new ChromeDriver(options);
+
 		} else if (browser.equals("firefox")) {
 			desiredCapabilities = DesiredCapabilities.firefox();
 		} else {
@@ -154,6 +161,7 @@ public class BrowserFactory extends ConfigP {
 			options.addArguments("--no-sandbox");// 以最高权限运行
 			options.addArguments("--disable-gpu");//硬件加速，谷歌文档提到需要加上这个属性来规避bug
 			options.addArguments("--start-maximized");//默认启动最大化，避免最大化过程失败
+			options.addArguments("--lang=en");
 
 			options.addArguments("blink-settings=imagesEnabled=false");//不加载图片, 提升速度
 			Map<String, Object> prefs = new HashMap<String, Object>();

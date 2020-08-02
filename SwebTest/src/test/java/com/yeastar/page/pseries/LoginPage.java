@@ -41,7 +41,6 @@ public class LoginPage extends BasePage{
      */
     @Step("login with userName:{0} , password:{1}")
     public LoginPage login(String userName,String passWord){
-        switchToEnglish();
         login_username.shouldBe(Condition.visible).setValue(userName);
         setElementValue(login_password,passWord);
         loginBtn.click();

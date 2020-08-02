@@ -8,6 +8,7 @@ import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.interactions.Actions;
@@ -197,5 +198,20 @@ public class BasePage implements IButton{
     public void getLastElementOffsetAndClick(String strXpath,int x,int y){
         ElementsCollection elements_Test = $$(By.xpath(strXpath));
         actions().moveToElement(elements_Test.get(elements_Test.size()-1),x,y).click().build().perform();
+    }
+
+
+
+    @Step("{0}")
+    public void reportMessage(String desc){
+        log.debug("[Message] "+desc);
+        sleep(5);
+        try{
+            Cookie cookie = new Cookie("zaleniumMessage", desc);
+            getWebDriver().manage().addCookie(cookie);
+        }catch (org.openqa.selenium.WebDriverException exception){
+            log.error("[org.openqa.selenium.WebDriverException: unable to set cookie]");
+        }
+
     }
 }

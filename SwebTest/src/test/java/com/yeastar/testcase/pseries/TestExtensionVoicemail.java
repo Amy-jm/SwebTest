@@ -8,6 +8,7 @@ import com.yeastar.page.pseries.CdrRecording.ICdrPageElement;
 import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.page.pseries.WebClient.Me_HomePage;
+import com.yeastar.swebtest.driver.SwebDriverP;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
@@ -34,14 +35,29 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 @Log4j2
 public class TestExtensionVoicemail extends TestCaseBase {
 
-//    @Test
+    @Test
     public void CaseName() throws InterruptedException {
 
         step("登录 PBX");
+
         loginWithAdmin();
-        Assert.fail();
-        step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
-        preparationSteps();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+        auto.extensionPage().choiceLinkusServer().
+                setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,true).
+                setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,true).
+                clickSaveAndApply();
+        auto.extensionPage().deleAllExtension()
+                .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD)
+                .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
+                .selectCombobox(IExtensionPageElement.VOICEMAIL_PIN_AUTH.ENABLED.getAlias())
+                .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.DO_NOT_SEND_EMAIL_NOTIFICATIONS.getAlias())
+                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_date_time_checkbox,true)
+                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_caller_id_checkbox,true)
+                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_message_duration_checkbox,true)
+                .selectCombobox(IExtensionPageElement.DEFAULT_GREETING.FOLLOW_SYSTEM.getAlias())
+                .ele_extension_voicemail_access_pin.setValue("1234");
+//        preparationSteps();
 
     }
 
@@ -426,7 +442,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("修改New Voicemail Notification设置为send email notification with attachment，afternotification设置为delete voicemail");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().editExtension(getDriver(),"0")
-                .setElementValue(ele_extension_user_email_addr,"lhr@yeastar.com")
+                .setElementValue(ele_extension_user_email_addr,EMAIL)
                 .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
                 .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.SEND_EMAIL_NOTIFICATIONS_WITH_ATTACHMENT.getAlias())
                 .selectCombobox(IExtensionPageElement.AFTER_NOTIFICATION.DELETE_VOICEMAIL.getAlias()).clickSaveAndApply();

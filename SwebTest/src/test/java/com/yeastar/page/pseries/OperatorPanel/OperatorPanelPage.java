@@ -56,7 +56,8 @@ public class OperatorPanelPage extends BasePage {
         PARKED("Parked"),
         Barge_IN("Barge In"),
         LISTEN("Listen"),
-        WHISPER("Whisper");
+        WHISPER("Whisper"),
+        RETRIEVE("Retrieve");
 
         private final String alias;
 
@@ -252,31 +253,35 @@ public class OperatorPanelPage extends BasePage {
         List<Record> records = getAllRecord(tableType);
         int targetInt = 0;
         String result = "";
-        for (int i = 0; i < records.size(); i++) {
-            if ((recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
-                    (recordType == RECORD.Caller && records.get(i).getCaller() == recordTypeValue) ||
-                    (recordType == RECORD.Callee && records.get(i).getCallee() == recordTypeValue) ||
-                    (recordType == RECORD.Status && records.get(i).getStatus() == recordTypeValue) ||
-                    (recordType == RECORD.StrTime && records.get(i).getStrTime() == recordTypeValue) ||
-                    (recordType == RECORD.Details && records.get(i).getDetails() == recordTypeValue)
-            ) {
-                targetInt = i;
+        if(records.size()!=0){
+            for (int i = 0; i < records.size(); i++) {
+                if ((recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
+                        (recordType == RECORD.Caller && records.get(i).getCaller() == recordTypeValue) ||
+                        (recordType == RECORD.Callee && records.get(i).getCallee() == recordTypeValue) ||
+                        (recordType == RECORD.Status && records.get(i).getStatus() == recordTypeValue) ||
+                        (recordType == RECORD.StrTime && records.get(i).getStrTime() == recordTypeValue) ||
+                        (recordType == RECORD.Details && records.get(i).getDetails() == recordTypeValue)
+                ) {
+                    targetInt = i;
+                }
             }
-        }
-        if (getRecordType == RECORD.RecordStatus) {
-            result = records.get(targetInt).getRecordStatus();
-        }else if (getRecordType == RECORD.Caller) {
-            result =  records.get(targetInt).getCaller();
-        }else if (getRecordType == RECORD.Callee) {
-            result =  records.get(targetInt).getCallee();
-        }else if (getRecordType == RECORD.Status) {
-            result =  records.get(targetInt).getStatus();
-        }else if (getRecordType == RECORD.StrTime) {
-            result =  records.get(targetInt).getStrTime();
-        }else if (getRecordType == RECORD.Details) {
-            result =  records.get(targetInt).getDetails();
+            if (getRecordType == RECORD.RecordStatus) {
+                result = records.get(targetInt).getRecordStatus();
+            }else if (getRecordType == RECORD.Caller) {
+                result =  records.get(targetInt).getCaller();
+            }else if (getRecordType == RECORD.Callee) {
+                result =  records.get(targetInt).getCallee();
+            }else if (getRecordType == RECORD.Status) {
+                result =  records.get(targetInt).getStatus();
+            }else if (getRecordType == RECORD.StrTime) {
+                result =  records.get(targetInt).getStrTime();
+            }else if (getRecordType == RECORD.Details) {
+                result =  records.get(targetInt).getDetails();
+            }else{
+                log.error("[not found "+getRecordType+" value] -->>[TableType] "+tableType+"[recordType:recordTypeValue]-->>"+recordType+recordTypeValue);
+            }
         }else{
-            log.error("[not found "+getRecordType+" value] -->>[TableType] "+tableType+"[recordType:recordTypeValue]-->>"+recordType+recordTypeValue);
+            reportMessage("[没有找到有效记录！！！]");
         }
     return result;
     }

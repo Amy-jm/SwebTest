@@ -4,15 +4,16 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface IQueuePageElement {
 
     /** 队列编辑页面Tab选项 **/
     enum QUEUE_TAB {
         BASIC("Basic"),
-        QUEUE_MEMBERS("Queue Members"),
-        QUEUE_PREFERENCE("Queue Preference"),
-        QUEUE_PANEL_PERMISSIONS("Queue Panel Permissions");
+        QUEUE_MEMBERS(UI_MAP.getString("extension_trunk.extension_groups.members") ),
+        QUEUE_PREFERENCE(UI_MAP.getString("call_features.queue.preference")),
+        QUEUE_PANEL_PERMISSIONS(UI_MAP.getString("call_features.queue.permissions"));
 
         private final String alias;
 
@@ -25,7 +26,7 @@ public interface IQueuePageElement {
         }
     }
 
-    SelenideElement searchIpt = $(By.xpath("//input[@placeholder=\"Search\"]"));
+    SelenideElement searchIpt = $(By.xpath("//input[@placeholder="+UI_MAP.getString("header.search_placeholder")+"]"));
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
 
     SelenideElement ele_queue_basic_number_input = $(By.id("queue_basic_number"));
