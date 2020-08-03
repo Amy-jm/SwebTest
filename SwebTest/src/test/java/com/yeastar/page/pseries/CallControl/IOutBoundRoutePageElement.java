@@ -28,7 +28,7 @@ public interface IOutBoundRoutePageElement {
     SelenideElement ele_outbound_routes_dial_pattern_add_btn = $(By.xpath("//div[@class='add-footer']//span[contains(text(),'Add')]"));
     ElementsCollection ele_outbound_routes_dial_pattern_input = $$(By.id("dial_pattern"));
     ElementsCollection ele_outbound_routes_strip_input = $$(By.id("strip"));
-    SelenideElement ele_outbound_routes_prepend_input = $(By.id("prepend"));
+    ElementsCollection ele_outbound_routes_prepend_input = $$(By.id("prepend"));
     SelenideElement ele_outbound_routes_add_trunk_btn = $(By.xpath("//div[3]//div[2]//div[1]//div[1]//div[1]//div[1]//div[1]//div[1]//div[2]//button[1]"));
     SelenideElement ele_outbound_routes_del_trunk_btn = $(By.xpath("//div[3]//div[2]//div[1]//div[1]//div[1]//div[1]//div[1]//div[1]//div[2]//button[2]"));
     SelenideElement ele_outbound_routes_pin_protect_combobox = $(By.id("outbound_routes_pin_protect"));

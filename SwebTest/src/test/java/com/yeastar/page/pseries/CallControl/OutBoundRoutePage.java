@@ -80,6 +80,7 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
         sleep(1000);
         ele_outbound_routes_dial_pattern_input.get(row).pressEnter().sendKeys(Keys.chord(Keys.CONTROL,"a"),pattern);
         ele_outbound_routes_strip_input.get(row).pressEnter().sendKeys(Keys.chord(Keys.CONTROL,"a"),strip);
+        ele_outbound_routes_prepend_input.get(row).click();
         sleep(3000);
         return this;
     }
