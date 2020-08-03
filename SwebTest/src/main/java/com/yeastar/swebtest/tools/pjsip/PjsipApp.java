@@ -441,18 +441,18 @@ public class PjsipApp extends PjsipDll{
         suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
 
         if (caller != callee){
-        for (int i = 0; i < accounts.size(); i++) {
-            account = accounts.get(i);
-            if (account.username.equals(String.valueOf(callee))) {
-                if (account.status == HUNGUP) {
-                    Reporter.error("分机:" + account.username + "处于hungup");
-                    YsAssert.assertEquals(account.status,TALKING,"分机"+account.username+"处于hungup");
+            for (int i = 0; i < accounts.size(); i++) {
+                account = accounts.get(i);
+                if (account.username.equals(String.valueOf(callee))) {
+                    if (account.status == HUNGUP) {
+                        Reporter.error("分机:" + account.username + "处于hungup");
+                        YsAssert.assertEquals(account.status,TALKING,"分机"+account.username+"处于hungup");
+                    }
                 }
             }
+            HangupAccont = findAccountByUsername(String.valueOf(callee));
+            suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
         }
-        HangupAccont = findAccountByUsername(String.valueOf(callee));
-        suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
-    }
         ys_waitingTime(5000);
         return suc;
     }

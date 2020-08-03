@@ -28,6 +28,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.swebtest.driver.DataReader2.*;
 import static org.apache.log4j.spi.Configurator.NULL;
 
@@ -47,6 +48,54 @@ public class APIUtil {
         String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username="+LOGIN_USERNAME+"&password="+enBase64(DigestUtils.md5Hex(LOGIN_PASSWORD));
         m_getRequest(req);
         return this ;
+    }
+
+    /**
+     * 分机登录web client页面
+     * @param num
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    public APIUtil loginWebClient(String num, String oldPassword, String newPassword){
+
+        //登录
+        String request = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username="+num+"&password="+enBase64(DigestUtils.md5Hex(oldPassword));
+        String respone = m_getRequest(request);
+
+        JSONObject jsonObject = new JSONObject(respone);
+        if (!jsonObject.getInteger("errcode").equals(0)){
+            log.error("[loginWebClient: ]分机"+num+"首次登录失败,errmsg:"+jsonObject.getString("errmsg"));
+        }
+        //判断是否需要确认隐私协议
+        if(jsonObject.containsKey("need_confirm_new_gdpr") && jsonObject.getInteger("need_confirm_new_gdpr") == 1){
+            m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/user/confirmgdpr","{}");
+        }
+
+        //判断是否需要修改密码
+        if(jsonObject.containsKey("need_modify_default_pwd") && jsonObject.getInteger("need_modify_default_pwd") == 1){
+            JSONObject postJson = new JSONObject();
+            postJson.put("old_password",enBase64(DigestUtils.md5Hex(oldPassword)));
+            postJson.put("new_password",enBase64(DigestUtils.md5Hex(newPassword)));
+            postJson.put("confirm_password",enBase64(DigestUtils.md5Hex(newPassword)));
+            respone = m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/user/updatepassword",postJson.toString());
+            System.out.println("DDDDDDDDDDD "+respone);
+            JSONObject responeObject = new JSONObject(respone);
+            if (!responeObject.getInteger("errcode").equals(0)){
+                log.error("[loginWebClient: ]"+"分机"+num+"默认密码修改失败,errormsg："+responeObject.getString("errmsg"));
+            }else{
+                //密码修改成功，重新登录
+                request = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username="+num+"&password="+enBase64(DigestUtils.md5Hex(newPassword));
+                respone = m_getRequest(request);
+                JSONObject jsonObject1 = new JSONObject(respone);
+                if (!jsonObject1.getInteger("errcode").equals(0) || jsonObject1.containsKey("need_confirm_new_gdpr") || jsonObject1.containsKey("need_modify_default_pwd")){
+                    log.error("[loginWebClient: ] 分机"+num+"密码修改失败,errmsg:"+jsonObject1.getString("errmsg"));
+                }
+            }
+        }
+
+
+        return this;
     }
 
     /**
@@ -81,6 +130,7 @@ public class APIUtil {
                 response = m_getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/pbx/getapplystatus");
                 jsonObject = new JSONObject(response);
                 if(!jsonObject.containsKey("status")){
+                    sleep(WaitUntils.SHORT_WAIT);
                     return true;
                 }
             }
@@ -303,7 +353,7 @@ public class APIUtil {
     }
 
     /**
-     * 获取分机概要列表
+     * 获取概要列表
      * 对应API：api/v1.0/outboundroute/searchsummary
      */
     public List<OutBoundRouteObject> getOutboundSummary(){
@@ -461,13 +511,12 @@ public class APIUtil {
      * @return
      */
     private String m_postRequest(String urlpath,String args1) {
-        log.debug("postRequest cmd: "+urlpath);
+        log.debug("postRequest cmd: "+urlpath + "body: "+args1);
         HttpsURLConnection.setDefaultHostnameVerifier(new APIUtil().new NullHostNameVerifier());
 
         OutputStreamWriter out = null;
         BufferedReader in = null;
-        StringBuilder result = new StringBuilder();
-        String responeData = null;
+        StringBuilder responeData = new StringBuilder();
         SSLContext sc = null;
         try {
             sc = SSLContext.getInstance("TLS");
@@ -494,14 +543,14 @@ public class APIUtil {
             in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
             String line;
             while ((line = in.readLine()) != null) {
-                result.append(line);
+                responeData.append(line);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        log.debug("[POST result: ] "+result);
-        return responeData;
+        log.debug("[POST responeData: ] "+responeData);
+        return String.valueOf(responeData);
     }
     /**
      * 执行Post请求
