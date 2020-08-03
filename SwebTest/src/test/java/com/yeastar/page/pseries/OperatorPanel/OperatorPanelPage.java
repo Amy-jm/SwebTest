@@ -101,7 +101,7 @@ public class OperatorPanelPage extends BasePage {
      * @param event 右键面板上动作事件
      * @param eventParam event 事件后，所有操作的参数
      */
-    private void eventAction(RIGHT_EVENT event,String eventParam){
+    private OperatorPanelPage eventAction(RIGHT_EVENT event,String eventParam){
         //1.类型一,Transfer
         if(event==RIGHT_EVENT.TRANSFER){
             SelenideElement transferElement = $(By.xpath(String.format(ACTION_XPATH,event.alias)));
@@ -123,6 +123,7 @@ public class OperatorPanelPage extends BasePage {
         }else{
             $(By.xpath(String.format(ACTION_XPATH,event.alias))).click();
         }
+        return this;
     }
 
     /**
@@ -151,7 +152,7 @@ public class OperatorPanelPage extends BasePage {
      * @param sourceElement 源元素
      * @param targetElement 目标元素
      */
-    public void dragAndDrop(WebElement sourceElement,WebElement targetElement){
+    public OperatorPanelPage dragAndDrop(WebElement sourceElement,WebElement targetElement){
         JavascriptExecutor js = (JavascriptExecutor)WebDriverFactory.getDriver();
         js.executeScript("function createEvent(typeOfEvent) {\n" + "var event =document.createEvent(\"CustomEvent\");\n"
                 + "event.initCustomEvent(typeOfEvent,true, true, null);\n" + "event.dataTransfer = {\n" + "data: {},\n"
@@ -169,7 +170,63 @@ public class OperatorPanelPage extends BasePage {
                 + "dispatchEvent(element, dragEndEvent,dropEvent.dataTransfer);\n" + "}\n" + "\n"
                 + "var source = arguments[0];\n" + "var destination = arguments[1];\n"
                 + "simulateHTML5DragAndDrop(source,destination);", sourceElement, targetElement);
+        return this;
     }
+
+
+    String ELEMENT_TABLE_XPATH = "//*[@id=\"%s\"]//table/tbody//td[contains(text(),'%s')]";
+    String ELEMENT_XPATH = "//*[@id=\"%s\"]//span[contains(text(),'%s')]";
+
+    /**
+     * VCP 区域
+     * 目前分为5个区域：Inbound（table），OutBound（table）,RingGroup,Queue,Parking，Extension
+     */
+    public enum DOMAIN{
+        INBOUND("table-inbound"),
+        OUTBOUND("table-outbound"),
+        RINGGROUP("table-ring-group"),
+        QUEUE("table-queue"),
+        PARKING("table-parking"),
+        EXTENSION("table-extension-2193");
+        private final String alias;
+
+        DOMAIN(String alias) {
+            this.alias = alias;
+        }
+
+        public String getAlias() {
+            return alias;
+        }
+    }
+
+    /**
+     * 元素 拖动
+     * @param sourceDomain 源元素 所在区域
+     * @param sourceName 源元素的Text名称
+     * @param targetDomain 目标元素，所在区域
+     * @param targetName 目标元素名称
+     * @return
+     */
+    public OperatorPanelPage dragAndDrop(DOMAIN sourceDomain,String sourceName,DOMAIN targetDomain,String targetName){
+        SelenideElement sourceElement = null;
+        SelenideElement targetElement = null;
+        //sourceElement
+        if(sourceDomain == DOMAIN.INBOUND || sourceDomain == DOMAIN.OUTBOUND){
+             sourceElement = $(By.xpath(String.format(ELEMENT_TABLE_XPATH,sourceDomain.getAlias(),sourceName)));
+        }else{
+             sourceElement = $(By.xpath(String.format(ELEMENT_XPATH,sourceDomain.getAlias(),sourceName)));
+        }
+        //targetElement
+        if(sourceDomain == DOMAIN.INBOUND || sourceDomain == DOMAIN.OUTBOUND){
+            targetElement =  $(By.xpath(String.format(ELEMENT_TABLE_XPATH,targetDomain.getAlias(),targetName)));
+        }else{
+            targetElement = $(By.xpath(String.format(ELEMENT_XPATH,targetDomain.getAlias(),targetName)));
+        }
+        dragAndDrop(sourceElement,targetElement);
+        return this;
+    }
+
+
 
     /**
      * 获取表格中的所有记录

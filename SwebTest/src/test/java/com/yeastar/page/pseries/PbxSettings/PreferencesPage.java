@@ -3,8 +3,10 @@ package com.yeastar.page.pseries.PbxSettings;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.yeastar.page.pseries.BasePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.actions;
 
 /**
@@ -29,6 +31,14 @@ public class PreferencesPage extends BasePage implements IPreferencesPageElement
 
     public PreferencesPage selectCombobox(String arg){
         selectComm(arg);
+        return this;
+    }
+    //Preferences -Account  show Unregistered Extensions
+    public SelenideElement preference_account_show_unregistered_extensions = $(By.id("preference_account_show_unregistered_extensions"));
+
+
+    public PreferencesPage isChoice(SelenideElement element,boolean isChecked){
+      isCheckbox(element,isChecked);
         return this;
     }
 }
