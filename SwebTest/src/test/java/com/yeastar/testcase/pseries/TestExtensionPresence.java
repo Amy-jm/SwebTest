@@ -11,6 +11,8 @@ import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
 
@@ -20,7 +22,9 @@ import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
 public class TestExtensionPresence extends TestCaseBase{
 
     private boolean runRecoveryEnvFlag=true;
-
+    private String reqDataCreateSPS = String.format("" +
+                    "{\"name\":\"%s\",\"enable\":1,\"country\":\"general\",\"itsp\":\"\",\"type\":\"peer\",\"transport\":\"udp\",\"codec_sel\":\"ulaw,alaw,g729\",\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_srtp\":0,\"enb_t38_support\":0,\"enb_inband_progress\":0,\"max_call_chans\":0,\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"\",\"from_user\":\"\",\"from_user_part\":\"default\",\"from_disp_name\":\"\",\"from_disp_name_part\":\"default\",\"from_host\":\"\",\"from_host_part\":\"domain\",\"diversion_user\":\"\",\"diversion_user_part\":\"\",\"rpid_user\":\"\",\"rpid_user_part\":\"\",\"pai_user\":\"\",\"pai_user_part\":\"\",\"ppi_user\":\"\",\"ppi_user_part\":\"\",\"enb_privacy_id\":0,\"enb_user_phone\":0,\"caller_id_from\":\"follow_system\",\"did_from\":\"follow_system\",\"user_agent\":\"\",\"enb_100rel\":0,\"max_ptime\":\"default\",\"rtp_reinvite\":\"\",\"enb_guest_auth\":0,\"enb_early_media\":0,\"enb_message\":0,\"did_list\":[],\"inbound_cid_list\":[],\"outbound_cid_list\":[],\"hostname\":\"%s\",\"port\":5060,\"domain\":\"%s\"}"
+            ,SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2);
 
     @Epic("P_Series")
     @Feature("Extension")
@@ -32,6 +36,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","Extension", "Regression", "PSeries","A_RecoveryEnv"},priority =0 )
     public void A_RecoveryEnv() {
         if(runRecoveryEnvFlag){
+            APIUtil apiUtil = new APIUtil();
             ArrayList<String> list = new ArrayList<>();
             ArrayList<String> list2 = new ArrayList<>();
 
@@ -48,7 +53,7 @@ public class TestExtensionPresence extends TestCaseBase{
             auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
 
             step("【环境准备】3、创建Trunk");
-            auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
+            apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
 
             step("【环境准备】4、创建队列");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_queue);
