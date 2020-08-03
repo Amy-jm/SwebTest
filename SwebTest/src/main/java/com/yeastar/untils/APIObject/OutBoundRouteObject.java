@@ -49,18 +49,20 @@ public class OutBoundRouteObject {
         this.trunkLists = new ArrayList<>();
         this.dialPatternLists = new ArrayList<>();
 
-        JsonArray m_trunkList = jsonObject.getJsonArray("trunk_list");
-        JsonArray m_dialPatternList = jsonObject.getJsonArray("dial_pattern_list");
+        if (jsonObject.containsKey("trunk_list")){
+            JsonArray m_trunkList = jsonObject.getJsonArray("trunk_list");
+            for (int i=0; i<m_trunkList.size(); i++){
+                this.trunkLists.add(new TrunkList((JSONObject) m_trunkList.getJsonObject(i)));
 
-        for (int i=0; i<m_trunkList.size(); i++){
-            this.trunkLists.add(new TrunkList((JSONObject) m_trunkList.getJsonObject(i)));
-
+            }
         }
+        if (jsonObject.containsKey("dial_pattern_list")){
+            JsonArray m_dialPatternList = jsonObject.getJsonArray("dial_pattern_list");
 
-        for (int i=0; i<m_dialPatternList.size(); i++){
-            this.dialPatternLists.add(new DialPatternList((JSONObject) m_dialPatternList.getJsonObject(i)));
+            for (int i=0; i<m_dialPatternList.size(); i++){
+                this.dialPatternLists.add(new DialPatternList((JSONObject) m_dialPatternList.getJsonObject(i)));
+            }
         }
-
     }
 
     private String getValueByString(JSONObject jsonObject,String key){
