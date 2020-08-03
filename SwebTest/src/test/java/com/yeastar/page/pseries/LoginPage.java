@@ -83,16 +83,42 @@ public class LoginPage extends BasePage{
             Selenide.actions().click(privacy_policy_confirmgdpr).perform();
             sleep(1000);
             ConfrimAlertBtn.click();
-
         }
         if(waitElementDisplay(change_password_new_password,SHORT_WAIT) && waitElementDisplay(change_password_confirm_password,SHORT_WAIT)){
             change_password_new_password.setValue(changePassword);
             change_password_confirm_password.setValue(changePassword);
             dail_save_btn.click();
         }
+        sleep(SHORT_WAIT);
+        return this;
+    }
 
-        //change password
-//        change_password_new_password.shouldBe(Condition.exist);
+    /**
+     * extension login PBX P
+     * @param userName
+     * @param passWord
+     */
+    @Step("login with userName:{0} , password:{1},changePassword:{2}")
+    public LoginPage loginWithExtensionNewPassword(String userName,String passWord,String changePassword){
+        Boolean isChangePassword = false ;
+        login_username.shouldBe(Condition.visible).setValue(userName);
+        setElementValue(login_password,passWord);
+        loginBtn.click();
+        if(waitElementDisplay(privacy_policy_confirmgdpr,SHORT_WAIT)){
+            Selenide.actions().click(privacy_policy_confirmgdpr).perform();
+            sleep(1000);
+            ConfrimAlertBtn.click();
+        }
+        sleep(SHORT_WAIT*2);//todo 29版本引入问题，修改密码界面会加载两次，修复后删除sleep
+        if(waitElementDisplay(change_password_new_password,SHORT_WAIT) && waitElementDisplay(change_password_confirm_password,SHORT_WAIT)){
+            change_password_new_password.setValue(changePassword);
+            change_password_confirm_password.setValue(changePassword);
+            dail_save_btn.click();
+            isChangePassword = true ;
+        }
+        if(isChangePassword){
+            login(userName,changePassword);
+        }
         sleep(SHORT_WAIT);
         return this;
     }

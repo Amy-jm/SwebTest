@@ -841,4 +841,17 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         return this;
     }
 
+    /**
+     * Linkus Clients User Type
+     */
+    public enum USER_TYPE{
+        Manager,User,Custom
+    }
+    public ExtensionPage editLinksClientsUserType(USER_TYPE userType){
+        $(By.id("visual_control_panel_list_user_type")).shouldBe(Condition.visible).click();
+        actions().sendKeys(userType+"").sendKeys(Keys.ENTER).build().perform();
+        $$(By.xpath(String.format(buttonLocationXpath,"Save"))).get(1).click();
+        return this;
+    }
+
 }
