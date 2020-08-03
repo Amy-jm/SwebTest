@@ -2,6 +2,7 @@ package com.yeastar.page.pseries.CallControl;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.yeastar.controllers.WebDriverFactory;
 import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
@@ -30,8 +31,9 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
         ele_edit_default_destination.scrollTo();
         actions().moveToElement(ele_edit_trunk_toRight_btn).perform();
         for(String trunkname: trunklist){
-            $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).click();
+            $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).shouldBe(Condition.visible).click();
         }
+        sleep(WaitUntils.RETRY_WAIT);
         ele_edit_trunk_toRight_btn.click();
         return this;
     }
@@ -56,8 +58,8 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
      * @return
      */
     @Step("删除指定呼入路由")
-    public InboundRoute deleteInboundRoute(WebDriver devier, String name){
-        if(TableUtils.clickTableDeletBtn(devier,"Name",name)){
+    public InboundRoute deleteInboundRoute(String name){
+        if(TableUtils.clickTableDeletBtn(WebDriverFactory.getDriver(),"Name",name)){
             OKAlertBtn.shouldBe(Condition.visible).click();
         }
         return this;

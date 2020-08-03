@@ -47,6 +47,12 @@ public class TestExtensionSecurity extends TestCaseBase {
         list.add(SPS);
         list2.clear();
         list2.add("0");
+
+        //创建trunk
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
+        auto.trunkPage().deleteTrunk(getDriver(),SPS).createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
+
+        //创建路由
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
         auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("AutoTest_Route",list,list2)
                 .addPatternAndStrip(0,"X.","").clickSaveAndApply();
@@ -74,10 +80,7 @@ public class TestExtensionSecurity extends TestCaseBase {
                 switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,true).
                 clickSaveAndApply();
-
-
         prerequisite();
-
         assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2000不会响铃");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
