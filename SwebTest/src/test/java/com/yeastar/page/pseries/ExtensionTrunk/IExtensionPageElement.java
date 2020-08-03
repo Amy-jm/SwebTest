@@ -68,8 +68,8 @@ public interface IExtensionPageElement {
 //    SelenideElement ele_extension_user_first_name = $(By.id("extension_user_first_name"));
 
     //密码强度不够弹框
-    SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),"+UI_MAP.getString("extension_trunk.extensions.pwd_weak_continue")+")]"));
-    SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//span[contains(@title,"+UI_MAP.getString("extension_trunk.extensions.weak_reg_password")+")]"));
+    SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\""+UI_MAP.getString("extension_trunk.extensions.pwd_weak_continue")+"\")]"));
+    SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//span[contains(@title,\""+UI_MAP.getString("extension_trunk.extensions.weak_reg_password")+"\")]"));
 
 
     /********advance ***/
@@ -102,13 +102,13 @@ public interface IExtensionPageElement {
     //-SIP User Agent Identification
     ElementsCollection ele_list_user_agent_input = $$(By.id("user_agent"));
     //--Add User Agent btn
-    SelenideElement ele_add_user_agent_btn =$(By.xpath("//span[contains(text(),"+UI_MAP.getString("extension_trunk.extensions.add_user_agent")+")]"));
+    SelenideElement ele_add_user_agent_btn =$(By.xpath("//span[contains(text(),\""+UI_MAP.getString("extension_trunk.extensions.add_user_agent")+"\")]"));
 
     //-SIP User Agent Identification
     ElementsCollection ele_list_permitted_ip_input = $$(By.id("permitted_ip"));
     ElementsCollection ele_list_netmask_input = $$(By.id("netmask"));
     //--Add User Agent btn
-    SelenideElement ele_add_ip_btn =$(By.xpath("//span[contains(text(),"+UI_MAP.getString("extension_trunk.extensions.add_ip")+")]"));
+    SelenideElement ele_add_ip_btn =$(By.xpath("//span[contains(text(),\""+UI_MAP.getString("extension_trunk.extensions.add_ip")+"\")]"));
 
     /** Features **/
     SelenideElement ele_extension_feature_enb_email_pwd_chg = $(By.id("extension_feature_enb_email_pwd_chg"));
