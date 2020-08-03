@@ -435,4 +435,120 @@ public class TestOperatorPanel extends TestCaseBase {
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
     }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Extension 呼入到分机1000-->分机10000 响铃中 -->右键Extension：C ,A先挂断\n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼叫[1000]\n" +
+            "3:右键->[Redirect] C" +
+            "4:A挂断")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries"})
+    public void testIncomingRightActionRedirectC_AHandUp(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        assertStep("3:[PJSIP 创建/注册]");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"991000",DEVICE_IP_LAN,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1000");
+
+        step( "4:右键->[Redirect] C");
+        auto.operatorPanelPage().ringTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1001");
+        sleep(WaitUntils.SHORT_WAIT);
+        assertStep("5:[VCP显示]2000->1001 来电  Ring状态");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1001 A[1001]");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+
+
+        assertStep("6:[VCP显示]2000->1001  接通后 Talking状态");
+        pjsip.Pj_Answer_Call(1001,false);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1001 A[1001]");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
+
+        pjsip.Pj_hangupCall(2000,2000);
+
+        assertStep("3:[CDR显示]");//todo CDR显示
+        pjsip.Pj_Hangup_All();
+        softAssert.assertAll();
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Extension 呼入到分机1000-->分机10000 响铃中 -->右键Extension：C ,C先挂断\n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼叫[1000]\n" +
+            "3:右键->[Redirect] C" +
+            "4:A挂断")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries"})
+    public void testIncomingRightActionRedirectC_CHandUp(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        assertStep("3:[PJSIP 创建/注册]");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"991000",DEVICE_IP_LAN,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1000");
+
+        step( "4:右键->[Redirect] C");
+        auto.operatorPanelPage().ringTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1001");
+        sleep(WaitUntils.SHORT_WAIT);
+        assertStep("5:[VCP显示]2000->1001 来电  Ring状态");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1001 A[1001]");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+
+
+        assertStep("6:[VCP显示]2000->1001  接通后 Talking状态");
+        pjsip.Pj_Answer_Call(1001,false);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1001 A[1001]");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
+
+        pjsip.Pj_hangupCall(1001,1001);
+
+        assertStep("3:[CDR显示]");//todo CDR显示
+        pjsip.Pj_Hangup_All();
+        softAssert.assertAll();
+
+    }
 }
