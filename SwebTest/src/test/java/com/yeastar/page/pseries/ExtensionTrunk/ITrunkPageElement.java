@@ -39,8 +39,8 @@ public interface ITrunkPageElement {
         ADVANCED(UI_MAP.getString("extension_trunk.extensions.advanced")),
         DIDS_DDIS(UI_MAP.getString("extension_trunk.trunks.did_list")),
         INBOUND_CALLER_ID_REFORMATTING(UI_MAP.getString("extension_trunk.trunks.inbound_cid")),
-        OUTBOUND_CALLER_ID(UI_MAP.getString(UI_MAP.getString("call_control.outbound_routes.outb_cid"))),
-        SIP_HEADERS(UI_MAP.getString(UI_MAP.getString("extension_trunk.trunks.sip_headers")));
+        OUTBOUND_CALLER_ID(UI_MAP.getString("call_control.outbound_routes.outb_cid")),
+        SIP_HEADERS(UI_MAP.getString("extension_trunk.trunks.sip_headers"));
         private final String alias;
         TRUNK_TAB(String alias){this.alias = alias;}
         public String getAlias(){
