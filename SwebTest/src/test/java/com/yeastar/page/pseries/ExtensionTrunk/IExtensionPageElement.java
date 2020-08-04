@@ -12,7 +12,7 @@ import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface IExtensionPageElement {
     /**查询输入框*/
-    SelenideElement searchIpt = $(By.xpath("//input[@placeholder="+UI_MAP.getString("header.search_placeholder")+"]"));
+    SelenideElement searchIpt = $(By.xpath("//input[@placeholder='"+UI_MAP.getString("header.search_placeholder")+"']"));
 
 
     SelenideElement ele_add_DropDown_bulk_add_Btn = $(By.xpath("//li[text()='"+UI_MAP.getString("common.bulk_add")+"']"));
