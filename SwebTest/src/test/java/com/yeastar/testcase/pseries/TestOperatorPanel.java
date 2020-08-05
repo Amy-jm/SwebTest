@@ -1,24 +1,21 @@
 package com.yeastar.testcase.pseries;
 
-import com.codeborne.selenide.Condition;
-import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.WebDriverFactory;
 import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
 import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
-import com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.RECORD;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.codeborne.selenide.Selenide.sleep;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 /**
  * @program: SwebTest
@@ -474,7 +471,7 @@ public class TestOperatorPanel extends TestCaseBase {
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1000");
 
         step( "4:右键->[Redirect] C");
-        auto.operatorPanelPage().ringTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1001");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1001");
         sleep(WaitUntils.SHORT_WAIT);
         assertStep("5:[VCP显示]2000->1001 来电  Ring状态");
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1001 A[1001]");
@@ -532,7 +529,7 @@ public class TestOperatorPanel extends TestCaseBase {
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1000");
 
         step( "4:右键->[Redirect] C");
-        auto.operatorPanelPage().ringTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1001");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1001");
         sleep(WaitUntils.SHORT_WAIT);
         assertStep("5:[VCP显示]2000->1001 来电  Ring状态");
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1001 A[1001]");
@@ -547,8 +544,53 @@ public class TestOperatorPanel extends TestCaseBase {
         pjsip.Pj_hangupCall(1001,1001);
 
         assertStep("3:[CDR显示]");//todo CDR显示
+
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Extension 呼入到分机1000-->分机10000 响铃中 -->右键不显示\n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼叫[1000]\n" +
+            "3:右键->查看显示的条目")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries"})
+    public void testIncomingRightActionUnDisplay(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().loginWithExtensionNewPassword("0","Yeastar202",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        assertStep("3:[PJSIP 创建/注册]");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"991000",DEVICE_IP_LAN,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        step( "4:右键->[Redirect] C");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1001");
+        sleep(WaitUntils.SHORT_WAIT);
+        assertStep("5:[VCP显示]2000->1001 来电  Ring状态");
+        List list =  auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001");
+
+        assertStep("3:[VCP]");//todo CDR显示
+
+//        assertThat(list).doesNotContain("Transfer","Listen","Whisper","Barge","Park","Unpark","Pause","Resume");
+        assertThat(list).containsOnlyOnce("Redirect","Pick Up","Hang Up");
+        pjsip.Pj_Hangup_All();
 
     }
 }
