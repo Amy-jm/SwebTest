@@ -68,6 +68,31 @@ public class OperatorPanelPage extends BasePage {
             return alias;
         }
     }
+
+    /**
+     * 获取 右键 菜单明细
+     * @param tableType
+     * @param tagName
+     * @return
+     */
+    public List getRightEvent(TABLE_TYPE tableType,String tagName){
+        sleep(WaitUntils.SHORT_WAIT);
+        List<String> listEvent = new ArrayList<>();
+        if(tableType==TABLE_TYPE.INBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        if(tableType==TABLE_TYPE.OUTBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_OUTBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        for (RIGHT_EVENT e : RIGHT_EVENT.values()) {
+            System.out.println(e.getAlias().toString());
+            if($(By.xpath(String.format(ACTION_XPATH,e.getAlias()))).exists()){
+                listEvent.add(e.alias);
+            }
+        }
+        return listEvent;
+    }
+
     /**
      * 右键表中的元素（tagName）
      * 匹配模式--包含匹配
