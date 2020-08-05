@@ -8,7 +8,7 @@ import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.Keys;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
      */
     @Step("创建呼入路由")
     public InboundRoute createInboundRoute(String name, List<String> trunklist){
-
         ele_add_btn.click();
+        sleep(WaitUntils.SHORT_WAIT*2);//todo version 30 bug,wait for fix and delete sleep
         ele_edit_name.setValue(name);
         ele_edit_default_destination.scrollTo();
         actions().moveToElement(ele_edit_trunk_toRight_btn).perform();
@@ -79,6 +79,20 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
 
     public InboundRoute selectCombobox(String arg){
         selectComm(arg);
+        return this;
+    }
+
+    /**
+     * 新增 DID Matching Mode
+     * @param row
+     * @param pattern
+     * @return
+     */
+    public InboundRoute addDIDPatternAnd(int row, String pattern){
+        ele_inbound_routes_dial_pattern_add_btn.click();
+        sleep(WaitUntils.SHORT_WAIT*2);//todo version 30 bug,wait for fix and delete sleep
+        ele_inbound_routes_dial_pattern_input.get(row).pressEnter().sendKeys(Keys.chord(Keys.CONTROL,"a"),pattern);
+        sleep(WaitUntils.RETRY_WAIT);
         return this;
     }
 }

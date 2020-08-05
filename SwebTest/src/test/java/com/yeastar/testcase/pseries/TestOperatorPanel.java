@@ -55,7 +55,7 @@ public class TestOperatorPanel extends TestCaseBase {
 
         //创建Inbound
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
-        auto.inboundRoute().deleteAllInboundRoutes().createInboundRoute("InRoute1",list).selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"1000").clickSaveAndApply();
+        auto.inboundRoute().deleteAllInboundRoutes().createInboundRoute("InRoute1",list).addDIDPatternAnd(0,"X.").selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"1000").clickSaveAndApply();
 
         auto.homePage().logout();
 
@@ -503,7 +503,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries"})
     public void testIncomingRightActionRedirectC_CHandUp(){
-        prerequisite();
+//        prerequisite();
 
         step("1:login web client");
         auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
@@ -522,7 +522,7 @@ public class TestOperatorPanel extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"991000",DEVICE_IP_LAN,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
@@ -547,7 +547,6 @@ public class TestOperatorPanel extends TestCaseBase {
 
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
-
     }
 
     @Epic("P_Series")
@@ -564,7 +563,7 @@ public class TestOperatorPanel extends TestCaseBase {
         prerequisite();
 
         step("1:login web client");
-        auto.loginPage().loginWithExtensionNewPassword("0","Yeastar202",EXTENSION_PASSWORD_NEW);
+        auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
