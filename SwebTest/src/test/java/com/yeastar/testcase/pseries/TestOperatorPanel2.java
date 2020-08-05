@@ -62,7 +62,8 @@ public class TestOperatorPanel2 extends TestCaseBase {
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1001").replace("EXTENSIONLASTNAME","B"))
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1002").replace("EXTENSIONLASTNAME","C"))
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1003").replace("EXTENSIONLASTNAME","D"))
-                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","0").replace("EXTENSIONLASTNAME",""));
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","0").replace("EXTENSIONLASTNAME",""))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1").replace("EXTENSIONLASTNAME",""));
 
             step("创建SPS中继");
             apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
@@ -147,10 +148,10 @@ public class TestOperatorPanel2 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer(2000,"991000",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_Auto_Answer(2000,"991000",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT);
 
-        auto.operatorPanelPage().ringTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000 A [1000]", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000 A [1000]", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"");
 
     }
 }

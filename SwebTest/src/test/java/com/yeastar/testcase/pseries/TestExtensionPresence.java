@@ -84,7 +84,6 @@ public class TestExtensionPresence extends TestCaseBase{
             list.add(SPS);
             auto.inboundRoute().deleteAllInboundRoutes()
                     .createInboundRoute("InRoute1",list)
-                    .editInbound("InRoute1","Name")
                     .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技")
                     .clickSave();
 
