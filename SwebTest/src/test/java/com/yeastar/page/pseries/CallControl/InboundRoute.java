@@ -27,7 +27,7 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
     public InboundRoute createInboundRoute(String name, List<String> trunklist){
 
         ele_add_btn.click();
-        sleep(5000);
+        sleep(10000);
         ele_edit_name.setValue(name);
         ele_edit_default_destination.scrollTo();
         actions().moveToElement(ele_edit_trunk_toRight_btn).perform();

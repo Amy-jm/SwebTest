@@ -82,7 +82,8 @@ public class TestExtensionPresence extends TestCaseBase{
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
             list.clear();
             list.add(SPS);
-            auto.inboundRoute().deleteAllInboundRoutes()
+            auto.inboundRoute()
+                    .deleteAllInboundRoutes()
                     .createInboundRoute("InRoute1",list)
                     .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技")
                     .clickSave();
