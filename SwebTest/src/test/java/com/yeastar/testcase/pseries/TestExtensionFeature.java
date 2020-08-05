@@ -32,6 +32,31 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 @Log4j2
 public class TestExtensionFeature extends TestCaseBase {
 
+    /**
+     * 前提条件
+     * 1.添加0分机和sps中继到 路由AutoTest_Route
+     */
+    public void prerequisite(){
+        //新增呼出路由 添加分机0 ，到路由AutoTest_Route
+        ArrayList<String> trunklist = new ArrayList<>();
+        trunklist.clear();
+        trunklist.add(SPS);
+
+
+        //创建trunk
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
+        auto.trunkPage().deleteTrunk(getDriver(),SPS).createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
+
+        //创建呼入路由
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+        auto.inboundRoute().deleteAllInboundRoutes()
+                .createInboundRoute("InRoute1",trunklist)
+//                .editInbound("InRoute1","Name")
+                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"1001-1001")
+                .clickSaveAndApply();
+
+    }
+
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Feature")
@@ -85,7 +110,7 @@ public class TestExtensionFeature extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("miss call 功能未实现")
-    @Test(groups = {"P0","testEmailNotification","Extension","Regression","PSeries","Feature"})
+    @Test(groups = {"P0","testEmailNotificationOnMissCall","Extension","Regression","PSeries","Feature"})
     public void testEmailNotificationOnMissCall() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -178,17 +203,19 @@ public class TestExtensionFeature extends TestCaseBase {
         step("2:创建分机号1001，编辑call blocking");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtension("1001",EXTENSION_PASSWORD).
-                            switchToTab(TABLE_MENU.FEATURES.getAlias()).addCallHandingRule("2000","IVR","","").clickSave();
+                            switchToTab(TABLE_MENU.FEATURES.getAlias()).addCallHandingRule("2000","IVR","","").clickSaveAndApply();
 
         step("删除呼入路由 -> 创建呼入路由InRoute1");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
-        ArrayList<String> trunklist = new ArrayList<>();
-        trunklist.add(SPS);
-        auto.inboundRoute().deleteAllInboundRoutes()
-                .createInboundRoute("InRoute1",trunklist)
-                .editInbound("InRoute1","Name")
-                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"1001-1001")
-                .clickSaveAndApply();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+//        ArrayList<String> trunklist = new ArrayList<>();
+//        trunklist.add(SPS);
+//        auto.inboundRoute().deleteAllInboundRoutes()
+//                .createInboundRoute("InRoute1",trunklist)
+////                .editInbound("InRoute1","Name")
+//                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"1001-1001")
+//                .clickSaveAndApply();
+
+        prerequisite();
 
         assertStep("3:[PJSIP注册]] ，2000 呼叫 1001 ");
         pjsip.Pj_Init();
@@ -200,7 +227,7 @@ public class TestExtensionFeature extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"99550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000,"991001",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
 
@@ -212,7 +239,7 @@ public class TestExtensionFeature extends TestCaseBase {
         auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","IVR 6200<6200>","ANSWERED","2000<2000> hung up",communication_inbound,SPS,"");
 
         assertStep("3:[PJSIP注册]] ，2001 呼叫 1001 ");
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"99550330",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"991001",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
         pjsip.Pj_Hangup_All();
         assertStep("5[CDR]1001<1001> 响铃");
