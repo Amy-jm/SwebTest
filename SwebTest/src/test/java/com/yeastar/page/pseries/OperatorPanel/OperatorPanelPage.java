@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
+import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 /**
  * @program: SwebTest
@@ -47,17 +48,16 @@ public class OperatorPanelPage extends BasePage {
      * vcp 右键事件
      **/
     public enum RIGHT_EVENT{
-        REDIRECT("Redirect"),
-        HANG_UP("Hang Up"),
-        PICK_UP("Pick Up"),
-        TRANSFER("Transfer"),
-        PAUSE_RECORD("Pause"),
-        Resume_RECORD("Resume"),
-        PARKED("Parked"),
-        Barge_IN("Barge In"),
-        LISTEN("Listen"),
-        WHISPER("Whisper"),
-        RETRIEVE("Retrieve");
+        REDIRECT( UI_MAP.getString("web_client.redirect")),
+        HANG_UP(UI_MAP.getString("web_client.hangup")),
+        PICK_UP(UI_MAP.getString("web_client.pickup")),
+        TRANSFER(UI_MAP.getString("web_client.transfer")),
+        PAUSE_RECORD(UI_MAP.getString("web_client.pause_recording")),
+        Resume_RECORD(UI_MAP.getString("web_client.resume_recording")),
+        PARKED(UI_MAP.getString("web_client.parked")),
+        Barge_IN(UI_MAP.getString("web_client.barge_in")),
+        LISTEN(UI_MAP.getString("web_client.listen")),
+        WHISPER(UI_MAP.getString("web_client.whisper"));
 
         private final String alias;
 

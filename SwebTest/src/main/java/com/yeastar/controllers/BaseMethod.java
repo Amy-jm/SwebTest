@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import com.codeborne.selenide.Condition;
@@ -139,6 +140,19 @@ public class BaseMethod extends WebDriverFactory {
 		}
 	}
 
+	/**
+	 * Base64加密字符串
+	 * @param str
+	 * @return
+	 */
+	public String enBase64(String str) {
+		byte[] bytes = str.getBytes();
+
+		String encoded = Base64.getEncoder().encodeToString(bytes);
+		System.out.println("Base 64 加密后：" + encoded);
+
+		return encoded;
+	}
 
 	/**
 	 * ssh操作执行静态命令查看
