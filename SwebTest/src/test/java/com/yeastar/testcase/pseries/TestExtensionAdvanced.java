@@ -8,6 +8,7 @@ import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -151,8 +152,9 @@ public class TestExtensionAdvanced extends TestCaseBase {
             "4:修改分机号1001,NAT->启用 ->5:配置生效： ")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLinks(value = {@TmsLink(value = "ID1001624"), @TmsLink(value = "ID1001623")})
+    @Issue("NAT,取消勾选后，保存会默认再次开启，Linkus Clients")
     @Test(groups = {"P0","TestExtensionAdvanced","testNAT","Regression","PSeries"})
-    public void testNAT() throws IOException, JSchException {
+    public void testNAT(){
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
@@ -163,23 +165,26 @@ public class TestExtensionAdvanced extends TestCaseBase {
                 switchToTab("Advanced").
                 isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_nat_checkbox,false).
                 clickSaveAndApply();
+        SoftAssertions softly = new SoftAssertions();
 
         assertStep("3:[PJSIP]期望结果：  direct_media                  : false");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("direct_media                  : false"),"[direct_media false]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("rtp_symmetric                 : false"),"[rtp_symmetric false]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("force_rport                   : false"),"[force_rport false]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("rewrite_contact               : false"),"[rewrite_contact false]");
+        softly.assertThat(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001")).contains(
+                "direct_media                  : false",
+                "rtp_symmetric                 : false",
+                "force_rport                   : false",
+                "rewrite_contact               : false");
 
         step("4:修改分机号1001,NAT->启用");
         auto.extensionPage().editFirstData().switchToTab("Advanced").isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_nat_checkbox,true).clickSaveAndApply();
 
         assertStep("5:[PJSIP]期望结果： ");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("direct_media                  : false"),"[direct_media false]");//关联字段，确认为false
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("rtp_symmetric                 : true"),"[rtp_symmetric true]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("force_rport                   : true"),"[force_rport true]");
-        softAssert.assertTrue(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001").contains("rewrite_contact               : true"),"[rewrite_contact true]");
+        softly.assertThat(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001")).contains(
+                "direct_media                  : false",
+                "rtp_symmetric                 : true",
+                "force_rport                   : true",
+                "rewrite_contact               : true");
 
-        softAssert.assertAll();
+        softly.assertAll();
     }
 
     @Epic("P_Series")
