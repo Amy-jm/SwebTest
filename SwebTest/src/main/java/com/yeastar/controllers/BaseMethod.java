@@ -220,4 +220,11 @@ public class BaseMethod extends WebDriverFactory {
 		return status;
 	}
 
+	/**
+	 * 界面刷新
+	 */
+	public void refresh(){
+		getWebDriver().navigate().refresh();
+	}
+
 }
