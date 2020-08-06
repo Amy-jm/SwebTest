@@ -356,7 +356,7 @@ public class TestExtensionSecurity extends TestCaseBase {
                  "1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001609")
-    @Issue("")
+    @Issue("bug cdr 多显示一条 call to T")
     @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForInternalExtension() throws IOException, JSchException {
         step("1:login PBX");
@@ -466,7 +466,7 @@ public class TestExtensionSecurity extends TestCaseBase {
             "1:login PBX->2:创建分机号0->3:验证保存成功->4:删除分机->5:验证删除成功")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001611")
-    @Issue("")
+    @Issue("bug cdr 多显示一条 call to T")
     @Test(groups = {"P0","TestExtensionSecurity","testMaxCallDurationForSPSTrunkTo0","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunkTo0() throws IOException, JSchException {
         step("1.login PBX");
