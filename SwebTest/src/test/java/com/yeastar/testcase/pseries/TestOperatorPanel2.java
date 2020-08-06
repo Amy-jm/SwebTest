@@ -150,7 +150,7 @@ public class TestOperatorPanel2 extends TestCaseBase {
         pjsip.Pj_Make_Call_Auto_Answer(2000,"991000",DEVICE_IP_LAN,false);
         sleep(WaitUntils.SHORT_WAIT);
 
-        auto.operatorPanelPage().ringTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000 A [1000]", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000 A [1000]", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"");
 
     }
 }
