@@ -39,7 +39,7 @@ public class BusinessHoursAndHolidaysPage extends BasePage implements IBusinessH
         $(By.id("office_times_start")).shouldBe(Condition.visible).click();
         $(By.xpath("//input[contains(@placeholder,'Select time') and contains(@class,'ant-time-picker-panel-input')]")).
                 shouldBe(Condition.visible).setValue(time);
-        actions().sendKeys(Keys.ENTER).build().perform();
+//        actions().sendKeys(Keys.ENTER).build().perform();
         return this;
     }
 
@@ -53,7 +53,7 @@ public class BusinessHoursAndHolidaysPage extends BasePage implements IBusinessH
         $(By.id("office_times_end")).shouldBe(Condition.visible).click();
         $(By.xpath("//input[contains(@placeholder,'Select time') and contains(@class,'ant-time-picker-panel-input')]")).
                 shouldBe(Condition.visible).setValue(time);
-        actions().sendKeys(Keys.ENTER).build().perform();
+//        actions().sendKeys(Keys.ENTER).build().perform();
         return this;
     }
 
@@ -66,7 +66,7 @@ public class BusinessHoursAndHolidaysPage extends BasePage implements IBusinessH
         $(By.id("reset_times_end")).shouldBe(Condition.visible).click();
         $(By.xpath("//input[contains(@placeholder,'Select time') and contains(@class,'ant-time-picker-panel-input')]")).
                 shouldBe(Condition.visible).setValue(time);
-        actions().sendKeys(Keys.ENTER).build().perform();
+//        actions().sendKeys(Keys.ENTER).build().perform();
         return this;
     }
 
@@ -80,7 +80,7 @@ public class BusinessHoursAndHolidaysPage extends BasePage implements IBusinessH
         $(By.id("reset_times_start")).shouldBe(Condition.visible).click();
         $(By.xpath("//input[contains(@placeholder,'Select time') and contains(@class,'ant-time-picker-panel-input')]")).
                 shouldBe(Condition.visible).setValue(time);
-        actions().sendKeys(Keys.ENTER).build().perform();
+//        actions().sendKeys(Keys.ENTER).build().perform();
         return this;
     }
 
@@ -94,6 +94,7 @@ public class BusinessHoursAndHolidaysPage extends BasePage implements IBusinessH
      * @return
      */
     public BusinessHoursAndHolidaysPage addBusinessHours(String businessStartTime,String businessEndTime,String breakStartTime,String breakEndTime,String days){
+
         addBtn.shouldBe(Condition.enabled).click();
         if(businessStartTime !="" && businessEndTime !=""){
            $(By.xpath("//label[contains(@title,\"Business Hours\")]//../..//span[contains(text(),'Add')]")).click();
