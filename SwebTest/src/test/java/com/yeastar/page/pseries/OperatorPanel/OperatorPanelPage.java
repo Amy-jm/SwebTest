@@ -323,6 +323,7 @@ public class OperatorPanelPage extends BasePage {
         //sourceElement
         if(sourceDomain == DOMAIN.INBOUND || sourceDomain == DOMAIN.OUTBOUND){
              sourceElement = $(By.xpath(String.format(ELEMENT_TABLE_XPATH,sourceDomain.getAlias(),sourceName)));
+            log.debug("[sourceName  ] "+String.format(ELEMENT_TABLE_XPATH,sourceDomain.getAlias(),sourceName));
         }else{
              sourceElement = $(By.xpath(String.format(ELEMENT_XPATH,sourceDomain.getAlias(),sourceName)));
         }
@@ -331,6 +332,7 @@ public class OperatorPanelPage extends BasePage {
             targetElement =  $(By.xpath(String.format(ELEMENT_TABLE_XPATH,targetDomain.getAlias(),targetName)));
         }else{
             targetElement = $(By.xpath(String.format(ELEMENT_XPATH,targetDomain.getAlias(),targetName)));
+            log.debug("[target  ] "+String.format(ELEMENT_XPATH,targetDomain.getAlias(),targetName));
         }
         dragAndDrop(sourceElement,targetElement);
 
@@ -457,5 +459,33 @@ public class OperatorPanelPage extends BasePage {
             reportMessage("[没有找到有效记录！！！]");
         }
     return result;
+    }
+
+    /**
+     * 返回对象记录
+     * @param records
+     * @param recordType
+     * @param recordTypeValue
+     * @return
+     */
+    public Record getRecord(List<Record> records,RECORD recordType,String recordTypeValue) {
+        int targetInt = 0;
+        if (records.size() != 0) {
+            for (int i = 0; i < records.size(); i++) {
+                if ((recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
+                        (recordType == RECORD.Caller && records.get(i).getCaller() == recordTypeValue) ||
+                        (recordType == RECORD.Callee && records.get(i).getCallee() == recordTypeValue) ||
+                        (recordType == RECORD.Status && records.get(i).getStatus() == recordTypeValue) ||
+                        (recordType == RECORD.StrTime && records.get(i).getStrTime() == recordTypeValue) ||
+                        (recordType == RECORD.Details && records.get(i).getDetails() == recordTypeValue)
+                ) {
+                    targetInt = i;
+                }
+            }
+
+        }else{
+            reportMessage("[没有找到有效记录！！！]");
+        }
+        return records.get(targetInt);
     }
 }

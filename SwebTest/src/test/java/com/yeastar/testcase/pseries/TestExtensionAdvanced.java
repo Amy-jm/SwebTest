@@ -165,10 +165,9 @@ public class TestExtensionAdvanced extends TestCaseBase {
                 switchToTab("Advanced").
                 isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_nat_checkbox,false).
                 clickSaveAndApply();
-        SoftAssertions softly = new SoftAssertions();
 
         assertStep("3:[PJSIP]期望结果：  direct_media                  : false");
-        softly.assertThat(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001")).contains(
+        softAssertPlus.assertThat(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001")).contains(
                 "direct_media                  : false",
                 "rtp_symmetric                 : false",
                 "force_rport                   : false",
@@ -178,13 +177,13 @@ public class TestExtensionAdvanced extends TestCaseBase {
         auto.extensionPage().editFirstData().switchToTab("Advanced").isCheckbox(IExtensionPageElement.ele_extension_advanced_enb_nat_checkbox,true).clickSaveAndApply();
 
         assertStep("5:[PJSIP]期望结果： ");
-        softly.assertThat(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001")).contains(
+        softAssertPlus.assertThat(execAsterisk(PJSIP_SHOW_ENDPOINT+"1001")).contains(
                 "direct_media                  : false",
                 "rtp_symmetric                 : true",
                 "force_rport                   : true",
                 "rewrite_contact               : true");
 
-        softly.assertAll();
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
