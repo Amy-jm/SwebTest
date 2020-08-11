@@ -58,6 +58,7 @@ public class OperatorPanelPage extends BasePage {
         PAUSE_RECORD(UI_MAP.getString("web_client.pause_recording")),
         Resume_RECORD(UI_MAP.getString("web_client.resume_recording")),
         PARKED(UI_MAP.getString("web_client.parked")),
+        RETRIEVE(UI_MAP.getString("web_client.unparked")),
         Barge_IN(UI_MAP.getString("web_client.barge_in")),
         LISTEN(UI_MAP.getString("web_client.listen")),
         WHISPER(UI_MAP.getString("web_client.whisper"));

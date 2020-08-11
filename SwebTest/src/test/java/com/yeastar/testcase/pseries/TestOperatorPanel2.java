@@ -26,6 +26,7 @@ import static com.codeborne.selenide.Selenide.sleep;
  */
 public class TestOperatorPanel2 extends TestCaseBase {
 
+    private APIUtil apiUtil = new APIUtil();
     private boolean runRecoveryEnvFlag = false;
 
     private String reqDataCreateExtension = String.format("" +
@@ -47,7 +48,7 @@ public class TestOperatorPanel2 extends TestCaseBase {
     public void prerequisite() {
 
         if (runRecoveryEnvFlag){
-            APIUtil apiUtil = new APIUtil();
+//            APIUtil apiUtil = new APIUtil();
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
             List<String> extensionNum = new ArrayList<>();
@@ -86,6 +87,7 @@ public class TestOperatorPanel2 extends TestCaseBase {
             apiUtil.apply();
 
             apiUtil.loginWebClient("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW).updatePersonal("{\"show_unregistered_extensions\":1}");
+            apiUtil.loginWebClient("1",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW).updatePersonal("{\"show_unregistered_extensions\":1}");
 //            runRecoveryEnvFlag = false;
         }
 
@@ -138,8 +140,8 @@ public class TestOperatorPanel2 extends TestCaseBase {
             "2:外线号码[2000]呼叫[1000]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries"})
-    public void testIncomingTalkingRightClick() {
+    @Test(groups = {"P0","VCP","testIncomingTalkingRightClickNotDisplay","Regression","PSeries"})
+    public void testIncomingTalkingRightClickNotDisplay() {
 
         prerequisite();
 
@@ -158,9 +160,65 @@ public class TestOperatorPanel2 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_Auto_Answer(2000,"991000",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(5000);
 
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000 A [1000]", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"");
+        List rightEventList = auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000");
+
+        assertStep("3.右击后不显示Pick Up、Redirect");
+        softAssert.assertFalse(rightEventList.contains(OperatorPanelPage.RIGHT_EVENT.PICK_UP),"右击不显示Pick up");
+        softAssert.assertFalse(rightEventList.contains(OperatorPanelPage.RIGHT_EVENT.REDIRECT),"右击不显示Redirect");
+        softAssert.assertFalse(rightEventList.contains(OperatorPanelPage.RIGHT_EVENT.RETRIEVE),"右击不显示Retrieve");
+
+        step("4.点击park后右击显示unpark");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.PARKED,"2000");
+        sleep(3000);
+        rightEventList = auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"2000");
+
+        softAssert.assertTrue(rightEventList.contains(OperatorPanelPage.RIGHT_EVENT.RETRIEVE.getAlias()),"右击有显示Retrieve");
+
+        pjsip.Pj_Hangup_All();
+        softAssert.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Extension 呼入到分机1000-->分机1000接听 -->右击不显示PickUp、Redirect、unpark\n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼叫[1000]\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testIncomingTalkingRightClickHangup","Regression","PSeries"})
+    public void testIncomingTalkingRightClickHangup() {
+
+        prerequisite();
+
+        step("1:login PBX");
+        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2.外线号码[2000]呼叫[1000]");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_Auto_Answer(2000,"991000",DEVICE_ASSIST_2,false);
+        sleep(5000);
+
+        step("3.右击挂断");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"2000");
+        sleep(5000);
+
+//        apiUtil.getCDRRecord(0);
+//        softAssert.assertAll();
+//        auto.cdrPage().assertCDRRecord()
 
     }
+
+
 }

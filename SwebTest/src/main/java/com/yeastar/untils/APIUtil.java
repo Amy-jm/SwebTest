@@ -104,7 +104,7 @@ public class APIUtil {
     }
     /**
      * 读CDR的API接口
-     * @param num  要获取最新的几条CDR几率，从0开始
+     * @param num  要获取最新的num条CDR几率，从0开始
      * @return 返回List类型的CDRObject对象，List里的对象数量和num一致
      * @throws IOException
      */
@@ -776,8 +776,9 @@ public class APIUtil {
         JSONArray jsonArray3 = new JSONArray();
 
         List<ExtensionObject> extensionObjects = getExtensionSummary();
-        for (String ext : dynamicAgentList){
-            for (ExtensionObject extensionObject: extensionObjects) {
+
+        for (ExtensionObject extensionObject: extensionObjects) {
+            for (String ext : dynamicAgentList){
                 if (ext.equals(extensionObject.number)){
                     JSONObject a = new JSONObject();
                     a.put("text",extensionObject.callerIdName);
@@ -786,6 +787,8 @@ public class APIUtil {
                     a.put("type","extension");
                     jsonArray1.put(a);
                 }
+            }
+            for (String ext : staticAgentList){
                 if (ext.equals(extensionObject.number)){
                     JSONObject a = new JSONObject();
                     a.put("text",extensionObject.callerIdName);
@@ -794,6 +797,8 @@ public class APIUtil {
                     a.put("type","extension");
                     jsonArray2.put(a);
                 }
+            }
+            for (String ext : managerList){
                 if (ext.equals(extensionObject.number)){
                     JSONObject a = new JSONObject();
                     a.put("text",extensionObject.callerIdName);

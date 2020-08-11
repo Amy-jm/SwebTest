@@ -2,6 +2,7 @@ package com.yeastar.page.pseries.CdrRecording;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.yeastar.controllers.WebDriverFactory;
 import com.yeastar.page.pseries.BasePage;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.untils.TableUtils;
@@ -47,13 +48,13 @@ public class CDRPage extends BasePage implements ICdrPageElement {
         ele_download_cdr_btn.waitUntil(Condition.visible,WaitUntils.SHORT_WAIT);
         ele_refresh_cdr_btn.click();
         sleep(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getTableForHeader(webDriver,CDR_HEADER.Call_From.getAlias(),row),callFrom);
-        softAssert.assertEquals(TableUtils.getTableForHeader(webDriver,CDR_HEADER.Call_To.getAlias(),row),callTo);
-        softAssert.assertEquals(TableUtils.getTableForHeader(webDriver,CDR_HEADER.Status.getAlias(),row),status);
-        softAssert.assertEquals(TableUtils.getTableForHeader(webDriver,CDR_HEADER.Reason.getAlias(),row),reason);
-        softAssert.assertEquals(TableUtils.getTableForHeader(webDriver,CDR_HEADER.Communication_Type.getAlias(),row),communicationType);
-        softAssert.assertEquals(TableUtils.getTableForHeader(webDriver,CDR_HEADER.Source_Trunk.getAlias(),row),sourceTrunk);
-        softAssert.assertEquals(TableUtils.getTableForHeader(webDriver,CDR_HEADER.Destination_Trunk.getAlias(),row),destTrunk);
+        softAssert.assertEquals(TableUtils.getTableForHeader(WebDriverFactory.getDriver(),CDR_HEADER.Call_From.getAlias(),row),callFrom);
+        softAssert.assertEquals(TableUtils.getTableForHeader(WebDriverFactory.getDriver(),CDR_HEADER.Call_To.getAlias(),row),callTo);
+        softAssert.assertEquals(TableUtils.getTableForHeader(WebDriverFactory.getDriver(),CDR_HEADER.Status.getAlias(),row),status);
+        softAssert.assertEquals(TableUtils.getTableForHeader(WebDriverFactory.getDriver(),CDR_HEADER.Reason.getAlias(),row),reason);
+        softAssert.assertEquals(TableUtils.getTableForHeader(WebDriverFactory.getDriver(),CDR_HEADER.Communication_Type.getAlias(),row),communicationType);
+        softAssert.assertEquals(TableUtils.getTableForHeader(WebDriverFactory.getDriver(),CDR_HEADER.Source_Trunk.getAlias(),row),sourceTrunk);
+        softAssert.assertEquals(TableUtils.getTableForHeader(WebDriverFactory.getDriver(),CDR_HEADER.Destination_Trunk.getAlias(),row),destTrunk);
         softAssert.assertAll();
 
         return this;
