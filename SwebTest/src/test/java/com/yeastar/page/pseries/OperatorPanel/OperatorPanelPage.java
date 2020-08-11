@@ -124,6 +124,36 @@ public class OperatorPanelPage extends BasePage {
     }
 
     /**
+     * 右键表中的元素（tagName）
+     * @param tagName
+     */
+    public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event){
+        if(tableType==TABLE_TYPE.INBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        if(tableType==TABLE_TYPE.OUTBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_OUTBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        eventAction(event, "");
+        return this;
+    }
+
+    /**
+     * 右键表中的元素（tagName）
+     * @param tagName
+     */
+    public  OperatorPanelPage rightTableActionMouserHover(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event){
+        if(tableType==TABLE_TYPE.INBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        if(tableType==TABLE_TYPE.OUTBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_OUTBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        eventActionWithHover(event);
+        return this;
+    }
+
+    /**
      *
      * @param tableType 源元素 所在区域
      * @param tagName   源元素 名称
@@ -188,6 +218,23 @@ public class OperatorPanelPage extends BasePage {
                 redirectElementInput.setValue(eventParam);
                  actions().sendKeys(Keys.ENTER).perform();
                 }
+        }
+        return this;
+    }
+
+
+    /**
+     * 右键事件
+     * @param event 右键面板上动作事件
+     * @param eventParam event 事件后，所有操作的参数
+     */
+    private OperatorPanelPage eventActionWithHover(RIGHT_EVENT event){
+        if(event==RIGHT_EVENT.TRANSFER){
+            SelenideElement transferElement = $(By.xpath(String.format(ACTION_XPATH,event.alias)));
+            $(By.xpath(String.format(ACTION_XPATH,event.alias))).hover();
+            sleep(WaitUntils.RETRY_WAIT);
+        }else{
+            $(By.xpath(String.format(ACTION_XPATH,event.alias))).hover();
         }
         return this;
     }

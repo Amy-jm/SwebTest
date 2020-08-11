@@ -221,4 +221,14 @@ public class BasePage implements IButton{
     public void refresh(){
         getWebDriver().navigate().refresh();
     }
+
+
+    /**
+     * 单击坐标
+     * @param x
+     * @param y
+     */
+    public void moveByOffsetAndClick(int x,int y){
+        actions().moveByOffset(x,y).perform();
+    }
 }
