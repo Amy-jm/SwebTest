@@ -207,7 +207,9 @@ public class APIUtil {
         for(ExtensionObject object : extensionObjectList){
             list.add(object.id);
         }
-        deleteExtension(list);
+        if(!list.isEmpty()){
+            deleteExtension(list);
+        }
         return this;
     }
 
