@@ -930,7 +930,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_AHandUp","Regression","PSeries"})
     public void testIncomingRightActionRedirectOffLineC_AHandUp(){
-//        prerequisiteForAPI();
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -960,7 +960,7 @@ public class TestOperatorPanel extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT*2);
         softAssert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),0);
 
-        pjsip.Pj_hangupCall(2000,2000);
+        pjsip.Pj_hangupCall(2000,2000);//todo can not handup
 
         assertStep("3:[CDR显示]");//todo CDR显示
         pjsip.Pj_Hangup_All();
@@ -980,7 +980,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries"})
     public void testIncomingRightActionRedirectOffLineC_CHandUp(){
-//        prerequisiteForAPI();
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1077,7 +1077,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHoverHandUp","Regression","PSeries"})
     public void testIncomingRightActionHoverHandUp(){
-//        prerequisiteForAPI();
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1124,7 +1124,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries"})
     public void testIncomingRightActionPickUp(){
-//        prerequisiteForAPI();
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
