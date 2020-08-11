@@ -207,7 +207,7 @@ public class APIUtil {
         for(ExtensionObject object : extensionObjectList){
             list.add(object.id);
         }
-        if(!list.isEmpty()){
+        if(list != null && !list.isEmpty()){
             deleteExtension(list);
         }
         return this;
@@ -274,7 +274,9 @@ public class APIUtil {
         for(ExtensionGroupObject object : extensionGroupObjects){
             list.add(object.id);
         }
-        deleteExtensionGroup(list);
+        if(list != null && !list.isEmpty()){
+            deleteExtensionGroup(list);
+        }
         return this;
     }
 
@@ -389,7 +391,9 @@ public class APIUtil {
         for(InboundRouteObject object : inboundObjectList){
             list.add(object.id);
         }
-        deleteInbound(list);
+        if (!list.isEmpty()) {
+            deleteInbound(list);
+        }
         return this;
     }
 
@@ -474,7 +478,9 @@ public class APIUtil {
         for(OutBoundRouteObject object : OutboundObjectList){
             list.add(object.id);
         }
-        deleteOutbound(list);
+        if(list != null && !list.isEmpty()){
+            deleteOutbound(list);
+        }
         return this;
     }
 
@@ -572,7 +578,9 @@ public class APIUtil {
         for(RingGroupObject object : ringGroupObjects){
             list.add(object.id);
         }
-        deleteRingGroup(list);
+        if(list != null && !list.isEmpty()){
+            deleteRingGroup(list);
+        }
         return this;
     }
 
@@ -659,7 +667,9 @@ public class APIUtil {
         for(ConferenceObject object : conferenceObjects){
             list.add(object.id);
         }
-        deleteConference(list);
+        if(list != null && !list.isEmpty()){
+            deleteConference(list);
+        }
         return this;
     }
 
@@ -746,7 +756,10 @@ public class APIUtil {
         for(QueueObject object : queueObjects){
             list.add(object.id);
         }
-        deleteQueue(list);
+        if(list != null && !list.isEmpty()){
+            deleteQueue(list);
+        }
+
         return this;
     }
 
@@ -778,34 +791,40 @@ public class APIUtil {
         List<ExtensionObject> extensionObjects = getExtensionSummary();
 
         for (ExtensionObject extensionObject: extensionObjects) {
-            for (String ext : dynamicAgentList){
-                if (ext.equals(extensionObject.number)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.callerIdName);
-                    a.put("text2",extensionObject.number);
-                    a.put("value",String.valueOf(extensionObject.id));
-                    a.put("type","extension");
-                    jsonArray1.put(a);
+            if(dynamicAgentList != null && !dynamicAgentList.isEmpty()){
+                for (String ext : dynamicAgentList){
+                    if (ext.equals(extensionObject.number)){
+                        JSONObject a = new JSONObject();
+                        a.put("text",extensionObject.callerIdName);
+                        a.put("text2",extensionObject.number);
+                        a.put("value",String.valueOf(extensionObject.id));
+                        a.put("type","extension");
+                        jsonArray1.put(a);
+                    }
                 }
             }
-            for (String ext : staticAgentList){
-                if (ext.equals(extensionObject.number)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.callerIdName);
-                    a.put("text2",extensionObject.number);
-                    a.put("value",String.valueOf(extensionObject.id));
-                    a.put("type","extension");
-                    jsonArray2.put(a);
+            if(staticAgentList != null && !staticAgentList.isEmpty()) {
+                for (String ext : staticAgentList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.callerIdName);
+                        a.put("text2", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray2.put(a);
+                    }
                 }
             }
-            for (String ext : managerList){
-                if (ext.equals(extensionObject.number)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.callerIdName);
-                    a.put("text2",extensionObject.number);
-                    a.put("value",String.valueOf(extensionObject.id));
-                    a.put("type","extension");
-                    jsonArray3.put(a);
+            if(managerList != null && !managerList.isEmpty()) {
+                for (String ext : managerList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.callerIdName);
+                        a.put("text2", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray3.put(a);
+                    }
                 }
             }
         }
