@@ -335,7 +335,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Issue("")
     @Test(groups = {"P0", "TestExtensionPresence", "Presence","PresenceAvailable", "Extension", "Regression", "PSeries"})
     public void testPresenceAvailable2000CallQueue6401(){
-        A_RecoveryEnv();
+//        A_RecoveryEnv();
 
         step("登录pbx");
         loginWithAdmin();

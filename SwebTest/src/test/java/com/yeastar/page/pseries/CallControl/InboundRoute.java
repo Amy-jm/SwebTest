@@ -69,6 +69,7 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
     @Step("点击编辑呼入路由")
     public InboundRoute editInbound(String name,String title){
         TableUtils.clickTableEidtBtn(getDriver(),title,name);
+        sleep(5000);
         return this;
     }
 

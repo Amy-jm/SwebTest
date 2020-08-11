@@ -1,12 +1,10 @@
 package com.yeastar.untils;
-import com.yeastar.untils.APIObject.ExtensionObject;
-import com.yeastar.untils.APIObject.InboundRouteObject;
-import com.yeastar.untils.APIObject.OutBoundRouteObject;
-import com.yeastar.untils.APIObject.TrunkObject;
+import com.yeastar.untils.APIObject.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log.output.ServletOutputLogTarget;
 import org.apache.xerces.xs.StringList;
+import org.testng.Assert;
 import top.jfunc.json.JsonArray;
 import top.jfunc.json.JsonObject;
 import top.jfunc.json.impl.JSONArray;
@@ -64,9 +62,8 @@ public class APIUtil {
         String respone = m_getRequest(request);
 
         JSONObject jsonObject = new JSONObject(respone);
-        if (!jsonObject.getInteger("errcode").equals(0)){
-            log.error("[loginWebClient: ]分机"+num+"首次登录失败,errmsg:"+jsonObject.getString("errmsg"));
-        }
+        Assert.assertEquals(String.valueOf(0),jsonObject.getString("errcode"),"[loginWebClient: ]分机"+num+"首次登录失败,errmsg:"+jsonObject.getString("errmsg"));
+
         //判断是否需要确认隐私协议
         if(jsonObject.containsKey("need_confirm_new_gdpr") && jsonObject.getInteger("need_confirm_new_gdpr") == 1){
             m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/user/confirmgdpr","{}");
@@ -79,25 +76,32 @@ public class APIUtil {
             postJson.put("new_password",enBase64(DigestUtils.md5Hex(newPassword)));
             postJson.put("confirm_password",enBase64(DigestUtils.md5Hex(newPassword)));
             respone = m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/user/updatepassword",postJson.toString());
-            System.out.println("DDDDDDDDDDD "+respone);
+
             JSONObject responeObject = new JSONObject(respone);
             if (!responeObject.getInteger("errcode").equals(0)){
-                log.error("[loginWebClient: ]"+"分机"+num+"默认密码修改失败,errormsg："+responeObject.getString("errmsg"));
+                Assert.fail("[loginWebClient: ]"+"分机"+num+"默认密码修改失败,errormsg："+responeObject.getString("errmsg"));
             }else{
                 //密码修改成功，重新登录
                 request = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username="+num+"&password="+enBase64(DigestUtils.md5Hex(newPassword));
                 respone = m_getRequest(request);
                 JSONObject jsonObject1 = new JSONObject(respone);
                 if (!jsonObject1.getInteger("errcode").equals(0) || jsonObject1.containsKey("need_confirm_new_gdpr") || jsonObject1.containsKey("need_modify_default_pwd")){
-                    log.error("[loginWebClient: ] 分机"+num+"密码修改失败,errmsg:"+jsonObject1.getString("errmsg"));
+                    Assert.fail("[loginWebClient: ] 分机"+num+"密码修改失败,errmsg:"+jsonObject1.getString("errmsg"));
                 }
             }
         }
-
-
         return this;
     }
 
+    /**
+     * 更新WebClient页面的Preferences
+     * @param request
+     * @return
+     */
+    public APIUtil updatePersonal(String request){
+        m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/updatepersonal",request);
+        return this;
+    }
     /**
      * 读CDR的API接口
      * @param num  要获取最新的几条CDR几率，从0开始
@@ -138,6 +142,21 @@ public class APIUtil {
         return false;
     }
 
+
+    /**
+     * 创建时需要获取的初始化参数
+     * @param arg ，根据需要创建的事件填写，分机相关：extension,队列相关：queue 以此类推
+     *       有效参数：personal extension park vm_group ivr ring_group queue conference paging account random_pwd
+     * @return
+     */
+    public JsonObject getInitialdata(String arg){
+
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/initialdata/get?menu="+arg);
+        JSONObject jsonObject = new JSONObject(jsonString);
+
+        return jsonObject.getJsonObject("initial_data");
+    }
+
     /**
      * 获取分机概要列表
      * 对应API：api/v1.0/extension/searchsummary
@@ -158,7 +177,7 @@ public class APIUtil {
             }
 
         }else {
-            log.error("[API getExtensionSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+            Assert.fail("[API getExtensionSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
         }
         return extObjList;
     }
@@ -219,7 +238,73 @@ public class APIUtil {
     }
 
     /**
-     * 获取分机概要列表
+     * 获取分机组概要列表
+     * 对应API：api/v1.0/extension/searchsummary
+     */
+    public List<ExtensionGroupObject> getExtensionGroupSummary(){
+
+        List<ExtensionGroupObject> extObjList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("extension_group_list"))
+                return extObjList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("extension_group_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                extObjList.add(new ExtensionGroupObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+
+        }else {
+            Assert.fail("[API getExtensionSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return extObjList;
+    }
+
+    /**
+     * 删除当前存在的所有分机组
+     * */
+    public APIUtil deleteAllExtensionGroup(){
+        List<ExtensionGroupObject> extensionGroupObjects = getExtensionGroupSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(ExtensionGroupObject object : extensionGroupObjects){
+            list.add(object.id);
+        }
+        deleteExtensionGroup(list);
+        return this;
+    }
+
+    /**
+     * 通过分机组的ID删除指定分机组
+     * 对应接口：/api/v1.0/extensiongroup/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteExtensionGroup(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/batchdelete",jsonObject.toString());
+
+        return this;
+    }
+
+    /**
+     * 创建分机，
+     * @param request  请求包中的完整body赋值给request
+     */
+    public APIUtil createExtensionGroup(String request){
+        //获取默认分机组
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/create",request);
+        return this;
+    }
+
+    /**
+     * 获取Trunk概要列表
      * 对应API：api/v1.0/extension/searchsummary
      */
     public List<TrunkObject> getTrunkSummary(){
@@ -237,7 +322,7 @@ public class APIUtil {
                 trunkObjList.add(new TrunkObject((JSONObject) jsonArray.getJsonObject(i)));
             }
         }else {
-            log.error("[API getTrunkSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+            Assert.fail("[API getTrunkSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
         }
         return trunkObjList;
     }
@@ -287,7 +372,7 @@ public class APIUtil {
                 extObjList.add(new InboundRouteObject((JSONObject) jsonArray.getJsonObject(i)));
             }
         }else {
-            log.error("[API getInboundSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+            Assert.fail("[API getInboundSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
         }
         return extObjList;
     }
@@ -372,13 +457,13 @@ public class APIUtil {
             }
 
         }else {
-            log.error("[API getOutboundSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+            Assert.fail("[API getOutboundSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
         }
         return extObjList;
     }
 
     /**
-     * 删除当前存在的所有分机
+     * 删除当前存在的所有呼出路由
      * */
     public APIUtil deleteAllOutbound(){
         List<OutBoundRouteObject> OutboundObjectList = getOutboundSummary();
@@ -411,7 +496,7 @@ public class APIUtil {
      * 创建呼出路由
      * @param request
      */
-    public  APIUtil createOutbound(String name, List<String> trunks, List<String> extensions){
+    public APIUtil createOutbound(String name, List<String> trunks, List<String> extensions){
 
         List<TrunkObject> trunkObjects = getTrunkSummary();
         JSONArray jsonArray = new JSONArray();
@@ -447,6 +532,304 @@ public class APIUtil {
                 ,name,jsonArray.toString() ,jsonArray2.toString());
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/create",request);
+        return this;
+    }
+
+    /**
+     * 获取概要列表
+     * 对应API：api/v1.0/ringgroup/searchsummary
+     */
+    public List<RingGroupObject> getRingGroupSummary(){
+
+        List<RingGroupObject> extObjList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("ring_group_list"))
+                return extObjList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("ring_group_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                extObjList.add(new RingGroupObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+
+        }else {
+            Assert.fail("[API getRingGroupSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return extObjList;
+    }
+
+    /**
+     * 删除当前存在的所有响铃组
+     * */
+    public APIUtil deleteAllRingGroup(){
+        List<RingGroupObject> ringGroupObjects = getRingGroupSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(RingGroupObject object : ringGroupObjects){
+            list.add(object.id);
+        }
+        deleteRingGroup(list);
+        return this;
+    }
+
+    /**
+     * 通过分机的ID删除指定分机
+     * 对应接口：/api/v1.0/ringgroup/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteRingGroup(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/batchdelete",jsonObject.toString());
+        return this;
+    }
+
+    /**
+     * 创建呼出路由
+     * @param request
+     */
+    public APIUtil createRingGroup(String name,String number, List<String> extensions){
+        JSONArray jsonArray = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        for (String ext : extensions){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.callerIdName);
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"member_list\":%s,\"ring_strategy\":\"ring_all\",\"ring_timeout\":60,\"fail_dest\":\"end_call\",\"fail_dest_prefix\":\"\",\"fail_dest_value\":\"\"}"
+                ,number,name,jsonArray.toString() );
+
+        String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/create",request);
+
+        JSONObject jsonObject = new JSONObject(respone);
+        Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createRingGroup: ]响铃组 num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
+        return this;
+    }
+
+
+    /**
+     * 获取概要列表
+     * 对应API：api/v1.0/conference/searchsummary
+     */
+    public List<ConferenceObject> getConferenceSummary(){
+
+        List<ConferenceObject> extObjList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("conference_list"))
+                return extObjList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("conference_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                extObjList.add(new ConferenceObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+
+        }else {
+            Assert.fail("[API getConferenceSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return extObjList;
+    }
+
+    /**
+     * 删除当前存在的所有响铃组
+     * */
+    public APIUtil deleteAllConference(){
+        List<ConferenceObject> conferenceObjects = getConferenceSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(ConferenceObject object : conferenceObjects){
+            list.add(object.id);
+        }
+        deleteConference(list);
+        return this;
+    }
+
+    /**
+     * 通过分机的ID删除指定分机
+     * 对应接口：/api/v1.0/ringgroup/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteConference(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/batchdelete",jsonObject.toString());
+        return this;
+    }
+
+    /**
+     * 创建呼出路由
+     * @param request
+     */
+    public APIUtil createConference(String name,String number, List<String> extensions){
+        JSONArray jsonArray = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        for (String ext : extensions){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.callerIdName);
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"partic_password\":\"\",\"moderator_password\":\"\",\"sound_prompt\":\"default\",\"enb_wait_moderator\":0,\"allow_partic_invite\":1,\"moderator_list\":%s}"
+                ,number,name,jsonArray.toString() );
+
+        String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/create",request);
+
+        JSONObject jsonObject = new JSONObject(respone);
+        Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createConference: ]响铃组 num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
+        return this;
+    }
+
+
+    /**
+     * 获取概要列表
+     * 对应API：api/v1.0/queue/searchsummary
+     */
+    public List<QueueObject> getQueueSummary(){
+
+        List<QueueObject> extObjList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/queue/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("queue_list"))
+                return extObjList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("queue_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                extObjList.add(new QueueObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+
+        }else {
+            Assert.fail("[API getQueueSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return extObjList;
+    }
+
+    /**
+     * 删除当前存在的所有响铃组
+     * */
+    public APIUtil deleteAllQueue(){
+        List<QueueObject> queueObjects = getQueueSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(QueueObject object : queueObjects){
+            list.add(object.id);
+        }
+        deleteQueue(list);
+        return this;
+    }
+
+    /**
+     * 通过分机的ID删除指定分机
+     * 对应接口：/api/v1.0/queue/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteQueue(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/queue/batchdelete",jsonObject.toString());
+        return this;
+    }
+
+    /**
+     * 创建呼出路由
+     * @param request
+     */
+    public APIUtil createQueue(String name,String number, List<String> dynamicAgentList, List<String> staticAgentList, List<String> managerList){
+        JSONArray jsonArray1 = new JSONArray();
+        JSONArray jsonArray2 = new JSONArray();
+        JSONArray jsonArray3 = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        for (String ext : dynamicAgentList){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.callerIdName);
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray1.put(a);
+                }
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.callerIdName);
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray2.put(a);
+                }
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.callerIdName);
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray3.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"ring_strategy\":\"ring_all\",\"moh\":\"default\",\"max_wait_time\":1800,\"fail_dest\":\"end_call\",\"fail_dest_prefix\":\"\",\"fail_dest_value\":\"\",\"enb_group_vm\":0,\"agent_timeout\":30,\"retry_time\":30,\"wrap_up_time\":30,\"agent_prompt\":\"\",\"enb_ring_in_use\":0,\"dynamic_agent_list\":%s,\"static_agent_list\":%s,\"manager_list\":%s,\"enb_email_miss_call\":1,\"enb_email_abandon_call\":1,\"enb_email_sla_alarm\":1,\"max_calls\":0,\"enb_leave_empty\":1,\"enb_join_empty\":0,\"sla_time\":60,\"sla_interval\":30,\"sla_alarm_threshold\":80,\"join_prompt\":\"\",\"enb_announce_agent_id\":0,\"enb_announce_pos\":1,\"enb_announce_hold_time\":1,\"caller_announce_freq\":30,\"sys_announce_prompt\":\"\",\"sys_announce_freq\":60,\"satisfa_survey_prompt\":\"\",\"press_key\":\"\",\"key_dest\":\"end_call\",\"key_dest_value\":\"\",\"key_dest_prefix\":\"\",\"enb_mgr_agent_status\":1,\"enb_mgr_call_dist\":1,\"enb_mgr_call_conn\":1,\"enb_mgr_monitor\":1,\"enb_mgr_call_park\":1,\"enb_mgr_record\":1,\"enb_agent_call_dist\":1,\"enb_agent_call_conn\":1,\"enb_agent_call_park\":1}"
+                ,number,name,jsonArray1.toString(),jsonArray2.toString(),jsonArray3.toString() );
+
+        String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/queue/create",request);
+        JSONObject jsonObject = new JSONObject(respone);
+        Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createQueue: ]队列 num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
+
+        return this;
+    }
+
+    /**
+     * Preference 更新
+     * @param request
+     * @return
+     */
+    public APIUtil preferencesUpdate(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/preferences/update",request);
+        return this;
+    }
+
+    /**
+     * linkusServer 更新
+     * @param request
+     * @return
+     */
+    public APIUtil linkusserverUpdate(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/linkusserver/update",request);
         return this;
     }
 
@@ -502,6 +885,10 @@ public class APIUtil {
             e.printStackTrace();
         }
         log.debug("[GET result: ] "+responeData);
+        JSONObject jsonObject = new JSONObject(responeData);
+        if(jsonObject.getInteger("errcode") != 0){
+            Assert.fail("[GET Request err:] errcode:"+jsonObject.getInteger("errcode")+" errmsg: "+jsonObject.getString("errmsg"));
+        }
         return responeData;
     }
 
@@ -511,7 +898,7 @@ public class APIUtil {
      * @return
      */
     private String m_postRequest(String urlpath,String args1) {
-        log.debug("postRequest cmd: "+urlpath + "body: "+args1);
+        log.debug("postRequest cmd: "+urlpath + "  body: "+args1);
         HttpsURLConnection.setDefaultHostnameVerifier(new APIUtil().new NullHostNameVerifier());
 
         OutputStreamWriter out = null;
@@ -550,6 +937,11 @@ public class APIUtil {
             e.printStackTrace();
         }
         log.debug("[POST responeData: ] "+responeData);
+
+        JSONObject jsonObject = new JSONObject(String.valueOf(responeData));
+        if(jsonObject.getInteger("errcode") != 0){
+            Assert.fail("[POST Request err:] errcode:"+jsonObject.getInteger("errcode")+" errmsg: "+jsonObject.getString("errmsg"));
+        }
         return String.valueOf(responeData);
     }
     /**
