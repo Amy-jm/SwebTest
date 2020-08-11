@@ -13,12 +13,14 @@ import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
@@ -35,32 +37,13 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 @Log4j2
 public class TestExtensionVoicemail extends TestCaseBase {
 
-    @Test
-    public void CaseName() throws InterruptedException {
+    private String reqDataCreateExtension = String.format("" +
+            "{\"type\":\"SIP\",\"first_name\":\"Yeastar Test0\",\"last_name\":\"朗视信息科技\",\"email_addr\":\"\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"0\",\"caller_id\":\"(0591)-Ys.0\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"MTIzNA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":[{\"id\":0,\"group_id\":1,\"ext_id\":0,\"user_type\":\"user\",\"enb_widget_in_calls\":1,\"enb_widget_out_calls\":1,\"enb_widget_ext_list\":1,\"enb_widget_ring_group_list\":1,\"enb_widget_queue_list\":1,\"enb_widget_park_ext_list\":1,\"enb_widget_vm_group_list\":1,\"enb_chg_presence\":0,\"enb_call_distribution\":0,\"enb_call_conn\":0,\"enb_monitor\":0,\"enb_call_park\":0,\"enb_ctrl_ivr\":0,\"enb_office_time_switch\":0,\"enb_mgr_recording\":0,\"group_name\":\"Default_All_Extensions\",\"member_select\":\"sel_all_ext\"}],\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"reg_name\":\"0\",\"reg_password\":\"%s\",\"allow_reg_remotely\":0,\"enb_user_agent_ident\":0,\"enb_ip_rstr\":0}"
+            ,enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)),enBase64(EXTENSION_PASSWORD));
 
-        step("登录 PBX");
-
-        loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().choiceLinkusServer().
-                setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,true).
-                setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,true).
-                clickSaveAndApply();
-        auto.extensionPage().deleAllExtension()
-                .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD)
-                .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
-                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
-                .selectCombobox(IExtensionPageElement.VOICEMAIL_PIN_AUTH.ENABLED.getAlias())
-                .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.DO_NOT_SEND_EMAIL_NOTIFICATIONS.getAlias())
-                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_date_time_checkbox,true)
-                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_caller_id_checkbox,true)
-                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_message_duration_checkbox,true)
-                .selectCombobox(IExtensionPageElement.DEFAULT_GREETING.FOLLOW_SYSTEM.getAlias())
-                .ele_extension_voicemail_access_pin.setValue("1234");
-//        preparationSteps();
-
-    }
-
+    private String reqDataCreateSPS = String.format("" +
+                    "{\"name\":\"%s\",\"enable\":1,\"country\":\"general\",\"itsp\":\"\",\"type\":\"peer\",\"transport\":\"udp\",\"codec_sel\":\"ulaw,alaw,g729\",\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_srtp\":0,\"enb_t38_support\":0,\"enb_inband_progress\":0,\"max_call_chans\":0,\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"\",\"from_user\":\"\",\"from_user_part\":\"default\",\"from_disp_name\":\"\",\"from_disp_name_part\":\"default\",\"from_host\":\"\",\"from_host_part\":\"domain\",\"diversion_user\":\"\",\"diversion_user_part\":\"\",\"rpid_user\":\"\",\"rpid_user_part\":\"\",\"pai_user\":\"\",\"pai_user_part\":\"\",\"ppi_user\":\"\",\"ppi_user_part\":\"\",\"enb_privacy_id\":0,\"enb_user_phone\":0,\"caller_id_from\":\"follow_system\",\"did_from\":\"follow_system\",\"user_agent\":\"\",\"enb_100rel\":0,\"max_ptime\":\"default\",\"rtp_reinvite\":\"\",\"enb_guest_auth\":0,\"enb_early_media\":0,\"enb_message\":0,\"did_list\":[],\"inbound_cid_list\":[],\"outbound_cid_list\":[],\"hostname\":\"%s\",\"port\":5060,\"domain\":\"%s\"}"
+            ,SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2);
     /**
      * voicemail 环境准备
      * 修改分机0voicemail页面，启用voicemail，
@@ -74,34 +57,40 @@ public class TestExtensionVoicemail extends TestCaseBase {
      */
     public void preparationSteps() {
 
-        //设置cdr名称显示格式
-        auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
-        auto.preferencesPage().selectCombobox(IPreferencesPageElement.NAME_DISPLAY_FORMAT.FIRST_LAST_WITH_SPACE.getAlias())
-                .setElementValue(IPreferencesPageElement.ele_pbx_settings_preferences_max_call_duration_select,"1800")
-                .clickSaveAndApply();
+        APIUtil apiUtil = new APIUtil();
+        List<String> trunks = new ArrayList<>();
+        trunks.add(SPS);
+
+        step("设置cdr名称显示格式:first_last,最大通话时长1800s");
+        apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"first_last\",\"max_call_duration\":1800}")
+        .linkusserverUpdate("{\"enable_extension_login\":1,\"enable_email_login\":1}");
 
         step("删除所有分机 -> 创建分机0");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().choiceLinkusServer().
-                setCheckbox(IExtensionPageElement.ele_extension_server_enable_extension_login_checkbox,true).
-                setCheckbox(IExtensionPageElement.ele_extension_server_enable_email_login_checkbox,true).
-                clickSaveAndApply();
+        apiUtil.deleteAllExtension().createExtension(reqDataCreateExtension);
 
-        auto.extensionPage().deleAllExtension()
-                .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD)
-                .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
-                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
-                .selectCombobox(IExtensionPageElement.VOICEMAIL_PIN_AUTH.ENABLED.getAlias())
-                .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.DO_NOT_SEND_EMAIL_NOTIFICATIONS.getAlias())
-                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_date_time_checkbox,true)
-                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_caller_id_checkbox,true)
-                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_message_duration_checkbox,true)
-                .selectCombobox(IExtensionPageElement.DEFAULT_GREETING.FOLLOW_SYSTEM.getAlias())
-                .ele_extension_voicemail_access_pin.setValue("1234");
-        auto.extensionPage().clickSaveAndApply();
-        sleep(5000);
+        step("删除spstrunk -> 创建sps trunk");
+        apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
+
+        step("删除呼入路由 -> 创建呼入路由InRoute1");
+        apiUtil.deleteAllInbound().createInbound("InRoute1",trunks,"Extension","0").apply();
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+//        auto.extensionPage().deleAllExtension()
+//                .createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD)
+//                .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+//                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
+//                .selectCombobox(IExtensionPageElement.VOICEMAIL_PIN_AUTH.ENABLED.getAlias())
+//                .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.DO_NOT_SEND_EMAIL_NOTIFICATIONS.getAlias())
+//                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_date_time_checkbox,true)
+//                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_caller_id_checkbox,true)
+//                .isCheckbox(IExtensionPageElement.ele_extension_voicemail_play_message_duration_checkbox,true)
+//                .selectCombobox(IExtensionPageElement.DEFAULT_GREETING.FOLLOW_SYSTEM.getAlias())
+//                .ele_extension_voicemail_access_pin.setValue("1234");
+//        auto.extensionPage().clickSaveAndApply();
+//        sleep(5000);
 
         //todo 26版本bug，删除分机提示音不会删除，此处手动兼容此问题
+
         step("录制voicemail greeting");
         SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, "rm /ysdisk/ysapps/pbxcenter/var/lib/asterisk/sounds/record/0/*");
         pjsip.Pj_Init();
@@ -116,20 +105,20 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.extensionPage().clickSave();
         softAssert.assertAll();
 
-        step("删除spstrunk -> 创建sps trunk");
-        sleep(3000);
-        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
-        auto.trunkPage().deleteTrunk(getDriver(),SPS).createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
 
-        step("删除呼入路由 -> 创建呼入路由InRoute1");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
-        ArrayList<String> trunklist = new ArrayList<>();
-        trunklist.add(SPS);
-        auto.inboundRoute().deleteAllInboundRoutes()
-                .createInboundRoute("InRoute1",trunklist)
-                .editInbound("InRoute1","Name")
-                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技")
-                .clickSaveAndApply();
+//        sleep(3000);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
+//        auto.trunkPage().deleteTrunk(getDriver(),SPS).createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
+
+//        step("删除呼入路由 -> 创建呼入路由InRoute1");
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+//        ArrayList<String> trunklist = new ArrayList<>();
+//        trunklist.add(SPS);
+//        auto.inboundRoute().deleteAllInboundRoutes()
+//                .createInboundRoute("InRoute1",trunklist)
+//                .editInbound("InRoute1","Name")
+//                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技")
+//                .clickSaveAndApply();
     }
 
 
