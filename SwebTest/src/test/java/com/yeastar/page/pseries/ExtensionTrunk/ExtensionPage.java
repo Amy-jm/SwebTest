@@ -247,7 +247,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         isCheckbox(ele_extension_presence_forward_enb_in_always_forward_checkBox,enable);
         if(enable){
             ele_extension_presence_forward_in_always_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_always_forward_dest']/../div[2]//li[contains(text(),'%s')]", dest1))).click();
+            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_always_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_always_forward_prefix_input.setValue(dest2);
@@ -294,14 +294,14 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_in_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_in_no_answer_forward_checkBox,true);
             ele_extension_presence_forward_in_no_answer_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_no_answer_forward_dest']/../div[2]//li[contains(text(),'%s')]", dest1))).click();
+            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_no_answer_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_no_answer_forward_prefix_input.setValue(dest2);
                 }else{
                     selectComm(ele_extension_presence_forward_in_no_answer_forward_value_combobox,dest2);
                 }
-
+//div[@id='c0aeb940-4d11-4440-b948-6231fe4b405e']//li[contains(@class,'ant-select-dropdown-menu-item ant-select-dropdown-menu-item-selected')][contains(text(),'Extension')]
                 if(!dest3.isEmpty()){
                     if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                         ele_extension_presence_forward_in_no_answer_forward_num_input.setValue(dest3);
@@ -343,7 +343,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_in_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_in_busy_forward_checkBox,true);
             ele_extension_presence_forward_in_busy_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_busy_forward_dest']/../div[2]//li[contains(text(),'%s')]", dest1))).click();
+            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_busy_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_busy_forward_prefix_input.setValue(dest2);
@@ -390,7 +390,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,enable);
         if(enable){
             ele_extension_presence_forward_ex_always_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_always_forward_dest']/../div[2]//li[contains(text(),'%s')]", dest1))).click();
+            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_always_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_always_forward_prefix_input.setValue(dest2);
@@ -436,7 +436,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_ex_no_answer_forward_checkBox,true);
             ele_extension_presence_forward_ex_no_answer_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_no_answer_forward_dest']/../div[2]//li[contains(text(),'%s')]", dest1))).click();
+            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_no_answer_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_no_answer_forward_prefix_input.setValue(dest2);
@@ -484,7 +484,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_ex_busy_forward_checkBox,true);
             ele_extension_presence_forward_ex_busy_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_busy_forward_dest']/../div[2]//li[contains(text(),'%s')]", dest1))).click();
+            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_busy_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_busy_forward_prefix_input.setValue(dest2);

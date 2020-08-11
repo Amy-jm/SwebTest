@@ -8,7 +8,7 @@ import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface IRingGroupPageElement {
 
-    SelenideElement searchIpt = $(By.xpath("//input[@placeholder="+UI_MAP.getString("header.search_placeholder")+"]"));
+    SelenideElement searchIpt = $(By.xpath("//input[@placeholder=‘"+UI_MAP.getString("header.search_placeholder")+"‘]"));
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
 
     SelenideElement ele_ring_group_number_input = $(By.id("ring_group_number"));

@@ -95,12 +95,13 @@ public class OperatorPanelPage extends BasePage {
         }
         return listEvent;
     }
+
     /**
      * 右键表中的元素（tagName）
      * 匹配模式--包含匹配
      * @param tagName
      */
-    public  OperatorPanelPage rightTableAction(String tagName, RIGHT_EVENT event, String eventParam){
+    public  OperatorPanelPage rightTableAction(String tagName,RIGHT_EVENT event,String eventParam){
         sleep(WaitUntils.SHORT_WAIT);
         //右键弹框
         actions().contextClick($(By.xpath(String.format(RIGHT_ACTION_XPATH,tagName)))).perform();

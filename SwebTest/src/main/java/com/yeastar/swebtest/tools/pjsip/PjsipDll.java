@@ -46,7 +46,7 @@ public class PjsipDll {
 
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary("YsAutoTestPjsua_sound",pjsipdll.class);
 //
-//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
 
         pjsipdll instance =  (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
 

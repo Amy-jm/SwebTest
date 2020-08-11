@@ -26,7 +26,7 @@ public interface IQueuePageElement {
         }
     }
 
-    SelenideElement searchIpt = $(By.xpath("//input[@placeholder="+UI_MAP.getString("header.search_placeholder")+"]"));
+    SelenideElement searchIpt = $(By.xpath("//input[@placeholder=‘"+UI_MAP.getString("header.search_placeholder")+"]’"));
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
 
     SelenideElement ele_queue_basic_number_input = $(By.id("queue_basic_number"));
