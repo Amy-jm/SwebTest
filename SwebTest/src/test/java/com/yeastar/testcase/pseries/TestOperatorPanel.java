@@ -141,7 +141,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "2:外线号码[2000]呼叫[1000]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries","VCP1"})
     public void testIncomingRingStatus(){
 //        prerequisite();
 //
@@ -186,7 +186,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Extension]1001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropWithCTalking(){
         prerequisiteForAPI();
 
@@ -243,7 +243,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Extension]1001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropWithCIdle(){
         prerequisiteForAPI();
 
@@ -297,7 +297,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Extension]1001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropWithCUnregistered(){
         prerequisiteForAPI();
 
@@ -349,7 +349,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Ring Group]6300")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropRingGroup(){
         prerequisiteForAPI();
 
@@ -432,7 +432,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Parking]1000")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropParking","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropParking","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropParking(){
         prerequisiteForAPI();
 
@@ -480,7 +480,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Queue]6400")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropQueue(){
         prerequisiteForAPI();
 
@@ -550,7 +550,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_AHandUp","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionRedirectC_AHandUp(){
         prerequisiteForAPI();
 
@@ -609,7 +609,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_CHandUp","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionRedirectC_CHandUp(){
         prerequisiteForAPI();
 
@@ -667,7 +667,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Ring Group]6300")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRedirectRingGroup","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRedirectRingGroup","Regression","PSeries","VCP1"})
     public void testIncomingRedirectRingGroup(){
         prerequisiteForAPI();
 
@@ -749,7 +749,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Queue]6400")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRedirectQueue","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRedirectQueue","Regression","PSeries","VCP1"})
     public void testIncomingRedirectQueue(){
         prerequisiteForAPI();
 
@@ -819,7 +819,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Voicemail]小图标")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRedirectVoicemail","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRedirectVoicemail","Regression","PSeries","VCP1"})
     public void testIncomingRedirectVoicemail(){
         prerequisiteForAPI();
 
@@ -865,7 +865,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6200")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRedirectIVR","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRedirectIVR","Regression","PSeries","VCP1"})
     public void testIncomingRedirectIVR(){
         prerequisiteForAPI();
 
@@ -911,7 +911,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "3:右键->查看显示的条目")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionUnDisplay","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionUnDisplay","Regression","PSeries","VCP1"})
     public void testIncomingRightActionUnDisplay(){
         prerequisiteForAPI();
 
@@ -950,7 +950,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_AHandUp","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_AHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionRedirectOffLineC_AHandUp(){
         prerequisiteForAPI();
 
@@ -1000,7 +1000,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionRedirectOffLineC_CHandUp(){
         prerequisiteForAPI();
 
@@ -1053,7 +1053,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionHandUp(){
         prerequisiteForAPI();
 
@@ -1097,7 +1097,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:移开后 通话继续")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionHoverHandUp","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionHoverHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionHoverHandUp(){
         prerequisiteForAPI();
 
@@ -1144,7 +1144,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionPickUp(){
         prerequisiteForAPI();
 
