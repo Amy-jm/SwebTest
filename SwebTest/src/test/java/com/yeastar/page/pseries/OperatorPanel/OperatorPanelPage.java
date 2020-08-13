@@ -228,7 +228,7 @@ public class OperatorPanelPage extends BasePage {
     /**
      * 右键事件
      * @param event 右键面板上动作事件
-     * @param eventParam event 事件后，所有操作的参数
+//     * @param eventParam event 事件后，所有操作的参数
      */
     private OperatorPanelPage eventActionWithHover(RIGHT_EVENT event){
         if(event==RIGHT_EVENT.TRANSFER){
@@ -346,7 +346,7 @@ public class OperatorPanelPage extends BasePage {
         RINGGROUP("table-ring-group"),
         QUEUE("table-queue"),
         PARKING("table-parking"),
-        EXTENSION("table-extension-2193");
+        EXTENSION("table-extension");
         private final String alias;
 
         DOMAIN(String alias) {
@@ -457,7 +457,7 @@ public class OperatorPanelPage extends BasePage {
      * 记录枚举
      */
     public enum  RECORD{
-        RecordStatus,
+//        RecordStatus,
         Caller,
         Callee,
         Status,
@@ -479,19 +479,21 @@ public class OperatorPanelPage extends BasePage {
         String result = "";
         if(records.size()!=0){
             for (int i = 0; i < records.size(); i++) {
-                if ((recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
-                        (recordType == RECORD.Caller && records.get(i).getCaller() == recordTypeValue) ||
-                        (recordType == RECORD.Callee && records.get(i).getCallee() == recordTypeValue) ||
-                        (recordType == RECORD.Status && records.get(i).getStatus() == recordTypeValue) ||
-                        (recordType == RECORD.StrTime && records.get(i).getStrTime() == recordTypeValue) ||
-                        (recordType == RECORD.Details && records.get(i).getDetails() == recordTypeValue)
+                if (
+//                        (recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
+                        recordType == RECORD.Caller && records.get(i).getCaller().contains(recordTypeValue) ||
+                        recordType == RECORD.Callee && records.get(i).getCallee().contains(recordTypeValue) ||
+                        recordType == RECORD.Status && records.get(i).getStatus().contains(recordTypeValue) ||
+                        recordType == RECORD.StrTime && records.get(i).getStrTime().contains(recordTypeValue) ||
+                        recordType == RECORD.Details && records.get(i).getDetails().contains(recordTypeValue)
                 ) {
                     targetInt = i;
                 }
             }
-            if (getRecordType == RECORD.RecordStatus) {
-                result = records.get(targetInt).getRecordStatus();
-            }else if (getRecordType == RECORD.Caller) {
+//            if (getRecordType == RECORD.RecordStatus) {
+//                result = records.get(targetInt).getRecordStatus();
+//            }else
+            if (getRecordType == RECORD.Caller) {
                 result =  records.get(targetInt).getCaller();
             }else if (getRecordType == RECORD.Callee) {
                 result =  records.get(targetInt).getCallee();
@@ -521,7 +523,8 @@ public class OperatorPanelPage extends BasePage {
         int targetInt = 0;
         if (records.size() != 0) {
             for (int i = 0; i < records.size(); i++) {
-                if ((recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
+                if (
+//                        (recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
                         (recordType == RECORD.Caller && records.get(i).getCaller() == recordTypeValue) ||
                         (recordType == RECORD.Callee && records.get(i).getCallee() == recordTypeValue) ||
                         (recordType == RECORD.Status && records.get(i).getStatus() == recordTypeValue) ||

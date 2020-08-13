@@ -419,9 +419,9 @@ public class APIUtil {
      * @param trunks
      */
     public  APIUtil createInbound(String name, List<String> trunks, String dest, String destValue){
-
         List<TrunkObject> trunkObjects = getTrunkSummary();
         JSONArray jsonArray = new JSONArray();
+        String request = "";
 
         for (int i=0; i<trunks.size(); i++){
             for (int j=0; j<trunkObjects.size(); j++){
@@ -434,11 +434,15 @@ public class APIUtil {
                 }
             }
         }
-
-        ExtensionObject ext = getExtensionSummary(destValue);
-
-        String request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"extension\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
-        ,name,String.valueOf(ext.id) ,jsonArray.toString());
+        if(dest.equalsIgnoreCase("extension")){
+            ExtensionObject ext = getExtensionSummary(destValue);
+             request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"%s\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
+                    ,name,dest.toLowerCase(),String.valueOf(ext.id) ,jsonArray.toString());
+        } else if(dest.equalsIgnoreCase("ring_group")){
+            RingGroupObject ext = getRingGroupSummary(destValue);
+             request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"%s\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
+                    ,name,dest.toLowerCase(),String.valueOf(ext.id) ,jsonArray.toString());
+        }
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/create",request);
         return this;
     }
@@ -566,6 +570,20 @@ public class APIUtil {
             Assert.fail("[API getRingGroupSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
         }
         return extObjList;
+    }
+    /**
+     * 找到指定RingGroup
+     * @param num  分机号
+     * @return
+     */
+    public RingGroupObject getRingGroupSummary(String num){
+        List<RingGroupObject> ringGroupObject = getRingGroupSummary();
+        for (RingGroupObject object : ringGroupObject){
+            if(object.number.equals(num)){
+                return object;
+            }
+        }
+        return null;
     }
 
     /**
@@ -945,8 +963,8 @@ public class APIUtil {
             // 发送POST请求必须设置如下两行   否则会抛异常（java.net.ProtocolException: cannot write to a URLConnection if doOutput=false - call setDoOutput(true)）
             conn.setDoInput(true);
             conn.setDoOutput(true);
-            conn.setConnectTimeout(5000);
-            conn.setReadTimeout(5000);
+            conn.setConnectTimeout(20000);
+            conn.setReadTimeout(20000);
 
             //获取URLConnection对象对应的输出流并开始发送参数
             out = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
