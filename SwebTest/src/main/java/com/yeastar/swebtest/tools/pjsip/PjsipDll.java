@@ -50,8 +50,6 @@ public class PjsipDll {
 
 
 
-
-
         //PjsipDll.dll的通用API
         int ys_registerAccount(String uri, String reguri, String name, String username,
                                String password, String proxy, Boolean isdefault,int reg_timeout);

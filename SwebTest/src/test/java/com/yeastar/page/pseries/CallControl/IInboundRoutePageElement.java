@@ -1,12 +1,14 @@
 package com.yeastar.page.pseries.CallControl;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.yeastar.swebtest.driver.DataReader2;
 import com.yeastar.untils.UIMapUtils;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface IInboundRoutePageElement {
@@ -21,6 +23,10 @@ public interface IInboundRoutePageElement {
     SelenideElement ele_add_btn = $(By.xpath(String.format(buttonLocationXpath,"Add")));
     SelenideElement ele_delete_btn = $(By.xpath(String.format(buttonLocationXpath,"Delete")));
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
+
+    //DID PATTERN
+    SelenideElement ele_inbound_routes_dial_pattern_add_btn = $(By.xpath("//div[@class='add-footer']//span[contains(text(),'Add')]"));
+    ElementsCollection ele_inbound_routes_dial_pattern_input = $$(By.id("did_pattern"));
 
 
     SelenideElement ele_edit_name = $(By.id("inbound_routes_name"));

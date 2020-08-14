@@ -11,6 +11,7 @@ import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class OperatorPanelPage extends BasePage {
 
     public SelenideElement transferElementInput = $(By.id("modalIpt"));//transfer 输入框
     public SelenideElement transferElementOKBtn = $(By.xpath("//div[@id=\"dial-transfer-call-panel\"]//button"));//transfer 确定按钮
+    public SelenideElement redirectElementInput = $(By.id("modalIpt"));//redirect input
+    public SelenideElement voiceMailImage = $(By.xpath("//i[contains(@class,'anticon anticon-customer-service')]"));//voice mail 图标
 
     /**
      * 表格类型
@@ -123,6 +126,71 @@ public class OperatorPanelPage extends BasePage {
     }
 
     /**
+     * 右键表中的元素（tagName）
+     * @param tagName
+     */
+    public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event){
+        if(tableType==TABLE_TYPE.INBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        if(tableType==TABLE_TYPE.OUTBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_OUTBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        eventAction(event, "");
+        return this;
+    }
+
+    /**
+     * 右键表中的元素（tagName）
+     * @param tagName
+     */
+    public  OperatorPanelPage rightTableActionMouserHover(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event){
+        if(tableType==TABLE_TYPE.INBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        if(tableType==TABLE_TYPE.OUTBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_OUTBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        eventActionWithHover(event);
+        return this;
+    }
+
+    /**
+     *
+     * @param tableType 源元素 所在区域
+     * @param tagName   源元素 名称
+     * @param event     右键事件类型
+     * @param eventParam  右键事件类型后，所要带的参数
+     * @param isClickVoiceMailImage 是否点击VoiceMail图标   redirect--搜索 eventParam，点击eventParam 右边小图标（VoiceMail）
+     * @return
+     */
+    public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event,String eventParam,boolean isClickVoiceMailImage){
+        if(tableType==TABLE_TYPE.INBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        if(tableType==TABLE_TYPE.OUTBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_OUTBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        eventAction(event, eventParam,isClickVoiceMailImage);
+        return this;
+    }
+
+
+    /**
+     * 右键表中的元素（tagName）
+     * @param tagName
+     */
+    public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName){
+        if(tableType==TABLE_TYPE.INBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        if(tableType==TABLE_TYPE.OUTBOUND){
+            actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_OUTBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
+        }
+        return this;
+    }
+
+    /**
      * 右键事件
      * @param event 右键面板上动作事件
      * @param eventParam event 事件后，所有操作的参数
@@ -148,6 +216,71 @@ public class OperatorPanelPage extends BasePage {
             //3.类型三，直接单击
         }else{
             $(By.xpath(String.format(ACTION_XPATH,event.alias))).click();
+            if(event == RIGHT_EVENT.REDIRECT){
+                redirectElementInput.setValue(eventParam);
+                 actions().sendKeys(Keys.ENTER).perform();
+                }
+        }
+        return this;
+    }
+
+
+    /**
+     * 右键事件
+     * @param event 右键面板上动作事件
+//     * @param eventParam event 事件后，所有操作的参数
+     */
+    private OperatorPanelPage eventActionWithHover(RIGHT_EVENT event){
+        if(event==RIGHT_EVENT.TRANSFER){
+            SelenideElement transferElement = $(By.xpath(String.format(ACTION_XPATH,event.alias)));
+            $(By.xpath(String.format(ACTION_XPATH,event.alias))).hover();
+            sleep(WaitUntils.RETRY_WAIT);
+        }else{
+            $(By.xpath(String.format(ACTION_XPATH,event.alias))).hover();
+        }
+        return this;
+    }
+
+    /**
+     * 右键事件
+     * @param event 右键面板上动作事件
+     * @param eventParam event 事件后，所有操作的参数
+     * @param isClickVoiceMailImage 是否单击第一个录音图标
+     */
+    private OperatorPanelPage eventAction(RIGHT_EVENT event,String eventParam,boolean isClickVoiceMailImage){
+        //1.类型一,Transfer
+        if(event==RIGHT_EVENT.TRANSFER){
+            SelenideElement transferElement = $(By.xpath(String.format(ACTION_XPATH,event.alias)));
+            $(By.xpath(String.format(ACTION_XPATH,event.alias))).hover();
+            sleep(WaitUntils.RETRY_WAIT);
+            actions().moveToElement(transferElement,220,0).click().perform();
+            if(eventParam != ""){
+                transferElementInput.shouldBe(Condition.visible).setValue(eventParam);
+                if(isClickVoiceMailImage){
+                    voiceMailImage.click();
+                }else{
+                    transferElementOKBtn.click();
+                }
+            }else{
+                log.error("[Transfer eventParam 不能为空！]");
+            }
+
+            //2.类型二, Parked / Whisper
+        }else if(event == RIGHT_EVENT.WHISPER || event == RIGHT_EVENT.PARKED){
+            $(By.xpath(String.format(ACTION_XPATH,event.alias))).hover();
+            sleep(WaitUntils.RETRY_WAIT);
+            $(By.xpath(String.format(WHISPER_ACTION_XPATH,eventParam))).click();
+            //3.类型三，直接单击
+        }else{
+            $(By.xpath(String.format(ACTION_XPATH,event.alias))).click();
+            if(event == RIGHT_EVENT.REDIRECT){
+                redirectElementInput.setValue(eventParam);
+                if(isClickVoiceMailImage){
+                    voiceMailImage.click();
+                }else{
+                    actions().sendKeys(Keys.ENTER).perform();
+                }
+            }
         }
         return this;
     }
@@ -213,7 +346,7 @@ public class OperatorPanelPage extends BasePage {
         RINGGROUP("table-ring-group"),
         QUEUE("table-queue"),
         PARKING("table-parking"),
-        EXTENSION("table-extension-2193");
+        EXTENSION("table-extension");
         private final String alias;
 
         DOMAIN(String alias) {
@@ -239,16 +372,24 @@ public class OperatorPanelPage extends BasePage {
         //sourceElement
         if(sourceDomain == DOMAIN.INBOUND || sourceDomain == DOMAIN.OUTBOUND){
              sourceElement = $(By.xpath(String.format(ELEMENT_TABLE_XPATH,sourceDomain.getAlias(),sourceName)));
+            log.debug("[sourceName  ] "+String.format(ELEMENT_TABLE_XPATH,sourceDomain.getAlias(),sourceName));
         }else{
              sourceElement = $(By.xpath(String.format(ELEMENT_XPATH,sourceDomain.getAlias(),sourceName)));
         }
         //targetElement
-        if(sourceDomain == DOMAIN.INBOUND || sourceDomain == DOMAIN.OUTBOUND){
+        if(targetDomain == DOMAIN.INBOUND || targetDomain == DOMAIN.OUTBOUND){
             targetElement =  $(By.xpath(String.format(ELEMENT_TABLE_XPATH,targetDomain.getAlias(),targetName)));
         }else{
             targetElement = $(By.xpath(String.format(ELEMENT_XPATH,targetDomain.getAlias(),targetName)));
+            log.debug("[target  ] "+String.format(ELEMENT_XPATH,targetDomain.getAlias(),targetName));
         }
         dragAndDrop(sourceElement,targetElement);
+
+//        Mouse mouse = ((HasInputDevices)WebDriverFactory.getDriver()).getMouse();
+//
+//        mouse.mouseDown((Coordinates) targetElement.getLocation());
+//        mouse.mouseUp((Coordinates) targetElement.getLocation());
+//        actions().moveToElement(targetElement,2,2).click().perform();
         return this;
     }
 
@@ -316,7 +457,7 @@ public class OperatorPanelPage extends BasePage {
      * 记录枚举
      */
     public enum  RECORD{
-        RecordStatus,
+//        RecordStatus,
         Caller,
         Callee,
         Status,
@@ -338,19 +479,21 @@ public class OperatorPanelPage extends BasePage {
         String result = "";
         if(records.size()!=0){
             for (int i = 0; i < records.size(); i++) {
-                if ((recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
-                        (recordType == RECORD.Caller && records.get(i).getCaller() == recordTypeValue) ||
-                        (recordType == RECORD.Callee && records.get(i).getCallee() == recordTypeValue) ||
-                        (recordType == RECORD.Status && records.get(i).getStatus() == recordTypeValue) ||
-                        (recordType == RECORD.StrTime && records.get(i).getStrTime() == recordTypeValue) ||
-                        (recordType == RECORD.Details && records.get(i).getDetails() == recordTypeValue)
+                if (
+//                        (recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
+                        recordType == RECORD.Caller && records.get(i).getCaller().contains(recordTypeValue) ||
+                        recordType == RECORD.Callee && records.get(i).getCallee().contains(recordTypeValue) ||
+                        recordType == RECORD.Status && records.get(i).getStatus().contains(recordTypeValue) ||
+                        recordType == RECORD.StrTime && records.get(i).getStrTime().contains(recordTypeValue) ||
+                        recordType == RECORD.Details && records.get(i).getDetails().contains(recordTypeValue)
                 ) {
                     targetInt = i;
                 }
             }
-            if (getRecordType == RECORD.RecordStatus) {
-                result = records.get(targetInt).getRecordStatus();
-            }else if (getRecordType == RECORD.Caller) {
+//            if (getRecordType == RECORD.RecordStatus) {
+//                result = records.get(targetInt).getRecordStatus();
+//            }else
+            if (getRecordType == RECORD.Caller) {
                 result =  records.get(targetInt).getCaller();
             }else if (getRecordType == RECORD.Callee) {
                 result =  records.get(targetInt).getCallee();
@@ -367,5 +510,34 @@ public class OperatorPanelPage extends BasePage {
             reportMessage("[没有找到有效记录！！！]");
         }
     return result;
+    }
+
+    /**
+     * 返回对象记录
+     * @param records
+     * @param recordType
+     * @param recordTypeValue
+     * @return
+     */
+    public Record getRecord(List<Record> records,RECORD recordType,String recordTypeValue) {
+        int targetInt = 0;
+        if (records.size() != 0) {
+            for (int i = 0; i < records.size(); i++) {
+                if (
+//                        (recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
+                        (recordType == RECORD.Caller && records.get(i).getCaller() == recordTypeValue) ||
+                        (recordType == RECORD.Callee && records.get(i).getCallee() == recordTypeValue) ||
+                        (recordType == RECORD.Status && records.get(i).getStatus() == recordTypeValue) ||
+                        (recordType == RECORD.StrTime && records.get(i).getStrTime() == recordTypeValue) ||
+                        (recordType == RECORD.Details && records.get(i).getDetails() == recordTypeValue)
+                ) {
+                    targetInt = i;
+                }
+            }
+
+        }else{
+            reportMessage("[没有找到有效记录！！！]");
+        }
+        return records.get(targetInt);
     }
 }

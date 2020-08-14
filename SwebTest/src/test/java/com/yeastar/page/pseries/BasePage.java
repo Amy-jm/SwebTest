@@ -212,6 +212,23 @@ public class BasePage implements IButton{
         }catch (org.openqa.selenium.WebDriverException exception){
             log.error("[org.openqa.selenium.WebDriverException: unable to set cookie]");
         }
+    }
 
+
+    /**
+     * 界面刷新
+     */
+    public void refresh(){
+        getWebDriver().navigate().refresh();
+    }
+
+
+    /**
+     * 单击坐标
+     * @param x
+     * @param y
+     */
+    public void moveByOffsetAndClick(int x,int y){
+        actions().moveByOffset(x,y).perform();
     }
 }

@@ -207,10 +207,9 @@ public class APIUtil {
         for(ExtensionObject object : extensionObjectList){
             list.add(object.id);
         }
-        if (!list.isEmpty()){
+        if(list != null && !list.isEmpty()){
             deleteExtension(list);
         }
-
         return this;
     }
 
@@ -275,10 +274,9 @@ public class APIUtil {
         for(ExtensionGroupObject object : extensionGroupObjects){
             list.add(object.id);
         }
-        if (!list.isEmpty()){
+        if(list != null && !list.isEmpty()){
             deleteExtensionGroup(list);
         }
-
         return this;
     }
 
@@ -393,10 +391,9 @@ public class APIUtil {
         for(InboundRouteObject object : inboundObjectList){
             list.add(object.id);
         }
-        if (!list.isEmpty()){
+        if (!list.isEmpty()) {
             deleteInbound(list);
         }
-
         return this;
     }
 
@@ -425,6 +422,7 @@ public class APIUtil {
 
         List<TrunkObject> trunkObjects = getTrunkSummary();
         JSONArray jsonArray = new JSONArray();
+
 
         for (int i=0; i<trunks.size(); i++){
             for (int j=0; j<trunkObjects.size(); j++){
@@ -481,10 +479,9 @@ public class APIUtil {
         for(OutBoundRouteObject object : OutboundObjectList){
             list.add(object.id);
         }
-        if (!list.isEmpty()){
+        if(list != null && !list.isEmpty()){
             deleteOutbound(list);
         }
-
         return this;
     }
 
@@ -571,6 +568,20 @@ public class APIUtil {
         }
         return extObjList;
     }
+    /**
+     * 找到指定RingGroup
+     * @param num  分机号
+     * @return
+     */
+    public RingGroupObject getRingGroupSummary(String num){
+        List<RingGroupObject> ringGroupObject = getRingGroupSummary();
+        for (RingGroupObject object : ringGroupObject){
+            if(object.number.equals(num)){
+                return object;
+            }
+        }
+        return null;
+    }
 
     /**
      * 删除当前存在的所有响铃组
@@ -582,10 +593,9 @@ public class APIUtil {
         for(RingGroupObject object : ringGroupObjects){
             list.add(object.id);
         }
-        if (!list.isEmpty()){
+        if(list != null && !list.isEmpty()){
             deleteRingGroup(list);
         }
-
         return this;
     }
 
@@ -672,10 +682,9 @@ public class APIUtil {
         for(ConferenceObject object : conferenceObjects){
             list.add(object.id);
         }
-        if (!list.isEmpty()){
+        if(list != null && !list.isEmpty()){
             deleteConference(list);
         }
-
         return this;
     }
 
@@ -762,7 +771,7 @@ public class APIUtil {
         for(QueueObject object : queueObjects){
             list.add(object.id);
         }
-        if (!list.isEmpty()){
+        if(list != null && !list.isEmpty()){
             deleteQueue(list);
         }
 
@@ -945,8 +954,8 @@ public class APIUtil {
             // 发送POST请求必须设置如下两行   否则会抛异常（java.net.ProtocolException: cannot write to a URLConnection if doOutput=false - call setDoOutput(true)）
             conn.setDoInput(true);
             conn.setDoOutput(true);
-            conn.setConnectTimeout(5000);
-            conn.setReadTimeout(5000);
+            conn.setConnectTimeout(20000);
+            conn.setReadTimeout(20000);
 
             //获取URLConnection对象对应的输出流并开始发送参数
             out = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
