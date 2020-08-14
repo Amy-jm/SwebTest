@@ -422,6 +422,7 @@ public class APIUtil {
         List<TrunkObject> trunkObjects = getTrunkSummary();
         JSONArray jsonArray = new JSONArray();
         String request = "";
+        String id = "";
 
         for (int i=0; i<trunks.size(); i++){
             for (int j=0; j<trunkObjects.size(); j++){
@@ -436,13 +437,16 @@ public class APIUtil {
         }
         if(dest.equalsIgnoreCase("extension")){
             ExtensionObject ext = getExtensionSummary(destValue);
-             request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"%s\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
-                    ,name,dest.toLowerCase(),String.valueOf(ext.id) ,jsonArray.toString());
+            id = String.valueOf(ext.id);
         } else if(dest.equalsIgnoreCase("ring_group")){
             RingGroupObject ext = getRingGroupSummary(destValue);
-             request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"%s\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
-                    ,name,dest.toLowerCase(),String.valueOf(ext.id) ,jsonArray.toString());
+            id = String.valueOf(ext.id);
+        }else if(dest.equalsIgnoreCase("queue")){
+            QueueObject ext = getQueueSummary(destValue);
+            id = String.valueOf(ext.id);
         }
+        request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"%s\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
+                ,name,dest.toLowerCase(),id ,jsonArray.toString());
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/create",request);
         return this;
     }
@@ -763,6 +767,21 @@ public class APIUtil {
         }
         return extObjList;
     }
+    /**
+     * 找到指定坐席
+     * @param num  分机号
+     * @return
+     */
+    public QueueObject getQueueSummary(String num){
+        List<QueueObject> queueObject = getQueueSummary();
+        for (QueueObject object : queueObject){
+            if(object.number.equals(num)){
+                return object;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * 删除当前存在的所有响铃组
