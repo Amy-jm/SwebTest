@@ -407,6 +407,7 @@ public class OperatorPanelPage extends BasePage {
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
         //获取总行数
         int sumRow = table.rowCount();
+       try{
         for (int i = 0; i < table.rowCount(); i++) {
             SeleniumTableRow row = table.get(i);
             Record record = new Record();
@@ -449,6 +450,9 @@ public class OperatorPanelPage extends BasePage {
             }
             records.add(record);
         }
+       }catch(org.openqa.selenium.StaleElementReferenceException ex){
+           log.error("[读取表中数据异常，可能表中已无数据]"+ex);
+       }
         log.debug("[Record list count] "+records.size());
         return records;
     }
@@ -524,12 +528,11 @@ public class OperatorPanelPage extends BasePage {
         if (records.size() != 0) {
             for (int i = 0; i < records.size(); i++) {
                 if (
-//                        (recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
-                        (recordType == RECORD.Caller && records.get(i).getCaller() == recordTypeValue) ||
-                        (recordType == RECORD.Callee && records.get(i).getCallee() == recordTypeValue) ||
-                        (recordType == RECORD.Status && records.get(i).getStatus() == recordTypeValue) ||
-                        (recordType == RECORD.StrTime && records.get(i).getStrTime() == recordTypeValue) ||
-                        (recordType == RECORD.Details && records.get(i).getDetails() == recordTypeValue)
+                      recordType == RECORD.Caller && records.get(i).getCaller().contains(recordTypeValue) ||
+                        recordType == RECORD.Callee && records.get(i).getCallee().contains(recordTypeValue) ||
+                        recordType == RECORD.Status && records.get(i).getStatus().contains(recordTypeValue) ||
+                        recordType == RECORD.StrTime && records.get(i).getStrTime().contains(recordTypeValue) ||
+                        recordType == RECORD.Details && records.get(i).getDetails().contains(recordTypeValue)
                 ) {
                     targetInt = i;
                 }
