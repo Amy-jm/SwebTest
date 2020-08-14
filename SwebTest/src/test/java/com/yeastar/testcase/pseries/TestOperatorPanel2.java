@@ -9,6 +9,7 @@ import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.RECORD;
 
@@ -48,7 +49,6 @@ public class TestOperatorPanel2 extends TestCaseBase {
     public void prerequisite() {
 
         if (runRecoveryEnvFlag){
-//            APIUtil apiUtil = new APIUtil();
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
             List<String> extensionNum = new ArrayList<>();
@@ -183,9 +183,11 @@ public class TestOperatorPanel2 extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到--> Extension 呼入到分机1000-->分机1000接听 -->右击不显示PickUp、Redirect、unpark\n" +
+    @Description("外线号码2000 呼入到--> Extension 呼入到分机1000-->分机1000接听 \n" +
             "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[1000]\n")
+            "2:外线号码[2000]呼叫[1000]\n" +
+            "3.右击挂断" +
+            "4.校验CDR")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingTalkingRightClickHangup","Regression","PSeries"})
@@ -214,10 +216,56 @@ public class TestOperatorPanel2 extends TestCaseBase {
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"2000");
         sleep(5000);
 
-//        apiUtil.getCDRRecord(0);
-//        softAssert.assertAll();
-//        auto.cdrPage().assertCDRRecord()
+        //todo cdr校验
+    }
 
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Extension 呼入到分机1000-->分机1000接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼叫[1000]\n" +
+            "3.右击点击Listen" +
+            "4.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","Operator Panel","testIncomingTalkingRightClickListen","Regression","PSeries"})
+    public void testIncomingTalkingRightClickListen() {
+
+        prerequisite();
+
+        step("1:login PBX");
+        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2.外线号码[2000]呼叫[1000]");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_Auto_Answer(2000,"991000",DEVICE_ASSIST_2,false);
+        sleep(5000);
+
+        step("3.右击Listen");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.LISTEN,"2000");
+        sleep(3000);
+
+        assertStep("4.断言：Inbound&Internal Call表格中只有一条记录");
+        Assert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),1,"Inbound&Internal Call表格中只有一条记录");
+
+        assertStep("5.断言页面元素");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status ),"Talking");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee ),"1000 A [1000]");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Details),"External");
+
+        //todo cdr校验
     }
 
 

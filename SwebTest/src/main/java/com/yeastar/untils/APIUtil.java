@@ -207,7 +207,10 @@ public class APIUtil {
         for(ExtensionObject object : extensionObjectList){
             list.add(object.id);
         }
-        deleteExtension(list);
+        if (!list.isEmpty()){
+            deleteExtension(list);
+        }
+
         return this;
     }
 
@@ -272,7 +275,10 @@ public class APIUtil {
         for(ExtensionGroupObject object : extensionGroupObjects){
             list.add(object.id);
         }
-        deleteExtensionGroup(list);
+        if (!list.isEmpty()){
+            deleteExtensionGroup(list);
+        }
+
         return this;
     }
 
@@ -387,7 +393,10 @@ public class APIUtil {
         for(InboundRouteObject object : inboundObjectList){
             list.add(object.id);
         }
-        deleteInbound(list);
+        if (!list.isEmpty()){
+            deleteInbound(list);
+        }
+
         return this;
     }
 
@@ -472,7 +481,10 @@ public class APIUtil {
         for(OutBoundRouteObject object : OutboundObjectList){
             list.add(object.id);
         }
-        deleteOutbound(list);
+        if (!list.isEmpty()){
+            deleteOutbound(list);
+        }
+
         return this;
     }
 
@@ -570,7 +582,10 @@ public class APIUtil {
         for(RingGroupObject object : ringGroupObjects){
             list.add(object.id);
         }
-        deleteRingGroup(list);
+        if (!list.isEmpty()){
+            deleteRingGroup(list);
+        }
+
         return this;
     }
 
@@ -657,7 +672,10 @@ public class APIUtil {
         for(ConferenceObject object : conferenceObjects){
             list.add(object.id);
         }
-        deleteConference(list);
+        if (!list.isEmpty()){
+            deleteConference(list);
+        }
+
         return this;
     }
 
@@ -744,7 +762,10 @@ public class APIUtil {
         for(QueueObject object : queueObjects){
             list.add(object.id);
         }
-        deleteQueue(list);
+        if (!list.isEmpty()){
+            deleteQueue(list);
+        }
+
         return this;
     }
 
