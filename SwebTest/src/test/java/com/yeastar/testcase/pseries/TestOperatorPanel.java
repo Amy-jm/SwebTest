@@ -26,6 +26,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @create: 2020/07/30
  */
 public class TestOperatorPanel extends TestCaseBase {
+    private boolean runRecoveryEnvFlag = true;
     ArrayList<String> queueListNum = null;
     ArrayList<String> ringGroupNum = null;
     ArrayList<String> ringGroupNum_1 = null;
@@ -137,90 +138,91 @@ public class TestOperatorPanel extends TestCaseBase {
     }
 
     @Test
-    public void prerequisiteForAPIForRingGroup() {
+    public void prerequisiteForAPIForRingGroup(boolean booRunRecoveryEnvFlag) {
+        if (booRunRecoveryEnvFlag) {
+            APIUtil apiUtil = new APIUtil();
+            List<String> trunks = new ArrayList<>();
+            trunks.add(SPS);
+            List<String> extensionNum = new ArrayList<>();
+            queueListNum = new ArrayList<>();
+            ringGroupNum = new ArrayList<>();
+            ringGroupNum_1 = new ArrayList<>();
 
-        APIUtil apiUtil = new APIUtil();
-        List<String> trunks = new ArrayList<>();
-        trunks.add(SPS);
-        List<String> extensionNum = new ArrayList<>();
-        queueListNum = new ArrayList<>();
-        ringGroupNum = new ArrayList<>();
-        ringGroupNum_1 = new ArrayList<>();
-
-        step("创建分机组");
-        apiUtil.deleteAllExtensionGroup().createExtensionGroup("{  \"name\": \"Default_Extension_Group\",  \"member_list\": [],  \"member_select\": \"sel_all_ext\",  \"share_group_info_to\": \"all_ext\",  \"specific_extensions\": [],  \"mgr_enb_widget_in_calls\": 1,  \"mgr_enb_widget_out_calls\": 1,  \"mgr_enb_widget_ext_list\": 1,  \"mgr_enb_widget_ring_group_list\": 1,  \"mgr_enb_widget_queue_list\": 1,  \"mgr_enb_widget_park_ext_list\": 1,  \"mgr_enb_widget_vm_group_list\": 1,  \"mgr_enb_chg_presence\": 1,  \"mgr_enb_call_distribution\": 1,  \"mgr_enb_call_conn\": 1,  \"mgr_enb_monitor\": 1,  \"mgr_enb_call_park\": 1,  \"mgr_enb_ctrl_ivr\": 1,  \"mgr_enb_office_time_switch\": 1,  \"mgr_enb_mgr_recording\": 1,  \"user_enb_widget_in_calls\": 0,  \"user_enb_widget_out_calls\": 0,  \"user_enb_widget_ext_list\": 0,  \"user_enb_widget_ring_group_list\": 0,  \"user_enb_widget_queue_list\": 0,  \"user_enb_widget_park_ext_list\": 0,  \"user_enb_widget_vm_group_list\": 0,  \"user_enb_chg_presence\": 0,  \"user_enb_call_distribution\": 0,  \"user_enb_call_conn\": 0,  \"user_enb_monitor\": 0,  \"user_enb_call_park\": 0,  \"user_enb_ctrl_ivr\": 0 }");
-        String groupList = apiUtil.getInitialdata("extension").getString("group_list").replace("\"user\"", "\"manager\"");
-
-
-        extensionNum.add("1000");
-        extensionNum.add("1001");
-        extensionNum.add("1002");
-        extensionNum.add("1003");
-        extensionNum.add("1004");
-        extensionNum.add("1005");
-        extensionNum.add("1006");
-        extensionNum.add("1007");
-        extensionNum.add("1008");
-        extensionNum.add("1009");
-        extensionNum.add("1010");
-        extensionNum.add("1011");
-        extensionNum.add("1012");
-
-        step("创建分机1000-1010");
-        apiUtil.deleteAllExtension().apply();
-        sleep(WaitUntils.SHORT_WAIT);
-        apiUtil.createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1000").replace("EXTENSIONLASTNAME","A").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1001").replace("EXTENSIONLASTNAME","B").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1002").replace("EXTENSIONLASTNAME","C").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1003").replace("EXTENSIONLASTNAME","D").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1004").replace("EXTENSIONLASTNAME","E").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1005").replace("EXTENSIONLASTNAME","F").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1006").replace("EXTENSIONLASTNAME","G").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1007").replace("EXTENSIONLASTNAME","H").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1008").replace("EXTENSIONLASTNAME","I").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1009").replace("EXTENSIONLASTNAME","J").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1010").replace("EXTENSIONLASTNAME","K").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1011").replace("EXTENSIONLASTNAME","L").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1012").replace("EXTENSIONLASTNAME","N").replace("GROUPLIST",groupList))
-                .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","0").replace("EXTENSIONLASTNAME","").replace("GROUPLIST",groupList));
-
-        step("创建SPS中继");
-        apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
-
-        step("创建响铃组6300");
-        ringGroupNum.add("1000");
-        ringGroupNum.add("1001");
-        ringGroupNum.add("1002");
-        ringGroupNum.add("1003");
-        ringGroupNum.add("1004");
-
-        step("创建响铃组6301");
-        ringGroupNum_1.add("1005");
-        ringGroupNum_1.add("1006");
-        ringGroupNum_1.add("1007");
-        ringGroupNum_1.add("1008");
-        ringGroupNum_1.add("1009");
-        apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName0,"6300",ringGroupNum)
-                                     .createRingGroup(ringGroupName,"6301",ringGroupNum_1);
+            step("创建分机组");
+            apiUtil.deleteAllExtensionGroup().createExtensionGroup("{  \"name\": \"Default_Extension_Group\",  \"member_list\": [],  \"member_select\": \"sel_all_ext\",  \"share_group_info_to\": \"all_ext\",  \"specific_extensions\": [],  \"mgr_enb_widget_in_calls\": 1,  \"mgr_enb_widget_out_calls\": 1,  \"mgr_enb_widget_ext_list\": 1,  \"mgr_enb_widget_ring_group_list\": 1,  \"mgr_enb_widget_queue_list\": 1,  \"mgr_enb_widget_park_ext_list\": 1,  \"mgr_enb_widget_vm_group_list\": 1,  \"mgr_enb_chg_presence\": 1,  \"mgr_enb_call_distribution\": 1,  \"mgr_enb_call_conn\": 1,  \"mgr_enb_monitor\": 1,  \"mgr_enb_call_park\": 1,  \"mgr_enb_ctrl_ivr\": 1,  \"mgr_enb_office_time_switch\": 1,  \"mgr_enb_mgr_recording\": 1,  \"user_enb_widget_in_calls\": 0,  \"user_enb_widget_out_calls\": 0,  \"user_enb_widget_ext_list\": 0,  \"user_enb_widget_ring_group_list\": 0,  \"user_enb_widget_queue_list\": 0,  \"user_enb_widget_park_ext_list\": 0,  \"user_enb_widget_vm_group_list\": 0,  \"user_enb_chg_presence\": 0,  \"user_enb_call_distribution\": 0,  \"user_enb_call_conn\": 0,  \"user_enb_monitor\": 0,  \"user_enb_call_park\": 0,  \"user_enb_ctrl_ivr\": 0 }");
+            String groupList = apiUtil.getInitialdata("extension").getString("group_list").replace("\"user\"", "\"manager\"");
 
 
-        step("创建呼入路由InRoute1,目的地到分机1000");
-        apiUtil.deleteAllInbound().createInbound("InRoute2",trunks,"Ring_Group","6300");
+            extensionNum.add("1000");
+            extensionNum.add("1001");
+            extensionNum.add("1002");
+            extensionNum.add("1003");
+            extensionNum.add("1004");
+            extensionNum.add("1005");
+            extensionNum.add("1006");
+            extensionNum.add("1007");
+            extensionNum.add("1008");
+            extensionNum.add("1009");
+            extensionNum.add("1010");
+            extensionNum.add("1011");
+            extensionNum.add("1012");
 
-        step("创建呼出路由");
-        apiUtil.deleteAllOutbound().createOutbound("Outbound1",trunks,extensionNum);
+            step("创建分机1000-1010");
+            apiUtil.deleteAllExtension().apply();
+            sleep(WaitUntils.SHORT_WAIT);
+            apiUtil.createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1000").replace("EXTENSIONLASTNAME", "A").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1001").replace("EXTENSIONLASTNAME", "B").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1002").replace("EXTENSIONLASTNAME", "C").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1003").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "E").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "F").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1006").replace("EXTENSIONLASTNAME", "G").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1007").replace("EXTENSIONLASTNAME", "H").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1008").replace("EXTENSIONLASTNAME", "I").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1009").replace("EXTENSIONLASTNAME", "J").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1010").replace("EXTENSIONLASTNAME", "K").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1011").replace("EXTENSIONLASTNAME", "L").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1012").replace("EXTENSIONLASTNAME", "N").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
 
-        step("创建队列");
-        queueListNum.add("1000");
-        queueListNum.add("1001");
-        queueListNum.add("1002");
-        queueListNum.add("1003");
-        apiUtil.deleteAllQueue().createQueue(queueListName,"6400",null, queueListNum,null);
+            step("创建SPS中继");
+            apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
+
+            step("创建响铃组6300");
+            ringGroupNum.add("1000");
+            ringGroupNum.add("1001");
+            ringGroupNum.add("1002");
+            ringGroupNum.add("1003");
+            ringGroupNum.add("1004");
+
+            step("创建响铃组6301");
+            ringGroupNum_1.add("1005");
+            ringGroupNum_1.add("1006");
+            ringGroupNum_1.add("1007");
+            ringGroupNum_1.add("1008");
+            ringGroupNum_1.add("1009");
+            apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName0, "6300", ringGroupNum)
+                    .createRingGroup(ringGroupName, "6301", ringGroupNum_1);
 
 
+            step("创建呼入路由InRoute1,目的地到分机1000");
+            apiUtil.deleteAllInbound().createInbound("InRoute2", trunks, "Ring_Group", "6300");
 
-        apiUtil.apply();
-        apiUtil.loginWebClient("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+            step("创建呼出路由");
+            apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
+
+            step("创建队列");
+            queueListNum.add("1000");
+            queueListNum.add("1001");
+            queueListNum.add("1002");
+            queueListNum.add("1003");
+            apiUtil.deleteAllQueue().createQueue(queueListName, "6400", null, queueListNum, null);
+
+
+            apiUtil.apply();
+            apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
+            runRecoveryEnvFlag = false;
+        }
     }
 
     @Epic("P_Series")
@@ -1280,7 +1282,8 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingStatus","Regression","PSeries","VCP1"})
     public void testRGIncomingRingStatus(){
-//        prerequisiteForAPIForRingGroup();
+       prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1321,7 +1324,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRingGroupIncomingRingStatus","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropRG(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1414,7 +1417,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropParking","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropParking(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1481,7 +1484,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropQueue","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropQueue(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1552,7 +1555,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropWithCTalking(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1614,7 +1617,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropWithCIdle(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1676,7 +1679,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @Issue("勾选显示未注册分机，概率性出现 未注册分机不能显示")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropWithCUnregistered(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1733,7 +1736,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionUnDisplay(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1776,7 +1779,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionHandUp(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1828,7 +1831,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionHoverHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionHoverHandUp(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1881,7 +1884,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionPickUp(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1933,7 +1936,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionRedirectC_AHandUp(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -2001,7 +2004,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionRedirectC_CHandUp(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2065,7 +2068,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRedirectRingGroup","Regression","PSeries","VCP1"})
     public void testRGIncomingRedirectRingGroup(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2160,7 +2163,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRedirectQueue","Regression","PSeries","VCP1"})
     public void testRGIncomingRedirectQueue(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2238,7 +2241,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRedirectVoicemail","Regression","PSeries","VCP1"})
     public void testRGIncomingRedirectVoicemail(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2290,7 +2293,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1"})
     public void testRGIncomingRedirectIVR(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2343,7 +2346,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionRedirectOffLineY_AHandUp(){
-//        prerequisiteForAPIForRingGroup();
+//      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -2399,7 +2402,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionRedirectOffLineY_YHandUp(){
-        prerequisiteForAPIForRingGroup();
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
