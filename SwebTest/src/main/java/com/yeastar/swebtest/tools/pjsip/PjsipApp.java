@@ -276,7 +276,7 @@ public class PjsipApp extends PjsipDll{
         if(CallerAccount.accId != -1){
             System.out.println("make call no answer:"+pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false));
         }
-
+        ys_waitingTime(2000);
         return "";
     }
     @Step("【pjsip】拨号 不会自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2} ")
@@ -423,6 +423,27 @@ public class PjsipApp extends PjsipDll{
         ys_waitingTime(2000);
         return suc;
     }
+
+    //挂断指定通话
+    @Step("【pjsip】挂断指定通话: caller:{0} , callee:{1}")
+    public int Pj_hangupCall(int number)  {
+        int suc = -1;
+        UserAccount account = null;
+        for (int i = 0; i < accounts.size(); i++) {
+            account = accounts.get(i);
+            if (account.username.equals(String.valueOf(number))) {
+                if (account.status == HUNGUP) {
+                    Reporter.infoCheck("分机:" + account.username + "处于hungup");
+                    return suc;
+                }
+            }
+        }
+        UserAccount HangupAccont = findAccountByUsername(String.valueOf(number));
+        suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
+        ys_waitingTime(3000);
+        return suc;
+    }
+
     //挂断指定通话
     @Step("【pjsip】挂断指定通话: caller:{0} , callee:{1}")
     public int Pj_hangupCall(int caller,int callee)  {
@@ -545,7 +566,7 @@ public class PjsipApp extends PjsipDll{
                 if(accounts.get(i).accId == accid){
                     accounts.get(i).callId = id;
                     accounts.get(i).status = RING;
-                    accounts.get(i).callerId = number;
+                    accounts.get(i).callerId = number.substring(5,number.indexOf("@"));
                 }
             }
             return 0;

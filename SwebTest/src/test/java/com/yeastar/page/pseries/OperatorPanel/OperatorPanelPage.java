@@ -121,6 +121,7 @@ public class OperatorPanelPage extends BasePage {
         if(tableType==TABLE_TYPE.OUTBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_OUTBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
+        sleep(1000);
         eventAction(event, eventParam);
         return this;
     }
@@ -465,6 +466,18 @@ public class OperatorPanelPage extends BasePage {
         Details;
     }
 
+    public enum RECORD_DETAILS{
+        QUEUE_RING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing")),
+        QUEUE_WAITING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing"));
+
+        private final String alias;
+        RECORD_DETAILS(String alias) {
+            this.alias = alias;
+        }
+        public String getAlias() {
+            return alias;
+        }
+    }
     /**
      *
      * @param tableType 指定表格  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND

@@ -13,7 +13,7 @@ public class UserAccount {
     public String port;
     public String type;
     public String uriHead;
-    public String callerId;
+    public String callerId; //来显
     public int status;
     public int pos;
 //    public int toTalk;
