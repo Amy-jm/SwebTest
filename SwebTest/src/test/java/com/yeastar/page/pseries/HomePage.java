@@ -134,12 +134,11 @@ public class HomePage extends BasePage{
     /**
      * web client 菜单
      */
-     public SelenideElement left_menu_first_level_operator_panel = $(By.id("m_w_visual_control_panel"));
-    public SelenideElement left_menu_first_level_operator_panel_parent = $(By.xpath("//a[contains(@id,\"m_w_visual_control_panel\")]/.."));
+     public SelenideElement left_menu_first_level_operator_panel = $(By.id("//a[contains(@id,\"m_w_visual_control_panel\")]/.."));//todo adapt for linux chrome
      public SelenideElement left_menu_first_level_call_log = $(By.id("m_w_call_log"));
      public SelenideElement left_menu_first_level_voicemails = $(By.id("m_w_voicemail"));
      public SelenideElement left_menu_first_level_recordings = $(By.id("m_w_recordings"));
-     public SelenideElement left_menu_first_level_preferences = $(By.id("m_w_preferences"));
+     public SelenideElement left_menu_first_level_preferences =$(By.xpath("//a[contains(@id,\"m_w_preferences\")]/.."));//todo adapt for linux chrome
 
 
     /**
@@ -364,7 +363,7 @@ public class HomePage extends BasePage{
                 isLevel2Visible(left_menu_first_level_cdr_recording);
                 break;
             case operator_panel:
-                left_menu_first_level_operator_panel_parent.click();
+                left_menu_first_level_operator_panel.click();
                 break;
             case call_log:
                 left_menu_first_level_call_log.click();
