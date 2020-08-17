@@ -81,6 +81,8 @@ public class OperatorPanelPage extends BasePage {
      */
     public List getRightEvent(TABLE_TYPE tableType,String tagName){
         sleep(WaitUntils.SHORT_WAIT);
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         List<String> listEvent = new ArrayList<>();
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
@@ -115,6 +117,8 @@ public class OperatorPanelPage extends BasePage {
      * @param tagName
      */
     public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event,String eventParam){
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
@@ -130,6 +134,8 @@ public class OperatorPanelPage extends BasePage {
      * @param tagName
      */
     public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event){
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
@@ -145,6 +151,8 @@ public class OperatorPanelPage extends BasePage {
      * @param tagName
      */
     public  OperatorPanelPage rightTableActionMouserHover(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event){
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
