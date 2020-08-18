@@ -418,8 +418,12 @@ public class PjsipApp extends PjsipDll{
     @Step("【pjsip】通话全部挂断")
     public int Pj_Hangup_All(){
         int suc=-1;
-        suc = pjsipdll.instance.ys_hangup_all_call();
-        ys_waitingTime(2000);
+        try{
+            suc = pjsipdll.instance.ys_hangup_all_call();
+            ys_waitingTime(2000);
+        }catch (Exception e){
+            log.error("[Pj_Hangup_All exception] "+e);
+        }
         return suc;
     }
     //挂断指定通话
