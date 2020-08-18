@@ -1262,7 +1262,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-//    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionRedirectOffLineC_CHandUp(){
         prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
