@@ -1,7 +1,5 @@
 package com.yeastar.swebtest.tools.pjsip;
 
-import com.yeastar.swebtest.tools.reporter.Reporter;
-//import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
@@ -42,8 +40,8 @@ public class PjsipApp extends PjsipDll{
     public  void Pj_Init(){
 
         accounts = new ArrayList<UserAccount>();
-        Reporter.infoExec("pjsip init "+pjsipdll.instance.ys_init());
-        Reporter.infoExec("pjisp main " +pjsipdll.instance.ys_main());
+//        Reporter.infoExec("pjsip init "+pjsipdll.instance.ys_init());
+//        Reporter.infoExec("pjisp main " +pjsipdll.instance.ys_main());
         pjsipdll.instance.onRegStateCallback(registerCallBack);
         pjsipdll.instance.onCallIncoming(incomingcallback);
         pjsipdll.instance.onCallStateCallback(callstateCallBack);
@@ -297,7 +295,7 @@ public class PjsipApp extends PjsipDll{
         String caller_status = null;
         String callee_status = null;
         CalleeAccount = findAccountByUsername(String.valueOf(CalleeNum));
-        Reporter.infoExec("Answer Call  "+CalleeAccount.callId+"  "+CalleeAccount.username);
+//        Reporter.infoExec("Answer Call  "+CalleeAccount.callId+"  "+CalleeAccount.username);
         if(CalleeAccount.callId != -1){
             pjsipdll.instance.ys_answerCall(CalleeAccount.callId,code);
         }else {
@@ -432,7 +430,7 @@ public class PjsipApp extends PjsipDll{
             account = accounts.get(i);
             if (account.username.equals(String.valueOf(caller))) {
                 if (account.status == HUNGUP) {
-                    Reporter.infoCheck("分机:" + account.username + "处于hungup");
+                    //Reporter.infoCheck("分机:" + account.username + "处于hungup");
                     YsAssert.assertEquals(account.status,TALKING,"分机"+account.username+"处于hungup");
                 }
             }
@@ -445,7 +443,7 @@ public class PjsipApp extends PjsipDll{
                 account = accounts.get(i);
                 if (account.username.equals(String.valueOf(callee))) {
                     if (account.status == HUNGUP) {
-                        Reporter.error("分机:" + account.username + "处于hungup");
+                        //Reporter.error("分机:" + account.username + "处于hungup");
                         YsAssert.assertEquals(account.status,TALKING,"分机"+account.username+"处于hungup");
                     }
                 }
