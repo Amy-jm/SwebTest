@@ -1244,7 +1244,7 @@ public class TestOperatorPanel extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT*2);
         softAssert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),0);
 
-        pjsip.Pj_hangupCall(2000,2000);//todo can not handup
+//        pjsip.Pj_hangupCall(2000,2000);//todo can not handup
 
         assertStep("3:[CDR显示]");//todo CDR显示
         pjsip.Pj_Hangup_All();
