@@ -2420,7 +2420,7 @@ public class TestOperatorPanel extends TestCaseBase {
             "4:Y挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1"})
+//    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionRedirectOffLineY_YHandUp(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
 
