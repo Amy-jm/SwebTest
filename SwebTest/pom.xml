@@ -71,7 +71,7 @@
                         <version>2.22.2</version>
                         <!--                <version>3.0.0-M4</version>-->
                         <configuration>
-                            <forkCount>0</forkCount>
+<!--                            <forkCount>0</forkCount>-->
                             <runOrder>alphabetical</runOrder>
                             <suiteXmlFiles>
                                 <suiteXmlFile>suite/${suiteXmlFile}</suiteXmlFile>
@@ -81,7 +81,7 @@
                             <!--                    add usersystemclassloader for vm crash-->
                             <useSystemClassLoader>false</useSystemClassLoader>
                             <!--                    关闭并发-->
-<!--                            <forkMode>once</forkMode>-->
+                            <forkMode>once</forkMode>
                             <!--                    <forkMode>once</forkMode>-->
                             <!--                    <forkCount>2.0C</forkCount>-->
                             <!--                    <parallel>methods</parallel>-->
