@@ -1,4 +1,5 @@
 package com.yeastar.untils;
+import com.yeastar.swebtest.pobject.Settings.PBX.CallFeatures.Conference.Conference;
 import com.yeastar.untils.APIObject.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -444,6 +445,9 @@ public class APIUtil {
         }else if(dest.equalsIgnoreCase("queue")){
             QueueObject ext = getQueueSummary(destValue);
             id = String.valueOf(ext.id);
+        }else if(dest.equalsIgnoreCase("conference")){
+            ConferenceObject ext = getConferenceSummary(destValue);
+            id = String.valueOf(ext.id);
         }
         request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"%s\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
                 ,name,dest.toLowerCase(),id ,jsonArray.toString());
@@ -677,6 +681,22 @@ public class APIUtil {
             Assert.fail("[API getConferenceSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
         }
         return extObjList;
+    }
+
+
+    /**
+     * 找到指定Conference
+     * @param num  Conference
+     * @return
+     */
+    public ConferenceObject getConferenceSummary(String num){
+        List<ConferenceObject> conferenceObject = getConferenceSummary();
+        for (ConferenceObject object : conferenceObject){
+            if(object.number.equals(num)){
+                return object;
+            }
+        }
+        return null;
     }
 
     /**

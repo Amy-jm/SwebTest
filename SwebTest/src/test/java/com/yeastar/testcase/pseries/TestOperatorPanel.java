@@ -25,17 +25,21 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @create: 2020/07/30
  */
 public class TestOperatorPanel extends TestCaseBase {
-    private boolean runRecoveryEnvFlag = true;
-    private boolean runRecoveryEnvFlag_api = true;
+    private boolean runRecoveryEnvFlagExtension = true;
+    private boolean runRecoveryEnvFlagRingGroup = true;
+    private boolean runRecoveryEnvFlagQueue = true;
+    private boolean runRecoveryEnvFlagConference = true;
     ArrayList<String> queueListNum = null;
     ArrayList<String> queueListNum_1 = null;
     ArrayList<String> ringGroupNum = null;
     ArrayList<String> ringGroupNum_1 = null;
+    ArrayList<String> conferenceList = null;
 
     String queueListName = "Q0";
     String queueListName_1 = "Q1";
     String ringGroupName0 = "RG0";//6300
     String ringGroupName_1 = "RG1";//6301
+    String conferenceListName = "CONF1";
 
 
 
@@ -81,8 +85,8 @@ public class TestOperatorPanel extends TestCaseBase {
                     "{\"name\":\"%s\",\"enable\":1,\"country\":\"general\",\"itsp\":\"\",\"type\":\"peer\",\"transport\":\"udp\",\"codec_sel\":\"ulaw,alaw,g729\",\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_srtp\":0,\"enb_t38_support\":0,\"enb_inband_progress\":0,\"max_call_chans\":0,\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"\",\"from_user\":\"\",\"from_user_part\":\"default\",\"from_disp_name\":\"\",\"from_disp_name_part\":\"default\",\"from_host\":\"\",\"from_host_part\":\"domain\",\"diversion_user\":\"\",\"diversion_user_part\":\"\",\"rpid_user\":\"\",\"rpid_user_part\":\"\",\"pai_user\":\"\",\"pai_user_part\":\"\",\"ppi_user\":\"\",\"ppi_user_part\":\"\",\"enb_privacy_id\":0,\"enb_user_phone\":0,\"caller_id_from\":\"follow_system\",\"did_from\":\"follow_system\",\"user_agent\":\"\",\"enb_100rel\":0,\"max_ptime\":\"default\",\"rtp_reinvite\":\"\",\"enb_guest_auth\":0,\"enb_early_media\":0,\"enb_message\":0,\"did_list\":[],\"inbound_cid_list\":[],\"outbound_cid_list\":[],\"hostname\":\"%s\",\"port\":5060,\"domain\":\"%s\"}"
             ,SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2);
 
-    public void prerequisiteForAPI(boolean isRunRecoveryEnvFlag_api) {
-        if(isRunRecoveryEnvFlag_api) {
+    public void prerequisiteForAPIExtension(boolean isRunRecoveryEnvFlag) {
+        if(isRunRecoveryEnvFlag) {
             APIUtil apiUtil = new APIUtil();
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
@@ -137,7 +141,7 @@ public class TestOperatorPanel extends TestCaseBase {
 
             apiUtil.apply();
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
-            runRecoveryEnvFlag_api = false;
+            runRecoveryEnvFlagExtension = false;
         }
     }
 
@@ -213,7 +217,7 @@ public class TestOperatorPanel extends TestCaseBase {
             queueListNum.add("1001");
             queueListNum.add("1002");
             queueListNum.add("1003");
-            ringGroupNum.add("1004");
+            queueListNum.add("1004");
 
 
             step("创建队列");
@@ -226,7 +230,105 @@ public class TestOperatorPanel extends TestCaseBase {
                     .createQueue(queueListName_1, "6401", null, queueListNum_1, null);
 
 
-            step("创建呼入路由InRoute1,目的地到分机1000");
+            step("创建呼入路由InRoute2,目的地到ring_group 6300");
+            apiUtil.deleteAllInbound().createInbound("InRoute2", trunks, "ring_group", "6300");
+
+//            step("创建呼出路由");//todo bug for 32
+//            apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
+
+
+            apiUtil.apply();
+            apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
+            runRecoveryEnvFlagRingGroup = false;
+        }
+    }
+
+    public void prerequisiteForAPIForQueue(boolean booRunRecoveryEnvFlag) {
+        if (booRunRecoveryEnvFlag) {
+            APIUtil apiUtil = new APIUtil();
+            List<String> trunks = new ArrayList<>();
+            trunks.add(SPS);
+            List<String> extensionNum = new ArrayList<>();
+            queueListNum = new ArrayList<>();
+            queueListNum_1 = new ArrayList<>();
+            ringGroupNum = new ArrayList<>();
+            ringGroupNum_1 = new ArrayList<>();
+
+            step("创建分机组");
+            apiUtil.deleteAllExtensionGroup().createExtensionGroup("{  \"name\": \"Default_Extension_Group\",  \"member_list\": [],  \"member_select\": \"sel_all_ext\",  \"share_group_info_to\": \"all_ext\",  \"specific_extensions\": [],  \"mgr_enb_widget_in_calls\": 1,  \"mgr_enb_widget_out_calls\": 1,  \"mgr_enb_widget_ext_list\": 1,  \"mgr_enb_widget_ring_group_list\": 1,  \"mgr_enb_widget_queue_list\": 1,  \"mgr_enb_widget_park_ext_list\": 1,  \"mgr_enb_widget_vm_group_list\": 1,  \"mgr_enb_chg_presence\": 1,  \"mgr_enb_call_distribution\": 1,  \"mgr_enb_call_conn\": 1,  \"mgr_enb_monitor\": 1,  \"mgr_enb_call_park\": 1,  \"mgr_enb_ctrl_ivr\": 1,  \"mgr_enb_office_time_switch\": 1,  \"mgr_enb_mgr_recording\": 1,  \"user_enb_widget_in_calls\": 0,  \"user_enb_widget_out_calls\": 0,  \"user_enb_widget_ext_list\": 0,  \"user_enb_widget_ring_group_list\": 0,  \"user_enb_widget_queue_list\": 0,  \"user_enb_widget_park_ext_list\": 0,  \"user_enb_widget_vm_group_list\": 0,  \"user_enb_chg_presence\": 0,  \"user_enb_call_distribution\": 0,  \"user_enb_call_conn\": 0,  \"user_enb_monitor\": 0,  \"user_enb_call_park\": 0,  \"user_enb_ctrl_ivr\": 0 }");
+            String groupList = apiUtil.getInitialdata("extension").getString("group_list").replace("\"user\"", "\"manager\"");
+
+
+            extensionNum.add("1000");
+            extensionNum.add("1001");
+            extensionNum.add("1002");
+            extensionNum.add("1003");
+            extensionNum.add("1004");
+            extensionNum.add("1005");
+            extensionNum.add("1006");
+            extensionNum.add("1007");
+            extensionNum.add("1008");
+            extensionNum.add("1009");
+            extensionNum.add("1010");
+            extensionNum.add("1011");
+            extensionNum.add("1012");
+
+            step("创建分机1000-1010");
+            apiUtil.deleteAllExtension().apply();
+            sleep(WaitUntils.SHORT_WAIT);
+            apiUtil.createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1000").replace("EXTENSIONLASTNAME", "A").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1001").replace("EXTENSIONLASTNAME", "B").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1002").replace("EXTENSIONLASTNAME", "C").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1003").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "E").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "F").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1006").replace("EXTENSIONLASTNAME", "G").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1007").replace("EXTENSIONLASTNAME", "H").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1008").replace("EXTENSIONLASTNAME", "I").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1009").replace("EXTENSIONLASTNAME", "J").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1010").replace("EXTENSIONLASTNAME", "K").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1011").replace("EXTENSIONLASTNAME", "L").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1012").replace("EXTENSIONLASTNAME", "N").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
+
+            step("创建SPS中继");
+            apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
+
+            step("创建响铃组6300");
+            ringGroupNum.add("1000");
+            ringGroupNum.add("1001");
+            ringGroupNum.add("1002");
+            ringGroupNum.add("1003");
+            ringGroupNum.add("1004");
+
+            step("创建响铃组6301");
+            ringGroupNum_1.add("1005");
+            ringGroupNum_1.add("1006");
+            ringGroupNum_1.add("1007");
+            ringGroupNum_1.add("1008");
+            ringGroupNum_1.add("1009");
+            apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName0, "6300", ringGroupNum)
+                    .createRingGroup(ringGroupName_1, "6301", ringGroupNum_1);
+
+            step("创建队列");
+            queueListNum.add("1000");
+            queueListNum.add("1001");
+            queueListNum.add("1002");
+            queueListNum.add("1003");
+            queueListNum.add("1004");
+
+
+            step("创建队列");
+            queueListNum_1.add("1005");
+            queueListNum_1.add("1006");
+            queueListNum_1.add("1007");
+            queueListNum_1.add("1008");
+            queueListNum_1.add("1009");
+            apiUtil.deleteAllQueue().createQueue(queueListName, "6400", null, queueListNum, null)
+                    .createQueue(queueListName_1, "6401", null, queueListNum_1, null);
+
+
+            step("创建呼入路由InRoute2,目的地到Queue 6400");
             apiUtil.deleteAllInbound().createInbound("InRoute2", trunks, "Queue", "6400");
 
 //            step("创建呼出路由");//todo bug for 32
@@ -235,7 +337,61 @@ public class TestOperatorPanel extends TestCaseBase {
 
             apiUtil.apply();
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
-            runRecoveryEnvFlag = false;
+            runRecoveryEnvFlagQueue = false;
+        }
+    }
+
+    public void prerequisiteForAPIForConference(boolean booRunRecoveryEnvFlag) {
+        if (booRunRecoveryEnvFlag) {
+            APIUtil apiUtil = new APIUtil();
+            List<String> trunks = new ArrayList<>();
+            trunks.add(SPS);
+            List<String> extensionNum = new ArrayList<>();
+            conferenceList = new ArrayList<>();
+
+
+            step("创建分机组");
+            apiUtil.deleteAllExtensionGroup().createExtensionGroup("{  \"name\": \"Default_Extension_Group\",  \"member_list\": [],  \"member_select\": \"sel_all_ext\",  \"share_group_info_to\": \"all_ext\",  \"specific_extensions\": [],  \"mgr_enb_widget_in_calls\": 1,  \"mgr_enb_widget_out_calls\": 1,  \"mgr_enb_widget_ext_list\": 1,  \"mgr_enb_widget_ring_group_list\": 1,  \"mgr_enb_widget_queue_list\": 1,  \"mgr_enb_widget_park_ext_list\": 1,  \"mgr_enb_widget_vm_group_list\": 1,  \"mgr_enb_chg_presence\": 1,  \"mgr_enb_call_distribution\": 1,  \"mgr_enb_call_conn\": 1,  \"mgr_enb_monitor\": 1,  \"mgr_enb_call_park\": 1,  \"mgr_enb_ctrl_ivr\": 1,  \"mgr_enb_office_time_switch\": 1,  \"mgr_enb_mgr_recording\": 1,  \"user_enb_widget_in_calls\": 0,  \"user_enb_widget_out_calls\": 0,  \"user_enb_widget_ext_list\": 0,  \"user_enb_widget_ring_group_list\": 0,  \"user_enb_widget_queue_list\": 0,  \"user_enb_widget_park_ext_list\": 0,  \"user_enb_widget_vm_group_list\": 0,  \"user_enb_chg_presence\": 0,  \"user_enb_call_distribution\": 0,  \"user_enb_call_conn\": 0,  \"user_enb_monitor\": 0,  \"user_enb_call_park\": 0,  \"user_enb_ctrl_ivr\": 0 }");
+            String groupList = apiUtil.getInitialdata("extension").getString("group_list").replace("\"user\"", "\"manager\"");
+
+
+            extensionNum.add("1000");
+            extensionNum.add("1001");
+            extensionNum.add("1002");
+            extensionNum.add("1003");
+            extensionNum.add("1004");
+            extensionNum.add("1005");
+
+
+            step("创建分机1000-1010");
+            apiUtil.deleteAllExtension().apply();
+            sleep(WaitUntils.SHORT_WAIT);
+            apiUtil.createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1000").replace("EXTENSIONLASTNAME", "A").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1001").replace("EXTENSIONLASTNAME", "B").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1002").replace("EXTENSIONLASTNAME", "C").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1003").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "E").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "F").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
+
+            step("创建SPS中继");
+            apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
+
+            step("创建Conference");
+            conferenceList.add("1000");
+            conferenceList.add("1001");
+            conferenceList.add("1002");
+            conferenceList.add("1003");
+            conferenceList.add("1004");
+
+            apiUtil.deleteAllConference().createConference(conferenceListName, "6500", conferenceList);
+
+            step("创建呼入路由InRoute3,目的地到conference 6500");
+            apiUtil.deleteAllInbound().createInbound("InRoute3", trunks, "conference", "6500");
+
+            apiUtil.apply();
+            apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
+            runRecoveryEnvFlagConference = false;
         }
     }
 
@@ -254,7 +410,7 @@ public class TestOperatorPanel extends TestCaseBase {
 //        step("1:login web client");
 //        auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
 
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -294,7 +450,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropWithCTalking(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -351,7 +507,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropWithCIdle(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -405,7 +561,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropWithCUnregistered(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -457,7 +613,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropRingGroup(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -540,7 +696,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropParking","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropParking(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -588,7 +744,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1"})
     public void testIncomingDragAndDropQueue(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -658,7 +814,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionRedirectC_AHandUp(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -717,7 +873,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionRedirectC_CHandUp(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -775,7 +931,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectRingGroup","Regression","PSeries","VCP1"})
     public void testIncomingRedirectRingGroup(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -857,7 +1013,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectQueue","Regression","PSeries","VCP1"})
     public void testIncomingRedirectQueue(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -927,7 +1083,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectVoicemail","Regression","PSeries","VCP1"})
     public void testIncomingRedirectVoicemail(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -973,7 +1129,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectIVR","Regression","PSeries","VCP1"})
     public void testIncomingRedirectIVR(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1019,7 +1175,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionUnDisplay","Regression","PSeries","VCP1"})
     public void testIncomingRightActionUnDisplay(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1058,7 +1214,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_AHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionRedirectOffLineC_AHandUp(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1108,7 +1264,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
 //    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionRedirectOffLineC_CHandUp(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1161,7 +1317,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionHandUp(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1205,7 +1361,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHoverHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionHoverHandUp(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1252,7 +1408,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
     public void testIncomingRightActionPickUp(){
-        prerequisiteForAPI(runRecoveryEnvFlag_api);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1300,7 +1456,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingStatus","Regression","PSeries","VCP1"})
     public void testRGIncomingRingStatus(){
-       prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -1342,7 +1498,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRingGroupIncomingRingStatus","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropRG(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1435,7 +1591,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropParking","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropParking(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1502,7 +1658,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropQueue","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropQueue(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1573,7 +1729,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropWithCTalking(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1635,7 +1791,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropWithCIdle(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1697,7 +1853,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @Issue("勾选显示未注册分机，概率性出现 未注册分机不能显示")
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1"})
     public void testRGIncomingRingDragAndDropWithCUnregistered(){
-//      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1754,7 +1910,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionUnDisplay(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1797,7 +1953,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionHandUp(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1849,7 +2005,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionHoverHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionHoverHandUp(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1904,7 +2060,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionPickUp(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1959,7 +2115,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionRedirectC_AHandUp(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -2026,7 +2182,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionRedirectC_CHandUp(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2089,7 +2245,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRedirectRingGroup","Regression","PSeries","VCP1"})
     public void testRGIncomingRedirectRingGroup(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2183,7 +2339,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRedirectQueue","Regression","PSeries","VCP1"})
     public void testRGIncomingRedirectQueue(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2261,7 +2417,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRedirectVoicemail","Regression","PSeries","VCP1"})
     public void testRGIncomingRedirectVoicemail(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2313,7 +2469,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1"})
     public void testRGIncomingRedirectIVR(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2366,7 +2522,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionRedirectOffLineY_AHandUp(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -2419,10 +2575,10 @@ public class TestOperatorPanel extends TestCaseBase {
             "3:右键->[Redirect] Y(外线)" +
             "4:Y挂断")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
+    @TmsLink(value = "")//todo  make jenkins vm exception
 //    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1"})
     public void testRGIncomingRightActionRedirectOffLineY_YHandUp(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -2480,7 +2636,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingStatus","Regression","PSeries","VCP1"})
     public void testQueueIncomingRingStatus(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -2523,7 +2679,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1"})
     public void testQueueIncomingRingDragAndDropWithCTalking(){
-//        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -2584,7 +2740,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1"})
     public void testQueueIncomingRingDragAndDropWithCIdle(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -2645,7 +2801,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @Issue("勾选显示未注册分机，概率性出现 未注册分机不能显示")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1"})
     public void testQueueIncomingRingDragAndDropWithCUnregistered(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -2702,7 +2858,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropRG","Regression","PSeries","VCP1"})
     public void testQueueIncomingRingDragAndDropRG(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -2794,7 +2950,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropParking","Regression","PSeries","VCP1"})
     public void testQueueIncomingRingDragAndDropParking(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -2860,7 +3016,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropQueue","Regression","PSeries","VCP1"})
     public void testQueueIncomingRingDragAndDropQueue(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -2942,7 +3098,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1"})
     public void testQueueIncomingRightActionRedirectC_AHandUp(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -3009,7 +3165,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1"})
     public void testQueueIncomingRightActionRedirectC_CHandUp(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3071,7 +3227,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRedirectRingGroup","Regression","PSeries","VCP1"})
     public void testQueueIncomingRedirectRingGroup(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3163,7 +3319,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRedirectQueue","Regression","PSeries","VCP1"})
     public void testQueueIncomingRedirectQueue(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3247,7 +3403,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRedirectVoicemail","Regression","PSeries","VCP1"})
     public void testQueueIncomingRedirectVoicemail(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3299,7 +3455,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRedirectIVR","Regression","PSeries","VCP1"})
     public void testQueueIncomingRedirectIVR(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3352,7 +3508,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1"})
     public void testQueueIncomingRightActionRedirectOffLineY_AHandUp(){
-      prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -3405,10 +3561,10 @@ public class TestOperatorPanel extends TestCaseBase {
             "3:右键->[Redirect] Y(外线)" +
             "4:Y挂断")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
+    @TmsLink(value = "")//TODO make jenkins vm exception
 //    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1"})
     public void testQueueIncomingRightActionRedirectOffLineY_YHandUp(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3467,7 +3623,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionHandUp","Regression","PSeries","VCP1"})
     public void testQueueIncomingRightActionHandUp(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3519,7 +3675,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionHoverHandUp","Regression","PSeries","VCP1"})
     public void testQueueIncomingRightActionHoverHandUp(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3573,7 +3729,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionPickUp","Regression","PSeries","VCP1"})
     public void testQueueIncomingRightActionPickUp(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3627,7 +3783,7 @@ public class TestOperatorPanel extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1"})
     public void testQueueIncomingRightActionUnDisplay(){
-        prerequisiteForAPIForRingGroup(runRecoveryEnvFlag);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -3657,6 +3813,158 @@ public class TestOperatorPanel extends TestCaseBase {
 
         assertThat(list).containsOnlyOnce("Redirect","Pick Up","Hang Up");//equals  assertThat(list).doesNotContain("Transfer","Listen","Whisper","Barge","Park","Unpark","Pause","Resume");
         pjsip.Pj_Hangup_All();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到-->Conference响铃中 -->呼入状态：ringing\n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼叫[Conference]\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testConferenceIncomingRingStatus","Regression","PSeries","VCP1"})
+    public void testConferenceIncomingRingStatus(){
+//        prerequisiteForAPIForConference(runRecoveryEnvFlagConference);
+
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        assertStep("3:[PJSIP注册] ，2000 呼叫 6500 ");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        assertStep("4:Ring显示状态 ");
+        List list =  auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+
+        softAssert.assertAll();
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(list, RECORD.Caller,"2000").getStatus()).contains("Talking").as("check vcp conference status");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(list, RECORD.Caller,"2000").getDetails()).contains("External, Conference").as("check vcp conference details");
+        softAssertPlus.assertAll();
+        pjsip.Pj_Hangup_All();
+    }
+
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到-->Conference响铃中 -->呼入状态：ringing\n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼叫[Conference]\n" +
+            "3:右键录音功能")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("bug，录音无法显示")
+    @Test(groups = {"P0","VCP","testConferenceRingActionRecord","Regression","PSeries","VCP1"})
+    public void testConferenceRingActionRecord(){
+        prerequisiteForAPIForConference(runRecoveryEnvFlagConference);
+
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        assertStep("3:[PJSIP注册] ，2000 呼叫 6500 ");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        assertStep("4:右键录音");//todo  bug add vcp assert
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"2000", OperatorPanelPage.RIGHT_EVENT.PAUSE_RECORD,"");
+
+
+        softAssertPlus.assertAll();
+        pjsip.Pj_Hangup_All();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> [Queue] 呼入6400[响铃中] -->右键HandUp\n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼叫[Queue]6400\n" +
+            "3:右键->HandUp" +
+            "4:通话结束")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testConferenceIncomingRightActionHandUp","Regression","PSeries","VCP1"})
+    public void testConferenceIncomingRightActionHandUp(){
+        prerequisiteForAPIForConference(runRecoveryEnvFlagConference);
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        assertStep("3:[PJSIP注册] ，2000 呼叫 6500 ");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
+        List resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Caller,"2000").getCallee()).contains("CONF1 [6500]");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Caller,"2000").getStatus()).contains("Talking");
+
+        step( "4:右键->[HandUp]");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"2000", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        List resultSum_after =auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        assertStep("5:[VCP显示]");
+        softAssertPlus.assertThat(resultSum_before.size()).isEqualTo(resultSum_after.size()+1);
+        softAssertPlus.assertAll();
     }
 
 }
