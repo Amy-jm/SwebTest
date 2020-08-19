@@ -4,13 +4,13 @@ import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
 import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
+import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.RECORD;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.testng.annotations.Test;
-import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.RECORD;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @author: huangjx@yeastar.com
  * @create: 2020/07/30
  */
-public class TestOperatorPanel extends TestCaseBase {
+public class TestOperatorConference_1 extends TestCaseBase {
     APIUtil apiUtil = new APIUtil();
     private boolean runRecoveryEnvFlagExtension = true;
     private boolean runRecoveryEnvFlagRingGroup = true;

@@ -9,13 +9,17 @@
     </listeners>
     <test name="pbxcore">
         <classes>
-<!--            <class name="com.yeastar.testcase.pseries.TestExtensionPresence"/>-->
+            <class name="com.yeastar.testcase.pseries.TestExtensionPresence"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionSecurity"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionAdvanced"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionBasicDisplayAndRegistration"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionList"/>
             <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>
-<!--            <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>-->
+            <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>
+            <class name="com.yeastar.testcase.pseries.TestOperatorExtension_1"/>
+            <class name="com.yeastar.testcase.pseries.TestOperatorQueue_1"/>
+            <class name="com.yeastar.testcase.pseries.TestOperatorRingGroup_1"/>
+
         </classes>
     </test>
 </suite>
