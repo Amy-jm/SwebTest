@@ -25,6 +25,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @create: 2020/07/30
  */
 public class TestOperatorPanel extends TestCaseBase {
+    APIUtil apiUtil = new APIUtil();
     private boolean runRecoveryEnvFlagExtension = true;
     private boolean runRecoveryEnvFlagRingGroup = true;
     private boolean runRecoveryEnvFlagQueue = true;
@@ -87,7 +88,7 @@ public class TestOperatorPanel extends TestCaseBase {
 
     public void prerequisiteForAPIExtension(boolean isRunRecoveryEnvFlag) {
         if(isRunRecoveryEnvFlag) {
-            APIUtil apiUtil = new APIUtil();
+
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
             List<String> extensionNum = new ArrayList<>();
@@ -121,7 +122,7 @@ public class TestOperatorPanel extends TestCaseBase {
             step("创建呼入路由InRoute1,目的地到分机1000");
             apiUtil.deleteAllInbound().createInbound("InRoute1", trunks, "Extension", "1000");
 
-//            step("创建呼出路由");//todo bug for 32
+            step("创建呼出路由");
             apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
 
             step("创建队列");
@@ -147,7 +148,6 @@ public class TestOperatorPanel extends TestCaseBase {
 
     public void prerequisiteForAPIForRingGroup(boolean booRunRecoveryEnvFlag) {
         if (booRunRecoveryEnvFlag) {
-            APIUtil apiUtil = new APIUtil();
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
             List<String> extensionNum = new ArrayList<>();
@@ -233,8 +233,8 @@ public class TestOperatorPanel extends TestCaseBase {
             step("创建呼入路由InRoute2,目的地到ring_group 6300");
             apiUtil.deleteAllInbound().createInbound("InRoute2", trunks, "ring_group", "6300");
 
-//            step("创建呼出路由");//todo bug for 32
-//            apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
+            step("创建呼出路由");
+            apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
 
 
             apiUtil.apply();
@@ -245,7 +245,6 @@ public class TestOperatorPanel extends TestCaseBase {
 
     public void prerequisiteForAPIForQueue(boolean booRunRecoveryEnvFlag) {
         if (booRunRecoveryEnvFlag) {
-            APIUtil apiUtil = new APIUtil();
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
             List<String> extensionNum = new ArrayList<>();
@@ -331,8 +330,8 @@ public class TestOperatorPanel extends TestCaseBase {
             step("创建呼入路由InRoute2,目的地到Queue 6400");
             apiUtil.deleteAllInbound().createInbound("InRoute2", trunks, "Queue", "6400");
 
-//            step("创建呼出路由");//todo bug for 32
-//            apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
+            step("创建呼出路由");
+            apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
 
 
             apiUtil.apply();
@@ -1242,12 +1241,17 @@ public class TestOperatorPanel extends TestCaseBase {
         step( "4:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),0);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
 
-//        pjsip.Pj_hangupCall(2000,2000);//todo can not handup
+        pjsip.Pj_Answer_Call(2001,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
+
+        pjsip.Pj_hangupCall(2000);//todo can not handup
 
         assertStep("3:[CDR显示]");//todo CDR显示
-        pjsip.Pj_Hangup_All();
         softAssert.assertAll();
 
     }
@@ -1289,19 +1293,21 @@ public class TestOperatorPanel extends TestCaseBase {
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ringing");
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"1000 A [1000]");
 
-        step( "4:右键->[Redirect] C");
+        step( "4:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
-        sleep(WaitUntils.SHORT_WAIT);
-        assertStep("5:[VCP显示]2000->2001 ");
-
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),0);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
 
-        pjsip.Pj_hangupCall(2001,2001);
+        pjsip.Pj_Answer_Call(2001,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
+
+        pjsip.Pj_hangupCall(2001);//todo can not handup
 
         assertStep("3:[CDR显示]");//todo CDR显示
 
-        pjsip.Pj_Hangup_All();
         softAssert.assertAll();
     }
 
@@ -2556,12 +2562,18 @@ public class TestOperatorPanel extends TestCaseBase {
         step( "4:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),0);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
+
+        pjsip.Pj_Answer_Call(2001,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
 
         pjsip.Pj_hangupCall(2000,2000);//todo can not handup  分机2000处于hungup 【预期：3 实际：4】
 
         assertStep("3:[CDR显示]");//todo CDR显示
-        pjsip.Pj_Hangup_All();
+
         softAssert.assertAll();
 
     }
@@ -2609,20 +2621,21 @@ public class TestOperatorPanel extends TestCaseBase {
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Status),"Ringing");
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Callee),"1000 A [1000]");
 
-        step( "4:右键->[Redirect] C");
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step( "4:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
-        sleep(WaitUntils.SHORT_WAIT);
-        assertStep("5:[VCP显示]2000->2001 ");
-
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),0);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
 
-        pjsip.Pj_hangupCall(2001,2001);
+        pjsip.Pj_Answer_Call(2001,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
+
+        pjsip.Pj_hangupCall(2001);
 
         assertStep("3:[CDR显示]");//todo CDR显示
 
-        pjsip.Pj_Hangup_All();
         softAssert.assertAll();
     }
 
@@ -3542,12 +3555,18 @@ public class TestOperatorPanel extends TestCaseBase {
         step( "4:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),0);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
 
-        pjsip.Pj_hangupCall(2000,2000);//todo  can not handup  分机2000处于hungup 【预期：3 实际：4】 0814
+        pjsip.Pj_Answer_Call(2001,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
+
+        pjsip.Pj_hangupCall(2000);//todo  can not handup  分机2000处于hungup 【预期：3 实际：4】 0814
 
         assertStep("3:[CDR显示]");//todo CDR显示
-        pjsip.Pj_Hangup_All();
+
         softAssert.assertAll();
 
     }
@@ -3595,20 +3614,21 @@ public class TestOperatorPanel extends TestCaseBase {
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Status),"Ringing");
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Callee),"1000 A [1000]");
 
-        step( "4:右键->[Redirect] C");
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step( "4:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
-        sleep(WaitUntils.SHORT_WAIT);
-        assertStep("5:[VCP显示]2000->2001 ");
-
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),0);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ring");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
 
-        pjsip.Pj_hangupCall(2001,2001);
+        pjsip.Pj_Answer_Call(2001,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
+        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"2001 [2001]");
+
+        pjsip.Pj_hangupCall(2001);
 
         assertStep("3:[CDR显示]");//todo CDR显示
 
-        pjsip.Pj_Hangup_All();
         softAssert.assertAll();
     }
     @Epic("P_Series")
