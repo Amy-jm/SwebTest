@@ -122,7 +122,7 @@ public class TestOperatorPanel extends TestCaseBase {
             apiUtil.deleteAllInbound().createInbound("InRoute1", trunks, "Extension", "1000");
 
 //            step("创建呼出路由");//todo bug for 32
-//            apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
+            apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
 
             step("创建队列");
             queueListNum.add("1000");

@@ -548,7 +548,7 @@ public class APIUtil {
             }
         }
 
-        String request = String.format("{\"name\":\"%s\",\"outb_cid\":\"\",\"enb_rrmemory_hunt\":0,\"pin_protect\":\"disable\",\"pin\":\"\",\"pin_list\":\"\",\"available_time\":\"always\",\"enb_office_time\":1,\"enb_out_of_office_time\":0,\"enb_holiday\":0,\"trunk_list\":%s,\"ext_list\":%s,\"role_list\":[],\"dial_pattern_list\":[],\"office_time_list\":[]}"
+        String request = String.format("{\"name\":\"%s\",\"outb_cid\":\"\",\"enb_rrmemory_hunt\":0,\"pin_protect\":\"disable\",\"pin\":\"\",\"pin_list\":\"\",\"available_time\":\"always\",\"enb_office_time\":1,\"enb_out_of_office_time\":0,\"enb_holiday\":0,\"trunk_list\":%s,\"ext_list\":%s,\"role_list\":[],\"dial_pattern_list\":[{\"dial_pattern\":\"X.\",\"prepend\":\"\",\"strip\":0}],\"office_time_list\":[]}"
                 ,name,jsonArray.toString() ,jsonArray2.toString());
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/create",request);

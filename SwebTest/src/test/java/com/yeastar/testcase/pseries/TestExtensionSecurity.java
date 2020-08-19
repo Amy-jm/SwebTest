@@ -34,7 +34,7 @@ import static com.yeastar.swebtest.driver.SwebDriverP.*;
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
 public class TestExtensionSecurity extends TestCaseBase {
-
+    private APIUtil apiUtil = new APIUtil();
     /**
      * 前提条件
      * 1.添加0分机和sps中继到 路由AutoTest_Route
@@ -43,6 +43,8 @@ public class TestExtensionSecurity extends TestCaseBase {
         //新增呼出路由 添加分机0 ，到路由AutoTest_Route
         ArrayList<String> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
+        List<String> trunks = new ArrayList<>();
+        trunks.add(SPS);
         list.clear();
         list.add(SPS);
         list2.clear();
@@ -52,10 +54,13 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
         auto.trunkPage().deleteTrunk(getDriver(),SPS).createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
 
-        //创建路由
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("AutoTest_Route",list,list2)
-                .addPatternAndStrip(0,"X.","").clickSaveAndApply();
+        //创建路由-UI
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
+//        auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("AutoTest_Route",list,list2)
+//                .addPatternAndStrip(0,"X.","").clickSaveAndApply();
+        //创建路由-API
+        step("创建呼出路由");
+        apiUtil.deleteAllOutbound().createOutbound("Outbound1",trunks,list2);
 
     }
 
@@ -76,7 +81,8 @@ public class TestExtensionSecurity extends TestCaseBase {
 
         step("2:创建分机号0,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().clickSaveAndApply();
+        auto.extensionPage().createSipExtension("0",EXTENSION_PASSWORD).
                 switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,true).
                 clickSaveAndApply();
@@ -107,10 +113,11 @@ public class TestExtensionSecurity extends TestCaseBase {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
-
+//
         step("2:创建分机号0,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().clickSaveAndApply();
+        auto.extensionPage().createSipExtension("0",EXTENSION_PASSWORD).
                 switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,false).clickSaveAndApply();
 
