@@ -68,6 +68,7 @@ public class BrowserFactory extends ConfigP {
 			options.addArguments("--disable-gpu");//硬件加速，谷歌文档提到需要加上这个属性来规避bug
 			options.addArguments("--start-maximized");//默认启动最大化，避免最大化过程失败
 			options.addArguments("--lang=en");
+			options.addArguments("--ignore-certificate-errors");
 			return webDriver = new ChromeDriver(options);
 
 		} else if (browser.equals("firefox")) {
@@ -162,6 +163,7 @@ public class BrowserFactory extends ConfigP {
 			options.addArguments("--disable-gpu");//硬件加速，谷歌文档提到需要加上这个属性来规避bug
 			options.addArguments("--start-maximized");//默认启动最大化，避免最大化过程失败
 			options.addArguments("--lang=en");
+			options.addArguments("--ignore-certificate-errors");
 
 			options.addArguments("blink-settings=imagesEnabled=false");//不加载图片, 提升速度
 			Map<String, Object> prefs = new HashMap<String, Object>();

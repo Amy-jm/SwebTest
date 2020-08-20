@@ -149,7 +149,7 @@ public class PjsipApp extends PjsipDll{
         System.out.println("sip register: "+"sip:"+ip+":"+account.port);
         System.out.println("username:"+String.valueOf(username));
         System.out.println("pwd :" +account.password);
-        if(isAsserst){
+        if(false){
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();
             ys_waitingTime(3000);
@@ -412,7 +412,7 @@ public class PjsipApp extends PjsipDll{
 
     @Step("【pjsip】拨号 自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2}")
     public String Pj_Make_Call_Auto_Answer(int CallerNum, String CalleeNum,String ServerIp)  {
-        return Pj_Make_Call_Auto_Answer(CallerNum,CalleeNum,ServerIp,true);
+        return Pj_Make_Call_Auto_Answer(CallerNum,CalleeNum,ServerIp,false);
     }
 
     //通话全部挂断

@@ -102,6 +102,43 @@ public class APIUtil {
         m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/updatepersonal",request);
         return this;
     }
+
+    /**
+     * 设置网络磁盘  1、用一个共享路径添加  2、把录音设置成这个路径
+     * @return
+     */
+    public APIUtil setNetworkDriver(){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storage/create","{\"name\":\""+NETWORK_DEVICE_NAME+"\",\"host\":\""+NETWORK_DEVICE_IP+"\",\"share_name\":\""+NETWORK_DEVICE_SHARE_NAME+"\",\"username\":\""+NETWORK_DEVICE_USER_NAME+"\",\"password\":\""+ enBase64(NETWORK_DEVICE_USER_PASSWORD)+"\",\"work_group\":\"\",\"samba_version\":\"auto\"}");
+        String response = m_getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/getmenuoption?menu=storage");
+        JSONObject jsonObject = new JSONObject(response);
+        JsonArray array = jsonObject.getJsonArray("storage_options");
+        for (int i=0; i<array.size(); i++){
+            if (array.getJsonObject(i).getString("text").equals(NETWORK_DEVICE_NAME)){
+                m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/update","{\"recording\":"+array.getJsonObject(i).getInteger("value")+"}");
+            }
+        }
+        return this;
+    }
+
+    /**
+     * 删除自动化的留言存储介质
+     * @return
+     */
+    public APIUtil deleteNetworkDrive(){
+
+        //先把录音介质设置到默认
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/update","{\"voicemail\":0,\"log\":0,\"recording\":0}");
+
+        String response = m_getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/getmenuoption?menu=storage");
+        JSONObject jsonObject = new JSONObject(response);
+        JsonArray array = jsonObject.getJsonArray("storage_options");
+        for (int i=0; i<array.size(); i++){
+            if (array.getJsonObject(i).getString("text").equals(NETWORK_DEVICE_NAME)){
+                m_getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storage/delete?id="+array.getJsonObject(i).getString("value"));
+            }
+        }
+        return this;
+    }
     /**
      * 读CDR的API接口
      * @param num  要获取最新的num条CDR几率，从0开始
@@ -445,6 +482,17 @@ public class APIUtil {
     }
 
     /**
+     * 对已有的呼入路由编辑 update
+     * @param name
+     * @param request
+     * @return
+     */
+    public APIUtil editInbound(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/update",request);
+        return this;
+    }
+
+    /**
      * 获取概要列表
      * 对应API：api/v1.0/outboundroute/searchsummary
      */
@@ -537,7 +585,7 @@ public class APIUtil {
             }
         }
 
-        String request = String.format("{\"name\":\"%s\",\"outb_cid\":\"\",\"enb_rrmemory_hunt\":0,\"pin_protect\":\"disable\",\"pin\":\"\",\"pin_list\":\"\",\"available_time\":\"always\",\"enb_office_time\":1,\"enb_out_of_office_time\":0,\"enb_holiday\":0,\"trunk_list\":%s,\"ext_list\":%s,\"role_list\":[],\"dial_pattern_list\":[],\"office_time_list\":[]}"
+        String request = String.format("{\"name\":\"%s\",\"outb_cid\":\"\",\"enb_rrmemory_hunt\":0,\"pin_protect\":\"disable\",\"pin\":\"\",\"pin_list\":\"\",\"available_time\":\"always\",\"enb_office_time\":1,\"enb_out_of_office_time\":0,\"enb_holiday\":0,\"trunk_list\":%s,\"ext_list\":%s,\"role_list\":[],\"dial_pattern_list\":[{\"dial_pattern\":\"X.\",\"prepend\":\"\",\"strip\":0}],\"office_time_list\":[]}"
                 ,name,jsonArray.toString() ,jsonArray2.toString());
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/create",request);
@@ -806,34 +854,40 @@ public class APIUtil {
         List<ExtensionObject> extensionObjects = getExtensionSummary();
 
         for (ExtensionObject extensionObject: extensionObjects) {
-            for (String ext : dynamicAgentList){
-                if (ext.equals(extensionObject.number)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.callerIdName);
-                    a.put("text2",extensionObject.number);
-                    a.put("value",String.valueOf(extensionObject.id));
-                    a.put("type","extension");
-                    jsonArray1.put(a);
+            if(dynamicAgentList != null && !dynamicAgentList.isEmpty()){
+                for (String ext : dynamicAgentList){
+                    if (ext.equals(extensionObject.number)){
+                        JSONObject a = new JSONObject();
+                        a.put("text",extensionObject.callerIdName);
+                        a.put("text2",extensionObject.number);
+                        a.put("value",String.valueOf(extensionObject.id));
+                        a.put("type","extension");
+                        jsonArray1.put(a);
+                    }
                 }
             }
-            for (String ext : staticAgentList){
-                if (ext.equals(extensionObject.number)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.callerIdName);
-                    a.put("text2",extensionObject.number);
-                    a.put("value",String.valueOf(extensionObject.id));
-                    a.put("type","extension");
-                    jsonArray2.put(a);
+            if(staticAgentList != null && !staticAgentList.isEmpty()){
+                for (String ext : staticAgentList){
+                    if (ext.equals(extensionObject.number)){
+                        JSONObject a = new JSONObject();
+                        a.put("text",extensionObject.callerIdName);
+                        a.put("text2",extensionObject.number);
+                        a.put("value",String.valueOf(extensionObject.id));
+                        a.put("type","extension");
+                        jsonArray2.put(a);
+                    }
                 }
             }
-            for (String ext : managerList){
-                if (ext.equals(extensionObject.number)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.callerIdName);
-                    a.put("text2",extensionObject.number);
-                    a.put("value",String.valueOf(extensionObject.id));
-                    a.put("type","extension");
-                    jsonArray3.put(a);
+            if(managerList != null && !managerList.isEmpty()){
+                for (String ext : managerList){
+                    if (ext.equals(extensionObject.number)){
+                        JSONObject a = new JSONObject();
+                        a.put("text",extensionObject.callerIdName);
+                        a.put("text2",extensionObject.number);
+                        a.put("value",String.valueOf(extensionObject.id));
+                        a.put("type","extension");
+                        jsonArray3.put(a);
+                    }
                 }
             }
         }

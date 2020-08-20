@@ -9,6 +9,7 @@ import com.yeastar.controllers.WebDriverFactory;
 import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -478,6 +479,46 @@ public class OperatorPanelPage extends BasePage {
             return alias;
         }
     }
+
+    /**
+     * 断言操作面板某一行内容
+     * @param softAssertPlus  传入case的AssertPlus
+     * @param tableType       指定表格  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND 用于找到要校验的那一行
+     * @param recordType      记录类型  用于找到要校验的那一行
+     * @param recordTypeValue 记录类型的值 用于找到要校验的那一行
+     * @param caller          预期值
+     * @param callee          预期值
+     * @param status          预期值
+     * @param details         预期值
+     */
+    public void assertRecordValue(SoftAssertions softAssertPlus, TABLE_TYPE tableType, RECORD recordType, String recordTypeValue, String caller, String callee, String status, String details){
+        List<Record> records = getAllRecord(tableType);
+        int targetInt = 0;
+
+        if(records.size()!=0){
+            for (int i = 0; i < records.size(); i++) {
+                if (
+//                        (recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
+                        recordType == RECORD.Caller && records.get(i).getCaller().contains(recordTypeValue) ||
+                                recordType == RECORD.Callee && records.get(i).getCallee().contains(recordTypeValue) ||
+                                recordType == RECORD.Status && records.get(i).getStatus().contains(recordTypeValue) ||
+                                recordType == RECORD.StrTime && records.get(i).getStrTime().contains(recordTypeValue) ||
+                                recordType == RECORD.Details && records.get(i).getDetails().contains(recordTypeValue)
+                ) {
+                    targetInt = i;
+                }
+            }
+
+            softAssertPlus.assertThat(records.get(targetInt).getCaller()).as("验证_Caller").contains(caller);
+            softAssertPlus.assertThat(records.get(targetInt).getCallee()).as("验证_Callee").contains(callee);
+            softAssertPlus.assertThat(records.get(targetInt).getStatus()).as("验证_Status").contains(status);
+            softAssertPlus.assertThat(records.get(targetInt).getDetails()).as("验证_Details").contains(details);
+
+        }else{
+            reportMessage("[没有找到有效记录！！！]");
+        }
+
+    }
     /**
      *
      * @param tableType 指定表格  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
@@ -522,7 +563,7 @@ public class OperatorPanelPage extends BasePage {
         }else{
             reportMessage("[没有找到有效记录！！！]");
         }
-    return result;
+        return result;
     }
 
     /**
@@ -553,4 +594,6 @@ public class OperatorPanelPage extends BasePage {
         }
         return records.get(targetInt);
     }
+
+
 }
