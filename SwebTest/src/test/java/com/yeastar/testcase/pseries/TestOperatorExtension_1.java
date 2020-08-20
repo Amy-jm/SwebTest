@@ -611,6 +611,8 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         pjsip.Pj_hangupCall(2000,2000);
 
         assertStep("3:[CDR显示]");//todo CDR显示
+
+
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
 

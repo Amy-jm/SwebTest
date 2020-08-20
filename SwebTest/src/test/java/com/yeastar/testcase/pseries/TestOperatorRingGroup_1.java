@@ -70,7 +70,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             apiUtil.deleteAllExtensionGroup().createExtensionGroup("{  \"name\": \"Default_Extension_Group\",  \"member_list\": [],  \"member_select\": \"sel_all_ext\",  \"share_group_info_to\": \"all_ext\",  \"specific_extensions\": [],  \"mgr_enb_widget_in_calls\": 1,  \"mgr_enb_widget_out_calls\": 1,  \"mgr_enb_widget_ext_list\": 1,  \"mgr_enb_widget_ring_group_list\": 1,  \"mgr_enb_widget_queue_list\": 1,  \"mgr_enb_widget_park_ext_list\": 1,  \"mgr_enb_widget_vm_group_list\": 1,  \"mgr_enb_chg_presence\": 1,  \"mgr_enb_call_distribution\": 1,  \"mgr_enb_call_conn\": 1,  \"mgr_enb_monitor\": 1,  \"mgr_enb_call_park\": 1,  \"mgr_enb_ctrl_ivr\": 1,  \"mgr_enb_office_time_switch\": 1,  \"mgr_enb_mgr_recording\": 1,  \"user_enb_widget_in_calls\": 0,  \"user_enb_widget_out_calls\": 0,  \"user_enb_widget_ext_list\": 0,  \"user_enb_widget_ring_group_list\": 0,  \"user_enb_widget_queue_list\": 0,  \"user_enb_widget_park_ext_list\": 0,  \"user_enb_widget_vm_group_list\": 0,  \"user_enb_chg_presence\": 0,  \"user_enb_call_distribution\": 0,  \"user_enb_call_conn\": 0,  \"user_enb_monitor\": 0,  \"user_enb_call_park\": 0,  \"user_enb_ctrl_ivr\": 0 }");
             String groupList = apiUtil.getInitialdata("extension").getString("group_list").replace("\"user\"", "\"manager\"");
 
-
+            extensionNum.add("0");
             extensionNum.add("1000");
             extensionNum.add("1001");
             extensionNum.add("1002");
@@ -1257,28 +1257,34 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Status),"Ringing");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Callee),"1000 A [1000]");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Details),"External");
+        sleep(WaitUntils.SHORT_WAIT*2);
+        List resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getCallee()).contains("1000 A [1000]");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getStatus()).contains("Ringing");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getDetails()).contains("External");
+
 
         step( "4:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ringing");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"DOD [2001]");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Details),"External");
+
+        List resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_redirect, RECORD.Caller,"2000").getCallee()).contains("DOD [2001]");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_redirect, RECORD.Caller,"2000").getStatus()).contains("Ringing");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_redirect, RECORD.Caller,"2000").getDetails()).contains("External");
 
         pjsip.Pj_Answer_Call(2001,false);
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"DOD [2001]");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Details),"External");
+        List resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_answer, RECORD.Caller,"2000").getCallee()).contains("DOD [2001]");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_answer, RECORD.Caller,"2000").getStatus()).contains("Talking");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_answer, RECORD.Caller,"2000").getDetails()).contains("External");
 
-        pjsip.Pj_hangupCall(2000,2000);//todo can not handup  分机2000处于hungup 【预期：3 实际：4】
+        pjsip.Pj_hangupCall(2000);//todo can not handup  分机2000处于hungup 【预期：3 实际：4】
 
         assertStep("3:[CDR显示]");//todo CDR显示
 
-        softAssert.assertAll();
+        softAssertPlus.assertAll();
 
     }
 
@@ -1322,29 +1328,32 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Status),"Ringing");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Callee),"1000 A [1000]");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Details),"External");
+        List resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getCallee()).contains("1000 A [1000]");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getStatus()).contains("Ringing");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getDetails()).contains("External");
+
 
         step( "4:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Ringing");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"DOD [2001]");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Details),"External");
+
+        List resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_redirect, RECORD.Caller,"2000").getCallee()).contains("DOD [2001]");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_redirect, RECORD.Caller,"2000").getStatus()).contains("Ringing");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_redirect, RECORD.Caller,"2000").getDetails()).contains("External");
 
         pjsip.Pj_Answer_Call(2001,false);
         sleep(WaitUntils.SHORT_WAIT*2);
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Status),"Talking");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Callee),"DOD [2001]");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Caller,"2000",RECORD.Details),"External");
+        List resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_answer, RECORD.Caller,"2000").getCallee()).contains("DOD [2001]");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_answer, RECORD.Caller,"2000").getStatus()).contains("Talking");
+        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_answer, RECORD.Caller,"2000").getDetails()).contains("External");
 
         pjsip.Pj_hangupCall(2001);
 
         assertStep("3:[CDR显示]");//todo CDR显示
 
-        softAssert.assertAll();
+        softAssertPlus.assertAll();
     }
-
-
 }

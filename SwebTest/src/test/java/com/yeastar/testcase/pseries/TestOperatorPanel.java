@@ -3759,6 +3759,7 @@ public class TestOperatorPanel extends TestCaseBase {
 
         softAssertPlus.assertAll();
     }
+
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")

@@ -9,13 +9,14 @@ import com.yeastar.controllers.WebDriverFactory;
 import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
+import okhttp3.internal.Internal;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
@@ -242,7 +243,7 @@ public class OperatorPanelPage extends BasePage {
 //     * @param eventParam event 事件后，所有操作的参数
      */
     private OperatorPanelPage eventActionWithHover(RIGHT_EVENT event){
-        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+//        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
         sleep(WaitUntils.SHORT_WAIT);
         if(event==RIGHT_EVENT.TRANSFER){
             SelenideElement transferElement = $(By.xpath(String.format(ACTION_XPATH,event.alias)));
@@ -473,6 +474,27 @@ public class OperatorPanelPage extends BasePage {
     }
 
     /**
+     * 获取所有对象，其中
+     * @param tableType
+     * @return
+     */
+    public List getAllRecordSimple(TABLE_TYPE tableType){
+        List<Record> list  = getAllRecord(tableType);
+        List<Record> simpleList = new ArrayList();
+        for (int i = 0; i < list.size(); i++) {
+            Record record = new Record();
+            record.setRecordStatus("");
+            record.setCaller(list.get(i).getCaller());
+            record.setCallee(list.get(i).getCallee());
+            record.setStatus(list.get(i).getStatus());
+            record.setStrTime("");
+            record.setDetails(list.get(i).getDetails());
+            simpleList.add(record);
+         }
+        return  simpleList;
+    }
+
+    /**
      * 记录枚举
      */
     public enum  RECORD{
@@ -485,8 +507,25 @@ public class OperatorPanelPage extends BasePage {
     }
 
     public enum RECORD_DETAILS{
-        QUEUE_RING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing")),
-        QUEUE_WAITING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing"));
+        QUEUE_RING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        QUEUE_WAITING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        INTERNAL("Internal"),
+        INTERNAL_AGENT_RING("Internal, Ringing Agent"),
+        INTERNAL_QUEUE("Internal, Queue"),
+        INTERNAL_PARKED("Internal, Parked"),
+        INTERNAL_RING_GROUP("Internal, Ringing Group"),
+        INTERNAL_IVR("Internal, IVR"),
+        INTERNAL_CONFERENCE("Internal, Conference"),
+        INTERNAL_PAGING("Internal, Paging"),
+        INTERNAL_VOICEMAIL("Internal, Voicemail"),
+        EXTERNAL("External"),
+        EXTERNAL_PARKED("External, Parked"),
+        EXTERNAL_WAITING_IN_QUEUE("External, Waiting in Queue"),
+        EXTERNAL_AGENT_RING("External, Ringing Agent"),
+        EXTERNAL_QUEUE("External, Queue"),
+        EXTERNAL_RING_GROUP("External, Ringing Group"),
+        EXTERNAL_CONFERENCE("External, Conference"),
+        EXTERNAL_VOICEMAIL("External, Voicemail");
 
         private final String alias;
         RECORD_DETAILS(String alias) {

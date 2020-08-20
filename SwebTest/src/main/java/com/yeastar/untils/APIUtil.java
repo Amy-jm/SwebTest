@@ -165,7 +165,7 @@ public class APIUtil {
     public List<ExtensionObject> getExtensionSummary(){
 
         List<ExtensionObject> extObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
