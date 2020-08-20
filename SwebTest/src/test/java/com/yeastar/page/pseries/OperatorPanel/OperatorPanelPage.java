@@ -416,7 +416,7 @@ public class OperatorPanelPage extends BasePage {
      * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
      * @return
      */
-    public List getAllRecord(TABLE_TYPE tableType){
+    public List<Record> getAllRecord(TABLE_TYPE tableType){
         List<Record> records  = new ArrayList();
         List<WebElement> tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_INBOUND_XPATH));
         WebElement tableElement = tableListElement.get(tableListElement.size()-1);
@@ -513,7 +513,7 @@ public class OperatorPanelPage extends BasePage {
         INTERNAL_AGENT_RING("Internal, Ringing Agent"),
         INTERNAL_QUEUE("Internal, Queue"),
         INTERNAL_PARKED("Internal, Parked"),
-        INTERNAL_RING_GROUP("Internal, Ringing Group"),
+        INTERNAL_RING_GROUP("Internal, Ring Group"),
         INTERNAL_IVR("Internal, IVR"),
         INTERNAL_CONFERENCE("Internal, Conference"),
         INTERNAL_PAGING("Internal, Paging"),
@@ -523,7 +523,7 @@ public class OperatorPanelPage extends BasePage {
         EXTERNAL_WAITING_IN_QUEUE("External, Waiting in Queue"),
         EXTERNAL_AGENT_RING("External, Ringing Agent"),
         EXTERNAL_QUEUE("External, Queue"),
-        EXTERNAL_RING_GROUP("External, Ringing Group"),
+        EXTERNAL_RING_GROUP("External, Ring Group"),
         EXTERNAL_CONFERENCE("External, Conference"),
         EXTERNAL_VOICEMAIL("External, Voicemail");
 

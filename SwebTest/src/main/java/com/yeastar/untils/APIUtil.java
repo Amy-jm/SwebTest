@@ -109,16 +109,19 @@ public class APIUtil {
      * @return 返回List类型的CDRObject对象，List里的对象数量和num一致
      * @throws IOException
      */
-    public  List<CDRObject> getCDRRecord(int num) throws IOException {
+    public  List<CDRObject> getCDRRecord(int num){
         String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/search?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
         String respondJson = getRequest(req);
 
         List<CDRObject> cdrList = new ArrayList<>();
-        for (int k=0; k < num; k++){
-            CDRObject p = new CDRObject(respondJson, k);
-            cdrList.add(p);
+        try {
+            for (int k = 0; k < num; k++) {
+                CDRObject p = new CDRObject(respondJson, k);
+                cdrList.add(p);
+            }
+        }catch (IOException e){
+            log.error("[getCDRRecord exception] "+e);
         }
-
         return cdrList;
     }
 
