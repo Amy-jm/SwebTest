@@ -80,7 +80,7 @@ public class OperatorPanelPage extends BasePage {
      * @param tagName
      * @return
      */
-    public List getRightEvent(TABLE_TYPE tableType,String tagName){
+    public List<String> getRightEvent(TABLE_TYPE tableType,String tagName){
         sleep(WaitUntils.SHORT_WAIT);
         refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
         sleep(WaitUntils.SHORT_WAIT);
@@ -478,7 +478,7 @@ public class OperatorPanelPage extends BasePage {
      * @param tableType
      * @return
      */
-    public List getAllRecordSimple(TABLE_TYPE tableType){
+    public List<Record> getAllRecordSimple(TABLE_TYPE tableType){
         List<Record> list  = getAllRecord(tableType);
         List<Record> simpleList = new ArrayList();
         for (int i = 0; i < list.size(); i++) {
@@ -519,6 +519,7 @@ public class OperatorPanelPage extends BasePage {
         INTERNAL_PAGING("Internal, Paging"),
         INTERNAL_VOICEMAIL("Internal, Voicemail"),
         EXTERNAL("External"),
+        EXTERNAL_IVR("External, IVR"),
         EXTERNAL_PARKED("External, Parked"),
         EXTERNAL_WAITING_IN_QUEUE("External, Waiting in Queue"),
         EXTERNAL_AGENT_RING("External, Ringing Agent"),

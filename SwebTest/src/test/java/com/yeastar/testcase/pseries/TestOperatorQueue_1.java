@@ -243,7 +243,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         assertStep("7:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+                .contains(tuple(queueListName+":2000 [2000]", "1010 K [1010]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
@@ -318,7 +318,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "3:[Inbound]1000 -->拖动到[Extension]1010（未注册）")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("勾选显示未注册分机，概率性出现 未注册分机不能显示")
+    @Issue("1.勾选显示未注册分机，概率性出现 未注册分机不能显示 \n" +
+            "2.拖动后，需要>=6秒后才会显示")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRingDragAndDropWithCUnregistered(){
         prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
@@ -356,7 +357,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"2000",OperatorPanelPage.DOMAIN.EXTENSION,"1010");
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT*4);
 
         assertStep("7:[VCP]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -379,6 +380,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropRG","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRingDragAndDropRG(){
         prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -425,7 +428,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                           tuple(ringGroupName_1+":2000 [2000]", "1006 G [1006]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                           tuple(ringGroupName_1+":2000 [2000]", "1007 H [1007]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                           tuple(ringGroupName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                          tuple(ringGroupName_1+":2000 [2000]", "1000 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+                          tuple(ringGroupName_1+":2000 [2000]", "1009 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
 
@@ -485,25 +488,16 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step("6：[Inbound]1001 -->拖动到[Parking]001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.PARKING,"001");
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("[VCP验证]");
-        sleep(WaitUntils.SHORT_WAIT);
-        List allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1000").getCaller()).as("验证分机1000_Caller").contains(queueListName+":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1001").getCaller()).as("验证分机1001_Caller").contains(queueListName+":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1002").getCaller()).as("验证分机1002_Caller").contains(queueListName+":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1003").getCaller()).as("验证分机1003_Caller").contains(queueListName+":2000 [2000]");
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1000").getStatus()).as("验证分机1000_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1001").getStatus()).as("验证分机1001_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1002").getStatus()).as("验证分机1002_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1003").getStatus()).as("验证分机1003_Status").contains("Ringing");
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1000").getDetails()).as("验证分机1000_Details").contains(RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias());//External, Ring Agent
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1001").getDetails()).as("验证分机1001_Details").contains(RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias());
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1002").getDetails()).as("验证分机1002_Details").contains(RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias());
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1003").getDetails()).as("验证分机1003_Details").contains(RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias());
+        List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(queueListName+":2000 [2000]", "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(queueListName+":2000 [2000]", "1002 C [1002]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(queueListName+":2000 [2000]", "1003 D [1003]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(queueListName+":2000 [2000]", "1004 E [1004]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
         softAssertPlus.assertThat(allRecordList).as("验证数量").size().isEqualTo(queueListNum.size());
 
@@ -572,7 +566,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                         tuple(queueListName_1+":2000 [2000]", "1006 G [1006]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
                         tuple(queueListName_1+":2000 [2000]", "1007 H [1007]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
                         tuple(queueListName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(queueListName_1+":2000 [2000]", "1000 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+                        tuple(queueListName_1+":2000 [2000]", "1009 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
         softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum_1.size());
 
@@ -668,8 +662,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
-
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
@@ -720,6 +713,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
     }
+
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
@@ -734,7 +728,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
@@ -771,42 +765,29 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step("6：[Inbound]1000 -->右键-->Redirect[RingGroup]6301");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6301");
-
         sleep(WaitUntils.SHORT_WAIT);
+
         assertStep("[VCP验证]");
-        List allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1005").getCaller()).as("验证分机1005_Caller").contains(ringGroupName_1 +":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1006").getCaller()).as("验证分机1006_Caller").contains(ringGroupName_1 +":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1007").getCaller()).as("验证分机1007_Caller").contains(ringGroupName_1 +":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1008").getCaller()).as("验证分机1008_Caller").contains(ringGroupName_1 +":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1009").getCaller()).as("验证分机1009_Caller").contains(ringGroupName_1 +":2000 [2000]");
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1005").getStatus()).as("验证分机1005_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1006").getStatus()).as("验证分机1006_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1007").getStatus()).as("验证分机1007_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1008").getStatus()).as("验证分机1008_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1009").getStatus()).as("验证分机1009_Status").contains("Ringing");
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1005").getDetails()).as("验证分机1005_Details").contains(RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias());//External, Ring Agent
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1006").getDetails()).as("验证分机1006_Details").contains(RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias());
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1007").getDetails()).as("验证分机1007_Details").contains(RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias());
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1008").getDetails()).as("验证分机1008_Details").contains(RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias());
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1009").getDetails()).as("验证分机1009_Details").contains(RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias());
-
+        List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName_1+":2000 [2000]", "1005 F [1005]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(ringGroupName_1+":2000 [2000]", "1006 G [1006]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(ringGroupName_1+":2000 [2000]", "1007 H [1007]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(ringGroupName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(ringGroupName_1+":2000 [2000]", "1009 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
-        step("7:显示状态1005 接通");
+        step("7:1005 接通");
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_Answer_Call(1005,false);
 
-        assertStep("[VCP验证]7:显示状态 A--B ring");
+        assertStep("[VCP验证]");
         sleep(WaitUntils.SHORT_WAIT);
-        List allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordListAfter,RECORD.Callee,"1005").getCaller()).as("验证分机1005_Caller").contains(ringGroupName_1 +":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordListAfter,RECORD.Callee,"1005").getStatus()).as("验证分机1005_Status").contains("Talking");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordListAfter,RECORD.Callee,"1005").getDetails()).as("验证分机1005_Details").contains(RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias());//External, Ring Agent
+        List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName_1+":2000 [2000]", "1005 F [1005]","Talking",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
+
 
         softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
@@ -826,7 +807,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
@@ -863,44 +844,27 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step("6：[Inbound]1000 -->右键-->Redirect[Queue]6400");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6401");
+        sleep(WaitUntils.SHORT_WAIT*2);
 
-        sleep(WaitUntils.SHORT_WAIT);
         assertStep("[VCP验证]");
-        List allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1005").getCaller()).as("验证分机1005_Caller").contains(queueListName_1+":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1006").getCaller()).as("验证分机1006_Caller").contains(queueListName_1+":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1007").getCaller()).as("验证分机1007_Caller").contains(queueListName_1+":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1008").getCaller()).as("验证分机1008_Caller").contains(queueListName_1+":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1009").getCaller()).as("验证分机1009_Caller").contains(queueListName_1+":2000 [2000]");
-
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1005").getStatus()).as("验证分机1005_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1006").getStatus()).as("验证分机1006_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1007").getStatus()).as("验证分机1007_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1008").getStatus()).as("验证分机1008_Status").contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1009").getStatus()).as("验证分机1009_Status").contains("Ringing");
-
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1005").getDetails()).as("验证分机1005_Details").contains(RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias());//External, Ring Agent
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1006").getDetails()).as("验证分机1006_Details").contains(RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias());
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1007").getDetails()).as("验证分机1007_Details").contains(RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias());
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1008").getDetails()).as("验证分机1008_Details").contains(RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias());
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordList,RECORD.Callee,"1009").getDetails()).as("验证分机1009_Details").contains(RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias());
-
-
+        List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName_1+":2000 [2000]", "1005 F [1005]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(queueListName_1+":2000 [2000]", "1006 G [1006]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(queueListName_1+":2000 [2000]", "1007 H [1007]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(queueListName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(queueListName_1+":2000 [2000]", "1009 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum_1.size());
 
         step("7:显示状态1005 接通");
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_Answer_Call(1005,false);
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("[VCP验证]");
-        sleep(WaitUntils.SHORT_WAIT);
-        List allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordListAfter,RECORD.Callee,"1005").getCaller()).as("验证分机1005_Caller").contains(queueListName_1 +":2000 [2000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordListAfter,RECORD.Callee,"1005").getStatus()).as("验证分机1005_Status").contains("Talking");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(allRecordListAfter,RECORD.Callee,"1005").getDetails()).as("验证分机1005_Details").contains(RECORD_DETAILS.EXTERNAL_QUEUE.getAlias());
+        List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName_1+":2000 [2000]", "1005 F [1005]","Talking",RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
         assertStep("[CDR验证]");//TODO CDR
@@ -946,15 +910,14 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT);
 
-        step("6：[Inbound]1000 -->Redirect[Voicemail]");
+        step("4：[Inbound]1000 -->Redirect[Voicemail]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1000",true);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
-
-        assertStep("[VCP验证]");
-        sleep(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Status),"Talking");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Callee),"1000 A [1000]");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Details),RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias());
+        assertStep("5:[VCP显示]");
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -973,7 +936,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRedirectIVR","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRedirectIVR(){
-//        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -996,22 +959,21 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
-        step("6：[Inbound]1000 -->Redirect[IVR]");
+        step("4：[Inbound]1000 -->Redirect[IVR]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6200");
+        sleep(WaitUntils.SHORT_WAIT*2);
 
-
-        assertStep("[VCP]");
-        sleep(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Status),"Talking");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Callee),"6200 [6200]");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1000",RECORD.Details),"External, IVR");
+        assertStep("5:[VCP显示]");
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName+":2000 [2000]", "6200 [6200]","Talking",RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         sleep(WaitUntils.SHORT_WAIT);
 
         //todo cdr
-        softAssert.assertAll();
+        softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
     }
 
@@ -1052,36 +1014,35 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
-        assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
-        List resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getCallee()).contains("1000 A [1000]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getStatus()).contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getDetails()).contains("External");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getCaller()).contains("Q0:2000 [2000]");
+        assertStep("4:[VCP显示]");
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
-        step( "4:右键->[Redirect] C(外线)");
+        step( "5:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
         sleep(WaitUntils.SHORT_WAIT*2);
 
-        List resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_redirect, RECORD.Caller,"2000").getCallee()).contains("DOD [2001]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_redirect, RECORD.Caller,"2000").getStatus()).contains("Ringing");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_redirect, RECORD.Caller,"2000").getDetails()).contains("External");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getCaller()).contains("2000 [2000]");
+        assertStep("6:[VCP显示]");
+        List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
+                .contains(tuple("2000 [2000]", "DOD [2001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
 
+        step("7:[接通]");
         pjsip.Pj_Answer_Call(2001,false);
         sleep(WaitUntils.SHORT_WAIT*2);
-        List resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_answer, RECORD.Caller,"2000").getCallee()).contains("DOD [2001]");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_answer, RECORD.Caller,"2000").getStatus()).contains("Talking");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_after_answer, RECORD.Caller,"2000").getDetails()).contains("External");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getRecord(resultSum_before, RECORD.Callee,"1000").getCaller()).contains("2000 [2000]");
 
-        pjsip.Pj_hangupCall(2000);//todo  can not handup  分机2000处于hungup 【预期：3 实际：4】 0814
+        assertStep("8:[VCP显示]");
+        List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
+                .contains(tuple("2000 [2000]", "DOD [2001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
 
-        assertStep("3:[CDR显示]");//todo CDR显示
+        step("9:[挂断]");
+        pjsip.Pj_hangupCall(2000);
+
+        assertStep("10:[CDR显示]");//todo CDR显示
 
         softAssertPlus.assertAll();
 
@@ -1124,9 +1085,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("4:[VCP显示]");
-        List resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
@@ -1135,7 +1097,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("6:[VCP显示]");
-        List resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
                 .contains(tuple("2000 [2000]", "DOD [2001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
 
@@ -1144,9 +1106,9 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("8:[VCP显示]");
-        List resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]", "1000 A [1000]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]", "DOD [2001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("9:[挂断]");
         pjsip.Pj_hangupCall(2001);
@@ -1193,14 +1155,14 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
-        List resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
         step( "5:右键->[HandUp]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
         sleep(WaitUntils.SHORT_WAIT*2);
-        List resultSum_after =auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_after =auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
 
         assertStep("6:[VCP显示]");
         softAssertPlus.assertThat(resultSum_before.size()).isEqualTo(resultSum_after.size()+1);
@@ -1244,10 +1206,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("4:[VCP显示]");
-        List resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
@@ -1258,7 +1220,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("6:[VCP显示]");
-        List resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
@@ -1304,16 +1266,16 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
-        List resultSum_before = auto.operatorPanelPage().getAllRecordSimple(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
         step( "5:右键->[右键PickUp]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.PICK_UP);
-        sleep(WaitUntils.SHORT_WAIT*2);//todo BUG 等待>=6s 才会出现
+        sleep(WaitUntils.SHORT_WAIT*4);//todo BUG 等待>=6s 才会出现
 
         assertStep("6:[VCP显示]");
-        List resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "0 [0]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
 
@@ -1357,7 +1319,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
-        List list =  auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000");
+        List<String> list =  auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000");
 
         assertThat(list).doesNotContain("Transfer","Listen","Whisper","Barge","Park","Unpark","Pause","Recording","Unrecording");
         pjsip.Pj_Hangup_All();
