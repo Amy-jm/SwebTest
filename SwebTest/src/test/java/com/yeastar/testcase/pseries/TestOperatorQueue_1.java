@@ -26,7 +26,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  */
 public class TestOperatorQueue_1 extends TestCaseBase {
     APIUtil apiUtil = new APIUtil();
-    private boolean runRecoveryEnvFlagQueue = true;
+    private boolean runRecoveryEnvFlag = true;
     ArrayList<String> queueListNum = null;
     ArrayList<String> queueListNum_1 = null;
     ArrayList<String> ringGroupNum = null;
@@ -48,7 +48,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             ,SPS,"DOD",DEVICE_ASSIST_2,DEVICE_ASSIST_2);
 
 
-    public void prerequisiteForAPIForQueue(boolean booRunRecoveryEnvFlag) {
+    public void prerequisiteForAPI(boolean booRunRecoveryEnvFlag) {
         if (booRunRecoveryEnvFlag) {
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
@@ -138,7 +138,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
             apiUtil.apply();
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
-            runRecoveryEnvFlagQueue = false;
+            runRecoveryEnvFlag = false;
         }
     }
 
@@ -153,7 +153,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingStatus","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRingStatus(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -200,7 +200,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @Issue("bug 等待留言的时候才开始录音")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRingDragAndDropWithCTalking(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -260,7 +260,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRingDragAndDropWithCIdle(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -322,7 +322,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "2.拖动后，需要>=6秒后才会显示")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRingDragAndDropWithCUnregistered(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -357,7 +357,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"2000",OperatorPanelPage.DOMAIN.EXTENSION,"1010");
-        sleep(WaitUntils.SHORT_WAIT*4);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("7:[VCP]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -379,7 +379,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropRG","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRingDragAndDropRG(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -428,7 +428,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                           tuple(ringGroupName_1+":2000 [2000]", "1006 G [1006]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                           tuple(ringGroupName_1+":2000 [2000]", "1007 H [1007]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                           tuple(ringGroupName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                          tuple(ringGroupName_1+":2000 [2000]", "1009 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+                          tuple(ringGroupName_1+":2000 [2000]", "1009 J [1009]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
 
@@ -459,7 +459,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropParking","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRingDragAndDropParking(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -493,11 +493,11 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(queueListName+":2000 [2000]", "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(queueListName+":2000 [2000]", "1002 C [1002]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(queueListName+":2000 [2000]", "1003 D [1003]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(queueListName+":2000 [2000]", "1004 E [1004]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+                .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName+":2000 [2000]", "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName+":2000 [2000]", "1002 C [1002]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName+":2000 [2000]", "1003 D [1003]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName+":2000 [2000]", "1004 E [1004]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
         softAssertPlus.assertThat(allRecordList).as("验证数量").size().isEqualTo(queueListNum.size());
 
@@ -516,7 +516,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropQueue","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRingDragAndDropQueue(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -566,7 +566,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                         tuple(queueListName_1+":2000 [2000]", "1006 G [1006]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
                         tuple(queueListName_1+":2000 [2000]", "1007 H [1007]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
                         tuple(queueListName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(queueListName_1+":2000 [2000]", "1009 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+                        tuple(queueListName_1+":2000 [2000]", "1009 J [1009]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
         softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum_1.size());
 
@@ -586,7 +586,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRightActionRedirectC_AHandUp(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -659,7 +659,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRightActionRedirectC_CHandUp(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -725,7 +725,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRedirectRingGroup","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRedirectRingGroup(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -784,7 +784,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         assertStep("[VCP验证]");
         sleep(WaitUntils.SHORT_WAIT);
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName_1+":2000 [2000]", "1005 F [1005]","Talking",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
@@ -804,7 +804,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRedirectQueue","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRedirectQueue(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -863,7 +863,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName_1+":2000 [2000]", "1005 F [1005]","Talking",RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
@@ -885,10 +885,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRedirectVoicemail","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRedirectVoicemail(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
@@ -936,10 +936,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRedirectIVR","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRedirectIVR(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
@@ -989,7 +989,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRightActionRedirectOffLineY_AHandUp(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1060,7 +1060,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")//TODO make jenkins vm exception
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRightActionRedirectOffLineY_YHandUp(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1129,7 +1129,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionHandUp","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRightActionHandUp(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1183,10 +1183,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRightActionHoverHandUp(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
@@ -1206,7 +1206,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1215,9 +1215,9 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step( "5:右键->[HandUp->悬停，移开]");
         auto.operatorPanelPage().rightTableActionMouserHover(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.RETRY_WAIT);
         auto.operatorPanelPage().moveByOffsetAndClick(200,200);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.RETRY_WAIT);
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1238,10 +1238,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testQueueIncomingRightActionPickUp","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRightActionPickUp(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
@@ -1293,7 +1293,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","Queue"})
     public void testQueueIncomingRightActionUnDisplay(){
-        prerequisiteForAPIForQueue(runRecoveryEnvFlagQueue);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
