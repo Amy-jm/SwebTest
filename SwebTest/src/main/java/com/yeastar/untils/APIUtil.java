@@ -103,6 +103,67 @@ public class APIUtil {
         return this;
     }
 
+    public APIUtil updateAutoRecord(List<String> trunkList, List<String> extList, List<String> conferenceList , List<String> queueList){
+        JSONArray jsonArray1 = new JSONArray();
+        JSONArray jsonArray2 = new JSONArray();
+        JSONArray jsonArray3 = new JSONArray();
+        JSONArray jsonArray4 = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+
+        for (ExtensionObject extensionObject: extensionObjects) {
+            if (trunkList != null && !trunkList.isEmpty()) {
+                for (String ext : trunkList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray1.put(a);
+                    }
+                }
+            }
+
+            if (extList != null && !extList.isEmpty()) {
+                for (String ext : extList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray2.put(a);
+                    }
+                }
+            }
+
+            if (conferenceList != null && !conferenceList.isEmpty()) {
+                for (String ext : conferenceList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray3.put(a);
+                    }
+                }
+            }
+
+            if (queueList != null && !queueList.isEmpty()) {
+                for (String ext : queueList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray4.put(a);
+                    }
+                }
+            }
+        }
+        String request = String.format("{\"record_trunk_list\":%s,\"record_ext_list\":%s,\"record_conference_list\":%s,\"record_queue_list\":%s}",jsonArray1.toString(),jsonArray2.toString(),jsonArray3.toString(),jsonArray4.toString());
+        m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/autorecord/update",request);
+        return this;
+    }
     /**
      * 设置网络磁盘  1、用一个共享路径添加  2、把录音设置成这个路径
      * @return
@@ -117,6 +178,7 @@ public class APIUtil {
                 m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/update","{\"recording\":"+array.getJsonObject(i).getInteger("value")+"}");
             }
         }
+
         return this;
     }
 
@@ -201,7 +263,7 @@ public class APIUtil {
     public List<ExtensionObject> getExtensionSummary(){
 
         List<ExtensionObject> extObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 

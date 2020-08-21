@@ -209,6 +209,7 @@ public class OperatorPanelPage extends BasePage {
             }else{
                 log.error("[Transfer eventParam 不能为空！]");
             }
+            sleep(WaitUntils.RETRY_WAIT);
             transferElementOKBtn.click();
             //2.类型二, Parked / Whisper
         }else if(event == RIGHT_EVENT.WHISPER || event == RIGHT_EVENT.PARKED){
@@ -480,6 +481,9 @@ public class OperatorPanelPage extends BasePage {
         }
     }
 
+    public void assertRecordValue(SoftAssertions softAssertPlus, TABLE_TYPE tableType, RECORD recordType, String recordTypeValue, String caller, String callee, String status, String details){
+        assertRecordValue(softAssertPlus,tableType,recordType,recordTypeValue, caller,  callee,  status,details,"" );
+    }
     /**
      * 断言操作面板某一行内容
      * @param softAssertPlus  传入case的AssertPlus
@@ -491,7 +495,10 @@ public class OperatorPanelPage extends BasePage {
      * @param status          预期值
      * @param details         预期值
      */
-    public void assertRecordValue(SoftAssertions softAssertPlus, TABLE_TYPE tableType, RECORD recordType, String recordTypeValue, String caller, String callee, String status, String details){
+    public void assertRecordValue(SoftAssertions softAssertPlus, TABLE_TYPE tableType, RECORD recordType, String recordTypeValue, String caller, String callee, String status, String details,String desc){
+
+        sleep(WaitUntils.SHORT_WAIT);
+
         List<Record> records = getAllRecord(tableType);
         int targetInt = 0;
 
@@ -509,13 +516,14 @@ public class OperatorPanelPage extends BasePage {
                 }
             }
 
-            softAssertPlus.assertThat(records.get(targetInt).getCaller()).as("验证_Caller").contains(caller);
-            softAssertPlus.assertThat(records.get(targetInt).getCallee()).as("验证_Callee").contains(callee);
-            softAssertPlus.assertThat(records.get(targetInt).getStatus()).as("验证_Status").contains(status);
-            softAssertPlus.assertThat(records.get(targetInt).getDetails()).as("验证_Details").contains(details);
+            softAssertPlus.assertThat(records.get(targetInt).getCaller()).as("验证_Caller_"+desc).contains(caller);
+            softAssertPlus.assertThat(records.get(targetInt).getCallee()).as("验证_Callee_"+desc).contains(callee);
+            softAssertPlus.assertThat(records.get(targetInt).getStatus()).as("验证_Status_"+desc).contains(status);
+            softAssertPlus.assertThat(records.get(targetInt).getDetails()).as("验证_Details_"+desc).contains(details);
 
         }else{
             reportMessage("[没有找到有效记录！！！]");
+            softAssertPlus.assertThat(records.size()).as("[没有找到有效记录！！！]").isEqualTo(-1);
         }
 
     }
