@@ -774,7 +774,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                         tuple(ringGroupName_1+":2000 [2000]", "1006 G [1006]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                         tuple(ringGroupName_1+":2000 [2000]", "1007 H [1007]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                         tuple(ringGroupName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(ringGroupName_1+":2000 [2000]", "1009 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+                        tuple(ringGroupName_1+":2000 [2000]", "1009 J [1009]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
         step("7:1005 接通");
@@ -849,11 +849,11 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(queueListName_1+":2000 [2000]", "1005 F [1005]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(queueListName_1+":2000 [2000]", "1006 G [1006]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(queueListName_1+":2000 [2000]", "1007 H [1007]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(queueListName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(queueListName_1+":2000 [2000]", "1009 J [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+                .contains(tuple(queueListName_1+":2000 [2000]", "1005 F [1005]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName_1+":2000 [2000]", "1006 G [1006]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName_1+":2000 [2000]", "1007 H [1007]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName_1+":2000 [2000]", "1009 J [1009]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
         softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum_1.size());
 
         step("7:显示状态1005 接通");
