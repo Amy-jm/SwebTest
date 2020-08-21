@@ -9,8 +9,7 @@ import com.yeastar.controllers.WebDriverFactory;
 import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.WaitUntils;
 import lombok.extern.log4j.Log4j2;
-import okhttp3.internal.Internal;
-import org.jetbrains.annotations.NotNull;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -175,8 +174,6 @@ public class OperatorPanelPage extends BasePage {
      * @return
      */
     public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event,String eventParam,boolean isClickVoiceMailImage){
-        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
-        sleep(WaitUntils.SHORT_WAIT);
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
@@ -474,27 +471,6 @@ public class OperatorPanelPage extends BasePage {
     }
 
     /**
-     * 获取所有对象，其中
-     * @param tableType
-     * @return
-     */
-    public List<Record> getAllRecordSimple(TABLE_TYPE tableType){
-        List<Record> list  = getAllRecord(tableType);
-        List<Record> simpleList = new ArrayList();
-        for (int i = 0; i < list.size(); i++) {
-            Record record = new Record();
-            record.setRecordStatus("");
-            record.setCaller(list.get(i).getCaller());
-            record.setCallee(list.get(i).getCallee());
-            record.setStatus(list.get(i).getStatus());
-            record.setStrTime("");
-            record.setDetails(list.get(i).getDetails());
-            simpleList.add(record);
-         }
-        return  simpleList;
-    }
-
-    /**
      * 记录枚举
      */
     public enum  RECORD{
@@ -535,6 +511,53 @@ public class OperatorPanelPage extends BasePage {
         public String getAlias() {
             return alias;
         }
+    }
+
+    public void assertRecordValue(SoftAssertions softAssertPlus, TABLE_TYPE tableType, RECORD recordType, String recordTypeValue, String caller, String callee, String status, String details){
+        assertRecordValue(softAssertPlus,tableType,recordType,recordTypeValue, caller,  callee,  status,details,"" );
+    }
+    /**
+     * 断言操作面板某一行内容
+     * @param softAssertPlus  传入case的AssertPlus
+     * @param tableType       指定表格  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND 用于找到要校验的那一行
+     * @param recordType      记录类型  用于找到要校验的那一行
+     * @param recordTypeValue 记录类型的值 用于找到要校验的那一行
+     * @param caller          预期值
+     * @param callee          预期值
+     * @param status          预期值
+     * @param details         预期值
+     */
+    public void assertRecordValue(SoftAssertions softAssertPlus, TABLE_TYPE tableType, RECORD recordType, String recordTypeValue, String caller, String callee, String status, String details,String desc){
+
+        sleep(WaitUntils.SHORT_WAIT);
+
+        List<Record> records = getAllRecord(tableType);
+        int targetInt = 0;
+
+        if(records.size()!=0){
+            for (int i = 0; i < records.size(); i++) {
+                if (
+//                        (recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
+                        recordType == RECORD.Caller && records.get(i).getCaller().contains(recordTypeValue) ||
+                                recordType == RECORD.Callee && records.get(i).getCallee().contains(recordTypeValue) ||
+                                recordType == RECORD.Status && records.get(i).getStatus().contains(recordTypeValue) ||
+                                recordType == RECORD.StrTime && records.get(i).getStrTime().contains(recordTypeValue) ||
+                                recordType == RECORD.Details && records.get(i).getDetails().contains(recordTypeValue)
+                ) {
+                    targetInt = i;
+                }
+            }
+
+            softAssertPlus.assertThat(records.get(targetInt).getCaller()).as("验证_Caller_"+desc).contains(caller);
+            softAssertPlus.assertThat(records.get(targetInt).getCallee()).as("验证_Callee_"+desc).contains(callee);
+            softAssertPlus.assertThat(records.get(targetInt).getStatus()).as("验证_Status_"+desc).contains(status);
+            softAssertPlus.assertThat(records.get(targetInt).getDetails()).as("验证_Details_"+desc).contains(details);
+
+        }else{
+            reportMessage("[没有找到有效记录！！！]");
+            softAssertPlus.assertThat(records.size()).as("[没有找到有效记录！！！]").isEqualTo(-1);
+        }
+
     }
     /**
      *

@@ -12,3 +12,6 @@ SwebTest.iml
 pic
 pjsip.log
 
+/CDR修改说明.txt
+/src/main/resources/driver/chrome/chromedriver3.exe
+/src/test/java/com/yeastar/testcase/pseries/mytest.java

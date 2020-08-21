@@ -1,5 +1,4 @@
 package com.yeastar.untils;
-import com.yeastar.swebtest.pobject.Settings.PBX.CallFeatures.Conference.Conference;
 import com.yeastar.untils.APIObject.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -101,6 +100,105 @@ public class APIUtil {
      */
     public APIUtil updatePersonal(String request){
         m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/updatepersonal",request);
+        return this;
+    }
+
+    public APIUtil updateAutoRecord(List<String> trunkList, List<String> extList, List<String> conferenceList , List<String> queueList){
+        JSONArray jsonArray1 = new JSONArray();
+        JSONArray jsonArray2 = new JSONArray();
+        JSONArray jsonArray3 = new JSONArray();
+        JSONArray jsonArray4 = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+
+        for (ExtensionObject extensionObject: extensionObjects) {
+            if (trunkList != null && !trunkList.isEmpty()) {
+                for (String ext : trunkList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray1.put(a);
+                    }
+                }
+            }
+
+            if (extList != null && !extList.isEmpty()) {
+                for (String ext : extList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray2.put(a);
+                    }
+                }
+            }
+
+            if (conferenceList != null && !conferenceList.isEmpty()) {
+                for (String ext : conferenceList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray3.put(a);
+                    }
+                }
+            }
+
+            if (queueList != null && !queueList.isEmpty()) {
+                for (String ext : queueList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray4.put(a);
+                    }
+                }
+            }
+        }
+        String request = String.format("{\"record_trunk_list\":%s,\"record_ext_list\":%s,\"record_conference_list\":%s,\"record_queue_list\":%s}",jsonArray1.toString(),jsonArray2.toString(),jsonArray3.toString(),jsonArray4.toString());
+        m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/autorecord/update",request);
+        return this;
+    }
+    /**
+     * 设置网络磁盘  1、用一个共享路径添加  2、把录音设置成这个路径
+     * @return
+     */
+    public APIUtil setNetworkDriver(){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storage/create","{\"name\":\""+NETWORK_DEVICE_NAME+"\",\"host\":\""+NETWORK_DEVICE_IP+"\",\"share_name\":\""+NETWORK_DEVICE_SHARE_NAME+"\",\"username\":\""+NETWORK_DEVICE_USER_NAME+"\",\"password\":\""+ enBase64(NETWORK_DEVICE_USER_PASSWORD)+"\",\"work_group\":\"\",\"samba_version\":\"auto\"}");
+        String response = m_getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/getmenuoption?menu=storage");
+        JSONObject jsonObject = new JSONObject(response);
+        JsonArray array = jsonObject.getJsonArray("storage_options");
+        for (int i=0; i<array.size(); i++){
+            if (array.getJsonObject(i).getString("text").equals(NETWORK_DEVICE_NAME)){
+                m_postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/update","{\"recording\":"+array.getJsonObject(i).getInteger("value")+"}");
+            }
+        }
+
+        return this;
+    }
+
+    /**
+     * 删除自动化的留言存储介质
+     * @return
+     */
+    public APIUtil deleteNetworkDrive(){
+
+        //先把录音介质设置到默认
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/update","{\"voicemail\":0,\"log\":0,\"recording\":0}");
+
+        String response = m_getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/getmenuoption?menu=storage");
+        JSONObject jsonObject = new JSONObject(response);
+        JsonArray array = jsonObject.getJsonArray("storage_options");
+        for (int i=0; i<array.size(); i++){
+            if (array.getJsonObject(i).getString("text").equals(NETWORK_DEVICE_NAME)){
+                m_getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storage/delete?id="+array.getJsonObject(i).getString("value"));
+            }
+        }
         return this;
     }
     /**
@@ -455,6 +553,17 @@ public class APIUtil {
         request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"%s\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
                 ,name,dest.toLowerCase(),id ,jsonArray.toString());
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/create",request);
+        return this;
+    }
+
+    /**
+     * 对已有的呼入路由编辑 update
+     * @param name
+     * @param request
+     * @return
+     */
+    public APIUtil editInbound(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/update",request);
         return this;
     }
 
