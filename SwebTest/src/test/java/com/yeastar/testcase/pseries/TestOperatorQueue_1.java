@@ -7,6 +7,8 @@ import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.RECORD_DETAILS;
 import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.APIUtil;
+import com.yeastar.untils.CDRObject;
+import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -25,6 +27,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @create: 2020/07/30
  */
 public class TestOperatorQueue_1 extends TestCaseBase {
+    private final String CDR_PREFIX="";//""cdr_recording.cdr.";
     APIUtil apiUtil = new APIUtil();
     private boolean runRecoveryEnvFlag = true;
     ArrayList<String> queueListNum = null;
@@ -636,13 +639,14 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "1010 K [1010]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
 
-        pjsip.Pj_hangupCall(2000,2000);
+        pjsip.Pj_hangupCall(2000);
 
-        assertStep("[CDR显示]");//todo CDR显示
-//        List<CDRObject> cdr = apiUtil.getCDRRecord(0);
-//        softAssert.assertEquals(cdr.get(0).callFrom,"");
+        assertStep("[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>", "Queue Q0<6400>","NO ANSWER","Redirected to 1010 K<1010>"),
+                          tuple("2000<2000>", "1010 K<1010>","ANSWERED","2000<2000> hung up"));
 
-        pjsip.Pj_Hangup_All();
         softAssertPlus.assertAll();
 
     }
@@ -709,9 +713,13 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         pjsip.Pj_hangupCall(1010);
 
-        assertStep("[CDR显示]");//todo CDR显示
-        pjsip.Pj_Hangup_All();
-        softAssert.assertAll();
+        assertStep("9:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>", "Queue Q0<6400>","NO ANSWER","Redirected to 1010 K<1010>"),
+                          tuple("2000<2000>", "1010 K<1010>","ANSWERED","1010 K<1010> hung up"));
+
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
@@ -788,9 +796,17 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                 .contains(tuple(ringGroupName_1+":2000 [2000]", "1005 F [1005]","Talking",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("9:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>", "Queue Q0<6400>","NO ANSWER","Redirected to RG1<6301>"),
+                          tuple("2000<2000>", "RingGroup RG1<6301>","ANSWERED","RingGroup RG1<6301> connected"),
+                          tuple("2000<2000>", "1005 F<1005>","ANSWERED","1005 F<1005> hung up"));
 
         softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
     }
 
     @Epic("P_Series")
@@ -867,10 +883,17 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                 .contains(tuple(queueListName_1+":2000 [2000]", "1005 F [1005]","Talking",RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
-        assertStep("[CDR验证]");//TODO CDR
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("9:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>", "Queue Q0<6400>","NO ANSWER","Redirected to Q1<6401>"),
+                        tuple("2000<2000>", "Queue Q1<6401>","ANSWERED","Queue Q1<6401> connected"),
+                        tuple("2000<2000>", "1005 F<1005>","ANSWERED","1005 F<1005> hung up"));
 
         softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
     }
 
 
@@ -907,7 +930,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         step("4：[Inbound]1000 -->Redirect[Voicemail]");
@@ -919,10 +942,16 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
-        sleep(WaitUntils.SHORT_WAIT);
-
-        softAssert.assertAll();
+        sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Hangup_All();
+
+        assertStep("9:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>", "1000 A<1000>", "VOICEMAIL", "2000<2000> hung up"),
+                          tuple ("2000<2000>", "Queue Q0<6400>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
@@ -970,11 +999,16 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "6200 [6200]","Talking",RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_Hangup_All();//TODO IVR 接听
 
-        //todo cdr
+        assertStep("9:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>", "IVR 6200<6200>", "ANSWERED", "2000<2000> hung up"),
+                          tuple("2000<2000>", "Queue Q0<6400>", "NO ANSWER", "Redirected to 6200<6200>"));
+
         softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
     }
 
     @Epic("P_Series")
@@ -1042,7 +1076,11 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         step("9:[挂断]");
         pjsip.Pj_hangupCall(2000);
 
-        assertStep("10:[CDR显示]");//todo CDR显示
+        assertStep("10:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),
+                          tuple ("2000<2000>", "Queue Q0<6400>", "NO ANSWER", "Redirected to 0<2001>"));//todo check to 0<2001>?
 
         softAssertPlus.assertAll();
 
@@ -1114,6 +1152,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_hangupCall(2001);
 
         assertStep("10:[CDR显示]");//todo CDR显示
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2001 hung up"),//todo check 2001 hung up ? 0<2001> hung up ?
+                        tuple ("2000<2000>", "Queue Q0<6400>", "NO ANSWER", "Redirected to 0<2001>"));
 
         softAssertPlus.assertAll();
     }
