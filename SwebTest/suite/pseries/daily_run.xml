@@ -19,8 +19,6 @@
             <class name="com.yeastar.testcase.pseries.TestOperatorExtension_1"/>
             <class name="com.yeastar.testcase.pseries.TestOperatorQueue_1"/>
             <class name="com.yeastar.testcase.pseries.TestOperatorRingGroup_1"/>
-            <class name="com.yeastar.testcase.pseries.TestOperatorConference_1"/>
-
         </classes>
     </test>
 </suite>
