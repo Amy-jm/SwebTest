@@ -758,6 +758,20 @@ public class APIUtil {
 
 
     /**
+     * 找到指定conference
+     * @param num  分机号
+     * @return
+     */
+    public ConferenceObject getConferenceSummary(String num){
+        List<ConferenceObject> conferenceObjects = getConferenceSummary();
+        for (ConferenceObject object : conferenceObjects){
+            if(object.number.equals(num)){
+                return object;
+            }
+        }
+        return null;
+    }
+    /**
      * 获取概要列表
      * 对应API：api/v1.0/conference/searchsummary
      */
@@ -845,6 +859,21 @@ public class APIUtil {
         return this;
     }
 
+
+    /**
+     * 找到指定 Queue
+     * @param num  分机号
+     * @return
+     */
+    public QueueObject getQueueSummary(String num){
+        List<QueueObject> queueObjects = getQueueSummary();
+        for (QueueObject object : queueObjects){
+            if(object.number.equals(num)){
+                return object;
+            }
+        }
+        return null;
+    }
 
     /**
      * 获取概要列表

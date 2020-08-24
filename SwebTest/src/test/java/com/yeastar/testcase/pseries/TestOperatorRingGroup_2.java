@@ -288,7 +288,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         step("4:右击选择挂断");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
 
-        assertStep("4:控制面板显示状态 ");
+        assertStep("5:控制面板显示状态 ");
         softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("操作面板没有记录").isEqualTo(0);
 
         pjsip.Pj_Hangup_All();

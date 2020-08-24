@@ -469,8 +469,26 @@ public class OperatorPanelPage extends BasePage {
     }
 
     public enum RECORD_DETAILS{
-        QUEUE_RING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing")),
-        QUEUE_WAITING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing"));
+        QUEUE_RING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        QUEUE_WAITING(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        INTERNAL("Internal"),
+        INTERNAL_AGENT_RING("Internal, Ringing Agent"),
+        INTERNAL_QUEUE("Internal, Queue"),
+        INTERNAL_PARKED("Internal, Parked"),
+        INTERNAL_RING_GROUP("Internal, Ring Group"),
+        INTERNAL_IVR("Internal, IVR"),
+        INTERNAL_CONFERENCE("Internal, Conference"),
+        INTERNAL_PAGING("Internal, Paging"),
+        INTERNAL_VOICEMAIL("Internal, Voicemail"),
+        EXTERNAL("External"),
+        EXTERNAL_IVR("External, IVR"),
+        EXTERNAL_PARKED("External, Parked"),
+        EXTERNAL_WAITING_IN_QUEUE("External, Waiting in Queue"),
+        EXTERNAL_AGENT_RING("External, Ringing Agent"),
+        EXTERNAL_QUEUE("External, Queue"),
+        EXTERNAL_RING_GROUP("External, Ring Group"),
+        EXTERNAL_CONFERENCE("External, Conference"),
+        EXTERNAL_VOICEMAIL("External, Voicemail");
 
         private final String alias;
         RECORD_DETAILS(String alias) {

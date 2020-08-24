@@ -22,8 +22,8 @@ import static com.codeborne.selenide.Selenide.open;
 public class TestCaseBase extends BaseMethod {
     public PageEngine auto;
     private WebDriver webDriver;
-    public SoftAssert softAssert;
     public SoftAssertions softAssertPlus = new SoftAssertions();
+    public SoftAssert softAssert;
 
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method){
