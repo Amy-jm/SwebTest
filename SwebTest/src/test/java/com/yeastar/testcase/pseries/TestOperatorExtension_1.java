@@ -1252,6 +1252,14 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
                 .contains(tuple("2000 [2000]", "0 [0]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
 
+        pjsip.Pj_Answer_Call(0,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        assertStep("6:[VCP显示]");
+        List<Record> resultSum_after_end = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum_after_end).extracting("caller","callee","status","details")
+                .contains(tuple("2000 [2000]", "0 [0]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
         softAssertPlus.assertAll();
     }
 

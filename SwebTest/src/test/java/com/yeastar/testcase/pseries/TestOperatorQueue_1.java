@@ -419,7 +419,6 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
-
         step("4：拖动到[RingGroup]6301");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.RINGGROUP,"6301");
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -433,7 +432,6 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                           tuple(ringGroupName_1+":2000 [2000]", "1008 I [1008]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                           tuple(ringGroupName_1+":2000 [2000]", "1009 J [1009]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
-
 
         step("5:1005 接通");
         sleep(WaitUntils.SHORT_WAIT);
@@ -858,7 +856,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT);
 
-        step("6：[Inbound]1000 -->右键-->Redirect[Queue]6400");
+        step("6：[Inbound]1000 -->右键-->Redirect[Queue]6401");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6401");
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -1320,6 +1318,14 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "0 [0]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        pjsip.Pj_Answer_Call(0,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        assertStep("6:[VCP显示]");
+        List<Record> resultSum_after_end = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum_after_end).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName+":2000 [2000]", "0 [0]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         softAssertPlus.assertAll();
     }
