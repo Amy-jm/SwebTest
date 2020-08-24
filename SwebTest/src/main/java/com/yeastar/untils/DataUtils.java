@@ -16,7 +16,7 @@ public class DataUtils {
      */
     public static String getCurrentTime(){
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHSS");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = calendar.getTime();
         return sdf.format(date);
     }

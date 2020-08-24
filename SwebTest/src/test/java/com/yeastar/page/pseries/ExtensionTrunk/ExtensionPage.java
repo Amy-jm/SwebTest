@@ -102,7 +102,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},userPassword:{1}")
     public ExtensionPage createSipExtension(String extensionNumber, String userPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         ele_extension_user_first_name.setValue(extensionNumber);
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
@@ -124,7 +124,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},userPassword:{1},email:{3}")
     public ExtensionPage createSipExtensionWithEmail(String extensionNumber,String userPassword,String strEmail) {
         addBtn.shouldBe(Condition.enabled).click();
-        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         ele_extension_user_first_name.setValue(extensionNumber);
         inputComm("Email Address", strEmail);//todo 24版本ID新增后替换
         ele_extension_user_user_password.setValue(userPassword);
@@ -147,7 +147,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},userPassword:{1},email:{3}")
     public ExtensionPage createSipExtensionWithEmail(String extensionNumber,String userPassword,String strEmail,String roleName) {
         addBtn.shouldBe(Condition.enabled).click();
-        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         ele_extension_user_first_name.setValue(extensionNumber);
         inputComm("Email Address", strEmail);//todo 24版本ID新增后替换
 //        ele_extension_user_role_id.setValue(roleName);
@@ -179,7 +179,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},firstName:{1},lastName:{2},calledID:{3},registerName:{4},registerPassword:{5}")
     public ExtensionPage createSipExtension(String extensionNumber,String firstName, String lastName,String calledID,String registerName,String userPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         ele_extension_user_first_name.setValue(firstName);
         ele_extension_user_last_name.setValue(lastName);
         ele_extension_user_caller_id.setValue(calledID);
@@ -206,7 +206,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage createSipExtension(String extensionNumber, String userPassword,String registrationPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         ele_extension_user_first_name.setValue(extensionNumber);
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
@@ -224,7 +224,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage createSipExtensionAndConf(String extensionNumber, String UserPassword,String registrationPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         inputComm("First Name", extensionNumber);
         inputComm("User Password", UserPassword);
         inputComm("Extension Number", extensionNumber);

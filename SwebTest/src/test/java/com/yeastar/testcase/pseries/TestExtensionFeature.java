@@ -240,11 +240,11 @@ public class TestExtensionFeature extends TestCaseBase {
 
         assertStep("3:[PJSIP注册]] ，2001 呼叫 1001 ");
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001,"991001",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT*3);//等待自动挂断
-        pjsip.Pj_Hangup_All();
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(2001);
         assertStep("5[CDR]1001<1001> 响铃");
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        auto.cdrPage().assertCDRRecord(getDriver(),0,"2001<2001>","1001<1001>","NO ANSWER","2001<2001> hung up",communication_inbound,SPS,"");
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2001<2001>","1001<1001>","ANSWERED","2001<2001> hung up",communication_inbound,SPS,"");
 
         softAssert.assertAll();
     }

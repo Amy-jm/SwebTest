@@ -30,4 +30,8 @@ public class  Record implements Serializable {
         this.strTime = time;
         this.details = details;
     }
+    @Override
+    public String toString() {
+        return "Record: recordStatus=" + recordStatus + ", caller=" + caller + ", callee=" + callee + ", status=" + status + ", strTime=" + strTime + ", details=" + details;
+    }
 }

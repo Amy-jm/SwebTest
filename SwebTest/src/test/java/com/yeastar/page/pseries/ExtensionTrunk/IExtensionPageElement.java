@@ -16,7 +16,7 @@ public interface IExtensionPageElement {
 
 
     SelenideElement ele_add_DropDown_bulk_add_Btn = $(By.xpath("//li[text()='"+UI_MAP.getString("common.bulk_add")+"']"));
-    SelenideElement ele_add_DropDown_add_Btn = $(By.xpath("//li[text()='Add']"));
+//    SelenideElement ele_add_DropDown_add_Btn = $(By.xpath("//li[text()='Add']"));//todo 【变更】V32版本隐藏批量添加
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
 
     /** 下拉列表 分机页面，分机列表中Presence可选项 **/

@@ -42,8 +42,8 @@ public class CDRObject {
         obj = (JSONObject) object.getJsonArray("cdr_list").getJsonObject(index);
         uid = getValue("uid");
         time = getValue("time");
-        callFrom = getValue("call_from");
-        callTo = getValue("call_to");
+        callFrom = getValue("call_from").replace(prefix,"");
+        callTo = getValue("call_to").replace(prefix,"");
         callDuration = getValue("duration"); //todo 时间需要转化成00:00:00
         ringDuration = getValue("ring_duration");
         talkDuration = getValue("talk_duration");
@@ -54,7 +54,7 @@ public class CDRObject {
         did = getValue("did_number");
         dod = getValue("dod_number");
         callerIpAddr = getValue("src_addr");
-        reason = getReason();
+        reason = getReason().replace(prefix,"");;
 
     }
 
