@@ -1144,7 +1144,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6200")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1","RingGroup1","Jack"})
+//    @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1","RingGroup1","Jack"})
     public void testRGIncomingRedirectIVR(){
        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
