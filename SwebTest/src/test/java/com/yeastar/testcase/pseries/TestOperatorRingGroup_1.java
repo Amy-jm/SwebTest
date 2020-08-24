@@ -163,7 +163,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "2:外线号码[2000]呼叫[RingGroup]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRingStatus","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRingStatus","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRingStatus(){
        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -210,7 +210,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "3.DragAndDrop RG\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRingGroupIncomingRingStatus","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRingGroupIncomingRingStatus","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRingDragAndDropRG(){
         prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -288,7 +288,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Parking]001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropParking","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropParking","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRingDragAndDropParking(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -342,7 +342,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropQueue","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropQueue","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRingDragAndDropQueue(){
         prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -402,7 +402,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("bug 等待留言的时候才开始录音")
-    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRingDragAndDropWithCTalking(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -462,7 +462,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "3:[Inbound]1000 -->拖动到[Extension]1010（idle）")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRingDragAndDropWithCIdle(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -522,7 +522,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("勾选显示未注册分机，概率性出现 未注册分机不能显示")
-    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRingDragAndDropWithCUnregistered(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -580,7 +580,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRightActionHandUp(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -637,7 +637,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:移开后 通话继续")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionHoverHandUp","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRightActionHoverHandUp(){
         prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -693,7 +693,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRightActionPickUp(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -758,7 +758,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("RG 响铃状态不会有CDR记录  Redirected to 0<2001>")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRightActionRedirectC_AHandUp(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -836,7 +836,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("RG 响铃状态不会有CDR记录  Redirected to 0<2001>")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRightActionRedirectC_CHandUp(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -912,7 +912,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Ring Group]6301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRedirectRingGroup","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRedirectRingGroup","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRedirectRingGroup(){
         prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -999,7 +999,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRedirectQueue","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRedirectQueue","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRedirectQueue(){
         prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -1087,7 +1087,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Voicemail]小图标")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRedirectVoicemail","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRedirectVoicemail","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRedirectVoicemail(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -1144,7 +1144,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6200")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRedirectIVR(){
        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -1212,7 +1212,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRightActionRedirectOffLineY_AHandUp(){
         prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -1287,7 +1287,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:Y挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")//todo  make jenkins vm exception
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRightActionRedirectOffLineY_YHandUp(){
       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
@@ -1360,7 +1360,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "3:右键->查看显示的条目")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1"})
+    @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","RingGroup1"})
     public void testRGIncomingRightActionUnDisplay(){
         prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
