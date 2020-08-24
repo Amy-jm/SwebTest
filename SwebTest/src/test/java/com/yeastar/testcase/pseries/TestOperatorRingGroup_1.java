@@ -1189,7 +1189,8 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         pjsip.Pj_Answer_Call(1010,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
-        pjsip.Pj_hangupCall(1010);
+        int returnStr = pjsip.Pj_hangupCall(1010);
+        System.out.println("***************[1010]"+returnStr);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("9:[CDR显示]");//todo add cdr
