@@ -992,21 +992,19 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step("4：[Inbound]1000 -->Redirect[IVR]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6200");
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("5:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "6200 [6200]","Talking",RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
-        sleep(WaitUntils.SHORT_WAIT);
-
         pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_Answer_Call(1009,false);
         sleep(WaitUntils.SHORT_WAIT);
 
-        pjsip.Pj_Hangup_All();//TODO IVR 接听
+        pjsip.Pj_hangupCall(2000);
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);

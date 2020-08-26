@@ -5,6 +5,8 @@ import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.RECORD;
 import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.untils.APIObject.IVRObject;
+import com.yeastar.untils.APIObject.IVRObject.*;
 import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.CDRObject;
 import com.yeastar.untils.DataUtils;
@@ -30,17 +32,17 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     APIUtil apiUtil = new APIUtil();
 
     private boolean runRecoveryEnvFlag = true;
-    ArrayList<String> ringGroupNum_1 ;
+    ArrayList<String> ringGroupNum_1;
+    ArrayList<String> queueListNum_1;
     ArrayList<String> IVRList_0 ;
     ArrayList<String> IVRList_1 ;
     private ArrayList<String> IVRMember = new ArrayList<>();
 
-    String queueListName = "Q0";
+
     String queueListName_1 = "Q1";
-    String ringGroupName0 = "RG0";//6300
     String ringGroupName_1 = "RG1";//6301
-    String IVRListName_0 = "CONF0";//6500
-    String IVRListName_1 = "CONF1";//6501
+    String IVRListName_0 = "ivr_6200";//6200
+    String IVRListName_1 = "ivr_6201";//6201
 
 
     private String reqDataCreateExtension = String.format("" +
@@ -59,6 +61,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             List<String> extensionNum = new ArrayList<>();
             IVRList_0 = new ArrayList<>();
             IVRList_1 = new ArrayList<>();
+            ringGroupNum_1 = new ArrayList<>();
+            queueListNum_1 = new ArrayList<>();
 
             step("创建分机组");
             apiUtil.deleteAllExtensionGroup().createExtensionGroup("{  \"name\": \"Default_Extension_Group\",  \"member_list\": [],  \"member_select\": \"sel_all_ext\",  \"share_group_info_to\": \"all_ext\",  \"specific_extensions\": [],  \"mgr_enb_widget_in_calls\": 1,  \"mgr_enb_widget_out_calls\": 1,  \"mgr_enb_widget_ext_list\": 1,  \"mgr_enb_widget_ring_group_list\": 1,  \"mgr_enb_widget_queue_list\": 1,  \"mgr_enb_widget_park_ext_list\": 1,  \"mgr_enb_widget_vm_group_list\": 1,  \"mgr_enb_chg_presence\": 1,  \"mgr_enb_call_distribution\": 1,  \"mgr_enb_call_conn\": 1,  \"mgr_enb_monitor\": 1,  \"mgr_enb_call_park\": 1,  \"mgr_enb_ctrl_ivr\": 1,  \"mgr_enb_office_time_switch\": 1,  \"mgr_enb_mgr_recording\": 1,  \"user_enb_widget_in_calls\": 0,  \"user_enb_widget_out_calls\": 0,  \"user_enb_widget_ext_list\": 0,  \"user_enb_widget_ring_group_list\": 0,  \"user_enb_widget_queue_list\": 0,  \"user_enb_widget_park_ext_list\": 0,  \"user_enb_widget_vm_group_list\": 0,  \"user_enb_chg_presence\": 0,  \"user_enb_call_distribution\": 0,  \"user_enb_call_conn\": 0,  \"user_enb_monitor\": 0,  \"user_enb_call_park\": 0,  \"user_enb_ctrl_ivr\": 0 }");
@@ -100,25 +104,36 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             step("创建SPS中继");
             apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS_2);
 
+            step("创建响铃组6301");
+            ringGroupNum_1.add("1005");
+            ringGroupNum_1.add("1006");
+            ringGroupNum_1.add("1007");
+            ringGroupNum_1.add("1008");
+            ringGroupNum_1.add("1009");
+            apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName_1, "6301", ringGroupNum_1);
+
+
+            step("创建响铃组6401");
+            queueListNum_1.add("1005");
+            queueListNum_1.add("1006");
+            queueListNum_1.add("1007");
+            queueListNum_1.add("1008");
+            queueListNum_1.add("1009");
+            apiUtil.deleteAllQueue().createQueue(queueListName_1, "6401", null, queueListNum_1, null);
+
             step("创建IVR_0");
-            IVRList_0.add("1000");
-            IVRList_0.add("1001");
-            IVRList_0.add("1002");
-            IVRList_0.add("1003");
-            IVRList_0.add("1004");
+            ArrayList<PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
+            pressKeyObjects_0.add(new PressKeyObject(PressKey.press0,"extension","","1000",0));
+//            pressKeyObjects.add(new PressKeyObject(PressKey.press1,"end_call","","1002",0));
 
-            step("创建IVR_1");
-            IVRList_1.add("1005");
-            IVRList_1.add("1006");
-            IVRList_1.add("1007");
-            IVRList_1.add("1008");
-            IVRList_1.add("1009");
+            ArrayList<PressKeyObject> pressKeyObjects_1 = new ArrayList<>();
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press0,"extension","","1001",0));
 
-//            apiUtil.deleteAllIVR().createIVR(IVRListName_0, "6500", IVRList_0)
-//                                         .createIVR(IVRListName_1, "6501", IVRList_1);
+            apiUtil.deleteAllIVR().createIVR("6200","ivr_6200",pressKeyObjects_0)
+                                           .createIVR("6201","ivr_6201",pressKeyObjects_1);
 
-            step("创建呼入路由InRoute3,目的地到IVR 6500");
-            apiUtil.deleteAllInbound().createInbound("InRoute3", trunks, "IVR", "6500");
+            step("创建呼入路由InRoute3,目的地到IVR 6200");
+            apiUtil.deleteAllInbound().createInbound("InRoute3", trunks, "IVR", "6200");
 
             step("创建呼出路由");
             apiUtil.deleteAllOutbound().createOutbound("Outbound1", trunks, extensionNum);
@@ -137,9 +152,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "2:外线号码[2000]呼叫[IVR]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingStatus","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRingStatus","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRingStatus(){
-//        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -150,29 +165,24 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("3:[PJSIP注册]");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
         sleep(WaitUntils.SHORT_WAIT);
-
-        pjsip.Pj_Send_Dtmf(2000,0);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
+//        pjsip.Pj_Answer_Call(1000,false);
+//        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ring", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
-        pjsip.Pj_Hangup_All();
+        pjsip.Pj_hangupCall(2000);
         softAssertPlus.assertAll();
     }
 
@@ -187,7 +197,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("bug 等待留言的时候才开始录音")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRingDragAndDropWithCTalking(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -200,17 +210,11 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1011,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1011,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
@@ -220,9 +224,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Make_Call_Auto_Answer(1011,"1010",DEVICE_IP_LAN,false);
         sleep(WaitUntils.SHORT_WAIT);
 
-        step("5:【2000 呼叫 1000】，1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT*3);
+        step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
+//        pjsip.Pj_Answer_Call(1000,false);
+//        sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.EXTENSION,"1010");
@@ -247,7 +255,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3:[Inbound]1000 -->拖动到[Extension]1010（idle）")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRingDragAndDropWithCIdle(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -260,22 +268,18 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
         refresh();//分机无法自动更新
 
-        step("5:【2000 呼叫 1001】，1010 空闲状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1001 -->拖动到[Extension]1010");
@@ -309,7 +313,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Issue("1.勾选显示未注册分机，概率性出现 未注册分机不能显示 \n" +
             "2.拖动后，需要>=6秒后才会显示")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRingDragAndDropWithCUnregistered(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -326,21 +330,18 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         step("4:【1010】 未注册");
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
         refresh();//todo 概率性出现，未注册分机不能显示
-        
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+
+        step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
@@ -365,7 +366,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3.DragAndDrop RG\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropRG","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropRG","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRingDragAndDropRG(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -375,13 +376,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ");
+        assertStep("3:[PJSIP注册] ，2000 呼叫 6200 ");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1006,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1007,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -390,10 +387,6 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1006,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1007,DEVICE_IP_LAN);
@@ -401,12 +394,15 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
 
 
         step("4：拖动到[RingGroup]6301");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.RINGGROUP,"6301");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.RINGGROUP,"6301");
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("[VCP显示]");
@@ -445,7 +441,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Parking]001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropParking","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropParking","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRingDragAndDropParking(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -455,24 +451,19 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ");
+        assertStep("3:[PJSIP注册] ，2000 呼叫 6200 ");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1001 -->拖动到[Parking]001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.PARKING,"001");
@@ -481,16 +472,75 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(IVRListName_0 +":2000 [2000]", "1001 B [1001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(IVRListName_0 +":2000 [2000]", "1002 C [1002]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(IVRListName_0 +":2000 [2000]", "1003 D [1003]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(IVRListName_0 +":2000 [2000]", "1004 E [1004]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
-        softAssertPlus.assertThat(allRecordList).as("验证数量").size().isEqualTo(IVRList_0.size());
+        softAssertPlus.assertThat(allRecordList).as("验证数量").size().isEqualTo(1);
 
         softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Extension ivr 6200-->分机10000 响铃中 -->DragAndDrop 到Queue 6401\n" +
+            "1:分机0,login web client\n" +
+            "2:[1001(idle)]-->未注册\n+" +
+            "3:[2000 呼叫 1000]，1001 为Ring状态\n" +
+            "4:[Inbound]1000 -->拖动到[Queue]6401")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1","Extension1"})
+    public void testIncomingDragAndDropQueue(){
+        prerequisiteForAPI(runRecoveryEnvFlag);
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1006,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1007,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1008,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1009,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1006,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1007,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1008,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+
+        step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
+
+        step("6：[Inbound]1000 -->拖动到[到Queue]6401");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.QUEUE,"6401");
+        sleep(WaitUntils.SHORT_WAIT);
+
+        assertStep("[VCP验证]");
+        List allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName_1+":2000 [2000]", "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                          tuple(queueListName_1+":2000 [2000]", "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                          tuple(queueListName_1+":2000 [2000]", "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                          tuple(queueListName_1+":2000 [2000]", "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                          tuple(queueListName_1+":2000 [2000]", "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+
+        softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum_1.size());
+
+        pjsip.Pj_Hangup_All();
+        softAssertPlus.assertAll();
+
     }
 
     @Epic("P_Series")
@@ -503,7 +553,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRightActionRedirectC_AHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -516,20 +566,17 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
@@ -560,7 +607,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "IVR CONF0<6500>","NO ANSWER","Redirected to 1010 K<1010>"),
+                .contains(tuple("2000<2000>", "1000 A<1000>","NO ANSWER","Redirected to 1010 K<1010>"),//todo bug callee
                         tuple("2000<2000>", "1010 K<1010>","ANSWERED","2000<2000> hung up"));
 
         softAssertPlus.assertAll();
@@ -577,7 +624,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRightActionRedirectC_CHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -586,22 +633,20 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-        step("3:[PJSIP注册] 分机创建并注册");        pjsip.Pj_Init();
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
@@ -632,7 +677,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "IVR CONF0<6500>","NO ANSWER","Redirected to 1010 K<1010>"),
+                .contains(tuple("2000<2000>", "1000 A<1000>","NO ANSWER","Redirected to 1010 K<1010>"), //bug callee
                         tuple("2000<2000>", "1010 K<1010>","ANSWERED","1010 K<1010> hung up"));
 
         softAssertPlus.assertAll();
@@ -647,7 +692,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Ring Group]6301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRedirectRingGroup","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRedirectRingGroup","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRedirectRingGroup(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -660,10 +705,6 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1006,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1007,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -672,10 +713,6 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1006,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1007,DEVICE_IP_LAN);
@@ -683,8 +720,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        step("5:【2000 呼叫 1000】，1000 为Ring状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->右键-->Redirect[RingGroup]6301");
@@ -718,9 +757,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "IVR CONF0<6500>","NO ANSWER","Redirected to RG1<6301>"),
-                        tuple("2000<2000>", "RingGroup RG1<6301>","ANSWERED","RingGroup RG1<6301> connected"),
-                        tuple("2000<2000>", "1005 F<1005>","ANSWERED","1005 F<1005> hung up"));
+                .contains(tuple("2000<2000>", "1000 A<1000>","NO ANSWER","Redirected to RG1<6301>"),//todo callee
+                          tuple("2000<2000>", "RingGroup RG1<6301>","ANSWERED","RingGroup RG1<6301> connected"),
+                          tuple("2000<2000>", "1005 F<1005>","ANSWERED","1005 F<1005> hung up"));
 
         softAssertPlus.assertAll();
     }
@@ -734,7 +773,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6501")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRedirectIVR","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRedirectIVR","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRedirectIVR(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -748,66 +787,51 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1006,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1007,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1008,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1009,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1006,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1007,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1008,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
-
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        step("5:【2000 呼叫 1000】，1000 为Ring状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->右键-->Redirect[IVR]6500");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6501");
-        sleep(WaitUntils.SHORT_WAIT*2);
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6201");
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_1+":2000 [2000]", "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(IVRListName_1+":2000 [2000]", "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(IVRListName_1+":2000 [2000]", "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(IVRListName_1+":2000 [2000]", "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                        tuple(IVRListName_1+":2000 [2000]", "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
-        softAssertPlus.assertThat(allRecordList).as("验证IVR数量").size().isEqualTo(IVRList_1.size());
+                .contains(tuple(IVRListName_1+":2000 [2000]", "1001 B [1001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        softAssertPlus.assertThat(allRecordList).as("验证IVR数量").size().isEqualTo(1);
+
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
 
         step("7:显示状态1005 接通");
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Answer_Call(1005,false);
+        pjsip.Pj_Answer_Call(1001,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("[VCP验证]");
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_1+":2000 [2000]", "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_1+":2000 [2000]", "1001 B [1001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
         sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_hangupCall(1005);
+        pjsip.Pj_hangupCall(1001);
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "IVR CONF0<6500>","NO ANSWER","Redirected to Q1<6401>"),
-                        tuple("2000<2000>", "IVR Q1<6401>","ANSWERED","IVR Q1<6401> connected"),
-                        tuple("2000<2000>", "1005 F<1005>","ANSWERED","1005 F<1005> hung up"));
+                .contains(tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
+                          tuple ("2000<2000>", "0<0>", "ANSWERED", "2000<2000> hung up"),
+                          tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6201<6201>"));
 
         softAssertPlus.assertAll();
     }
@@ -816,13 +840,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->[IVR] 呼入6500[响铃中]-->右键Extension  Voicemail 图标\n" +
+    @Description("外线号码2000 呼入到-->[IVR] 6200[响铃中]-->右键Extension  Voicemail 图标\n" +
             "1:分机0,login web client\n" +
             "3:[2000 呼叫 1000]，1000 为Ring状态\n" +
             "4:[Inbound]1000 -->Redirect[Voicemail]小图标")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRedirectVoicemail","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRedirectVoicemail","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRedirectVoicemail(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -846,7 +870,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("4：[Inbound]1000 -->Redirect[Voicemail]");
@@ -865,7 +892,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
                 .contains(tuple("2000<2000>", "1000 A<1000>", "VOICEMAIL", "2000<2000> hung up"),
-                        tuple ("2000<2000>", "IVR CONF0<6500>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+                        tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
 
         softAssertPlus.assertAll();
     }
@@ -873,14 +900,14 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到--> [IVR] 呼入6500[响铃中]-->右键Extension-->右键Redirect：Y ,A先挂断\n" +
+    @Description("外线号码2000 呼入到--> [IVR] 6200[响铃中]-->右键Extension-->右键Redirect：Y ,A先挂断\n" +
             "1:分机0,login web client\n" +
             "2:外线号码[2000]呼叫[IVR]6500\n" +
             "3:右键Redirect Y(外线)" +
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRightActionRedirectOffLineY_AHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -893,21 +920,18 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("3:[PJSIP 创建/注册]");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -939,7 +963,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
                 .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),
-                        tuple ("2000<2000>", "IVR CONF0<6500>", "NO ANSWER", "Redirected to 0<2001>"));//todo check to 0<2001>?
+                          tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"),
+                          tuple("2000<2000>", "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> called Extension"));
 
         softAssertPlus.assertAll();
 
@@ -948,14 +973,14 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到--> [IVR] 呼入6500[响铃中]-->右键Extension-->右键Redirect：Y,Y先挂断\n" +
+    @Description("外线号码2000 呼入到--> [IVR] 6200[响铃中]-->右键Extension-->右键Redirect：Y,Y先挂断\n" +
             "1:分机0,login web client\n" +
             "2:外线号码[2000]呼叫[1000]\n" +
             "3:右键->[Redirect] Y(外线)" +
             "4:Y挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")//TODO make jenkins vm exception
-    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRightActionRedirectOffLineY_YHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -968,21 +993,18 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("3:[PJSIP 创建/注册]");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1013,22 +1035,23 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("10:[CDR显示]");//todo CDR显示
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2001 hung up"),//todo check 2001 hung up ? 0<2001> hung up ?
-                        tuple ("2000<2000>", "IVR CONF0<6500>", "NO ANSWER", "Redirected to 0<2001>"));
+                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2001 hung up"),
+                          tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"),
+                          tuple ("2000<2000>", "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> called Extension"));
 
         softAssertPlus.assertAll();
     }
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到--> [IVR] 呼入6500[响铃中] -->右键HandUp\n" +
+    @Description("外线号码2000 呼入到--> [IVR] 6200[响铃中] -->右键HandUp\n" +
             "1:分机0,login web client\n" +
             "2:外线号码[2000]呼叫[IVR]6500\n" +
             "3:右键->HandUp" +
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRightActionHandUp","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRightActionHandUp","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRightActionHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1041,18 +1064,15 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
@@ -1075,14 +1095,14 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->[IVR] 呼入6500[响铃中]-->右键 悬停 HandUp\n" +
+    @Description("外线号码2000 呼入到-->[IVR] 6200[响铃中]-->右键 悬停 HandUp\n" +
             "1:分机0,login web client\n" +
             "2:外线号码[2000]呼叫[1000]\n" +
             "3:右键->右键 悬停 HandUp" +
             "4:移开后 通话继续")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRightActionHoverHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1106,7 +1126,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
@@ -1130,14 +1153,14 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->[IVR] 呼入6500[响铃中]-->右键PickUp\n" +
+    @Description("外线号码2000 呼入到-->[IVR] 6200[响铃中]-->右键PickUp\n" +
             "1:分机0,login web client\n" +
             "2:外线号码[2000]呼叫[IVR]6500\n" +
             "3:右键->PickUp" +
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRightActionPickUp","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testIVRIncomingRightActionPickUp","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRightActionPickUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1151,20 +1174,17 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1186,13 +1206,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->[IVR] 呼入6500[响铃中] -->右键不显示\n" +
+    @Description("外线号码2000 呼入到-->[IVR] 6200[响铃中] -->右键不显示\n" +
             "1:分机0,login web client\n" +
             "2:外线号码[2000]呼叫[IVR]6500\n" +
             "3:右键->查看显示的条目")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","IVR"})
+    @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRightActionUnDisplay(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1216,7 +1236,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996500",DEVICE_ASSIST_2,false);
+        step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
