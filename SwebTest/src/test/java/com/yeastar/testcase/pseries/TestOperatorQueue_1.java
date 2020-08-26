@@ -977,12 +977,14 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1009,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
@@ -997,7 +999,13 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "6200 [6200]","Talking",RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Answer_Call(1009,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
         pjsip.Pj_Hangup_All();//TODO IVR 接听
 
         assertStep("9:[CDR显示]");
