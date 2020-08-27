@@ -180,7 +180,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ring", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         pjsip.Pj_hangupCall(2000);
         softAssertPlus.assertAll();
@@ -775,7 +775,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRedirectIVR","Regression","PSeries","VCP1","IVR1"})
     public void testIVRIncomingRedirectIVR(){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+//        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -798,14 +798,14 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
-        step("6：[Inbound]1000 -->右键-->Redirect[IVR]6500");
+        step("6：[Inbound]1000 -->右键-->Redirect[IVR]6201");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6201");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_1+":2000 [2000]", "1001 B [1001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_1+":2000 [2000]",  "ivr_6201 [6201]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
         softAssertPlus.assertThat(allRecordList).as("验证IVR数量").size().isEqualTo(1);
 
         sleep(WaitUntils.SHORT_WAIT);
