@@ -170,12 +170,12 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @DataProvider(name = "routes")
      public Object[][] Routes() {
         return new Object[][] {
-                {"99",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SPS线路"},//sps   前缀 替换
+                {"99",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
                 {"88",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
                 {""  ,2000,"2005",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
                 {"77",2000,"1000",DEVICE_ASSIST_2,1020,RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
                 {"66",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
-                {""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP REGISTER"}//SIP  --55 REGISTER
+                {""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}//SIP  --55 REGISTER
         };
 //                                {"44",,DEVICE_ASSIST_3}};//ACCOUNT 4000
      }
@@ -190,8 +190,8 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -230,8 +230,8 @@ step("1:login web click ，测试线路："+message);
     @Issue("拖动后状态无法直接接听，通过30s timeout 转到voicemail")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-//        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -247,7 +247,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
         refresh();
 
         step("4:【1002 与1001 通话】，1001 为Talking状态");
@@ -300,7 +300,7 @@ step("1:login web click ，测试线路："+message);
         step("4:【1001】 空闲状态");
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1001】，1001 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
@@ -341,7 +341,7 @@ step("1:login web click ，测试线路："+message);
             "2.拖动后，需要>=6秒后才会显示,被叫")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -359,7 +359,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         step("4:【1001】 未注册");
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         refresh();//todo extension概率性出现 未注册分机不显示
 
@@ -392,8 +392,8 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropRingGroup(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -414,12 +414,11 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
-
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         step("6：[Inbound]1000 -->拖动到[RingGroup]6300");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.RINGGROUP,"6300");
@@ -428,14 +427,22 @@ step("1:login web click ，测试线路："+message);
         assertStep("[VCP验证]");
         List allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
 
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(ringGroupName_0+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                          tuple(ringGroupName_0+":2000 [2000]", "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                          tuple(ringGroupName_0+":2000 [2000]", "1002 C [1002]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                          tuple(ringGroupName_0+":2000 [2000]", "1003 D [1003]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                          tuple(ringGroupName_0+":2000 [2000]", "1004 E [1004]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(allRecordList).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1000 A [1000]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1001 B [1001]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1002 C [1002]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1003 D [1003]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1004 E [1004]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
+        }else {
+            softAssertPlus.assertThat(allRecordList).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1000 A [1000]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1001 B [1001]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1002 C [1002]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1003 D [1003]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1004 E [1004]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        }
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_0.size());
-
 
         step("7:显示状态1001 接通");
         sleep(WaitUntils.SHORT_WAIT);
@@ -444,9 +451,14 @@ step("1:login web click ，测试线路："+message);
         assertStep("[VCP验证]7:显示状态 A--B ring");
         sleep(WaitUntils.SHORT_WAIT);
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                .contains(tuple(ringGroupName_0+":2000 [2000]", "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        if(message.equals("FXS")){
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName_0+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_0+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
+        }
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
         pjsip.Pj_Hangup_All();
@@ -477,7 +489,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1001】，1001 为Ring状态");
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
@@ -490,7 +502,7 @@ step("1:login web click ，测试线路："+message);
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",vcpDetail));
 
         pjsip.Pj_Hangup_All();
         softAssertPlus.assertAll();
@@ -508,8 +520,8 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -530,28 +542,64 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
-
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1001】，1001 为Ring状态");
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("6：[Inbound]1000 -->拖动到[到Queue]6400");
+        sleep(WaitUntils.SHORT_WAIT*2);
+        step("6：[Inbound]1001 -->拖动到[Parking]001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.QUEUE,"6400");
+        sleep(WaitUntils.SHORT_WAIT);
+        assertStep("[VCP验证]");
+        List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1002 C [1002]","Ringing",RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1003 D [1003]","Ringing",RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1002 C [1002]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1003 D [1003]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+        }
+        softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum.size());
+
+        step("7:显示状态1005 接通");
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Answer_Call(1001,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("[VCP验证]");
-        List allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName+":2000 [2000]", "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName+":2000 [2000]", "1002 C [1002]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName+":2000 [2000]", "1003 D [1003]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+        List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""),  "1001 B [1001]","Talking",RECORD_DETAILS.INTERNAL_QUEUE.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""),  "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
+        }
 
-        softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum.size());
+        softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
-        pjsip.Pj_Hangup_All();
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(1001);
+
+        assertStep("9:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "Queue Q0<6400>", "ANSWERED", "Queue Q0<6400> connected"),
+                            tuple ("1020<1020>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
+                            tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to Q0<6400>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>", "Queue Q0<6400>", "ANSWERED", "Queue Q0<6400> connected"),
+                            tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
+                            tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to Q0<6400>"));
+        }
         softAssertPlus.assertAll();
 
     }
@@ -568,7 +616,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionRedirectC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -583,7 +631,7 @@ step("1:login web click ，测试线路："+message);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
@@ -591,7 +639,7 @@ step("1:login web click ，测试线路："+message);
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",vcpDetail));
 
         step( "4:右键->[Redirect] C");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1001");
@@ -600,7 +648,7 @@ step("1:login web click ，测试线路："+message);
         assertStep("5:[VCP显示]2000->1001 来电  Ring状态");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",vcpDetail));
 
         assertStep("6:[VCP显示]2000->1001  接通后 Talking状态");
         sleep(WaitUntils.SHORT_WAIT);
@@ -609,16 +657,21 @@ step("1:login web click ，测试线路："+message);
 
         List<Record> resultSum_talking= auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",vcpDetail));
 
         pjsip.Pj_hangupCall(2000);
 
         assertStep("[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1001 B<1001>"),
-                          tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "2000<2000> hung up"));
-
+        if(message.equals("FXS")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "1001 B<1001>", "ANSWERED", "1020<1020> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 1001 B<1001>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1001 B<1001>"),
+                            tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "2000<2000> hung up"));
+        }
         pjsip.Pj_Hangup_All();
         softAssertPlus.assertAll();
 
@@ -636,7 +689,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionRedirectC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -651,7 +704,7 @@ step("1:login web click ，测试线路："+message);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -659,7 +712,7 @@ step("1:login web click ，测试线路："+message);
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",vcpDetail));
 
         step( "4:右键->[Redirect] C");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1001");
@@ -668,7 +721,7 @@ step("1:login web click ，测试线路："+message);
         assertStep("5:[VCP显示]2000->1001 来电  Ring状态");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",vcpDetail));
 
         assertStep("6:[VCP显示]2000->1001  接通后 Talking状态");
         sleep(WaitUntils.SHORT_WAIT);
@@ -677,16 +730,21 @@ step("1:login web click ，测试线路："+message);
 
         List<Record> resultSum_talking= auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",vcpDetail));
 
         pjsip.Pj_hangupCall(1001);
 
         assertStep("[CDR显示]");
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1001 B<1001>"),
-                        tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"));
-
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        if(message.equals("FXS")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
+                            tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 1001 B<1001>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1001 B<1001>"),
+                            tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"));
+        }
         pjsip.Pj_Hangup_All();
         softAssertPlus.assertAll();
     }
@@ -702,8 +760,8 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectRingGroup","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
         step("2:进入Operator panel 界面");
@@ -725,7 +783,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
 
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
@@ -737,12 +795,23 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(ringGroupName_0+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                          tuple(ringGroupName_0+":2000 [2000]", "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                          tuple(ringGroupName_0+":2000 [2000]", "1002 C [1002]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                          tuple(ringGroupName_0+":2000 [2000]", "1003 D [1003]","Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(allRecordList).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1000 A [1000]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1001 B [1001]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1002 C [1002]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1003 D [1003]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1004 E [1004]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
+        }else {
+            softAssertPlus.assertThat(allRecordList).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1000 A [1000]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1001 B [1001]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1002 C [1002]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1003 D [1003]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1004 E [1004]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        }
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_0.size());
+
 
         step("7:显示状态1001 接通");
         sleep(WaitUntils.SHORT_WAIT);
@@ -750,19 +819,18 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("[VCP验证]7:显示状态 A--B ring");
         sleep(WaitUntils.SHORT_WAIT);
-        List allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                .contains(tuple(ringGroupName_0+":2000 [2000]", "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias())); softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
-        sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_hangupCall(1001);
+        List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        if(message.equals("FXS")){
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_0+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_0+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
-        assertStep("9:[CDR显示]");
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "RingGroup RG0<6300>", "ANSWERED", "RingGroup RG0<6300> connected"),
-                          tuple ("2000<2000>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
-                          tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to RG0<6300>"));
+        }
+        softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
+        pjsip.Pj_Hangup_All();
         softAssertPlus.assertAll();
     }
 
@@ -777,8 +845,8 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectQueue","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRedirectQueue(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
         step("2:进入Operator panel 界面");
@@ -800,7 +868,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
 
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
@@ -812,11 +880,20 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(queueListName+":2000 [2000]", "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName+":2000 [2000]", "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName+":2000 [2000]", "1002 C [1002]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName+":2000 [2000]", "1003 D [1003]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1002 C [1002]","Ringing",RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1003 D [1003]","Ringing",RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1002 C [1002]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                            tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1003 D [1003]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+        }
+
         softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum.size());
 
         step("7:显示状态1005 接通");
@@ -826,8 +903,14 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("[VCP验证]");
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                .contains(tuple(queueListName+":2000 [2000]", "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",RECORD_DETAILS.INTERNAL_QUEUE.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName+":2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
+        }
+
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -835,11 +918,17 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "Queue Q0<6400>", "ANSWERED", "Queue Q0<6400> connected"),
-                          tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
-                          tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to Q0<6400>"));
-
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "Queue Q0<6400>", "ANSWERED", "Queue Q0<6400> connected"),
+                              tuple ("1020<1020>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to Q0<6400>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>", "Queue Q0<6400>", "ANSWERED", "Queue Q0<6400> connected"),
+                            tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
+                            tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to Q0<6400>"));
+        }
         softAssertPlus.assertAll();
     }
 
@@ -855,7 +944,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectVoicemail","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRedirectVoicemail(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -867,7 +956,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
@@ -878,18 +967,28 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("5:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Talking",RECORD_DETAILS.INTERNAL_VOICEMAIL.getAlias()));
+        }else{
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+        }
 
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Hangup_All();
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "1000 A<1000>", "VOICEMAIL", "2000<2000> hung up"),
-                          tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
-
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "1000 A<1000>", "VOICEMAIL", "1020<1020> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>", "1000 A<1000>", "VOICEMAIL", "2000<2000> hung up"),
+                            tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+        }
         softAssertPlus.assertAll();
     }
 
@@ -904,7 +1003,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectIVR","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -916,7 +1015,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
@@ -935,10 +1034,15 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> hung up"),
-                          tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6200<6200>"));
-
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "IVR ivr_6200<6200>", "ANSWERED", "1020<1020> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6200<6200>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>", "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> hung up"),
+                            tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6200<6200>"));
+        }
         softAssertPlus.assertAll();
     }
 
@@ -966,7 +1070,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
@@ -992,7 +1096,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_AHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionRedirectOffLineC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
         prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1006,7 +1110,7 @@ step("1:login web click ，测试线路："+message);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
@@ -1014,36 +1118,52 @@ step("1:login web click ，测试线路："+message);
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",vcpDetail));
 
         step( "5:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("6:[VCP显示]");
-        List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equals("FXS")) {
+            List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.OUTBOUND);
+            softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",vcpDetail));
+        }else{
+            List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+            softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",vcpDetail));
+        }
 
         step("7:[接通]");
         pjsip.Pj_Answer_Call(2001,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("8:[VCP显示]");
-        List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
-
+        if(message.equals("FXS")) {
+            List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.OUTBOUND);
+            softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }else{
+            List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+            softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
         step("9:[挂断]");
         pjsip.Pj_hangupCall(2000);
 
         assertStep("10:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),
-                        tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"));//todo check to 0<2001>?
-
-        softAssertPlus.assertAll();
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "2001", "ANSWERED", "1020<1020> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),
+                            tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"));//todo check to 0<2001>?
+        }
+            softAssertPlus.assertAll();
 
     }
 
@@ -1073,7 +1193,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
@@ -1139,7 +1259,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
@@ -1186,7 +1306,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
@@ -1237,7 +1357,7 @@ step("1:login web click ，测试线路："+message);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT*2);
