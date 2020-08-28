@@ -190,7 +190,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-//        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -230,7 +230,7 @@ step("1:login web click ，测试线路："+message);
     @Issue("拖动后状态无法直接接听，通过30s timeout 转到voicemail")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-//        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+//        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -285,7 +285,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -341,7 +341,7 @@ step("1:login web click ，测试线路："+message);
             "2.拖动后，需要>=6秒后才会显示,被叫")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -392,7 +392,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropRingGroup(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -465,7 +465,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropParking","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -508,7 +508,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -568,7 +568,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionRedirectC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -636,7 +636,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionRedirectC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -702,7 +702,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectRingGroup","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -777,7 +777,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectQueue","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRedirectQueue(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -855,7 +855,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectVoicemail","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRedirectVoicemail(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -904,7 +904,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRedirectIVR","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -953,7 +953,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionUnDisplay","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionUnDisplay(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -991,7 +991,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_AHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionRedirectOffLineC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -1059,7 +1059,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionRedirectOffLineC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1126,7 +1126,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1173,7 +1173,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionHoverHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1222,7 +1222,7 @@ step("1:login web click ，测试线路："+message);
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionPickUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        //prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
