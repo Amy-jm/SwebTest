@@ -13,6 +13,8 @@ import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.testng.ITestContext;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -58,6 +60,11 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             APIUtil apiUtil = new APIUtil();
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
+            trunks.add(BRI_1);
+            trunks.add(FXO_1);
+            trunks.add(E1);
+            trunks.add(SIPTrunk);
+            trunks.add(ACCOUNTTRUNK);
             List<String> extensionNum = new ArrayList<>();
             IVRList_0 = new ArrayList<>();
             IVRList_1 = new ArrayList<>();
@@ -142,6 +149,50 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
             runRecoveryEnvFlag = false;
         }
+    }
+
+    Object[][] routes = new Object[][] {
+            {"99",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
+            {"88",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
+            {""  ,2000,"2005",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+            {"77",2000,"1000",DEVICE_ASSIST_2,1020, OperatorPanelPage.RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
+            {"66",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
+            {""  ,2000,"2001",DEVICE_ASSIST_1,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
+            {"44",4000,"1000",DEVICE_ASSIST_3,4000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+    };
+
+    /**
+     * 多线路测试数据
+     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
+     * @return
+     */
+    @DataProvider(name = "routes")
+    public Object[][] Routes(ITestContext c) {
+        Object[][] group = null;
+        for (String groups : c.getIncludedGroups()) {
+            for (int i = 0; i < routes.length; i++) {
+                for (int j = 0; j < routes[i].length; j++) {
+                    if (groups.equalsIgnoreCase("SPS")) {
+                        group = new Object[][] {{"99",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"}};
+                    }else if (groups.equalsIgnoreCase("BRI")) {
+                        group = new Object[][] {{"88",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"}};
+                    }else if (groups.equalsIgnoreCase("FXO")) {
+                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"}};
+                    }else if (groups.equalsIgnoreCase("FXS")) {
+                        group = new Object[][] {{"77",2000,"1000",DEVICE_ASSIST_2,1020, OperatorPanelPage.RECORD_DETAILS.INTERNAL.getAlias(),"FXS"}};
+                    }else if (groups.equalsIgnoreCase("E1")) {
+                        group = new Object[][] {{"66",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"}};
+                    }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
+                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}};
+                    }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
+                        group = new Object[][] {{"44",4000,"1000",DEVICE_ASSIST_3,4000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}};
+                    }else {
+                        group = routes;
+                    }
+                }
+            }
+        }
+        return group;
     }
 
     @Epic("P_Series")
