@@ -30,7 +30,7 @@ import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 public class OperatorPanelPage extends BasePage {
 
     public String TABLE_INBOUND_XPATH = "//*[@id=\"table-inbound\"]//div[contains(@class,'ant-table-body')]//table";
-    public String TABLE_OUTBOUND_XPATH = "//div[@id=\"table-outbound\"]//div[contains(@class,'ant-table-body')]//table";
+    public String TABLE_OUTBOUND_XPATH = "//*[@id=\"table-outbound\"]//div[contains(@class,'ant-table-body')]//table";
     private String ACTION_XPATH = "//span[contains(text(),'%s')]";
     private String WHISPER_ACTION_XPATH = "//li[contains(text(),'%s')]";
     private String RIGHT_ACTION_XPATH = "//table/tbody//td[contains(text(),\"%s\")]";
@@ -419,7 +419,13 @@ public class OperatorPanelPage extends BasePage {
      */
     public List<Record> getAllRecord(TABLE_TYPE tableType){
         List<Record> records  = new ArrayList();
-        List<WebElement> tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_INBOUND_XPATH));
+
+        List<WebElement> tableListElement ;
+        if(tableType == TABLE_TYPE.INBOUND){
+            tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_INBOUND_XPATH));
+        }else{
+            tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_OUTBOUND_XPATH));
+        }
         WebElement tableElement = tableListElement.get(tableListElement.size()-1);
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
         //获取总行数

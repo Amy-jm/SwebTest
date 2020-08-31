@@ -313,7 +313,7 @@ step("1:login web click ，测试线路："+message);
         assertStep("7:[VCP]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Ringing",vcpDetail));
 
         pjsip.Pj_Answer_Call(1001,false);
         sleep(WaitUntils.SHORT_WAIT);
@@ -321,7 +321,7 @@ step("1:login web click ，测试线路："+message);
         assertStep("8:显示状态 A--C talking");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1001 B [1001]","Talking",vcpDetail));
         pjsip.Pj_Hangup_All();
         softAssertPlus.assertAll();
 
@@ -1004,7 +1004,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRedirectIVR","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
         prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
-step("1:login web click ，测试线路："+message);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
         step("2:进入Operator panel 界面");
@@ -1026,9 +1026,15 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("5:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "ivr_6200 [6200]","Talking",RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                            .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "6200 [6200]","Talking",RECORD_DETAILS.INTERNAL_IVR.getAlias()));
 
+        }else{
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "6200 [6200]","Talking",RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+
+        }
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Hangup_All();//TODO IVR 接听
 
@@ -1036,12 +1042,12 @@ step("1:login web click ，测试线路："+message);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         if(message.equals("FXS")) {
             softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                    .contains(tuple("1020<1020>", "IVR ivr_6200<6200>", "ANSWERED", "1020<1020> hung up"),
-                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6200<6200>"));
+                    .contains(tuple("1020<1020>", "IVR 6200<6200>", "ANSWERED", "1020<1020> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 6200<6200>"));
         }else{
             softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                    .contains(tuple("2000<2000>", "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> hung up"),
-                            tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6200<6200>"));
+                    .contains(tuple("2000<2000>", "IVR 6200<6200>", "ANSWERED", "2000<2000> hung up"),
+                            tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 6200<6200>"));
         }
         softAssertPlus.assertAll();
     }
@@ -1122,22 +1128,22 @@ step("1:login web click ，测试线路："+message);
 
         step( "5:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("6:[VCP显示]");
         if(message.equals("FXS")) {
             List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.OUTBOUND);
             softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
-                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",vcpDetail));
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
             List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
             softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
-                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",vcpDetail));
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
         }
 
         step("7:[接通]");
         pjsip.Pj_Answer_Call(2001,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("8:[VCP显示]");
         if(message.equals("FXS")) {
@@ -1202,35 +1208,51 @@ step("1:login web click ，测试线路："+message);
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",vcpDetail));
 
         step( "5:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("6:[VCP显示]");
-        List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equals("FXS")) {
+            List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.OUTBOUND);
+            softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }else{
+            List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+            softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
 
         step("7:[接通]");
         pjsip.Pj_Answer_Call(2001,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("8:[VCP显示]");
-        List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
-
+        if(message.equals("FXS")) {
+            List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.OUTBOUND);
+            softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }else{
+            List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+            softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "DOD [2001]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
         step("9:[挂断]");
         pjsip.Pj_hangupCall(2001);
 
         assertStep("10:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),
-                        tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"));//todo check to 0<2001>?
-
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "2001", "ANSWERED", "2001 hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2001 hung up"),
+                             tuple  ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"));
+        }
         softAssertPlus.assertAll();
     }
 
@@ -1247,7 +1269,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingRightActionHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
         prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
         step("2:进入Operator panel 界面");
@@ -1266,8 +1288,13 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.INTERNAL.getAlias()));
+        }else{
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
 
         step( "4:右键->[HandUp]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
@@ -1313,8 +1340,13 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.INTERNAL.getAlias()));
+        }else{
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
 
         step( "4:右键->[HandUp]");
         auto.operatorPanelPage().rightTableActionMouserHover(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
@@ -1324,8 +1356,13 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("5:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.INTERNAL.getAlias()));
+        }else{
+            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
 
         softAssertPlus.assertAll();
     }
@@ -1364,8 +1401,13 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.INTERNAL.getAlias()));
+        }else{
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
 
         step( "5:右键->[右键PickUp]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.PICK_UP);
@@ -1373,19 +1415,28 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "0 [0]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "0 [0]","Ringing",RECORD_DETAILS.INTERNAL.getAlias()));
+        }else{
+            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "0 [0]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
 
         pjsip.Pj_Answer_Call(0,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after_end = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_end).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "0 [0]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(resultSum_after_end).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "0 [0]","Talking", RECORD_DETAILS.INTERNAL.getAlias()));
 
+        }else{
+            softAssertPlus.assertThat(resultSum_after_end).extracting("caller","callee","status","details")
+                    .contains(tuple("2000 [2000]".replace("2000",vcpCaller+""), "0 [0]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        }
         softAssertPlus.assertAll();
     }
-
-
 }
