@@ -13,7 +13,9 @@ import com.yeastar.untils.CDRObject;
 import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.tuple;
@@ -29,6 +31,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @author: huangjx@yeastar.com
  * @create: 2020/07/30
  */
+@Log4j2
 public class TestOperatorExtension_1 extends TestCaseBase {
     APIUtil apiUtil = new APIUtil();
     private boolean runRecoveryEnvFlagExtension = true;
@@ -46,6 +49,16 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     String ringGroupName_0 = "RG0";//6300
     String ringGroupName_1 = "RG1";//6301
     String conferenceListName = "CONF1";
+    String testRoute = System.getProperty("pbx.pseries.test.route");
+    Object[][] routes = new Object[][] {
+        {"99",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
+        {"88",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
+        {""  ,2000,"2005",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+        {"77",2000,"1000",DEVICE_ASSIST_2,1020,RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
+        {"66",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
+        {""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
+        {"44",4000,"1000",DEVICE_ASSIST_3,4000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+    };;
 
 
 
@@ -108,6 +121,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
             trunks.add(FXO_1);
             trunks.add(E1);
             trunks.add(SIPTrunk);
+            trunks.add(ACCOUNTTRUNK);
             List<String> extensionNum = new ArrayList<>();
             queueListNum = new ArrayList<>();
             ringGroupNum_0 = new ArrayList<>();
@@ -166,7 +180,12 @@ public class TestOperatorExtension_1 extends TestCaseBase {
             runRecoveryEnvFlagExtension = false;
         }
     }
-    //routePrefix+caller+callee+device_assist+message
+
+    /**
+     * 多线路测试数据
+     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
+     * @return
+     */
     @DataProvider(name = "routes")
      public Object[][] Routes() {
         return new Object[][] {
@@ -175,10 +194,45 @@ public class TestOperatorExtension_1 extends TestCaseBase {
                 {""  ,2000,"2005",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
                 {"77",2000,"1000",DEVICE_ASSIST_2,1020,RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
                 {"66",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
-                {""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}//SIP  --55 REGISTER
+                {""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
+                {"44",4000,"1000",DEVICE_ASSIST_3,4000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}
         };
-//                                {"44",,DEVICE_ASSIST_3}};//ACCOUNT 4000
      }
+
+    /**
+     * 多线路测试数据
+     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
+     * @return
+     */
+    @DataProvider(name = "routesDebug")
+    public Object[][] RoutesDebug(ITestContext c) {
+        Object[][] group = null;
+        for (String groups : c.getIncludedGroups()) {
+            log.debug("[c.getIncludedGroups]"+groups);
+            for (int i = 0; i < routes.length; i++) {
+                for (int j = 0; j < routes[i].length; j++) {
+                    log.debug("[routes] i:"+i+"j:"+j+"---->>>"+routes[i][j]);
+                    if (groups.equalsIgnoreCase("SPS")) {
+                        group = new Object[][] {{"99",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"}};
+                    }else if (groups.equalsIgnoreCase("BRI")) {
+                        group = new Object[][] {{"88",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"}};
+                    }else if (groups.equalsIgnoreCase("FXO")) {
+                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"}};
+                    }else if (groups.equalsIgnoreCase("FXS")) {
+                        group = new Object[][] {{"77",2000,"1000",DEVICE_ASSIST_2,1020,RECORD_DETAILS.INTERNAL.getAlias(),"FXS"}};
+                    }else if (groups.equalsIgnoreCase("E1")) {
+                        group = new Object[][] {{"66",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"E1"}};
+                    }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
+                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}};
+                    }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
+                        group = new Object[][] {{"44",4000,"1000",DEVICE_ASSIST_3,4000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}};
+                    }
+                }
+            }
+        }
+        log.debug("[group ]"+group);
+        return group;
+    }
 
     @Epic("P_Series")
     @Feature("Operator Panel")
@@ -188,7 +242,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
             "2:外线号码[2000]呼叫[1000]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries","VCP1","Extension1","SPS"},dataProvider = "routesDebug")
     public void testIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
         prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
         step("1:login web click ，测试线路："+message);
@@ -286,7 +340,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries","VCP1","Extension1"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
         prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
