@@ -11,6 +11,8 @@ import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.testng.ITestContext;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -62,6 +64,11 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         if (booRunRecoveryEnvFlag) {
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
+            trunks.add(BRI_1);
+            trunks.add(FXO_1);
+            trunks.add(E1);
+            trunks.add(SIPTrunk);
+            trunks.add(ACCOUNTTRUNK);
             List<String> extensionNum = new ArrayList<>();
             queueListNum = new ArrayList<>();
             queueListNum_1 = new ArrayList<>();
@@ -153,6 +160,48 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
             runRecoveryEnvFlagRingGroup = false;
         }
+    }
+    Object[][] routes = new Object[][] {
+            {"99",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
+            {"88",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
+            {""  ,2000,"2005",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+            {"77",2000,"1000",DEVICE_ASSIST_2,1020, OperatorPanelPage.RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
+            {"66",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
+            {""  ,2000,"2001",DEVICE_ASSIST_1,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
+            {"44",4000,"1000",DEVICE_ASSIST_3,4000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+    };
+    /**
+     * 多线路测试数据
+     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
+     * @return
+     */
+    @DataProvider(name = "routes")
+    public Object[][] Routes(ITestContext c) {
+        Object[][] group = null;
+        for (String groups : c.getIncludedGroups()) {
+            for (int i = 0; i < routes.length; i++) {
+                for (int j = 0; j < routes[i].length; j++) {
+                    if (groups.equalsIgnoreCase("SPS")) {
+                        group = new Object[][] {{"99",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"}};
+                    }else if (groups.equalsIgnoreCase("BRI")) {
+                        group = new Object[][] {{"88",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"}};
+                    }else if (groups.equalsIgnoreCase("FXO")) {
+                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"}};
+                    }else if (groups.equalsIgnoreCase("FXS")) {
+                        group = new Object[][] {{"77",2000,"1000",DEVICE_ASSIST_2,1020, OperatorPanelPage.RECORD_DETAILS.INTERNAL.getAlias(),"FXS"}};
+                    }else if (groups.equalsIgnoreCase("E1")) {
+                        group = new Object[][] {{"66",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"}};
+                    }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
+                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}};
+                    }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
+                        group = new Object[][] {{"44",4000,"1000",DEVICE_ASSIST_3,4000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}};
+                    }else {
+                        group = routes;//默认选择具体的用例跑所有线路
+                    }
+                }
+            }
+        }
+        return group;
     }
 
     @Epic("P_Series")
@@ -1146,7 +1195,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @TmsLink(value = "")
 //    @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1","RingGroup1","Jack"})
     public void testRGIncomingRedirectIVR(){
-       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+//       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1160,14 +1209,14 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1009,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
@@ -1175,21 +1224,19 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
 
         step("4：[Inbound]1000 -->Redirect[IVR]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6200");
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("5:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName_0+":2000 [2000]", "6200 [6200]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
-        sleep(WaitUntils.SHORT_WAIT);
-
         pjsip.Pj_Send_Dtmf(2000,"0");
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Answer_Call(1010,false);
+        pjsip.Pj_Answer_Call(1009,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
-        int returnStr = pjsip.Pj_hangupCall(1010);
+        int returnStr = pjsip.Pj_hangupCall(1009);
         System.out.println("***************[1010]"+returnStr);
         sleep(WaitUntils.SHORT_WAIT);
 

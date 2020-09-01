@@ -15,8 +15,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
@@ -31,7 +30,7 @@ import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 public class OperatorPanelPage extends BasePage {
 
     public String TABLE_INBOUND_XPATH = "//*[@id=\"table-inbound\"]//div[contains(@class,'ant-table-body')]//table";
-    public String TABLE_OUTBOUND_XPATH = "//div[@id=\"table-outbound\"]//div[contains(@class,'ant-table-body')]//table";
+    public String TABLE_OUTBOUND_XPATH = "//*[@id=\"table-outbound\"]//div[contains(@class,'ant-table-body')]//table";
     private String ACTION_XPATH = "//span[contains(text(),'%s')]";
     private String WHISPER_ACTION_XPATH = "//li[contains(text(),'%s')]";
     private String RIGHT_ACTION_XPATH = "//table/tbody//td[contains(text(),\"%s\")]";
@@ -80,7 +79,9 @@ public class OperatorPanelPage extends BasePage {
      * @param tagName
      * @return
      */
-    public List getRightEvent(TABLE_TYPE tableType,String tagName){
+    public List<String> getRightEvent(TABLE_TYPE tableType,String tagName){
+        sleep(WaitUntils.SHORT_WAIT);
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
         sleep(WaitUntils.SHORT_WAIT);
         List<String> listEvent = new ArrayList<>();
         if(tableType==TABLE_TYPE.INBOUND){
@@ -116,6 +117,8 @@ public class OperatorPanelPage extends BasePage {
      * @param tagName
      */
     public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event,String eventParam){
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
@@ -132,6 +135,8 @@ public class OperatorPanelPage extends BasePage {
      * @param tagName
      */
     public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event){
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
@@ -147,6 +152,8 @@ public class OperatorPanelPage extends BasePage {
      * @param tagName
      */
     public  OperatorPanelPage rightTableActionMouserHover(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event){
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
@@ -167,6 +174,8 @@ public class OperatorPanelPage extends BasePage {
      * @return
      */
     public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName,RIGHT_EVENT event,String eventParam,boolean isClickVoiceMailImage){
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
@@ -183,6 +192,8 @@ public class OperatorPanelPage extends BasePage {
      * @param tagName
      */
     public  OperatorPanelPage rightTableAction(TABLE_TYPE tableType,String tagName){
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         if(tableType==TABLE_TYPE.INBOUND){
             actions().contextClick(WebDriverFactory.getDriver().findElement(By.xpath(String.format(TABLE_INBOUND_XPATH+"/tbody//td[contains(text(),\"%s\")]",tagName)))).perform();
         }
@@ -209,7 +220,6 @@ public class OperatorPanelPage extends BasePage {
             }else{
                 log.error("[Transfer eventParam 不能为空！]");
             }
-            sleep(WaitUntils.RETRY_WAIT);
             transferElementOKBtn.click();
             //2.类型二, Parked / Whisper
         }else if(event == RIGHT_EVENT.WHISPER || event == RIGHT_EVENT.PARKED){
@@ -234,6 +244,8 @@ public class OperatorPanelPage extends BasePage {
 //     * @param eventParam event 事件后，所有操作的参数
      */
     private OperatorPanelPage eventActionWithHover(RIGHT_EVENT event){
+//        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         if(event==RIGHT_EVENT.TRANSFER){
             SelenideElement transferElement = $(By.xpath(String.format(ACTION_XPATH,event.alias)));
             $(By.xpath(String.format(ACTION_XPATH,event.alias))).hover();
@@ -370,6 +382,8 @@ public class OperatorPanelPage extends BasePage {
      * @return
      */
     public OperatorPanelPage dragAndDrop(DOMAIN sourceDomain,String sourceName,DOMAIN targetDomain,String targetName){
+        refresh();//todo  for linux 必须刷新后才能进行邮件操作 chrome 84
+        sleep(WaitUntils.SHORT_WAIT);
         SelenideElement sourceElement = null;
         SelenideElement targetElement = null;
         //sourceElement
@@ -403,13 +417,20 @@ public class OperatorPanelPage extends BasePage {
      * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
      * @return
      */
-    public List getAllRecord(TABLE_TYPE tableType){
+    public List<Record> getAllRecord(TABLE_TYPE tableType){
         List<Record> records  = new ArrayList();
-        List<WebElement> tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_INBOUND_XPATH));
+
+        List<WebElement> tableListElement ;
+        if(tableType == TABLE_TYPE.INBOUND){
+            tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_INBOUND_XPATH));
+        }else{
+            tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_OUTBOUND_XPATH));
+        }
         WebElement tableElement = tableListElement.get(tableListElement.size()-1);
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
         //获取总行数
         int sumRow = table.rowCount();
+       try{
         for (int i = 0; i < table.rowCount(); i++) {
             SeleniumTableRow row = table.get(i);
             Record record = new Record();
@@ -452,6 +473,9 @@ public class OperatorPanelPage extends BasePage {
             }
             records.add(record);
         }
+       }catch(org.openqa.selenium.StaleElementReferenceException ex){
+           log.error("[读取表中数据异常，可能表中已无数据]"+ex);
+       }
         log.debug("[Record list count] "+records.size());
         return records;
     }
@@ -589,7 +613,7 @@ public class OperatorPanelPage extends BasePage {
         }else{
             reportMessage("[没有找到有效记录！！！]");
         }
-        return result;
+    return result;
     }
 
     /**
@@ -604,12 +628,11 @@ public class OperatorPanelPage extends BasePage {
         if (records.size() != 0) {
             for (int i = 0; i < records.size(); i++) {
                 if (
-//                        (recordType == RECORD.RecordStatus && records.get(i).getRecordStatus() == recordTypeValue) ||
-                        (recordType == RECORD.Caller && records.get(i).getCaller() == recordTypeValue) ||
-                        (recordType == RECORD.Callee && records.get(i).getCallee() == recordTypeValue) ||
-                        (recordType == RECORD.Status && records.get(i).getStatus() == recordTypeValue) ||
-                        (recordType == RECORD.StrTime && records.get(i).getStrTime() == recordTypeValue) ||
-                        (recordType == RECORD.Details && records.get(i).getDetails() == recordTypeValue)
+                      recordType == RECORD.Caller && records.get(i).getCaller().contains(recordTypeValue) ||
+                        recordType == RECORD.Callee && records.get(i).getCallee().contains(recordTypeValue) ||
+                        recordType == RECORD.Status && records.get(i).getStatus().contains(recordTypeValue) ||
+                        recordType == RECORD.StrTime && records.get(i).getStrTime().contains(recordTypeValue) ||
+                        recordType == RECORD.Details && records.get(i).getDetails().contains(recordTypeValue)
                 ) {
                     targetInt = i;
                 }
@@ -620,6 +643,4 @@ public class OperatorPanelPage extends BasePage {
         }
         return records.get(targetInt);
     }
-
-
 }

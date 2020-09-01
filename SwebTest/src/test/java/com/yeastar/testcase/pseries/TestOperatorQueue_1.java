@@ -12,6 +12,8 @@ import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.testng.ITestContext;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.tuple;
 import java.util.ArrayList;
@@ -55,6 +57,11 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         if (booRunRecoveryEnvFlag) {
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
+            trunks.add(BRI_1);
+            trunks.add(FXO_1);
+            trunks.add(E1);
+            trunks.add(SIPTrunk);
+            trunks.add(ACCOUNTTRUNK);
             List<String> extensionNum = new ArrayList<>();
             queueListNum = new ArrayList<>();
             queueListNum_1 = new ArrayList<>();
@@ -154,7 +161,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "2:外线号码[2000]呼叫[Queue]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingStatus","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRingStatus","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRingStatus(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -201,7 +208,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("bug 等待留言的时候才开始录音")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRingDragAndDropWithCTalking(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -261,7 +268,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "3:[Inbound]1000 -->拖动到[Extension]1010（idle）")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRingDragAndDropWithCIdle(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -323,7 +330,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Issue("1.勾选显示未注册分机，概率性出现 未注册分机不能显示 \n" +
             "2.拖动后，需要>=6秒后才会显示")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRingDragAndDropWithCUnregistered(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -380,7 +387,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "3.DragAndDrop RG\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropRG","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropRG","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRingDragAndDropRG(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -458,7 +465,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Parking]001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropParking","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropParking","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRingDragAndDropParking(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -515,7 +522,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropQueue","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropQueue","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRingDragAndDropQueue(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -585,7 +592,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRightActionRedirectC_AHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -659,7 +666,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRightActionRedirectC_CHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -729,7 +736,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Ring Group]6301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRedirectRingGroup","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRedirectRingGroup","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRedirectRingGroup(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -816,7 +823,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRedirectQueue","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRedirectQueue","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRedirectQueue(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -904,7 +911,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Voicemail]小图标")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRedirectVoicemail","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRedirectVoicemail","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRedirectVoicemail(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -961,7 +968,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6200")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRedirectIVR","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRedirectIVR","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRedirectIVR(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -977,12 +984,14 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1009,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996400",DEVICE_ASSIST_2,false);
@@ -990,15 +999,19 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step("4：[Inbound]1000 -->Redirect[IVR]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6200");
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("5:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+":2000 [2000]", "6200 [6200]","Talking",RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
-        sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_Hangup_All();//TODO IVR 接听
+        pjsip.Pj_Send_Dtmf(2000,"0");
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Answer_Call(1009,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        pjsip.Pj_hangupCall(2000);
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
@@ -1019,7 +1032,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRightActionRedirectOffLineY_AHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1094,7 +1107,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:Y挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")//TODO make jenkins vm exception
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRightActionRedirectOffLineY_YHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1167,7 +1180,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionHandUp","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionHandUp","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRightActionHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1209,7 +1222,48 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         softAssertPlus.assertAll();
     }
-
+    Object[][] routes = new Object[][] {
+            {"99",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
+            {"88",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
+            {""  ,2000,"2005",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+            {"77",2000,"1000",DEVICE_ASSIST_2,1020,RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
+            {"66",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
+            {""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
+            {"44",4000,"1000",DEVICE_ASSIST_3,4000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+    };
+    /**
+     * 多线路测试数据
+     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
+     * @return
+     */
+    @DataProvider(name = "routes")
+    public Object[][] Routes(ITestContext c) {
+        Object[][] group = null;
+        for (String groups : c.getIncludedGroups()) {
+            for (int i = 0; i < routes.length; i++) {
+                for (int j = 0; j < routes[i].length; j++) {
+                    if (groups.equalsIgnoreCase("SPS")) {
+                        group = new Object[][] {{"99",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"}};
+                    }else if (groups.equalsIgnoreCase("BRI")) {
+                        group = new Object[][] {{"88",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"}};
+                    }else if (groups.equalsIgnoreCase("FXO")) {
+                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"}};
+                    }else if (groups.equalsIgnoreCase("FXS")) {
+                        group = new Object[][] {{"77",2000,"1000",DEVICE_ASSIST_2,1020,RECORD_DETAILS.INTERNAL.getAlias(),"FXS"}};
+                    }else if (groups.equalsIgnoreCase("E1")) {
+                        group = new Object[][] {{"66",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"E1"}};
+                    }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
+                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}};
+                    }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
+                        group = new Object[][] {{"44",4000,"1000",DEVICE_ASSIST_3,4000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}};
+                    }else {
+                        group = routes;//默认选择具体的用例跑所有线路
+                    }
+                }
+            }
+        }
+        return group;
+    }
 
     @Epic("P_Series")
     @Feature("Operator Panel")
@@ -1221,7 +1275,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:移开后 通话继续")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRightActionHoverHandUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1276,7 +1330,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionPickUp","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionPickUp","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRightActionPickUp(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1339,7 +1393,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "3:右键->查看显示的条目")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","Queue"})
+    @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","Queue","Queue1"})
     public void testQueueIncomingRightActionUnDisplay(){
         prerequisiteForAPI(runRecoveryEnvFlag);
 

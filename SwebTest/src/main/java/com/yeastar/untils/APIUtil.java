@@ -18,6 +18,8 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -207,16 +209,19 @@ public class APIUtil {
      * @return 返回List类型的CDRObject对象，List里的对象数量和num一致
      * @throws IOException
      */
-    public  List<CDRObject> getCDRRecord(int num) throws IOException {
+    public  List<CDRObject> getCDRRecord(int num){
         String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/search?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
         String respondJson = getRequest(req);
 
         List<CDRObject> cdrList = new ArrayList<>();
-        for (int k=0; k < num; k++){
-            CDRObject p = new CDRObject(respondJson, k);
-            cdrList.add(p);
+        try {
+            for (int k = 0; k < num; k++) {
+                CDRObject p = new CDRObject(respondJson, k);
+                cdrList.add(p);
+            }
+        }catch (IOException e){
+            log.error("[getCDRRecord exception] "+e);
         }
-
         return cdrList;
     }
 
@@ -518,10 +523,10 @@ public class APIUtil {
      * @param trunks
      */
     public  APIUtil createInbound(String name, List<String> trunks, String dest, String destValue){
-
         List<TrunkObject> trunkObjects = getTrunkSummary();
         JSONArray jsonArray = new JSONArray();
-
+        String request = "";
+        String id = "";
 
         for (int i=0; i<trunks.size(); i++){
             for (int j=0; j<trunkObjects.size(); j++){
@@ -534,11 +539,24 @@ public class APIUtil {
                 }
             }
         }
-
-        ExtensionObject ext = getExtensionSummary(destValue);
-
-        String request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"extension\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
-        ,name,String.valueOf(ext.id) ,jsonArray.toString());
+        if(dest.equalsIgnoreCase("extension")){
+            ExtensionObject ext = getExtensionSummary(destValue);
+            id = String.valueOf(ext.id);
+        } else if(dest.equalsIgnoreCase("ring_group")){
+            RingGroupObject ext = getRingGroupSummary(destValue);
+            id = String.valueOf(ext.id);
+        }else if(dest.equalsIgnoreCase("queue")){
+            QueueObject ext = getQueueSummary(destValue);
+            id = String.valueOf(ext.id);
+        }else if(dest.equalsIgnoreCase("conference")){
+            ConferenceObject ext = getConferenceSummary(destValue);
+            id = String.valueOf(ext.id);
+        }else if(dest.equalsIgnoreCase("ivr")){
+            IVRObject ext = getIVRSummary(destValue);
+            id = String.valueOf(ext.id);
+        }
+        request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"%s\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
+                ,name,dest.toLowerCase(),id ,jsonArray.toString());
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/create",request);
         return this;
     }
@@ -580,6 +598,47 @@ public class APIUtil {
     }
 
     /**
+     * 获取概要列表
+     * 对应API：api/v1.0/ivr/searchsummary
+     */
+    public List<IVRObject> getIVRSummary(){
+
+        List<IVRObject> extObjList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ivr/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("ivr_list"))
+                return extObjList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("ivr_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                extObjList.add(new IVRObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+
+        }else {
+            Assert.fail("[API getIVRSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return extObjList;
+    }
+
+    /**
+     * 找到指定ivr
+     * @param num  ivr号
+     * @return
+     */
+    public IVRObject getIVRSummary(String num){
+        List<IVRObject> ivrObject = getIVRSummary();
+        for (IVRObject object : ivrObject){
+            if(object.number.equals(num)){
+                return object;
+            }
+        }
+        return null;
+    }
+
+
+    /**
      * 删除当前存在的所有呼出路由
      * */
     public APIUtil deleteAllOutbound(){
@@ -591,6 +650,22 @@ public class APIUtil {
         }
         if(list != null && !list.isEmpty()){
             deleteOutbound(list);
+        }
+        return this;
+    }
+
+    /**
+     * 删除当前存在的所有IVR
+     * */
+    public APIUtil deleteAllIVR(){
+        List<IVRObject> IVRObjectList = getIVRSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(IVRObject object : IVRObjectList){
+            list.add(object.id);
+        }
+        if(list != null && !list.isEmpty()){
+            deleteIVR(list);
         }
         return this;
     }
@@ -608,6 +683,22 @@ public class APIUtil {
         JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/batchdelete",jsonObject.toString());
+        return this;
+    }
+
+    /**
+     * 通过IVR的ID删除指定IVR
+     * 对应接口：/api/v1.0/ivr/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteIVR(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ivr/batchdelete",jsonObject.toString());
         return this;
     }
 
@@ -652,6 +743,72 @@ public class APIUtil {
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/create",request);
         return this;
+    }
+
+    /**
+     * 创建呼出路由
+     * @param request
+     */
+    public APIUtil createIVR(String number,String name, List<IVRObject.PressKeyObject> pressKeyObjects){
+        JSONArray jsonArray = new JSONArray();
+        Boolean isAdd = false; //是否添加
+        Boolean isContains = false;  //是否 包含
+
+        if(pressKeyObjects != null && !pressKeyObjects.isEmpty()) {
+            for (IVRObject.PressKey pressKey: IVRObject.PressKey.values()) {
+                isAdd = false;
+                isContains = false;
+                for(IVRObject.PressKeyObject pressKeyObject:pressKeyObjects){
+                    if (pressKey.toString().contains(pressKeyObject.getPressKeyNum())) {
+                        JSONObject a = new JSONObject();
+                        a.put(pressKey.toString()+"_dest", pressKeyObject.getDest());
+                        a.put(pressKey.toString()+"_dest_prefix", pressKeyObject.getDestPrefix());
+                        a.put(pressKey.toString()+"_dest_value", Integer.toString(getExtensionSummary(pressKeyObject.getDestValue()).id));//getExtensionSummary id
+                        if(HasDigit(pressKeyObject.getPressKeyNum())){
+                            a.put("allow_out_record"+pressKey.toString().substring(pressKey.toString().length() -1, pressKey.toString().length()), pressKeyObject.getIsAllowOutRecord());
+                        }else{
+                            a.put("allow_out_record_"+pressKey.toString().substring(pressKey.toString().length() -1, pressKey.toString().length()), pressKeyObject.getIsAllowOutRecord());
+                        }
+                        jsonArray.put(a);
+                        isAdd = true;
+                        break;
+                    }
+                }
+
+                if(!isAdd){
+                    JSONObject b = new JSONObject();
+                    b.put(pressKey.toString()+"_dest", "");
+                    b.put(pressKey.toString()+"_dest_prefix", "");
+                    b.put(pressKey.toString()+"_dest_value", "");
+                    if(HasDigit(pressKey.toString())){
+                        b.put("allow_out_record"+pressKey.toString().substring(pressKey.toString().length() -1, pressKey.toString().length()), 0);
+                    }else{
+                        b.put("allow_out_record_"+pressKey.toString().substring(pressKey.toString().indexOf("_")+1, pressKey.toString().length()), 0);
+                    }
+                    jsonArray.put(b);
+                }
+            }
+        }
+        else {
+            Assert.fail("[API Create IVR] ,pressKeyObjects.size(): "+ pressKeyObjects.size());
+        }
+
+        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"prompt\":\"default\",\"prompt_repeat\":3,\"resp_timeout\":3,\"digit_timeout\":3,\"dial_ext_option\":\"disable\",\"dial_ext_list\":[],\"restrict_dial_ext_list\":[],\"enb_dial_outb_routes\":0,\"dial_outb_route_list\":[],\"enb_dial_check_vm\":0,%s}",
+                number,name,jsonArray.toString().replace("[{","").replace("}]","").replace("},{",","));
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ivr/create",request);
+        return this;
+    }
+
+    // 判断一个字符串是否含有数字
+    private boolean HasDigit(String content) {
+        boolean flag = false;
+        Pattern p = Pattern.compile(".*\\d+.*");
+        Matcher m = p.matcher(content);
+        if (m.matches()) {
+            flag = true;
+        }
+        return flag;
     }
 
     /**
@@ -796,6 +953,22 @@ public class APIUtil {
         return extObjList;
     }
 
+
+    /**
+     * 找到指定Conference
+     * @param num  Conference
+     * @return
+     */
+    public ConferenceObject getConferenceSummary(String num){
+        List<ConferenceObject> conferenceObject = getConferenceSummary();
+        for (ConferenceObject object : conferenceObject){
+            if(object.number.equals(num)){
+                return object;
+            }
+        }
+        return null;
+    }
+
     /**
      * 删除当前存在的所有响铃组
      * */
@@ -899,6 +1072,21 @@ public class APIUtil {
         }
         return extObjList;
     }
+    /**
+     * 找到指定坐席
+     * @param num  分机号
+     * @return
+     */
+    public QueueObject getQueueSummary(String num){
+        List<QueueObject> queueObject = getQueueSummary();
+        for (QueueObject object : queueObject){
+            if(object.number.equals(num)){
+                return object;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * 删除当前存在的所有响铃组
@@ -957,26 +1145,26 @@ public class APIUtil {
                     }
                 }
             }
-            if(staticAgentList != null && !staticAgentList.isEmpty()){
-                for (String ext : staticAgentList){
-                    if (ext.equals(extensionObject.number)){
+            if(staticAgentList != null && !staticAgentList.isEmpty()) {
+                for (String ext : staticAgentList) {
+                    if (ext.equals(extensionObject.number)) {
                         JSONObject a = new JSONObject();
-                        a.put("text",extensionObject.callerIdName);
-                        a.put("text2",extensionObject.number);
-                        a.put("value",String.valueOf(extensionObject.id));
-                        a.put("type","extension");
+                        a.put("text", extensionObject.callerIdName);
+                        a.put("text2", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
                         jsonArray2.put(a);
                     }
                 }
             }
-            if(managerList != null && !managerList.isEmpty()){
-                for (String ext : managerList){
-                    if (ext.equals(extensionObject.number)){
+            if(managerList != null && !managerList.isEmpty()) {
+                for (String ext : managerList) {
+                    if (ext.equals(extensionObject.number)) {
                         JSONObject a = new JSONObject();
-                        a.put("text",extensionObject.callerIdName);
-                        a.put("text2",extensionObject.number);
-                        a.put("value",String.valueOf(extensionObject.id));
-                        a.put("type","extension");
+                        a.put("text", extensionObject.callerIdName);
+                        a.put("text2", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
                         jsonArray3.put(a);
                     }
                 }
