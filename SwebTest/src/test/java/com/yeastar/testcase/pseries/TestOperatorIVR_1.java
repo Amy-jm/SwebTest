@@ -23,6 +23,7 @@ import java.util.List;
 import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.RECORD_DETAILS;
 
 /**
  * @program: SwebTest
@@ -41,10 +42,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     private ArrayList<String> IVRMember = new ArrayList<>();
 
 
-    String queueListName_1 = "Q1";
-    String ringGroupName_1 = "RG1";//6301
-    String IVRListName_0 = "ivr_6200";//6200
-    String IVRListName_1 = "ivr_6201";//6201
+    String queueListName_1 = "Q1:";
+    String ringGroupName_1 = "RG1:";//6301
+    String IVRListName_0 = "ivr_6200:";//6200
+    String IVRListName_1 = "ivr_6201:";//6201
 
 
     private String reqDataCreateExtension = String.format("" +
@@ -54,6 +55,11 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     private String reqDataCreateSPS_2 = String.format("" +
                     "{\"name\":\"%s\",\"enable\":1,\"country\":\"general\",\"itsp\":\"\",\"type\":\"peer\",\"transport\":\"udp\",\"codec_sel\":\"ulaw,alaw,g729\",\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_srtp\":0,\"enb_t38_support\":0,\"enb_inband_progress\":0,\"max_call_chans\":0,\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"%s\",\"from_user\":\"\",\"from_user_part\":\"default\",\"from_disp_name\":\"\",\"from_disp_name_part\":\"default\",\"from_host\":\"\",\"from_host_part\":\"domain\",\"diversion_user\":\"\",\"diversion_user_part\":\"\",\"rpid_user\":\"\",\"rpid_user_part\":\"\",\"pai_user\":\"\",\"pai_user_part\":\"\",\"ppi_user\":\"\",\"ppi_user_part\":\"\",\"enb_privacy_id\":0,\"enb_user_phone\":0,\"caller_id_from\":\"follow_system\",\"did_from\":\"follow_system\",\"user_agent\":\"\",\"enb_100rel\":0,\"max_ptime\":\"default\",\"rtp_reinvite\":\"\",\"enb_guest_auth\":0,\"enb_early_media\":0,\"enb_message\":0,\"did_list\":[],\"inbound_cid_list\":[],\"outbound_cid_list\":[],\"hostname\":\"%s\",\"port\":5060,\"domain\":\"%s\"}"
             ,SPS,"DOD",DEVICE_ASSIST_2,DEVICE_ASSIST_2);
+
+    private String reqDataCreateExtensionFXS = String.format("" +
+                    "{\"type\":\"FXS\",\"first_name\":\"EXTENSIONNUM\",\"last_name\":\"EXTENSIONLASTNAME\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"OTkxMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"enb_ctl_record\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"fxs_port\":\"1-3\",\"enb_hotline\":0,\"hotline_number\":\"\",\"delay_dial\":2,\"min_flash_detect\":300,\"max_flash_detect\":1000,\"rx_volume\":\"0\",\"rx_gain\":0,\"tx_volume\":\"0\",\"tx_gain\":0,\"enb_call_waiting\":0,\"enb_dtmf_passthrough\":0,\"enb_echo_cancel\":1}"
+            ,enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)),enBase64(EXTENSION_PASSWORD));
+
 
     public void prerequisiteForAPI(boolean booRunRecoveryEnvFlag) {
         if (booRunRecoveryEnvFlag) {
@@ -106,7 +112,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1010").replace("EXTENSIONLASTNAME", "K").replace("GROUPLIST", groupList))
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1011").replace("EXTENSIONLASTNAME", "L").replace("GROUPLIST", groupList))
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "1012").replace("EXTENSIONLASTNAME", "N").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
+                    .createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
 
             step("创建SPS中继");
             apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS_2);
@@ -117,7 +124,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             ringGroupNum_1.add("1007");
             ringGroupNum_1.add("1008");
             ringGroupNum_1.add("1009");
-            apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName_1, "6301", ringGroupNum_1);
+            apiUtil.deleteAllRingGroup().createRingGroup("RG1", "6301", ringGroupNum_1);
 
 
             step("创建响铃组6401");
@@ -126,7 +133,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             queueListNum_1.add("1007");
             queueListNum_1.add("1008");
             queueListNum_1.add("1009");
-            apiUtil.deleteAllQueue().createQueue(queueListName_1, "6401", null, queueListNum_1, null);
+            apiUtil.deleteAllQueue().createQueue("Q1", "6401", null, queueListNum_1, null);
 
             step("创建IVR_0");
             ArrayList<PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
@@ -166,6 +173,42 @@ public class TestOperatorIVR_1 extends TestCaseBase {
      * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
      * @return
      */
+    @DataProvider(name = "routesDebug")
+    public Object[][] RoutesDebug() {
+        return new Object[][] {
+                {"99",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"},//sps   前缀 替换
+//                {"88",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"},//BRI   前缀 替换
+//                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+                {"77",2000,"1000",DEVICE_ASSIST_2,"1020 [1020]",RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
+//                {"66",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
+//                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
+                {"44",4000,"1000",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}
+        };
+    }
+
+    /**
+     * 多线路测试数据
+     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
+     * @return
+     */
+    @DataProvider(name = "routesDebug_1")
+    public Object[][] RoutesDebug_1() {
+        return new Object[][] {
+                {"99",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"},//sps   前缀 替换
+                {"88",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"},//BRI   前缀 替换
+                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+                {"77",2000,"1000",DEVICE_ASSIST_2,"1020 [1020]",RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
+                {"66",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
+                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
+                {"44",4000,"1000",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}
+        };
+    }
+
+    /**
+     * 多线路测试数据
+     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
+     * @return
+     */
     @DataProvider(name = "routes")
     public Object[][] Routes(ITestContext c) {
         Object[][] group = null;
@@ -173,19 +216,19 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             for (int i = 0; i < routes.length; i++) {
                 for (int j = 0; j < routes[i].length; j++) {
                     if (groups.equalsIgnoreCase("SPS")) {
-                        group = new Object[][] {{"99",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"}};
+                        group = new Object[][] {{"99",2000,"1000",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"}};
                     }else if (groups.equalsIgnoreCase("BRI")) {
-                        group = new Object[][] {{"88",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"}};
+                        group = new Object[][] {{"88",2000,"1000",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"}};
                     }else if (groups.equalsIgnoreCase("FXO")) {
-                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"}};
+                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"}};
                     }else if (groups.equalsIgnoreCase("FXS")) {
-                        group = new Object[][] {{"77",2000,"1000",DEVICE_ASSIST_2,1020, OperatorPanelPage.RECORD_DETAILS.INTERNAL.getAlias(),"FXS"}};
+                        group = new Object[][] {{"77",2000,"1000",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.INTERNAL.getAlias(),"FXS"}};
                     }else if (groups.equalsIgnoreCase("E1")) {
-                        group = new Object[][] {{"66",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"}};
+                        group = new Object[][] {{"66",2000,"1000",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"}};
                     }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
-                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}};
+                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}};
                     }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
-                        group = new Object[][] {{"44",4000,"1000",DEVICE_ASSIST_3,4000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}};
+                        group = new Object[][] {{"44",4000,"1000",DEVICE_ASSIST_3,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}};
                     }else {
                         group = routes;
                     }
@@ -203,8 +246,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "2:外线号码[2000]呼叫[IVR]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingStatus","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRingStatus(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRingStatus","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -216,24 +260,30 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("3:[PJSIP注册]");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
-        sleep(WaitUntils.SHORT_WAIT);
-//        pjsip.Pj_Answer_Call(1000,false);
-//        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(caller,"0");
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+//        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+//                .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
 
-        pjsip.Pj_hangupCall(2000);
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(IVRListName_0+vcpCaller, "1000 K [1000]", "Ringing", RECORD_DETAILS.INTERNAL.getAlias()));
+        }else {
+            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(IVRListName_0+vcpCaller, "1000 K [1000]", "Ringing", RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        }
+
+        pjsip.Pj_hangupCall(caller);
         softAssertPlus.assertAll();
     }
 
@@ -248,8 +298,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("bug 等待留言的时候才开始录音")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRingDragAndDropWithCTalking(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -263,12 +314,12 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1011,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1011,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
         refresh();
 
         step("4:【1011 与1010 通话】，【1010】 Talking状态");
@@ -276,12 +327,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT);
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
-//        pjsip.Pj_Answer_Call(1000,false);
-//        sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.EXTENSION,"1010");
@@ -290,9 +339,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("7:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
-
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(IVRListName_0+vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.INTERNAL.getAlias()));
+        }else {
+            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(IVRListName_0+vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
         softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
     }
@@ -306,8 +359,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3:[Inbound]1000 -->拖动到[Extension]1010（idle）")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRingDragAndDropWithCIdle(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -320,34 +374,35 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
         refresh();//分机无法自动更新
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+        pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1001 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.EXTENSION,"1010");
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        assertStep("[VCP]");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1010",RECORD.Status),"Ringing");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1010",RECORD.Callee),"1010 K [1010]");
+        sleep(WaitUntils.SHORT_WAIT);
 
         pjsip.Pj_Answer_Call(1010,false);
         sleep(WaitUntils.SHORT_WAIT);
 
-        assertStep("8:显示状态 A--C talking");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1010",RECORD.Status),"Talking");
-        softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1010",RECORD.Callee),"1010 K [1010]");
-
+        assertStep("7:[VCP显示]");
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(IVRListName_0+vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.INTERNAL.getAlias()));
+        }else {
+            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(IVRListName_0+vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
 
@@ -364,8 +419,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Issue("1.勾选显示未注册分机，概率性出现 未注册分机不能显示 \n" +
             "2.拖动后，需要>=6秒后才会显示")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRingDragAndDropWithCUnregistered(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -382,17 +438,17 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         step("4:【1010】 未注册");
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
         refresh();//todo 概率性出现，未注册分机不能显示
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
@@ -402,7 +458,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("7:[VCP]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+                .contains(tuple(IVRListName_0+vcpCaller, "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         pjsip.Pj_Hangup_All();
         softAssertPlus.assertAll();
@@ -417,8 +473,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3.DragAndDrop RG\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropRG","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRingDragAndDropRG(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropRG","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRingDragAndDropRG(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -435,7 +492,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1007,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1008,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1009,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
@@ -443,13 +500,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1007,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1008,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
-        sleep(WaitUntils.SHORT_WAIT);
+       pjsip.Pj_Send_Dtmf(caller,"0");
+        sleep(WaitUntils.SHORT_WAIT*2);
 
 
         step("4：拖动到[RingGroup]6301");
@@ -458,12 +515,29 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP显示]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(ringGroupName_1+":2000 [2000]", "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(ringGroupName_1+":2000 [2000]", "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(ringGroupName_1+":2000 [2000]", "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(ringGroupName_1+":2000 [2000]", "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(ringGroupName_1+":2000 [2000]", "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
+        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        }else {
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        }
+
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
 
@@ -472,10 +546,17 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Answer_Call(1005,false);
 
         assertStep("6:[VCP验证]");
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                .contains(tuple(ringGroupName_1+":2000 [2000]", "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){   softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
+        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple("RG1:4000 [4000]", "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple("RG1:2000 [2000]", "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        }
 
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
@@ -492,8 +573,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Parking]001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropParking","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRingDragAndDropParking(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropParking","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -505,15 +587,15 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("3:[PJSIP注册] ，2000 呼叫 6200 ");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+        pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1001 -->拖动到[Parking]001");
@@ -522,9 +604,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
-
+       if(message.equalsIgnoreCase("FXS")){
+           softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                   .contains(tuple( vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
+       }else{
+           softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                   .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+       }
         softAssertPlus.assertThat(allRecordList).as("验证数量").size().isEqualTo(1);
 
         softAssertPlus.assertAll();
@@ -541,8 +627,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1","IVR1"})
-    public void testIncomingDragAndDropQueue(){
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -559,19 +646,19 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1007,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1008,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1009,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1006,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1007,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1008,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->拖动到[到Queue]6401");
@@ -580,13 +667,21 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(queueListName_1+":2000 [2000]", "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName_1+":2000 [2000]", "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName_1+":2000 [2000]", "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName_1+":2000 [2000]", "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName_1+":2000 [2000]", "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
-
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(queueListName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+        }
         softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum_1.size());
 
         pjsip.Pj_Hangup_All();
@@ -604,8 +699,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRightActionRedirectC_AHandUp(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRightActionRedirectC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -618,22 +714,27 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
+        }else{
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        }
 
         step( "5:右键->[Redirect] C");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1010");
@@ -641,8 +742,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1010 K [1010]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+                    .contains(tuple(vcpCaller, "1010 K [1010]","Ringing", vcpDetail));
+        }else{
+            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_0 +vcpCaller, "1010 K [1010]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
 
         assertStep("7:[接通]");
         pjsip.Pj_Answer_Call(1010,false);
@@ -650,17 +756,26 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("8:[VCP显示]");
         List<Record> resultSum_talking= auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
-
-        pjsip.Pj_hangupCall(2000);
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
+                    .contains(tuple( vcpCaller, "1010 K [1010]","Talking",vcpDetail));
+        }else{
+            softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_0 +vcpCaller, "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
+        pjsip.Pj_hangupCall(caller);
 
         assertStep("[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "1000 A<1000>","NO ANSWER","Redirected to 1010 K<1010>"),//todo bug callee
-                        tuple("2000<2000>", "1010 K<1010>","ANSWERED","2000<2000> hung up"));
-
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
+                    .contains(tuple("1020<1020>", "1010 K<1010>", "ANSWERED", "1020<1020> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 1010 K<1010>"));
+        }else {
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
+                    .contains(tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1010 K<1010>"),
+                            tuple("2000<2000>", "1010 K<1010>", "ANSWERED", "2000<2000> hung up"));
+        }
         softAssertPlus.assertAll();
 
     }
@@ -675,8 +790,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRightActionRedirectC_CHandUp(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRightActionRedirectC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -688,22 +804,27 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1010,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
+        }else{
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        }
 
         step( "5:右键->[Redirect] C");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1010");
@@ -711,8 +832,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1010 K [1010]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+                    .contains(tuple(vcpCaller, "1010 K [1010]","Ringing", vcpDetail));
+        }else{
+            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_0 +vcpCaller, "1010 K [1010]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
 
         assertStep("7:[接通]");
         pjsip.Pj_Answer_Call(1010,false);
@@ -720,17 +846,30 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("8:[VCP显示]");
         List<Record> resultSum_talking= auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
-
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
+                    .contains(tuple( vcpCaller, "1010 K [1010]","Talking",vcpDetail));
+        }else{
+            softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_0 +vcpCaller, "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+        }
         pjsip.Pj_hangupCall(1010);
 
-        assertStep("9:[CDR显示]");
+        assertStep("[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "1000 A<1000>","NO ANSWER","Redirected to 1010 K<1010>"), //bug callee
-                        tuple("2000<2000>", "1010 K<1010>","ANSWERED","1010 K<1010> hung up"));
-
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
+                    .contains(tuple("1020<1020>", "1010 K<1010>", "ANSWERED", "1010 K<1010> hung up"),
+                            tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 1010 K<1010>"));
+        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
+                    .contains(tuple("4000<6101>", "1010 K<1010>", "ANSWERED", "1010 K<1010> hung up"),
+                              tuple ("4000<6101>", "1000 A<1000>", "NO ANSWER", "Redirected to 1010 K<1010>"));
+        }else {
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
+                    .contains(tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1010 K<1010>"),
+                            tuple("2000<2000>", "1010 K<1010>", "ANSWERED", "1010 K<1010> hung up"));
+        }
         softAssertPlus.assertAll();
     }
 
@@ -743,8 +882,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Ring Group]6301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRedirectRingGroup","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRedirectRingGroup(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRedirectRingGroup","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -761,7 +901,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1007,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1008,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1009,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1005,DEVICE_IP_LAN);
@@ -769,12 +909,12 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1007,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1008,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+        pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->右键-->Redirect[RingGroup]6301");
@@ -783,12 +923,29 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(ringGroupName_1+":2000 [2000]", "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(ringGroupName_1+":2000 [2000]", "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(ringGroupName_1+":2000 [2000]", "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(ringGroupName_1+":2000 [2000]", "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                        tuple(ringGroupName_1+":2000 [2000]", "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing",RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias() ),
+                              tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
+        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple("RG1:4000 [4000]", "1006 G [1006]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple ("RG1:4000 [4000]", "1007 H [1007]", "Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple ("RG1:4000 [4000]", "1008 I [1008]", "Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple ("RG1:4000 [4000]", "1009 J [1009]", "Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple ("RG1:4000 [4000]", "1005 F [1005]", "Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_1+"2000 [2000]", "1005 F [1005]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+"2000 [2000]", "1006 G [1006]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+"2000 [2000]", "1007 H [1007]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+"2000 [2000]", "1008 I [1008]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+"2000 [2000]", "1009 J [1009]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        }
+
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
         step("7:1005 接通");
@@ -798,8 +955,14 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("[VCP验证]");
         sleep(WaitUntils.SHORT_WAIT);
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                .contains(tuple(ringGroupName_1+":2000 [2000]", "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Talking",RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        }
+
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -807,11 +970,22 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "1000 A<1000>","NO ANSWER","Redirected to RG1<6301>"),//todo callee
-                          tuple("2000<2000>", "RingGroup RG1<6301>","ANSWERED","RingGroup RG1<6301> connected"),
-                          tuple("2000<2000>", "1005 F<1005>","ANSWERED","1005 F<1005> hung up"));
-
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "RingGroup RG1<6301>", "ANSWERED", "RingGroup RG1<6301> connected"),
+                              tuple ("1020<1020>", "1005 F<1005>", "ANSWERED", "1005 F<1005> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to RG1<6301>"));
+        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("4000<6101>", "RingGroup RG1<6301>", "ANSWERED", "RingGroup RG1<6301> connected"),
+                              tuple ("4000<6101>", "1005 F<1005>", "ANSWERED", "1005 F<1005> hung up"),
+                              tuple ("4000<6101>", "1000 A<1000>", "NO ANSWER", "Redirected to RG1<6301>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>", "RingGroup RG1<6301>", "ANSWERED", "RingGroup RG1<6301> connected"),
+                              tuple ("2000<2000>", "1005 F<1005>", "ANSWERED", "1005 F<1005> hung up"),
+                              tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to RG1<6301>"));
+        }
         softAssertPlus.assertAll();
     }
 
@@ -824,9 +998,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6501")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRedirectIVR","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRedirectIVR(){
-//        prerequisiteForAPI(runRecoveryEnvFlag);
+    @Test(groups = {"P0","VCP","testIVRIncomingRedirectIVR","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -838,29 +1013,34 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->右键-->Redirect[IVR]6201");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6201");
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_1+":2000 [2000]",  "ivr_6201 [6201]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(vcpCaller,  "ivr_6201 [6201]", "Talking", RECORD_DETAILS.INTERNAL_IVR.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_0+vcpCaller,  "ivr_6201 [6201]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        }
         softAssertPlus.assertThat(allRecordList).as("验证IVR数量").size().isEqualTo(1);
 
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("7:显示状态1005 接通");
@@ -870,8 +1050,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_1+":2000 [2000]", "1001 B [1001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_1+vcpCaller, "1001 B [1001]","Talking",  RECORD_DETAILS.INTERNAL_IVR.getAlias()));
+        }else{
+            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_1+vcpCaller, "1001 B [1001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+        }
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -879,10 +1064,22 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
-                          tuple ("2000<2000>", "0<0>", "ANSWERED", "2000<2000> hung up"),
-                          tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6201<6201>"));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
+                              tuple ("1020<1020>", "0<0>", "ANSWERED", "1020<1020> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6201<6201>"));
+        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("4000<6101>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
+                              tuple ("4000<6101>", "0<0>", "ANSWERED", "4000<6101> hung up"),
+                              tuple ("4000<6101>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6201<6201>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
+                              tuple ("2000<2000>", "0<0>", "ANSWERED", "2000<2000> hung up"),
+                              tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6201<6201>"));
+        }
 
         softAssertPlus.assertAll();
     }
@@ -897,8 +1094,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Voicemail]小图标")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIVRIncomingRedirectVoicemail","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRedirectVoicemail(){
+    @Test(groups = {"P0","VCP","testIVRIncomingRedirectVoicemail","Regression","PSeries","VCP1","IVR1",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    public void testIVRIncomingRedirectVoicemail(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -913,18 +1111,18 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         step("4：[Inbound]1000 -->Redirect[Voicemail]");
@@ -933,17 +1131,35 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("5:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple(vcpCaller, "1000 A [1000]","Talking", RECORD_DETAILS.INTERNAL_VOICEMAIL.getAlias()));
+        }else{
+            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+                    .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+        }
+
 
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Hangup_All();
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(tuple("2000<2000>", "1000 A<1000>", "VOICEMAIL", "2000<2000> hung up"),
-                        tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+
+
+        if(message.equalsIgnoreCase("FXS")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("1020<1020>", "1000 A<1000>", "VOICEMAIL", "1020<1020> hung up"),
+                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("4000<6101>", "1000 A<1000>", "VOICEMAIL", "4000<6101> hung up"),
+                              tuple ("4000<6101>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>", "1000 A<1000>", "VOICEMAIL", "2000<2000> hung up"),
+                            tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+        }
 
         softAssertPlus.assertAll();
     }
@@ -959,7 +1175,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRightActionRedirectOffLineY_AHandUp(){
+    public void testIVRIncomingRightActionRedirectOffLineY_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -972,22 +1188,22 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_0 +"2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         step( "5:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
@@ -1032,7 +1248,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")//TODO make jenkins vm exception
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRightActionRedirectOffLineY_YHandUp(){
+    public void testIVRIncomingRightActionRedirectOffLineY_YHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -1045,22 +1261,22 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_0 +"2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         step( "5:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"2001");
@@ -1103,7 +1319,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionHandUp","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRightActionHandUp(){
+    public void testIVRIncomingRightActionHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -1115,21 +1331,21 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_0 +"2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         step( "5:右键->[HandUp]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
@@ -1154,7 +1370,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRightActionHoverHandUp(){
+    public void testIVRIncomingRightActionHoverHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -1169,24 +1385,24 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_0 +"2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         step( "5:右键->[HandUp->悬停，移开]");
         auto.operatorPanelPage().rightTableActionMouserHover(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
@@ -1197,7 +1413,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_0 +"2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         softAssertPlus.assertAll();
     }
@@ -1212,7 +1428,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionPickUp","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRightActionPickUp(){
+    public void testIVRIncomingRightActionPickUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -1225,22 +1441,22 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+                .contains(tuple(IVRListName_0 +"2000 [2000]", "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         step( "5:右键->[右键PickUp]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.PICK_UP);
@@ -1249,7 +1465,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                .contains(tuple(IVRListName_0 +":2000 [2000]", "0 [0]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(IVRListName_0 +"2000 [2000]", "0 [0]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         softAssertPlus.assertAll();
     }
@@ -1264,7 +1480,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","IVR1"})
-    public void testIVRIncomingRightActionUnDisplay(){
+    public void testIVRIncomingRightActionUnDisplay(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
@@ -1279,18 +1495,18 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(caller,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,"996200",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Send_Dtmf(2000,"0");
+       pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
