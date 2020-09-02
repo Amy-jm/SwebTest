@@ -230,7 +230,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testRGIncomingRingStatus","Regression","PSeries","VCP1","RingGroup1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -280,7 +280,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testRingGroupIncomingRingStatus","Regression","PSeries","VCP1","RingGroup1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRingDragAndDropRG(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -361,7 +361,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropParking","Regression","PSeries","VCP1","RingGroup1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -658,7 +658,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","RingGroup1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRightActionHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 //
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -995,7 +995,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testRGIncomingRedirectRingGroup","Regression","PSeries","VCP1","RingGroup1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1045,7 +1045,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
                           tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                           tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                           tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-//        softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
+        softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
         step("7:1005 接通");
         sleep(WaitUntils.SHORT_WAIT);
