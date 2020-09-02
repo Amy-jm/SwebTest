@@ -174,17 +174,17 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             for (int i = 0; i < routes.length; i++) {
                 for (int j = 0; j < routes[i].length; j++) {
                     if (groups.equalsIgnoreCase("SPS")) {
-                        group = new Object[][] {{"99",2000,"6400",DEVICE_ASSIST_2,2000, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SPS"}};
+                        group = new Object[][] {{"99",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SPS"}};
                     }else if (groups.equalsIgnoreCase("BRI")) {
-                        group = new Object[][] {{"88",2000,"6400",DEVICE_ASSIST_2,2000, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"BRI"}};
+                        group = new Object[][] {{"88",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"BRI"}};
                     }else if (groups.equalsIgnoreCase("FXO")) {
-                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,2000, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"FXO"}};
+                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"FXO"}};
                     }else if (groups.equalsIgnoreCase("E1")) {
-                        group = new Object[][] {{"66",2000,"6400",DEVICE_ASSIST_2,2000, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"E1"}};
+                        group = new Object[][] {{"66",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"E1"}};
                     }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
-                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,2000, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"}};
+                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"}};
                     }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
-                        group = new Object[][] {{"44",4000,"6400",DEVICE_ASSIST_3,4000, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_ACCOUNT"}};
+                        group = new Object[][] {{"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_ACCOUNT"}};
                     }else {
                         group = routes;//默认选择具体的用例跑所有线路
                     }
