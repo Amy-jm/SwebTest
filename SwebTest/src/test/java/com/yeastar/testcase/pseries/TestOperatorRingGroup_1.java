@@ -5,6 +5,7 @@ import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.*;
 import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.untils.APIObject.IVRObject;
 import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.CDRObject;
 import com.yeastar.untils.DataUtils;
@@ -151,6 +152,10 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             apiUtil.deleteAllQueue().createQueue(queueListName, "6400", null, queueListNum, null)
                     .createQueue(queueListName_1, "6401", null, queueListNum_1, null);
 
+            step("创建ivr 6200");
+            ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
+            pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0,"extension","","1000",0));
+            apiUtil.deleteAllIVR().createIVR("6200","6200",pressKeyObjects_0);
 
             step("创建呼入路由InRoute2,目的地到ring_group 6300");
             apiUtil.deleteAllInbound().createInbound("InRoute2", trunks, "ring_group", "6300");
@@ -211,10 +216,10 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @DataProvider(name = "routesDebug")
     public Object[][] RoutesDebug() {
         return new Object[][] {
-//                {"99",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SPS"},//sps   前缀 替换
-//                {"88",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"BRI"},//BRI   前缀 替换
-//                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-//                {"66",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
+                {"99",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SPS"},//sps   前缀 替换
+                {"88",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"BRI"},//BRI   前缀 替换
+                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+                {"66",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
                 {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
                 {"44",4000,"6300",DEVICE_ASSIST_3,"4000 [4000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_ACCOUNT"}
         };
@@ -230,7 +235,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testRGIncomingRingStatus","Regression","PSeries","VCP1","RingGroup1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+//       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
