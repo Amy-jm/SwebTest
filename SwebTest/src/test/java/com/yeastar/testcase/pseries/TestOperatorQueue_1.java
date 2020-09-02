@@ -12,6 +12,7 @@ import com.yeastar.untils.CDRObject;
 import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
@@ -29,6 +30,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @author: huangjx@yeastar.com
  * @create: 2020/07/30
  */
+@Log4j2
 public class TestOperatorQueue_1 extends TestCaseBase {
     private final String CDR_PREFIX="";//""cdr_recording.cdr.";
     APIUtil apiUtil = new APIUtil();
@@ -197,6 +199,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                 }
             }
         }
+        log.debug("[group]"+group);
         return group;
     }
     /**
