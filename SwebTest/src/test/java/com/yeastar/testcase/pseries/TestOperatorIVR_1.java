@@ -159,13 +159,12 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     }
 
     Object[][] routes = new Object[][] {
-            {"99",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
-            {"88",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
-            {""  ,2000,"2005",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-            {"77",2000,"1000",DEVICE_ASSIST_2,1020, OperatorPanelPage.RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
-            {"66",2000,"1000",DEVICE_ASSIST_2,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
-            {""  ,2000,"2001",DEVICE_ASSIST_1,2000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
-            {"44",4000,"1000",DEVICE_ASSIST_3,4000, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+            {"99",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"},//sps   前缀 替换
+            {"88",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"},//BRI   前缀 替换
+            {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+            {"66",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
+            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
+            {"44",4000,"1000",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}
     };
 
     /**
@@ -176,13 +175,12 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @DataProvider(name = "routesDebug")
     public Object[][] RoutesDebug() {
         return new Object[][] {
-                {"99",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"},//sps   前缀 替换
-//                {"88",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"},//BRI   前缀 替换
-//                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-                {"77",2000,"1000",DEVICE_ASSIST_2,"1020 [1020]",RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
-//                {"66",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
-//                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
-                {"44",4000,"1000",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}
+                {"99",2000,"6200",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"},//sps   前缀 替换
+                {"88",2000,"6200",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"},//BRI   前缀 替换
+                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+                {"66",2000,"6200",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
+                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
+                {"44",4000,"6200",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}
         };
     }
 
@@ -194,13 +192,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @DataProvider(name = "routesDebug_1")
     public Object[][] RoutesDebug_1() {
         return new Object[][] {
-                {"99",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"},//sps   前缀 替换
-                {"88",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"},//BRI   前缀 替换
-                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-                {"77",2000,"1000",DEVICE_ASSIST_2,"1020 [1020]",RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
-                {"66",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
-                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
-                {"44",4000,"1000",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}
+//                {"99",2000,"6200",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"},//sps   前缀 替换
+//                {"88",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"},//BRI   前缀 替换
+//                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+                {"77",2000,"6200",DEVICE_ASSIST_2,"1020 [1020]",RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
+//                {"66",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
+//                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
+//                {"44",4000,"6200",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}
         };
     }
 
@@ -216,19 +214,17 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             for (int i = 0; i < routes.length; i++) {
                 for (int j = 0; j < routes[i].length; j++) {
                     if (groups.equalsIgnoreCase("SPS")) {
-                        group = new Object[][] {{"99",2000,"1000",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"}};
+                        group = new Object[][] {{"99",2000,"6200",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"}};
                     }else if (groups.equalsIgnoreCase("BRI")) {
-                        group = new Object[][] {{"88",2000,"1000",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"}};
+                        group = new Object[][] {{"88",2000,"6200",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"}};
                     }else if (groups.equalsIgnoreCase("FXO")) {
-                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"}};
-                    }else if (groups.equalsIgnoreCase("FXS")) {
-                        group = new Object[][] {{"77",2000,"1000",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.INTERNAL.getAlias(),"FXS"}};
+                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"}};
                     }else if (groups.equalsIgnoreCase("E1")) {
-                        group = new Object[][] {{"66",2000,"1000",DEVICE_ASSIST_2,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"}};
+                        group = new Object[][] {{"66",2000,"6200",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"}};
                     }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
-                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}};
+                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"}};
                     }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
-                        group = new Object[][] {{"44",4000,"1000",DEVICE_ASSIST_3,"ivr_6200:2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}};
+                        group = new Object[][] {{"44",4000,"6200",DEVICE_ASSIST_3,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}};
                     }else {
                         group = routes;
                     }
@@ -247,7 +243,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRingStatus","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -272,16 +268,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-//        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-//                .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
 
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
-                    .contains(tuple(IVRListName_0+vcpCaller, "1000 K [1000]", "Ringing", RECORD_DETAILS.INTERNAL.getAlias()));
-        }else {
-            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
-                    .contains(tuple(IVRListName_0+vcpCaller, "1000 K [1000]", "Ringing", RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
-        }
+        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(IVRListName_0+vcpCaller, "1000 A [1000]", "Ringing", RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         pjsip.Pj_hangupCall(caller);
         softAssertPlus.assertAll();
@@ -299,7 +288,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Issue("bug 等待留言的时候才开始录音")
     @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -339,9 +328,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("7:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
-                    .contains(tuple(IVRListName_0+vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.INTERNAL.getAlias()));
+                    .contains(tuple(vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
         }else {
             softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
                     .contains(tuple(IVRListName_0+vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
@@ -360,9 +349,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+//        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -396,13 +385,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("7:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
-                    .contains(tuple(IVRListName_0+vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.INTERNAL.getAlias()));
-        }else {
-            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
                     .contains(tuple(IVRListName_0+vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }
+
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
 
@@ -420,7 +405,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Issue("1.勾选显示未注册分机，概率性出现 未注册分机不能显示 \n" +
             "2.拖动后，需要>=6秒后才会显示")
     @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -474,7 +459,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropRG","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropRG(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -515,14 +500,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP显示]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
                     .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                               tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
@@ -548,9 +526,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("6:[VCP验证]");
         sleep(WaitUntils.SHORT_WAIT*2);
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){   softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
                     .contains(tuple("RG1:4000 [4000]", "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         }else{
@@ -574,7 +550,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRingDragAndDropParking","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -604,9 +580,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-       if(message.equalsIgnoreCase("FXS")){
+       if(message.equalsIgnoreCase("SIP_ACCOUNT")){
            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                   .contains(tuple( vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
+                   .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
        }else{
            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
                    .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
@@ -628,7 +604,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -667,13 +643,13 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                    .contains(tuple(queueListName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                              tuple(queueListName_1+vcpCaller, "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                              tuple(queueListName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                              tuple(queueListName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                              tuple(queueListName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+                    .contains(tuple(queueListName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1006 G [1006]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()),
+                              tuple(queueListName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.INTERNAL_AGENT_RING.getAlias()));
         }else{
             softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
                     .contains(tuple(queueListName_1+vcpCaller, "1005 F [1005]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
@@ -700,7 +676,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -728,9 +704,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
+                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
             softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
@@ -742,9 +718,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1010 K [1010]","Ringing", vcpDetail));
+                    .contains(tuple(vcpCaller, "1010 K [1010]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
             softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1010 K [1010]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
@@ -756,9 +732,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("8:[VCP显示]");
         List<Record> resultSum_talking= auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
-                    .contains(tuple( vcpCaller, "1010 K [1010]","Talking",vcpDetail));
+                    .contains(tuple(vcpCaller, "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
             softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
@@ -767,6 +743,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        //todo add cdr assert
 //        if(message.equalsIgnoreCase("FXS")){
 //            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
 //                    .contains(tuple("1020<1020>", "1010 K<1010>", "ANSWERED", "1020<1020> hung up"),
@@ -791,7 +768,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -818,13 +795,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
-        }else{
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
-        }
 
         step( "5:右键->[Redirect] C");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1010");
@@ -832,13 +804,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1010 K [1010]","Ringing", vcpDetail));
-        }else{
-            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1010 K [1010]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
-        }
 
         assertStep("7:[接通]");
         pjsip.Pj_Answer_Call(1010,false);
@@ -846,16 +813,12 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("8:[VCP显示]");
         List<Record> resultSum_talking= auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
-                    .contains(tuple( vcpCaller, "1010 K [1010]","Talking",vcpDetail));
-        }else{
-            softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1010 K [1010]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
-        }
+
         pjsip.Pj_hangupCall(1010);
 
-        assertStep("[CDR显示]");
+        assertStep("[CDR显示]");//todo add cdr assert
 //        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 //        if(message.equalsIgnoreCase("FXS")){
 //            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
@@ -883,7 +846,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRedirectRingGroup","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -923,14 +886,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing",RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias() ),
-                              tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
                     .contains(tuple("RG1:4000 [4000]", "1006 G [1006]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                               tuple ("RG1:4000 [4000]", "1007 H [1007]", "Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
@@ -970,12 +926,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                    .contains(tuple("1020<1020>", "RingGroup RG1<6301>", "ANSWERED", "RingGroup RG1<6301> connected"),
-                              tuple ("1020<1020>", "1005 F<1005>", "ANSWERED", "1005 F<1005> hung up"),
-                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to RG1<6301>"));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
                     .contains(tuple("4000<6101>", "RingGroup RG1<6301>", "ANSWERED", "RingGroup RG1<6301> connected"),
                               tuple ("4000<6101>", "1005 F<1005>", "ANSWERED", "1005 F<1005> hung up"),
@@ -999,7 +950,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRedirectIVR","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1030,9 +981,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller,  "ivr_6201 [6201]", "Talking", RECORD_DETAILS.INTERNAL_IVR.getAlias()));
+                    .contains(tuple(vcpCaller,  "ivr_6201 [6201]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
         }else{
             softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0+vcpCaller,  "ivr_6201 [6201]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
@@ -1050,13 +1001,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                    .contains(tuple(IVRListName_1+vcpCaller, "1001 B [1001]","Talking",  RECORD_DETAILS.INTERNAL_IVR.getAlias()));
-        }else{
-            softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_1+vcpCaller, "1001 B [1001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
-        }
+
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -1064,12 +1011,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                    .contains(tuple("1020<1020>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
-                              tuple ("1020<1020>", "0<0>", "ANSWERED", "1020<1020> hung up"),
-                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to ivr_6201<6201>"));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
                     .contains(tuple("4000<6101>", "1001 B<1001>", "ANSWERED", "1001 B<1001> hung up"),
                               tuple ("4000<6101>", "0<0>", "ANSWERED", "4000<6101> hung up"),
@@ -1095,7 +1037,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRedirectVoicemail","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRedirectVoicemail(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1131,12 +1073,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("5:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Talking", RECORD_DETAILS.INTERNAL_VOICEMAIL.getAlias()));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(IVRListName_0+vcpCaller, "1000 A [1000]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+                    .contains(tuple(vcpCaller, "1000 A [1000]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
         }else{
             softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
@@ -1148,13 +1087,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-
-
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                    .contains(tuple("1020<1020>", "1000 A<1000>", "VOICEMAIL", "1020<1020> hung up"),
-                              tuple ("1020<1020>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
                     .contains(tuple("4000<6101>", "1000 A<1000>", "VOICEMAIL", "4000<6101> hung up"),
                               tuple ("4000<6101>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
@@ -1178,7 +1111,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectOffLineY_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1206,10 +1139,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(vcpCaller, "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
@@ -1222,36 +1152,24 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("6:[VCP显示]");
-
-        if(message.equalsIgnoreCase("FXS")){
-            List<Record> resultSum_after_redirect_outbound = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.OUTBOUND);
-            softAssertPlus.assertThat(resultSum_after_redirect_outbound).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "DOD [2001]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }else{
-            List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
             softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
                     .contains(tuple(vcpCaller, "DOD [2001]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }
+
 
         step("7:[接通]");
         pjsip.Pj_Answer_Call(2001,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("8:[VCP显示]");
-
-        if(message.equalsIgnoreCase("FXS")){
-            List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.OUTBOUND);
-                softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                                .contains(tuple(vcpCaller, "DOD [2001]","Talking", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }else{
-            List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
             softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
                          .contains(tuple(vcpCaller, "DOD [2001]","Talking", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }
+
         step("9:[挂断]");
         pjsip.Pj_hangupCall(caller);
 
-        assertStep("10:[CDR显示]");
+        assertStep("10:[CDR显示]");//todo add cdr assert
 //        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 //        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
 //                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),
@@ -1273,7 +1191,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")//TODO make jenkins vm exception
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectOffLineY_YHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPI(runRecoveryEnvFlag);
 
@@ -1301,10 +1219,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
             softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(vcpCaller, "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
@@ -1317,37 +1232,24 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("6:[VCP显示]");
-
-        if(message.equalsIgnoreCase("FXS")){
-            List<Record> resultSum_after_redirect_outbound = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.OUTBOUND);
-            softAssertPlus.assertThat(resultSum_after_redirect_outbound).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "DOD [2001]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }else{
-            List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
             softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
                     .contains(tuple(vcpCaller, "DOD [2001]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }
 
         step("7:[接通]");
         pjsip.Pj_Answer_Call(2001,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("8:[VCP显示]");
+        List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+            softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
+                    .contains(tuple(vcpCaller, "DOD [2001]","Talking", RECORD_DETAILS.EXTERNAL.getAlias()));
 
-        if(message.equalsIgnoreCase("FXS")){
-            List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.OUTBOUND);
-            softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "DOD [2001]","Talking", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }else{
-            List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-            softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "DOD [2001]","Talking", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }
         step("9:[挂断]");
         pjsip.Pj_hangupCall(2001);
 
 
-        assertStep("10:[CDR显示]");//todo CDR显示
+        assertStep("10:[CDR显示]");////todo add cdr assert
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 //        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
 //                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2001 hung up"),
@@ -1367,9 +1269,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionHandUp","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRightActionHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1393,10 +1295,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
             softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
@@ -1428,9 +1327,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRightActionHoverHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1460,10 +1359,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
             softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
@@ -1479,10 +1375,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
             softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
                     .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
@@ -1503,9 +1396,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testIVRIncomingRightActionPickUp","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRightActionPickUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1531,10 +1424,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("FXS")){
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", vcpDetail));
-        }else if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
+        if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
             softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
         }else{
@@ -1560,7 +1450,6 @@ public class TestOperatorIVR_1 extends TestCaseBase {
                     .contains(tuple(IVRListName_0 +vcpCaller, "0 [0]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
         }
 
-
         softAssertPlus.assertAll();
     }
 
@@ -1574,9 +1463,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","IVR1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIVRIncomingRightActionUnDisplay(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI(runRecoveryEnvFlag);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
