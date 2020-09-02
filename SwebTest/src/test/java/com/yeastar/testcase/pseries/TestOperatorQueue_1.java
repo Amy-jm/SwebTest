@@ -177,6 +177,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
      */
     @DataProvider(name = "routes")
     public Object[][] Routes(ITestContext c) {
+        log.debug("[Routes]");
         Object[][] group = null;
         for (String groups : c.getIncludedGroups()) {
             for (int i = 0; i < routes.length; i++) {

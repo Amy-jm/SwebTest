@@ -1231,9 +1231,9 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "3:[2000 呼叫 1000]，1000 为Ring状态\n" +
             "4:[Inbound]1000 -->Redirect[IVR]6200")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1","RingGroup1","Jack",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
+    @TmsLink(value = "")//todo ###########
+//    @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1","RingGroup1","Jack",
+//            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
