@@ -20,11 +20,11 @@
 <!--            <class name="com.yeastar.testcase.pseries.TestOperatorQueue_1"/>-->
 <!--            <class name="com.yeastar.testcase.pseries.TestOperatorRingGroup_1"/>-->
 <!--            <class name="com.yeastar.testcase.pseries.TestOperatorIVR_1"/>-->
-<!--            <class name="com.yeastar.testcase.pseries.TestOperatorConference"/>-->
+            <class name="com.yeastar.testcase.pseries.TestOperatorConference"/>
             <class name="com.yeastar.testcase.pseries.TestOperatorExtension_2"/>
-<!--            <class name="com.yeastar.testcase.pseries.TestOperatorQueue_2"/>-->
-<!--            <class name="com.yeastar.testcase.pseries.TestOperatorRingGroup_2"/>-->
-<!--            <class name="com.yeastar.testcase.pseries.TestOperatorIVR_2"/>-->
+            <class name="com.yeastar.testcase.pseries.TestOperatorQueue_2"/>
+            <class name="com.yeastar.testcase.pseries.TestOperatorRingGroup_2"/>
+            <class name="com.yeastar.testcase.pseries.TestOperatorIVR_2"/>
         </classes>
     </test>
 </suite>
