@@ -249,6 +249,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
         prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
