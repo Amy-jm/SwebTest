@@ -935,7 +935,8 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-        step("3:[PJSIP注册] 分机创建并注册");        pjsip.Pj_Init();
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);

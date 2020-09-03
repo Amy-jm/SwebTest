@@ -41,8 +41,10 @@ public class PjsipApp extends PjsipDll{
     public  void Pj_Init(){
 
         accounts = new ArrayList<UserAccount>();
-        Reporter.infoExec("pjsip init "+pjsipdll.instance.ys_init());
-        Reporter.infoExec("pjisp main " +pjsipdll.instance.ys_main());
+        pjsipdll.instance.ys_init();
+        pjsipdll.instance.ys_main();
+//        Reporter.infoExec("pjsip init "+ pjsipdll.instance.ys_init());
+//        Reporter.infoExec("pjisp main " +pjsipdll.instance.ys_main());
         pjsipdll.instance.onRegStateCallback(registerCallBack);
         pjsipdll.instance.onCallIncoming(incomingcallback);
         pjsipdll.instance.onCallStateCallback(callstateCallBack);
@@ -56,7 +58,7 @@ public class PjsipApp extends PjsipDll{
         }else{
         }
 //
-//        Reporter.infoExec("pjs_init done");
+        Reporter.infoExec("pjs_init done");
 
     }
     //释放PJSIP
