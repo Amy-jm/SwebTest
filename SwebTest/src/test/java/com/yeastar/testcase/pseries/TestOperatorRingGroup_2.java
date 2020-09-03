@@ -7,7 +7,6 @@ import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.APIObject.IVRObject;
 import com.yeastar.untils.APIObject.InboundRouteObject;
-import com.yeastar.untils.APIObject.QueueObject;
 import com.yeastar.untils.APIObject.RingGroupObject;
 import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.SSHLinuxUntils;

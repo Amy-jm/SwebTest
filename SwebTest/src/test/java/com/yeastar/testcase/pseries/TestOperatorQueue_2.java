@@ -13,7 +13,6 @@ import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.SSHLinuxUntils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
-import javafx.scene.control.Tab;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
