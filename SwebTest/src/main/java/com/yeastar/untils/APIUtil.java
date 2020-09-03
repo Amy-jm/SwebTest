@@ -746,7 +746,7 @@ public class APIUtil {
     }
 
     /**
-     * 创建呼出路由
+     * 创建IVR
      * @param request
      */
     public APIUtil createIVR(String number,String name, List<IVRObject.PressKeyObject> pressKeyObjects){
@@ -797,6 +797,11 @@ public class APIUtil {
                 number,name,jsonArray.toString().replace("[{","").replace("}]","").replace("},{",","));
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ivr/create",request);
+        return this;
+    }
+
+    public APIUtil editIVR(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ivr/update",String.format("{%s,\"id\":%s}",request,getIVRSummary(number).id));
         return this;
     }
 
@@ -953,22 +958,6 @@ public class APIUtil {
         return extObjList;
     }
 
-
-    /**
-     * 找到指定Conference
-     * @param num  Conference
-     * @return
-     */
-    public ConferenceObject getConferenceSummary(String num){
-        List<ConferenceObject> conferenceObject = getConferenceSummary();
-        for (ConferenceObject object : conferenceObject){
-            if(object.number.equals(num)){
-                return object;
-            }
-        }
-        return null;
-    }
-
     /**
      * 删除当前存在的所有响铃组
      * */
@@ -1072,21 +1061,6 @@ public class APIUtil {
         }
         return extObjList;
     }
-    /**
-     * 找到指定坐席
-     * @param num  分机号
-     * @return
-     */
-    public QueueObject getQueueSummary(String num){
-        List<QueueObject> queueObject = getQueueSummary();
-        for (QueueObject object : queueObject){
-            if(object.number.equals(num)){
-                return object;
-            }
-        }
-        return null;
-    }
-
 
     /**
      * 删除当前存在的所有响铃组

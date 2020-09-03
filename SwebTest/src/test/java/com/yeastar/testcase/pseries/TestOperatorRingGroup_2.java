@@ -1,28 +1,38 @@
 package com.yeastar.testcase.pseries;
 
+import com.codeborne.selenide.Condition;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
+import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.untils.APIObject.IVRObject;
 import com.yeastar.untils.APIObject.InboundRouteObject;
+import com.yeastar.untils.APIObject.QueueObject;
 import com.yeastar.untils.APIObject.RingGroupObject;
 import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.SSHLinuxUntils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.sleep;
+import static org.assertj.core.groups.Tuple.tuple;
 
 public class TestOperatorRingGroup_2 extends TestCaseBase {
     private APIUtil apiUtil = new APIUtil();
-    private boolean runRecoveryEnvFlag = false;
+    private boolean runRecoveryEnvFlag = true;
 
     private String reqDataCreateExtension = String.format("" +
                     "{\"type\":\"SIP\",\"first_name\":\"EXTENSIONNUM\",\"last_name\":\"EXTENSIONLASTNAME\",\"email_addr\":\"\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"reg_name\":\"EXTENSIONNUM\",\"reg_password\":\"%s\",\"allow_reg_remotely\":1,\"enb_user_agent_ident\":0,\"enb_ip_rstr\":0}"
+            ,enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)),enBase64(EXTENSION_PASSWORD));
+
+    private String reqDataCreateFxs = String.format("" +
+                    "{\"type\":\"FXS\",\"first_name\":\"EXTENSIONNUM\",\"last_name\":\"EXTENSIONLASTNAME\",\"email_addr\":\"\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"OTQxMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"enb_ctl_record\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"fxs_port\":\"FXSPORT\",\"enb_hotline\":0,\"hotline_number\":\"\",\"delay_dial\":2,\"min_flash_detect\":300,\"max_flash_detect\":1000,\"rx_volume\":\"0\",\"rx_gain\":0,\"tx_volume\":\"0\",\"tx_gain\":0,\"enb_call_waiting\":0,\"enb_dtmf_passthrough\":0,\"enb_echo_cancel\":1}"
             ,enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)),enBase64(EXTENSION_PASSWORD));
 
     private String reqDataCreateSPS = String.format("" +
@@ -32,9 +42,11 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
     private final String queueListName = "QU";
     private final String ringGroupName = "RG";//6300
     private final String conferenceName = "CO";
+    private final String ivrName = "IR";
     private final String queueListName2 = "QE";
-    private final String ringGroupName2 = "RI";//6301
+    private final String ringGroupName2 = "RI";//6300
     private final String conferenceName2 = "CF";
+    private final String ivrName2 = "IV";
 
     private final ArrayList<String> queueMembers = new ArrayList<>();
     private final ArrayList<String> ringGroupMembers = new ArrayList<>();
@@ -54,6 +66,26 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
     private final String op_ivr = UI_MAP.getString("web_client.ivr").trim();
     private final String opf_detial = "%s, %s";
 
+    private void registerAllExtension(){
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+    }
+
     @Epic("P_Series")
     @Feature("Extension")
     @Story("Presence")
@@ -62,6 +94,29 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
     @TmsLink("")
     @Test(groups = {"P0","VCP","prerequisite","Regression","PSeries"},priority =0 )
     public void prerequisite() {
+
+        ringGroupMembers.clear();
+        ringGroupMembers2.clear();
+        queueMembers2.clear();
+        queueMembers.clear();
+        conferenceMember.clear();
+        conferenceMember2.clear();
+
+        ringGroupMembers.add("1001");
+        ringGroupMembers.add("1002");
+        ringGroupMembers.add("1003");
+        ringGroupMembers2.add("1004");
+        ringGroupMembers2.add("1005");
+        queueMembers.add("1001");
+        queueMembers.add("1002");
+        queueMembers.add("1003");
+        queueMembers2.add("1004");
+        queueMembers2.add("1005");
+        conferenceMember.add("1001");
+        conferenceMember.add("1002");
+        conferenceMember.add("1003");
+        conferenceMember2.add("1004");
+        conferenceMember2.add("1005");
 
         if (runRecoveryEnvFlag){
             List<String> trunks = new ArrayList<>();
@@ -88,7 +143,9 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1004").replace("EXTENSIONLASTNAME","E").replace("GROUPLIST",groupList))
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1005").replace("EXTENSIONLASTNAME","F").replace("GROUPLIST",groupList))
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","0").replace("EXTENSIONLASTNAME","").replace("GROUPLIST",groupList))
-                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1").replace("EXTENSIONLASTNAME","").replace("GROUPLIST",groupList));
+                    .createExtension(reqDataCreateExtension.replace("EXTENSIONNUM","1").replace("EXTENSIONLASTNAME","").replace("GROUPLIST",groupList))
+                    .createExtension(reqDataCreateFxs.replace("EXTENSIONNUM","1020").replace("EXTENSIONLASTNAME","FXS").replace("FXSPORT",FXS_1).replace("GROUPLIST",groupList));
+
 
             step("创建SPS中继");
             apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
@@ -100,40 +157,31 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
             apiUtil.deleteAllOutbound().createOutbound("Outbound1",trunks,extensionNum);
 
             step("创建响铃组6300");
-            ringGroupMembers.add("1001");
-            ringGroupMembers.add("1002");
-            ringGroupMembers.add("1003");
+
             apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName,"6300",ringGroupMembers);
 
             step("创建响铃组6301");
-            ringGroupMembers2.add("1004");
-            ringGroupMembers2.add("1005");
             apiUtil.createRingGroup(ringGroupName2,"6301",ringGroupMembers2);
 
             step("创建队列6400");
-            queueMembers.add("1001");
-            queueMembers.add("1002");
-            queueMembers.add("1003");
-            apiUtil.deleteAllQueue().createQueue(queueListName,"6400",null, queueMembers,null);
+            apiUtil.deleteAllQueue().createQueue(ringGroupName,"6400",null, queueMembers,null);
 
             step("创建队列6401");
-            queueMembers2.add("1004");
-            queueMembers2.add("1005");
-            apiUtil.createQueue(queueListName2,"6401",null, queueMembers2,null);
+            apiUtil.createQueue(ringGroupName2,"6401",null, queueMembers2,null);
 
             step("创建会议室");
-            conferenceMember.add("1001");
-            conferenceMember.add("1002");
-            conferenceMember.add("1003");
             apiUtil.deleteAllConference().createConference(conferenceName, "6500", conferenceMember);
 
             step("创建会议室");
-            conferenceMember2.add("1004");
-            conferenceMember2.add("1005");
             apiUtil.createConference(conferenceName2, "6501", conferenceMember2);
 
-            step("创建IVR");
-//            apiUtil.dela
+            step("创建IVR 6200,6201");
+            ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
+            pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0,"extension","","1000",0));
+            ArrayList<IVRObject.PressKeyObject> pressKeyObjects_1 = new ArrayList<>();
+            pressKeyObjects_1.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0,"extension","","1001",0));
+            apiUtil.deleteAllIVR().createIVR("6200",ivrName,pressKeyObjects_0)
+                    .createIVR("6201",ivrName2,pressKeyObjects_1).editIVR("6201","\"dial_ext_option\":\"all\"");
 
             step("设置网络磁盘");
             extensionNum.add("0");
@@ -149,6 +197,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
                     apiUtil.editInbound(String.format("{\"def_dest\":\"ring_group\",\"def_dest_value\":\"%s\",\"id\":%s}",rg.id,object.id));
                 }
             }
+
             apiUtil.apply();
 
             apiUtil.loginWebClient("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW).updatePersonal("{\"show_unregistered_extensions\":1}");
@@ -161,28 +210,772 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1000接听后挂断\n" +
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 -->呼入状态：talking\n" +
             "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]\n")
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingStatus","Regression","PSeries","VCP1"})
-    public void testRGIncomingTalkingStatus(){
-        prerequisite();
-        
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+    @Test(groups = {"P0","VCP","testRinggroupIncomingTalkingStatus","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingStatus() {
 
-        step("2:进入Operator panel 界面");
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ");
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
         pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        pjsip.Pj_Answer_Call(1001,200,false);
+        assertStep("3.断言页面元素");
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1001 B [1001]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+
+        pjsip.Pj_Hangup_All();
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001接听 -->右击不显示PickUp、Redirect、unpark\n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingTalkingRightClickNotDisplay","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickNotDisplay() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        assertStep("3.右击后不显示Pick Up、Redirect");
+        List rightEventList = auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001");
+        softAssertPlus.assertThat(rightEventList).doesNotContain(OperatorPanelPage.RIGHT_EVENT.PICK_UP, OperatorPanelPage.RIGHT_EVENT.REDIRECT, OperatorPanelPage.RIGHT_EVENT.RETRIEVE).as("右击不显示Pick up,Redirect,Retrieve");
+
+        step("4.点击park后右击显示unpark");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.PARKED,"2000");
+        sleep(3000);
+        rightEventList = auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"2000");
+
+        softAssertPlus.assertThat(rightEventList.contains(OperatorPanelPage.RIGHT_EVENT.RETRIEVE.getAlias())).isEqualTo(true).as("右击有显示Retrieve");
+
+        pjsip.Pj_Hangup_All();
+        softAssertPlus.assertAll();;
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击挂断" +
+            "4.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingTalkingRightClickHangup","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickHangup() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击挂断");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"2000");
+        sleep(5000);
+
+        //todo cdr校验
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击点击Listen" +
+            "4.断言分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "6.断言VCP页面元素")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","Operator Panel","testRinggroupIncomingTalkingRightClickListen","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickListen() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Listen");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.LISTEN,"2000");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        assertStep("4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态");
+        softAssertPlus.assertThat(pjsip.getUserAccountInfo(0).callerId).as("分机0的来显应为Call Monitor").isEqualTo("Call Monitor");
+        pjsip.Pj_Answer_Call(0,200,false);
+        softAssertPlus.assertThat(getExtensionStatus(0, TALKING, 8)).as("预期分机0通话中").isEqualTo(TALKING);
+
+        assertStep("5.断言：Inbound&Internal Call表格中只有一条记录");
+        Assert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),1,"Inbound&Internal Call表格中只有一条记录");
+
+        assertStep("6.断言页面元素");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1001 B [1001]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        softAssertPlus.assertAll();
+
+        //todo cdr校验
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击点击 WHISPER" +
+            "4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "5.断言：Inbound&Internal Call表格中只有一条记录" +
+            "6.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickWhisper","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickWhisper() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Whisper");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.WHISPER,"1001");
+        sleep(3000);
+
+        assertStep("4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态");
+        softAssertPlus.assertThat(pjsip.getUserAccountInfo(0).callerId).as("分机0的来显应为Call Monitor").isEqualTo("Call Monitor");
+        pjsip.Pj_Answer_Call(0,200,false);
+        softAssertPlus.assertThat(getExtensionStatus(0, TALKING, 8)).as("预期分机0通话中").isEqualTo(TALKING);
+
+        assertStep("5.断言：Inbound&Internal Call表格中只有一条记录");
+        Assert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),1,"Inbound&Internal Call表格中只有一条记录");
+
+        assertStep("6.断言页面元素");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1001 B [1001]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击Barge" +
+            "4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "5.断言：Inbound&Internal Call表格中只有一条记录" +
+            "6.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickWhisper","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickBarge() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Barge");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.Barge_IN,"1001");
+        sleep(3000);
+
+        assertStep("4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态");
+        softAssertPlus.assertThat(pjsip.getUserAccountInfo(0).callerId).as("分机0的来显应为Call Monitor").isEqualTo("Call Monitor");
+        softAssertPlus.assertThat(getExtensionStatus(0, RING, 8)).as("预期分机0通话中").isEqualTo(RING);
+
+        assertStep("5.断言：Inbound&Internal Call表格中只有一条记录");
+        Assert.assertEquals(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size(),1,"Inbound&Internal Call表格中只有一条记录");
+
+        assertStep("6.断言页面元素");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1001 B [1001]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        softAssertPlus.assertAll();
+        //todo cdr校验
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击Park" +
+            "4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "5.断言：Inbound&Internal Call表格中只有一条记录" +
+            "6.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickPark","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickPark() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+
+        clearasteriskLog();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Park");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.PARKED,"2000");
+
+        assertStep("4.断言页面元素");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","[6000]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
+
+        assertStep("5.Asterisk断言：分机1001听到停泊语音call-parked-at.slin，然后挂断");
+        softAssertPlus.assertThat(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG)).as("cli确认有停泊提示音").contains("call-parked-at");
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 8)).as("预期分机1000已挂断").isEqualTo(HUNGUP);
+
+        sleep(5000);
+
+        softAssertPlus.assertThat(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG)).as("[cli确认有停泊提示音]").contains("call-parked-at");
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 8)).as("预期分机1000已挂断").isEqualTo(HUNGUP);
+        softAssertPlus.assertAll();
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击Park" +
+            "4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "5.断言：Inbound&Internal Call表格中只有一条记录" +
+            "6.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickPark","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickParkToUnPark() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Park->右键点击Retrieve，分机0接听");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.PARKED,"2000");
+        sleep(WaitUntils.RETRY_WAIT);
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"2000", OperatorPanelPage.RIGHT_EVENT.RETRIEVE,"");
+
+        softAssertPlus.assertThat(getExtensionStatus(0, RING, 8)).as("预期分机0响铃").isEqualTo(RING);
+        pjsip.Pj_Answer_Call(0,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        assertStep("4.断言页面元素");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","0 [0]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        //todo cdr校验
+        softAssertPlus.assertAll();
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击Park" +
+            "4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "5.断言：Inbound&Internal Call表格中只有一条记录" +
+            "6.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickPark","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickRecord() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        clearasteriskLog();
+
+        step("3.右击Unrecording");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"2000", OperatorPanelPage.RIGHT_EVENT.PAUSE_RECORD,"");
+
+        assertStep("4.[Asterisk断言]：cli打印停止录音");
+        softAssertPlus.assertThat(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG)).as("cli打印停止录音").contains("PAUSE MIXMON");
+
+        clearasteriskLog();
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"2000", OperatorPanelPage.RIGHT_EVENT.Resume_RECORD,"");
+
+        assertStep("4.[Asterisk断言]：cli打印停止录音");
+        softAssertPlus.assertThat(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG)).as("cli打印停止录音").contains("UNPAUSE MIXMON");
+
+        softAssertPlus.assertAll();;
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickTransferToRingGroup","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickTransferToRingGroup() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Transfer到响铃组6301");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6301");
+
+        assertStep("1004 1005响铃");
+        softAssertPlus.assertThat(getExtensionStatus(1004, RING, 8)).as("预期响铃组6301的分机1004响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 8)).as("预期响铃组6301的分机1005响铃").isEqualTo(RING);
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName2+":2000 [2000]","1004 E [1004]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                        tuple(ringGroupName2+":2000 [2000]","1005 F [1005]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+
+        assertStep("1004 Talking");
+        pjsip.Pj_Answer_Call(1004,200,false);
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName2+":2000 [2000]","1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击Park" +
+            "4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "5.断言：Inbound&Internal Call表格中只有一条记录" +
+            "6.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickTransferToQueue","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickTransferToQueue() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Transfer到队列6401");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6401");
+
+        assertStep("1004 1005响铃");
+        softAssertPlus.assertThat(getExtensionStatus(1004, RING, 8)).as("预期分机1004响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 8)).as("预期分机1005响铃").isEqualTo(RING);
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName2+":2000 [2000]","1004 E [1004]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName2+":2000 [2000]","1005 F [1005]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+
+        assertStep("1004 1005Talking");
+        pjsip.Pj_Answer_Call(1004,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName2+":2000 [2000]","1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
+
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3：进入1004voicemail" )
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickTransferToVoicemail","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickTransferToVoicemail() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Transfer到Voicemail");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"1004");
+
+        assertStep("1004响铃");
+        softAssertPlus.assertThat(getExtensionStatus(1004, RING, 8)).as("预期分机1004响铃").isEqualTo(RING);
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1004 E [1004]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        assertStep("预期响分机1004 挂断，进入Voicemail");
+        pjsip.Pj_Answer_Call(1004,404,false);
+        sleep(12000);
+        softAssertPlus.assertThat(getExtensionStatus(1004, HUNGUP, 8)).as("预期分机1004已挂断，进入Voicemail ").isEqualTo(HUNGUP);
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击Park" +
+            "4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "5.断言：Inbound&Internal Call表格中只有一条记录" +
+            "6.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickTransferToIVR","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickTransferToIVR() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Transfer到IVR 6201");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6201");
+
+        assertStep("4.界面显示到IVR");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]",ivrName2+" [6201]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+
+        step("5.IVR 呼叫1001");
+        pjsip.Pj_Send_Dtmf(2000,"1004");
+        softAssertPlus.assertThat(getExtensionStatus(1004, RING, 8)).as("预期分机1004响铃").isEqualTo(RING);
+
+        pjsip.Pj_Answer_Call(1004,200,false);
+        softAssertPlus.assertThat(getExtensionStatus(1004, TALKING, 8)).as("预期分机1004响铃").isEqualTo(TALKING);
+
+        assertStep("6.[判断] 界面仅显示External，无IVR相关的");
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ivrName2+":2000 [2000]","1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
+
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击Park" +
+            "4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "5.断言：Inbound&Internal Call表格中只有一条记录" +
+            "6.校验CDR")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("停泊后VCP控制面吧无记录")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickTransferToParking","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickTransferToParking() {
+
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
+        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
@@ -190,32 +983,260 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_Answer_Call(1001,200,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.TALKING_WAIT);
 
-        assertStep("4:Talking显示状态 ");
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee,"1000",
-                "RG:2000 [2000]","1001 B [1001]",op_talking, String.format(opf_detial,op_external,op_ringgroup));
-        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("操作面板只有一条记录").isEqualTo(1);
+        step("3.右击Transfer到停泊号码6000");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6000");
 
-        pjsip.Pj_Hangup_All();
-        softAssert.assertAll();
+        assertStep("控制面板显示");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName2+":2000 [2000]","6000",op_talking, OperatorPanelPage.RECORD_DETAILS.INTERNAL_PARKED.getAlias()));
+
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
     }
 
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->[RingGroup] 呼入6300 1001接听-->右键不显示\n" +
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 \n" +
             "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]6300" +
-            "3.1000接听\n" +
-            "4:右键->查看显示的条目")
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n" +
+            "3.右击Park" +
+            "4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态" +
+            "5.断言：Inbound&Internal Call表格中只有一条记录" +
+            "6.校验CDR")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1"})
-    public void testRGIncomingRightActionUnDisplay(){
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickTransferToConference","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickTransferToConference() {
+
         prerequisite();
-        
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Transfer到会议室6501");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6501");
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]",conferenceName2+" [6501]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_CONFERENCE.getAlias()));
+
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
+    }
+
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 -->转移到内部号码C -->外线号码先挂断 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickTransferInternalAHangup","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickTransferInternalAHangup() {
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Transfer到内部分机1001");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"1004");
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1004 E [1004]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        assertStep("1004响铃->接听");
+        pjsip.Pj_Answer_Call(1004,200,false);
+
+        softAssertPlus.assertThat(getExtensionStatus(1004, TALKING, 8)).as("预期分机1004接听").isEqualTo(TALKING);
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        pjsip.Pj_hangupCall(2000);
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup-->分机1001接听 -->转移到内部号码C -->被转移号码C先挂断 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingRightClickTransferInternalAHangup","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingRightClickTransferInternalCHangup() {
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.右击Transfer到内部分机1004");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"1004");
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1004 E [1004]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        assertStep("1004响铃->接听");
+        pjsip.Pj_Answer_Call(1004,200,false);
+
+        softAssertPlus.assertThat(getExtensionStatus(1004, TALKING, 8)).as("预期分机1004接听").isEqualTo(TALKING);
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        pjsip.Pj_hangupCall(1001);
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Extension 呼入到分机1000-->主叫挂断 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingCallerHangup","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingCallerHangup() {
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("3.主叫挂断,控制面板没有记录");
+        pjsip.Pj_hangupCall(2000);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("主叫挂断,控制面板没有记录").isEqualTo(0);
+
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Extension 呼入到分机1000-->被叫挂断 \n" +
+            "1:分机0,login web client\n" +
+            "2:外线号码[2000]呼入Ringgroup 1001接听\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P0","VCP","OperatorPanel","testRinggroupIncomingTalkingCalleeHangup","Regression","PSeries"})
+    public void testRinggroupIncomingTalkingCalleeHangup() {
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("2:外线号码[2000]呼入Ringgroup 1001接听");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        assertStep("3.判断控制面板");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1001 B [1001]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+
+        step("4.被叫挂断,控制面板没有记录");
+        pjsip.Pj_hangupCall(1001);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).isEqualTo(0).as("被叫挂断,控制面板没有记录");
+
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
+    }
+
+    //======================================================Drag and Drop 拖拽 ==========================================//
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop \n" +
+            "1:分机0,login web client\n" +
+            "2:内部分机[1002]-->[1001]通话\n+" +
+            "3:[2000 呼叫 1000]，1000 为Ring状态\n" +
+            "4:[Inbound]1000 -->拖动到[Extension]1001")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropWithCTalking","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropWithCTalking(){
+        prerequisite();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -223,1418 +1244,506 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-        assertStep("3:[PJSIP 创建/注册]");
+        step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        refresh();
 
+        step("4:【1002 与1000 通话】，1000 为Talking状态");
+        pjsip.Pj_Make_Call_No_Answer(1002,"1000",DEVICE_IP_LAN,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1000,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
         pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.SHORT_WAIT*3);
+
+        step("6：[Inbound]1000 -->拖动到[Extension]1001");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.EXTENSION,"1000");
         sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Answer_Call(1000,486,false);
+        sleep(WaitUntils.SHORT_WAIT*4);
+        refresh();
 
-        assertStep("4:[VCP显示] 不显示 Redirect，pick up，hang up");
-        List list =  auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001");
+        assertStep("4:VCP 第一条显示状态 A--C Talking external,voicemail");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1000 A [1000]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
-        softAssertPlus.assertThat(list).doesNotContain(OperatorPanelPage.RIGHT_EVENT.REDIRECT,OperatorPanelPage.RIGHT_EVENT.PICK_UP,OperatorPanelPage.RIGHT_EVENT.HANG_UP);//equals  assertThat(list).doesNotContain("Transfer","Listen","Whisper","Barge","Park","Unpark","Pause","Resume");
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
+        softAssertPlus.assertAll();;
+
     }
 
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听后挂断\n" +
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop （idle）\n" +
             "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]\n")
+            "2:[1001(idle)]-->空闲状态\n+" +
+            "3:[2000 呼叫 1001]，1001 为Ring状态\n" +
+            "4:[Inbound]1000 -->拖动到[Extension]1001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingHangup","Regression","PSeries","VCP1"})
-    public void testRGIncomingTalkingHangup(){
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropWithCIdle","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropWithCIdle(){
         prerequisite();
-        
 
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ");
+        step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
+        step("5:【2000 呼叫 Queue】，1001 接听");
         pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_Answer_Call(1001,200,false);
+
+        step("6：[Inbound]1001 -->拖动到[Extension]1001");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.EXTENSION,"1000");
         sleep(WaitUntils.SHORT_WAIT*2);
 
-        step("4:右击选择挂断");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
+        assertStep("7:显示状态 A--C ring");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1000 A [1000]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
-        assertStep("5:控制面板显示状态 ");
+        pjsip.Pj_Answer_Call(1000,200,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        assertStep("8:显示状态 A--C talking");
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1000 A [1000]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        pjsip.Pj_Hangup_All();
+        softAssertPlus.assertAll();;
+
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop （未注册）\n" +
+            "1:分机0,login web client\n" +
+            "2:[1001(idle)]-->未注册\n+" +
+            "3:[2000 呼叫 1000]，1001 为Ring状态\n" +
+            "4:[Inbound]1000 -->拖动到[Extension]1001")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "39版本右侧未注册分机不显示")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropWithCUnregistered(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
+        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+
+        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+
+        step("5:【2000 呼叫 Queue】，1001 接听为Talking状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("6：[Inbound]1001 -->拖动到[Extension]1000");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.EXTENSION,"1000");
+        sleep(WaitUntils.TALKING_WAIT*7);
+
+        assertStep("7:[VCP]显示状态 2000--1000 voicemail ");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1000 A [1000]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+
+        pjsip.Pj_Hangup_All();
+        softAssertPlus.assertAll();;
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop 到Ring Group 6300\n" +
+            "1:分机0,login web client\n" +
+            "2:[1001(idle)]-->未注册\n+" +
+            "3:[2000 呼叫 1000]，1000 为Ring状态\n" +
+            "4:[Inbound]1000 -->拖动到[Ring Group]6300")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropRingGroup","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropRingGroup(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        step("5:【2000 呼叫 1000】，1000 接听为Talking状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        step("6：[Inbound]1001 -->拖动到[RingGroup]6301");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.RINGGROUP,"6301");
+
+        sleep(WaitUntils.SHORT_WAIT);
+        assertStep("[VCP验证]");
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName2+":2000 [2000]","1004 E [1004]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName2+":2000 [2000]","1005 F [1005]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        softAssertPlus.assertThat(resultSum.size()).as("验证RingGroup数量").isEqualTo(ringGroupMembers2.size());
+
+        assertStep("7:显示状态1004 接通,验证界面");
+        pjsip.Pj_Answer_Call(1004,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName2+":2000 [2000]","1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+
+        softAssertPlus.assertAll();
+
+        pjsip.Pj_Hangup_All();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop 到Queue 6401\n" +
+            "1:分机0,login web client\n" +
+            "2:[1001(idle)]-->未注册\n+" +
+            "3:[2000 呼叫 1000]，1001 为Ring状态\n" +
+            "4:[Inbound]1000 -->拖动到[Queue]6400")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropQueue","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropQueue(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Answer_Call(1001,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        step("6：[Inbound]1000 -->拖动到[到Queue]6401");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.QUEUE,"6401");
+
+        sleep(WaitUntils.SHORT_WAIT);
+        assertStep("[VCP验证]");
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName2+":2000 [2000]","1004 E [1004]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
+                        tuple(queueListName2+":2000 [2000]","1005 F [1005]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+
+        softAssertPlus.assertThat(resultSum.size()).as("验证RingGroup数量").isEqualTo(queueMembers2.size());
+
+        assertStep("7:显示状态1004 接通,验证界面");
+        pjsip.Pj_Answer_Call(1004,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(queueListName2+":2000 [2000]","1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
+
+        softAssertPlus.assertAll();
+        pjsip.Pj_Hangup_All();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop 到Park 6000\n" +
+            "1:分机0,login web client\n" +
+            "2:[1001(idle)]-->未注册\n+" +
+            "3:[2000 呼叫 1000]，1001 为Talking状态\n" +
+            "4:[Inbound]1000 -->拖动到[Park]6000" +
+            "5:被park后，分机D拨打6000取回park，D接起后D挂")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropParking","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropParking(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Answer_Call(1001,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        step("6：[Inbound]1000 -->拖动到[Parking]6000");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.PARKING,"6000");
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","[6000]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
+
+        sleep(WaitUntils.SHORT_WAIT);
+        assertStep("[VCP验证]");
+
+        pjsip.Pj_Make_Call_No_Answer(1001,"6000",DEVICE_IP_LAN);
+
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1001 B [1001]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        softAssertPlus.assertAll();
+        pjsip.Pj_Hangup_All();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop 到Park 6000\n" +
+            "1:分机0,login web client\n" +
+            "2:[1001(idle)]-->未注册\n+" +
+            "3:[2000 呼叫 1000]，1001 为Talking状态\n" +
+            "4:[Inbound]1000 -->拖动到[Park]6000" +
+            "5:被park后，在park期间,通话未被取回时右键Transfer")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropParkingRightClickTransfer","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropParkingRightClickTransfer(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Answer_Call(1001,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        step("6：[Inbound]1001 -->拖动到[到Parking]6000");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.PARKING,"6000");
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","[6000]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
+
+        sleep(WaitUntils.SHORT_WAIT);
+        assertStep("[VCP验证]");
+
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "2000", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"1001");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        pjsip.Pj_Answer_Call(1001,200,false);
+        sleep(WaitUntils.TALKING_WAIT);
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","1001 B [1001]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        softAssertPlus.assertAll();
+        pjsip.Pj_Hangup_All();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop 到Park 6000\n" +
+            "1:分机0,login web client\n" +
+            "2:[1001(idle)]-->未注册\n+" +
+            "3:[2000 呼叫 1000]，1001 为Talking状态\n" +
+            "4:[Inbound]1000 -->拖动到[Park]6000" +
+            "5:被park后，在park期间,通话未被取回时右键UnPark")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropParkingRightClickUnpark","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropParkingRightClickUnpark(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        step("5:[2000 呼叫 Queue]，1001接听 为Talking状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Answer_Call(1001,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        step("6：[Inbound]1001 -->拖动到[到Parking]6000");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.PARKING,"6000");
+
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","[6000]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
+        sleep(WaitUntils.RETRY_WAIT);
+
+        assertStep("[VCP验证]");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "2000", OperatorPanelPage.RIGHT_EVENT.RETRIEVE,"");
+        sleep(WaitUntils.RETRY_WAIT);
+        pjsip.Pj_Answer_Call(0,false);
+        sleep(WaitUntils.RETRY_WAIT);
+
+        resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","0 [0]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+
+        softAssertPlus.assertAll();
+        pjsip.Pj_Hangup_All();
+    }
+
+    @Epic("P_Series")
+    @Feature("Operator Panel")
+    @Story("外线号码A 呼入到")
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop 到Park 6000\n" +
+            "1:分机0,login web client\n" +
+            "2:[1001(idle)]-->未注册\n+" +
+            "3:[2000 呼叫 1000]，1001 为Talking状态\n" +
+            "4:[Inbound]1000 -->拖动到[Park]6000" +
+            "5:被park后，在park期间,通话未被取回时右键Hangup")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropParkingRightClickHangup","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropParkingRightClickHangup(){
+        prerequisite();
+
+        step("1:login web client");
+        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
+
+        step("2:进入Operator panel 界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
+
+        step("3:[PJSIP注册] 分机创建并注册");
+        pjsip.Pj_Init();
+        registerAllExtension();
+
+        step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
+        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
+        pjsip.Pj_Answer_Call(1001,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        step("6：[Inbound]1000 -->拖动到[到Parking]6000");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.PARKING,"6000");
+
+        assertStep("[VCP验证]");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","[6000]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
+        sleep(WaitUntils.RETRY_WAIT);
+
+        assertStep("[VCP验证]");
+        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "2000", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"");
         softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("操作面板没有记录").isEqualTo(0);
 
+        softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
-        softAssert.assertAll();
     }
 
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听右击Linsten\n" +
+    @Description("外线号码2000 呼入到--> Ringgroup -->分机1001 接听 -->DragAndDrop 到Park 6000\n" +
             "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]\n")
+            "2:[1001(idle)]-->未注册\n+" +
+            "3:[2000 呼叫 1000]，1001 为Talking状态\n" +
+            "4:[Inbound]1000 -->拖动到[Park]6000" +
+            "5:被park后，在park期间,通话未被取回时主叫挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingRightClickListen","Regression","PSeries","VCP1"})
-    public void testRGIncomingTalkingRightClickListen(){
+    @Test(groups = {"P0","VCP","testRinggroupIncomingDragAndDropParkingHangup","Regression","PSeries","VCP2"})
+    public void testRinggroupIncomingDragAndDropParkingHangup(){
         prerequisite();
-        
 
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ");
+        step("3:[PJSIP注册] 分机创建并注册");
         pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        registerAllExtension();
 
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
+        step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001,200,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("4:右击选择挂断");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.LISTEN);
-        sleep(3000);
-
-        assertStep("5.分机0的来显应为Call Monitor，分机0处于Talking状态");
-        softAssertPlus.assertThat(pjsip.getUserAccountInfo(0).callerId).as("分机0的来显应为Call Monitor").contains("Call Monitor");
-
-        pjsip.Pj_Answer_Call(0,200,false);
-        softAssertPlus.assertThat(getExtensionStatus(0, TALKING, 8)).as("预期分机0通话中").isEqualTo(TALKING);
-
-        assertStep("6.Inbound&Internal Call表格中只有一条记录");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("操作面板只有1条记录").isEqualTo(1);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus,OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee,"1001",
-                "RG:2000 [2000]","1001 B [1001]",op_talking, String.format(opf_detial,op_external,op_ringgroup));
-
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听右击Whisper\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingRightClickWhisper","Regression","PSeries","VCP1"})
-    public void testRGIncomingTalkingRightClickWhisper(){
-        prerequisite();
-        
-
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001,200,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("4:右击选择挂断");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.WHISPER,"1001");
-        sleep(3000);
-
-        assertStep("5.分机0的来显应为Call Monitor，分机0处于Talking状态");
-        softAssertPlus.assertThat(pjsip.getUserAccountInfo(0).callerId).as("分机0的来显应为Call Monitor").contains("Call Monitor");
-
-        pjsip.Pj_Answer_Call(0,200,false);
-        softAssertPlus.assertThat(getExtensionStatus(0, TALKING, 8)).as("预期分机0通话中").isEqualTo(TALKING);
-
-        assertStep("6.Inbound&Internal Call表格中只有一条记录");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("操作面板只有1条记录").isEqualTo(1);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus,OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee,"1001",
-                "RG:2000 [2000]","1001 B [1001]",op_talking, String.format(opf_detial,op_external,op_ringgroup));
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听右击Barge\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingRightClickBarge","Regression","PSeries","VCP1"})
-    public void testRGIncomingTalkingRightClickBarge(){
-        prerequisite();
-        
-
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001,200,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("4:右击选择挂断");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.Barge_IN,"1001");
-        sleep(3000);
-
-        assertStep("5.分机0的来显应为Call Monitor，分机0处于Talking状态");
-        softAssertPlus.assertThat(pjsip.getUserAccountInfo(0).callerId).as("分机0的来显应为Call Monitor").contains("Call Monitor");
-
-        pjsip.Pj_Answer_Call(0,200,false);
-        softAssertPlus.assertThat(getExtensionStatus(0, TALKING, 8)).as("预期分机0通话中").isEqualTo(TALKING);
-
-        assertStep("6.Inbound&Internal Call表格中只有一条记录");
-        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("操作面板只有1条记录").isEqualTo(1);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus,OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee,"1001",
-                "RG:2000 [2000]","1001 B [1001]",op_talking, String.format(opf_detial,op_external,op_ringgroup));
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听右击Parked\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingRightClickPark","Regression","PSeries","VCP1"})
-    public void testRGIncomingTalkingRightClickPark(){
-        prerequisite();
-
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001,200,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus,OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee,"1001",
-                "RG:2000 [2000]","1001 B [1001]",op_talking, String.format(opf_detial,op_external,op_ringgroup));
-
-        step("4:右击选择Parked");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.PARKED,"2000");
-        sleep(3000);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus,OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee,"1001",
-                "RG:2000 [2000]","1001 B [1001]",op_talking, String.format(opf_detial,op_external,op_parked));
-
-        //todo unparK后被叫分机显示不正确
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.RETRIEVE);
-        pjsip.Pj_Answer_Call(0,200,false);
-        sleep(3000);
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus,OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee,"1001",
-                "RG:2000 [2000]","0 [0]",op_talking, op_external);
-
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听右击Parked\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingRightClickRecord","Regression","PSeries","VCP1"})
-    public void testRGIncomingTalkingRightClickRecord(){
-        prerequisite();
-
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001,200,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        clearasteriskLog();
-
-        step("3.右击Unrecording");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"2000", OperatorPanelPage.RIGHT_EVENT.PAUSE_RECORD,"");
-
-        //todo 31版本bug，多余权限限制导致不能停止录音
-        assertStep("4.[Asterisk断言]：cli打印停止录音");
-        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("PAUSE MIXMON"),"[cli打印停止录音]");
-
-        clearasteriskLog();
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"2000", OperatorPanelPage.RIGHT_EVENT.Resume_RECORD,"");
-
-        assertStep("4.[Asterisk断言]：cli打印停止录音");
-        softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("UNPAUSE MIXMON"),"[cli打印开始录音]");
-
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1000接听后挂断\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup] 1001接听\n" +
-            "3:转移到响铃组6301")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingTransferToRG6301","Regression","PSeries"})
-    public void testRGIncomingTalkingTransferToRG6301() {
-        prerequisite();
-
-        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300响铃组 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1004, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1005, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000, "996300", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT * 2);
-
-        step("4:右击选择Transfer到响铃组6301");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6301");
-
-        assertStep("4:6301响铃组响铃，1004接听 ");
-        sleep(1000);
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RI:2000 [2000]", "1004 E [1004]", op_ringing, String.format(opf_detial, op_external, op_ringgroup));
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1005",
-                "RI:2000 [2000]", "1005 F [1005]", op_ringing, String.format(opf_detial, op_external, op_ringgroup));
-
-        pjsip.Pj_Answer_Call(1004,200,false);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RI:2000 [2000]", "1004 E [1004]", op_talking, String.format(opf_detial, op_external, op_ringgroup));
-
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1000接听后挂断\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup] 1001接听\n" +
-            "3:转移到队列6401,1003接听")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingTransferToQE6401","Regression","PSeries"})
-    public void testRGIncomingTalkingTransferToQE6401() {
-        prerequisite();
-
-        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6401队列 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1004, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1005, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000, "996300", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT * 2);
-
-        step("4:右击选择Transfer到队列6401");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6401");
-
-        assertStep("4:6401接听，1004接听 ");
-        sleep(1000);
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "QE:2000 [2000]", "1004 E [1004]", op_ringing, String.format(opf_detial, op_external, op_queue));
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1005",
-                "QE:2000 [2000]", "1005 F [1005]", op_ringing, String.format(opf_detial, op_external, op_queue));
-
-        pjsip.Pj_Answer_Call(1004,200,false);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "QE:2000 [2000]", "1004 E [1004]", op_talking, String.format(opf_detial, op_external, op_queue));
-
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1000接听\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup] 1001接听\n" +
-            "3:转移到分机1004，1004发486，进入1004语音留言")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingTransferToVoicemail","Regression","PSeries"})
-    public void testRGIncomingTalkingTransferToVoicemail() {
-        prerequisite();
-
-        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300响铃组 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000, "996300", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT * 2);
-
-        step("4:右击选择Transfer到1004");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"1004");
-
-        assertStep("5:1004 发486进入语音留言");
-        sleep(1000);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_talking, String.format(opf_detial, op_external, op_voicemail));
-
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1000接听\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup] 1001接听\n" +
-            "3:转移到分机ivr6201，按分机号转到1004，接听")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingTransferToIVR","Regression","PSeries"})
-    public void testRGIncomingTalkingTransferToIVR6201() {
-        prerequisite();
-
-        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300响铃组 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000, "996300", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT * 2);
-
-        step("4:右击选择Transfer到ivr6201");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6201");
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "6201",
-                "RG:2000 [2000]", "IV [6201]", op_talking, String.format(opf_detial, op_external, op_ivr));
-
-        assertStep("5:2000按分机号1004,1004接听");
-        sleep(1000);
-        pjsip.Pj_Send_Dtmf(2000,"1004");
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "IV:2000 [2000]", "1004 E [1004]", op_ringing, String.format(opf_detial, op_external, op_voicemail));
-
-        pjsip.Pj_Answer_Call(1004,200,false);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "IV:2000 [2000]", "1004 E [1004]", op_talking, String.format(opf_detial, op_external, op_voicemail));
-
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1000接听\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup] 1001接听\n" +
-            "3:转移到park6000")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingTransferToParking6000","Regression","PSeries"})
-    public void testRGIncomingTalkingTransferToParking6000() {
-        prerequisite();
-
-        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300响铃组 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000, "996300", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT * 2);
-
-        step("4:右击选择Transfer到Park6000");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6000");
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "6000",
-                "RG:2000 [2000]", "[6000]", op_talking, String.format(opf_detial, op_external, op_parked));
-
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1000接听\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup] 1001接听\n" +
-            "3:转移到分机会议室6501")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingTransferToConference6401","Regression","PSeries"})
-    public void testRGIncomingTalkingTransferToConference6401() {
-        prerequisite();
-
-        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300响铃组 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000, "996300", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT * 2);
-
-        step("4:右击选择Transfer到会议室6501");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"6501");
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "6501",
-                "RG:2000 [2000]", "CF [6501]", op_talking, String.format(opf_detial, op_external, op_conference));
-
-        pjsip.Pj_Hangup_All();
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1000接听\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup] 1001接听\n" +
-            "3:转移到分机内部分机1004" +
-            "4:2000先挂")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingTransferToAHangup","Regression","PSeries"})
-    public void testRGIncomingTalkingTransferToAHangup() {
-        prerequisite();
-
-        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300响铃组 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000, "996300", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT * 2);
-
-        step("4:右击选择Transfer到分机1004");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"1004");
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_ringing,op_external);
-
-        pjsip.Pj_Answer_Call(1004,200,false);
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_talking,op_external);
-
+        pjsip.Pj_Answer_Call(1001,false);
+        sleep(WaitUntils.SHORT_WAIT);
+
+        step("6：[Inbound]1000 -->拖动到[到Parking]6000");
+        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001", OperatorPanelPage.DOMAIN.PARKING,"6000");
+
+        assertStep("[VCP验证]");
+        List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName+":2000 [2000]","[6000]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
+        sleep(WaitUntils.RETRY_WAIT);
+
+        assertStep("[VCP验证]");
         pjsip.Pj_hangupCall(2000);
-
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1000接听\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup] 1001接听\n" +
-            "3:转移到分机内部分机1004" +
-            "4:1004先挂")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingTransferToInternalBHangup","Regression","PSeries"})
-    public void testRGIncomingTalkingTransferToInternalBHangup() {
-        prerequisite();
-
-        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300响铃组 ");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1004, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000, "996300", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT * 2);
-
-        step("4:右击选择Transfer到分机1004");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1001", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"1004");
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_ringing,op_external);
-
-        pjsip.Pj_Answer_Call(1004,200,false);
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_talking,op_external);
-
-        pjsip.Pj_hangupCall(1004);
-
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到分机1004-\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDrop1004Busy","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDrop1004Busy(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(1004,"1005",DEVICE_IP_LAN);
-        pjsip.Pj_Answer_Call(1005, 200, false);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到分机1004");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.EXTENSION,"1004");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("1004忙，转入voicemail");
-        pjsip.Pj_Answer_Call(1004,486,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_talking,String.format(opf_detial, op_external, op_voicemail));
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1005",
-                "1004 E [1004]", "1005 F [1005]", op_talking,op_external);
-
-        softAssertPlus.assertAll();
-
-        pjsip.Pj_Hangup_All();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到分机1004-\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDrop1004Idle","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDrop1004Idle(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到分机1004");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.EXTENSION,"1004");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_ringing,op_external);
-
-        step("1004接听");
-        pjsip.Pj_Answer_Call(1004,200,false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_talking,op_external);
-
-        softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到分机1004-\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDrop1004UnRegister","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDrop1004UnRegister(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到分机1004");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.EXTENSION,"1004");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_ringing,String.format(opf_detial, op_external, op_voicemail));
-
-        softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到响铃组6301-\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDropRG","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDropRG(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到分机1004");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.RINGGROUP,"6301");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RI:2000 [2000]", "1004 E [1004]", op_ringing,String.format(opf_detial, op_external, op_ringgroup));
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1005",
-                "RI:2000 [2000]", "1005 F [1005]", op_ringing,String.format(opf_detial, op_external, op_ringgroup));
-
-        pjsip.Pj_Answer_Call(1004,200,false);
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RI:2000 [2000]", "1004 E [1004]", op_talking,String.format(opf_detial, op_external, op_ringgroup));
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("控制面板只有1条记录").isEqualTo(1);
-
-        softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到队列6401-\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDropQE6401","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDropQE6401(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到分机1004");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.QUEUE,"6401");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "QE:2000 [2000]", "1004 E [1004]", op_ringing,String.format(opf_detial, op_external, op_queue));
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1005",
-                "QE:2000 [2000]", "1005 F [1005]", op_ringing,String.format(opf_detial, op_external, op_queue));
-
-        pjsip.Pj_Answer_Call(1004,200,false);
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "QE:2000 [2000]", "1004 E [1004]", op_talking,String.format(opf_detial, op_external, op_queue));
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("控制面板只有1条记录").isEqualTo(1);
-
-        softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到Parking 6000-" +
-            "4.被park后，分机D拨打6900取回park，D接起后D挂\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDropPark6000Answer","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDropPark6000_1(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到分机1004");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.PARKING,"6000");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "6000",
-                "RG:2000 [2000]", "[6000]", op_talking ,String.format(opf_detial, op_external, op_parked));
-
-        pjsip.Pj_Make_Call_Auto_Answer(1004,"6000",DEVICE_IP_LAN);
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_talking ,op_external);
-
-        pjsip.Pj_hangupCall(1004);
-
-        softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
-    }
-
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到Parking 6000-" +
-            "4.被park后，通话未被取回时 邮件Transfer 转给1004\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDropParking6000_2","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDropParking6000_2(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到Park 6000");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.PARKING,"6000");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "6000",
-                "RG:2000 [2000]", "[6000]", op_talking ,String.format(opf_detial, op_external, op_parked));
-
-        step("5:右击转移");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "6000", OperatorPanelPage.RIGHT_EVENT.TRANSFER,"1004");
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_ringing ,op_external);
-
-        pjsip.Pj_Make_Call_Auto_Answer(1004,"6000",DEVICE_IP_LAN);
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1004",
-                "RG:2000 [2000]", "1004 E [1004]", op_talking ,op_external);
-
-        softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到Parking 6000-" +
-            "4.被park后，通话未被取回时 unpark\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDropParking6000_3","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDropParking6000_3(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到Park 6000");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.PARKING,"6000");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "6000",
-                "RG:2000 [2000]", "[6000]", op_talking ,String.format(opf_detial, op_external, op_parked));
-
-        step("5:右击取回");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "6000", OperatorPanelPage.RIGHT_EVENT.RETRIEVE);
-
-        pjsip.Pj_Answer_Call(0,200,false);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "[0]",
-                "RG:2000 [2000]", "0 [0]", op_talking ,op_external);
-
-        softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到Parking 6000-" +
-            "4.被park后，2000挂断\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDropParking6000_4","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDropParking6000_4(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到Park 6000");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.PARKING,"6000");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "6000",
-                "RG:2000 [2000]", "[6000]", op_talking ,String.format(opf_detial, op_external, op_parked));
-
-        step("5:右击挂断");
-        auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "6000", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("操作面板只有没有记录").isEqualTo(0);
-
-        softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到Parking 6000-" +
-            "4.被park后，未等取回，2000挂断\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDropParking6000_5","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDropParking6000_5(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到Park 6000");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.PARKING,"6000");
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "6000",
-                "RG:2000 [2000]", "[6000]", op_talking ,String.format(opf_detial, op_external, op_parked));
-
-        pjsip.Pj_hangupCall(2000);
-
-        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("操作面板只有没有记录").isEqualTo(0);
-
-        softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
-    }
-
-    @Epic("P_Series")
-    @Feature("Operator Panel")
-    @Story("外线号码A 呼入到")
-    @Description("外线号码2000 呼入到-->RingGroup-->RingGroup 1001接听 -->]\n" +
-            "1:分机0,login web client\n" +
-            "2:外线号码[2000]呼叫[RingGroup]" +
-            "3.拖拽到Parking 6000-" +
-            "4.被park后，park超时，回拨回B，B接起，A挂\n")
-   @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingTalkingDragAndDropParking6000_6","Regression","PSeries"})
-    public void testRGIncomingTalkingDragAndDropParking6000_6(){
-        prerequisite();
-        auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
-
-        step("2:进入Operator panel 界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
-
-        assertStep("3:[PJSIP注册] ，2000 呼叫 6300 ,1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
-
-        pjsip.Pj_Make_Call_No_Answer(2000,"996300",DEVICE_ASSIST_2,false);
-        pjsip.Pj_Answer_Call(1001, 200, false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        step("4：分机1001-->拖动到Park 6000");
-        auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.PARKING,"6000");
-
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "6000",
-                "RG:2000 [2000]", "[6000]", op_talking ,String.format(opf_detial, op_external, op_parked),"拖拽至停泊6000");
-
-        sleep(WaitUntils.SHORT_WAIT * 20);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1001",
-                "RG:2000 [2000]", "1001 B [1001]", op_ringing ,op_external,"回拨至1001响铃");
-
-        pjsip.Pj_Answer_Call(1001,200,false);
-        sleep(WaitUntils.SHORT_WAIT);
-
-        auto.operatorPanelPage().assertRecordValue(softAssertPlus, OperatorPanelPage.TABLE_TYPE.INBOUND, OperatorPanelPage.RECORD.Callee, "1001",
-                "RG:2000 [2000]", "1001 B [1001]", op_talking ,op_external,"回拨至1001接听");
-
-        pjsip.Pj_hangupCall(2000);
+        softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("操作面板没有记录").isEqualTo(0);
 
         softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();

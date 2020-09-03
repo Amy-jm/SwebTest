@@ -52,7 +52,7 @@ public class PjsipApp extends PjsipDll{
         log.debug("[System Property:]" + m_os);
         if(m_os.toLowerCase().startsWith("win")){
             log.debug("[System is Windows]");
-            pjsipdll.instance.ys_log_set_level(1);
+            pjsipdll.instance.ys_log_set_level(-1);
         }else{
         }
 //
@@ -106,10 +106,10 @@ public class PjsipApp extends PjsipDll{
 //        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+String.valueOf(port), "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true);
         account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port, "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true,99999);
 
-        System.out.println("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
-        System.out.println("sip register: "+"sip:"+ip+":"+account.port);
-        System.out.println("username:"+String.valueOf(username));
-        System.out.println("pwd :" +account.password);
+//        System.out.println("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
+//        System.out.println("sip register: "+"sip:"+ip+":"+account.port);
+//        System.out.println("username:"+String.valueOf(username));
+//        System.out.println("pwd :" +account.password);
         if(isAsserst){
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();
@@ -144,10 +144,10 @@ public class PjsipApp extends PjsipDll{
 //        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+String.valueOf(port), "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true);
         account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port, "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true,99999);
 
-        System.out.println("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
-        System.out.println("sip register: "+"sip:"+ip+":"+account.port);
-        System.out.println("username:"+String.valueOf(username));
-        System.out.println("pwd :" +account.password);
+//        System.out.println("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
+//        System.out.println("sip register: "+"sip:"+ip+":"+account.port);
+//        System.out.println("username:"+String.valueOf(username));
+//        System.out.println("pwd :" +account.password);
         if(false){
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();
@@ -505,9 +505,8 @@ public class PjsipApp extends PjsipDll{
         }
         int suc = -1;
         for (int i=0 ; i<dtmfList.size(); i++){
-            System.out.println("callId: "+callid+"send dtmf :"+dtmfList.get(i)+" num:");
+            log.debug("callId: "+callid+" send dtmf :"+dtmfList.get(i)+" num:");
             suc = pjsipdll.instance.ys_dialDtmf(callid,dtmfList.get(i),1);
-            System.out.println("send dtmf end ...");
             ys_waitingTime(500);
         }
         return suc;
@@ -575,10 +574,10 @@ public class PjsipApp extends PjsipDll{
     public pjsipdll.CallstateCallBack callstateCallBack = new pjsipdll.CallstateCallBack() {
         @Override
         public int fptr_callstate(int id, int accId,int callCode) {
-            System.out.println("CallstateCallBack callid:"+id +" accId:" + accId+" code:"+ callCode);
+
             for(int i=0; i<accounts.size(); i++){
                 if(accounts.get(i).accId == accId){
-                    System.out.println("CallstateCallBack : username :"+accounts.get(i).username);
+                    log.debug("CallstateCallBack username : "+accounts.get(i).username +"callid:"+id +" accId:" + accId+" code:"+ callCode);
                     switch (callCode){
                         case PJSIP_INV_STATE_NULL:
                             accounts.get(i).callId = id;
@@ -637,9 +636,7 @@ public class PjsipApp extends PjsipDll{
         UserAccount account = null;
         for(int i=0; i<accounts.size(); i++){
             account = accounts.get(i);
-//            System.out.println("finding account "+account.username);
             if(account.username.equals(username)){
-                System.out.println("find this "+account.username+" IP:"+account.ip);
                 return account;
             }
         }
