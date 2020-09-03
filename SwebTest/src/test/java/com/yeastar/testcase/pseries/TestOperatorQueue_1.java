@@ -41,8 +41,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     ArrayList<String> ringGroupNum_1 = null;
 
 
-    String queueListName = "Q0";
-    String queueListName_1 = "Q1";
+    String queueListName = "Q0:";
+    String queueListName_1 = "Q1:";
     String ringGroupName0 = "RG0";//6300
     String ringGroupName_1 = "RG1";//6301
 
@@ -143,8 +143,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             queueListNum_1.add("1007");
             queueListNum_1.add("1008");
             queueListNum_1.add("1009");
-            apiUtil.deleteAllQueue().createQueue(queueListName, "6400", null, queueListNum, null)
-                    .createQueue(queueListName_1, "6401", null, queueListNum_1, null);
+            apiUtil.deleteAllQueue().createQueue("Q0", "6400", null, queueListNum, null)
+                    .createQueue("Q1", "6401", null, queueListNum_1, null);
 
             step("创建ivr 6200");
             ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
