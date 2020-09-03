@@ -921,9 +921,9 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Issue("RG 响铃状态不会有CDR记录  Redirected to 0<2001>")
     @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","RingGroup1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRightActionRedirectC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+      prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1232,10 +1232,10 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6200")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")//todo ###########
-//    @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1","RingGroup1","Jack",
-//            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1","RingGroup1","Jack",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+        prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1273,10 +1273,10 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
 
         pjsip.Pj_Send_Dtmf(caller,"0");
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_Answer_Call(1009,false);
+        pjsip.Pj_Answer_Call(1000,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
-        int returnStr = pjsip.Pj_hangupCall(1009);
+        int returnStr = pjsip.Pj_hangupCall(1000);
         System.out.println("***************[1010]"+returnStr);
         sleep(WaitUntils.SHORT_WAIT);
 
