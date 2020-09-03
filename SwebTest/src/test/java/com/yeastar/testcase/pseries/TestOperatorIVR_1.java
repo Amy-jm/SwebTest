@@ -231,6 +231,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
                 }
             }
         }
+        //jenkins  run with xml and ITestContext c will be null
+        if(group ==null){
+            group =routes; //default run all routes
+        }
         return group;
     }
 
