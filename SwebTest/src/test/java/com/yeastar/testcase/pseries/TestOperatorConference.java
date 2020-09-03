@@ -8,14 +8,10 @@ import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.APIObject.ConferenceObject;
 import com.yeastar.untils.APIObject.InboundRouteObject;
-import com.yeastar.untils.APIObject.QueueObject;
 import com.yeastar.untils.APIUtil;
-import com.yeastar.untils.SSHLinuxUntils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
-import javafx.scene.control.Tab;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
