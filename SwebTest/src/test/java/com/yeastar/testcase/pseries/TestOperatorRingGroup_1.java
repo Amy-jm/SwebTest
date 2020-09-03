@@ -41,8 +41,8 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     ArrayList<String> ringGroupNum_1 = null;
     ArrayList<String> conferenceList = null;
 
-    String queueListName = "Q0";
-    String queueListName_1 = "Q1";
+    String queueListName = "Q0:";
+    String queueListName_1 = "Q1:";
     String ringGroupName_0 = "RG0:";//6300
     String ringGroupName_1 = "RG1:";//6301
     String conferenceListName = "CONF1";
@@ -149,8 +149,8 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             queueListNum_1.add("1007");
             queueListNum_1.add("1008");
             queueListNum_1.add("1009");
-            apiUtil.deleteAllQueue().createQueue(queueListName, "6400", null, queueListNum, null)
-                    .createQueue(queueListName_1, "6401", null, queueListNum_1, null);
+            apiUtil.deleteAllQueue().createQueue("Q0", "6400", null, queueListNum, null)
+                    .createQueue("Q1", "6401", null, queueListNum_1, null);
 
             step("创建ivr 6200");
             ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
@@ -216,11 +216,11 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @DataProvider(name = "routesDebug")
     public Object[][] RoutesDebug() {
         return new Object[][] {
-                {"99",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SPS"},//sps   前缀 替换
-                {"88",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"BRI"},//BRI   前缀 替换
-                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-                {"66",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
-                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
+//                {"99",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SPS"},//sps   前缀 替换
+//                {"88",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"BRI"},//BRI   前缀 替换
+//                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+//                {"66",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
+//                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
                 {"44",4000,"6300",DEVICE_ASSIST_3,"4000 [4000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_ACCOUNT"}
         };
     }
@@ -886,7 +886,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]", "DOD [2001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller, "DOD [2001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("7:[接通]");
         pjsip.Pj_Answer_Call(2001,false);
@@ -895,7 +895,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         assertStep("8:[VCP显示]");
         List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]", "DOD [2001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller, "DOD [2001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("9:[挂断]");
         pjsip.Pj_hangupCall(caller);
@@ -964,7 +964,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]","DOD [2001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"DOD [2001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("7:[接通]");
         pjsip.Pj_Answer_Call(caller,false);
@@ -973,7 +973,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         assertStep("8:[VCP显示]");
         List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]", "DOD [2001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller, "DOD [2001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("9:[挂断]");
         pjsip.Pj_hangupCall(2001);
@@ -1342,7 +1342,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]", "DOD [2001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller, "DOD [2001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("7:[接通]");
         pjsip.Pj_Answer_Call(2001,false);
@@ -1351,7 +1351,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         assertStep("8:[VCP显示]");
         List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]", "DOD [2001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller, "DOD [2001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("9:[挂断]");
         pjsip.Pj_hangupCall(caller);
@@ -1418,7 +1418,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]", "DOD [2001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller, "DOD [2001]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("7:[接通]");
         pjsip.Pj_Answer_Call(2001,false);
@@ -1427,7 +1427,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         assertStep("8:[VCP显示]");
         List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_after_answer).extracting("caller","callee","status","details")
-                .contains(tuple("2000 [2000]", "DOD [2001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller, "DOD [2001]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("9:[挂断]");
         pjsip.Pj_hangupCall(2001);

@@ -44,7 +44,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     String queueListName = "Q0:";
     String queueListName_1 = "Q1:";
     String ringGroupName0 = "RG0";//6300
-    String ringGroupName_1 = "RG1";//6301
+    String ringGroupName_1 = "RG1:";//6301
 
 
     private final String reqDataCreateExtension = String.format("" +
@@ -127,8 +127,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             ringGroupNum_1.add("1007");
             ringGroupNum_1.add("1008");
             ringGroupNum_1.add("1009");
-            apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName0, "6300", ringGroupNum)
-                    .createRingGroup(ringGroupName_1, "6301", ringGroupNum_1);
+            apiUtil.deleteAllRingGroup().createRingGroup("RG0", "6300", ringGroupNum)
+                    .createRingGroup("RG1", "6301", ringGroupNum_1);
 
             step("创建队列");
             queueListNum.add("1000");
