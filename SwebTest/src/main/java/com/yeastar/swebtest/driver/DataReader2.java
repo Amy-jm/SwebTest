@@ -32,7 +32,7 @@ public class DataReader2 {
     public final static String PJSIP_SSH_PASSWORD = "";
     public final static String PJSIP_SSH_USER = "ls@yf";
 
-    public final String PBX_URL = "https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT+"/login";//todo version 34 bug need add to login
+    public final String PBX_URL = "https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT;
 
     public static JSONObject UI_MAP = UIMapUtils.getUIMapHandle();
     /**
