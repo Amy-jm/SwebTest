@@ -161,9 +161,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     Object[][] routes = new Object[][] {
 //            {"99",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"},//sps   前缀 替换
 //            {"88",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"},//BRI   前缀 替换
-            {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+//            {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
 //            {"66",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
-            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
+//            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
             {"44",4000,"1000",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}
     };
 
@@ -1299,13 +1299,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }else{
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+
+        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Ringing",vcpDetail));
-        }
+
 
 
         step( "5:右键->[HandUp]");
@@ -1363,13 +1360,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }else{
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Ringing",vcpDetail));
-        }
 
         step( "5:右键->[HandUp->悬停，移开]");
         auto.operatorPanelPage().rightTableActionMouserHover(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.HANG_UP);
@@ -1428,13 +1420,9 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if(message.equalsIgnoreCase("SIP_ACCOUNT")) {
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
-        }else{
-            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                     .contains(tuple(IVRListName_0 +vcpCaller, "1000 A [1000]","Ringing",vcpDetail));
-        }
+
 
 
         step( "5:右键->[右键PickUp]");
