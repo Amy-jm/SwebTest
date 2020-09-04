@@ -315,7 +315,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT);
 
         step("5:【2000 呼叫 1000】，1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT*3);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1001");
@@ -364,7 +364,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1001】，1001 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1001 -->拖动到[Extension]1001");
@@ -426,7 +426,7 @@ step("1:login web click ，测试线路："+message);
         refresh();//todo extension概率性出现 未注册分机不显示
 
         step("5:【2000 呼叫 1000】，1000 为Ringing状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1001");
@@ -480,7 +480,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         step("6：[Inbound]1000 -->拖动到[RingGroup]6300");
@@ -556,7 +556,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1001】，1001 为Ring状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1001 -->拖动到[Parking]001");
@@ -610,7 +610,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1001】，1001 为Ring状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT*2);
         step("6：[Inbound]1001 -->拖动到[Parking]001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.QUEUE,"6400");
@@ -699,7 +699,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
@@ -773,7 +773,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
@@ -854,7 +854,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->右键-->Redirect[RingGroup]6300");
@@ -940,7 +940,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->右键-->Redirect[Queue]6400");
@@ -1029,7 +1029,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->Redirect[Voicemail]");
@@ -1148,7 +1148,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示] Ring 只显示 Redirect，pick up，hang up");
@@ -1189,7 +1189,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
@@ -1274,7 +1274,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
@@ -1356,7 +1356,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
@@ -1409,7 +1409,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
@@ -1471,7 +1471,7 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-        pjsip.Pj_Make_Call_No_Answer(2000,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
