@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 
 
 @Log4j2
@@ -46,6 +47,7 @@ public class TestCaseBase extends BaseMethod {
         if(EmptyUtil.isNotEmpty(pjsip)){
             log.debug("[start destroy pjsip]");
             pjsip.Pj_Destory();
+            sleep(5000);//wait for pisip destroy finis
             log.debug("[end destroy pjsip]");
         }
 
