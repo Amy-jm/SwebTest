@@ -7,6 +7,7 @@ import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.*;
+import com.yeastar.untils.APIObject.IVRObject;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
@@ -31,7 +32,7 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 @Listeners({ExecutionListener.class, AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
 public class TestExtensionFeature extends TestCaseBase {
-
+    APIUtil apiUtil = new APIUtil();
     /**
      * 前提条件
      * 1.添加0分机和sps中继到 路由AutoTest_Route
@@ -42,6 +43,11 @@ public class TestExtensionFeature extends TestCaseBase {
         trunklist.clear();
         trunklist.add(SPS);
 
+//        step("创建IVR_0");
+//        ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
+//        pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0,"extension","","1000",0));
+
+//        apiUtil.deleteAllIVR().createIVR("6200","6200",pressKeyObjects_0);
 
         //创建trunk
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
@@ -55,6 +61,7 @@ public class TestExtensionFeature extends TestCaseBase {
                 .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"1001-1001")
                 .clickSaveAndApply();
 
+//        apiUtil.apply();
     }
 
     @Epic("P_Series")

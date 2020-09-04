@@ -102,7 +102,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},userPassword:{1}")
     public ExtensionPage createSipExtension(String extensionNumber, String userPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         ele_extension_user_first_name.setValue(extensionNumber);
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
