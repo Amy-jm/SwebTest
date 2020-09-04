@@ -231,6 +231,9 @@ public class TestOperatorExtension_1 extends TestCaseBase {
             }
         }
         log.debug("[group ]"+group);
+        if(routes.length == 0){
+            return routes;
+        }
         return group;
     }
 
