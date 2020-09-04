@@ -275,7 +275,8 @@ public class PjsipApp extends PjsipDll{
         uri = "sip:"+Callee+"@"+ ServerIp+":"+CallerAccount.port;
         System.out.println("uri: "+ uri);
         if(CallerAccount.accId != -1){
-            System.out.println("make call no answer:"+pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false));
+            pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false); //todo 待后续按日志等级输出
+//            System.out.println("make call no answer:"+pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false));
         }
         ys_waitingTime(2000);
         return "";
