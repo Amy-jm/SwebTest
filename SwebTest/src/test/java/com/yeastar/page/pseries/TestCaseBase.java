@@ -45,13 +45,12 @@ public class TestCaseBase extends BaseMethod {
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
-        int retryTemp = 0;
-        while(EmptyUtil.isNotEmpty(pjsip) && retryTemp <= 10){
-            Thread.currentThread().sleep(10000);
-            log.debug("[start destroy pjsip] count -->"+ retryTemp);
+        if(EmptyUtil.isNotEmpty(pjsip)){
+            log.debug("[start destroy pjsip] count -->");
             pjsip.Pj_Destory();
+            sleep(5000);
             log.debug("[end destroy pjsip]");
-            retryTemp ++;
+            pjsip=null;
         }
 
         log.debug("[remote session]{}",webDriver);
