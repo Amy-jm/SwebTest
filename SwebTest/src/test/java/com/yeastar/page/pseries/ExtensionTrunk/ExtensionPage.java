@@ -124,7 +124,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},userPassword:{1},email:{3}")
     public ExtensionPage createSipExtensionWithEmail(String extensionNumber,String userPassword,String strEmail) {
         addBtn.shouldBe(Condition.enabled).click();
-//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         ele_extension_user_first_name.setValue(extensionNumber);
         inputComm("Email Address", strEmail);//todo 24版本ID新增后替换
         ele_extension_user_user_password.setValue(userPassword);

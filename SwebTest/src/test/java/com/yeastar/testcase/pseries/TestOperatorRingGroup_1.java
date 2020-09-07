@@ -239,7 +239,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testRGIncomingRingStatus","Regression","PSeries","VCP1","RingGroup1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
+       prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
 
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -267,10 +267,10 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
 
           softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-                    .contains(tuple(ringGroupName_0 +vcpCaller, "1000 A [1000]","Ringing", vcpDetail),
-                              tuple(ringGroupName_0 +vcpCaller, "1001 B [1001]","Ringing", vcpDetail),
-                              tuple(ringGroupName_0 +vcpCaller, "1002 C [1002]","Ringing", vcpDetail),
-                              tuple(ringGroupName_0 +vcpCaller, "1003 D [1003]","Ringing", vcpDetail));
+                    .contains(tuple(ringGroupName_0 +vcpCaller, "1000 A [1000]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_0 +vcpCaller, "1001 B [1001]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_0 +vcpCaller, "1002 C [1002]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_0 +vcpCaller, "1003 D [1003]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
 
         pjsip.Pj_Hangup_All();
@@ -333,11 +333,11 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
             softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing", vcpDetail),
-                              tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", vcpDetail),
-                              tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", vcpDetail),
-                              tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", vcpDetail),
-                              tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", vcpDetail));
+                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
 //        softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
@@ -350,7 +350,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
 
         softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
-                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Talking", vcpDetail));
+                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Talking", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
