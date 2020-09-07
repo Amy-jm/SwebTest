@@ -5,6 +5,7 @@ import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.untils.*;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
@@ -40,14 +41,15 @@ public class TestCaseBase extends BaseMethod {
         softAssertPlus = new SoftAssertions();
     }
 
+    @SneakyThrows
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
         int retryTemp = 0;
         while(EmptyUtil.isNotEmpty(pjsip) && retryTemp <= 10){
+            Thread.sleep(10000);
             log.debug("[start destroy pjsip] count -->"+ retryTemp);
             pjsip.Pj_Destory();
-            sleep(5000);//wait for pisip destroy finis
             log.debug("[end destroy pjsip]");
             retryTemp ++;
         }
