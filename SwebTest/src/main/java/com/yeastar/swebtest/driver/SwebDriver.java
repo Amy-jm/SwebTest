@@ -784,7 +784,7 @@ public class SwebDriver extends Config {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Reporter.infoExec("Extjs： " + js);
+//        Reporter.infoExec("Extjs： " + js);
         Object result = executeJavaScript(js);
 //        Object result= (Object)((JavascriptExecutor)webDriver).executeScript(js);
         if (js.contains("return")) {

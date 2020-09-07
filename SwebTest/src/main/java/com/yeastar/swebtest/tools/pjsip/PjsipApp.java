@@ -17,15 +17,36 @@ import static com.yeastar.swebtest.driver.SwebDriver.*;
  * Created by Yeastar on 2017/6/7.
  */
 @Log4j2
-public class PjsipApp extends PjsipDll{
+public class PjsipApp extends PjsipDll {
 
-    final static int PJSIP_INV_STATE_NULL=0;	        /**< Before INVITE is sent or received  0*/
-    final static int PJSIP_INV_STATE_CALLING=1;	    /**< After INVITE is sent		    1*/
-    final static int PJSIP_INV_STATE_INCOMING=2;	    /**< After INVITE is received.	    2*/
-    final static int PJSIP_INV_STATE_EARLY=3	  ;     /**< After response with To tag.	    3*/
-    final static int PJSIP_INV_STATE_CONNECTING=4;	/**< After 2xx is sent/received.	4   */
-    final static int PJSIP_INV_STATE_CONFIRMED=5;	    /**< After ACK is sent/received.	5   */
-    final static int PJSIP_INV_STATE_DISCONNECTED=6; /**< Session is terminated.		    6*/
+    final static int PJSIP_INV_STATE_NULL = 0;
+    /**
+     * < Before INVITE is sent or received  0
+     */
+    final static int PJSIP_INV_STATE_CALLING = 1;
+    /**
+     * < After INVITE is sent		    1
+     */
+    final static int PJSIP_INV_STATE_INCOMING = 2;
+    /**
+     * < After INVITE is received.	    2
+     */
+    final static int PJSIP_INV_STATE_EARLY = 3;
+    /**
+     * < After response with To tag.	    3
+     */
+    final static int PJSIP_INV_STATE_CONNECTING = 4;
+    /**
+     * < After 2xx is sent/received.	4
+     */
+    final static int PJSIP_INV_STATE_CONFIRMED = 5;
+    /**
+     * < After ACK is sent/received.	5
+     */
+    final static int PJSIP_INV_STATE_DISCONNECTED = 6;
+    /**
+     * < Session is terminated.		    6
+     */
 
     private static List<UserAccount> accounts;
 
@@ -36,47 +57,54 @@ public class PjsipApp extends PjsipDll{
     public void setAccounts(List<UserAccount> accounts) {
         this.accounts = accounts;
     }
+
     //初始化PJSIP
     @Step("【pjsip】初始化PJSIP")
-    public  void Pj_Init(){
-
-        accounts = new ArrayList<UserAccount>();
-        pjsipdll.instance.ys_init();
-        pjsipdll.instance.ys_main();
+    public void Pj_Init() {
+        try {
+            accounts = new ArrayList<UserAccount>();
+            pjsipdll.instance.ys_init();
+            pjsipdll.instance.ys_main();
 //        Reporter.infoExec("pjsip init "+ pjsipdll.instance.ys_init());
 //        Reporter.infoExec("pjisp main " +pjsipdll.instance.ys_main());
-        pjsipdll.instance.onRegStateCallback(registerCallBack);
-        pjsipdll.instance.onCallIncoming(incomingcallback);
-        pjsipdll.instance.onCallStateCallback(callstateCallBack);
-        pjsipdll.instance.onDtmfDigitCallback(dtmfCallBack);
+            pjsipdll.instance.onRegStateCallback(registerCallBack);
+            pjsipdll.instance.onCallIncoming(incomingcallback);
+            pjsipdll.instance.onCallStateCallback(callstateCallBack);
+            pjsipdll.instance.onDtmfDigitCallback(dtmfCallBack);
 
-        String m_os = System.getProperty("os.name");
-        log.debug("[System Property:]" + m_os);
-        if(m_os.toLowerCase().startsWith("win")){
-            log.debug("[System is Windows]");
-            pjsipdll.instance.ys_log_set_level(1);
-        }else{
-        }
+            String m_os = System.getProperty("os.name");
+            log.debug("[System Property:]" + m_os);
+            if (m_os.toLowerCase().startsWith("win")) {
+                log.debug("[System is Windows]");
+                pjsipdll.instance.ys_log_set_level(1);
+            } else {
+            }
 //
-        Reporter.infoExec("pjs_init done");
-
+            Reporter.infoExec("pjs_init done");
+        } catch (Exception ex) {
+            log.error("【Pj_Init】" + ex);
+        }
     }
+
     //释放PJSIP
     @Step("【pjsip】释放PJSIP")
-    public void Pj_Destory(){
+    public void Pj_Destory() {
         pjsipdll.instance.ys_destroy_pjsua();
     }
+
     //在Account数组中创建分机
     @Step("【pjsip】在Account数组中创建分机")
-    public void Pj_CreateAccount(int username, String password,String type,int pos){
-        Pj_CreateAccount(type,username,password,pos,"",5060);
+    public void Pj_CreateAccount(int username, String password, String type, int pos) {
+        Pj_CreateAccount(type, username, password, pos, "", 5060);
     }
+
     @Step("【pjsip】创建分机, username：{0},  password:{1},  type:{2}, port:{3}, pos:{4} ")
-    public void Pj_CreateAccount(int username, String password,String type,int port,int pos){
-        Pj_CreateAccount(type,username,password,pos,"",port);
+    public void Pj_CreateAccount(int username, String password, String type, int port, int pos) {
+        Pj_CreateAccount(type, username, password, pos, "", port);
     }
+
     @Step("【pjsip】创建分机,type:{0}, username：{1},  password:{2},  pos:{3}, ip:{4}, port:{5} ")
-    public void Pj_CreateAccount(String type,int username, String password,int pos,String ip,int port){
+    public void Pj_CreateAccount(String type, int username, String password, int pos, String ip, int port) {
         UserAccount account = new UserAccount();
         account.username = String.valueOf(username);
         account.password = password;
@@ -86,10 +114,9 @@ public class PjsipApp extends PjsipDll{
         account.callId = -1;
         account.accId = -1;
         account.port = String.valueOf(port);
-        if(type == "UDP" || type == "udp"){
+        if (type == "UDP" || type == "udp") {
             account.uriHead = "sip:";
-        }
-        else if(type == "TLS" || type == "tls"){
+        } else if (type == "TLS" || type == "tls") {
             account.uriHead = "sips:";
         }
 
@@ -98,36 +125,36 @@ public class PjsipApp extends PjsipDll{
 
     //注册分机
     @Step("【pjsip】注册分机, type:{0}, username:{1},  ip:{2}, password:{3}, port:{4}, isAsserst:{5}")
-    public UserAccount Pj_Register_Account_For_PSeries(String type,int username, String ip,String password,int port,boolean isAsserst) {
+    public UserAccount Pj_Register_Account_For_PSeries(String type, int username, String ip, String password, int port, boolean isAsserst) {
 
-        UserAccount account ;
+        UserAccount account;
         account = findAccountByUsername(String.valueOf(username));
         account.ip = ip;
 //        account.port = String.valueOf(port);
         account.uriHead = "sip:";
 //        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+String.valueOf(port), "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true);
-        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port, "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true,99999);
+        account.accId = pjsipdll.instance.ys_registerAccount(account.uriHead + String.valueOf(username) + "@" + ip + ":" + account.port, "sip:" + ip + ":" + account.port, "*", String.valueOf(username), account.password, "", true, 99999);
 
-        System.out.println("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
-        System.out.println("sip register: "+"sip:"+ip+":"+account.port);
-        System.out.println("username:"+String.valueOf(username));
-        System.out.println("pwd :" +account.password);
-        if(isAsserst){
+        System.out.println("sip: ." + account.uriHead + String.valueOf(username) + "@" + ip + ":" + account.port + "......." + account.accId);
+        System.out.println("sip register: " + "sip:" + ip + ":" + account.port);
+        System.out.println("username:" + String.valueOf(username));
+        System.out.println("pwd :" + account.password);
+        if (isAsserst) {
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();
             ys_waitingTime(3000);
-            int time=16;
+            int time = 16;
             String call_status = null;
-            while (time>0){
+            while (time > 0) {
                 ys_waitingTime(1000);
-                call_status = String.valueOf(gridExtensonStatus(extensions.grid_status,account.pos,0));
-                if(call_status.equals("Registered")){
+                call_status = String.valueOf(gridExtensonStatus(extensions.grid_status, account.pos, 0));
+                if (call_status.equals("Registered")) {
                     break;
                 }
                 time--;
             }
 //            YsAssert.assertEquals(call_status,"Registered",String.valueOf(username)+"分机注册");
-            if(time>0){
+            if (time > 0) {
                 updateAccountByUsername(username);
             }
         }
@@ -136,36 +163,36 @@ public class PjsipApp extends PjsipDll{
 
     //注册分机
     @Step("【pjsip】注册分机, type:{0}, username:{1},  ip:{2}, password:{3}, port:{4}, isAsserst:{5}")
-    public UserAccount Pj_Register_Account(String type,int username, String ip,String password,int port,boolean isAsserst) {
+    public UserAccount Pj_Register_Account(String type, int username, String ip, String password, int port, boolean isAsserst) {
 
-        UserAccount account ;
+        UserAccount account;
         account = findAccountByUsername(String.valueOf(username));
         account.ip = ip;
 //        account.port = String.valueOf(port);
         account.uriHead = "sip:";
 //        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+String.valueOf(port), "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true);
-        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port, "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true,99999);
+        account.accId = pjsipdll.instance.ys_registerAccount(account.uriHead + String.valueOf(username) + "@" + ip + ":" + account.port, "sip:" + ip + ":" + account.port, "*", String.valueOf(username), account.password, "", true, 99999);
 
-        System.out.println("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
-        System.out.println("sip register: "+"sip:"+ip+":"+account.port);
-        System.out.println("username:"+String.valueOf(username));
-        System.out.println("pwd :" +account.password);
-        if(false){
+//        System.out.println("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
+//        System.out.println("sip register: "+"sip:"+ip+":"+account.port);
+//        System.out.println("username:"+String.valueOf(username));
+//        System.out.println("pwd :" +account.password);
+        if (false) {
             pageDeskTop.taskBar_Main.click();
             pageDeskTop.pbxmonitorShortcut.click();
             ys_waitingTime(3000);
-            int time=16;
+            int time = 16;
             String call_status = null;
-            while (time>0){
+            while (time > 0) {
                 ys_waitingTime(1000);
-                call_status = String.valueOf(gridExtensonStatus(extensions.grid_status,account.pos,0));
-                if(call_status.equals("Registered")){
+                call_status = String.valueOf(gridExtensonStatus(extensions.grid_status, account.pos, 0));
+                if (call_status.equals("Registered")) {
                     break;
                 }
                 time--;
             }
 //            YsAssert.assertEquals(call_status,"Registered",String.valueOf(username)+"分机注册");
-            if(time>0){
+            if (time > 0) {
                 updateAccountByUsername(username);
             }
         }
@@ -173,28 +200,29 @@ public class PjsipApp extends PjsipDll{
     }
 
     /**
-     *
      * @param username
      * @param ip
      * @
      */
-    public void Pj_Register_Account_WithoutAssist(int username , String ip){
-        Pj_Register_Account("UDP",username,ip, "",5060,false);
+    public void Pj_Register_Account_WithoutAssist(int username, String ip) {
+        Pj_Register_Account("UDP", username, ip, "", 5060, false);
         ys_waitingTime(2000);
     }
-    public void Pj_Register_Account_WithoutAssist(int username , String ip,int port){
-        Pj_Register_Account("UDP",username,ip, "",port,false);
+
+    public void Pj_Register_Account_WithoutAssist(int username, String ip, int port) {
+        Pj_Register_Account("UDP", username, ip, "", port, false);
     }
-    public void Pj_Register_Account_WithoutAssist_For_PSeries(int username , String ip){
-        Pj_Register_Account("UDP",username,ip, "",5060,false);
+
+    public void Pj_Register_Account_WithoutAssist_For_PSeries(int username, String ip) {
+        Pj_Register_Account("UDP", username, ip, "", 5060, false);
         ys_waitingTime(2000);
     }
-    public void Pj_Register_Account_WithoutAssist_For_PSeries(int username , String ip,int port){
-        Pj_Register_Account("UDP",username,ip, "",port,false);
+
+    public void Pj_Register_Account_WithoutAssist_For_PSeries(int username, String ip, int port) {
+        Pj_Register_Account("UDP", username, ip, "", port, false);
     }
 
     /**
-     *
      * @param username
      * @param ip
      * @param password
@@ -202,12 +230,11 @@ public class PjsipApp extends PjsipDll{
      * @
      */
     @Step("【pjsip】账号注册 username：{0} , ip：{1},password：{2},port：{3} ")
-    public void Pj_Register_Account(int username , String ip,String password,int port)  {
-        Pj_Register_Account("UDP",username,ip, password,port,true);
+    public void Pj_Register_Account(int username, String ip, String password, int port) {
+        Pj_Register_Account("UDP", username, ip, password, port, true);
     }
 
     /**
-     *
      * @param type
      * @param username
      * @param ip
@@ -216,8 +243,8 @@ public class PjsipApp extends PjsipDll{
      * @
      */
     @Step("【pjsip】账号注册 type：{0}, username：{1} , ip：{2},password：{3},port：{4} ")
-    public void Pj_Register_Account(String type,int username , String ip,String password,int port)  {
-        Pj_Register_Account(type,username,ip, password,port,true);
+    public void Pj_Register_Account(String type, int username, String ip, String password, int port) {
+        Pj_Register_Account(type, username, ip, password, port, true);
     }
 
     /**
@@ -226,41 +253,45 @@ public class PjsipApp extends PjsipDll{
      * @
      */
     @Step("【pjsip】账号注册  username：{0} , ip：{1}")
-    public void Pj_Register_Account(int username,String ip) {
-        Pj_Register_Account("UDP",username,ip, "",5060,true);
+    public void Pj_Register_Account(int username, String ip) {
+        Pj_Register_Account("UDP", username, ip, "", 5060, true);
     }
 
     @Step("【pjsip】账号注册  username：{0} , ip：{1}")
-    public void Pj_Register_Account_For_PSeries(int username,String ip) {
-        Pj_Register_Account_For_PSeries("UDP",username,ip, "",5060,true);
+    public void Pj_Register_Account_For_PSeries(int username, String ip) {
+        Pj_Register_Account_For_PSeries("UDP", username, ip, "", 5060, true);
     }
 
     @Step("【pjsip】账号注册  username：{0} , ip：{1} ,port:{2}")
-    public void Pj_Register_Account(int username,String ip,int port) {
-        Pj_Register_Account("UDP",username,ip, "",port,true);
+    public void Pj_Register_Account(int username, String ip, int port) {
+        Pj_Register_Account("UDP", username, ip, "", port, true);
     }
+
     /**
      * 取消注册
+     *
      * @param username
      * @return
      */
     @Step("【pjsip】取消注册：{0}")
-    public int Pj_Unregister_Account(int username){
+    public int Pj_Unregister_Account(int username) {
         int suc = -1;
         suc = pjsipdll.instance.ys_unregister_account(findAccountByUsername(String.valueOf(username)).accId);
 //        if(suc == 0)
 //            removeAccountByUsername(String.valueOf(username));
         return suc;
     }
+
     /**
      * 取消全部分机注册
+     *
      * @return
      */
     @Step("【pjsip】取消全部分机注册：{0}")
-    public int Pj_Unregister_Accounts(){
+    public int Pj_Unregister_Accounts() {
         int suc = -1;
         suc = pjsipdll.instance.ys_removeAccounts();
-        if(suc == 0){
+        if (suc == 0) {
 //            accounts.removeAll(accounts);
         }
         return suc;
@@ -268,104 +299,117 @@ public class PjsipApp extends PjsipDll{
 
     //拨号 不会自动应答  特殊呼出号码
     @Step("【pjsip】拨号 不会自动应答 特殊呼出号码： callerNum：{0} , Callee：{1} , ServerIp：{2} , Assert：{3}")
-    public String Pj_Make_Call_No_Answer(int CallerNum, String Callee,String ServerIp,boolean Assert){
-        UserAccount CallerAccount ;
+    public String Pj_Make_Call_No_Answer(int CallerNum, String Callee, String ServerIp, boolean Assert) {
+        UserAccount CallerAccount;
         CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
-        String uri  = "";
-        uri = "sip:"+Callee+"@"+ ServerIp+":"+CallerAccount.port;
-        System.out.println("uri: "+ uri);
-        if(CallerAccount.accId != -1){
+        String uri = "";
+        uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
+//        System.out.println("uri: "+ uri);//todo 待后续按日志等级输出
+        if (CallerAccount.accId != -1) {
             pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false); //todo 待后续按日志等级输出
 //            System.out.println("make call no answer:"+pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false));
         }
         ys_waitingTime(2000);
         return "";
     }
+
     @Step("【pjsip】拨号 不会自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2} ")
-    public String Pj_Make_Call_No_Answer(int CallerNum,String Callee,String ServerIp ){
-        return Pj_Make_Call_No_Answer(CallerNum,Callee,ServerIp,true);
+    public String Pj_Make_Call_No_Answer(int CallerNum, String Callee, String ServerIp) {
+        return Pj_Make_Call_No_Answer(CallerNum, Callee, ServerIp, true);
     }
+
     //   //被叫方手动接听 默认 code =  200
     @Step("【pjsip】被叫方手动接听 默认 code =  200： callerNum：{0} , Assert：{1")
-    public int Pj_Answer_Call(int CalleeNum ,boolean Assert){
-        return Pj_Answer_Call(CalleeNum,200,Assert);
+    public int Pj_Answer_Call(int CalleeNum, boolean Assert) {
+        return Pj_Answer_Call(CalleeNum, 200, Assert);
     }
+
     //被叫方手动接听 可以自定义 code   486 （Busy )  200(ok)  180(ring)
     @Step("【pjsip】被叫方手动接听 可以自定义 code   486 （Busy )  200(ok)  180(ring)： callerNum：{0} , code：{1} , Assert：{2}")
-    public int Pj_Answer_Call(int CalleeNum, int code,boolean Assert) {
-        int suc=-1;
-        UserAccount CalleeAccount ;
-        UserAccount CallerAccount = null;
-        String caller_status = null;
-        String callee_status = null;
-        CalleeAccount = findAccountByUsername(String.valueOf(CalleeNum));
-        Reporter.infoExec("Answer Call  "+CalleeAccount.callId+"  "+CalleeAccount.username);
-        if(CalleeAccount.callId != -1){
-            pjsipdll.instance.ys_answerCall(CalleeAccount.callId,code);
-        }else {
+    public int Pj_Answer_Call(int CalleeNum, int code, boolean Assert) {
+        int suc = -1;
+        try {
+            UserAccount CalleeAccount;
+            UserAccount CallerAccount = null;
+            String caller_status = null;
+            String callee_status = null;
+            CalleeAccount = findAccountByUsername(String.valueOf(CalleeNum));
+//        Reporter.infoExec("Answer Call  "+CalleeAccount.callId+"  "+CalleeAccount.username);//todo 待后续日志等级输出
+            if (CalleeAccount.callId != -1) {
+                pjsipdll.instance.ys_answerCall(CalleeAccount.callId, code);
+            } else {
 
-        }
-        if(Assert){
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            if(CalleeAccount.pos  != -1){
-                int timeed=5;
-                while (timeed>0){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            }
+            if (Assert) {
+                pageDeskTop.taskBar_Main.click();
+                pageDeskTop.pbxmonitorShortcut.click();
+                if (CalleeAccount.pos != -1) {
+                    int timeed = 5;
+                    while (timeed > 0) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        callee_status = String.valueOf(gridExtensonStatus(extensions.grid_status, CalleeAccount.pos, 0));
+                        if (callee_status.equals("Busy")) {
+                            break;
+                        }
+                        timeed--;
                     }
-                    callee_status = String.valueOf(gridExtensonStatus(extensions.grid_status,CalleeAccount.pos,0));
-                    if(callee_status.equals("Busy")){
-                        break;
-                    }
-                    timeed--;
                 }
             }
+        } catch (Exception ex) {
+            log.error("【Pj_Answer_Call】" + ex);
         }
-        return suc ;
+        return suc;
     }
 
     //拨号 自动应答  特殊呼出号码
     @Step("【pjsip】拨号 自动应答 特殊呼出号码： callerNum：{0} , Callee：{1} , ServerIp：{2} , Assert：{3}")
-    public String Pj_Make_Call_Auto_Answer(int CallerNum, String Callee,String ServerIp,boolean Assert)  {
-        UserAccount CallerAccount ;
-
-        CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
-        String uri  = "";
+    public String Pj_Make_Call_Auto_Answer(int CallerNum, String Callee, String ServerIp, boolean Assert) {
+        UserAccount CallerAccount;
         String caller_status = null;
         String callee_status = null;
+        try {
+            CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
+            String uri = "";
 
-        //+":"+CalleeAccount.port
+
+            //+":"+CalleeAccount.port
 //        uri = CalleeAccount.uriHead+CalleeAccount.username+"@"+ServerIp;
-        uri = "sip:"+Callee+"@"+ ServerIp+":"+CallerAccount.port;
+            uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
 
-        log.debug("uri/./.........."+uri+"  "+CallerAccount.accId);
-        int retMakecall= pjsipdll.instance.ys_makeCall(CallerAccount.accId,uri,true);
-        log.debug("[Make call Auto] "+ retMakecall);
-        if(Assert){
-            pageDeskTop.taskBar_Main.click();
-            pageDeskTop.pbxmonitorShortcut.click();
-            if(CallerAccount.pos  != -1){
-                int timeer=5;
-                while (timeer>0){
-                    ys_waitingTime(1000);
-                    caller_status = String.valueOf(gridExtensonStatus(extensions.grid_status,CallerAccount.pos,0));
-                    if(caller_status.equals("Busy")){
-                        break;
+            log.debug("uri/./.........." + uri + "  " + CallerAccount.accId);
+            int retMakecall = pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, true);
+            log.debug("[Make call Auto] " + retMakecall);
+            if (Assert) {
+                pageDeskTop.taskBar_Main.click();
+                pageDeskTop.pbxmonitorShortcut.click();
+                if (CallerAccount.pos != -1) {
+                    int timeer = 5;
+                    while (timeer > 0) {
+                        ys_waitingTime(1000);
+                        caller_status = String.valueOf(gridExtensonStatus(extensions.grid_status, CallerAccount.pos, 0));
+                        if (caller_status.equals("Busy")) {
+                            break;
+                        }
+                        timeer--;
                     }
-                    timeer--;
                 }
-            }
 
 //            YsAssert.assertEquals(caller_status,"Busy");
 //            YsAssert.assertEquals(callee_status,"Busy");
-        }
+            }
 //        m_extension.closeMonitorWindow();
 //        pageDeskTop.CDRandRecording.click();
+
+        } catch (Exception ex) {
+            log.error("【Pj_Make_Call_Auto_Answer】" + ex);
+        }
         return callee_status;
     }
+
 
     //拨号 自动应答  特殊呼出号码
     @Step("【pjsip】拨号 自动应答 特殊呼出号码： callerNum：{0} , Callee：{1} , ServerIp：{2} , Assert：{3}")
@@ -376,7 +420,7 @@ public class PjsipApp extends PjsipDll{
         String uri  = "";
         String caller_status = null;
         String callee_status = null;
-
+try{
         //+":"+CalleeAccount.port
 //        uri = CalleeAccount.uriHead+CalleeAccount.username+"@"+ServerIp;
         uri = "sip:"+Callee+"@"+ ServerIp+":"+CallerAccount.port;
@@ -409,6 +453,9 @@ public class PjsipApp extends PjsipDll{
         }
 //        m_extension.closeMonitorWindow();
 //        pageDeskTop.CDRandRecording.click();
+    } catch (Exception ex) {
+        log.error("【Pj_Make_Call_Auto_Answer】" + ex);
+    }
         return callee_status;
     }
 
@@ -430,19 +477,24 @@ public class PjsipApp extends PjsipDll{
     @Step("【pjsip】挂断指定通话: caller:{0} , callee:{1}")
     public int Pj_hangupCall(int number)  {
         int suc = -1;
-        UserAccount account = null;
-        for (int i = 0; i < accounts.size(); i++) {
-            account = accounts.get(i);
-            if (account.username.equals(String.valueOf(number))) {
-                if (account.status == HUNGUP) {
-                    Reporter.infoCheck("分机:" + account.username + "处于hungup");
-                    return suc;
+        try {
+            UserAccount account = null;
+            for (int i = 0; i < accounts.size(); i++) {
+                account = accounts.get(i);
+                if (account.username.equals(String.valueOf(number))) {
+                    if (account.status == HUNGUP) {
+                        Reporter.infoCheck("分机:" + account.username + "处于hungup");
+                        return suc;
+                    }
                 }
             }
+            UserAccount HangupAccont = findAccountByUsername(String.valueOf(number));
+            suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
+            ys_waitingTime(3000);
+
+        }catch(Exception ex){
+            log.error("【pj_hangupCall】"+ex);
         }
-        UserAccount HangupAccont = findAccountByUsername(String.valueOf(number));
-        suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
-        ys_waitingTime(3000);
         return suc;
     }
 
@@ -483,12 +535,14 @@ public class PjsipApp extends PjsipDll{
     //发送DTMF
     @Step("【pjsip】发送DTMF: username:{0} , dtmf:{1}")
     public int Pj_Send_Dtmf(int username, String... dtmf) {
+        int suc = -1;
+        try{
         ys_waitingTime(3000);//等待输入DTMF的提示出现
         ArrayList<String> dtmfList = new ArrayList<>();
         for (String index:dtmf){
             dtmfList.add(index);
         }
-        int suc = -1;
+
         UserAccount CallerAccont = findAccountByUsername(String.valueOf(username));
         for (int i=0 ; i<dtmfList.size(); i++){
             System.out.println("callId: "+CallerAccont.callId+"send dtmf :"+dtmfList.get(i)+" num:");
@@ -498,6 +552,9 @@ public class PjsipApp extends PjsipDll{
             }
            ys_waitingTime(500);
         }
+    } catch (Exception ex) {
+        log.error("【Pj_Send_Dtmf】" + ex);
+    }
         return suc;
     }
     public int Pj_Send_Dtmf(int username,int callid ,String... dtmf)  {
@@ -642,7 +699,7 @@ public class PjsipApp extends PjsipDll{
             account = accounts.get(i);
 //            System.out.println("finding account "+account.username);
             if(account.username.equals(username)){
-                System.out.println("find this "+account.username+" IP:"+account.ip);
+//                System.out.println("find this "+account.username+" IP:"+account.ip);
                 return account;
             }
         }
