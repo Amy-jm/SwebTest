@@ -47,7 +47,7 @@ public class TestCaseBase extends BaseMethod {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
         int retryTemp = 0;
         while(EmptyUtil.isNotEmpty(pjsip) && retryTemp <= 10){
-            Thread.sleep(10000);
+            Thread.currentThread().sleep(10000);
             log.debug("[start destroy pjsip] count -->"+ retryTemp);
             pjsip.Pj_Destory();
             log.debug("[end destroy pjsip]");
