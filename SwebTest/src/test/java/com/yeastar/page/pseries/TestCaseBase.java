@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
+import com.yeastar.swebtest.tools.pjsip.PjsipApp;
 import com.yeastar.untils.*;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -36,6 +37,7 @@ public class TestCaseBase extends BaseMethod {
         log.debug("[Test PBX_URL]"+PBX_URL);
         open(PBX_URL);
         auto = PageEngine.getInstance();
+        pjsip = new PjsipApp();
 
         softAssert = new SoftAssert();
         softAssertPlus = new SoftAssertions();
