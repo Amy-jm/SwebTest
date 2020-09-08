@@ -32,18 +32,29 @@ public class TestCaseBase extends BaseMethod {
     public void setUp(Method method){
         log.info("\r\n====== [SetUp] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
 
+        long startTime=System.currentTimeMillis();
         webDriver = initialDriver(BROWSER,PBX_URL,method);
+        log.debug("[init driver time]:"+(System.currentTimeMillis()-startTime)/1000+" Seconds");
+
+        long startTime_1=System.currentTimeMillis();
         setDriver(webDriver);
         log.debug("[Test PBX_URL]"+PBX_URL);
         open(PBX_URL);
+        log.debug("[open url time]:"+(System.currentTimeMillis()-startTime_1)/1000+" Seconds");
+
+        long startTime_2=System.currentTimeMillis();
         auto = PageEngine.getInstance();
         try {
             pjsip = new PjsipApp();
         } catch (Exception ex) {
          log.error("【Pj_setup new】" + ex);
         }
+        log.debug("[open url time]:"+(System.currentTimeMillis()-startTime_2)/1000+" Seconds");
+
+        long startTime_3=System.currentTimeMillis();
         softAssert = new SoftAssert();
         softAssertPlus = new SoftAssertions();
+        log.debug("[soft time]:"+(System.currentTimeMillis()-startTime_3)/1000+" Seconds");
     }
 
     @SneakyThrows

@@ -62,8 +62,10 @@ public class BrowserFactory extends ConfigP {
 			} catch (WebDriverException ex) {
 				log.error("【initialDriver】 retry-->"+retry +" 【ExceptionMessage】" + ex);
 			}
+			if(retry !=0){
+				sleep(60*1000);
+			}
 			retry++;
-			sleep(60*1000);
 		} while (webDriver == null && retry <= 5);
 		return webDriver;
 	}
