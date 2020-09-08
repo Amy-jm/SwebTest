@@ -106,7 +106,7 @@ public class BusinessHoursAndHolidaysPage extends BasePage implements IBusinessH
            selectBreakStartTime(breakStartTime);
            selectBreakEndTime(breakEndTime);
        }
-
+        sleep(2000);
         $(By.id("office_time_days_of_week")).click();//展开星期面板
        log.debug("[businessStartTime] "+businessEndTime+"[businessEndTime] "+businessEndTime+"[breakStartTime] "+breakStartTime+"[breakEndTime] "+breakEndTime+"[days string] "+days);
         sleep(WaitUntils.RETRY_WAIT);
