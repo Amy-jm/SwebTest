@@ -1,59 +1,59 @@
-16:15:44.787 sip_endpoint.c  .Module "mod-pjsua-log" registered
-16:15:44.788 sip_endpoint.c  .Module "mod-tsx-layer" registered
-16:15:44.788 sip_endpoint.c  .Module "mod-stateful-util" registered
-16:15:44.788 sip_endpoint.c  .Module "mod-ua" registered
-16:15:44.788 sip_endpoint.c  .Module "mod-100rel" registered
-16:15:44.788 sip_endpoint.c  .Module "mod-pjsua" registered
-16:15:44.788 sip_endpoint.c  .Module "mod-invite" registered
-16:15:44.816     wmme_dev.c  ..WMME found 5 devices:
-16:15:44.816     wmme_dev.c  .. dev_id 0: Wave mapper  (in=2, out=2)
-16:15:44.816     wmme_dev.c  .. dev_id 1: Âó¿Ë·ç (Realtek High Definition  (in=2, out=0)
-16:15:44.816     wmme_dev.c  .. dev_id 2: ÑïÉùÆ÷ (Realtek High Definition  (in=0, out=2)
-16:15:44.816     wmme_dev.c  .. dev_id 3: S22B360 (Ó¢ÌØ¶û(R) ÏÔÊ¾Æ÷ÒôÆµ)  (in=0, out=2)
-16:15:44.816     wmme_dev.c  .. dev_id 4: Realtek Digital Output (Realtek  (in=0, out=2)
-16:15:44.816     wmme_dev.c  ..WMME initialized
-16:15:44.816     audiodev.c  ..get_dev_count. 5  0 
-16:15:44.816          pjlib  ..select() I/O Queue created (0064500C)
-16:15:44.817   conference.c  ..Creating conference bridge with 254 ports
-16:15:44.817   Master/sound  ..Using delay buffer with WSOLA.
-16:15:44.818 sip_endpoint.c  .Module "mod-evsub" registered
-16:15:44.818 sip_endpoint.c  .Module "mod-presence" registered
-16:15:44.818        evsub.c  .Event pkg "presence" registered by mod-presence
-16:15:44.818 sip_endpoint.c  .Module "mod-mwi" registered
-16:15:44.818        evsub.c  .Event pkg "message-summary" registered by mod-mwi
-16:15:44.818 sip_endpoint.c  .Module "mod-refer" registered
-16:15:44.818        evsub.c  .Event pkg "refer" registered by mod-refer
-16:15:44.818 sip_endpoint.c  .Module "mod-pjsua-pres" registered
-16:15:44.818 sip_endpoint.c  .Module "mod-pjsua-im" registered
-16:15:44.819 sip_endpoint.c  .Module "mod-pjsua-options" registered
-16:15:44.819   pjsua_core.c  .1 SIP worker threads created
-16:15:44.819   pjsua_core.c  .pjsua version 2.6 for win32-6.1/i386/msvc-17.0 initialized
-16:15:44.819   pjsua_core.c  .PJSUA state changed: CREATED --> INIT
-16:15:44.819    pjsua_aud.c  Creating file player: F:\molihua.wav..
-16:15:44.819   wav_player.c  .File player 'F:\molihua.wav' created: samp.rate=8000, ch=1, bufsize=4KB, filesize=685KB
-16:15:44.819     resample.c  .resample created: high qualiy, large filter, in/out rate=8000/16000
-16:15:44.819     resample.c  .resample created: high qualiy, large filter, in/out rate=16000/8000
-16:15:44.819    pjsua_aud.c  .Player created, id=0, slot=1
-16:15:44.820   pjsipDll.cpp  =========LINE:1154  wav init status =.. 0  wav_id=0
+13:18:40.801 sip_endpoint.c  .Module "mod-pjsua-log" registered
+13:18:40.803 sip_endpoint.c  .Module "mod-tsx-layer" registered
+13:18:40.803 sip_endpoint.c  .Module "mod-stateful-util" registered
+13:18:40.803 sip_endpoint.c  .Module "mod-ua" registered
+13:18:40.803 sip_endpoint.c  .Module "mod-100rel" registered
+13:18:40.803 sip_endpoint.c  .Module "mod-pjsua" registered
+13:18:40.803 sip_endpoint.c  .Module "mod-invite" registered
+13:18:40.937     wmme_dev.c  ..WMME found 5 devices:
+13:18:40.937     wmme_dev.c  .. dev_id 0: Wave mapper  (in=2, out=2)
+13:18:40.937     wmme_dev.c  .. dev_id 1: Âó¿Ë·ç (Realtek High Definition  (in=2, out=0)
+13:18:40.937     wmme_dev.c  .. dev_id 2: ÑïÉùÆ÷ (Realtek High Definition  (in=0, out=2)
+13:18:40.937     wmme_dev.c  .. dev_id 3: S22B360 (Ó¢ÌØ¶û(R) ÏÔÊ¾Æ÷ÒôÆµ)  (in=0, out=2)
+13:18:40.937     wmme_dev.c  .. dev_id 4: Realtek Digital Output (Realtek  (in=0, out=2)
+13:18:40.937     wmme_dev.c  ..WMME initialized
+13:18:40.937     audiodev.c  ..get_dev_count. 5  0 
+13:18:40.937          pjlib  ..select() I/O Queue created (006FDAA4)
+13:18:40.986   conference.c  ..Creating conference bridge with 254 ports
+13:18:40.986   Master/sound  ..Using delay buffer with WSOLA.
+13:18:40.988 sip_endpoint.c  .Module "mod-evsub" registered
+13:18:40.988 sip_endpoint.c  .Module "mod-presence" registered
+13:18:40.988        evsub.c  .Event pkg "presence" registered by mod-presence
+13:18:40.988 sip_endpoint.c  .Module "mod-mwi" registered
+13:18:40.988        evsub.c  .Event pkg "message-summary" registered by mod-mwi
+13:18:40.988 sip_endpoint.c  .Module "mod-refer" registered
+13:18:40.988        evsub.c  .Event pkg "refer" registered by mod-refer
+13:18:40.988 sip_endpoint.c  .Module "mod-pjsua-pres" registered
+13:18:40.988 sip_endpoint.c  .Module "mod-pjsua-im" registered
+13:18:40.988 sip_endpoint.c  .Module "mod-pjsua-options" registered
+13:18:40.988   pjsua_core.c  .1 SIP worker threads created
+13:18:40.988   pjsua_core.c  .pjsua version 2.6 for win32-6.1/i386/msvc-17.0 initialized
+13:18:40.989   pjsua_core.c  .PJSUA state changed: CREATED --> INIT
+13:18:40.989    pjsua_aud.c  Creating file player: F:\molihua.wav..
+13:18:41.011   wav_player.c  .File player 'F:\molihua.wav' created: samp.rate=8000, ch=1, bufsize=4KB, filesize=685KB
+13:18:41.011     resample.c  .resample created: high qualiy, large filter, in/out rate=8000/16000
+13:18:41.011     resample.c  .resample created: high qualiy, large filter, in/out rate=16000/8000
+13:18:41.011    pjsua_aud.c  .Player created, id=0, slot=1
+13:18:41.011   pjsipDll.cpp  =========LINE:1154  wav init status =.. 0  wav_id=0
 
-16:15:44.820   pjsipDll.cpp  =========LINE:1157  app_config.wav_id =.. -1 
+13:18:41.011   pjsipDll.cpp  =========LINE:1157  app_config.wav_id =.. -1 
 
-16:15:44.820   pjsipDll.cpp  app_config.wav_port............1
+13:18:41.011   pjsipDll.cpp  app_config.wav_port............1
 
-16:15:44.820   pjsipDll.cpp  __LINE__............1190
+13:18:41.011   pjsipDll.cpp  __LINE__............1190
 
-16:15:44.820   pjsipDll.cpp  __LINE__............1200 prot=0
+13:18:41.011   pjsipDll.cpp  __LINE__............1200 prot=0
 
-16:15:44.820   pjsipDll.cpp  __LINE__............1202 prot=0
+13:18:41.011   pjsipDll.cpp  __LINE__............1202 prot=0
 
-16:15:44.825   pjsua_core.c  SIP UDP socket reachable at 192.168.11.195:61588
-16:15:44.825    udp0064A550  SIP UDP transport started, published address is 192.168.11.195:61588
-16:15:44.826   pjsipDll.cpp  app_config.no_tcp............1
+13:18:41.016   pjsua_core.c  SIP UDP socket reachable at 192.168.11.195:57068
+13:18:41.016    udp00702FE8  SIP UDP transport started, published address is 192.168.11.195:57068
+13:18:41.016   pjsipDll.cpp  app_config.no_tcp............1
 
-16:15:44.826 sip_endpoint.c  Module "My-Module" registered
-16:15:44.828   pjsua_core.c  PJSUA state changed: INIT --> STARTING
-16:15:44.828 sip_endpoint.c  .Module "mod-unsolicited-mwi" registered
-16:15:44.828   pjsua_core.c  .PJSUA state changed: STARTING --> RUNNING
-16:15:44.831   pjsipDll.cpp  lhr======onRegStateCallback(fptr_regstate cb)
-16:15:44.832   pjsipDll.cpp  gagatest2======onCallIncoming(fptr_callincoming cb)
-16:15:44.832   pjsipDll.cpp  gaga======onDtmfDigitCallback(fptr_dtmfdigit cb)
+13:18:41.017 sip_endpoint.c  Module "My-Module" registered
+13:18:41.147   pjsua_core.c  PJSUA state changed: INIT --> STARTING
+13:18:41.148 sip_endpoint.c  .Module "mod-unsolicited-mwi" registered
+13:18:41.148   pjsua_core.c  .PJSUA state changed: STARTING --> RUNNING
+13:18:41.155   pjsipDll.cpp  lhr======onRegStateCallback(fptr_regstate cb)
+13:18:41.156   pjsipDll.cpp  gagatest2======onCallIncoming(fptr_callincoming cb)
+13:18:41.157   pjsipDll.cpp  gaga======onDtmfDigitCallback(fptr_dtmfdigit cb)
