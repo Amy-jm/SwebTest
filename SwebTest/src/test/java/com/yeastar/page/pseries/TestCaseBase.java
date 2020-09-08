@@ -58,7 +58,8 @@ public class TestCaseBase extends BaseMethod {
         log.debug("[remote session]{}",webDriver);
         try{
             if(EmptyUtil.isNotEmpty(webDriver)){
-                BrowserUtils.getInstance().getLogType_Browser(method,webDriver);
+//                BrowserUtils.getInstance().getLogType_Browser(method,webDriver);
+                BrowserUtils.getInstance().getAnalyzeLog(method,webDriver);
                 webDriver.quit();
             }
         }catch(Exception ex){
