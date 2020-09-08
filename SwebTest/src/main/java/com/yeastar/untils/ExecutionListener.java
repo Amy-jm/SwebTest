@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class ExecutionListener implements ITestListener {
 
     public void onTestStart(ITestResult iTestResult) {
-        log.debug( "[ExecutionListener onTestStart] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
+//        log.debug( "[ExecutionListener onTestStart] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
@@ -59,8 +59,8 @@ public class ExecutionListener implements ITestListener {
                 .build();
         try {
             ResultSenderUtils.send(point);
-        }catch(org.influxdb.InfluxDBIOException EX){
-            log.error("[InfluxDB Server connection exception]");
+        }catch(org.influxdb.InfluxDBIOException ex){
+            log.error("[InfluxDB Server connection exception]" + ex);
         }
     }
 
@@ -72,8 +72,8 @@ public class ExecutionListener implements ITestListener {
                 .build();
         try {
             ResultSenderUtils.send(point);
-        }catch(org.influxdb.InfluxDBIOException EX){
-            log.error("[InfluxDB Server connection exception]");
+        }catch(org.influxdb.InfluxDBIOException ex){
+            log.error("[InfluxDB Server connection exception]" + ex);
         }
     }
 }

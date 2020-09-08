@@ -784,11 +784,11 @@ public class SwebDriver extends Config {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Reporter.infoExec("Extjs： " + js);
+//        Reporter.infoExec("Extjs： " + js);
         Object result = executeJavaScript(js);
 //        Object result= (Object)((JavascriptExecutor)webDriver).executeScript(js);
         if (js.contains("return")) {
-            System.out.println("Extjs: Result:  " + result);
+            //System.out.println("Extjs: Result:  " + result);  todo 待后续按日志等级输出
         }
         return result;
     }

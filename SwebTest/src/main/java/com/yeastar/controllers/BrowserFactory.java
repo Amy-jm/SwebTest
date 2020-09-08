@@ -1,31 +1,27 @@
 package com.yeastar.controllers;
 
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
 import com.codeborne.selenide.Configuration;
 import com.yeastar.swebtest.driver.ConfigP;
 import com.yeastar.untils.DataUtils;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.WebDriverRunner.*;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
 @Log4j2
@@ -41,12 +37,22 @@ public class BrowserFactory extends ConfigP {
 	}
 
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, Method method) {
-		if (IS_RUN_REMOTE_SERVER.trim().equalsIgnoreCase("true")) {
-			log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
-			return initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub", method);
-		} else {
-			return initialDriver(browser, relativeOrAbsoluteUrl, "");
-		}
+		int retry = 0;
+		do {
+			try {
+				if (IS_RUN_REMOTE_SERVER.trim().equalsIgnoreCase("true")) {
+					log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
+					webDriver = initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub", method);
+				} else {
+					webDriver = initialDriver(browser, relativeOrAbsoluteUrl, "");
+				}
+			} catch (WebDriverException ex) {
+				log.error("【initialDriver】 retry-->"+retry +" 【ExceptionMessage】" + ex);
+			}
+			retry++;
+			sleep(60*1000);
+		} while (webDriver == null && retry <= 5);
+		return webDriver;
 	}
 
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl){
@@ -165,7 +171,7 @@ public class BrowserFactory extends ConfigP {
 			options.addArguments("--lang=en");
 			options.addArguments("--ignore-certificate-errors");
 
-			options.addArguments("blink-settings=imagesEnabled=false");//不加载图片, 提升速度
+			//options.addArguments("blink-settings=imagesEnabled=false");//不加载图片, 提升速度
 			Map<String, Object> prefs = new HashMap<String, Object>();
 			prefs.put("credentials_enable_service", false);
 			prefs.put("profile.password_manager_enabled", false);

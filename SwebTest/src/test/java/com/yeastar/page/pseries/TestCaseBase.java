@@ -4,7 +4,9 @@ import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
+import com.yeastar.swebtest.tools.pjsip.PjsipApp;
 import com.yeastar.untils.*;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
@@ -23,8 +25,8 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class TestCaseBase extends BaseMethod {
     public PageEngine auto;
     private WebDriver webDriver;
-    public SoftAssertions softAssertPlus = new SoftAssertions();
     public SoftAssert softAssert;
+    public SoftAssertions softAssertPlus = new SoftAssertions();
 
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method){
@@ -35,20 +37,22 @@ public class TestCaseBase extends BaseMethod {
         log.debug("[Test PBX_URL]"+PBX_URL);
         open(PBX_URL);
         auto = PageEngine.getInstance();
+        pjsip = new PjsipApp();
 
         softAssert = new SoftAssert();
         softAssertPlus = new SoftAssertions();
     }
 
+    @SneakyThrows
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
-
         if(EmptyUtil.isNotEmpty(pjsip)){
-            log.debug("[start destroy pjsip]");
+            log.debug("[start destroy pjsip] count -->");
             pjsip.Pj_Destory();
-            sleep(10000);
+            sleep(5000);
             log.debug("[end destroy pjsip]");
+            pjsip=null;
         }
 
         log.debug("[remote session]{}",webDriver);

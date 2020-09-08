@@ -10,8 +10,8 @@ localLog
 pic
 SwebTest.iml
 pic
-pjsip.log
-
+/pjsip.log
+/src/main/java/com/yeastar/yeastar/swebtest/tools/pjsip/PjsipDll.java
 /CDR修改说明.txt
 /src/main/resources/driver/chrome/chromedriver3.exe
 /src/test/java/com/yeastar/testcase/pseries/mytest.java
