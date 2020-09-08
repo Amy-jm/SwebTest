@@ -153,7 +153,7 @@ public class BrowserUtils {
             //as the request and response will consists HUGE amount of DATA so I will be write it into text file for reference
             for (LogEntry entry : entries) {
                 String data = (new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
-                    if(data.contains("/api/v") || data.contains("Set-Cookie") || data.contains("status") || data.contains("payloadData")){
+                    if(data.contains("/api/v") || data.contains("\"Set-Cookie\"") || data.contains("\"status\"") || data.contains("payloadData")){
                     log.fatal(data);
                     }
             }

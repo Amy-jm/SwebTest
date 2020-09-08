@@ -17,7 +17,7 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class TestDebug extends TestCaseBase {
 
 
-    @Test(invocationCount = 50,groups = "debug")
+    @Test(invocationCount = 20,groups = "debug")
     public void testDebugLogin() {
         step("1:login PBX");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
