@@ -37,8 +37,11 @@ public class TestCaseBase extends BaseMethod {
         log.debug("[Test PBX_URL]"+PBX_URL);
         open(PBX_URL);
         auto = PageEngine.getInstance();
-        pjsip = new PjsipApp();
-
+        try {
+            pjsip = new PjsipApp();
+        } catch (Exception ex) {
+         log.error("【Pj_setup new】" + ex);
+        }
         softAssert = new SoftAssert();
         softAssertPlus = new SoftAssertions();
     }
@@ -51,8 +54,8 @@ public class TestCaseBase extends BaseMethod {
             log.debug("[start destroy pjsip]");
             pjsip.Pj_Destory();
             sleep(5000);
-            log.debug("[end destroy pjsip]");
             pjsip=null;
+            log.debug("[end destroy pjsip] pjsip->"+pjsip);
         }
 
         log.debug("[remote session]{}",webDriver);
