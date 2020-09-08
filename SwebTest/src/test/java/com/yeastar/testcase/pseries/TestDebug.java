@@ -19,7 +19,7 @@ public class TestDebug extends TestCaseBase {
     public void testDebugLogin() {
         step("1:login PBX");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
-        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
     }
 }
 
