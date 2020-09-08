@@ -13,8 +13,6 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
-import static com.yeastar.controllers.WebDriverFactory.getDriver;
-
 
 /**
  * @author huangjx
@@ -93,18 +91,18 @@ public class BrowserUtils {
     }
 
 
-    public static void analyzeLog(WebDriver driver) {
+    public static void getAnalyzeLog(WebDriver driver) {
         System.out.println("=================LogType.BROWSER");
         LogEntries logEntries_Browser = driver.manage().logs().get(LogType.BROWSER);
         for (LogEntry entry : logEntries_Browser) {
-            System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+            log.fatal(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
             //do something useful with the data
         }
 
         System.out.println("=================LogType.CLIENT");
         LogEntries logEntries_CLIENT = driver.manage().logs().get(LogType.CLIENT);
         for (LogEntry entry : logEntries_CLIENT) {
-            System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+            log.fatal(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
             //do something useful with the data
         }
 
@@ -112,7 +110,7 @@ public class BrowserUtils {
         System.out.println("=================LogType.SERVER");
         LogEntries logEntries_SERVER = driver.manage().logs().get(LogType.SERVER);
         for (LogEntry entry : logEntries_Browser) {
-            System.out.println(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+            log.fatal(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
             //do something useful with the data
         }
 
@@ -124,8 +122,52 @@ public class BrowserUtils {
 
         //as the request and response will consists HUGE amount of DATA so I will be write it into text file for reference
         for (LogEntry entry : entries) {
-            String data = (new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage()).toString();
-            System.out.println(data);
+            String data = (new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+            log.fatal(data);
+        }
+    }
+
+
+    public static void getAnalyzeLog(Method method,WebDriver driver) {
+        try {
+            log.fatal("\r\n===[" + method.getName() + "]===LogType  start=====================");
+
+            log.fatal("\r\n===[" + method.getName() + "]===LogType.BROWSER.start=====================");
+            LogEntries logEntries_Browser = driver.manage().logs().get(LogType.BROWSER);
+            for (LogEntry entry : logEntries_Browser) {
+                log.fatal(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+                //do something useful with the data
+            }
+
+            log.fatal("\r\n===[" + method.getName() + "]===LogType.CLIENT.start=====================");
+            LogEntries logEntries_CLIENT = driver.manage().logs().get(LogType.CLIENT);
+            for (LogEntry entry : logEntries_CLIENT) {
+                log.fatal(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+                //do something useful with the data
+            }
+
+            log.fatal("\r\n===[" + method.getName() + "]===LogType.PERFORMANCE.start=====================");
+            //this is just to make you know user number of logs with LogType as PERFORMANCE
+            List<LogEntry> entries = driver.manage().logs().get(LogType.PERFORMANCE).getAll();
+            log.fatal(entries.size() + " " + LogType.PERFORMANCE + " log entries found");
+            //as the request and response will consists HUGE amount of DATA so I will be write it into text file for reference
+            for (LogEntry entry : entries) {
+                String data = (new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+                    if(data.contains("/api/v") || data.contains("\"Set-Cookie\"") || data.contains("\"status\"") || data.contains("payloadData")){
+                    log.fatal(data);
+                    }
+            }
+
+//            log.fatal("\r\n===[" + method.getName() + "]===LogType.SERVER.start=====================");
+//            LogEntries logEntries_SERVER = driver.manage().logs().get(LogType.SERVER);
+//            for (LogEntry entry : logEntries_SERVER) {
+//                log.fatal(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+//                //do something useful with the data
+//            }
+
+            log.fatal("\r\n===[" + method.getName() + "]===LogType  end=====================");
+        } catch (Exception e) {
+            log.error("[getAnalyzeLog error]{}", e.getMessage() + e.getStackTrace());
         }
     }
 
