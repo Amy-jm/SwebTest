@@ -171,7 +171,7 @@ public class BrowserFactory extends ConfigP {
 			options.addArguments("--lang=en");
 			options.addArguments("--ignore-certificate-errors");
 
-			options.addArguments("blink-settings=imagesEnabled=false");//不加载图片, 提升速度
+			//options.addArguments("blink-settings=imagesEnabled=false");//不加载图片, 提升速度
 			Map<String, Object> prefs = new HashMap<String, Object>();
 			prefs.put("credentials_enable_service", false);
 			prefs.put("profile.password_manager_enabled", false);
