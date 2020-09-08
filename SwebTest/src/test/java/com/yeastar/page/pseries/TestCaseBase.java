@@ -48,7 +48,7 @@ public class TestCaseBase extends BaseMethod {
     public void afterMethod(Method method) {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
         if(EmptyUtil.isNotEmpty(pjsip)){
-            log.debug("[start destroy pjsip] count -->");
+            log.debug("[start destroy pjsip]");
             pjsip.Pj_Destory();
             sleep(5000);
             log.debug("[end destroy pjsip]");

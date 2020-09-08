@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -18,6 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -28,14 +31,24 @@ import static com.codeborne.selenide.WebDriverRunner.*;
 public class BrowserFactory extends ConfigP {
 	private WebDriver webDriver;
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl) throws MalformedURLException {
-		if (IS_RUN_REMOTE_SERVER.trim().equalsIgnoreCase("true")) {
-			log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
-			return initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub");
-		} else {
-			return initialDriver(browser, relativeOrAbsoluteUrl, "");
-		}
+		int retry = 0;
+		do {
+			try {
+				if (IS_RUN_REMOTE_SERVER.trim().equalsIgnoreCase("true")) {
+					log.debug("[IS_RUN_REMOTE_SERVER] " + IS_RUN_REMOTE_SERVER);
+					webDriver = initialDriver(browser, relativeOrAbsoluteUrl, "http://" + GRID_HUB_IP + ":" + GRID_HUB_PORT + "/wd/hub");
+				} else {
+					webDriver = initialDriver(browser, relativeOrAbsoluteUrl, "");
+				}
+			} catch (WebDriverException ex) {
+				log.error("【initialDriver】 retry-->" + retry + " 【ExceptionMessage】" + ex);
+			}
+			retry++;
+			sleep(60 * 1000);
+		} while (webDriver == null && retry <= 5);
+		return webDriver;
 	}
-
+	//local
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, Method method) {
 		int retry = 0;
 		do {
@@ -54,7 +67,7 @@ public class BrowserFactory extends ConfigP {
 		} while (webDriver == null && retry <= 5);
 		return webDriver;
 	}
-
+	//local
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl){
 		//Selenide的配置信息
 		Configuration.timeout = FINDELEMENT_TIMEOUT;
@@ -75,6 +88,9 @@ public class BrowserFactory extends ConfigP {
 			options.addArguments("--start-maximized");//默认启动最大化，避免最大化过程失败
 			options.addArguments("--lang=en");
 			options.addArguments("--ignore-certificate-errors");
+			LoggingPreferences logs = new LoggingPreferences();
+			logs.enable(LogType.PERFORMANCE, Level.ALL);
+
 			return webDriver = new ChromeDriver(options);
 
 		} else if (browser.equals("firefox")) {
@@ -88,10 +104,21 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("name", Thread.currentThread().getStackTrace()[3].getMethodName());
 			desiredCapabilities.setCapability("build", System.getProperty("serviceBuildName"));
 			desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
+
+			LoggingPreferences logPrefs = new LoggingPreferences();
+			logPrefs.enable( LogType.PERFORMANCE, Level.ALL );
+			logPrefs.enable(LogType.BROWSER, Level.ALL);
+			logPrefs.enable(LogType.CLIENT, Level.ALL);
+			logPrefs.enable(LogType.DRIVER, Level.ALL);
+			logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+			logPrefs.enable(LogType.PROFILER, Level.ALL);
+			logPrefs.enable(LogType.SERVER, Level.ALL);
+
+			desiredCapabilities.setCapability("network", true);
+			desiredCapabilities.setCapability(CapabilityType.LOGGING_PREFS,logPrefs);
 			String testFileNameTemplate = DataUtils.getCurrentTime()+"_{browser}_{testStatus}";
 			log.debug("[testFileNameTemplate]{}",testFileNameTemplate);
 			desiredCapabilities.setCapability("testFileNameTemplate", testFileNameTemplate);
-			desiredCapabilities.setCapability("network", true);
 			log.debug("[idleTimeout] 20s");
 			desiredCapabilities.setCapability("idleTimeout", 240);//150-100
 			log.debug("[ZALENIUM_PROXY_CLEANUP_TIMEOUT]  90s");
@@ -114,6 +141,7 @@ public class BrowserFactory extends ConfigP {
 		return webDriver;
 	}
 
+	//remote
 	public WebDriver initialDriver(String browser, String relativeOrAbsoluteUrl, String hubUrl, Method method){
 		//Selenide的配置信息
 		Configuration.timeout = FINDELEMENT_TIMEOUT;
@@ -157,9 +185,18 @@ public class BrowserFactory extends ConfigP {
 				log.debug("[set recordVideo]{}",RECORD_VIDEO.trim());
 				desiredCapabilities.setCapability("recordVideo", false);
 			}
-			//Screen Resolution
-//			desiredCapabilities.setCapability("screenResolution", "1920x1080");
+
+			LoggingPreferences logPrefs = new LoggingPreferences();
+			logPrefs.enable( LogType.PERFORMANCE, Level.ALL );
+			logPrefs.enable(LogType.BROWSER, Level.ALL);
+			logPrefs.enable(LogType.CLIENT, Level.ALL);
+			logPrefs.enable(LogType.DRIVER, Level.ALL);
+			logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+			logPrefs.enable(LogType.PROFILER, Level.ALL);
+			logPrefs.enable(LogType.SERVER, Level.ALL);
 			desiredCapabilities.setCapability("network", true);
+
+
 			//unknown error: DevToolsActivePort file doesn't exist
 			log.debug("[add config for DevToolsActivePort issue start...]");
 
@@ -171,6 +208,7 @@ public class BrowserFactory extends ConfigP {
 			options.addArguments("--lang=en");
 			options.addArguments("--ignore-certificate-errors");
 
+
 			//options.addArguments("blink-settings=imagesEnabled=false");//不加载图片, 提升速度
 			Map<String, Object> prefs = new HashMap<String, Object>();
 			prefs.put("credentials_enable_service", false);
@@ -181,6 +219,7 @@ public class BrowserFactory extends ConfigP {
 			options.setExperimentalOption("prefs", prefs);
 			desiredCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 			desiredCapabilities.setCapability("goog:"+ChromeOptions.CAPABILITY, options);
+			desiredCapabilities.setCapability("goog:"+CapabilityType.LOGGING_PREFS,logPrefs);
 			log.debug("[add config for DevToolsActivePort issue end...]");
 			try {
 				webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
