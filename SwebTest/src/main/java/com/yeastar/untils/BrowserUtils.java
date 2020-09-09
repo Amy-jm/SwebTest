@@ -154,9 +154,9 @@ public class BrowserUtils {
             for (LogEntry entry : entries) {
                 String data = (new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
 //                    if(data.contains("/api/v") || data.contains("\"Set-Cookie\"") || data.contains("\"status\"") || data.contains("payloadData")){
-                    if(data.contains("/api/v")  || data.contains("payloadData")){
+//                    if(data.contains("/api/v")  || data.contains("payloadData")){
                        log.fatal(data);
-                    }
+//                    }
             }
 
 //            log.fatal("\r\n===[" + method.getName() + "]===LogType.SERVER.start=====================");
