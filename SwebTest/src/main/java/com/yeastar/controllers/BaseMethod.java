@@ -197,7 +197,7 @@ public class BaseMethod extends WebDriverFactory {
 	 * @param username
 	 */
 	@Step("获取分机通话状态")
-	public static int getExtensionStatus(int username, int expectStatus, int timeout) {
+	public  int getExtensionStatus(int username, int expectStatus, int timeout) {
 		UserAccount account;
 		int time = 0;
 		int status = -1;
