@@ -180,6 +180,10 @@ import java.util.SimpleTimeZone;
  * Created by GaGa on 2017-05-19.
  */
 public class ConfigP extends DataReader2 {
+    public PjsipApp  pjsip = null ;
+    public void Configp(){
+        pjsip = new PjsipApp();
+    }
 
     public static long TEST_TIMEOUT = 3000;  //测试过程的时间差
     public static long FINDELEMENT_TIMEOUT = 10000;  //元素查找的时间差
@@ -475,7 +479,7 @@ public class ConfigP extends DataReader2 {
     /**
      * PJSIP  SSH  TCPSocket初始化
      */
-    public static PjsipApp pjsip = new PjsipApp();
+
     public static SSHApp ssh = new SSHApp();
     public static TcpSocket tcpSocket = new TcpSocket();
     /**
