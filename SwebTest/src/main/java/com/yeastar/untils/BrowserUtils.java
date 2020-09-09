@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -148,28 +149,30 @@ public class BrowserUtils {
 
             log.fatal("\r\n===[" + method.getName() + "]===LogType.PERFORMANCE.start=====================");
             //this is just to make you know user number of logs with LogType as PERFORMANCE
+            String keyWord = ",\"payloadData\":\"{\\\"errcode";
+            String endKeyWord = "\"}\"},\"timestamp\":";
+            HashSet hs = new HashSet();
             List<LogEntry> entries = driver.manage().logs().get(LogType.PERFORMANCE).getAll();
             log.fatal(entries.size() + " " + LogType.PERFORMANCE + " log entries found");
             //as the request and response will consists HUGE amount of DATA so I will be write it into text file for reference
             for (LogEntry entry : entries) {
                 String data = (new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
-//                    if(data.contains("/api/v") || data.contains("\"Set-Cookie\"") || data.contains("\"status\"") || data.contains("payloadData")){
-//                    if(data.contains("/api/v")  || data.contains("payloadData")){
-                       log.fatal(data);
-//                    }
+                if (data.contains("/api/v") || data.contains("\"Set-Cookie\"") || data.contains("\"status\"") || data.contains("payloadData")) {
+                    if(data.contains(keyWord) && data.contains(endKeyWord)){
+                        int beginIndex=data.indexOf(keyWord);
+                        int endIndex=data.indexOf(endKeyWord);
+                        hs.add(data.substring(beginIndex,endIndex));
+                    }
+                    log.fatal(data);
+                }
             }
 
-//            log.fatal("\r\n===[" + method.getName() + "]===LogType.SERVER.start=====================");
-//            LogEntries logEntries_SERVER = driver.manage().logs().get(LogType.SERVER);
-//            for (LogEntry entry : logEntries_SERVER) {
-//                log.fatal(new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
-//                //do something useful with the data
-//            }
-
             log.fatal("\r\n===[" + method.getName() + "]===LogType  end=====================");
+            log.fatal("\r\n===[" + method.getName() + "]===LogType  errcode and message start=====================");
+            log.error(hs);
+            log.fatal("\r\n===[" + method.getName() + "]===LogType  errcode and message end=====================");
         } catch (Exception e) {
             log.error("[getAnalyzeLog error]{}", e.getMessage() + e.getStackTrace());
         }
     }
-
-    }
+}
