@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.close;
 import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 /**
  * Created by Yeastar on 2018/2/9.
@@ -196,7 +197,13 @@ public class LessonReport extends SwebDriver{
     public void step(String desc){
         log.debug("[step] "+desc);
         sleep(5);
-        Cookie cookie = new Cookie("zaleniumMessage", desc);
-        webDriver.manage().addCookie(cookie);
+        try{
+            Cookie cookie = new Cookie("zaleniumMessage", desc);
+            getWebDriver().manage().addCookie(cookie);
+        }catch (org.openqa.selenium.WebDriverException exception){
+            log.error("[org.openqa.selenium.WebDriverException: unable to set cookie]");
+        }catch(Exception ex){
+            log.error("[BaseMethod on step ] "+ex);
+        }
     }
 }

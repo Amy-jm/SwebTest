@@ -178,6 +178,8 @@ public class BrowserUtils {
                 getWebDriver().manage().addCookie(cookie);
             }catch (org.openqa.selenium.WebDriverException exception){
                 log.error("[org.openqa.selenium.WebDriverException: unable to set cookie]");
+            }catch(Exception ex){
+                log.error("[BrowserUtils on LogType  errcode and message start ] "+ex);
             }
             log.fatal("\r\n===[" + method.getName() + "]===LogType  errcode and message end=====================");
         } catch (Exception e) {

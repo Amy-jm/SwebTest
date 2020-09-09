@@ -28,6 +28,8 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
             webDriver.manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
             log.error(ex.getMessage());
+        }catch(Exception ex){
+            log.error("[TestNG Listener on Success ] "+ex);
         }
     }
 
@@ -47,6 +49,8 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
             webDriver.manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
             log.error(ex.getMessage());
+        }catch(Exception ex){
+            log.error("[TestNG Listener on Failure ] "+ex);
         }
     }
 
@@ -66,6 +70,8 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
             webDriver.manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
             log.error(ex.getMessage());
+        }catch(Exception ex){
+            log.error("[TestNG Listener on Skipped ] "+ex);
         }
     }
 
@@ -105,6 +111,8 @@ public class TestNGListener extends TestListenerAdapter implements IInvokedMetho
             webDriver.manage().addCookie(cookie);
         }catch(java.lang.NullPointerException ex){
             log.error(ex.getMessage());
+        }catch(Exception ex){
+            log.error("[TestNG Listener on onTestStart ] "+ex);
         }
     }
 
