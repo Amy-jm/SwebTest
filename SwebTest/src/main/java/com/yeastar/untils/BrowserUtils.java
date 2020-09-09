@@ -1,6 +1,7 @@
 package com.yeastar.untils;
 
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
@@ -13,6 +14,8 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
 /**
@@ -149,7 +152,7 @@ public class BrowserUtils {
 
             log.fatal("\r\n===[" + method.getName() + "]===LogType.PERFORMANCE.start=====================");
             //this is just to make you know user number of logs with LogType as PERFORMANCE
-            String keyWord = ",\"payloadData\":\"{\\\"errcode";
+            String keyWord = "{\\\"errcode";
             String endKeyWord = "\"}\"},\"timestamp\":";
             HashSet hs = new HashSet();
             List<LogEntry> entries = driver.manage().logs().get(LogType.PERFORMANCE).getAll();
@@ -170,6 +173,12 @@ public class BrowserUtils {
             log.fatal("\r\n===[" + method.getName() + "]===LogType  end=====================");
             log.fatal("\r\n===[" + method.getName() + "]===LogType  errcode and message start=====================");
             log.error(hs);
+            try{
+                Cookie cookie = new Cookie("zaleniumMessage", "[errcode and message] "+hs);
+                getWebDriver().manage().addCookie(cookie);
+            }catch (org.openqa.selenium.WebDriverException exception){
+                log.error("[org.openqa.selenium.WebDriverException: unable to set cookie]");
+            }
             log.fatal("\r\n===[" + method.getName() + "]===LogType  errcode and message end=====================");
         } catch (Exception e) {
             log.error("[getAnalyzeLog error]{}", e.getMessage() + e.getStackTrace());
