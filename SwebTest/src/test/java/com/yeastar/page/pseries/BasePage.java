@@ -18,6 +18,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.yeastar.controllers.WebDriverFactory.getDriver;
 
 /**
  * BasePage 通用方法
@@ -197,7 +198,12 @@ public class BasePage implements IButton{
      */
     public void getLastElementOffsetAndClick(String strXpath,int x,int y){
         ElementsCollection elements_Test = $$(By.xpath(strXpath));
-        actions().moveToElement(elements_Test.get(elements_Test.size()-1),x,y).click().build().perform();
+        try {
+            actions().moveToElement(elements_Test.get(elements_Test.size() - 1), x, y).click().build().perform();
+        } catch (org.openqa.selenium.WebDriverException ex) {
+            log.info("[BastPage getLastElementOffsetAndClick exception And will retry] " + ex);
+            new Actions(getDriver()).moveToElement(elements_Test.get(elements_Test.size() - 1), x, y).click().build().perform();
+        }
     }
 
 

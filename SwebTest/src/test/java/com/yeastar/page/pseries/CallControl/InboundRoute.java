@@ -7,14 +7,16 @@ import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.yeastar.controllers.WebDriverFactory.getDriver;
-
+@Log4j2
 public class InboundRoute extends BasePage implements IInboundRoutePageElement {
 
     /**
@@ -29,7 +31,12 @@ public class InboundRoute extends BasePage implements IInboundRoutePageElement {
         sleep(WaitUntils.SHORT_WAIT*2);//todo version 30 bug,wait for fix and delete sleep
         ele_edit_name.setValue(name);
         ele_edit_default_destination.scrollTo();
-        actions().moveToElement(ele_edit_trunk_toRight_btn).perform();
+        try {
+            actions().moveToElement(ele_edit_trunk_toRight_btn).perform();
+        }catch(org.openqa.selenium.WebDriverException ex){
+            log.info("[createInboundRoute action exception And will retry] "+ex);
+            new Actions(getDriver()).moveToElement(ele_edit_time_condition).perform();
+        }
         for(String trunkname: trunklist){
             $(By.xpath("//td[contains(text(),'"+trunkname+"')]")).shouldBe(Condition.visible).click();
         }

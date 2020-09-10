@@ -7,9 +7,11 @@ import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ import static com.yeastar.controllers.WebDriverFactory.getDriver;
  * @author: huangjx@yeastar.com
  * @create: 2020/06/30
  */
+@Log4j2
 public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageElement{
 
     //根据路由名称选择->编辑
@@ -91,7 +94,12 @@ public class OutBoundRoutePage extends BasePage implements IOutBoundRoutePageEle
      */
     public OutBoundRoutePage addExtensionOrExtensionGroup(String extension){
         sleep(WaitUntils.SHORT_WAIT);
-        Selenide.actions().moveToElement($(By.xpath(String.format(GROUP_EXTENSION_XPATH,extension))),3,3).click().perform();
+        try{
+            Selenide.actions().moveToElement($(By.xpath(String.format(GROUP_EXTENSION_XPATH,extension))),3,3).click().perform();
+        }catch(org.openqa.selenium.WebDriverException ex){
+            log.info("[addExtensionOrExtensionGroup action exception And will retry] "+ex);
+            new Actions(getDriver()).moveToElement($(By.xpath(String.format(GROUP_EXTENSION_XPATH,extension))),3,3).click().perform();
+        }
         sleep(WaitUntils.RETRY_WAIT);
         $(By.xpath(String.format(Group_EXTENSION_RIGHT_BUTTON_XPATH,extension))).click();
         return this;

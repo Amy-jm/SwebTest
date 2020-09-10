@@ -14,10 +14,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.*;
 
 import static com.codeborne.selenide.Selenide.*;
+import static com.yeastar.controllers.WebDriverFactory.getDriver;
 import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 /**
@@ -214,7 +216,12 @@ public class OperatorPanelPage extends BasePage {
             SelenideElement transferElement = $(By.xpath(String.format(ACTION_XPATH,event.alias)));
             $(By.xpath(String.format(ACTION_XPATH,event.alias))).hover();
             sleep(WaitUntils.RETRY_WAIT);
-            actions().moveToElement(transferElement,220,0).click().perform();
+            try{
+                actions().moveToElement(transferElement,220,0).click().perform();
+            } catch (org.openqa.selenium.WebDriverException ex) {
+                log.info("[OperatorPanel eventAction exception And will retry] " + ex);
+                new Actions(getDriver()).moveToElement(transferElement,220,0).click().perform();
+            }
             if(eventParam != ""){
                 transferElementInput.shouldBe(Condition.visible).setValue(eventParam);
             }else{
@@ -268,7 +275,12 @@ public class OperatorPanelPage extends BasePage {
             SelenideElement transferElement = $(By.xpath(String.format(ACTION_XPATH,event.alias)));
             $(By.xpath(String.format(ACTION_XPATH,event.alias))).hover();
             sleep(WaitUntils.RETRY_WAIT);
-            actions().moveToElement(transferElement,220,0).click().perform();
+            try{
+                actions().moveToElement(transferElement,220,0).click().perform();
+            } catch (org.openqa.selenium.WebDriverException ex) {
+                log.info("[OperatorPanel eventAction exception And will retry] " + ex);
+                new Actions(getDriver()).moveToElement(transferElement,220,0).click().perform();
+        }
             if(eventParam != ""){
                 transferElementInput.shouldBe(Condition.visible).setValue(eventParam);
                 if(isClickVoiceMailImage){
