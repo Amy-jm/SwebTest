@@ -485,7 +485,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("cdr判断");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        auto.cdrPage().assertCDRRecord(getDriver(),0,"2002<2002>","Voicemail Yeastar Test0 朗视信息科技<0>","VOICEMAIL","2002<2002> hung up",communication_inbound,SPS,"");
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Voicemail Yeastar Test0 朗视信息科技<0>","VOICEMAIL","2000<2000> hung up",communication_inbound,SPS,"");
 
         assertStep("分机0登录webclient，voicemail页面新增一条已读的来自2002的语音留言");
         auto.homePage().logout();
@@ -530,7 +530,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("cdr判断");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        auto.cdrPage().assertCDRRecord(getDriver(),0,"2002<2002>","Voicemail Yeastar Test0 朗视信息科技<0>","VOICEMAIL","2002<2002> hung up",communication_inbound,SPS,"");
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Voicemail Yeastar Test0 朗视信息科技<0>","VOICEMAIL","2000<2000> hung up",communication_inbound,SPS,"");
 
         assertStep("分机0登录webclient，voicemail页面新增一条未读的来自2002的语音留言");
         auto.homePage().logout();
