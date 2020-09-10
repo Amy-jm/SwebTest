@@ -97,20 +97,8 @@ public class TestExtensionVoicemail extends TestCaseBase {
             auto.extensionPage().clickSave();
             softAssert.assertAll();
 
-
-//        sleep(3000);
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
-//        auto.trunkPage().deleteTrunk(getDriver(),SPS).createSpsTrunk(SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2).clickSaveAndApply();
-
-//        step("删除呼入路由 -> 创建呼入路由InRoute1");
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
-//        ArrayList<String> trunklist = new ArrayList<>();
-//        trunklist.add(SPS);
-//        auto.inboundRoute().deleteAllInboundRoutes()
-//                .createInboundRoute("InRoute1",trunklist)
-//                .editInbound("InRoute1","Name")
-//                .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技")
-//                .clickSaveAndApply();
+            apiUtil.apply();
+            apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
             runRecoveryEnvFlag = false;
         }
 
@@ -172,10 +160,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
         softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-from-phonenumber"),"[Assert,cli确认提示音vm-from-phonenumber]");
         softAssert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("vm-duration"),"[Assert,cli确认提示音vm-duration]");
         softAssert.assertAll();
-        
+
         auto.homePage().logout();
         assertStep("分机0登录webclient，voicemail页面新增一条来自2000未读的留言记录");
-        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+//        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);

@@ -56,12 +56,12 @@ public class RingGroupPage extends BasePage implements IRingGroupPageElement {
             actions().moveToElement(ele_ring_group_add_extension_member).perform();
         } catch (org.openqa.selenium.WebDriverException ex) {
             log.info("[createInboundRoute action exception And will retry] " + ex);
-            new Actions(getDriver()).moveToElement(ele_ring_group_add_extension_member).perform();
+            new Actions(getDriver()).moveToElement(ele_ring_group_add_extension_member).build().perform();
         }
         for (String extname : extList) {
             $(By.xpath("//td[contains(text(),'" + extname + "')]")).click();
         }
-        ele_ring_group_add_extension_member.click();
+        ele_ring_group_add_extension_member.shouldBe(Condition.enabled).click();
         return this;
     }
 }

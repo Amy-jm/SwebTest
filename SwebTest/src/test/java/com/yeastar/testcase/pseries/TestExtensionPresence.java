@@ -48,9 +48,10 @@ public class TestExtensionPresence extends TestCaseBase{
 
             step("【环境准备】2、创建分机");
             auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
+            auto.extensionPage().deleAllExtension().clickSaveAndApply();
             auto.extensionPage().deleAllExtension().createSipExtension("0","Yeastar Test0","朗视信息科技","(0591)-Ys.0","0",EXTENSION_PASSWORD).clickSave();
             auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
-            auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSave();
+            auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSaveAndApply();
 
             step("【环境准备】3、创建Trunk");
             apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
@@ -59,34 +60,36 @@ public class TestExtensionPresence extends TestCaseBase{
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_queue);
             list.clear();
             list.add("Yeastar Test9999999 朗视信息科技");
-            auto.queuePage().deleAllQueue().createQueue("6400","6400").editStaticAgents(list).clickSave();
+            auto.queuePage().deleAllQueue().clickSaveAndApply();
+            auto.queuePage().deleAllQueue().createQueue("6400","6400").editStaticAgents(list).clickSaveAndApply();
             list.clear();
             list.add("Yeastar Test0 朗视信息科技");
-            auto.queuePage().createQueue("6402","6402").editDynamicAgents(list).clickSave();
-            auto.queuePage().createQueue("6401","6401").editStaticAgents(list).clickSave();
+            auto.queuePage().createQueue("6402","6402").editDynamicAgents(list).clickSaveAndApply();
+            auto.queuePage().createQueue("6401","6401").editStaticAgents(list).clickSaveAndApply();
 
             step("【环境准备】5、创建IVR");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-            auto.ivrPage().deleAllIVR().createIVR("6200","6200","Yeastar Test9999999 朗视信息科技").clickSave();
+            auto.ivrPage().deleAllIVR().clickSaveAndApply();
+            auto.ivrPage().deleAllIVR().createIVR("6200","6200","Yeastar Test9999999 朗视信息科技").clickSaveAndApply();
 
             step("【环境准备】6、创建响铃组");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ring_group);
             list.clear();
             list.add("Yeastar Test9999999 朗视信息科技");
-            auto.ringGroupPage().deleAllRingGroup().createRingGroup("6300","6300",list).clickSave();
+            auto.ringGroupPage().deleAllRingGroup().clickSaveAndApply();
+            auto.ringGroupPage().deleAllRingGroup().createRingGroup("6300","6300",list).clickSaveAndApply();
             list.clear();
             list.add("Yeastar Test0 朗视信息科技");
-            auto.ringGroupPage().createRingGroup("6301","6301",list).clickSave();
+            auto.ringGroupPage().createRingGroup("6301","6301",list).clickSaveAndApply();
 
             step("【环境准备】7、创建呼入路由");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_inbound_routes);
             list.clear();
             list.add(SPS);
-            auto.inboundRoute()
-                    .deleteAllInboundRoutes()
+            auto.inboundRoute().deleteAllInboundRoutes()
                     .createInboundRoute("InRoute1",list)
                     .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(),"0-Yeastar Test0 朗视信息科技")
-                    .clickSave();
+                    .clickSaveAndApply();
 
             step("【环境准备】8、创建呼出路由");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
@@ -95,9 +98,9 @@ public class TestExtensionPresence extends TestCaseBase{
             list2.clear();
             list2.add("Yeastar Test0 朗视信息科技");
             list2.add("Yeastar Test9999999 朗视信息科技");
-            auto.outBoundRoutePage().deleteAllOutboundRoutes().createOutbound("Outbound1",list,list2)
-                    .addPatternAndStrip(0,"90.","2").clickSave();
-            auto.ringGroupPage().clickApply();
+            auto.outBoundRoutePage().deleteAllOutboundRoutes()
+                    .createOutbound("Outbound1",list,list2)
+                    .addPatternAndStrip(0,"90.","2").clickSaveAndApply();
 
             auto.homePage().logout();
             runRecoveryEnvFlag = false;
