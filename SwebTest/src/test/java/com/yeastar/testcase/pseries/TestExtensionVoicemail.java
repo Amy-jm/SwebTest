@@ -191,6 +191,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("设置分机0状态为Available ");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().editExtension(getDriver(),"0").switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
                 .selectComm(ele_extension_voicemail_available_combobox,"test.wav");
         auto.extensionPage().clickSave();
         auto.extensionPage().selectExtensionPresence("0",IExtensionPageElement.TABLE_PRESENCE_LIST.AVAILABLE.getAlias()).clickApply();
@@ -203,7 +204,6 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
 
         step("cli确认播放提示音为test.slin");
         Assert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test.slin"),"[Assert,cli确认提示音]");
