@@ -241,7 +241,6 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
 
         step("cli确认播放提示音为test.slin");
         Assert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test.slin"),"[Assert,cli确认提示音]");
@@ -279,7 +278,6 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
 
         step("cli确认播放提示音为test.slin");
         Assert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test.slin"),"[Assert,cli确认提示音]");
@@ -316,7 +314,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+
 
         step("cli确认播放提示音为test.slin");
         Assert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test.slin"),"[Assert,cli确认提示音]");
@@ -353,7 +351,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+
 
         step("cli确认播放提示音为test6.wav");
         Assert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test.slin"),"[Assert,cli确认提示音]");
@@ -390,7 +388,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2000,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+
 
         step("cli确认播放提示音为test.slin");
         Assert.assertTrue(SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, SHOW_CLI_LOG).contains("test.slin"),"[Assert,cli确认提示音]");
@@ -409,13 +407,14 @@ public class TestExtensionVoicemail extends TestCaseBase {
         loginWithAdmin();
 
         step("环境准备");
-        preparationSteps();
+//        preparationSteps();
 
         step("修改New Voicemail Notification设置为send email notification with attachment，afternotification设置为delete voicemail");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().editExtension(getDriver(),"0")
                 .setElementValue(ele_extension_user_email_addr,EMAIL)
                 .switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
                 .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.SEND_EMAIL_NOTIFICATIONS_WITH_ATTACHMENT.getAlias())
                 .selectCombobox(IExtensionPageElement.AFTER_NOTIFICATION.DELETE_VOICEMAIL.getAlias()).clickSaveAndApply();
 
@@ -429,7 +428,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2001,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+//
 
 //        step("【验证邮箱服务器是否能正常】通过修改分机1001密码，验证是否能收到邮件");
 //        sleep(30000);//等待接收邮件
@@ -440,16 +439,16 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("cdr判断");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        auto.cdrPage().assertCDRRecord(getDriver(),0,"2001<2001>","Voicemail Yeastar Test0 朗视信息科技<0>","VOICEMAIL","2001<2001> hung up",communication_inbound,SPS,"");
+        auto.cdrPage().assertCDRRecord(getDriver(),0,"2000<2000>","Voicemail Yeastar Test0 朗视信息科技<0>","VOICEMAIL","2000<2000> hung up",communication_inbound,SPS,"");//DEVICE_ASSIST_2 辅助设置SIP 呼出名称设置为 2000 （VCP多线路基础配置）
 
         //todo 检查分机页面
         assertStep("分机0登录webclient，voicemail页面未新增一条来自2001未读的留言记录");
         auto.homePage().logout();
-        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+//        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
-        Assert.assertEquals(me_name,"2001\n" +"External Number");
+        Assert.assertEquals(me_name,"2000\n" +"External Number");//DEVICE_ASSIST_2 辅助设置SIP 呼出名称设置为 2000 （VCP多线路基础配置）
     }
 
     @Epic("P_Series")
@@ -471,6 +470,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("修改New Voicemail Notification设置为send email notification without attachment，afternotification设置为mark as read");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().editExtension(getDriver(),"0").switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
                 .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.SEND_EMAIL_NOTIFICATIONS_WITHOUT_ATTACHMENT.getAlias())
                 .selectCombobox(IExtensionPageElement.AFTER_NOTIFICATION.MARK_AS_READ.getAlias()).clickSaveAndApply();
 
@@ -481,7 +481,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2002,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+
 
         assertStep("cdr判断");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -489,10 +489,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("分机0登录webclient，voicemail页面新增一条已读的来自2002的语音留言");
         auto.homePage().logout();
-        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+//        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
-        Assert.assertEquals(me_name,"2002\n" +"External Number");
+        Assert.assertEquals(me_name,"2000\n" +"External Number");//DEVICE_ASSIST_2 辅助设置SIP 呼出名称设置为 2000
     }
 
     @Epic("P_Series")
@@ -515,6 +515,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         step("修改New Voicemail Notification设置为do not send email notification");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().editExtension(getDriver(),"0").switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
+                .isCheckBoxForSwitch(IExtensionPageElement.ele_extension_voicemail_enable,true)
                 .selectCombobox(IExtensionPageElement.NEW_VOICEMAIL_NOTIFICATION.DO_NOT_SEND_EMAIL_NOTIFICATIONS.getAlias()).clickSaveAndApply();
 
         step("辅助设备分机2002通过sps trunk呼入，进入voicemial");
@@ -525,7 +526,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(2002,"99550330",DEVICE_ASSIST_2,false);
         sleep(20000);
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+
 
         assertStep("cdr判断");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -533,10 +534,10 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("分机0登录webclient，voicemail页面新增一条未读的来自2002的语音留言");
         auto.homePage().logout();
-        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+//        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
-        Assert.assertNotEquals(me_name,"2002\n" +"External Number");
+        Assert.assertNotEquals(me_name,"2000\n" +"External Number");//DEVICE_ASSIST_2 辅助设置SIP 呼出名称设置为 2000
     }
 
     @Epic("P_Series")
@@ -568,7 +569,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         softAssert.assertEquals(getExtensionStatus(2000, HUNGUP, 8),HUNGUP,"预期分机2000直接被挂断");
         pjsip.Pj_Hangup_All();
-        pjsip.Pj_Destory();
+
         softAssert.assertAll();
     }
 
