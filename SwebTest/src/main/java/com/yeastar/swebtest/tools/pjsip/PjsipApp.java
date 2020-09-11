@@ -333,7 +333,7 @@ public class PjsipApp extends PjsipDll {
     }
 
     @Step("【pjsip】拨号 不会自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2} ")
-    public String Pj_Make_Call_No_Answer(int CallerNum, String Callee, String ServerIp) throws Exception {
+    public String Pj_Make_Call_No_Answer(int CallerNum, String Callee, String ServerIp){
         return Pj_Make_Call_No_Answer(CallerNum, Callee, ServerIp, true);
     }
 
