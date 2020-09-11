@@ -4,14 +4,13 @@ import com.yeastar.swebtest.tools.reporter.Reporter;
 import com.yeastar.swebtest.tools.ysassert.YsAssert;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import org.testng.Assert;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.yeastar.swebtest.driver.Config.*;
-import static com.yeastar.swebtest.driver.SwebDriver.*;
+import static com.yeastar.swebtest.driver.SwebDriver.gridExtensonStatus;
+import static com.yeastar.swebtest.driver.SwebDriver.ys_waitingTime;
 
 /**
  * Created by Yeastar on 2017/6/7.
@@ -89,18 +88,30 @@ public class PjsipApp extends PjsipDll {
     //释放PJSIP
     @Step("【pjsip】释放PJSIP")
     public void Pj_Destory() {
-        pjsipdll.instance.ys_destroy_pjsua();
+        try {
+            pjsipdll.instance.ys_destroy_pjsua();
+        } catch (Exception ex) {
+            log.error("【Pj_Destory】" + ex);
+        }
     }
 
     //在Account数组中创建分机
     @Step("【pjsip】在Account数组中创建分机")
     public void Pj_CreateAccount(int username, String password, String type, int pos) {
-        Pj_CreateAccount(type, username, password, pos, "", 5060);
+        try{
+            Pj_CreateAccount(type, username, password, pos, "", 5060);
+        } catch (Exception ex) {
+            log.error("【Pj_CreateAccount】" + ex);
+        }
     }
 
     @Step("【pjsip】创建分机, username：{0},  password:{1},  type:{2}, port:{3}, pos:{4} ")
     public void Pj_CreateAccount(int username, String password, String type, int port, int pos) {
-        Pj_CreateAccount(type, username, password, pos, "", port);
+        try{
+            Pj_CreateAccount(type, username, password, pos, "", port);
+        } catch (Exception ex) {
+            log.error("【Pj_CreateAccount】" + ex);
+        }
     }
 
     @Step("【pjsip】创建分机,type:{0}, username：{1},  password:{2},  pos:{3}, ip:{4}, port:{5} ")
@@ -214,8 +225,12 @@ public class PjsipApp extends PjsipDll {
     }
 
     public void Pj_Register_Account_WithoutAssist_For_PSeries(int username, String ip) {
-        Pj_Register_Account("UDP", username, ip, "", 5060, false);
-        ys_waitingTime(2000);
+        try {
+            Pj_Register_Account("UDP", username, ip, "", 5060, false);
+            ys_waitingTime(2000);
+        }catch(Exception ex){
+            log.error("[Pj_Pj_Register_Account_WithoutAssist_For_PSeries]"+ex);
+           }
     }
 
     public void Pj_Register_Account_WithoutAssist_For_PSeries(int username, String ip, int port) {
@@ -300,21 +315,25 @@ public class PjsipApp extends PjsipDll {
     //拨号 不会自动应答  特殊呼出号码
     @Step("【pjsip】拨号 不会自动应答 特殊呼出号码： callerNum：{0} , Callee：{1} , ServerIp：{2} , Assert：{3}")
     public String Pj_Make_Call_No_Answer(int CallerNum, String Callee, String ServerIp, boolean Assert) {
-        UserAccount CallerAccount;
-        CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
-        String uri = "";
-        uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
+        try {
+            UserAccount CallerAccount;
+            CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
+            String uri = "";
+            uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
 //        System.out.println("uri: "+ uri);//todo 待后续按日志等级输出
-        if (CallerAccount.accId != -1) {
-            pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false); //todo 待后续按日志等级输出
+            if (CallerAccount.accId != -1) {
+                pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false); //todo 待后续按日志等级输出
 //            System.out.println("make call no answer:"+pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false));
+            }
+            ys_waitingTime(2000);
+        } catch (Exception ex) {
+            log.error("【Pj_Pj_Make_Call_No_Answer】" + ex);
         }
-        ys_waitingTime(2000);
         return "";
     }
 
     @Step("【pjsip】拨号 不会自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2} ")
-    public String Pj_Make_Call_No_Answer(int CallerNum, String Callee, String ServerIp) {
+    public String Pj_Make_Call_No_Answer(int CallerNum, String Callee, String ServerIp) throws Exception {
         return Pj_Make_Call_No_Answer(CallerNum, Callee, ServerIp, true);
     }
 
@@ -468,8 +487,12 @@ try{
     @Step("【pjsip】通话全部挂断")
     public int Pj_Hangup_All(){
         int suc=-1;
+        try{
         suc = pjsipdll.instance.ys_hangup_all_call();
         ys_waitingTime(2000);
+        }catch(Exception ex){
+            log.error("【Pj_Hangup_All】" + ex);
+        }
         return suc;
     }
 
@@ -493,7 +516,7 @@ try{
             ys_waitingTime(3000);
 
         }catch(Exception ex){
-            log.error("【pj_hangupCall】"+ex);
+            log.error("【pj_hangupCall number】"+ex);
         }
         return suc;
     }
