@@ -175,6 +175,7 @@ public class BrowserUtils {
             log.error(hs);
             try{
                 Cookie cookie = new Cookie("zaleniumMessage", "[errcode and message] "+hs);
+                log.debug("[errcode and message] "+ method.getName() +"--->"+hs);
                 getWebDriver().manage().addCookie(cookie);
             }catch (org.openqa.selenium.WebDriverException exception){
                 log.error("[org.openqa.selenium.WebDriverException: unable to set cookie]");
