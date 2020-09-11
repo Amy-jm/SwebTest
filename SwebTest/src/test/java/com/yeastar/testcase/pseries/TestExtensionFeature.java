@@ -247,7 +247,7 @@ public class TestExtensionFeature extends TestCaseBase {
         pjsip.Pj_hangupCall(2001);
         assertStep("5[CDR]1001<1001> 响铃");
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        auto.cdrPage().assertCDRRecord(getDriver(), 0, "2001<2001>", "1001<1001>", "ANSWERED", "2001<2001> hung up", communication_inbound, SPS, "");
+        auto.cdrPage().assertCDRRecord(getDriver(), 0, "2000<2001>", "1001<1001>", "ANSWERED", "2000<2000> hung up", communication_inbound, SPS, "");//VCP 多显示 来电都显示未 2000
 
         softAssert.assertAll();
     }
