@@ -899,11 +899,11 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 //                              tuple ("RG1:4000 [4000]", "1005 F [1005]", "Ringing",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 //        }else{
             softAssertPlus.assertThat(allRecordList).extracting("caller","callee","status","details")
-                    .contains(tuple(ringGroupName_1+"2000 [2000]", "1005 F [1005]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+"2000 [2000]", "1006 G [1006]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+"2000 [2000]", "1007 H [1007]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+"2000 [2000]", "1008 I [1008]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                              tuple(ringGroupName_1+"2000 [2000]", "1009 J [1009]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+                    .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1006 G [1006]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+                              tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 //        }
 
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
@@ -1091,16 +1091,15 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
-            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                    .contains(tuple("4000<6101>", "1000 A<1000>", "VOICEMAIL", "4000<6101> hung up"),
-                              tuple ("4000<6101>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
-        }else{
-            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                    .contains(tuple("2000<2000>", "1000 A<1000>", "VOICEMAIL", "2000<2000> hung up"),
-                            tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
-        }
-
+//        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
+//            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+//                    .contains(tuple("4000<6101>", "1000 A<1000>", "VOICEMAIL", "4000<6101> hung up"),
+//                              tuple ("4000<6101>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+//        }else{
+//            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+//                    .contains(tuple("2000<2000>", "1000 A<1000>", "VOICEMAIL", "2000<2000> hung up"),
+//                            tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 1000 A<1000>"));
+//        }
         softAssertPlus.assertAll();
     }
 
