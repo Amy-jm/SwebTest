@@ -55,7 +55,7 @@ public class TestExtensionPresence extends TestCaseBase{
 
             step("[新增录音文件 test]");
             SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, "rm /ysdisk/ysapps/pbxcenter/var/lib/asterisk/sounds/record/0/*");
-//            pjsip.Pj_Init();
+            pjsip.Pj_Init();
             pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
             pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
             auto.extensionPage().editExtension(getDriver(),"0").recordVoicemailGreeting("0-Yeastar Test0 朗视信息科技","test");

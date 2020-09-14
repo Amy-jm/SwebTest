@@ -81,7 +81,7 @@ public class PjsipApp extends PjsipDll {
 //
             Reporter.infoExec("pjs_init done");
         } catch (Throwable ex) {
-            log.error("【Pj_Init】" + ex);
+            log.error("【PjsipException Init】" + ex);
         }
     }
 
@@ -91,7 +91,7 @@ public class PjsipApp extends PjsipDll {
         try {
             pjsipdll.instance.ys_destroy_pjsua();
         } catch (Throwable ex) {
-            log.error("【Pj_Destory】" + ex);
+            log.error("【PjsipException Destory】" + ex);
         }
     }
 
@@ -101,7 +101,7 @@ public class PjsipApp extends PjsipDll {
         try{
             Pj_CreateAccount(type, username, password, pos, "", 5060);
         } catch (Throwable ex) {
-            log.error("【Pj_CreateAccount】" + ex);
+            log.error("【PjsipException CreateAccount】" + ex);
         }
     }
 
@@ -110,7 +110,7 @@ public class PjsipApp extends PjsipDll {
         try{
             Pj_CreateAccount(type, username, password, pos, "", port);
         } catch (Throwable ex) {
-            log.error("【Pj_CreateAccount】" + ex);
+            log.error("【PjsipException CreateAccount】" + ex);
         }
     }
 
@@ -327,7 +327,7 @@ public class PjsipApp extends PjsipDll {
             }
             ys_waitingTime(2000);
         } catch (Throwable ex) {
-            log.error("【Pj_Pj_Make_Call_No_Answer】" + ex);
+            log.error("【PjsipException Pj_Make_Call_No_Answer】" + ex);
         }
         return "";
     }
@@ -379,7 +379,7 @@ public class PjsipApp extends PjsipDll {
                 }
             }
         } catch (Throwable ex) {
-            log.error("【Pj_Answer_Call】" + ex);
+            log.error("【PjsipException Answer_Call】" + ex);
         }
         return suc;
     }
@@ -424,7 +424,7 @@ public class PjsipApp extends PjsipDll {
 //        pageDeskTop.CDRandRecording.click();
 
         } catch (Throwable ex) {
-            log.error("【Pj_Make_Call_Auto_Answer】" + ex);
+            log.error("【PjsipException Make_Call_Auto_Answer】" + ex);
         }
         return callee_status;
     }
@@ -473,7 +473,7 @@ try{
 //        m_extension.closeMonitorWindow();
 //        pageDeskTop.CDRandRecording.click();
     } catch (Throwable ex) {
-        log.error("【Pj_Make_Call_Auto_Answer】" + ex);
+        log.error("【PjsipException Make_Call_Auto_Answer】" + ex);
     }
         return callee_status;
     }
@@ -491,7 +491,7 @@ try{
         suc = pjsipdll.instance.ys_hangup_all_call();
         ys_waitingTime(2000);
         }catch(Throwable ex){
-            log.error("【Pj_Hangup_All】" + ex);
+            log.error("【PjsipException Hangup_All】" + ex);
         }
         return suc;
     }
@@ -516,7 +516,7 @@ try{
             ys_waitingTime(3000);
 
         }catch(Throwable ex){
-            log.error("【Pj_hangupCall number】"+ex);
+            log.error("【PjsipException hangupCall number】"+ex);
         }
         return suc;
     }
@@ -576,7 +576,7 @@ try{
            ys_waitingTime(500);
         }
     } catch (Throwable ex) {
-        log.error("【Pj_Send_Dtmf】" + ex);
+        log.error("【PjsipException Send_Dtmf】" + ex);
     }
         return suc;
     }
@@ -634,7 +634,7 @@ try{
                 }
             }
         }catch(Throwable ex){
-                log.error("【Pj_fptr_regstate】" + ex);
+                log.error("【PjsipException fptr_regstate】" + ex);
         }
             return 0;
         }
@@ -699,7 +699,7 @@ try{
                 }
             }
         }catch(Throwable ex){
-            log.error("【Pj_fptr_callstate】" + ex);
+            log.error("【PjsipException fptr_callstate】" + ex);
         }
             return 0;
         }
