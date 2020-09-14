@@ -431,6 +431,8 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Issue("bug cdr 多显示一条为 call to T的记录")
     @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunk() throws IOException, JSchException {
+        prerequisite();
+
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
@@ -446,7 +448,7 @@ public class TestExtensionSecurity extends TestCaseBase {
                 .clickSaveAndApply();
 
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().editOutbound("AutoTest_Route","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
+        auto.outBoundRoutePage().editOutbound("Outbound1","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
 
 
         assertStep("4:全局设置 preference，Max Call Duration 设置30s");
