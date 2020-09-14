@@ -48,7 +48,7 @@ public class TestCaseBase extends BaseMethod {
             pjsip = new PjsipApp();
             log.debug("【pjsip new】 "+pjsip);
         } catch (Throwable ex) {
-         log.error("【Pj_setup new】" + ex);
+         log.error("【PjsipException new】" + ex);
         }
         log.debug("[open url time]:"+(System.currentTimeMillis()-startTime_2)/1000+" Seconds");
 
