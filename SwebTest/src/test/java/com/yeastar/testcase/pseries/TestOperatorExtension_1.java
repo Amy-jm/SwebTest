@@ -870,14 +870,21 @@ step("1:login web click ，测试线路："+message);
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-
+        if(message.equals("FXS")) {
+            softAssertPlus.assertThat(allRecordList).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1000 A [1000]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1001 B [1001]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1002 C [1002]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1003 D [1003]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()),
+                            tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1004 E [1004]", "Ringing", RECORD_DETAILS.INTERNAL_RING_GROUP.getAlias()));
+        }else {
             softAssertPlus.assertThat(allRecordList).extracting("caller", "callee", "status", "details")
                     .contains(tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1000 A [1000]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                             tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1001 B [1001]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                             tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1002 C [1002]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                             tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1003 D [1003]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                             tuple(ringGroupName_0 + ":2000 [2000]".replace("2000", vcpCaller + ""), "1004 E [1004]", "Ringing", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-
+        }
         softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_0.size());
 
 

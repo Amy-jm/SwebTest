@@ -205,7 +205,9 @@ public class TestExtensionFeature extends TestCaseBase {
 
         step("2:创建分机号1001，编辑call blocking");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().deleAllExtension().createSipExtension("1001", EXTENSION_PASSWORD).
+        auto.extensionPage().deleAllExtension().clickSaveAndApply();
+        auto.extensionPage().deleAllExtension().createSipExtension("1002", EXTENSION_PASSWORD).clickSaveAndApply();
+        auto.extensionPage().createSipExtension("1001", EXTENSION_PASSWORD).
                 switchToTab(TABLE_MENU.FEATURES.getAlias()).addCallHandingRule("2000", "IVR", "", "").clickSaveAndApply();
 
         step("删除呼入路由 -> 创建呼入路由InRoute1");
@@ -219,20 +221,21 @@ public class TestExtensionFeature extends TestCaseBase {
 //                .clickSaveAndApply();
 
         prerequisite();
+        sleep(WaitUntils.SHORT_WAIT * 3);
 
         assertStep("3:[PJSIP注册]] ，2000 呼叫 1001 ");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
+        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1001, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000, DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001, DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1002, DEVICE_IP_LAN);
 
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2000, "991001", DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT * 3);//等待自动挂断
-        pjsip.Pj_Hangup_All();
+        pjsip.Pj_hangupCall(2000);
 
         assertStep("5[CDR]IVR6200 响铃");
         //todo cdr 显示全选
@@ -242,12 +245,12 @@ public class TestExtensionFeature extends TestCaseBase {
         auto.cdrPage().assertCDRRecord(getDriver(), 0, "2000<2000>", "IVR 6200<6200>", "ANSWERED", "2000<2000> hung up", communication_inbound, SPS, "");
 
         assertStep("3:[PJSIP注册]] ，2001 呼叫 1001 ");
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(2001, "991001", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(1002, "1001", DEVICE_IP_LAN, false);
         sleep(WaitUntils.SHORT_WAIT * 2);
-        pjsip.Pj_hangupCall(2001);
+        pjsip.Pj_hangupCall(1002);
         assertStep("5[CDR]1001<1001> 响铃");
         auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        auto.cdrPage().assertCDRRecord(getDriver(), 0, "2001<2001>", "1001<1001>", "ANSWERED", "2001<2001> hung up", communication_inbound, SPS, "");
+        auto.cdrPage().assertCDRRecord(getDriver(), 0, "1002<1002>", "1001<1001>", "ANSWERED", "1002<1002> hung up", communication_internal, "", "");//VCP 多显示 来电都显示未 2000
 
         softAssert.assertAll();
     }

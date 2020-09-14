@@ -489,7 +489,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("分机0登录webclient，voicemail页面新增一条已读的来自2002的语音留言");
         auto.homePage().logout();
-//        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
         Assert.assertEquals(me_name,"2000\n" +"External Number");//DEVICE_ASSIST_2 辅助设置SIP 呼出名称设置为 2000
@@ -534,7 +534,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
 
         assertStep("分机0登录webclient，voicemail页面新增一条未读的来自2002的语音留言");
         auto.homePage().logout();
-//        auto.loginPage().loginWithExtension("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW);
+        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
         Assert.assertNotEquals(me_name,"2000\n" +"External Number");//DEVICE_ASSIST_2 辅助设置SIP 呼出名称设置为 2000

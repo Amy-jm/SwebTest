@@ -281,6 +281,7 @@
                 <directory>src/test/resources</directory>
                 <includes>
                     <include>**/*.properties</include>
+                    <include>**/*.ts</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

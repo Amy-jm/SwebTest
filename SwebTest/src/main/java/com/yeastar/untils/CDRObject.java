@@ -44,7 +44,7 @@ public class CDRObject {
         time = getValue("time");
         callFrom = getValue("call_from").replace(prefix,"");
         callTo = getValue("call_to").replace(prefix,"");
-        callDuration = getValue("duration"); //todo 时间需要转化成00:00:00
+        callDuration = obj.getString("duration"); //todo 时间需要转化成00:00:00
         ringDuration = getValue("ring_duration");
         talkDuration = getValue("talk_duration");
         status = UIMapUtils.getValueByKey(getValue("disposition").toLowerCase().replace(" ","_"));

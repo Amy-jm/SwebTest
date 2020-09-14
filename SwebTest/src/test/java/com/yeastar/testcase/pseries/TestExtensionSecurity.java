@@ -24,6 +24,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
 import static com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement.*;
 import static com.yeastar.swebtest.driver.SwebDriverP.*;
+import static org.assertj.core.groups.Tuple.tuple;
 
 /**
  * @program: SwebTest
@@ -65,6 +66,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         //创建路由-API
         step("创建呼出路由");
         apiUtil.deleteAllOutbound().createOutbound("Outbound1",trunks,list2);
+        apiUtil.apply();
 
     }
 
@@ -127,16 +129,16 @@ public class TestExtensionSecurity extends TestCaseBase {
 
         prerequisite();
 
-        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2000不会响铃");
+        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2001不会响铃");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2001",DEVICE_IP_LAN,false);
         softAssert.assertEquals(getExtensionStatus(0,TALKING,10),TALKING,"预期0为TALKING状态");
-        softAssert.assertEquals(getExtensionStatus(2000,TALKING,10),TALKING,"预期2000为TALKING状态");
+        softAssert.assertEquals(getExtensionStatus(2001,TALKING,10),TALKING,"预期2001为TALKING状态");
         pjsip.Pj_Hangup_All();
 
         assertStep("[CDR]4.验证通话状态");
@@ -145,7 +147,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Status",0),"ANSWERED");
         softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call From",0),"0<0>");
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"2000");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"2001");
         softAssert.assertAll();
     }
 
@@ -180,17 +182,17 @@ public class TestExtensionSecurity extends TestCaseBase {
                 DataUtils.getCurrentWeekDay()).clickSaveAndApply();
 
 
-        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2000不会响铃");
+        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2001不会响铃");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
         //勾选，下班时间不能呼出
         pjsip.Pj_Make_Call_No_Answer(0,"2000",DEVICE_IP_LAN,false);
         softAssert.assertEquals(getExtensionStatus(0,HUNGUP,10),HUNGUP,"预期0为HUNGUP状态");
-        softAssert.assertEquals(getExtensionStatus(2000,IDLE,10),IDLE,"预期2000不会响铃");
+        softAssert.assertEquals(getExtensionStatus(2001,IDLE,10),IDLE,"预期2001不会响铃");
         pjsip.Pj_Hangup_All();
         softAssert.assertAll();
         //todo bug 23版本 设置不生效，待24版本验证
@@ -225,16 +227,16 @@ public class TestExtensionSecurity extends TestCaseBase {
                 "","",
                 DataUtils.getCurrentWeekDay()).clickSaveAndApply();
 
-        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2000不会响铃");
+        assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2001不会响铃");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2001",DEVICE_IP_LAN,false);
         softAssert.assertEquals(getExtensionStatus(0,TALKING,10),TALKING,"预期0为TALKING状态");
-        softAssert.assertEquals(getExtensionStatus(2000,TALKING,10),TALKING,"预期2000为TALKING状态");
+        softAssert.assertEquals(getExtensionStatus(2001,TALKING,10),TALKING,"预期2001为TALKING状态");
         pjsip.Pj_Hangup_All();
 
         assertStep("[CDR]4.验证通话状态");
@@ -243,7 +245,7 @@ public class TestExtensionSecurity extends TestCaseBase {
         ys_waitingTime(WaitUntils.SHORT_WAIT);
         softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Status",0),"ANSWERED");
         softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call From",0),"0<0>");
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"2000");
+        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"2001");
         softAssert.assertAll();
     }
 
@@ -402,12 +404,18 @@ public class TestExtensionSecurity extends TestCaseBase {
 
         assertStep("[CDR]5.第一条记录：Reason = Exceeded the max call duration(s) ；Call Duration(s)=00:00:30");
         //todo cdr 显示全选
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
-        ys_waitingTime(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
-        softAssert.assertAll();
+//        ys_waitingTime(WaitUntils.SHORT_WAIT);
+//        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
+//        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:00:30");
+//        softAssert.assertAll();
+
+
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","callDuration","status","reason")
+                    .contains(tuple("Yeastar Test0 朗视信息科技<0>", "Yeastar Test9999999 朗视信息科技<9999999>", "30","ANSWERED", "Exceeded the max call duration(s)"));
+        softAssertPlus.assertAll();
     }
 
 
@@ -423,6 +431,8 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Issue("bug cdr 多显示一条为 call to T的记录")
     @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunk() throws IOException, JSchException {
+        prerequisite();
+
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
@@ -438,7 +448,7 @@ public class TestExtensionSecurity extends TestCaseBase {
                 .clickSaveAndApply();
 
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().editOutbound("AutoTest_Route","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
+        auto.outBoundRoutePage().editOutbound("Outbound1","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
 
 
         assertStep("4:全局设置 preference，Max Call Duration 设置30s");
