@@ -80,7 +80,7 @@ public class PjsipApp extends PjsipDll {
             }
 //
             Reporter.infoExec("pjs_init done");
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             log.error("【Pj_Init】" + ex);
         }
     }
@@ -90,7 +90,7 @@ public class PjsipApp extends PjsipDll {
     public void Pj_Destory() {
         try {
             pjsipdll.instance.ys_destroy_pjsua();
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             log.error("【Pj_Destory】" + ex);
         }
     }
@@ -100,7 +100,7 @@ public class PjsipApp extends PjsipDll {
     public void Pj_CreateAccount(int username, String password, String type, int pos) {
         try{
             Pj_CreateAccount(type, username, password, pos, "", 5060);
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             log.error("【Pj_CreateAccount】" + ex);
         }
     }
@@ -109,7 +109,7 @@ public class PjsipApp extends PjsipDll {
     public void Pj_CreateAccount(int username, String password, String type, int port, int pos) {
         try{
             Pj_CreateAccount(type, username, password, pos, "", port);
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             log.error("【Pj_CreateAccount】" + ex);
         }
     }
@@ -326,7 +326,7 @@ public class PjsipApp extends PjsipDll {
 //            System.out.println("make call no answer:"+pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false));
             }
             ys_waitingTime(2000);
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             log.error("【Pj_Pj_Make_Call_No_Answer】" + ex);
         }
         return "";
@@ -378,7 +378,7 @@ public class PjsipApp extends PjsipDll {
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             log.error("【Pj_Answer_Call】" + ex);
         }
         return suc;
@@ -423,7 +423,7 @@ public class PjsipApp extends PjsipDll {
 //        m_extension.closeMonitorWindow();
 //        pageDeskTop.CDRandRecording.click();
 
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             log.error("【Pj_Make_Call_Auto_Answer】" + ex);
         }
         return callee_status;
@@ -472,7 +472,7 @@ try{
         }
 //        m_extension.closeMonitorWindow();
 //        pageDeskTop.CDRandRecording.click();
-    } catch (Exception ex) {
+    } catch (Throwable ex) {
         log.error("【Pj_Make_Call_Auto_Answer】" + ex);
     }
         return callee_status;
@@ -575,7 +575,7 @@ try{
             }
            ys_waitingTime(500);
         }
-    } catch (Exception ex) {
+    } catch (Throwable ex) {
         log.error("【Pj_Send_Dtmf】" + ex);
     }
         return suc;
