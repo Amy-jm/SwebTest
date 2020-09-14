@@ -33,7 +33,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0", "TestExtensionPresence", "Presence","Extension", "Regression", "PSeries","A_RecoveryEnv"},priority =0 )
+//    @Test(groups = {"P0", "TestExtensionPresence", "Presence","Extension", "Regression", "PSeries","A_RecoveryEnv"},priority =0 )
     public void A_RecoveryEnv() {
         if(runRecoveryEnvFlag){
             APIUtil apiUtil = new APIUtil();
@@ -63,7 +63,7 @@ public class TestExtensionPresence extends TestCaseBase{
             pjsip.Pj_Answer_Call(0,200,false);
             sleep(15000);
             pjsip.Pj_Hangup_All();
-//            pjsip.Pj_Destory();
+            pjsip.Pj_Destory();
 
             step("【环境准备】3、创建Trunk");
             apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
