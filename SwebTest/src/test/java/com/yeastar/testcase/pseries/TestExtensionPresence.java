@@ -163,7 +163,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING,"响铃30s超时无应答，分机9999999预期振铃");
 
         pjsip.Pj_Hangup_All();
-        //pjsip.Pj_Destory();
+        pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
