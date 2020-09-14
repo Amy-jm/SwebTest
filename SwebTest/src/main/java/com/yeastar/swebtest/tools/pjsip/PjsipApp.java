@@ -516,7 +516,7 @@ try{
             ys_waitingTime(3000);
 
         }catch(Throwable ex){
-            log.error("【pj_hangupCall number】"+ex);
+            log.error("【Pj_hangupCall number】"+ex);
         }
         return suc;
     }
