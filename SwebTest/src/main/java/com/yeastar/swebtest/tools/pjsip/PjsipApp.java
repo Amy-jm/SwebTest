@@ -228,7 +228,7 @@ public class PjsipApp extends PjsipDll {
         try {
             Pj_Register_Account("UDP", username, ip, "", 5060, false);
             ys_waitingTime(2000);
-        }catch(Exception ex){
+        }catch(Throwable ex){
             log.error("[Pj_Pj_Register_Account_WithoutAssist_For_PSeries]"+ex);
            }
     }
@@ -490,7 +490,7 @@ try{
         try{
         suc = pjsipdll.instance.ys_hangup_all_call();
         ys_waitingTime(2000);
-        }catch(Exception ex){
+        }catch(Throwable ex){
             log.error("【Pj_Hangup_All】" + ex);
         }
         return suc;
@@ -515,7 +515,7 @@ try{
             suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
             ys_waitingTime(3000);
 
-        }catch(Exception ex){
+        }catch(Throwable ex){
             log.error("【pj_hangupCall number】"+ex);
         }
         return suc;
@@ -613,18 +613,19 @@ try{
     public  pjsipdll.RegisterCallBack registerCallBack = new pjsipdll.RegisterCallBack() {
         @Override
         public int fptr_regstate(int id, int registerCode) {
-            System.out.println("RegisterCallBack :"+id +" code:"+ registerCode);
-            if(registerCode == 200){
-                for(int i=0; i<accounts.size(); i++){
-                    if(accounts.get(i).accId == id)
-                        accounts.get(i).status=IDLE;
+            try{
+            System.out.println("RegisterCallBack :" + id + " code:" + registerCode);
+            if (registerCode == 200) {
+                for (int i = 0; i < accounts.size(); i++) {
+                    if (accounts.get(i).accId == id)
+                        accounts.get(i).status = IDLE;
                 }
-            }else{
-                for(int i=0; i<accounts.size(); i++){
-                    if(accounts.get(i).accId == id)
-                        accounts.get(i).status=INVALID;
+            } else {
+                for (int i = 0; i < accounts.size(); i++) {
+                    if (accounts.get(i).accId == id)
+                        accounts.get(i).status = INVALID;
                 }
-                switch (registerCode){
+                switch (registerCode) {
                     case 503://服务器未相应
                         break;
                     case 408://超时
@@ -632,6 +633,9 @@ try{
                     //....
                 }
             }
+        }catch(Throwable ex){
+                log.error("【Pj_fptr_regstate】" + ex);
+        }
             return 0;
         }
     };
@@ -658,6 +662,7 @@ try{
     public pjsipdll.CallstateCallBack callstateCallBack = new pjsipdll.CallstateCallBack() {
         @Override
         public int fptr_callstate(int id, int accId,int callCode) {
+            try{
             System.out.println("CallstateCallBack callid:"+id +" accId:" + accId+" code:"+ callCode);
             for(int i=0; i<accounts.size(); i++){
                 if(accounts.get(i).accId == accId){
@@ -693,6 +698,9 @@ try{
                     }
                 }
             }
+        }catch(Throwable ex){
+            log.error("【Pj_fptr_callstate】" + ex);
+        }
             return 0;
         }
     };

@@ -161,7 +161,7 @@ public class BrowserUtils {
             for (LogEntry entry : entries) {
                 String data = (new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
                 if (data.contains("/api/v") || data.contains("\"Set-Cookie\"") || data.contains("\"status\"") || data.contains("payloadData")) {
-                    if(data.contains(keyWord) && data.contains(endKeyWord)){
+                    if(data.contains(keyWord) && data.contains(endKeyWord) && !data.contains("errcode\\\":0,\\\"errmsg\\\":\\\"Succ")){
                         int beginIndex=data.indexOf(keyWord);
                         int endIndex=data.indexOf(endKeyWord);
                         hs.add(data.substring(beginIndex,endIndex));
