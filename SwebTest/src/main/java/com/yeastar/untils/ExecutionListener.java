@@ -49,31 +49,36 @@ public class ExecutionListener implements ITestListener {
     }
 
     private void sendTestMethodStatus(ITestResult iTestResult, String status) {
-        Point point = Point.measurement("testmethod")
-                .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-                .tag("testclass", iTestResult.getTestClass().getName())
-                .tag("name", iTestResult.getName())
-//                .tag("description", iTestResult.getMethod().getDescription())
-                .tag("result", status)
-                .addField("duration", (iTestResult.getEndMillis() - iTestResult.getStartMillis()))
-                .build();
         try {
+            Point point = Point.measurement("testmethod")
+                    .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+                    .tag("testclass", iTestResult.getTestClass().getName())
+                    .tag("name", iTestResult.getName())
+//                .tag("description", iTestResult.getMethod().getDescription())
+                    .tag("result", status)
+                    .addField("duration", (iTestResult.getEndMillis() - iTestResult.getStartMillis()))
+                    .build();
+
             ResultSenderUtils.send(point);
-        }catch(org.influxdb.InfluxDBIOException ex){
+        } catch (org.influxdb.InfluxDBIOException ex) {
             log.error("[InfluxDB Server connection exception]" + ex);
+        } catch (Exception ex) {
+            log.error("[ExecutionListener exception]" + ex);
         }
     }
-
     private void sendTestClassStatus(ITestContext iTestContext) {
+        try {
         Point point = Point.measurement("testclass")
                 .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
                 .tag("name", iTestContext.getAllTestMethods()[0].getTestClass().getName())
                 .addField("duration", (iTestContext.getEndDate().getTime() - iTestContext.getStartDate().getTime()))
                 .build();
-        try {
+
             ResultSenderUtils.send(point);
         }catch(org.influxdb.InfluxDBIOException ex){
             log.error("[InfluxDB Server connection exception]" + ex);
+        }catch(Exception ex){
+            log.error("[ExecutionListener exception]" + ex);
         }
     }
 }

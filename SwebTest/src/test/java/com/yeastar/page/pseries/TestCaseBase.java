@@ -46,6 +46,7 @@ public class TestCaseBase extends BaseMethod {
         auto = PageEngine.getInstance();
         try {
             pjsip = new PjsipApp();
+            log.debug("【pjsip new】 "+pjsip);
         } catch (Exception ex) {
          log.error("【Pj_setup new】" + ex);
         }

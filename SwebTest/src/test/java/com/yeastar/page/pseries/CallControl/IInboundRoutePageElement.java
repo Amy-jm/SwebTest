@@ -31,7 +31,7 @@ public interface IInboundRoutePageElement {
 
     SelenideElement ele_edit_name = $(By.id("inbound_routes_name"));
     SelenideElement ele_edit_did_match_mode = $(By.id("inbound_routes_did_option"));
-    SelenideElement ele_edit_trunk_toRight_btn = $(By.xpath("//div[@class='ant-col ant-col-sm-24 ant-col-md-12 ant-col-lg-20']//button[1]"));
+    SelenideElement ele_edit_trunk_toRight_btn = $(By.xpath("//i[contains(@aria-label,\"icon: right\")]/../..//button[1]"));
     SelenideElement ele_edit_trunk_toLeft_btn = $(By.xpath("//div[@class='ant-col ant-col-sm-24 ant-col-md-12 ant-col-lg-20']//button[2]"));
 
     /**Default Destination**/

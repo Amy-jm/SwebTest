@@ -21,7 +21,7 @@ public interface IRingGroupPageElement {
     String ele_ring_group_transfer_right_extension_str = "transfer_right_ring_group_extension";
     SelenideElement ele_ring_group_transfer_left_search_input = $(By.xpath("//div[@id='transfer_left_ring_group_extension']/../..//input[@placeholder='Search here']"));
     SelenideElement ele_ring_group_transfer_right_search_input = $(By.xpath("//div[@id='transfer_right_ring_group_extension']/../..//input[@placeholder='Search here']"));
-    SelenideElement ele_ring_group_add_extension_member = $(By.xpath("//div[@class='ant-col ant-col-sm-24 ant-col-md-12 ant-col-lg-20']//button[1]"));
+    SelenideElement ele_ring_group_add_extension_member = $(By.xpath("//i[contains(@aria-label,\"icon: right\")]/../..//button[1]"));
     SelenideElement ele_ring_group_del_extension_member = $(By.xpath("//div[@class='ant-col ant-col-sm-24 ant-col-md-12 ant-col-lg-20']//button[2]"));
     SelenideElement ele_ring_group_top_extenson_member = $(By.xpath("//div[@class='ant-col ant-col-sm-24 ant-col-md-12 ant-col-lg-4']//button[1]"));
     SelenideElement ele_ring_group_up_extension_menber = $(By.xpath("//div[@class='ant-col ant-col-sm-24 ant-col-md-12 ant-col-lg-4']//button[2]"));

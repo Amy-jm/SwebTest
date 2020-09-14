@@ -10,15 +10,15 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class Me_HomePage {
 
     /**
-     * 左侧菜单
+     * 左侧菜单  //a[contains(@id,"m_w_preferences")]/..
      **/
-    public SelenideElement left_menu_first_level_extension = $(By.id("m_w_extension"));
-    public SelenideElement left_menu_first_level_visual_control_panel = $(By.id("m_w_visual_control_panel"));
-    public SelenideElement left_menu_first_level_call_log = $(By.id("m_w_call_log"));
-    public SelenideElement left_menu_first_level_voicemails = $(By.id("m_w_voicemail"));
-    public SelenideElement left_menu_first_level_recordings = $(By.id("m_w_recordings"));
-    public SelenideElement left_menu_first_level_preferences = $(By.id("m_w_preferences"));
-    public SelenideElement left_menu_first_level_queue_live = $(By.id("m_w_queue_live"));
+    public SelenideElement left_menu_first_level_extension = $(By.id("m_w_extension"));//m_w_extension
+    public SelenideElement left_menu_first_level_visual_control_panel = $(By.id("m_w_visual_control_panel"));//m_w_visual_control_panel
+    public SelenideElement left_menu_first_level_call_log = $(By.id("m_w_call_log"));//m_w_call_log
+    public SelenideElement left_menu_first_level_voicemails = $(By.xpath("//a[contains(@id,\"m_w_voicemail\")]/.."));//m_w_voicemail
+    public SelenideElement left_menu_first_level_recordings = $(By.id("m_w_recordings"));//m_w_recordings
+    public SelenideElement left_menu_first_level_preferences = $(By.id("m_w_preferences"));//m_w_preferences
+    public SelenideElement left_menu_first_level_queue_live = $(By.id("m_w_queue_live"));//m_w_queue_live
     public SelenideElement queue_live_wallboard = $(By.id("m_w_wallBoard"));
     public SelenideElement queue_live_queue_panel = $(By.id("m_w_queue_calls"));
 

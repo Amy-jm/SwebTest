@@ -984,7 +984,7 @@ public class SwebDriverP extends ConfigP {
     public static void ysAssertWithHangup(int actStatus, int expStatus, String desc) {
 //        YsAssert.assertEquals(getExtensionStatus(2000,HUNGUP,20),HUNGUP,"预期2000会被挂断");
         if (actStatus != expStatus) {
-            pjsip.Pj_Hangup_All();
+//            pjsip.Pj_Hangup_All();
             YsAssert.assertEquals(actStatus, expStatus, desc);
         }
     }
@@ -994,7 +994,7 @@ public class SwebDriverP extends ConfigP {
      *
      * @param username
      */
-    public static int getExtensionStatus(int username, int expectStatus, int timeout) {
+    public  int getExtensionStatus(int username, int expectStatus, int timeout) {
         UserAccount account;
         int time = 0;
         int status = -1;

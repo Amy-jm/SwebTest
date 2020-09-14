@@ -286,7 +286,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "3.DragAndDrop RG\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRingGroupIncomingRingStatus","Regression","PSeries","VCP1","RingGroup1",
+    @Test(groups = {"P0","VCP","testRGIncomingRingDragAndDropRG","Regression","PSeries","VCP1","RingGroup1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRingDragAndDropRG(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         prerequisiteForAPIForRingGroup(runRecoveryEnvFlagRingGroup);
