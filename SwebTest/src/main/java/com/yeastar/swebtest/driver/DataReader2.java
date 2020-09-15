@@ -153,6 +153,7 @@ public class DataReader2 {
     public  static String GRID_HUB_IP = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"GRID_HUB_IP");
     public  static String GRID_HUB_PORT = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"GRID_HUB_PORT");
     public  static String RECORD_VIDEO = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"RECORD_VIDEO");
+    public  static String screenResolution = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"screenResolution");
 
 
     /**
