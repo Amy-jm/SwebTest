@@ -166,7 +166,7 @@ public class BrowserFactory extends ConfigP {
 		//这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
 		if (browser.equals("chrome")) {
 			Configuration.browser = CHROME;
-			System.setProperty("webdriver.chrome.driver", CHROME_PATH);
+//			System.setProperty("webdriver.chrome.driver", CHROME_PATH);
 			desiredCapabilities = DesiredCapabilities.chrome();
 		} else if (browser.equals("firefox")) {
 			System.setProperty("webdriver.firefox.bin", FIREFOX_PATH);
