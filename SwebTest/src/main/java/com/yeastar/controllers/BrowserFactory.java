@@ -125,8 +125,13 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("idleTimeout", 240);//150-100
 			log.debug("[ZALENIUM_PROXY_CLEANUP_TIMEOUT]  90s");
 			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
-			desiredCapabilities.setCapability("screenResolution", screenResolution);
-
+			if(!screenResolutionUser.isEmpty()){
+				desiredCapabilities.setCapability("screenResolution", screenResolutionUser);
+				log.debug("[set screenResolutionUser]{}",screenResolutionUser.trim());
+			}else{
+				desiredCapabilities.setCapability("screenResolution", screenResolution);
+				log.debug("[set screenResolution]{}",screenResolution.trim());
+			}
 
 			try {
 				webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
@@ -183,8 +188,14 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 720);//180-90
 			log.debug("[set ZALENIUM_PROXY_CLEANUP_TIMEOUT]{}",720);
 			desiredCapabilities.setCapability("WAIT_FOR_AVAILABLE_NODES",false);//不等待回收node，直接创建
-			desiredCapabilities.setCapability("screenResolution", screenResolution);
-			log.debug("[set screenResolution]{}",screenResolution.trim());
+			if(!screenResolutionUser.isEmpty()){
+				desiredCapabilities.setCapability("screenResolution", screenResolutionUser);
+				log.debug("[set screenResolutionUser]{}",screenResolutionUser.trim());
+			}else{
+				desiredCapabilities.setCapability("screenResolution", screenResolution);
+				log.debug("[set screenResolution]{}",screenResolution.trim());
+			}
+
 			log.debug("[set WAIT_FOR_AVAILABLE_NODES]{}",false);
 			if (RECORD_VIDEO.trim().equalsIgnoreCase("false")) {
 				log.debug("[set recordVideo]{}",RECORD_VIDEO.trim());
