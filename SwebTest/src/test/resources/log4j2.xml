@@ -29,7 +29,7 @@
 
         <!-- debug级别日志文件输出 -->
         <RollingFile name="debug_appender" fileName="${filePath}\debug.log"
-                     filePattern="${filePath}\%d{yyyy-MM-dd}\debug_%i.log.gz">
+                     filePattern="${filePath}\%d{yyyy-MM-dd}\debug_%i.log.gz" append="false">
             <!-- 过滤器 -->
             <Filters>
                 <!-- 限制日志级别在debug及以上在info以下 -->
@@ -49,7 +49,7 @@
 
         <!-- info级别日志文件输出 -->
         <RollingFile name="info_appender" fileName="${infoFileName}.log"
-                     filePattern="${filePath}/%d{yyyy-MM-dd}/info_%i.log.gz">
+                     filePattern="${filePath}/%d{yyyy-MM-dd}/info_%i.log.gz" append="false">
             <!-- 过滤器 -->
             <Filters>
                 <!-- 限制日志级别在info及以上在error以下 -->
@@ -68,7 +68,7 @@
 
         <!-- error级别日志文件输出 -->
         <RollingFile name="error_appender" fileName="${errorFileName}.log"
-                     filePattern="${filePath}/%d{yyyy-MM-dd}/error_%i.log.gz">
+                     filePattern="${filePath}/%d{yyyy-MM-dd}/error_%i.log.gz" append="false">
             <!-- 过滤器 -->
             <Filters>
                 <!-- 限制日志级别在error及以上 -->
@@ -86,7 +86,7 @@
 
         <!-- Browser级别日志文件输出 -->
         <RollingFile name="browser_appender" fileName="${browserLog}.log"
-                     filePattern="${filePath}/%d{yyyy-MM-dd}/browser_%i.log.gz">
+                     filePattern="${filePath}/%d{yyyy-MM-dd}/browser_%i.log.gz" append="false">
             <!-- 过滤器 -->
             <Filters>
                 <!-- 限制日志级别在info及以上在error以下 -->
