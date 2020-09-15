@@ -41,7 +41,9 @@ public class BrowserFactory extends ConfigP {
 					webDriver = initialDriver(browser, relativeOrAbsoluteUrl, "");
 				}
 			} catch (WebDriverException ex) {
-				log.error("【initialDriver】 retry-->" + retry + " 【ExceptionMessage】" + ex);
+				log.error("【initialDriver WebDriverException】 retry-->" + retry + " 【ExceptionMessage】" + ex);
+			} catch (java.lang.IllegalStateException ex){
+				log.error("【initialDriver IllegalStateException】 retry-->" + retry + " 【ExceptionMessage】" + ex);
 			}
 			retry++;
 			sleep(60 * 1000);
