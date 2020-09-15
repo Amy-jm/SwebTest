@@ -84,7 +84,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             //todo 26版本bug，删除分机提示音不会删除，此处手动兼容此问题
 
             step("录制voicemail greeting");
-            SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, "rm /ysdisk/ysapps/pbxcenter/var/lib/asterisk/sounds/record/0/*");
+            SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, "rm -rf /ysdisk/ysapps/pbxcenter/var/lib/asterisk/sounds/record/0/*");
             pjsip.Pj_Init();
             pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
             pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
@@ -303,8 +303,11 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().editExtension(getDriver(),"0").switchToTab(IExtensionPageElement.TABLE_MENU.VOICEMAIL.getAlias())
                 .selectComm(ele_extension_voicemail_doNotDisturb_combobox,"test.wav");
-        auto.extensionPage().clickSave();
+        auto.extensionPage().clickSaveAndApply();
+        auto.extensionPage().editExtension(getDriver(),"0").switchToTab(TABLE_MENU.PRESENCE.getAlias()).ele_extension_presence_doNotDisturb_tab.click();
+        auto.extensionPage().isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,true).clickSaveAndApply();
         auto.extensionPage().selectExtensionPresence("0",IExtensionPageElement.TABLE_PRESENCE_LIST.DONotDISTURB.getAlias()).clickApply();
+
 
         step("清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial");
         clearasteriskLog();
@@ -537,7 +540,8 @@ public class TestExtensionVoicemail extends TestCaseBase {
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
         String me_name = TableUtils.getTableForHeader(getDriver(),"Name",0);
-        Assert.assertNotEquals(me_name,"2000\n" +"External Number");//DEVICE_ASSIST_2 辅助设置SIP 呼出名称设置为 2000
+        log.debug("[me_name] "+me_name);
+        Assert.assertTrue(me_name.contains("2000\n" +"External Number"));//DEVICE_ASSIST_2 辅助设置SIP 呼出名称设置为 2000
     }
 
     @Epic("P_Series")
