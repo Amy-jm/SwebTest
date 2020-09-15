@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- log4j2 配置文件 -->
 <!-- 日志级别 trace<debug<info<warn<error<fatal -->
-<configuration status="debug"  monitorInterval="30">
+<configuration status="off"  monitorInterval="30">
     <!-- 自定义属性 -->
     <Properties>
         <!-- 日志格式 -->
-        <Property name="pattern">%d{[MM-dd HH:mm]} (%F:%L) %5p %m%n</Property>
+        <Property name="pattern">%d{[MM-dd HH:mm]} %m%n</Property>
         <!-- 日志文件路径 -->
         <Property name="filePath">${sys:user.dir}\log</Property>
         <!-- debug级别日志文件名称 -->
