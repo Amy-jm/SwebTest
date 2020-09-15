@@ -429,7 +429,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001610")
     @Issue("bug cdr 多显示一条为 call to T的记录")
-    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
+    @Test(groups = {"P0","testMaxCallDurationForSPSTrunk","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunk() throws IOException, JSchException {
         prerequisite();
 
