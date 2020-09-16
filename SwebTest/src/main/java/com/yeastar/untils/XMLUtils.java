@@ -126,6 +126,7 @@ public class XMLUtils {
 //        suite.addAttribute("thread-count", "5");
 //        suite.addAttribute(" preserve-order", "false");
         suite.addAttribute(" parallel", "false");
+        suite.attributeValue(" verbose","10");
 
         // 创建二级子节点Listeners,test
         Element listeners = suite.addElement("listeners");

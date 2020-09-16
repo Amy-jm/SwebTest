@@ -238,7 +238,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "2:外线号码[2000]呼叫[IVR]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingStatus", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingStatus", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingStatus(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -283,7 +283,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("bug 等待留言的时候才开始录音")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCTalking", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCTalking", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropWithCTalking(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -344,7 +344,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3:[Inbound]1000 -->拖动到[Extension]1010（idle）")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCIdle", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCIdle", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropWithCIdle(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -400,7 +400,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Issue("1.勾选显示未注册分机，概率性出现 未注册分机不能显示 \n" +
             "2.拖动后，需要>=6秒后才会显示")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCUnregistered", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCUnregistered", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropWithCUnregistered(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -454,7 +454,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3.DragAndDrop RG\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropRG", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropRG", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropRG(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -545,7 +545,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Parking]001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropParking", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropParking", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropParking(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -599,7 +599,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIncomingDragAndDropQueue", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIncomingDragAndDropQueue", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIncomingDragAndDropQueue(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -671,7 +671,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectC_AHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectC_AHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectC_AHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -763,7 +763,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectC_CHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectC_CHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectC_CHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -841,7 +841,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Ring Group]6301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectRingGroup", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectRingGroup", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRedirectRingGroup(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -945,7 +945,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6501")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectIVR", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectIVR", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRedirectIVR(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -1032,7 +1032,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Voicemail]小图标")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectVoicemail", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectVoicemail", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRedirectVoicemail(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -1105,7 +1105,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectOffLineY_AHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectOffLineY_AHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectOffLineY_AHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -1185,7 +1185,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:Y挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")//TODO make jenkins vm exception
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectOffLineY_YHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectOffLineY_YHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectOffLineY_YHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -1264,7 +1264,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -1318,7 +1318,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:移开后 通话继续")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionHoverHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionHoverHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionHoverHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -1383,7 +1383,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionPickUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionPickUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionPickUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
@@ -1442,7 +1442,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3:右键->查看显示的条目")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testRGIncomingRightActionUnDisplay", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testRGIncomingRightActionUnDisplay", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionUnDisplay(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI(runRecoveryEnvFlag);
