@@ -39,7 +39,11 @@ public class TestCaseBase extends BaseMethod {
         long startTime_1=System.currentTimeMillis();
         setDriver(webDriver);
         log.debug("[Test PBX_URL]"+PBX_URL);
-        open(PBX_URL);
+        try {
+            open(PBX_URL);//may throw IllegalStateException
+        } catch (IllegalStateException ex) {
+            log.error("【open url exception】" + ex);
+        }
         log.debug("[open url time]:"+(System.currentTimeMillis()-startTime_1)/1000+" Seconds");
 
         long startTime_2=System.currentTimeMillis();
