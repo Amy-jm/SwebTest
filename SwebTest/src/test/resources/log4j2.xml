@@ -7,7 +7,7 @@
         <!-- 日志格式 -->
         <Property name="pattern">%d{[MM-dd HH:mm]} %m%n</Property>
         <!-- 日志文件路径 -->
-        <Property name="filePath">${sys:user.dir}\log</Property>
+        <Property name="filePath">log</Property>
         <!-- debug级别日志文件名称 -->
         <Property name="debugFileName">${filePath}\debug</Property>
         <!-- info级别日志文件名称 -->

@@ -58,7 +58,6 @@ public class TestCaseBase extends BaseMethod {
         log.debug("[soft time]:"+(System.currentTimeMillis()-startTime_3)/1000+" Seconds");
     }
 
-    @SneakyThrows
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
@@ -68,6 +67,9 @@ public class TestCaseBase extends BaseMethod {
             sleep(5000);
             pjsip=null;
             log.debug("[end destroy pjsip] pjsip->"+pjsip);
+            System.gc();
+            log.debug("[end destroy pjsip and call jvm jc] pjsip->");
+
         }
 
         log.debug("[remote session]{}",webDriver);
