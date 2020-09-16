@@ -78,8 +78,9 @@ public class TestCaseBase extends BaseMethod {
 //                BrowserUtils.getInstance().getLogType_Browser(method,webDriver);
                 BrowserUtils.getInstance().getAnalyzeLog(method,webDriver);
                 webDriver.quit();
+                webDriver=null;
             }
-        }catch(Exception ex){
+        }catch(Throwable ex){
             log.error("[driver quite exception]"+ex.getMessage()+ex.getStackTrace());
         }
         log.debug("[clean remote session to null]{}",webDriver);
