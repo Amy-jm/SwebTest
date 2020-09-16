@@ -44,6 +44,8 @@ public class BrowserFactory extends ConfigP {
 				log.error("【initialDriver WebDriverException】 retry-->" + retry + " 【ExceptionMessage】" + ex);
 			} catch (java.lang.IllegalStateException ex){
 				log.error("【initialDriver IllegalStateException】 retry-->" + retry + " 【ExceptionMessage】" + ex);
+			} catch(Throwable ex){
+				log.error("【initialDriver throwable】 retry-->" + retry + " 【ExceptionMessage】" + ex);
 			}
 			retry++;
 			sleep(60 * 1000);
