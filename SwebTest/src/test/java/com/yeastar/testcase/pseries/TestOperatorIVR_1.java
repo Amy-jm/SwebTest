@@ -47,7 +47,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             {"66", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "E1"},//E1     前缀 替换
             {"",   2000, "2001", DEVICE_ASSIST_1, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
             {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"},
-            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_TEST_GSM_CALLER+" ["+DEVICE_TEST_GSM_CALLER+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
+            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
     private boolean runRecoveryEnvFlag = true;
     private ArrayList<String> IVRMember = new ArrayList<>();
@@ -165,26 +165,6 @@ public class TestOperatorIVR_1 extends TestCaseBase {
      *
      * @return
      */
-    @DataProvider(name = "routesDebug")
-    public Object[][] RoutesDebug() {
-        return new Object[][]{
-//                {"99", 2000, "6200", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SPS"},//sps   前缀 替换
-//                {"88", 2000, "6200", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "BRI"},//BRI   前缀 替换
-//                {"", 2000, "2005", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "FXO"},//FXO --77 不输   2005（FXS）
-//                {"66", 2000, "6200", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "E1"},//E1     前缀 替换
-//                {"", 2000, "2001", DEVICE_ASSIST_1, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
-//                {"44", 4000, "6200", DEVICE_ASSIST_3, "4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"},
-                {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_TEST_GSM_CALLER+" ["+DEVICE_TEST_GSM_CALLER+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
-        };
-    }
-
-
-    /**
-     * 多线路测试数据
-     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
-     *
-     * @return
-     */
     @DataProvider(name = "routes")
     public Object[][] Routes(ITestContext c) {
         Object[][] group = null;
@@ -204,7 +184,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
                     } else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
                         group = new Object[][]{{"44", 4000, "6200", DEVICE_ASSIST_3, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"}};
                     }else if (groups.equalsIgnoreCase("GSM")) {
-                        group = new Object[][] {{"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_TEST_GSM_CALLER+" ["+DEVICE_TEST_GSM_CALLER+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}};
+                        group = new Object[][] {{"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}};
                     } else {
                         group = routes;
                     }

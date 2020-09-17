@@ -90,7 +90,6 @@ public class DataReader2 {
     public static String E1 = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"E1");
     public static String DEVICE_ASSIST_GSM = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"DEVICE_ASSIST_GSM").trim();
     public static String DEVICE_TEST_GSM = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"DEVICE_TEST_GSM").trim();
-    public static String DEVICE_TEST_GSM_CALLER = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"DEVICE_TEST_GSM_CALLER").trim();
 
 
     public static String SIPTrunk = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"SIPTRUNK");

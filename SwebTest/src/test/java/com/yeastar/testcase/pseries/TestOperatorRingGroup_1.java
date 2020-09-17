@@ -175,7 +175,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             {"66",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
             {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
             {"44",4000,"6300",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"},//SIP  --55 REGISTER
-            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_TEST_GSM_CALLER+" ["+DEVICE_TEST_GSM_CALLER+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
+            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
 
     };
     /**
@@ -202,7 +202,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
                     }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
                         group = new Object[][] {{"44",4000,"6300",DEVICE_ASSIST_3,"4000 [4000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_ACCOUNT"}};
                     }else if (groups.equalsIgnoreCase("GSM")) {
-                        group = new Object[][] {{"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_TEST_GSM_CALLER+" ["+DEVICE_TEST_GSM_CALLER+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}};
+                        group = new Object[][] {{"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}};
                     } else {
                         group =routes;//默认选择具体的用例跑所有线路
                     }
