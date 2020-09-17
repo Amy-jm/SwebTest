@@ -63,9 +63,9 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
             {"99",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
             {"88",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
             {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-//            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
-//            {"66",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
-//            {"44",4000,"6300",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
+            {"66",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
+            {"44",4000,"6300",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
     };
 
     /**
@@ -161,13 +161,12 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         if (runRecoveryEnvFlag){
             List<String> trunks = new ArrayList<>();
-            trunks.add(SPS);
-            trunks.add(BRI_1);
-            trunks.add(FXO_1);
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ "+E1);
-//            trunks.add(E1);
-//            trunks.add(SIPTrunk);
-//            trunks.add(ACCOUNTTRUNK);
+            if(!SPS.toLowerCase().endsWith("null"))trunks.add(SPS);
+            if(!BRI_1.toLowerCase().endsWith("null"))trunks.add(BRI_1);
+            if(!FXO_1.toLowerCase().endsWith("null"))trunks.add(FXO_1);
+            if(!E1.toLowerCase().endsWith("null"))trunks.add(E1);
+            if(!SIPTrunk.toLowerCase().endsWith("null"))trunks.add(SIPTrunk);
+            if(!ACCOUNTTRUNK.toLowerCase().endsWith("null"))trunks.add(ACCOUNTTRUNK);
 
             List<String> extensionNum = new ArrayList<>();
             List<String> emptyList = new ArrayList<>();
