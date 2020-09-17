@@ -35,10 +35,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @Log4j2
 public class TestOperatorExtension_1 extends TestCaseBase {
     APIUtil apiUtil = new APIUtil();
-    private boolean runRecoveryEnvFlagExtension = true;
-    private boolean runRecoveryEnvFlagRingGroup = true;
-    private boolean runRecoveryEnvFlagQueue = true;
-    private boolean runRecoveryEnvFlagConference = true;
+    private boolean isRunRecoveryEnvFlag = true;
     ArrayList<String> queueListNum = null;
     ArrayList<String> queueListNum_1 = null;
     ArrayList<String> ringGroupNum_0 = null;
@@ -115,9 +112,8 @@ public class TestOperatorExtension_1 extends TestCaseBase {
                     "{\"name\":\"%s\",\"enable\":1,\"country\":\"general\",\"itsp\":\"\",\"type\":\"peer\",\"transport\":\"udp\",\"codec_sel\":\"ulaw,alaw,g729\",\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_srtp\":0,\"enb_t38_support\":0,\"enb_inband_progress\":0,\"max_call_chans\":0,\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"%s\",\"from_user\":\"\",\"from_user_part\":\"default\",\"from_disp_name\":\"\",\"from_disp_name_part\":\"default\",\"from_host\":\"\",\"from_host_part\":\"domain\",\"diversion_user\":\"\",\"diversion_user_part\":\"\",\"rpid_user\":\"\",\"rpid_user_part\":\"\",\"pai_user\":\"\",\"pai_user_part\":\"\",\"ppi_user\":\"\",\"ppi_user_part\":\"\",\"enb_privacy_id\":0,\"enb_user_phone\":0,\"caller_id_from\":\"follow_system\",\"did_from\":\"follow_system\",\"user_agent\":\"\",\"enb_100rel\":0,\"max_ptime\":\"default\",\"rtp_reinvite\":\"\",\"enb_guest_auth\":0,\"enb_early_media\":0,\"enb_message\":0,\"did_list\":[],\"inbound_cid_list\":[],\"outbound_cid_list\":[],\"hostname\":\"%s\",\"port\":5060,\"domain\":\"%s\"}"
             ,SPS,"DOD",DEVICE_ASSIST_2,DEVICE_ASSIST_2);
 
-    public void prerequisiteForAPIExtension(boolean isRunRecoveryEnvFlag) {
+    public void prerequisiteForAPIExtension() {
         if(isRunRecoveryEnvFlag) {
-
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
             trunks.add(BRI_1);
@@ -185,7 +181,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
 
             apiUtil.apply();
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
-            runRecoveryEnvFlagExtension = false;
+            isRunRecoveryEnvFlag = false;
         }
     }
 
@@ -261,7 +257,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
 
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -302,7 +298,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -358,7 +354,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-//        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+//        prerequisiteForAPIExtension();;
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -414,7 +410,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -465,7 +461,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingDragAndDropRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -550,7 +546,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testIncomingDragAndDropParking","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+        prerequisiteForAPIExtension();;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -593,7 +589,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -690,7 +686,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRightActionRedirectC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -763,7 +759,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRightActionRedirectC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -834,7 +830,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRedirectRingGroup","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -920,7 +916,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRedirectQueue","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRedirectQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1020,7 +1016,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRedirectVoicemail","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRedirectVoicemail(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+prerequisiteForAPIExtension();
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1080,7 +1076,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRedirectIVR","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1139,7 +1135,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionUnDisplay","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRightActionUnDisplay(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+        prerequisiteForAPIExtension();;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1178,7 +1174,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_AHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRightActionRedirectOffLineC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+        prerequisiteForAPIExtension();;
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -1262,7 +1258,7 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRightActionRedirectOffLineC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+        prerequisiteForAPIExtension();;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1345,7 +1341,8 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRightActionHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+        prerequisiteForAPIExtension();
+
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1397,8 +1394,9 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRightActionHoverHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        prerequisiteForAPIExtension();
+
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
         step("2:进入Operator panel 界面");
@@ -1456,8 +1454,9 @@ step("1:login web click ，测试线路："+message);
     @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testIncomingRightActionPickUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+        prerequisiteForAPIExtension();
+
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
         step("2:进入Operator panel 界面");

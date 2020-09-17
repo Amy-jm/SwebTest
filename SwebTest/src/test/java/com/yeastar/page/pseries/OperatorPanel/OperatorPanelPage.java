@@ -18,6 +18,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.yeastar.controllers.WebDriverFactory.getDriver;
@@ -497,7 +498,98 @@ public class OperatorPanelPage extends BasePage {
             retry++;
         } while (records.size() == 0 && retry <= 30);
         log.debug("[Wait table appear] " + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
+        if(records.size() == 0){
+            throw new NoSuchElementException("[表格无数据！！！]");
+        }
         return records;
+    }
+
+    /**
+     * 获取表格中的所有记录
+     * timeout  30s
+     * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
+     * @return
+     */
+    public List<Record> getAllRecord(TABLE_TYPE tableType,int timeout){
+        long startTime = System.currentTimeMillis();
+        List<Record> records = new ArrayList();
+        int retry = 0;
+        do {
+            List<WebElement> tableListElement;
+            if (tableType == TABLE_TYPE.INBOUND) {
+                tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_INBOUND_XPATH));
+            } else {
+                tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_OUTBOUND_XPATH));
+            }
+            WebElement tableElement = tableListElement.get(tableListElement.size() - 1);
+            SeleniumTable table = SeleniumTable.getInstance(tableElement);
+            //获取总行数
+            int sumRow = table.rowCount();
+            try {
+                for (int i = 0; i < table.rowCount(); i++) {
+                    SeleniumTableRow row = table.get(i);
+                    Record record = new Record();
+                    for (int j = 0; j < row.cellCount(); j++) {
+                        SeleniumTableCell cell = row.get(j);
+                        switch (j) {
+                            case 0:
+                                if (tableType == TABLE_TYPE.INBOUND) {
+                                    if (waitElementDisplay($(By.xpath(TABLE_INBOUND_XPATH + "//tr[" + i + "]//td[1]//span[contains(@class,\"dot\")]")), WaitUntils.RETRY_WAIT)) {
+                                        record.setRecordStatus("true");
+                                    } else {
+                                        record.setRecordStatus("false");
+                                    }
+                                } else {
+                                    if (waitElementDisplay($(By.xpath(TABLE_OUTBOUND_XPATH + "//tr[" + i + "]//td[1]//span[contains(@class,\"dot\")]")), WaitUntils.RETRY_WAIT)) {
+                                        record.setRecordStatus("true");
+                                    } else {
+                                        record.setRecordStatus("false");
+                                    }
+                                }
+                                break;
+                            case 1:
+                                record.setCaller(cell.getText());
+                                break;
+                            case 2:
+                                record.setCallee(cell.getText());
+                                break;
+                            case 3:
+                                record.setStatus(cell.getText());
+                                break;
+                            case 4:
+                                record.setStrTime(cell.getText());
+                                break;
+                            case 5:
+                                record.setDetails(cell.getText());
+                                break;
+                            default:
+                                log.debug("[getAllRecord default]");
+                        }
+                    }
+                    records.add(record);
+                }
+            } catch (org.openqa.selenium.StaleElementReferenceException ex) {
+                log.error("[读取表中数据异常，可能表中已无数据]" + ex);
+            }
+            log.debug("[Record list count] " + records.size() +" retry-->"+retry);
+            sleep(WaitUntils.RETRY_WAIT);
+            retry++;
+        } while (records.size() == 0 && retry <= timeout);
+        log.debug("[Wait table appear] " + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
+        if(records.size() == 0){
+            throw new NoSuchElementException("[表格无数据！！！]");
+        }
+        return records;
+    }
+
+    /**
+     * 获取表格中的所有记录
+     * timeout  30s
+     * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
+     * @return
+     */
+    public List<Record> waitTableRecordAppear(TABLE_TYPE tableType,int timeout){
+        return getAllRecord(tableType,timeout);
     }
 
     /**
