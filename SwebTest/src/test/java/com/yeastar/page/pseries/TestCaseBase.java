@@ -50,6 +50,7 @@ public class TestCaseBase extends BaseMethod {
         auto = PageEngine.getInstance();
         try {
             pjsip = new PjsipApp();
+            pjsip.work(454545454545l);
             log.debug("【pjsip new】 "+pjsip);
         } catch (Throwable ex) {
          log.error("【PjsipException new】" + ex);
@@ -71,7 +72,6 @@ public class TestCaseBase extends BaseMethod {
             sleep(5000);
             pjsip=null;
             log.debug("[end destroy pjsip] pjsip->"+pjsip);
-            System.gc();
             log.debug("[end destroy pjsip and call jvm jc] pjsip->");
 
         }
