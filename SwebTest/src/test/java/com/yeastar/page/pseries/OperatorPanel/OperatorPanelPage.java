@@ -427,23 +427,47 @@ public class OperatorPanelPage extends BasePage {
 
 
     /**
-     * 获取表格中的所有记录, 没有数据的时候 throw NoSuchElementException
+     * 获取表格中的所有记录
      * timeout  30s
      * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
      * @return
      */
     public List<Record> getAllRecord(TABLE_TYPE tableType){
-        long startTime = System.currentTimeMillis();
-        List<Record> records=null ;
+        int timeout = 30;//默认超时时间 Seconds
+        return getTableData(tableType,timeout);
+    }
+
+    /**
+     * 获取表格中的所有记录, 0的时候 throw NoSuchElementException
+     * timeout  30s
+     * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
+     * @return
+     */
+    public List<Record> getAllRecordNotEquals0(TABLE_TYPE tableType){
+        List<Record> records = new ArrayList();
         int timeout = 30;//默认超时时间 Seconds
         records = getTableData(tableType,timeout);
-        if(records != null){
+        if(records.size() == 0){
+            throw new NoSuchElementException("[表格无数据！！！]");
+        }
+        return  records;
+    }
+    /**
+     * 获取表格中的所有记录, 0的时候 throw NoSuchElementException
+     * timeout seconds
+     * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
+     * @return
+     */
+    public List<Record> getAllRecordNotEquals0(TABLE_TYPE tableType,int timeout){
+        long startTime = System.currentTimeMillis();
+        List<Record> records = new ArrayList();
+        records = getTableData(tableType,timeout);
+        if(records.size() == 0){
             throw new NoSuchElementException("[表格无数据！！！]");
         }
         log.debug("[Wait table appear] " + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
         return  records;
     }
-
     /**
      * 获取表格中的所有记录
      * timeout  30s
@@ -451,12 +475,80 @@ public class OperatorPanelPage extends BasePage {
      * @return
      */
     public List<Record> getAllRecord(TABLE_TYPE tableType,int timeout){
+        return getTableData(tableType,timeout);
+    }
+
+    /**
+     * 获取表格中的所有记录,
+     * timeout  30s
+     * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
+     * @return
+     */
+    private List<Record> getTableData(TABLE_TYPE tableType ,int timeout){
         long startTime = System.currentTimeMillis();
-        List<Record> records ;
-        records = getTableData(tableType,timeout);
-        if(records.size() == 0){
-            throw new NoSuchElementException("[表格无数据！！！]");
-        }
+        List<Record> records = new ArrayList();
+        int retry = 0;
+        do {
+            List<WebElement> tableListElement;
+            if (tableType == TABLE_TYPE.INBOUND) {
+                tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_INBOUND_XPATH));
+            } else {
+                tableListElement = WebDriverFactory.getDriver().findElements(By.xpath(TABLE_OUTBOUND_XPATH));
+            }
+            WebElement tableElement = tableListElement.get(tableListElement.size() - 1);
+            SeleniumTable table = SeleniumTable.getInstance(tableElement);
+            //获取总行数
+            int sumRow = table.rowCount();
+            try {
+                for (int i = 0; i < table.rowCount(); i++) {
+                    SeleniumTableRow row = table.get(i);
+                    Record record = new Record();
+                    for (int j = 0; j < row.cellCount(); j++) {
+                        SeleniumTableCell cell = row.get(j);
+                        switch (j) {
+                            case 0:
+                                if (tableType == TABLE_TYPE.INBOUND) {
+                                    if (waitElementDisplay($(By.xpath(TABLE_INBOUND_XPATH + "//tr[" + i + "]//td[1]//span[contains(@class,\"dot\")]")), WaitUntils.RETRY_WAIT)) {
+                                        record.setRecordStatus("true");
+                                    } else {
+                                        record.setRecordStatus("false");
+                                    }
+                                } else {
+                                    if (waitElementDisplay($(By.xpath(TABLE_OUTBOUND_XPATH + "//tr[" + i + "]//td[1]//span[contains(@class,\"dot\")]")), WaitUntils.RETRY_WAIT)) {
+                                        record.setRecordStatus("true");
+                                    } else {
+                                        record.setRecordStatus("false");
+                                    }
+                                }
+                                break;
+                            case 1:
+                                record.setCaller(cell.getText());
+                                break;
+                            case 2:
+                                record.setCallee(cell.getText());
+                                break;
+                            case 3:
+                                record.setStatus(cell.getText());
+                                break;
+                            case 4:
+                                record.setStrTime(cell.getText());
+                                break;
+                            case 5:
+                                record.setDetails(cell.getText());
+                                break;
+                            default:
+                                log.debug("[getAllRecord default]");
+                        }
+                    }
+                    records.add(record);
+                }
+            } catch (org.openqa.selenium.StaleElementReferenceException ex) {
+                log.error("[读取表中数据异常，可能表中已无数据]" + ex);
+            }
+            log.debug("[Record list count] " + records.size() +" retry-->"+retry);
+            sleep(WaitUntils.RETRY_WAIT);
+            retry++;
+        } while (records.size() == 0 && retry <= timeout);
         log.debug("[Wait table appear] " + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
         return records;
     }
@@ -467,10 +559,9 @@ public class OperatorPanelPage extends BasePage {
      * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
      * @return
      */
-    public List<Record> getTableData(TABLE_TYPE tableType ,int timeout){
+    public List<Record> getTableData_(TABLE_TYPE tableType ,int timeout){
         long startTime = System.currentTimeMillis();
-        List<Record> records = new ArrayList();
-//        records = null;
+        List<Record> records = null;
         int retry = 0;
         do {
             List<WebElement> tableListElement;
