@@ -135,7 +135,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Description("Presence->前置条件")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
-    @Test(groups = {"P0","VCP","prerequisite","Regression","PSeries"},priority =0 )
+    @Test(groups = {"P0","VCP","prerequisite","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},priority =0 )
     public void prerequisite() {
 
         ringGroupMembers.clear();
@@ -254,7 +255,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "2:外线号码[2000]呼叫 1001接听\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingTalkingStatus","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingTalkingStatus","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingStatus(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -299,7 +301,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "2:外线号码[2000]呼叫 1001接听\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingTalkingRightClickNotDisplay","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingTalkingRightClickNotDisplay","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickNotDisplay(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -352,7 +355,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "4.校验CDR")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingTalkingRightClickHangup","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingTalkingRightClickHangup","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -398,7 +402,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","Operator Panel","testIncomingTalkingRightClickListen","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","Operator Panel","testIncomingTalkingRightClickListen","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickListen(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -462,7 +467,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickWhisper","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickWhisper","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickWhisper(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -524,7 +530,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickWhisper","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickWhisper","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickBarge(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -587,7 +594,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickPark","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickPark","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickPark(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -652,7 +660,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickPark","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickPark","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickParkToUnPark(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -714,7 +723,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickPark","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickPark","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickRecord(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -769,7 +779,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToRingGroup","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToRingGroup","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickTransferToRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -826,7 +837,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToQueue","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToQueue","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickTransferToQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -881,7 +893,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToVoicemail","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToVoicemail","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickTransferToVoicemail(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -937,7 +950,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToIVR","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToIVR","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickTransferToIVR(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -995,7 +1009,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("停泊后VCP控制面吧无记录")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToParking","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToParking","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickTransferToParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -1053,7 +1068,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToConference","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferToConference","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickTransferToConference(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
 
         prerequisite();
@@ -1095,7 +1111,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferInternalAHangup","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferInternalAHangup","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickTransferInternalAHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1144,7 +1161,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferInternalAHangup","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingRightClickTransferInternalAHangup","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingRightClickTransferInternalCHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1193,7 +1211,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingCallerHangup","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingCallerHangup","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingCallerHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1230,7 +1249,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingCalleeHangup","Regression","PSeries"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","OperatorPanel","testIncomingTalkingCalleeHangup","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIncomingTalkingCalleeHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1274,7 +1294,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Extension]1001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1335,7 +1356,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Extension]1001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1394,7 +1416,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Extension]1001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1450,7 +1473,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Ring Group]6300")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1505,7 +1529,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Queue]6400")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1560,7 +1585,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "5:被park后，分机D拨打6000取回park，D接起后D挂")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropParking","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropParking","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1611,7 +1637,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "5:被park后，在park期间,通话未被取回时右键Transfer")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropParkingRightClickTransfer","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropParkingRightClickTransfer","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropParkingRightClickTransfer(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1665,7 +1692,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "5:被park后，在park期间,通话未被取回时右键UnPark")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropParkingRightClickUnpark","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropParkingRightClickUnpark","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropParkingRightClickUnpark(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1718,7 +1746,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "5:被park后，在park期间,通话未被取回时右键Hangup")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropParkingRightClickHangup","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropParkingRightClickHangup","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropParkingRightClickHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
@@ -1766,7 +1795,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
             "5:被park后，在park期间,通话未被取回时主叫挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropParkingHangup","Regression","PSeries","VCP2"},dataProvider = "routes")
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropParkingHangup","Regression","PSeries","VCP2","VCP_Extension_2",
+            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM","VCP2"},dataProvider = "routes")
     public void testIncomingDragAndDropParkingHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 

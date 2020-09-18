@@ -434,10 +434,10 @@ public class OperatorPanelPage extends BasePage {
      */
     public List<Record> getAllRecord(TABLE_TYPE tableType){
         long startTime = System.currentTimeMillis();
-        List<Record> records ;
+        List<Record> records=null ;
         int timeout = 30;//默认超时时间 Seconds
         records = getTableData(tableType,timeout);
-        if(records.size() == 0){
+        if(records != null){
             throw new NoSuchElementException("[表格无数据！！！]");
         }
         log.debug("[Wait table appear] " + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
@@ -470,6 +470,7 @@ public class OperatorPanelPage extends BasePage {
     public List<Record> getTableData(TABLE_TYPE tableType ,int timeout){
         long startTime = System.currentTimeMillis();
         List<Record> records = new ArrayList();
+//        records = null;
         int retry = 0;
         do {
             List<WebElement> tableListElement;
