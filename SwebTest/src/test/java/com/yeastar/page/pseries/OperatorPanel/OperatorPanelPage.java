@@ -444,19 +444,17 @@ public class OperatorPanelPage extends BasePage {
      * @return
      */
     public List<Record> getAllRecordNotEquals0(TABLE_TYPE tableType){
-        long startTime = System.currentTimeMillis();
         List<Record> records = new ArrayList();
         int timeout = 30;//默认超时时间 Seconds
         records = getTableData(tableType,timeout);
         if(records.size() == 0){
             throw new NoSuchElementException("[表格无数据！！！]");
         }
-        log.debug("[Wait table appear] " + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
         return  records;
     }
     /**
      * 获取表格中的所有记录, 0的时候 throw NoSuchElementException
-     * timeout
+     * timeout seconds
      * @param tableType 表格类型  OperatorPanelPage.TABLE_TYPE.INBOUND 或是 OperatorPanelPage.TABLE_TYPE.OUTBOUND
      * @return
      */
