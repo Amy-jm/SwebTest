@@ -39,16 +39,21 @@ public class TestCaseBase extends BaseMethod {
         long startTime_1=System.currentTimeMillis();
         setDriver(webDriver);
         log.debug("[Test PBX_URL]"+PBX_URL);
-        open(PBX_URL);
+        try {
+            open(PBX_URL);//may throw IllegalStateException
+        } catch (IllegalStateException ex) {
+            log.error("【open url exception】" + ex);
+        }
         log.debug("[open url time]:"+(System.currentTimeMillis()-startTime_1)/1000+" Seconds");
 
         long startTime_2=System.currentTimeMillis();
         auto = PageEngine.getInstance();
         try {
             pjsip = new PjsipApp();
+//            pjsip.work(454545454545l);
             log.debug("【pjsip new】 "+pjsip);
         } catch (Throwable ex) {
-         log.error("【Pj_setup new】" + ex);
+         log.error("【PjsipException new】" + ex);
         }
         log.debug("[open url time]:"+(System.currentTimeMillis()-startTime_2)/1000+" Seconds");
 
@@ -58,7 +63,6 @@ public class TestCaseBase extends BaseMethod {
         log.debug("[soft time]:"+(System.currentTimeMillis()-startTime_3)/1000+" Seconds");
     }
 
-    @SneakyThrows
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
@@ -68,6 +72,8 @@ public class TestCaseBase extends BaseMethod {
             sleep(5000);
             pjsip=null;
             log.debug("[end destroy pjsip] pjsip->"+pjsip);
+            log.debug("[end destroy pjsip and call jvm jc] pjsip->");
+
         }
 
         log.debug("[remote session]{}",webDriver);
@@ -76,8 +82,9 @@ public class TestCaseBase extends BaseMethod {
 //                BrowserUtils.getInstance().getLogType_Browser(method,webDriver);
                 BrowserUtils.getInstance().getAnalyzeLog(method,webDriver);
                 webDriver.quit();
+                webDriver=null;
             }
-        }catch(Exception ex){
+        }catch(Throwable ex){
             log.error("[driver quite exception]"+ex.getMessage()+ex.getStackTrace());
         }
         log.debug("[clean remote session to null]{}",webDriver);

@@ -4,13 +4,14 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import static com.yeastar.swebtest.driver.DataReader2.*;
-
+@Log4j2
 public class SSHLinuxUntils {
     public static void main(String[] args) throws IOException, JSchException, InterruptedException {
         // TODO Auto-generated method stub
@@ -83,7 +84,7 @@ public class SSHLinuxUntils {
 
             channelExec.disconnect();
             session.disconnect();
-//            System.out.println(out);
+            log.debug("[exeCommand return] "+out);
             return out;
         } catch (JSchException e) {
             e.printStackTrace();

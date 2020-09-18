@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- log4j2 配置文件 -->
 <!-- 日志级别 trace<debug<info<warn<error<fatal -->
-<configuration status="trace">
+<configuration status="off"  monitorInterval="30">
     <!-- 自定义属性 -->
     <Properties>
         <!-- 日志格式 -->
-        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss:SSS} (%F:%L) %5p %m%n</Property>
+        <Property name="pattern">%d{[MM-dd HH:mm]} %m%n</Property>
         <!-- 日志文件路径 -->
         <Property name="filePath">log</Property>
         <!-- debug级别日志文件名称 -->
-        <Property name="debugFileName">${filePath}/debug.log</Property>
+        <Property name="debugFileName">${filePath}\debug</Property>
         <!-- info级别日志文件名称 -->
-        <Property name="infoFileName">${filePath}/info.log</Property>
+        <Property name="infoFileName">${filePath}\info</Property>
         <!-- error级别日志文件名称 -->
-        <Property name="errorFileName">${filePath}/error.log</Property>
+        <Property name="errorFileName">${filePath}\error</Property>
         <!-- browserLog -->
-        <Property name="browserLog">${filePath}/browser.log</Property>
+        <Property name="browserLog">${filePath}\browser</Property>
     </Properties>
 
     <!-- 定义输出器 -->
@@ -26,13 +26,14 @@
             <PatternLayout pattern="${pattern}"/>
         </Console>
 
+
         <!-- debug级别日志文件输出 -->
-        <RollingFile name="debug_appender" fileName="${debugFileName}"
-                     filePattern="${filePath}/%d{yyyy-MM-dd}/debug_%i.log">
+        <RollingFile name="debug_appender" fileName="${filePath}\debug.log"
+                     filePattern="${filePath}\%d{yyyy-MM-dd}\debug_%i.log.gz" append="false">
             <!-- 过滤器 -->
             <Filters>
                 <!-- 限制日志级别在debug及以上在info以下 -->
-                <ThresholdFilter level="debug"/>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
                 <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
             </Filters>
             <!-- 日志格式 -->
@@ -42,13 +43,13 @@
                 <!-- 每隔一天转存 -->
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <!-- 文件大小 -->
-                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
             </Policies>
         </RollingFile>
 
         <!-- info级别日志文件输出 -->
-        <RollingFile name="info_appender" fileName="${infoFileName}"
-                     filePattern="${filePath}/%d{yyyy-MM-dd}/info_%i.log">
+        <RollingFile name="info_appender" fileName="${infoFileName}.log"
+                     filePattern="${filePath}/%d{yyyy-MM-dd}/info_%i.log.gz" append="false">
             <!-- 过滤器 -->
             <Filters>
                 <!-- 限制日志级别在info及以上在error以下 -->
@@ -66,8 +67,8 @@
         </RollingFile>
 
         <!-- error级别日志文件输出 -->
-        <RollingFile name="error_appender" fileName="${errorFileName}"
-                     filePattern="${filePath}/%d{yyyy-MM-dd}/error_%i.log">
+        <RollingFile name="error_appender" fileName="${errorFileName}.log"
+                     filePattern="${filePath}/%d{yyyy-MM-dd}/error_%i.log.gz" append="false">
             <!-- 过滤器 -->
             <Filters>
                 <!-- 限制日志级别在error及以上 -->
@@ -84,8 +85,8 @@
         </RollingFile>
 
         <!-- Browser级别日志文件输出 -->
-        <RollingFile name="browser_appender" fileName="${browserLog}"
-                     filePattern="${filePath}/%d{yyyy-MM-dd}/browser_%i.log">
+        <RollingFile name="browser_appender" fileName="${browserLog}.log"
+                     filePattern="${filePath}/%d{yyyy-MM-dd}/browser_%i.log.gz" append="false">
             <!-- 过滤器 -->
             <Filters>
                 <!-- 限制日志级别在info及以上在error以下 -->
@@ -98,7 +99,7 @@
                 <!-- 每隔一天转存 -->
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <!-- 文件大小 -->
-                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
             </Policies>
         </RollingFile>
     </appenders>
@@ -111,14 +112,16 @@
         <Root level="debug">
             <!-- 输出控制台 -->
             <AppenderRef ref="console"/>
+            <!-- 输出browser日志文件 -->
+<!--            <AppenderRef ref="browser_appender"/>-->
             <!-- 输出debug级别日志文件 -->
             <AppenderRef ref="debug_appender"/>
             <!-- 输出info级别日志文件 -->
-            <AppenderRef ref="info_appender"/>
-            <!-- 输出error级别日志文件 -->
+<!--            <AppenderRef ref="info_appender"/>-->
+<!--            &lt;!&ndash; 输出error级别日志文件 &ndash;&gt;-->
             <AppenderRef ref="error_appender"/>
-            <!-- 输出browser日志文件 -->
-            <AppenderRef ref="browser_appender"/>
+
+
         </Root>
     </loggers>
 </configuration>

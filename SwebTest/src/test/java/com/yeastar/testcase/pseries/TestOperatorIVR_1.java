@@ -30,6 +30,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @create: 2020/07/30
  */
 public class TestOperatorIVR_1 extends TestCaseBase {
+    private boolean isRunRecoveryEnvFlag = true;
     APIUtil apiUtil = new APIUtil();
     ArrayList<String> ringGroupNum_1;
     ArrayList<String> queueListNum_1;
@@ -42,10 +43,11 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     Object[][] routes = new Object[][]{
             {"99", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SPS"},//sps   前缀 替换
             {"88", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "BRI"},//BRI   前缀 替换
-            {"", 2000, "2005", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "FXO"},//FXO --77 不输   2005（FXS）
+            {"",   2000, "2005", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "FXO"},//FXO --77 不输   2005（FXS）
             {"66", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "E1"},//E1     前缀 替换
-            {"", 2000, "2001", DEVICE_ASSIST_1, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
-            {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"}
+            {"",   2000, "2001", DEVICE_ASSIST_1, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
+            {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"},
+            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
     private boolean runRecoveryEnvFlag = true;
     private ArrayList<String> IVRMember = new ArrayList<>();
@@ -59,8 +61,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
                     "{\"type\":\"FXS\",\"first_name\":\"EXTENSIONNUM\",\"last_name\":\"EXTENSIONLASTNAME\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"OTkxMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"enb_ctl_record\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"fxs_port\":\"1-3\",\"enb_hotline\":0,\"hotline_number\":\"\",\"delay_dial\":2,\"min_flash_detect\":300,\"max_flash_detect\":1000,\"rx_volume\":\"0\",\"rx_gain\":0,\"tx_volume\":\"0\",\"tx_gain\":0,\"enb_call_waiting\":0,\"enb_dtmf_passthrough\":0,\"enb_echo_cancel\":1}"
             , enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)), enBase64(EXTENSION_PASSWORD));
 
-    public void prerequisiteForAPI(boolean booRunRecoveryEnvFlag) {
-        if (booRunRecoveryEnvFlag) {
+    public void prerequisiteForAPI() {
+        if (isRunRecoveryEnvFlag) {
             APIUtil apiUtil = new APIUtil();
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
@@ -69,6 +71,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             trunks.add(E1);
             trunks.add(SIPTrunk);
             trunks.add(ACCOUNTTRUNK);
+            trunks.add(GSM);
             List<String> extensionNum = new ArrayList<>();
             IVRList_0 = new ArrayList<>();
             IVRList_1 = new ArrayList<>();
@@ -152,45 +155,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
             apiUtil.apply();
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
-            runRecoveryEnvFlag = false;
+            isRunRecoveryEnvFlag = false;
         }
-    }
-
-    /**
-     * 多线路测试数据
-     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
-     *
-     * @return
-     */
-    @DataProvider(name = "routesDebug")
-    public Object[][] RoutesDebug() {
-        return new Object[][]{
-                {"99", 2000, "6200", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SPS"},//sps   前缀 替换
-                {"88", 2000, "6200", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "BRI"},//BRI   前缀 替换
-                {"", 2000, "2005", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "FXO"},//FXO --77 不输   2005（FXS）
-                {"66", 2000, "6200", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "E1"},//E1     前缀 替换
-                {"", 2000, "2001", DEVICE_ASSIST_1, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
-                {"44", 4000, "6200", DEVICE_ASSIST_3, "4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"}
-        };
-    }
-
-    /**
-     * 多线路测试数据
-     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
-     *
-     * @return
-     */
-    @DataProvider(name = "routesDebug_1")
-    public Object[][] RoutesDebug_1() {
-        return new Object[][]{
-//                {"99",2000,"6200",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SPS"},//sps   前缀 替换
-//                {"88",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"BRI"},//BRI   前缀 替换
-//                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-                {"77", 2000, "6200", DEVICE_ASSIST_2, "1020 [1020]", RECORD_DETAILS.INTERNAL.getAlias(), "FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
-//                {"66",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
-//                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
-//                {"44",4000,"6200",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"SIP_ACCOUNT"}
-        };
     }
 
     /**
@@ -217,6 +183,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
                         group = new Object[][]{{"", 2000, "2001", DEVICE_ASSIST_1, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"}};
                     } else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
                         group = new Object[][]{{"44", 4000, "6200", DEVICE_ASSIST_3, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"}};
+                    }else if (groups.equalsIgnoreCase("GSM")) {
+                        group = new Object[][] {{"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}};
                     } else {
                         group = routes;
                     }
@@ -238,10 +206,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "2:外线号码[2000]呼叫[IVR]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingStatus", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingStatus", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingStatus(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -258,7 +226,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller, deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
+
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT * 2);
 
@@ -283,10 +252,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("bug 等待留言的时候才开始录音")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCTalking", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCTalking", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropWithCTalking(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -313,7 +282,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -344,10 +313,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3:[Inbound]1000 -->拖动到[Extension]1010（idle）")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCIdle", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCIdle", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropWithCIdle(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -400,10 +369,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Issue("1.勾选显示未注册分机，概率性出现 未注册分机不能显示 \n" +
             "2.拖动后，需要>=6秒后才会显示")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCUnregistered", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropWithCUnregistered", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropWithCUnregistered(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -428,7 +397,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -454,10 +423,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3.DragAndDrop RG\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropRG", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropRG", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropRG(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -485,7 +454,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT * 2);
 
@@ -545,10 +514,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Parking]001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropParking", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRingDragAndDropParking", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRingDragAndDropParking(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -566,7 +535,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -599,10 +568,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIncomingDragAndDropQueue", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIncomingDragAndDropQueue", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIncomingDragAndDropQueue(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -629,7 +598,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -671,10 +640,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectC_AHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectC_AHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectC_AHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -694,7 +663,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -763,10 +732,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectC_CHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectC_CHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectC_CHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -785,7 +754,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -841,10 +810,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Ring Group]6301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectRingGroup", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectRingGroup", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRedirectRingGroup(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -872,7 +841,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -945,10 +914,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6501")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectIVR", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectIVR", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRedirectIVR(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -967,7 +936,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -1032,10 +1001,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Voicemail]小图标")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectVoicemail", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRedirectVoicemail", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRedirectVoicemail(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -1059,7 +1028,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT * 2);
 
@@ -1105,10 +1074,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectOffLineY_AHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectOffLineY_AHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectOffLineY_AHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -1128,7 +1097,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -1185,10 +1154,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:Y挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")//TODO make jenkins vm exception
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectOffLineY_YHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionRedirectOffLineY_YHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionRedirectOffLineY_YHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -1208,7 +1177,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -1264,10 +1233,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -1285,7 +1254,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -1318,10 +1287,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:移开后 通话继续")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionHoverHandUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionHoverHandUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionHoverHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -1345,7 +1314,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -1383,10 +1352,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionPickUp", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testIVRIncomingRightActionPickUp", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionPickUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -1406,7 +1375,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 
@@ -1442,10 +1411,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             "3:右键->查看显示的条目")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0", "VCP", "testRGIncomingRightActionUnDisplay", "Regression", "PSeries", "VCP1", "IVR1",
+    @Test(groups = {"P0", "VCP", "testRGIncomingRightActionUnDisplay", "Regression", "PSeries", "VCP1", "VCP_IVR_1",
             "SPS", "BRI", "FXO", "FXS", "E1", "SIP_REGISTER", "SIP_ACCOUNT"}, dataProvider = "routes")
     public void testIVRIncomingRightActionUnDisplay(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
@@ -1469,7 +1438,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         step("【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT);
 

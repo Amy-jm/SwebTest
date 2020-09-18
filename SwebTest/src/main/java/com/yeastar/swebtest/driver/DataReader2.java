@@ -91,6 +91,7 @@ public class DataReader2 {
     public static String DEVICE_ASSIST_GSM = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"DEVICE_ASSIST_GSM").trim();
     public static String DEVICE_TEST_GSM = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"DEVICE_TEST_GSM").trim();
 
+
     public static String SIPTrunk = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"SIPTRUNK");
     public static String SIPTrunk2 = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"SIPTRUNK2");
     public static String ACCOUNTTRUNK = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"ACCOUNTTRUNK");
@@ -153,6 +154,8 @@ public class DataReader2 {
     public  static String GRID_HUB_IP = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"GRID_HUB_IP");
     public  static String GRID_HUB_PORT = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"GRID_HUB_PORT");
     public  static String RECORD_VIDEO = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"RECORD_VIDEO");
+    public  static String screenResolution = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"screenResolution");//全局分辨率     用户分辨率 > 全局分辨率
+    public static String screenResolutionUser = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"screenResolutionUser");//用户分辨率    用户分辨率 > 全局分辨率
 
 
     /**

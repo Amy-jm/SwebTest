@@ -429,10 +429,8 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001610")
     @Issue("bug cdr 多显示一条为 call to T的记录")
-    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
+    @Test(groups = {"P0","testMaxCallDurationForSPSTrunk","testCalled0To9999999","Regression","PSeries","Security"})
     public void testMaxCallDurationForSPSTrunk() throws IOException, JSchException {
-        prerequisite();
-
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
@@ -447,34 +445,35 @@ public class TestExtensionSecurity extends TestCaseBase {
         auto.extensionPage().editFirstData().switchToTab("Security").setElementValue(ele_extension_security_max_outb_call_duration_select,"60")
                 .clickSaveAndApply();
 
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
-        auto.outBoundRoutePage().editOutbound("Outbound1","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
+        prerequisite();
+
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
+//        auto.outBoundRoutePage().editOutbound("Outbound1","Name").addExtensionOrExtensionGroup("0").clickSaveAndApply();
 
 
         assertStep("4:全局设置 preference，Max Call Duration 设置30s");
         auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
-        auto.preferencesPage().setElementValue(ele_pbx_settings_preferences_max_call_duration_select,"30")
-                .clickSaveAndApply();
+        auto.preferencesPage().setElementValue(ele_pbx_settings_preferences_max_call_duration_select,"30").clickSaveAndApply();
 
 
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(3000,DEVICE_ASSIST_2);
 
-        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2000",DEVICE_IP_LAN,false);
+        pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"3000",DEVICE_IP_LAN,false);
         ys_waitingTime(70000);
         pjsip.Pj_Hangup_All();
 
         assertStep("[CDR]5.第一条记录：Reason = Exceeded the max call duration(s) ；Call Duration(s)=00:00:30");
-        //todo cdr 显示全选
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        //todo delete sleep
-        ys_waitingTime(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
+
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","callDuration","status","reason")
+                .contains(tuple("Yeastar Test0 朗视信息科技<0>", "3000", "60","ANSWERED", "Exceeded the max call duration(s)"));
+        softAssertPlus.assertAll();
         softAssert.assertAll();
+
     }
 
 

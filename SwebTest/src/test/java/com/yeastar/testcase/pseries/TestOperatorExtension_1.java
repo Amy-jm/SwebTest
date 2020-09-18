@@ -35,10 +35,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @Log4j2
 public class TestOperatorExtension_1 extends TestCaseBase {
     APIUtil apiUtil = new APIUtil();
-    private boolean runRecoveryEnvFlagExtension = true;
-    private boolean runRecoveryEnvFlagRingGroup = true;
-    private boolean runRecoveryEnvFlagQueue = true;
-    private boolean runRecoveryEnvFlagConference = true;
+    private boolean isRunRecoveryEnvFlag = true;
     ArrayList<String> queueListNum = null;
     ArrayList<String> queueListNum_1 = null;
     ArrayList<String> ringGroupNum_0 = null;
@@ -51,14 +48,16 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     String ringGroupName_1 = "RG1";//6301
     String conferenceListName = "CONF1";
     String testRoute = System.getProperty("pbx.pseries.test.route");
+
     Object[][] routes = new Object[][] {
-        {"99",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
-        {"88",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
-        {""  ,2000,"2005",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-        {"77",2000,"1000",DEVICE_ASSIST_2,1020,RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
-        {"66",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
-        {""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
-        {"44",4000,"1000",DEVICE_ASSIST_3,4000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+        {"99",2000,"1000",DEVICE_ASSIST_2,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
+        {"88",2000,"1000",DEVICE_ASSIST_2,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
+        {""  ,2000,"2005",DEVICE_ASSIST_2,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+        {"77",2000,"1000",DEVICE_ASSIST_2,"1020",RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
+        {"66",2000,"1000",DEVICE_ASSIST_2,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
+        {""  ,2000,"2001",DEVICE_ASSIST_1,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
+        {"44",4000,"1000",DEVICE_ASSIST_3,"4000",RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"},//SIP  --55 REGISTER
+        {"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM,RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
 
 
@@ -67,7 +66,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
      * 前提条件
      * 1.添加0分机和sps中继到 路由AutoTest_Route
      */
-    public void prerequisite(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
+    public void prerequisite(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
         //新增呼出路由 添加分机0 ，到路由AutoTest_Route
         ArrayList<String> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
@@ -113,9 +112,8 @@ public class TestOperatorExtension_1 extends TestCaseBase {
                     "{\"name\":\"%s\",\"enable\":1,\"country\":\"general\",\"itsp\":\"\",\"type\":\"peer\",\"transport\":\"udp\",\"codec_sel\":\"ulaw,alaw,g729\",\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_srtp\":0,\"enb_t38_support\":0,\"enb_inband_progress\":0,\"max_call_chans\":0,\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"%s\",\"from_user\":\"\",\"from_user_part\":\"default\",\"from_disp_name\":\"\",\"from_disp_name_part\":\"default\",\"from_host\":\"\",\"from_host_part\":\"domain\",\"diversion_user\":\"\",\"diversion_user_part\":\"\",\"rpid_user\":\"\",\"rpid_user_part\":\"\",\"pai_user\":\"\",\"pai_user_part\":\"\",\"ppi_user\":\"\",\"ppi_user_part\":\"\",\"enb_privacy_id\":0,\"enb_user_phone\":0,\"caller_id_from\":\"follow_system\",\"did_from\":\"follow_system\",\"user_agent\":\"\",\"enb_100rel\":0,\"max_ptime\":\"default\",\"rtp_reinvite\":\"\",\"enb_guest_auth\":0,\"enb_early_media\":0,\"enb_message\":0,\"did_list\":[],\"inbound_cid_list\":[],\"outbound_cid_list\":[],\"hostname\":\"%s\",\"port\":5060,\"domain\":\"%s\"}"
             ,SPS,"DOD",DEVICE_ASSIST_2,DEVICE_ASSIST_2);
 
-    public void prerequisiteForAPIExtension(boolean isRunRecoveryEnvFlag) {
+    public void prerequisiteForAPIExtension() {
         if(isRunRecoveryEnvFlag) {
-
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
             trunks.add(BRI_1);
@@ -123,6 +121,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
             trunks.add(E1);
             trunks.add(SIPTrunk);
             trunks.add(ACCOUNTTRUNK);
+            trunks.add(GSM);
             List<String> extensionNum = new ArrayList<>();
             queueListNum = new ArrayList<>();
             ringGroupNum_0 = new ArrayList<>();
@@ -182,27 +181,10 @@ public class TestOperatorExtension_1 extends TestCaseBase {
 
             apiUtil.apply();
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
-            runRecoveryEnvFlagExtension = false;
+            isRunRecoveryEnvFlag = false;
         }
     }
 
-    /**
-     * 多线路测试数据
-     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
-     * @return
-     */
-    @DataProvider(name = "routesDebug")
-     public Object[][] RoutesDebug() {
-        return new Object[][] {
-                {"99",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
-                {"88",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
-                {""  ,2000,"2005",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-                {"77",2000,"1000",DEVICE_ASSIST_2,1020,RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
-                {"66",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
-                {""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
-                {"44",4000,"1000",DEVICE_ASSIST_3,4000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}
-        };
-     }
 
     /**
      * 多线路测试数据
@@ -218,19 +200,21 @@ public class TestOperatorExtension_1 extends TestCaseBase {
                 for (int j = 0; j < routes[i].length; j++) {
                     log.debug("[routes] i:"+i+"j:"+j+"---->>>"+routes[i][j]);
                     if (groups.equalsIgnoreCase("SPS")) {
-                        group = new Object[][] {{"99",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"}};
+                        group = new Object[][] {{"99",2000,"1000",DEVICE_ASSIST_2,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"}};
                     }else if (groups.equalsIgnoreCase("BRI")) {
-                        group = new Object[][] {{"88",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"}};
+                        group = new Object[][] {{"88",2000,"1000",DEVICE_ASSIST_2,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"}};
                     }else if (groups.equalsIgnoreCase("FXO")) {
-                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"}};
+                        group = new Object[][] {{""  ,2000,"2005",DEVICE_ASSIST_2,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"}};
                     }else if (groups.equalsIgnoreCase("FXS")) {
-                        group = new Object[][] {{"77",2000,"1000",DEVICE_ASSIST_2,1020,RECORD_DETAILS.INTERNAL.getAlias(),"FXS"}};
+                        group = new Object[][] {{"77",2000,"1000",DEVICE_ASSIST_2,"1020",RECORD_DETAILS.INTERNAL.getAlias(),"FXS"}};
                     }else if (groups.equalsIgnoreCase("E1")) {
-                        group = new Object[][] {{"66",2000,"1000",DEVICE_ASSIST_2,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"E1"}};
+                        group = new Object[][] {{"66",2000,"1000",DEVICE_ASSIST_2,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"E1"}};
                     }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
-                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,2000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}};
+                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,"2000",RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"}};
                     }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
-                        group = new Object[][] {{"44",4000,"1000",DEVICE_ASSIST_3,4000,RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}};
+                        group = new Object[][] {{"44",4000,"1000",DEVICE_ASSIST_3,"4000",RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}};
+                    }else if (groups.equalsIgnoreCase("GSM")) {
+                        group = new Object[][] {{"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM,RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}};
                     }else {
                         group = routes;//默认选择具体的用例跑所有线路
                     }
@@ -252,10 +236,10 @@ public class TestOperatorExtension_1 extends TestCaseBase {
             "2:外线号码[2000]呼叫[1000]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRingStatus","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
 
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -272,7 +256,6 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -294,10 +277,10 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("拖动后状态无法直接接听，通过30s timeout 转到voicemail")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCTalking","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -350,10 +333,10 @@ public class TestOperatorExtension_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Extension]1001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCIdle","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-//        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+    public void testIncomingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+//        prerequisiteForAPIExtension();;
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -376,7 +359,6 @@ public class TestOperatorExtension_1 extends TestCaseBase {
 
         step("6：[Inbound]1001 -->拖动到[Extension]1001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.EXTENSION,"1001");
-        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("7:[VCP]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -407,11 +389,11 @@ public class TestOperatorExtension_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Issue("1.勾选显示未注册分机，概率性出现 未注册分机不能显示 \n+" +
             "2.拖动后，需要>=6秒后才会显示,被叫")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
-step("1:login web click ，测试线路："+message);
+    public void testIncomingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("勾选显示未注册分机");
@@ -438,7 +420,6 @@ step("1:login web click ，测试线路："+message);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,caller+"",OperatorPanelPage.DOMAIN.EXTENSION,"1001");
-        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("7:[VCP]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -459,10 +440,10 @@ step("1:login web click ，测试线路："+message);
             "4:[Inbound]1000 -->拖动到[Ring Group]6300")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropRingGroup","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingDragAndDropRingGroup(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingDragAndDropRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -493,7 +474,6 @@ step("1:login web click ，测试线路："+message);
         step("6：[Inbound]1000 -->拖动到[RingGroup]6300");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.RINGGROUP,"6300");
 
-        sleep(WaitUntils.SHORT_WAIT);
         assertStep("[VCP验证]");
         List allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
 
@@ -545,10 +525,10 @@ step("1:login web click ，测试线路："+message);
             "4:[Inbound]1000 -->拖动到[Parking]001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropParking","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropParking","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+    public void testIncomingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -568,7 +548,6 @@ step("1:login web click ，测试线路："+message);
 
         step("6：[Inbound]1001 -->拖动到[Parking]001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.PARKING,"001");
-        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -589,10 +568,10 @@ step("1:login web click ，测试线路："+message);
             "4:[Inbound]1000 -->拖动到[Queue]6400")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingDragAndDropQueue","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -621,7 +600,7 @@ step("1:login web click ，测试线路："+message);
         sleep(WaitUntils.SHORT_WAIT*2);
         step("6：[Inbound]1001 -->拖动到[Parking]001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.QUEUE,"6400");
-        sleep(WaitUntils.SHORT_WAIT);
+
         assertStep("[VCP验证]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         if(message.equals("FXS")) {
@@ -686,10 +665,10 @@ step("1:login web click ，测试线路："+message);
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRightActionRedirectC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingRightActionRedirectC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -707,7 +686,6 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -760,10 +738,10 @@ step("1:login web click ，测试线路："+message);
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRightActionRedirectC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingRightActionRedirectC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -781,7 +759,6 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -832,10 +809,10 @@ step("1:login web click ，测试线路："+message);
             "4:[Inbound]1000 -->Redirect[Ring Group]6300")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRedirectRingGroup","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRedirectRingGroup","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -918,10 +895,10 @@ step("1:login web click ，测试线路："+message);
             "4:[Inbound]1000 -->Redirect[Queue]6400")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRedirectQueue","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRedirectQueue","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRedirectQueue(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingRedirectQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1018,10 +995,10 @@ step("1:login web click ，测试线路："+message);
             "4:[Inbound]1000 -->Redirect[Voicemail]小图标")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRedirectVoicemail","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRedirectVoicemail","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRedirectVoicemail(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingRedirectVoicemail(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+prerequisiteForAPIExtension();
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1078,10 +1055,10 @@ step("1:login web click ，测试线路："+message);
             "4:[Inbound]1000 -->Redirect[IVR]6200")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRedirectIVR","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRedirectIVR","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+    public void testIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1137,10 +1114,10 @@ step("1:login web click ，测试线路："+message);
             "3:右键->查看显示的条目")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionUnDisplay","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRightActionUnDisplay","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRightActionUnDisplay(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+    public void testIncomingRightActionUnDisplay(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1176,10 +1153,10 @@ step("1:login web click ，测试线路："+message);
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_AHandUp","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_AHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRightActionRedirectOffLineC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+    public void testIncomingRightActionRedirectOffLineC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();;
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
@@ -1197,7 +1174,6 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1261,10 +1237,10 @@ step("1:login web click ，测试线路："+message);
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRightActionRedirectOffLineC_CHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRightActionRedirectOffLineC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+    public void testIncomingRightActionRedirectOffLineC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();;
 step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1282,7 +1258,6 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1345,10 +1320,11 @@ step("1:login web click ，测试线路："+message);
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRightActionHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
+    public void testIncomingRightActionHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
+
         step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
@@ -1364,7 +1340,6 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1398,11 +1373,12 @@ step("1:login web click ，测试线路："+message);
             "4:移开后 通话继续")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRightActionHoverHandUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+    public void testIncomingRightActionHoverHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
+
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
         step("2:进入Operator panel 界面");
@@ -1417,7 +1393,6 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
 
         assertStep("3:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1458,11 +1433,12 @@ step("1:login web click ，测试线路："+message);
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","Extension1",
+    @Test(groups = {"P0","VCP","testIncomingRightActionHandUp","Regression","PSeries","VCP1","VCP_Extension_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
-    public void testIncomingRightActionPickUp(String routePrefix,int caller,String callee,String deviceAssist,int vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);;
-step("1:login web click ，测试线路："+message);
+    public void testIncomingRightActionPickUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
+        prerequisiteForAPIExtension();
+
+        step("1:login web click ，测试线路："+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
         step("2:进入Operator panel 界面");
@@ -1479,7 +1455,6 @@ step("1:login web click ，测试线路："+message);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);

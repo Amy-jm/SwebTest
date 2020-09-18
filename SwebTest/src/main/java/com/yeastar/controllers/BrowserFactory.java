@@ -41,7 +41,11 @@ public class BrowserFactory extends ConfigP {
 					webDriver = initialDriver(browser, relativeOrAbsoluteUrl, "");
 				}
 			} catch (WebDriverException ex) {
-				log.error("【initialDriver】 retry-->" + retry + " 【ExceptionMessage】" + ex);
+				log.error("【initialDriver WebDriverException】 retry-->" + retry + " 【ExceptionMessage】" + ex);
+			} catch (java.lang.IllegalStateException ex){
+				log.error("【initialDriver IllegalStateException】 retry-->" + retry + " 【ExceptionMessage】" + ex);
+			} catch(Throwable ex){
+				log.error("【initialDriver throwable】 retry-->" + retry + " 【ExceptionMessage】" + ex);
 			}
 			retry++;
 			sleep(60 * 1000);
@@ -125,7 +129,13 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("idleTimeout", 240);//150-100
 			log.debug("[ZALENIUM_PROXY_CLEANUP_TIMEOUT]  90s");
 			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 90);//180-90
-
+			if(!screenResolutionUser.isEmpty()){
+				desiredCapabilities.setCapability("screenResolution", screenResolutionUser);
+				log.debug("[set screenResolutionUser]{}",screenResolutionUser.trim());
+			}else{
+				desiredCapabilities.setCapability("screenResolution", screenResolution);
+				log.debug("[set screenResolution]{}",screenResolution.trim());
+			}
 
 			try {
 				webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
@@ -158,7 +168,7 @@ public class BrowserFactory extends ConfigP {
 		//这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
 		if (browser.equals("chrome")) {
 			Configuration.browser = CHROME;
-			System.setProperty("webdriver.chrome.driver", CHROME_PATH);
+//			System.setProperty("webdriver.chrome.driver", CHROME_PATH);
 			desiredCapabilities = DesiredCapabilities.chrome();
 		} else if (browser.equals("firefox")) {
 			System.setProperty("webdriver.firefox.bin", FIREFOX_PATH);
@@ -182,6 +192,14 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability("ZALENIUM_PROXY_CLEANUP_TIMEOUT", 720);//180-90
 			log.debug("[set ZALENIUM_PROXY_CLEANUP_TIMEOUT]{}",720);
 			desiredCapabilities.setCapability("WAIT_FOR_AVAILABLE_NODES",false);//不等待回收node，直接创建
+			if(!screenResolutionUser.isEmpty()){
+				desiredCapabilities.setCapability("screenResolution", screenResolutionUser);
+				log.debug("[set screenResolutionUser]{}",screenResolutionUser.trim());
+			}else{
+				desiredCapabilities.setCapability("screenResolution", screenResolution);
+				log.debug("[set screenResolution]{}",screenResolution.trim());
+			}
+
 			log.debug("[set WAIT_FOR_AVAILABLE_NODES]{}",false);
 			if (RECORD_VIDEO.trim().equalsIgnoreCase("false")) {
 				log.debug("[set recordVideo]{}",RECORD_VIDEO.trim());

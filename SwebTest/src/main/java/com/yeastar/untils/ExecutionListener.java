@@ -2,9 +2,7 @@ package com.yeastar.untils;
 
 import lombok.extern.log4j.Log4j2;
 import org.influxdb.dto.Point;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+import org.testng.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,23 +13,26 @@ import java.util.concurrent.TimeUnit;
  * @create: 2020/06/23
  */
 @Log4j2
-public class ExecutionListener implements ITestListener {
+public class ExecutionListener  extends TestListenerAdapter implements IInvokedMethodListener {
 
     public void onTestStart(ITestResult iTestResult) {
 //        log.debug( "[ExecutionListener onTestStart] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
+        super.onTestSuccess(iTestResult);
         log.debug( "[ExecutionListener Success] "+iTestResult.getTestClass()+"#"+iTestResult.getName());
         this.sendTestMethodStatus(iTestResult, "PASS");
     }
 
     public void onTestFailure(ITestResult iTestResult) {
+        super.onTestSuccess(iTestResult);
         log.debug("[ExecutionListener Failure] "+iTestResult.getTestClass()+iTestResult.getName());
         this.sendTestMethodStatus(iTestResult, "FAIL");
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
+        super.onTestSuccess(iTestResult);
         log.debug("[ExecutionListener SKIPPED] "+iTestResult.getTestClass()+iTestResult.getName());
         this.sendTestMethodStatus(iTestResult, "SKIPPED");
     }
@@ -80,5 +81,15 @@ public class ExecutionListener implements ITestListener {
         }catch(Exception ex){
             log.error("[ExecutionListener exception]" + ex);
         }
+    }
+
+    @Override
+    public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
+
+    }
+
+    @Override
+    public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
+
     }
 }

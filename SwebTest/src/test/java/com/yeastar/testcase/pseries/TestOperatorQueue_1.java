@@ -9,7 +9,6 @@ import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.APIObject.IVRObject;
 import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.CDRObject;
-import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
@@ -34,7 +33,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 public class TestOperatorQueue_1 extends TestCaseBase {
     private final String CDR_PREFIX="";//""cdr_recording.cdr.";
     APIUtil apiUtil = new APIUtil();
-    private boolean runRecoveryEnvFlag = true;
+    private boolean isRunRecoveryEnvFlag = true;
     ArrayList<String> queueListNum = null;
     ArrayList<String> queueListNum_1 = null;
     ArrayList<String> ringGroupNum = null;
@@ -58,8 +57,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             ,SPS,"DOD",DEVICE_ASSIST_2,DEVICE_ASSIST_2);
 
 
-    public void prerequisiteForAPI(boolean booRunRecoveryEnvFlag) {
-        if (booRunRecoveryEnvFlag) {
+    public void prerequisiteForAPI() {
+        if (isRunRecoveryEnvFlag) {
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
             trunks.add(BRI_1);
@@ -67,6 +66,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             trunks.add(E1);
             trunks.add(SIPTrunk);
             trunks.add(ACCOUNTTRUNK);
+            trunks.add(GSM);
             List<String> extensionNum = new ArrayList<>();
             queueListNum = new ArrayList<>();
             queueListNum_1 = new ArrayList<>();
@@ -159,16 +159,17 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
             apiUtil.apply();
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
-            runRecoveryEnvFlag = false;
+            isRunRecoveryEnvFlag = false;
         }
     }
     Object[][] routes = new Object[][] {
             {"99",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
             {"88",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
             {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-//            {"66",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
+            {"66",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
             {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
-            {"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+            {"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"},//SIP  --55 REGISTER
+            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
     /**
      * 多线路测试数据
@@ -194,7 +195,9 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                         group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"}};
                     }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
                         group = new Object[][] {{"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_ACCOUNT"}};
-                    }else {
+                    }else if (groups.equalsIgnoreCase("GSM")) {
+                        group = new Object[][] {{"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}};
+                    } else {
                         group = routes;//默认选择具体的用例跑所有线路
                     }
                 }
@@ -206,22 +209,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         }
         return group;
     }
-    /**
-     * 多线路测试数据
-     * routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + vcpCaller（VCP列表中显示的主叫名称） + vcpDetail（VCP中显示的Detail信息） + testRouteTypeMessage（路由类型）
-     * @return
-     */
-    @DataProvider(name = "routesDebug")
-    public Object[][] RoutesDebug() {
-        return new Object[][] {
-                {"99",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SPS"},//sps   前缀 替换
-                {"88",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"BRI"},//BRI   前缀 替换
-                {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-                {"66",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL_IVR.getAlias(),"E1"},//E1     前缀 替换
-                {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"},//SIP  --55 REGISTER
-                {"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]",RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_ACCOUNT"}
-        };
-    }
+
     @Epic("P_Series")
     @Feature("Operator Panel")
     @Story("外线号码A 呼入到")
@@ -230,10 +218,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "2:外线号码[2000]呼叫[Queue]\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingStatus","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRingStatus","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRingStatus(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -256,7 +244,6 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -278,10 +265,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("bug 等待留言的时候才开始录音")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCTalking","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -313,8 +300,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT);
 
         step("5:【2000 呼叫 1000】，1000 为Ringing状态");
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*3);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.EXTENSION,"1010");
@@ -339,10 +326,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "3:[Inbound]1000 -->拖动到[Extension]1010（idle）")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCIdle","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -368,12 +355,11 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         refresh();//分机无法自动更新
 
         step("5:【2000 呼叫 1001】，1010 空闲状态");
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1001 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.EXTENSION,"1010");
-        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("[VCP]");
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1010",RECORD.Status),"Ringing");
@@ -402,10 +388,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
     @TmsLink(value = "")
     @Issue("1.勾选显示未注册分机，概率性出现 未注册分机不能显示 \n" +
             "2.拖动后，需要>=6秒后才会显示")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropWithCUnregistered","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -435,8 +421,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         refresh();//todo 概率性出现，未注册分机不能显示
 
         step("5:【2000 呼叫 6400】，1000 为Ringing状态");
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,caller+"",OperatorPanelPage.DOMAIN.EXTENSION,"1010");
@@ -460,10 +446,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "3.DragAndDrop RG\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropRG","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropRG","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRingDragAndDropRG(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -497,12 +483,11 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         step("4：拖动到[RingGroup]6301");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.RINGGROUP,"6301");
-        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("[VCP显示]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -539,10 +524,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Parking]001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropParking","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropParking","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -566,8 +551,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         step("6：[Inbound]1001 -->拖动到[Parking]001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.PARKING,"001");
@@ -597,10 +582,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->拖动到[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropQueue","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRingDragAndDropQueue","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -635,8 +620,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1001】，1001 为Ring状态");
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         step("6：[Inbound]1000 -->拖动到[到Queue]6400");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.QUEUE,"6401");
@@ -668,10 +653,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_AHandUp","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRightActionRedirectC_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -695,8 +680,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -743,10 +727,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:c挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectC_CHandUp","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRightActionRedirectC_CHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -768,8 +752,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -814,10 +797,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Ring Group]6301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRedirectRingGroup","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRedirectRingGroup","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -852,8 +835,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         step("6：[Inbound]1000 -->右键-->Redirect[RingGroup]6301");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6301");
@@ -902,10 +885,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRedirectQueue","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRedirectQueue","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRedirectQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -940,8 +923,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         step("5:【2000 呼叫 1000】，1000 为Ring状态");
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         step("6：[Inbound]1000 -->右键-->Redirect[Queue]6401");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6401");
@@ -991,10 +974,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Voicemail]小图标")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRedirectVoicemail","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRedirectVoicemail","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRedirectVoicemail(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1016,8 +999,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         step("4：[Inbound]1000 -->Redirect[Voicemail]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1000",true);
@@ -1049,10 +1032,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[IVR]6200")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRedirectIVR","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRedirectIVR","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1076,8 +1059,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         step("4：[Inbound]1000 -->Redirect[IVR]");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"6200");
@@ -1114,10 +1097,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:A挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRightActionRedirectOffLineY_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1141,8 +1124,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1190,10 +1172,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:Y挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")//TODO make jenkins vm exception
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionRedirectOffLineY_YHandUp","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRightActionRedirectOffLineY_YHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1217,8 +1199,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1264,10 +1245,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionHandUp","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionHandUp","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRightActionHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1289,8 +1270,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1319,10 +1299,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:移开后 通话继续")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionHoverHandUp","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRightActionHoverHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1344,8 +1324,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1375,10 +1354,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "4:通话结束")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testQueueIncomingRightActionPickUp","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testQueueIncomingRightActionPickUp","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRightActionPickUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1402,8 +1381,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
@@ -1439,10 +1417,10 @@ public class TestOperatorQueue_1 extends TestCaseBase {
             "3:右键->查看显示的条目")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","Queue","Queue1",
+    @Test(groups = {"P0","VCP","testRGIncomingRightActionUnDisplay","Regression","PSeries","VCP1","Queue","VCP_Queue_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testQueueIncomingRightActionUnDisplay(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPI(runRecoveryEnvFlag);
+        prerequisiteForAPI();
 
         step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1464,8 +1442,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
-       pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         assertStep("4:[VCP显示]");
         List<String> list =  auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000");

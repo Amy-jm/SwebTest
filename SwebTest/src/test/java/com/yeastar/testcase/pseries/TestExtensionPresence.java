@@ -53,6 +53,18 @@ public class TestExtensionPresence extends TestCaseBase{
             auto.extensionPage().createSipExtension("9999999","Yeastar Test9999999","朗视信息科技","(0591)-Ys.9999999","9999999",EXTENSION_PASSWORD).clickSave();
             auto.extensionPage().createSipExtension("1000","F1000","朗视信息科技","(0591)-Ys.1000","1000",EXTENSION_PASSWORD).clickSaveAndApply();
 
+            step("[新增录音文件 test]");
+            SSHLinuxUntils.exeCommand(DEVICE_IP_LAN, "rm /ysdisk/ysapps/pbxcenter/var/lib/asterisk/sounds/record/0/*");
+            pjsip.Pj_Init();
+            pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+            pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
+            auto.extensionPage().editExtension(getDriver(),"0").recordVoicemailGreeting("0-Yeastar Test0 朗视信息科技","test");
+            softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING,"预期分机0响铃");
+            pjsip.Pj_Answer_Call(0,200,false);
+            sleep(15000);
+            pjsip.Pj_Hangup_All();
+            pjsip.Pj_Destory();
+
             step("【环境准备】3、创建Trunk");
             apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
 
@@ -151,7 +163,7 @@ public class TestExtensionPresence extends TestCaseBase{
         softAssert.assertEquals(getExtensionStatus(9999999, RING, 8),RING,"响铃30s超时无应答，分机9999999预期振铃");
 
         pjsip.Pj_Hangup_All();
-        //pjsip.Pj_Destory();
+        pjsip.Pj_Destory();
         softAssert.assertAll();
     }
 
