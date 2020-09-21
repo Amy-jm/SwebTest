@@ -1,2 +1,0 @@
-chromedriver 对应谷歌游览器v63-65版本
-chromedriver66 对应谷歌游览器v64-66版本
