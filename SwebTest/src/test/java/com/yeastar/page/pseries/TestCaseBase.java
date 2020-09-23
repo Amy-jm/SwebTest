@@ -80,7 +80,7 @@ public class TestCaseBase extends BaseMethod {
         try{
             if(EmptyUtil.isNotEmpty(webDriver)){
 //                BrowserUtils.getInstance().getLogType_Browser(method,webDriver);
-                BrowserUtils.getInstance().getAnalyzeLog(method,webDriver);
+//                BrowserUtils.getInstance().getAnalyzeLog(method,webDriver);
                 webDriver.quit();
                 webDriver=null;
             }
