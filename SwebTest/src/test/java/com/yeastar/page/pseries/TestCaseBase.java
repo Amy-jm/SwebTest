@@ -48,7 +48,7 @@ public class TestCaseBase extends BaseMethod {
         if(EmptyUtil.isNotEmpty(pjsip)){
             log.debug("[start destroy pjsip]");
             pjsip.Pj_Destory();
-            sleep(6000);
+            sleep(60000);
             pjsip=null;
             log.debug("[end destroy pjsip] pjsip->"+pjsip);
 
