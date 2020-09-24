@@ -11,3 +11,4 @@ SwebTest/.factorypath
 SwebTest/.classpath
 SwebTest/.vscode/settings.json
 
+SwebTest/log/browser.log

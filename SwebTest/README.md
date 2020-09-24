@@ -118,6 +118,10 @@ softAssertPlus.assertAll();
 
 
 ## 用例执行
+1.TestNG
+
+
+2.maven
 
 
 ## 报告查看
