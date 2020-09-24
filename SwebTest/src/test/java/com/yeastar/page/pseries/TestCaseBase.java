@@ -66,16 +66,6 @@ public class TestCaseBase extends BaseMethod {
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
-        if(EmptyUtil.isNotEmpty(pjsip)){
-            log.debug("[start destroy pjsip]");
-            pjsip.Pj_Destory();
-            sleep(5000);
-            pjsip=null;
-            log.debug("[end destroy pjsip] pjsip->"+pjsip);
-            log.debug("[end destroy pjsip and call jvm jc] pjsip->");
-
-        }
-
         log.debug("[remote session]{}",webDriver);
         try{
             if(EmptyUtil.isNotEmpty(webDriver)){
@@ -88,6 +78,16 @@ public class TestCaseBase extends BaseMethod {
             log.error("[driver quite exception]"+ex.getMessage()+ex.getStackTrace());
         }
         log.debug("[clean remote session to null]{}",webDriver);
+
+        if(EmptyUtil.isNotEmpty(pjsip)){
+            log.debug("[start destroy pjsip]");
+            pjsip.Pj_Destory();
+            sleep(5000);
+            pjsip=null;
+            log.debug("[end destroy pjsip] pjsip->"+pjsip);
+            log.debug("[end destroy pjsip and call jvm jc] pjsip->");
+
+        }
 
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
