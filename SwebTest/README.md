@@ -61,7 +61,7 @@ selenium + selenide + testng + +allure + zalenium + docker + maven
 # 用例编写
 ## 用例模式 PageObject
 
-![po](./.vscode/imgmd/po.png)
+![po](./imgmd/po.png)
 
 ## 用例组成
 <font color=DarkOrchi size=5>**注解**</font>+
