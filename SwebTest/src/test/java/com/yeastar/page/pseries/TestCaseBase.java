@@ -9,6 +9,7 @@ import com.yeastar.untils.*;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -39,6 +40,7 @@ public class TestCaseBase extends BaseMethod {
         } catch (Throwable ex) {
             log.error("【PjsipException new】" + ex);
         }
+
     }
 
     @AfterClass
@@ -46,7 +48,7 @@ public class TestCaseBase extends BaseMethod {
         if(EmptyUtil.isNotEmpty(pjsip)){
             log.debug("[start destroy pjsip]");
             pjsip.Pj_Destory();
-            sleep(60000);
+            sleep(6000);
             pjsip=null;
             log.debug("[end destroy pjsip] pjsip->"+pjsip);
 
@@ -61,6 +63,11 @@ public class TestCaseBase extends BaseMethod {
         long startTime=System.currentTimeMillis();
         webDriver = initialDriver(BROWSER,PBX_URL,method);
         log.debug("[init driver time]:"+(System.currentTimeMillis()-startTime)/1000+" Seconds");
+//        if(!loginWebsession.isEmpty()){
+//
+//            log.debug("[set cookies ]: "+ loginWebsession);
+//            webDriver.manage().addCookie(new Cookie("websession", loginWebsession, "/", null));
+//        }
 
         long startTime_1=System.currentTimeMillis();
         setDriver(webDriver);
@@ -100,6 +107,8 @@ public class TestCaseBase extends BaseMethod {
 //            log.debug("[end destroy pjsip and call jvm jc] pjsip->");
 //
 //        }
+        pjsip.Pj_Hangup_All();
+        sleep(3000);
 
         log.debug("[remote session]{}",webDriver);
         try{

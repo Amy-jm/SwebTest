@@ -12,6 +12,7 @@ import org.openqa.selenium.html5.Location;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.yeastar.untils.WaitUntils.SHORT_WAIT;
 
 @Log4j2
@@ -49,6 +50,12 @@ public class LoginPage extends BasePage{
             sleep(3000);
         }catch (com.codeborne.selenide.ex.ElementNotFound e){
             isLoginSuccess = false;
+            loginBtn.click();
+        }
+        log.debug("is login success "+isLoginSuccess);
+        if (isLoginSuccess){
+            log.debug("after login get cookies: "+getWebDriver().manage().getCookieNamed("websession"));
+
         }
         return this;
     }

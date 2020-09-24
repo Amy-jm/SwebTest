@@ -63,10 +63,10 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     private final String op_ringing = UI_MAP.getString("web_client.ringing").trim();
 
     Object[][] routes = new Object[][] {
-//            {"99",2000,"1001",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
-//            {"88",2000,"1001",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
-//            {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-            {"77",2000,"1001",DEVICE_ASSIST_2,"1020 [FXS] [1020]",RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
+            {"99",2000,"1001",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
+            {"88",2000,"1001",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
+            {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+            {"77",2000,"1001",DEVICE_ASSIST_2,"1020 FXS [1020]",RECORD_DETAILS.INTERNAL.getAlias(),"FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
 //            {"66",2000,"1000",DEVICE_ASSIST_2,"2000 [2000]",RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
 //            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]",RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
 //            {"44",4000,"1000",DEVICE_ASSIST_3,"4000 [4000]",RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
@@ -329,7 +329,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("3.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
         pjsip.Pj_Hangup_All();
 
         assertStep("10:[CDR显示]");
@@ -495,7 +495,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("6.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
         softAssertPlus.assertAll();
 
         //todo cdr校验
@@ -560,7 +560,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("6.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
         softAssertPlus.assertAll();
     }
 
@@ -622,7 +622,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("6.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
         softAssertPlus.assertAll();
         //todo cdr校验
 
@@ -750,7 +750,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("4.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"0 [0]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"0 [0]",op_talking, vcpDetail));
 
         //todo cdr校验
         softAssertPlus.assertAll();
@@ -969,7 +969,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1004 E [1004]",op_ringing, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1004 E [1004]",op_ringing, vcpDetail));
 
         assertStep("预期响分机1004 挂断，进入Voicemail");
         pjsip.Pj_Answer_Call(1004,404,false);
@@ -1183,7 +1183,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1004 E [1004]",op_ringing, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1004 E [1004]",op_ringing, vcpDetail));
 
         assertStep("1004响铃->接听");
         pjsip.Pj_Answer_Call(1004,200,false);
@@ -1191,7 +1191,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         softAssertPlus.assertThat(getExtensionStatus(1004, TALKING, 8)).as("预期分机1004接听").isEqualTo(TALKING);
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1004 E [1004]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1004 E [1004]",op_talking, vcpDetail));
 
         pjsip.Pj_hangupCall(2000);
         //todo cdr校验
@@ -1233,7 +1233,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1004 E [1004]",op_ringing, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1004 E [1004]",op_ringing, vcpDetail));
 
         assertStep("1004响铃->接听");
         pjsip.Pj_Answer_Call(1004,200,false);
@@ -1241,7 +1241,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         softAssertPlus.assertThat(getExtensionStatus(1004, TALKING, 8)).as("预期分机1004接听").isEqualTo(TALKING);
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1004 E [1004]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1004 E [1004]",op_talking, vcpDetail));
 
         pjsip.Pj_hangupCall(1001);
         //todo cdr校验
@@ -1319,7 +1319,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("3.判断控制面板");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
 
         step("4.被叫挂断,控制面板没有记录");
         pjsip.Pj_hangupCall(1001);
@@ -1438,7 +1438,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("7:显示状态 A--C ring");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1000 A [1000]",op_ringing, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1000 A [1000]",op_ringing, vcpDetail));
 
         pjsip.Pj_Answer_Call(1000,200,false);
         sleep(WaitUntils.SHORT_WAIT);
@@ -1446,7 +1446,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("8:显示状态 A--C talking");
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1000 A [1000]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1000 A [1000]",op_talking, vcpDetail));
 
         pjsip.Pj_Hangup_All();
         softAssertPlus.assertAll();;
@@ -1667,7 +1667,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
 
         softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
@@ -1722,7 +1722,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         sleep(WaitUntils.TALKING_WAIT);
         resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
 
         softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
@@ -1776,7 +1776,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(vcpCaller,"0 [0]",op_talking, RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(vcpCaller,"0 [0]",op_talking, vcpDetail));
 
         softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
