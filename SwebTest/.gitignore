@@ -1,7 +1,11 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
 target
-log
+log/
+./log
+.vscode
+.vscode/
+.vscode/*
 log/*
 build/*
 allure-results
@@ -9,6 +13,8 @@ allure-results/*
 localLog
 pic
 SwebTest.iml
+SwebTest/log
+SwebTest/.vscode
 pic
 /pjsip.log
 /src/main/java/com/yeastar/yeastar/swebtest/tools/pjsip/PjsipDll.java
