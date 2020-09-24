@@ -10,7 +10,9 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
@@ -27,6 +29,30 @@ public class TestCaseBase extends BaseMethod {
     private WebDriver webDriver;
     public SoftAssert softAssert;
     public SoftAssertions softAssertPlus = new SoftAssertions();
+
+    @BeforeClass
+    public void beforeClass(){
+        try {
+            pjsip = new PjsipApp();
+            pjsip.Pj_Init();
+            log.debug("【pjsip new】 "+pjsip);
+        } catch (Throwable ex) {
+            log.error("【PjsipException new】" + ex);
+        }
+    }
+
+    @AfterClass
+    public void afterClass(){
+        if(EmptyUtil.isNotEmpty(pjsip)){
+            log.debug("[start destroy pjsip]");
+            pjsip.Pj_Destory();
+            sleep(60000);
+            pjsip=null;
+            log.debug("[end destroy pjsip] pjsip->"+pjsip);
+
+
+        }
+    }
 
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method){
@@ -48,13 +74,12 @@ public class TestCaseBase extends BaseMethod {
 
         long startTime_2=System.currentTimeMillis();
         auto = PageEngine.getInstance();
-        try {
-            pjsip = new PjsipApp();
-//            pjsip.work(454545454545l);
-            log.debug("【pjsip new】 "+pjsip);
-        } catch (Throwable ex) {
-         log.error("【PjsipException new】" + ex);
-        }
+//        try {
+//            pjsip = new PjsipApp();
+//            log.debug("【pjsip new】 "+pjsip);
+//        } catch (Throwable ex) {
+//            log.error("【PjsipException new】" + ex);
+//        }
         log.debug("[open url time]:"+(System.currentTimeMillis()-startTime_2)/1000+" Seconds");
 
         long startTime_3=System.currentTimeMillis();
@@ -66,15 +91,15 @@ public class TestCaseBase extends BaseMethod {
     @AfterMethod(alwaysRun = true)
     public void afterMethod(Method method) {
         log.info("\r\n====== [afterMethod] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
-        if(EmptyUtil.isNotEmpty(pjsip)){
-            log.debug("[start destroy pjsip]");
-            pjsip.Pj_Destory();
-            sleep(5000);
-            pjsip=null;
-            log.debug("[end destroy pjsip] pjsip->"+pjsip);
-            log.debug("[end destroy pjsip and call jvm jc] pjsip->");
-
-        }
+//        if(EmptyUtil.isNotEmpty(pjsip)){
+//            log.debug("[start destroy pjsip]");
+//            pjsip.Pj_Destory();
+//            sleep(5000);
+//            pjsip=null;
+//            log.debug("[end destroy pjsip] pjsip->"+pjsip);
+//            log.debug("[end destroy pjsip and call jvm jc] pjsip->");
+//
+//        }
 
         log.debug("[remote session]{}",webDriver);
         try{

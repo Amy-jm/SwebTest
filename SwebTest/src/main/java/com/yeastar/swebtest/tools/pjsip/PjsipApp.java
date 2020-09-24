@@ -44,8 +44,8 @@ public class PjsipApp extends PjsipDll{
         Reporter.infoExec("pjsip init "+pjsipdll.instance.ys_init());
         Reporter.infoExec("pjisp main " +pjsipdll.instance.ys_main());
         pjsipdll.instance.onRegStateCallback(registerCallBack);
-        pjsipdll.instance.onCallIncoming(incomingcallback);
         pjsipdll.instance.onCallStateCallback(callstateCallBack);
+        pjsipdll.instance.onCallIncoming(incomingcallback);
         pjsipdll.instance.onDtmfDigitCallback(dtmfCallBack);
 
         String m_os = System.getProperty("os.name");
@@ -59,6 +59,12 @@ public class PjsipApp extends PjsipDll{
 //        Reporter.infoExec("pjs_init done");
 
     }
+    public void Pj_SetLogLevel(){
+       log.debug("set log level");
+       pjsipdll.instance.ys_log_set_level(1);
+    }
+
+
     //释放PJSIP
     @Step("【pjsip】释放PJSIP")
     public void Pj_Destory(){
@@ -84,11 +90,21 @@ public class PjsipApp extends PjsipDll{
         account.callId = -1;
         account.accId = -1;
         account.port = String.valueOf(port);
+        account.status = INVALID;
+
         if(type == "UDP" || type == "udp"){
             account.uriHead = "sip:";
         }
         else if(type == "TLS" || type == "tls"){
             account.uriHead = "sips:";
+        }
+
+        System.out.println("accounts find account "+accounts.contains(account));
+        for(int i=0; i<accounts.size(); i++){
+            if(accounts.get(i).username.endsWith(account.username)){
+                accounts.set(i,account);
+                return;
+            }
         }
 
         this.accounts.add(account);

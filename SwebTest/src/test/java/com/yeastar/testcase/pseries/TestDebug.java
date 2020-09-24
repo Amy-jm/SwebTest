@@ -67,11 +67,10 @@ public class TestDebug extends TestCaseBase {
             runRecoveryEnvFlagExtension = false;
         }
     }
-    // @Test(invocationCount = 30, groups = "debug")
-    @Test
+    @Test(invocationCount = 30, groups = "debug")
     public void testDebugLogin() {
 
-        // prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
+        prerequisiteForAPIExtension(runRecoveryEnvFlagExtension);
         step("1:login PBX");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
