@@ -1,0 +1,13 @@
+SwebTest/log/info.log
+SwebTest/log/error.log
+SwebTest/log/debug.log
+SwebTest/log/browser.log
+SwebTest/.settings/org.eclipse.m2e.core.prefs
+SwebTest/.settings/org.eclipse.jdt.core.prefs
+SwebTest/.settings/org.eclipse.jdt.apt.core.prefs
+SwebTest/.settings/org.eclipse.core.resources.prefs
+SwebTest/.project
+SwebTest/.factorypath
+SwebTest/.classpath
+SwebTest/.vscode/settings.json
+
