@@ -3,6 +3,7 @@ package com.yeastar.page.pseries;
 import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
+import com.yeastar.page.pseries.PageEngine;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.swebtest.tools.pjsip.PjsipApp;
 import com.yeastar.untils.*;
@@ -30,7 +31,7 @@ public class TestCaseBase extends BaseMethod {
     public SoftAssert softAssert;
     public SoftAssertions softAssertPlus = new SoftAssertions();
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void beforeClass(){
         try {
             pjsip = new PjsipApp();
@@ -42,7 +43,7 @@ public class TestCaseBase extends BaseMethod {
 
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void afterClass(){
         if(EmptyUtil.isNotEmpty(pjsip)){
             log.debug("[start destroy pjsip]");
