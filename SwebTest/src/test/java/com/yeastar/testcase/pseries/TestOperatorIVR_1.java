@@ -9,6 +9,7 @@ import com.yeastar.untils.APIObject.IVRObject.PressKey;
 import com.yeastar.untils.APIObject.IVRObject.PressKeyObject;
 import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.CDRObject;
+import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -211,7 +212,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRingStatus(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -234,7 +235,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
 
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Ringing", RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         pjsip.Pj_hangupCall(caller);
@@ -257,7 +258,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRingDragAndDropWithCTalking(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -294,10 +295,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("7:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
 //        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
-//            softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+//            softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
 //                    .contains(tuple(vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
 //        }else {
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
 //        }
         softAssertPlus.assertAll();
@@ -318,7 +319,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRingDragAndDropWithCIdle(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -350,7 +351,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("7:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
 
         pjsip.Pj_Hangup_All();
@@ -374,7 +375,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRingDragAndDropWithCUnregistered(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("勾选显示未注册分机");
@@ -407,7 +408,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("7:[VCP]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1010 K [1010]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         pjsip.Pj_Hangup_All();
@@ -428,7 +429,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRingDragAndDropRG(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -519,7 +520,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRingDragAndDropParking(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -573,7 +574,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIncomingDragAndDropQueue(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -645,7 +646,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRightActionRedirectC_AHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -673,7 +674,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 //            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
 //                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 //        }else{
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 //        }
 
@@ -737,7 +738,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRightActionRedirectC_CHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
@@ -760,7 +761,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         step("5:右键->[Redirect] C");
@@ -815,7 +816,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRedirectRingGroup(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -919,7 +920,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRedirectIVR(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1006,7 +1007,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRedirectVoicemail(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1042,7 +1043,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 //            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
 //                    .contains(tuple(vcpCaller, "1000 A [1000]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 //        }else{
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 //        }
 
@@ -1079,7 +1080,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRightActionRedirectOffLineY_AHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1103,13 +1104,8 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-//        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
-//            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-//                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
-//        }else{
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Ringing", vcpDetail));
-//        }
 
         step("5:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT, "2001");
@@ -1117,7 +1113,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_after_redirect).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(vcpCaller, "DOD [2001]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
 
 
@@ -1127,18 +1123,24 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("8:[VCP显示]");
         List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_answer).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_after_answer).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(vcpCaller, "DOD [2001]", "Talking", RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("9:[挂断]");
         pjsip.Pj_hangupCall(caller);
 
-        assertStep("10:[CDR显示]");//todo add cdr assert
-//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-//                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),
-//                          tuple("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"),
-//                          tuple("2000<2000>", "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> called Extension"));
+        assertStep("10:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        if (message.equals("SPS") || message.equals("SIP_REGISTER") || message.equals("SIP_ACCOUNT") || message.equals("FXS")) { //非物理线路，主叫挂断，reason-正常显示
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
+                    .contains(tuple("2000<2000>".replace("2000", caller+""), "2001", "ANSWERED", "2000<2000> hung up".replace("2000", caller+"")),
+                              tuple("2000<2000>".replace("2000", caller+""), "1000 A<1000>", "NO ANSWER", "Redirected to 2001"),
+                              tuple("2000<2000>".replace("2000", caller+""), "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> called Extension".replace("2000",caller+"")));
+        } else {//物理线路，呼入，在转出后，无法识别 主叫挂断；目前reason显示为 被叫挂断
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
+                    .contains(tuple("2000<2000>".replace("2000", caller+""), "2001", "ANSWERED", "2001 hung up"),
+                            tuple("2000<2000>".replace("2000", caller+""), "1000 A<1000>", "NO ANSWER", "Redirected to 2001"));
+        }
 
         softAssertPlus.assertAll();
 
@@ -1159,7 +1161,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRightActionRedirectOffLineY_YHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1183,21 +1185,20 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-//        if(message.equalsIgnoreCase("SIP_ACCOUNT")){
-//            softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
-//                    .contains(tuple(vcpCaller, "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
+//        if(message.equals("SIP_ACCOUNT")){
+//            softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time：" + DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
+//                    .contains(tuple("4000 [4000]", "1000 A [1000]", "Ringing", "External"));
 //        }else{
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
-                .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Ringing", vcpDetail));
+            softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time：" + DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
+                    .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Ringing", vcpDetail));
 //        }
-
         step("5:右键->[Redirect] C(外线)");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND, "1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT, "2001");
         sleep(WaitUntils.SHORT_WAIT * 2);
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after_redirect = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_redirect).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_after_redirect).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(vcpCaller, "DOD [2001]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("7:[接通]");
@@ -1206,19 +1207,27 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("8:[VCP显示]");
         List<Record> resultSum_after_answer = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_answer).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_after_answer).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(vcpCaller, "DOD [2001]", "Talking", RECORD_DETAILS.EXTERNAL.getAlias()));
 
         step("9:[挂断]");
         pjsip.Pj_hangupCall(2001);
 
-
-        assertStep("10:[CDR显示]");////todo add cdr assert
+        assertStep("10:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-//                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2001 hung up"),
-//                          tuple ("2000<2000>", "1000 A<1000>", "NO ANSWER", "Redirected to 0<2001>"),
-//                          tuple ("2000<2000>", "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> called Extension"));
+//        if(message.equals("SIP_ACCOUNT")){
+//            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+//                    .contains(tuple("2000<2000>".replace("2000", caller+""), "2001", "ANSWERED", "2001 hung up"),
+//                            tuple ("2000<2000>".replace("2000", caller+""), "1000 A<1000>", "NO ANSWER", "Redirected to 2001"),
+//                            tuple ("2000<2000>".replace("2000", caller+""), "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> called Extension".replace("2000", caller+"")));
+//
+//        }else{
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                    .contains(tuple("2000<2000>".replace("2000", caller+""), "2001", "ANSWERED", "2001 hung up"),
+                            tuple ("2000<2000>".replace("2000", caller+""), "1000 A<1000>", "NO ANSWER", "Redirected to 2001"),
+                            tuple ("2000<2000>".replace("2000", caller+""), "IVR ivr_6200<6200>", "ANSWERED", "2000<2000> called Extension".replace("2000", caller+"")));
+
+//        }
 
         softAssertPlus.assertAll();
     }
@@ -1238,7 +1247,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRightActionHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1261,7 +1270,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
 
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Ringing", vcpDetail));
 
 
@@ -1292,7 +1301,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRightActionHoverHandUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1320,7 +1329,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Ringing", vcpDetail));
 
         step("5:右键->[HandUp->悬停，移开]");
@@ -1357,7 +1366,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRightActionPickUp(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1381,7 +1390,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
 
         assertStep("4:[VCP显示]2000->1000 初始状态 Ring状态");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
+        softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
                 .contains(tuple(IVRListName_0 + vcpCaller, "1000 A [1000]", "Ringing", vcpDetail));
 
 
@@ -1416,7 +1425,7 @@ public class TestOperatorIVR_1 extends TestCaseBase {
     public void testIVRIncomingRightActionUnDisplay(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String message) {
         prerequisiteForAPI();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk: " +message);
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
