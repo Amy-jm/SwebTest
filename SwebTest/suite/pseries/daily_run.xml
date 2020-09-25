@@ -17,13 +17,9 @@
 <!--            <class name="com.yeastar.testcase.pseries.TestExtensionFeature"/>-->
 <!--            <class name="com.yeastar.testcase.pseries.TestExtensionVoicemail"/>-->
             <class name="com.yeastar.testcase.pseries.TestOperatorExtension_2"/>
-            <class name="com.yeastar.testcase.pseries.TestOperatorExtension_2"/>
-            <class name="com.yeastar.testcase.pseries.TestOperatorExtension_2"/>
-            <class name="com.yeastar.testcase.pseries.TestOperatorExtension_2"/>
-            <class name="com.yeastar.testcase.pseries.TestOperatorExtension_2"/>
-            <class name="com.yeastar.testcase.pseries.TestOperatorExtension_2"/>
-            <class name="com.yeastar.testcase.pseries.TestOperatorExtension_2"/>
-            <class name="com.yeastar.testcase.pseries.TestOperatorExtension_2"/>
+            <class name="com.yeastar.testcase.pseries.TestOperatorQueue_2"/>
+            <class name="com.yeastar.testcase.pseries.TestOperatorRingGroup_2"/>
+            <class name="com.yeastar.testcase.pseries.TestOperatorIVR_2"/>
         </classes>
     </test>
 </suite>
