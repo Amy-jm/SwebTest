@@ -246,7 +246,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
 
         assertStep("4:[VCP显示]");
-        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecordNotEquals0(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
@@ -309,7 +309,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         refresh();
 
         assertStep("7:[VCP显示]");
-        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        List<Record> resultSum_before = auto.operatorPanelPage().getAllRecordNotEquals0(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "1010 K [1010]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
@@ -484,7 +484,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
 
         step("4：拖动到[RingGroup]6301");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1001",OperatorPanelPage.DOMAIN.RINGGROUP,"6301");
