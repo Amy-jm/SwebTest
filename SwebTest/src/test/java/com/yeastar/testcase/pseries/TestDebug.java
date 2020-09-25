@@ -9,11 +9,15 @@ import com.yeastar.untils.ExecutionListener;
 import com.yeastar.untils.TestNGListenerP;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.openqa.selenium.Cookie;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 
 @Listeners({ExecutionListener.class, AllureReporterListener.class, TestNGListenerP.class})
@@ -75,6 +79,80 @@ public class TestDebug extends TestCaseBase {
         step("1:login PBX");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+    }
+
+    @Test
+    public void testLoginGetCookie() {
+//        step("1:login PBX");
+        auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
+
+        File file = new File("Cookies.data");
+        try
+        {
+            // Delete old file if exists
+            file.delete();
+            file.createNewFile();
+            FileWriter fileWrite = new FileWriter(file);
+            BufferedWriter Bwrite = new BufferedWriter(fileWrite);
+            // loop for getting the cookie information
+
+            // loop for getting the cookie information
+            for(Cookie ck : getDriver().manage().getCookies())
+            {
+                Bwrite.write((ck.getName()+";"+ck.getValue()+";"+ck.getDomain()+";"+ck.getPath()+";"+ck.getExpiry()+";"+ck.isSecure()));
+                Bwrite.newLine();
+            }
+            Bwrite.close();
+            fileWrite.close();
+
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    @Test(dependsOnMethods = "testLoginGetCookie" )
+//    @Test
+    public void testLoginSetCookie(){
+        try{
+
+            File file2 = new File("Cookies.data");
+            FileReader fileReader = new FileReader(file2);
+            BufferedReader Buffreader = new BufferedReader(fileReader);
+            String strline;
+            while((strline=Buffreader.readLine())!=null){
+                StringTokenizer token = new StringTokenizer(strline,";");
+                while(token.hasMoreTokens()){
+                    String name = token.nextToken();
+                    String value = token.nextToken();
+                    String domain = token.nextToken();
+                    String path = token.nextToken();
+                    Date expiry = null;
+
+                    String val;
+                    if(!(val=token.nextToken()).equals("null"))
+                    {
+                        expiry = new Date(val);
+                    }
+                    Boolean isSecure = new Boolean(token.nextToken()).
+                            booleanValue();
+                    Cookie ck = new Cookie(name,value,domain,path,expiry,isSecure);
+                    System.out.println(ck);
+                    getDriver().manage().addCookie(ck); // This will add the stored cookie to your current session
+                }
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+        //确认GDRP隐私条款 v1.0   http://xx.com/api/v1.0/user/confirmgdpr
+        APIUtil apiUtil = new APIUtil();
+        String gdpr ="https://"+DEVICE_IP_LAN+":8088/api/v1.0/"+LOGIN_USERNAME+"/confirmgdpr";
+        apiUtil.getRequest(gdpr);
+        getDriver().navigate().refresh();
+        auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+
     }
 }
 
