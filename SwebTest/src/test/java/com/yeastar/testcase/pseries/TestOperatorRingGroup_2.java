@@ -65,9 +65,9 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
             {"99",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
             {"88",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
             {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
-            {"66",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
-            {"44",4000,"6300",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+//            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
+//            {"66",2000,"6300",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
+//            {"44",4000,"6300",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
     };
 
     /**
@@ -314,16 +314,16 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -360,16 +360,16 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -414,16 +414,16 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_Answer_Call(1001,200,false);
@@ -461,18 +461,18 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -526,18 +526,18 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -589,18 +589,18 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -653,18 +653,18 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         clearasteriskLog();
 
@@ -719,18 +719,18 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -782,16 +782,16 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -838,7 +838,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -895,7 +895,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -951,7 +951,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1008,7 +1008,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1067,20 +1067,20 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1126,7 +1126,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1168,7 +1168,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1218,7 +1218,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1268,7 +1268,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1306,7 +1306,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1351,16 +1351,16 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         refresh();
 
         step("4:【1002 与1000 通话】，1000 为Talking状态");
@@ -1413,16 +1413,16 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         step("5:【2000 呼叫 Queue】，1001 接听");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1473,15 +1473,15 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         step("5:【2000 呼叫 Queue】，1001 接听为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1524,7 +1524,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000 接听为Talking状态");
@@ -1580,7 +1580,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
@@ -1636,7 +1636,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
@@ -1688,7 +1688,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
@@ -1743,7 +1743,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         step("5:[2000 呼叫 Queue]，1001接听 为Talking状态");
@@ -1797,7 +1797,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
@@ -1846,7 +1846,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
