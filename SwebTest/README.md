@@ -1,8 +1,10 @@
-# SWEBTEST
 
-- [SWEBTEST](#swebtest)
+<font size=10>**UIAuto**</font>
+- [Summary](#summary)
 - [技术栈](#技术栈)
 - [运行环境](#运行环境)
+  - [Local](#local)
+  - [Remote](#remote)
 - [目录结构](#目录结构)
 - [用例编写](#用例编写)
   - [用例模式 PageObject](#用例模式-pageobject)
@@ -23,13 +25,25 @@
       - [Pipline Job](#pipline-job)
       - [Run 5 Times Job](#run-5-times-job)
 - [RoadMap](#roadmap)
+- [FAQ](#faq)
+- [Plan](#plan)
     
+# Summary
 
+【目标】
+1. 提供简洁易用的自动化测试方案
+2. 提高测试效率，结合DeveOps
+3. 支持多产品线的自动化测试（Web,Mobile,PC）
 
 # 技术栈
 selenium + selenide + testng  + allure + zalenium + docker + maven + jenkins 
 
 # 运行环境
+## Local 
+   *repo*
+
+   http://192.168.5.142/caspar/swebtest.git
+## Remote
   1. Code (用例编写与调试)
         http://192.168.3.252:8077/
 
@@ -249,3 +263,21 @@ http://192.168.3.252:8087/jenkins/view/PBX_P/job/yeastar-autotest-p-series-testc
 
 # RoadMap
 https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindmap
+
+
+
+# FAQ
+1. 
+   ![po](./imgmd/vs_error_java.png)
+
+2. ![po](./imgmd/vs_error_webview.png)
+   
+3. ![po](./imgmd/vs_error_domain.png)
+
+
+# Plan
+0. 自动化介绍
+1. vscode 使用
+2. 用例编写
+3. CI 使用
+4. git 基本使用

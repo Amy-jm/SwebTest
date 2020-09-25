@@ -12,3 +12,5 @@ SwebTest/.classpath
 SwebTest/.vscode/settings.json
 
 SwebTest/log/browser.log
+SwebTest/log/browser.log
+SwebTest/pjsip.log
