@@ -195,7 +195,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         conferenceMember2.add("1005");
 
         if(lhrFlag && !runRecoveryEnvFlag){
-            registerAllExtension();
+            //registerAllExtension();
             lhrFlag = false;
         }
 
@@ -839,7 +839,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -896,7 +896,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -952,7 +952,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1009,7 +1009,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1127,7 +1127,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1169,7 +1169,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1219,7 +1219,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1269,7 +1269,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1307,7 +1307,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("2:外线号码[2000]呼入Ringgroup 1001接听");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1525,7 +1525,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("3:[PJSIP注册] 分机创建并注册");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000 接听为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1581,7 +1581,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("3:[PJSIP注册] 分机创建并注册");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1637,7 +1637,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("3:[PJSIP注册] 分机创建并注册");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1689,7 +1689,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("3:[PJSIP注册] 分机创建并注册");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1744,7 +1744,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("3:[PJSIP注册] 分机创建并注册");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         step("5:[2000 呼叫 Queue]，1001接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1798,7 +1798,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("3:[PJSIP注册] 分机创建并注册");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1847,7 +1847,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
 
         step("3:[PJSIP注册] 分机创建并注册");
         //pjsip.Pj_Init();
-        registerAllExtension();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
