@@ -1,6 +1,7 @@
 package com.yeastar.testcase.pseries;
 
 import com.codeborne.selenide.Condition;
+import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.APIObject.IVRObject;
 import com.yeastar.untils.APIUtil;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import static com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement.ele_pbx_settings_preferences_max_call_duration_select;
 
 
 @Listeners({ExecutionListener.class, AllureReporterListener.class, TestNGListenerP.class})
@@ -152,7 +155,28 @@ public class TestDebug extends TestCaseBase {
         apiUtil.getRequest(gdpr);
         getDriver().navigate().refresh();
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
+    }
 
+    @Test(groups = {"testDebugMaxCallDuration"})
+    public void testDebugMaxCallDuration() {
+
+        step("1:login PBX");
+        auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
+        auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
+
+        step("2:创建分机号1001");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
+        for(int i=0;i<=5000;i++){
+            auto.preferencesPage().setElementValue(ele_pbx_settings_preferences_max_call_duration_select,randomWithRange(20,7200)+"")
+                    .clickSaveAndApply();
+        }
+
+    }
+
+    int randomWithRange(int min, int max)
+    {
+        int range = Math.abs(max - min) + 1;
+        return (int)(Math.random() * range) + (min <= max ? min : max);
     }
 }
 
