@@ -229,7 +229,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         assertStep("3:[PJSIP注册] ，2000 呼叫 1000 ");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 
@@ -270,7 +270,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -327,7 +327,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -388,7 +388,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -436,7 +436,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -522,7 +522,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000, DEVICE_IP_LAN);
@@ -566,7 +566,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -659,7 +659,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         assertStep("3:[PJSIP 创建/注册]");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -728,7 +728,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         assertStep("3:[PJSIP 创建/注册]");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -793,7 +793,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -889,7 +889,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -985,7 +985,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000, DEVICE_IP_LAN);
@@ -1041,7 +1041,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000, DEVICE_IP_LAN);
@@ -1097,7 +1097,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         assertStep("3:[PJSIP 创建/注册]");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 
@@ -1137,7 +1137,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         assertStep("3:[PJSIP 创建/注册]");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(2001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -1222,7 +1222,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         assertStep("3:[PJSIP 创建/注册]");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(2001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -1299,7 +1299,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         assertStep("3:[PJSIP 创建/注册]");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 
@@ -1352,7 +1352,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         assertStep("3:[PJSIP 创建/注册]");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 
@@ -1412,7 +1412,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         assertStep("3:[PJSIP 创建/注册]");
-        pjsip.Pj_Init();
+        //pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
