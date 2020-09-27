@@ -76,9 +76,9 @@ public class TestCaseBase extends BaseMethod {
         long startTime_2=System.currentTimeMillis();
         auto = PageEngine.getInstance();
         try {
-            pjsip = new PjsipApp();
-//            pjsip.work(454545454545l);
-            log.debug("【pjsip new】 "+pjsip);
+           setPjsip(new PjsipApp());
+           pjsip = getPjsip();
+           log.debug("【pjsip new】 "+pjsip);
         } catch (Throwable ex) {
          log.error("【PjsipException new】" + ex);
         }
