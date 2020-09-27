@@ -166,7 +166,7 @@ public class TestDebug extends TestCaseBase {
 
         step("2:创建分机号1001");
         auto.homePage().intoPage(HomePage.Menu_Level_1.pbx_settings, HomePage.Menu_Level_2.pbx_settings_tree_preferences);
-        for(int i=0;i<=5000;i++){
+        for(int i=0;i<=5000*100;i++){
             auto.preferencesPage().setElementValue(ele_pbx_settings_preferences_max_call_duration_select,randomWithRange(20,7200)+"")
                     .clickSaveAndApply();
         }
