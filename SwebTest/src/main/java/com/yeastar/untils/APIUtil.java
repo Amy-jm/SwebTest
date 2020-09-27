@@ -1226,7 +1226,7 @@ public class APIUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        log.debug("[GET result: ] "+responeData);
+//        log.debug("[GET result: ] "+responeData);
         JSONObject jsonObject = new JSONObject(responeData);
         if(jsonObject.getInteger("errcode") != 0){
             Assert.fail("[GET Request err:] errcode:"+jsonObject.getInteger("errcode")+" errmsg: "+jsonObject.getString("errmsg"));
