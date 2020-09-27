@@ -31,7 +31,7 @@ public class TestCaseBase extends BaseMethod {
     public SoftAssert softAssert;
     public SoftAssertions softAssertPlus = new SoftAssertions();
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void beforeClass(){
         try {
             pjsip = new PjsipApp();
@@ -43,7 +43,7 @@ public class TestCaseBase extends BaseMethod {
 
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void afterClass(){
         if(EmptyUtil.isNotEmpty(pjsip)){
             log.debug("[start destroy pjsip]");
