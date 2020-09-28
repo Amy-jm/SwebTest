@@ -749,9 +749,9 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         sleep(WaitUntils.RETRY_WAIT);
 
         assertStep("6:[VCP显示]");
-//        List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-//        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
-//                .contains(tuple(ringGroupName_0+vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
+        List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
+        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+                .contains(tuple(ringGroupName_0+vcpCaller, "1000 A [1000]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
         softAssertPlus.assertAll();
     }
@@ -890,10 +890,10 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         pjsip.Pj_hangupCall(caller);
 
         assertStep("10:[CDR显示]");
-//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-//                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),
-//                        tuple ("2000<2000>", "Queue Q0<6300>", "NO ANSWER", "Redirected to 0<2001>"));
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "2001", "ANSWERED", "2000<2000> hung up".replace("2000",caller+"")),
+                         tuple("2000<2000>".replace("2000",caller+""), "RingGroup RG0<6300>", "NO ANSWER", "Redirected to 2001"));
 
         softAssertPlus.assertAll();
     }
@@ -968,10 +968,10 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         pjsip.Pj_hangupCall(2001);
 
         assertStep("10:[CDR显示]");
-//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-//                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),
-//                          tuple ("2000<2000>", "Queue Q0<6300>", "NO ANSWER", "Redirected to 0<2001>"));
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "2001", "ANSWERED", "2001 hung up"),
+                          tuple("2000<2000>".replace("2000",caller+""), "RingGroup RG0<6300>", "NO ANSWER", "Redirected to 2001"));
 
         softAssertPlus.assertAll();
 
@@ -986,6 +986,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Ring Group]6301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
+    @Issue(" FXO,SIP_Register 无法接听")
     @Test(groups = {"P0","VCP","testRGIncomingRedirectRingGroup","Regression","PSeries","VCP1","VCP_RingGroup_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRedirectRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
@@ -1039,28 +1040,28 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
                           tuple(ringGroupName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                           tuple(ringGroupName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                           tuple(ringGroupName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-        softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
+//        softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
         step("7:1005 接通");
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*3);
         pjsip.Pj_Answer_Call(1005,false);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("[VCP验证]");
-        sleep(WaitUntils.SHORT_WAIT);
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(allRecordListAfter).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName_1+vcpCaller, "1005 F [1005]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-        softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
+//        softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_hangupCall(1005);
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-//                .contains(tuple("2000<2000>", "RingGroup RG1<6301>", "ANSWERED", "RingGroup RG1<6301> connected"),
-//                          tuple ("2000<2000>", "1005 F<1005>", "ANSWERED", "1005 F<1005> hung up"),
-//                          tuple ("2000<2000>", "RingGroup RG0<6300>", "NO ANSWER", "Redirected to RingGroup RG0<6300>"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "RingGroup RG1<6301>", "ANSWERED", "RingGroup RG1<6301> connected"),
+                          tuple("2000<2000>".replace("2000",caller+""), "1005 F<1005>", "ANSWERED", "1005 F<1005> hung up"),
+                          tuple("2000<2000>".replace("2000",caller+""), "RingGroup RG0<6300>", "NO ANSWER", "Redirected to RG1<6301>"));
 
         softAssertPlus.assertAll();
     }
@@ -1074,12 +1075,11 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
             "4:[Inbound]1000 -->Redirect[Queue]6401")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P0","VCP","testRGIncomingRedirectQueue","Regression","PSeries","VCP1","VCP_RingGroup_1",
-            "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routesDebug")
+    @Test(groups = {"P0","VCP","testRGIncomingRedirectQueue","Regression","PSeries","VCP1","VCP_RingGroup_1","SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRedirectQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIForRingGroup();
+//        prerequisiteForAPIForRingGroup();
 
-         step("1:login web client , test trunk "+message);
+        step("1:login web client , test trunk "+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
 
         step("2:进入Operator panel 界面");
@@ -1128,7 +1128,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
                         tuple(queueListName_1+vcpCaller, "1007 H [1007]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
                         tuple(queueListName_1+vcpCaller, "1008 I [1008]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
                         tuple(queueListName_1+vcpCaller, "1009 J [1009]","Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
-        softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum_1.size());
+//        softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum_1.size());
 
         step("7:显示状态1005 接通");
         sleep(WaitUntils.SHORT_WAIT);
@@ -1146,14 +1146,13 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-//                .contains(tuple("2000<2000>", "Queue Q1<6401>", "ANSWERED", "Queue Q1<6401> connected"),
-//                          tuple ("2000<2000>", "1005 F<1005>", "ANSWERED", "1005 F<1005> hung up"),
-//                          tuple ("2000<2000>", "RingGroup RG0<6300>", "NO ANSWER", "Redirected to RingGroup RG0<6300>"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "Queue Q1<6401>", "ANSWERED", "Queue Q1<6401> connected"),
+                        tuple("2000<2000>".replace("2000",caller+""), "1005 F<1005>", "ANSWERED", "1005 F<1005> hung up"),
+                        tuple("2000<2000>".replace("2000",caller+""), "RingGroup RG0<6300>", "NO ANSWER", "Redirected to Q1<6401>"));
 
         softAssertPlus.assertAll();
     }
-
 
     @Epic("P_Series")
     @Feature("Operator Panel")
@@ -1167,7 +1166,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testRGIncomingRedirectVoicemail","Regression","PSeries","VCP1","VCP_RingGroup_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRedirectVoicemail(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIForRingGroup();
+prerequisiteForAPIForRingGroup();
 
          step("1:login web client , test trunk "+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1202,13 +1201,13 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
                 .contains(tuple(ringGroupName_0+vcpCaller, "1000 A [1000]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_Hangup_All();
+        pjsip.Pj_hangupCall(caller);
 
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-//                .contains(tuple("2000<2000>", "1000 A<1000>", "VOICEMAIL", "2000<2000> hung up"),
-//                          tuple ("2000<2000>", "RingGroup RG0<6300>", "NO ANSWER", "Redirected to RingGroup RG0<6300>"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "Voicemail 1000 A<1000>", "VOICEMAIL", "2000<2000> hung up".replace("2000",caller+"")),
+                          tuple("2000<2000>".replace("2000",caller+""), "RingGroup RG0<6300>", "NO ANSWER", "Redirected to 1000 A<1000>"));
 
         softAssertPlus.assertAll();
     }
@@ -1225,7 +1224,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testRGIncomingRedirectIVR","Regression","PSeries","VCP1","VCP_RingGroup_1","Jack",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRedirectIVR(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIForRingGroup();
+prerequisiteForAPIForRingGroup();
 
          step("1:login web client , test trunk "+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);// auto.loginPage().loginWithExtensionNewPassword("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW); //for prerequisite();
@@ -1267,15 +1266,14 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         sleep(WaitUntils.SHORT_WAIT*2);
 
         int returnStr = pjsip.Pj_hangupCall(1000);
-        System.out.println("***************[1010]"+returnStr);
         sleep(WaitUntils.SHORT_WAIT);
 
-        assertStep("9:[CDR显示]");//todo add cdr
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(5);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-//                .contains(tuple("2000<2000>", "1010 K<1010>", "ANSWERED", "1010 K<1010> hung up"),
-//                          tuple ("2000<2000>", "IVR 6200<6200>", "ANSWERED", "2000<2000> hung up"),//todo bug
-//                          tuple ("2000<2000>", "RingGroup RG0<6300>", "NO ANSWER", "Redirected to RingGroup RG0<6300>"));//todo bug
+        assertStep("9:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "1000 A<1000>", "ANSWERED", "1000 A<1000> hung up"),
+                          tuple("2000<2000>".replace("2000",caller+""), "IVR 6200<6200>", "ANSWERED", "2000<2000> called Extension".replace("2000",caller+"")),
+                          tuple("2000<2000>".replace("2000",caller+""), "RingGroup RG0<6300>", "NO ANSWER", "Redirected to 6200<6200>"));
 
         softAssertPlus.assertAll();
     }
@@ -1293,7 +1291,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
     @Test(groups = {"P0","VCP","testRGIncomingRightActionRedirectOffLineY_AHandUp","Regression","PSeries","VCP1","VCP_RingGroup_1",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT"},dataProvider = "routes")
     public void testRGIncomingRightActionRedirectOffLineY_AHandUp(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message){
-        prerequisiteForAPIForRingGroup();
+prerequisiteForAPIForRingGroup();
 
          step("1:login web client , test trunk "+message);
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
@@ -1427,10 +1425,10 @@ public class TestOperatorRingGroup_1 extends TestCaseBase {
         pjsip.Pj_hangupCall(2001);
 
         assertStep("10:[CDR显示]");
-//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-//                .contains(tuple("2000<spsOuntCid>", "2001", "ANSWERED", "2000<spsOuntCid> hung up"),//
-//                        tuple ("2000<2000>", "Queue Q0<6400>", "NO ANSWER", "Redirected to 0<2001>"));//todo bug
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "2001", "ANSWERED", "2001 hung up"),//
+                          tuple("2000<2000>".replace("2000",caller+""), "RingGroup RG0<6300>", "NO ANSWER", "Redirected to 2001"));
 
         softAssertPlus.assertAll();
     }

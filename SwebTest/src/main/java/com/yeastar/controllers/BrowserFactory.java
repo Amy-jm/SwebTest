@@ -71,6 +71,10 @@ public class BrowserFactory extends ConfigP {
 			}
 			retry++;
 		} while (webDriver == null && retry <= 5);
+		if(webDriver==null){
+			log.error("[init webdriver failed!]");
+			throw new NullPointerException();
+		}
 		return webDriver;
 	}
 	//local

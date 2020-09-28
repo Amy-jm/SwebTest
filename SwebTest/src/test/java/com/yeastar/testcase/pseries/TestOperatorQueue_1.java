@@ -690,20 +690,20 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step( "5:右键->[Redirect] C");
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000", OperatorPanelPage.RIGHT_EVENT.REDIRECT,"1010");
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_after).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "1010 K [1010]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
 
         assertStep("7:[接通]");
         pjsip.Pj_Answer_Call(1010,false);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         assertStep("8:[VCP显示]");
         List<Record> resultSum_talking= auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_talking).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "1010 K [1010]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
 
         pjsip.Pj_hangupCall(caller);
@@ -766,7 +766,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_after).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "1010 K [1010]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
 
         assertStep("7:[接通]");
@@ -775,7 +775,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         assertStep("8:[VCP显示]");
         List<Record> resultSum_talking= auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_talking).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_talking).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "1010 K [1010]","Talking",RECORD_DETAILS.EXTERNAL.getAlias()));
 
         pjsip.Pj_hangupCall(1010);
@@ -1239,7 +1239,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "2001", "ANSWERED", "2001 hung up"),
-                        tuple ("2000<2000>".replace("2000",caller+""), "Queue Q0<6400>", "NO ANSWER", "Redirected to 0<2001>"));
+                        tuple ("2000<2000>".replace("2000",caller+""), "Queue Q0<6400>", "NO ANSWER", "Redirected to 2001<2001>"));
 
         softAssertPlus.assertAll();
     }
@@ -1347,7 +1347,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_after).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
         softAssertPlus.assertAll();
@@ -1402,7 +1402,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_after).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "0 [0]","Ringing",RECORD_DETAILS.EXTERNAL.getAlias()));
 
         pjsip.Pj_Answer_Call(0,false);
@@ -1410,7 +1410,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         assertStep("6:[VCP显示]");
         List<Record> resultSum_after_end = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum_after_end).extracting("caller","callee","status","details")
+        softAssertPlus.assertThat(resultSum_after_end).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "0 [0]","Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         softAssertPlus.assertAll();
