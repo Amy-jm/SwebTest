@@ -47,7 +47,7 @@ public class TestOperatorExtension_1 extends TestCaseBase {
             {"66", 2000, "1000", DEVICE_ASSIST_2, "2000", RECORD_DETAILS.EXTERNAL.getAlias(), "E1"},//E1     前缀 替换
             {"", 2000, "2001", DEVICE_ASSIST_1, "2000", RECORD_DETAILS.EXTERNAL.getAlias(), "SIP_REGISTER"},
             {"44", 4000, "1000", DEVICE_ASSIST_3, "4000", RECORD_DETAILS.EXTERNAL.getAlias(), "SIP_ACCOUNT"},//SIP  --55 REGISTER
-            {"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM,RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
+//            {"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM,RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
     private boolean isRunRecoveryEnvFlag = true;
     private final String reqDataCreateExtension = String.format("" +
