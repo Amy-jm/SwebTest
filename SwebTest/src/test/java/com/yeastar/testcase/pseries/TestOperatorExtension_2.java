@@ -301,7 +301,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -327,7 +328,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("3.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
         pjsip.Pj_Hangup_All();
 
@@ -353,7 +354,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -407,7 +409,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -462,7 +465,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -501,7 +505,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("6.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
 
         pjsip.Pj_hangupCall(caller);
@@ -536,7 +540,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -575,7 +580,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("6.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
         softAssertPlus.assertAll();
     }
@@ -599,7 +604,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -638,7 +644,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("6.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
 
         pjsip.Pj_hangupCall(caller);
@@ -674,7 +680,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -706,7 +713,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("4.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"[6000]",op_talking, RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
 
         assertStep("5.Asterisk断言：分机1001听到停泊语音call-parked-at.slin，然后挂断");
@@ -740,7 +747,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -776,7 +784,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("4.断言页面元素");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"0 [0]",op_talking, vcpDetail));
 
         pjsip.Pj_hangupCall(caller);
@@ -813,7 +821,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -869,7 +878,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -892,15 +902,15 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         softAssertPlus.assertThat(getExtensionStatus(1005, RING, 8)).as("预期响铃组6301的分机1005响铃").isEqualTo(RING);
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName2+":2000 [2000]","1004 E [1004]",op_ringing, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName2+":2000 [2000]","1005 F [1005]",op_ringing, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
         assertStep("1004 Talking");
         pjsip.Pj_Answer_Call(1004,200,false);
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName2+":2000 [2000]","1004 E [1004]",op_talking, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
         pjsip.Pj_hangupCall(caller);
@@ -935,7 +945,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -958,7 +969,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         softAssertPlus.assertThat(getExtensionStatus(1005, RING, 8)).as("预期分机1005响铃").isEqualTo(RING);
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName2+":2000 [2000]","1004 E [1004]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
                         tuple(queueListName2+":2000 [2000]","1005 F [1005]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
@@ -967,7 +978,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         sleep(WaitUntils.TALKING_WAIT);
 
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName2+":2000 [2000]","1004 E [1004]",op_talking, RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
 
         pjsip.Pj_hangupCall(caller);
@@ -999,7 +1010,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1021,7 +1033,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         softAssertPlus.assertThat(getExtensionStatus(1004, RING, 8)).as("预期分机1004响铃").isEqualTo(RING);
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1004 E [1004]",op_ringing, vcpDetail));
 
         assertStep("预期响分机1004 挂断，进入Voicemail");
@@ -1029,7 +1041,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         sleep(12000);
         softAssertPlus.assertThat(getExtensionStatus(1004, HUNGUP, 8)).as("预期分机1004已挂断，进入Voicemail ").isEqualTo(HUNGUP);
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1004 E [1004]",op_talking, RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         pjsip.Pj_hangupCall(caller);
@@ -1066,7 +1078,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1086,7 +1099,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("4.界面显示到IVR");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,ivrName2+" [6201]",op_talking, RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         step("5.IVR 呼叫1001");
@@ -1098,7 +1111,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("6.[判断] 界面仅显示External，无IVR相关的");
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(ivrName2+":2000 [2000]","1004 E [1004]",op_talking, RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
         pjsip.Pj_hangupCall(caller);
@@ -1133,7 +1146,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1165,7 +1179,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("控制面板显示");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName2+":2000 [2000]","6000",op_talking, RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
 
         pjsip.Pj_hangupCall(caller);
@@ -1199,7 +1213,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1218,7 +1233,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         auto.operatorPanelPage().rightTableAction(TABLE_TYPE.INBOUND,"1001", RIGHT_EVENT.TRANSFER,"6501");
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,conferenceName2+" [6501]",op_talking, RECORD_DETAILS.EXTERNAL_CONFERENCE.getAlias()));
 
         pjsip.Pj_hangupCall(caller);
@@ -1248,7 +1263,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingTalkingRightClickTransferInternalAHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1267,7 +1283,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         auto.operatorPanelPage().rightTableAction(TABLE_TYPE.INBOUND,"1001", RIGHT_EVENT.TRANSFER,"1004");
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1004 E [1004]",op_ringing, vcpDetail));
 
         assertStep("1004响铃->接听");
@@ -1275,7 +1291,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         softAssertPlus.assertThat(getExtensionStatus(1004, TALKING, 8)).as("预期分机1004接听").isEqualTo(TALKING);
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1004 E [1004]",op_talking, vcpDetail));
 
         pjsip.Pj_hangupCall(caller);
@@ -1304,7 +1320,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingTalkingRightClickTransferInternalCHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1323,7 +1340,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         auto.operatorPanelPage().rightTableAction(TABLE_TYPE.INBOUND,"1001", RIGHT_EVENT.TRANSFER,"1004");
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1004 E [1004]",op_ringing, vcpDetail));
 
         assertStep("1004响铃->接听");
@@ -1331,7 +1348,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         softAssertPlus.assertThat(getExtensionStatus(1004, TALKING, 8)).as("预期分机1004接听").isEqualTo(TALKING);
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1004 E [1004]",op_talking, vcpDetail));
 
         pjsip.Pj_hangupCall(1004);
@@ -1360,7 +1377,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingTalkingCallerHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1404,7 +1422,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingTalkingCalleeHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1421,7 +1440,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("3.判断控制面板");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
 
         step("4.被叫挂断,控制面板没有记录");
@@ -1455,7 +1474,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1495,7 +1515,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("4:VCP 第一条显示状态 A--C Talking external,voicemail");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1000 A [1000]",op_talking, RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         softAssertPlus.assertAll();;
@@ -1517,7 +1537,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1546,7 +1567,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("7:显示状态 A--C ring");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1000 A [1000]",op_ringing, vcpDetail));
 
         pjsip.Pj_Answer_Call(1000,200,false);
@@ -1554,7 +1575,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("8:显示状态 A--C talking");
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1000 A [1000]",op_talking, vcpDetail));
 
         pjsip.Pj_Hangup_All();
@@ -1577,7 +1598,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("勾选显示未注册分机");
@@ -1614,7 +1636,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("7:[VCP]显示状态 2000--1000 voicemail ");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1000 A [1000]",op_talking, RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         pjsip.Pj_Hangup_All();
@@ -1638,7 +1660,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1661,9 +1684,9 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("[VCP验证]");
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName2+":2000 [2000]","1004 E [1004]",op_ringing, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName2+":2000 [2000]","1005 F [1005]",op_ringing, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
         softAssertPlus.assertThat(resultSum.size()).as("验证RingGroup数量").isEqualTo(ringGroupMembers2.size());
 
@@ -1671,7 +1694,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         pjsip.Pj_Answer_Call(1004,false);
         sleep(WaitUntils.TALKING_WAIT);
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName2+":2000 [2000]","1004 E [1004]",op_talking, RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
         softAssertPlus.assertAll();
@@ -1694,7 +1717,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1717,7 +1741,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         assertStep("[VCP验证]");
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName2+":2000 [2000]","1004 E [1004]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
                         tuple(queueListName2+":2000 [2000]","1005 F [1005]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
@@ -1727,7 +1751,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         pjsip.Pj_Answer_Call(1004,false);
         sleep(WaitUntils.TALKING_WAIT);
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName2+":2000 [2000]","1004 E [1004]",op_talking, RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
 
         softAssertPlus.assertAll();
@@ -1750,7 +1774,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1770,7 +1795,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         auto.operatorPanelPage().dragAndDrop(DOMAIN.INBOUND,"1001",DOMAIN.PARKING,"6000");
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"[6000]",op_talking, RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
 
         sleep(WaitUntils.SHORT_WAIT);
@@ -1779,7 +1804,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         pjsip.Pj_Make_Call_No_Answer(1001,"6000",DEVICE_IP_LAN);
 
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
 
         softAssertPlus.assertAll();
@@ -1802,7 +1827,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropParkingRightClickTransfer(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1822,7 +1848,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         auto.operatorPanelPage().dragAndDrop(DOMAIN.INBOUND,"1001",DOMAIN.PARKING,"6000");
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"[6000]",op_talking, RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
 
         sleep(WaitUntils.SHORT_WAIT);
@@ -1834,7 +1860,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         pjsip.Pj_Answer_Call(1001,200,false);
         sleep(WaitUntils.TALKING_WAIT);
         resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"1001 B [1001]",op_talking, vcpDetail));
 
         softAssertPlus.assertAll();
@@ -1857,7 +1883,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropParkingRightClickUnpark(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1877,7 +1904,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         auto.operatorPanelPage().dragAndDrop(DOMAIN.INBOUND,"1001",DOMAIN.PARKING,"6000");
 
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"[6000]",op_talking, RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
         sleep(WaitUntils.RETRY_WAIT);
 
@@ -1888,7 +1915,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
         sleep(WaitUntils.RETRY_WAIT);
 
         resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"0 [0]",op_talking, vcpDetail));
 
         softAssertPlus.assertAll();
@@ -1911,7 +1938,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropParkingRightClickHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1932,7 +1960,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"[6000]",op_talking, RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
         sleep(WaitUntils.RETRY_WAIT);
 
@@ -1960,7 +1988,8 @@ public class TestOperatorExtension_2 extends TestCaseBase {
     public void testIncomingDragAndDropParkingHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client");
+        step("1:login web client ,test trunk "+message);
+
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1981,7 +2010,7 @@ public class TestOperatorExtension_2 extends TestCaseBase {
 
         assertStep("[VCP验证]");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
-        softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
+       step("1:login web client ,test trunk "+message); softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(vcpCaller,"[6000]",op_talking, RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
         sleep(WaitUntils.RETRY_WAIT);
 
