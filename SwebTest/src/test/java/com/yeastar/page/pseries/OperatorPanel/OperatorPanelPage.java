@@ -229,6 +229,7 @@ public class OperatorPanelPage extends BasePage {
             }else{
                 log.error("[Transfer eventParam 不能为空！]");
             }
+            sleep(1000);
             transferElementOKBtn.click();
             //2.类型二, Parked / Whisper
         }else if(event == RIGHT_EVENT.WHISPER || event == RIGHT_EVENT.PARKED){
