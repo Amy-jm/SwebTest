@@ -763,7 +763,10 @@ public class APIUtil {
                         JSONObject a = new JSONObject();
                         a.put(pressKey.toString()+"_dest", pressKeyObject.getDest());
                         a.put(pressKey.toString()+"_dest_prefix", pressKeyObject.getDestPrefix());
-                        a.put(pressKey.toString()+"_dest_value", Integer.toString(getExtensionSummary(pressKeyObject.getDestValue()).id));//getExtensionSummary id
+                        log.debug("[getExtensionSummary id] "+pressKeyObject.getDestValue());
+                        if(getExtensionSummary(pressKeyObject.getDestValue())!= null ){
+                            a.put(pressKey.toString()+"_dest_value", Integer.toString(getExtensionSummary(pressKeyObject.getDestValue()).id));//getExtensionSummary id
+                        }
                         if(HasDigit(pressKeyObject.getPressKeyNum())){
                             a.put("allow_out_record"+pressKey.toString().substring(pressKey.toString().length() -1, pressKey.toString().length()), pressKeyObject.getIsAllowOutRecord());
                         }else{

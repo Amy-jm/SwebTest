@@ -6,6 +6,7 @@ import com.yeastar.page.pseries.CallControl.IInboundRoutePageElement;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
 import com.yeastar.untils.*;
+import com.yeastar.untils.APIObject.IVRObject;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.Listeners;
@@ -13,10 +14,12 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.page.pseries.ExtensionTrunk.IExtensionPageElement.*;
 import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
+import static org.assertj.core.api.Assertions.tuple;
 
 /**
  * @program: SwebTest
@@ -29,6 +32,13 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
 public class TestExtensionFeature extends TestCaseBase {
     APIUtil apiUtil = new APIUtil();
 
+    public void prerequisiteCreateIVR() {
+        step("创建IVR_0");
+        ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
+        pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0, "extension", "", "1000", 0));
+        apiUtil.deleteAllIVR().createIVR("6200", "6200", pressKeyObjects_0);
+        apiUtil.apply();
+    }
     /**
      * 前提条件
      * 1.添加0分机和sps中继到 路由AutoTest_Route
@@ -39,11 +49,6 @@ public class TestExtensionFeature extends TestCaseBase {
         trunklist.clear();
         trunklist.add(SPS);
 
-//        step("创建IVR_0");
-//        ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
-//        pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0,"extension","","1000",0));
-
-//        apiUtil.deleteAllIVR().createIVR("6200","6200",pressKeyObjects_0);
 
         //创建trunk
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_trunks);
@@ -57,7 +62,7 @@ public class TestExtensionFeature extends TestCaseBase {
                 .selectDefaultDestination(IInboundRoutePageElement.DEFAULT_DESTIONATON.EXTENSION.getAlias(), "1001-1001")
                 .clickSaveAndApply();
 
-//        apiUtil.apply();
+//
     }
 
     @Epic("P_Series")
@@ -81,6 +86,7 @@ public class TestExtensionFeature extends TestCaseBase {
         step("2:创建分机号1001,启用disable outbound call");
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
         auto.extensionPage().deleAllExtension().createSipExtensionWithEmail("1001", EXTENSION_PASSWORD, "yeastarautotest@163.com").clickSaveAndApply();
+        auto.extensionPage().editDataByEditImage("1001").switchToTab("Features").setCheckbox(ele_extension_feature_enb_email_pwd_chg, true).clickSaveAndApply();
 
         int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
         log.debug("[邮箱数量]" + emailUnreadCount_before);
@@ -199,6 +205,8 @@ public class TestExtensionFeature extends TestCaseBase {
     @Issue("")
     @Test(groups = {"P0", "testCallBacking", "Extension", "Regression", "PSeries", "Feature"})
     public void testCallBacking() throws IOException, JSchException {
+        prerequisiteCreateIVR();
+
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME, LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
@@ -239,19 +247,28 @@ public class TestExtensionFeature extends TestCaseBase {
 
         assertStep("5[CDR]IVR6200 响铃");
         //todo cdr 显示全选
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        //CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
-        auto.cdrPage().assertCDRRecord(getDriver(), 0, "2000<2000>", "IVR 6200<6200>", "ANSWERED", "2000<2000> hung up", communication_inbound, SPS, "");
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
+//        //CDR 会产生2条数据，第一条为到voicemail数据， 第二条数据为：no answer数据（目前对该条数据进行验证）
+//        auto.cdrPage().assertCDRRecord(getDriver(), 0, "2000<2000>", "IVR 6200<6200>", "ANSWERED", "2000<2000> hung up", communication_inbound, SPS, "");
+
+        assertStep("[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
+                .contains(tuple("2000<2000>", "IVR 6200<6200>", "ANSWERED", "2000<2000> hung up"));
+
 
         assertStep("3:[PJSIP注册]] ，2001 呼叫 1001 ");
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(1002, "1001", DEVICE_IP_LAN, false);
         sleep(WaitUntils.SHORT_WAIT * 2);
         pjsip.Pj_hangupCall(1002);
-        assertStep("5[CDR]1001<1001> 响铃");
-        auto.cdrPage().refreshBtn.shouldBe(Condition.visible).click();
-        auto.cdrPage().assertCDRRecord(getDriver(), 0, "1002<1002>", "1001<1001>", "ANSWERED", "1002<1002> hung up", communication_internal, "", "");//VCP 多显示 来电都显示未 2000
 
-        softAssert.assertAll();
+        assertStep("5[CDR]1001<1001> 响铃");
+        List<CDRObject> resultCDRAfter = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDRAfter).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason")
+                .contains(tuple("1002<1002>", "1001<1001>", "ANSWERED", "1002<1002> hung up"));
+
+        softAssertPlus.assertAll();
+
     }
 }

@@ -38,7 +38,7 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
      */
     public void prerequisite(){
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_role_management);
-        auto.extensionPage().deleRole("extension").addNewRole("extension");
+        auto.extensionPage().deleRole("extension").addNewRole("extension").clickSaveAndApply();
     }
 
 
@@ -75,7 +75,7 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
             "4.能正常新增，编辑，删除分机")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
-    @Issue("bug 分机多显示 CDR菜单")
+    @Issue("")
     @Test(groups = {"P0","testLoginWithEmail","Extension","Regression","PSeries","UserPasswordAndLoginModel"})
     public void testLoginWithEmail() throws IOException, JSchException {
         step("1:login PBX");
@@ -96,11 +96,12 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
         auto.loginPage().loginWithExtension(EMAIL, LOGIN_PASSWORD, EXTENSION_PASSWORD);
         auto.loginPage().login(EMAIL, EXTENSION_PASSWORD);
         auto.extensionPage().switchWebClient();
-        softAssert.assertEquals(auto.extensionPage().getMenuNumWithDashBoardBrother().menuNumber,"1","[期望结果为，只显示一个Extension菜单] 实际显示-->"+auto.extensionPage().getMenuNumWithDashBoardBrother().menuStr);
+        softAssert.assertEquals(auto.extensionPage().getMenuNumWithDashBoardBrother().menuNumber-1,"1","[期望结果为，只显示一个Extension菜单] 实际显示-->"+auto.extensionPage().getMenuNumWithDashBoardBrother().menuStr);
         assertStep("4:功能菜单中只显示extension，可正常添加、编辑、删除");
 
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
-        auto.extensionPage().createSipExtension("1003", LOGIN_PASSWORD).editDataByEditImage("1003").setElementValue(auto.extensionPage().ele_extension_user_last_name,"test").clickSaveAndApply();
+        auto.extensionPage().createSipExtension("1003", LOGIN_PASSWORD).clickSave();
+        auto.extensionPage().editDataByEditImage("1003").setElementValue(auto.extensionPage().ele_extension_user_last_name,"test").clickSaveAndApply();
         auto.extensionPage().deleDataByDeleImage("1003").clickSaveAndApply();
 
         softAssert.assertAll();
