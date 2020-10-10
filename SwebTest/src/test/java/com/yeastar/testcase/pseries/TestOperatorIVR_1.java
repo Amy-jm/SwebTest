@@ -164,6 +164,10 @@ public class TestOperatorIVR_1 extends TestCaseBase {
             reg=true;
             log.debug("2001注册失败");
         }
+        if(getExtensionStatus(4000, IDLE, 5) != IDLE){
+            reg=true;
+            log.debug("4000注册失败");
+        }
         return reg;
     }
     public void prerequisiteForAPI() {

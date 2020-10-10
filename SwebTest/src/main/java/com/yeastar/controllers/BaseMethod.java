@@ -207,8 +207,8 @@ public class BaseMethod extends WebDriverFactory {
 		int status = -1;
 		while (time <= timeout) {
 			sleep(1000);
-//			account = pjsip.getUserAccountInfo(username);
-			account = getPjsip().getUserAccountInfo(username);
+			account = pjsip.getUserAccountInfo(username);
+//			account = getPjsip().getUserAccountInfo(username);
 
 			if (account == null) {
 				status = -1;

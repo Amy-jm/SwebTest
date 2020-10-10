@@ -26,7 +26,6 @@ import static com.codeborne.selenide.Selenide.sleep;
 
 @Log4j2
 public class TestCaseBase extends BaseMethod {
-    public PjsipApp  pjsip = null ;
     public PageEngine auto;
     private WebDriver webDriver;
     public SoftAssert softAssert;
@@ -36,9 +35,9 @@ public class TestCaseBase extends BaseMethod {
     public void beforeClass(){
         log.debug("[before Class] init pjsip .");
         try {
-            setPjsip(new PjsipApp());
-//            pjsip = new PjsipApp();
-            pjsip=getPjsip();
+//            setPjsip(new PjsipApp());
+//            pjsip=getPjsip();
+            pjsip = new PjsipApp();
             pjsip.Pj_Init();
             log.debug("【pjsip new】 "+pjsip);
         } catch (Throwable ex) {
