@@ -461,8 +461,11 @@ public class PjsipApp extends PjsipDll {
 //            System.out.println("make call no answer:"+pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false));
             }
             ys_waitingTime(2000);
-        } catch (Throwable ex) {
-            log.error("【PjsipException Pj_Make_Call_No_Answer】" + ex);
+        } catch (java.lang.NullPointerException ex) {
+            log.error("【Pjsip NullPointerException  Pj_Make_Call_No_Answer】" + ex);
+            throw new NullPointerException();
+        } catch (Throwable ex){
+            log.error("【Pjsip exception  Pj_Make_Call_No_Answer】" + ex);
         }
         return "";
     }
@@ -488,9 +491,10 @@ public class PjsipApp extends PjsipDll {
             String caller_status = null;
             String callee_status = null;
             CalleeAccount = findAccountByUsername(String.valueOf(CalleeNum));
-//        Reporter.infoExec("Answer Call  "+CalleeAccount.callId+"  "+CalleeAccount.username);//todo 待后续日志等级输出
+            System.out.println("Answer Call  "+CalleeAccount.callId+"  "+CalleeAccount.username);//todo 待后续日志等级输出
             if (CalleeAccount.callId != -1) {
-                pjsipdll.instance.ys_answerCall(CalleeAccount.callId, code);
+                int answer = pjsipdll.instance.ys_answerCall(CalleeAccount.callId, code);
+                System.out.println("answer return: "+answer);
             } else {
 
             }

@@ -26,34 +26,37 @@ import static com.codeborne.selenide.Selenide.sleep;
 
 @Log4j2
 public class TestCaseBase extends BaseMethod {
+    public PjsipApp  pjsip = null ;
     public PageEngine auto;
     private WebDriver webDriver;
     public SoftAssert softAssert;
     public SoftAssertions softAssertPlus = new SoftAssertions();
-//
-//    @BeforeClass(alwaysRun = true)
-//    public void beforeClass(){
-//        log.debug("[before Class] init pjsip .");
-//        try {
+
+    @BeforeClass(alwaysRun = true)
+    public void beforeClass(){
+        log.debug("[before Class] init pjsip .");
+        try {
+            setPjsip(new PjsipApp());
 //            pjsip = new PjsipApp();
-//            pjsip.Pj_Init();
-//            log.debug("【pjsip new】 "+pjsip);
-//        } catch (Throwable ex) {
-//            log.error("【PjsipException new】" + ex);
-//        }
-//
-//    }
-//
-//    @AfterClass(alwaysRun = true)
-//    public void afterClass(){
-//        log.debug("[after Class] destroy pjsip .");
-//        if(EmptyUtil.isNotEmpty(pjsip)){
-//            pjsip.Pj_Destory();
+            pjsip=getPjsip();
+            pjsip.Pj_Init();
+            log.debug("【pjsip new】 "+pjsip);
+        } catch (Throwable ex) {
+            log.error("【Pjsip Exception new】" + ex);
+        }
+
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass(){
+        log.debug("[after Class] destroy pjsip .");
+        if(EmptyUtil.isNotEmpty(pjsip)){
+            pjsip.Pj_Destory();
 //            sleep(60000);
 //            pjsip=null;
-//            log.debug("[end destroy pjsip] pjsip->"+pjsip);
-//        }
-//    }
+            log.debug("[end destroy pjsip] pjsip->"+pjsip);
+        }
+    }
 
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method){
@@ -75,13 +78,6 @@ public class TestCaseBase extends BaseMethod {
 
         long startTime_2=System.currentTimeMillis();
         auto = PageEngine.getInstance();
-        try {
-           setPjsip(new PjsipApp());
-           pjsip = getPjsip();
-           log.debug("【pjsip new】 "+pjsip);
-        } catch (Throwable ex) {
-         log.error("【PjsipException new】" + ex);
-        }
         log.debug("[open url time]:"+(System.currentTimeMillis()-startTime_2)/1000+" Seconds");
 
         long startTime_3=System.currentTimeMillis();
@@ -99,23 +95,21 @@ public class TestCaseBase extends BaseMethod {
 //                BrowserUtils.getInstance().getLogType_Browser(method,webDriver);
 //                BrowserUtils.getInstance().getAnalyzeLog(method,webDriver);
                 webDriver.quit();
-                webDriver=null;
             }
         }catch(Throwable ex){
             log.error("[driver quite exception]"+ex.getMessage()+ex.getStackTrace());
         }
-        log.debug("[clean remote session to null]{}",webDriver);
 
         if(EmptyUtil.isNotEmpty(pjsip)){
-            log.debug("[start destroy pjsip]");
-            pjsip.Pj_Destory();
-            sleep(5000);
-            pjsip=null;
-            log.debug("[end destroy pjsip] pjsip->"+pjsip);
-            log.debug("[end destroy pjsip and call jvm jc] pjsip->");
-
+            long startTime=System.currentTimeMillis();
+            pjsip.Pj_Hangup_All();
+            sleep(10000);
+            log.debug("[hangup all sleep time]:"+(System.currentTimeMillis()-startTime)/1000+" Seconds");
+            log.debug("[after method hangup all] "+pjsip);
         }
 
+        log.debug("[pjsip hangup all] ",pjsip.Pj_Hangup_All());
+        log.debug("[clean remote session to null]{}",webDriver);
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
 

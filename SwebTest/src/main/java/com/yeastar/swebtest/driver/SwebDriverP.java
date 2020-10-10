@@ -26,6 +26,7 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.*;
+import static com.yeastar.controllers.WebDriverFactory.getPjsip;
 
 /**
  * Created by GaGa on 2017-04-16.
@@ -1000,7 +1001,8 @@ public class SwebDriverP extends ConfigP {
         int status = -1;
         while (time <= timeout) {
             ys_waitingTime(1000);
-            account = pjsip.getUserAccountInfo(username);
+//            account = pjsip.getUserAccountInfo(username);
+            account = getPjsip().getUserAccountInfo(username);
             if (account == null) {
                 status = -1;
                 System.out.println("first--------account is null----------");
