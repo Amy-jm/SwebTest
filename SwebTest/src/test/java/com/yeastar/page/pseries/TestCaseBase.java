@@ -109,7 +109,18 @@ public class TestCaseBase extends BaseMethod {
 
         log.debug("[pjsip hangup all] ",pjsip.Pj_Hangup_All());
         log.debug("[clean remote session to null]{}",webDriver);
+        checkExtensionStats();
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
+    }
+
+    public void checkExtensionStats(){
+        for(int i=1000;i<=1012;i++){
+            log.debug("1000状态："+getExtensionStatus(i, IDLE, 5));
+        }
+        log.debug("2000状态："+getExtensionStatus(2000, IDLE, 5));
+        log.debug("2001状态："+getExtensionStatus(2001, IDLE, 5));
+        log.debug("2002状态："+getExtensionStatus(2002, IDLE, 5));
+        log.debug("4000状态："+getExtensionStatus(4000, IDLE, 5));
     }
 
     /**

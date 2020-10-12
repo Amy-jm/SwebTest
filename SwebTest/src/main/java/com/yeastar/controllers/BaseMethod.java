@@ -31,8 +31,6 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 @Log4j2
 public class BaseMethod extends WebDriverFactory {
 
-
-
 	@Step("{0}")
 	public void step(String desc){
 		log.debug("[step] "+desc);

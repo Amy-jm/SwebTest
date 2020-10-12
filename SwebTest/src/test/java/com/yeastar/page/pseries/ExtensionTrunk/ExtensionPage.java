@@ -573,6 +573,17 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         return this;
     }
 
+    /**
+     * 编辑指定分机号的分机
+     * @param driver
+     * @param extNum
+     * @return
+     */
+    public ExtensionPage editExtension(String extNum){
+        TableUtils.clickTableEidtBtn(getWebDriver(),"Extension Number",extNum);
+        return this;
+    }
+
 
     /**
      * 选择表中的第一条数据，编辑

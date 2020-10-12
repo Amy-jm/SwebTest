@@ -352,7 +352,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "1000 A [1000]","Ringing",RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
-        pjsip.Pj_Hangup_All();
+
         softAssertPlus.assertAll();
     }
 
@@ -395,7 +395,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 //        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010,DEVICE_IP_LAN);
 //        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1011,DEVICE_IP_LAN);
 //        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller,deviceAssist);
-        refresh();
+//        refresh();
 
         step("4:【1011 与1010 通话】，【1010】 Talking状态");
         pjsip.Pj_Make_Call_Auto_Answer(1011,"1010",DEVICE_IP_LAN,false);
@@ -407,7 +407,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND,"1000",OperatorPanelPage.DOMAIN.EXTENSION,"1010");
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT*4);
         refresh();
 
         assertStep("7:[VCP显示]");
@@ -416,7 +416,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
                 .contains(tuple(queueListName+vcpCaller, "1010 K [1010]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
+
     }
 
     @Epic("P_Series")
@@ -474,7 +474,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1010",RECORD.Status),"Talking");
         softAssert.assertEquals(auto.operatorPanelPage().getRecordValue(OperatorPanelPage.TABLE_TYPE.INBOUND, RECORD.Callee,"1010",RECORD.Callee),"1010 K [1010]");
 
-        pjsip.Pj_Hangup_All();
+
         softAssert.assertAll();
 
     }
@@ -537,14 +537,14 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName+vcpCaller, "1010 K [1010]","Talking",RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
-        pjsip.Pj_Hangup_All();
-        sleep(5000);
-        if(getExtensionStatus(1010, IDLE, 5) == IDLE) {
-            pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010, DEVICE_IP_LAN);
-            if(getExtensionStatus(1010, IDLE, 5) != IDLE){
-                log.debug("[恢复环境1001状态]1001注册失败");
-            }
-        }
+//        pjsip.Pj_Hangup_All();
+//        sleep(5000);
+//        if(getExtensionStatus(1010, IDLE, 5) == IDLE) {
+//            pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1010, DEVICE_IP_LAN);
+//            if(getExtensionStatus(1010, IDLE, 5) != IDLE){
+//                log.debug("[恢复环境1001状态]1001注册失败");
+//            }
+//        }
         softAssertPlus.assertAll();
     }
 
@@ -620,7 +620,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
 
         softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
+
     }
 
     @Epic("P_Series")
@@ -678,7 +678,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssertPlus.assertThat(allRecordList).as("验证数量").size().isEqualTo(queueListNum.size());
 
         softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
+
     }
 
     @Epic("P_Series")
@@ -749,7 +749,6 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         softAssertPlus.assertThat(allRecordList).as("验证Queue数量").size().isEqualTo(queueListNum_1.size());
 
         softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
     }
 
     @Epic("P_Series")
@@ -773,7 +772,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-       step("3:[PJSIP] "+ caller + " 呼叫 " +callee);
+       step("3:[PJSIP] "+ caller + " 呼叫 " +callee +"stats:");
 //        pjsip.Pj_Init();
 //        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 //        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -846,7 +845,8 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-       step("3:[PJSIP] "+ caller + " 呼叫 " +callee);        pjsip.Pj_Init();
+       step("3:[PJSIP] "+ caller + " 呼叫 " +callee);
+//       pjsip.Pj_Init();
 //        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 //        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 //        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1002,7 +1002,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         step("2:进入Operator panel 界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
-       step("3:[PJSIP] "+ caller + " 呼叫 " +callee);
+        step("3:[PJSIP] "+ caller + " 呼叫 " +callee);
 //        pjsip.Pj_Init();
 //        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 //        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -1346,7 +1346,7 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "2001", "ANSWERED", "2001 hung up"),
-                        tuple ("2000<2000>".replace("2000",caller+""), "Queue Q0<6400>", "NO ANSWER", "Redirected to 2001<2001>"));
+                        tuple ("2000<2000>".replace("2000",caller+""), "Queue Q0<6400>", "NO ANSWER", "Redirected to 2001"));
 
         softAssertPlus.assertAll();
     }
@@ -1564,8 +1564,6 @@ public class TestOperatorQueue_1 extends TestCaseBase {
         List<String> list =  auto.operatorPanelPage().getRightEvent(OperatorPanelPage.TABLE_TYPE.INBOUND,"1000");
 
         assertThat(list).doesNotContain("Transfer","Listen","Whisper","Barge","Park","Unpark","Pause","Recording","Unrecording");
-        pjsip.Pj_Hangup_All();
+
     }
-
-
 }
