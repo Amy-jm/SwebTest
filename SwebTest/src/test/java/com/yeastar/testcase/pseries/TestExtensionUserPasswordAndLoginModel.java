@@ -96,7 +96,7 @@ public class TestExtensionUserPasswordAndLoginModel extends TestCaseBase {
         auto.loginPage().loginWithExtension(EMAIL, LOGIN_PASSWORD, EXTENSION_PASSWORD);
         auto.loginPage().login(EMAIL, EXTENSION_PASSWORD);
         auto.extensionPage().switchWebClient();
-        softAssert.assertEquals(auto.extensionPage().getMenuNumWithDashBoardBrother().menuNumber-1,"1","[期望结果为，只显示一个Extension菜单] 实际显示-->"+auto.extensionPage().getMenuNumWithDashBoardBrother().menuStr);
+        softAssert.assertEquals(auto.extensionPage().getMenuNumWithDashBoardBrother().menuNumber-1,1,"[期望结果为，只显示一个Extension菜单] 实际显示-->"+auto.extensionPage().getMenuNumWithDashBoardBrother().menuStr);
         assertStep("4:功能菜单中只显示extension，可正常添加、编辑、删除");
 
         auto.homePage().intoPage(HomePage.Menu_Level_1.extension_trunk, HomePage.Menu_Level_2.extension_trunk_tree_extensions);
