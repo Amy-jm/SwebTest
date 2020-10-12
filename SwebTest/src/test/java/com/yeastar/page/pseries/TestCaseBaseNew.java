@@ -3,11 +3,11 @@ package com.yeastar.page.pseries;
 import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
-import com.yeastar.page.pseries.PageEngine;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
 import com.yeastar.swebtest.tools.pjsip.PjsipApp;
-import com.yeastar.untils.*;
-import lombok.SneakyThrows;
+import com.yeastar.untils.DataUtils;
+import com.yeastar.untils.EmptyUtil;
+import com.yeastar.untils.SSHLinuxUntils;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
@@ -24,28 +24,40 @@ import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
 
 /**
- *
- *  TestCaseBase
- * 1.pjsip init 在setup进行初始化
- *
- * 【区别】TestCaseBaseNew
+ * TestCaseBaseNew
  * 1.新增 beforeClass and afterClass
  * 2.pjsip init 在beforeclass进行初始化
  */
 
 @Log4j2
-public class TestCaseBase extends BaseMethod {
+public class TestCaseBaseNew extends BaseMethod {
     public PageEngine auto;
     private WebDriver webDriver;
     public SoftAssert softAssert;
     public SoftAssertions softAssertPlus = new SoftAssertions();
 
+    @BeforeClass(alwaysRun = true)
+    public void beforeClass(){
+        log.debug("[before Class] init pjsip .");
+        try {
+//            setPjsip(new PjsipApp());
+//            pjsip=getPjsip();
+            pjsip = new PjsipApp();
+            pjsip.Pj_Init();
+            log.debug("【pjsip new】 "+pjsip);
+        } catch (Throwable ex) {
+            log.error("【Pjsip Exception new】" + ex);
+        }
+
+    }
 
     @AfterClass(alwaysRun = true)
     public void afterClass(){
         log.debug("[after Class] destroy pjsip .");
         if(EmptyUtil.isNotEmpty(pjsip)){
             pjsip.Pj_Destory();
+//            sleep(60000);
+//            pjsip=null;
             log.debug("[end destroy pjsip] pjsip->"+pjsip);
         }
     }
@@ -60,10 +72,6 @@ public class TestCaseBase extends BaseMethod {
 
         long startTime_1=System.currentTimeMillis();
         setDriver(webDriver);
-
-        setPjsip(new PjsipApp());
-        pjsip=getPjsip();
-
         log.debug("[Test PBX_URL]"+PBX_URL);
         try {
             open(PBX_URL);//may throw IllegalStateException

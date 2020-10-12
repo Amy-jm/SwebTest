@@ -5,6 +5,7 @@ import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.*;
 import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.page.pseries.TestCaseBaseNew;
 import com.yeastar.untils.APIObject.IVRObject;
 import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.CDRObject;
@@ -32,7 +33,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @create: 2020/07/30
  */
 @Log4j2
-public class TestOperatorRingGroup_1 extends TestCaseBase {
+public class TestOperatorRingGroup_1 extends TestCaseBaseNew {
     APIUtil apiUtil = new APIUtil();
 
     private boolean isRunRecoveryEnvFlag = true;

@@ -5,6 +5,7 @@ import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.RECORD_DETAILS;
 import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.page.pseries.TestCaseBaseNew;
 import com.yeastar.untils.APIObject.IVRObject.PressKey;
 import com.yeastar.untils.APIObject.IVRObject.PressKeyObject;
 import com.yeastar.untils.APIUtil;
@@ -32,7 +33,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  * @create: 2020/07/30
  */
 @Log4j2
-public class TestOperatorIVR_1 extends TestCaseBase {
+public class TestOperatorIVR_1 extends TestCaseBaseNew {
     private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = false;
     APIUtil apiUtil = new APIUtil();

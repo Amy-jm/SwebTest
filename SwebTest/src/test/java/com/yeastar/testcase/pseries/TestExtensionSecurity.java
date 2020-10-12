@@ -10,6 +10,7 @@ import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -126,6 +127,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Test(groups = {"P0","testDisableOutCall","Extension","Regression","PSeries","Security"})
     public void testDisableOutCall() throws IOException, JSchException {
         prerequisite();
+
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
@@ -137,8 +139,6 @@ public class TestExtensionSecurity extends TestCaseBase {
                 switchToTab("Security").
                 isCheckbox(IExtensionPageElement.ele_extension_security_disable_outb_call_checkbox,false).clickSaveAndApply();
 
-
-
         assertStep("3.验证通话状态,1.预期0会Ring ,2.预期2001不会响铃");
         pjsip.Pj_Init();
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -146,19 +146,32 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(2001,DEVICE_ASSIST_2);
 
+        if(getExtensionStatus(0, IDLE, 5) != IDLE) {
+            log.debug("0注册失败" + "stats："+getExtensionStatus(0, IDLE, 5));
+        }
+        if(getExtensionStatus(2001, IDLE, 5) != IDLE) {
+            log.debug("2001注册失败" + "stats："+getExtensionStatus(2001, IDLE, 5));
+        }
+
         pjsip.Pj_Make_Call_Auto_Answer_For_PSeries(0,"2001",DEVICE_IP_LAN,false);
-        softAssert.assertEquals(getExtensionStatus(0,TALKING,10),TALKING,"预期0为TALKING状态");
-        softAssert.assertEquals(getExtensionStatus(2001,TALKING,10),TALKING,"预期2001为TALKING状态");
+        softAssertPlus.assertThat(getExtensionStatus(0,TALKING,10)).isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(2001,TALKING,10)).isEqualTo(TALKING);
         pjsip.Pj_Hangup_All();
 
         assertStep("[CDR]4.验证通话状态");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
-        ys_waitingTime(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Status",0),"ANSWERED");
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call From",0),"0<0>");
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"2001");
-        softAssert.assertAll();
+//        ys_waitingTime(WaitUntils.SHORT_WAIT);
+//        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Status",0),"ANSWERED");
+//        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call From",0),"0<0>");
+//        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call To",0),"2001");
+        assertStep("9:[CDR显示]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
+                .contains(Assertions.tuple("0<0>", "2001", "ANSWERED", "0<0> hung up"));
+
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
