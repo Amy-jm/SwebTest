@@ -124,7 +124,7 @@ public class BasePage implements IButton{
      * 点击保存并应用
      */
     public void clickSaveAndApply(){
-        if(waitElementDisplay(saveBtn,WaitUntils.SHORT_WAIT*2) && saveBtn.isEnabled()){
+        if(waitElementDisplay(saveBtn,WaitUntils.SHORT_WAIT*2) && saveBtn.has(Condition.visible)){
             saveBtn.click();
         }
 //        saveBtn.shouldBe(Condition.enabled).click();

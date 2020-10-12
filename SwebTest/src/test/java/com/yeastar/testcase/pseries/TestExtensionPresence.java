@@ -40,6 +40,10 @@ public class TestExtensionPresence extends TestCaseBase{
             ArrayList<String> list = new ArrayList<>();
             ArrayList<String> list2 = new ArrayList<>();
 
+            step("【环境准备】3、创建Trunk");
+            apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
+            apiUtil.apply();
+
             step("【环境准备】1、登录pbx");
             loginWithAdmin();
 
@@ -65,8 +69,6 @@ public class TestExtensionPresence extends TestCaseBase{
             pjsip.Pj_Hangup_All();
             pjsip.Pj_Destory();
 
-            step("【环境准备】3、创建Trunk");
-            apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
 
             step("【环境准备】4、创建队列");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_queue);
