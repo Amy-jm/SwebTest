@@ -67,8 +67,8 @@ public class BasePage implements IButton{
      * @param arg 需要选择的文本
      */
     public void selectComm(SelenideElement ele, String arg) {
-        ele.click();
-        $(By.xpath(String.format(SELECT_COMM_XPATH, arg))).click();
+        ele.shouldBe(Condition.visible).click();
+        $(By.xpath(String.format(SELECT_COMM_XPATH, arg))).shouldBe(Condition.visible).click();
         return;
     }
 

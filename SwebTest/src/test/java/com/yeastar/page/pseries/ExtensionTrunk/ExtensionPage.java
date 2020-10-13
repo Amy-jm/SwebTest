@@ -245,7 +245,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         isCheckbox(ele_extension_presence_forward_enb_in_always_forward_checkBox,enable);
         if(enable){
             ele_extension_presence_forward_in_always_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_always_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_always_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_always_forward_prefix_input.setValue(dest2);
@@ -292,7 +293,9 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_in_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_in_no_answer_forward_checkBox,true);
             ele_extension_presence_forward_in_no_answer_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_no_answer_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+            sleep(1000);
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_no_answer_forward_dest']//span[contains(@title,'%s')]", dest1))).click();
+            sendTextFromAction(dest1);
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_no_answer_forward_prefix_input.setValue(dest2);
@@ -341,12 +344,12 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_in_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_in_busy_forward_checkBox,true);
             ele_extension_presence_forward_in_busy_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_busy_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
-            if(!dest2.isEmpty()){
-                if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_busy_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
+            if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_busy_forward_prefix_input.setValue(dest2);
                 }else{
-                    selectComm(ele_extension_presence_forward_in_busy_forward_value_combobox,dest2);
+//                    selectComm(ele_extension_presence_forward_in_busy_forward_value_combobox,dest2);
                 }
                 if(!dest3.isEmpty()){
                     if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
@@ -355,7 +358,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                         selectComm(ele_extension_presence_forward_play_in_busy_forward_prefix_combobox,dest3);
                     }
                 }
-            }
 
         }else{
             isCheckbox(ele_extension_presence_forward_enb_in_busy_forward_checkBox,enable);
@@ -388,7 +390,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,enable);
         if(enable){
             ele_extension_presence_forward_ex_always_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_always_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_always_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_always_forward_prefix_input.setValue(dest2);
@@ -434,7 +437,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_ex_no_answer_forward_checkBox,true);
             ele_extension_presence_forward_ex_no_answer_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_no_answer_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_no_answer_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_no_answer_forward_prefix_input.setValue(dest2);
@@ -482,7 +486,9 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_ex_busy_forward_checkBox,true);
             ele_extension_presence_forward_ex_busy_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_busy_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_busy_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
+
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_busy_forward_prefix_input.setValue(dest2);
@@ -575,7 +581,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
 
     /**
      * 编辑指定分机号的分机
-     * @param driver
+     * @param
      * @param extNum
      * @return
      */
@@ -861,6 +867,18 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         actions().sendKeys(userType+"").sendKeys(Keys.ENTER).build().perform();
         $$(By.xpath(String.format(buttonLocationXpath,"Save"))).get(1).click();
         return this;
+    }
+
+    /**
+     * 通过键盘输入
+     * @param dest1
+     */
+    private void sendTextFromAction(String dest1){
+        actions().sendKeys(dest1).build().perform();
+        if(dest1.startsWith("Hang")){ //兼容 Hang Up 与 Play Greeting then Hang up 选项
+            actions().sendKeys(Keys.DOWN).build().perform();
+        }
+        actions().sendKeys(Keys.ENTER).build().perform();
     }
 
 }
