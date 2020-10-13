@@ -97,16 +97,13 @@ public class TestCaseBase extends BaseMethod {
         }
 
         if(EmptyUtil.isNotEmpty(pjsip)){
-            long startTime=System.currentTimeMillis();
-            pjsip.Pj_Hangup_All();
-            sleep(10000);
-            log.debug("[hangup all sleep time]:"+(System.currentTimeMillis()-startTime)/1000+" Seconds");
-            log.debug("[after method hangup all] "+pjsip);
+            pjsip.Pj_Destory();
+            log.debug("[end destroy pjsip] pjsip->"+pjsip);
         }
 
         log.debug("[pjsip hangup all] ",pjsip.Pj_Hangup_All());
         log.debug("[clean remote session to null]{}",webDriver);
-        checkExtensionStats();
+//        checkExtensionStats();
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
 
