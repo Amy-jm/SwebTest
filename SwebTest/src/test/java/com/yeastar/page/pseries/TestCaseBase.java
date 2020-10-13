@@ -40,16 +40,6 @@ public class TestCaseBase extends BaseMethod {
     public SoftAssert softAssert;
     public SoftAssertions softAssertPlus = new SoftAssertions();
 
-
-    @AfterClass(alwaysRun = true)
-    public void afterClass(){
-        log.debug("[after Class] destroy pjsip .");
-        if(EmptyUtil.isNotEmpty(pjsip)){
-            pjsip.Pj_Destory();
-            log.debug("[end destroy pjsip] pjsip->"+pjsip);
-        }
-    }
-
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method){
         log.info("\r\n====== [SetUp] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
