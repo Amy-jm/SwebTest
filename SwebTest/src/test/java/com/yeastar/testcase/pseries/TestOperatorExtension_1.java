@@ -46,7 +46,7 @@ public class TestOperatorExtension_1 extends TestCaseBaseNew {
             {"", 2000, "2005", DEVICE_ASSIST_2, "2000", RECORD_DETAILS.EXTERNAL.getAlias(), "FXO"},//FXO --77 不输   2005（FXS）
             {"77", 2000, "1000", DEVICE_ASSIST_2, "1020", RECORD_DETAILS.INTERNAL.getAlias(), "FXS"},//FXS    1.没有呼入路由，直接到分机(只测试分机)  2.新增分机1020FXS类型
             {"66", 2000, "1000", DEVICE_ASSIST_2, "2000", RECORD_DETAILS.EXTERNAL.getAlias(), "E1"},//E1     前缀 替换
-            {"", 2000, "2001", DEVICE_ASSIST_1, "2000", RECORD_DETAILS.EXTERNAL.getAlias(), "SIP_REGISTER"},
+            {"", 3000, "3001", DEVICE_ASSIST_1, "3000", RECORD_DETAILS.EXTERNAL.getAlias(), "SIP_REGISTER"},
             {"44", 4000, "1000", DEVICE_ASSIST_3, "4000", RECORD_DETAILS.EXTERNAL.getAlias(), "SIP_ACCOUNT"},//SIP  --55 REGISTER
 //            {"33",2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM,RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
@@ -106,6 +106,8 @@ public class TestOperatorExtension_1 extends TestCaseBaseNew {
         pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(4000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
@@ -117,6 +119,8 @@ public class TestOperatorExtension_1 extends TestCaseBaseNew {
         pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(4000,DEVICE_ASSIST_3);
 
         boolean reg=false;
@@ -158,8 +162,16 @@ public class TestOperatorExtension_1 extends TestCaseBaseNew {
         }
         return reg;
     }
-
+    private boolean isDebugInitExtensionFlag = true;
     public void prerequisiteForAPIExtension() {
+        //local debug
+        if(isDebugInitExtensionFlag){
+            log.debug("*****************init extension************");
+            registerAllExtension();
+            isRunRecoveryEnvFlag = false;
+        }
+
+
         if (isRunRecoveryEnvFlag) {
             List<String> trunks = new ArrayList<>();
             trunks.add(SPS);
@@ -257,7 +269,7 @@ public class TestOperatorExtension_1 extends TestCaseBaseNew {
                     } else if (groups.equalsIgnoreCase("E1")) {
                         group = new Object[][]{{"66", 2000, "1000", DEVICE_ASSIST_2, "2000", RECORD_DETAILS.EXTERNAL.getAlias(), "E1"}};
                     } else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
-                        group = new Object[][]{{"", 2000, "2001", DEVICE_ASSIST_1, "2000", RECORD_DETAILS.EXTERNAL.getAlias(), "SIP_REGISTER"}};
+                        group = new Object[][]{{"", 3000, "3001", DEVICE_ASSIST_1, "3000", RECORD_DETAILS.EXTERNAL.getAlias(), "SIP_REGISTER"}};
                     } else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
                         group = new Object[][]{{"44", 4000, "1000", DEVICE_ASSIST_3, "4000", RECORD_DETAILS.EXTERNAL.getAlias(), "SIP_ACCOUNT"}};
                     } else if (groups.equalsIgnoreCase("GSM")) {
@@ -354,17 +366,19 @@ public class TestOperatorExtension_1 extends TestCaseBaseNew {
 
         step("5:【2000 呼叫 1000】，1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT * 3);
+        sleep(WaitUntils.SHORT_WAIT);
 
         step("6：[Inbound]1000 -->拖动到[Extension]1001");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND, "1000", OperatorPanelPage.DOMAIN.EXTENSION, "1001");
-        sleep(WaitUntils.SHORT_WAIT * 2);
+        sleep(WaitUntils.SHORT_WAIT*12);
+//        pjsip.Pj_Send_Dtmf(1000,"404");
         refresh();
+
 
         assertStep("7:[VCP显示]");
         List<Record> resultSum_before = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum_before).extracting("caller", "callee", "status", "details")
-                .contains(tuple("2000 [2000]".replace("2000", vcpCaller + ""), "1001 B [1001]", "Talking", RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
+                      .contains(tuple("2000 [2000]".replace("2000", vcpCaller + ""), "1001 B [1001]", "Talking", RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
         pjsip.Pj_Hangup_All();
         softAssertPlus.assertAll();

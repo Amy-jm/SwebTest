@@ -52,7 +52,7 @@ public class CDRObject {
         status = UIMapUtils.getValueByKey(getValue("disposition").toLowerCase().replace(" ","_"));
         sourceTrunk = getValue("src_trunk");
         destinationTrunk = getValue("dst_trunk");
-        communicatonType = getValue("Outbound");
+        communicatonType = getValue("call_type").replace(prefix,"");;
         did = getValue("did_number");
         dod = getValue("dod_number");
         callerIpAddr = getValue("src_addr");

@@ -494,13 +494,10 @@ public class TestExtensionSecurity extends TestCaseBase {
         pjsip.Pj_Hangup_All();
 
         assertStep("[CDR]5.第一条记录：Reason = Exceeded the max call duration(s) ；Call Duration(s)=00:00:30");
-
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","callDuration","status","reason")
-                .contains(tuple("Yeastar Test0 朗视信息科技<0>", "3000", "60","ANSWERED", "Exceeded the max call duration(s)"));
+                .contains(tuple("0<0>", "3000", "60","ANSWERED", "Exceeded the max call duration(s)"));
         softAssertPlus.assertAll();
-        softAssert.assertAll();
-
     }
 
 
@@ -549,10 +546,15 @@ public class TestExtensionSecurity extends TestCaseBase {
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         //todo delete sleep
-        ys_waitingTime(WaitUntils.SHORT_WAIT);
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
-        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
-        softAssert.assertAll();
+//        ys_waitingTime(WaitUntils.SHORT_WAIT);
+//        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Reason",0),"Exceeded the max call duration(s)");
+//        softAssert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Call Duration(s)",0),"00:01:00");
+//        softAssert.assertAll();
+//        assertStep("[CDR]5.第一条记录：Reason = Exceeded the max call duration(s) ；Call Duration(s)=00:00:30");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","callDuration","status","reason","callDuration")
+                .contains(tuple("Yeastar Test0 朗视信息科技<0>", "3000", "60","ANSWERED", "Exceeded the max call duration(s)","60"));
+        softAssertPlus.assertAll();
     }
 
 
