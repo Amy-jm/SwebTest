@@ -33,7 +33,7 @@ public class TestExtensionPresence extends TestCaseBase{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue("")
-    @Test(groups = {"P0", "TestExtensionPresence", "Presence","Extension", "Regression", "PSeries","A_RecoveryEnv"},priority =0 )
+//    @Test(groups = {"P0", "TestExtensionPresence", "Presence","Extension", "Regression", "PSeries","A_RecoveryEnv"},priority =0 )
     public void A_RecoveryEnv() {
         if(runRecoveryEnvFlag){
             APIUtil apiUtil = new APIUtil();
