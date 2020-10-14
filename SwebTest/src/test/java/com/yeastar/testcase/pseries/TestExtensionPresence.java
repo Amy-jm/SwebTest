@@ -113,8 +113,8 @@ public class TestExtensionPresence extends TestCaseBase{
             list2.clear();
             list2.add("Yeastar Test0 朗视信息科技");
             list2.add("Yeastar Test9999999 朗视信息科技");
-            auto.outBoundRoutePage().deleteAllOutboundRoutes()
-                    .createOutbound("Outbound1",list,list2)
+            auto.outBoundRoutePage().deleteAllOutboundRoutes().clickSaveAndApply();
+            auto.outBoundRoutePage().createOutbound("Outbound1",list,list2)
                     .addPatternAndStrip(0,"90.","2").clickSaveAndApply();
 
             auto.homePage().logout();

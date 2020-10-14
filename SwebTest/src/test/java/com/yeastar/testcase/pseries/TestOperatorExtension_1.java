@@ -162,7 +162,7 @@ public class TestOperatorExtension_1 extends TestCaseBaseNew {
         }
         return reg;
     }
-    private boolean isDebugInitExtensionFlag = true;
+    private boolean isDebugInitExtensionFlag = false;
     public void prerequisiteForAPIExtension() {
         //local debug
         if(isDebugInitExtensionFlag){
