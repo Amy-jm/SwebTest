@@ -66,7 +66,7 @@ public class TestExtensionPresence extends TestCaseBase{
             softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING,"预期分机0响铃");
             pjsip.Pj_Answer_Call(0,200,false);
             sleep(15000);
-            pjsip.Pj_Hangup_All();
+            pjsip.Pj_hangupCall(0);
             // 移动到 Method
             //pjsip.Pj_Destory();
 
