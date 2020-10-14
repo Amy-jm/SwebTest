@@ -35,7 +35,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @Log4j2
 public class TestOperatorIVR_1 extends TestCaseBaseNew {
     private boolean isRunRecoveryEnvFlag = true;
-    private boolean isDebugInitExtensionFlag = false;
+
     APIUtil apiUtil = new APIUtil();
     ArrayList<String> ringGroupNum_1;
     ArrayList<String> queueListNum_1;
@@ -50,7 +50,7 @@ public class TestOperatorIVR_1 extends TestCaseBaseNew {
             {"88", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "BRI"},//BRI   前缀 替换
             {"",   2000, "2005", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "FXO"},//FXO --77 不输   2005（FXS）
             {"66", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "E1"},//E1     前缀 替换
-            {"",   3000, "3001", DEVICE_ASSIST_1, "3000 [3000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
+            {"",   3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
             {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"},
 //            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
@@ -175,6 +175,7 @@ public class TestOperatorIVR_1 extends TestCaseBaseNew {
         }
         return reg;
     }
+    private boolean isDebugInitExtensionFlag = false;
     public void prerequisiteForAPI() {
         //local debug
         if(isDebugInitExtensionFlag){
@@ -298,7 +299,7 @@ public class TestOperatorIVR_1 extends TestCaseBaseNew {
                     } else if (groups.equalsIgnoreCase("E1")) {
                         group = new Object[][]{{"66", 2000, "6200", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "E1"}};
                     } else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
-                        group = new Object[][]{{"", 3000, "3001", DEVICE_ASSIST_1, "3000 [3000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"}};
+                        group = new Object[][]{{"", 3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"}};
                     } else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
                         group = new Object[][]{{"44", 4000, "6200", DEVICE_ASSIST_3, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"}};
                     }else if (groups.equalsIgnoreCase("GSM")) {
@@ -406,7 +407,10 @@ public class TestOperatorIVR_1 extends TestCaseBaseNew {
 
         step("6：[Inbound]1000 -->拖动到[Extension]1010");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND, "1000", OperatorPanelPage.DOMAIN.EXTENSION, "1010");
-        sleep(WaitUntils.SHORT_WAIT * 2);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_Send_Dtmf(1010,404);
+        log.debug("2--【1010】"+getExtensionStatus(1010,HUNGUP,3));
+        sleep(WaitUntils.SHORT_WAIT*10);
         refresh();
 
         assertStep("7:[VCP显示]");
@@ -416,7 +420,7 @@ public class TestOperatorIVR_1 extends TestCaseBaseNew {
 //                    .contains(tuple(vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
 //        }else {
         softAssertPlus.assertThat(resultSum_before).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
-                .contains(tuple(IVRListName_0 + vcpCaller, "1010 K [1010]", "Ringing", RECORD_DETAILS.EXTERNAL.getAlias()));
+                .contains(tuple(IVRListName_0 + vcpCaller, "1010 K [1010]", "Talking", RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 //        }
         pjsip.Pj_Hangup_All();
         sleep(5000);
