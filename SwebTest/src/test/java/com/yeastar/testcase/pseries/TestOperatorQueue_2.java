@@ -6,6 +6,7 @@ import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.*;
 import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.page.pseries.TestCaseBaseNew;
 import com.yeastar.untils.APIObject.IVRObject;
 import com.yeastar.untils.APIObject.InboundRouteObject;
 import com.yeastar.untils.APIObject.QueueObject;
@@ -27,10 +28,10 @@ import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.groups.Tuple.tuple;
 
 @Log4j2
-public class TestOperatorQueue_2 extends TestCaseBase {
+public class TestOperatorQueue_2 extends TestCaseBaseNew {
     private APIUtil apiUtil = new APIUtil();
     private boolean runRecoveryEnvFlag = true;
-
+    private boolean lhrFlag = !runRecoveryEnvFlag;
     private String reqDataCreateExtension = String.format("" +
                     "{\"type\":\"SIP\",\"first_name\":\"EXTENSIONNUM\",\"last_name\":\"EXTENSIONLASTNAME\",\"email_addr\":\"\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"reg_name\":\"EXTENSIONNUM\",\"reg_password\":\"%s\",\"allow_reg_remotely\":1,\"enb_user_agent_ident\":0,\"enb_ip_rstr\":0}"
             ,enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)),enBase64(EXTENSION_PASSWORD));
@@ -67,7 +68,7 @@ public class TestOperatorQueue_2 extends TestCaseBase {
             {"88",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
             {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
             {"66",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
-            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
+            {""  ,3001,"3000",DEVICE_ASSIST_1,"3001 [3001]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
             {"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
     };
     /**
@@ -90,7 +91,7 @@ public class TestOperatorQueue_2 extends TestCaseBase {
                     }else if (groups.equalsIgnoreCase("E1")) {
                         group = new Object[][] {{"66",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"E1"}};
                     }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
-                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"}};
+                        group = new Object[][] {{""  ,3001,"3000",DEVICE_ASSIST_1,"3001 [3001]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"}};
                     }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
                         group = new Object[][] {{"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_ACCOUNT"}};
                     }else {
@@ -106,8 +107,7 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         return group;
     }
 
-
-    private void registerAllExtension(){
+    private boolean registerAllExtension(  ){
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -116,6 +116,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(4000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
@@ -125,6 +127,39 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist(4000,DEVICE_ASSIST_3);
+
+        boolean reg=true;
+        if(getExtensionStatus(1000, IDLE, 5) != IDLE) {
+            reg = false;
+            log.debug("1000注册失败");
+        }
+        if(getExtensionStatus(1001, IDLE, 5) != IDLE) {
+            reg = false;
+            log.debug("1001注册失败");
+        }
+        if(getExtensionStatus(1002, IDLE, 5) != IDLE) {
+            reg = false;
+            log.debug("1002注册失败");
+        }
+        if(getExtensionStatus(1003, IDLE, 5) != IDLE) {
+            reg = false;
+            log.debug("1003注册失败");
+        }
+        if(getExtensionStatus(1004, IDLE, 5) != IDLE){
+            reg=false;
+            log.debug("1004注册失败");
+        }
+        if(getExtensionStatus(1005, IDLE, 5) != IDLE){
+            reg=false;
+            log.debug("1005注册失败");
+        }
+        if(getExtensionStatus(2000, IDLE, 5) != IDLE){
+            reg=false;
+            log.debug("2000注册失败");
+        }
+        return !reg;
     }
 
     @Epic("P_Series")
@@ -159,6 +194,11 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         conferenceMember.add("1003");
         conferenceMember2.add("1004");
         conferenceMember2.add("1005");
+
+        if(lhrFlag && !runRecoveryEnvFlag){
+            registerAllExtension();
+            lhrFlag = false;
+        }
 
         if (runRecoveryEnvFlag){
             List<String> trunks = new ArrayList<>();
@@ -250,7 +290,7 @@ public class TestOperatorQueue_2 extends TestCaseBase {
 
             apiUtil.loginWebClient("0",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW).updatePersonal("{\"show_unregistered_extensions\":1}");
             apiUtil.loginWebClient("1",EXTENSION_PASSWORD,EXTENSION_PASSWORD_NEW).updatePersonal("{\"show_unregistered_extensions\":1}");
-            runRecoveryEnvFlag = false;
+            runRecoveryEnvFlag = registerAllExtension();
         }
 
     }
@@ -276,20 +316,20 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
-
+        step("1001接听");
         pjsip.Pj_Answer_Call(1001,200,false);
         assertStep("3.断言页面元素");
 
@@ -322,16 +362,16 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -376,16 +416,16 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_Answer_Call(1001,200,false);
@@ -423,18 +463,18 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -488,18 +528,18 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -551,18 +591,18 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -615,18 +655,18 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         clearasteriskLog();
 
@@ -681,18 +721,18 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -744,16 +784,16 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -800,8 +840,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -858,8 +898,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -876,7 +916,7 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName2+":"+vcpCaller,"1004 E [1004]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName2+":"+vcpCaller,"1005 F [1005]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+                        tuple(queueListName2+":"+vcpCaller,"1005 F [1005]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
         assertStep("1004 1005Talking");
         pjsip.Pj_Answer_Call(1004,200,false);
@@ -914,8 +954,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -971,8 +1011,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1030,20 +1070,20 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1089,8 +1129,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1131,8 +1171,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1181,8 +1221,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1231,8 +1271,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1269,8 +1309,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("2:外线号码[2000]呼叫Queue 1001接听");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -1314,16 +1354,16 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         refresh();
 
         step("4:【1002 与1000 通话】，1000 为Talking状态");
@@ -1376,16 +1416,16 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         step("5:【2000 呼叫 Queue】，1001 接听");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1440,15 +1480,15 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_Init();
+        //pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        //pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        //pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
+        //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
 
         refresh();//todo extension概率性出现 未注册分机不显示
 
@@ -1493,8 +1533,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000 接听为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1549,8 +1589,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1567,7 +1607,7 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName2+":"+vcpCaller,"1004 E [1004]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()),
-                          tuple(queueListName2+":"+vcpCaller,"1005 F [1005]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
+                        tuple(queueListName2+":"+vcpCaller,"1005 F [1005]",op_ringing, RECORD_DETAILS.EXTERNAL_AGENT_RING.getAlias()));
 
         softAssertPlus.assertThat(resultSum.size()).as("验证RingGroup数量").isEqualTo(queueMembers2.size());
 
@@ -1605,8 +1645,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1657,8 +1697,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1712,8 +1752,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         step("5:[2000 呼叫 Queue]，1001接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1766,8 +1806,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
@@ -1815,8 +1855,8 @@ public class TestOperatorQueue_2 extends TestCaseBase {
         auto.homePage().intoPage(HomePage.Menu_Level_1.operator_panel);
 
         step("3:[PJSIP注册] 分机创建并注册");
-        pjsip.Pj_Init();
-        registerAllExtension();
+        //pjsip.Pj_Init();
+        //registerAllExtension();
 
         step("5:【2000 呼叫 1000】，1000接听 为Talking状态");
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);

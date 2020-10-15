@@ -514,7 +514,7 @@ public class TestOperatorIVR_1 extends TestCaseBaseNew {
 //        pjsip.Pj_CreateAccount(caller, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 
         step("4:【1010】 未注册");
-        pjsip.Pj_Unregister_Account(1001);
+        pjsip.Pj_Unregister_Account(1010);
         sleep(WaitUntils.SHORT_WAIT);
 //        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1000, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller, deviceAssist);
@@ -586,50 +586,41 @@ public class TestOperatorIVR_1 extends TestCaseBaseNew {
 //        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(1009, DEVICE_IP_LAN);
 //        pjsip.Pj_Register_Account_WithoutAssist_For_PSeries(caller, deviceAssist);
 
-        step("5:【2000 呼叫 6200】，press 0 ->1000 为Ringing状态");
+        step("4:线路"+message+"【"+caller+" 呼叫 "+callee+"】，press 0 ->1000 为Ringing状态");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         auto.operatorPanelPage().waitTableRecordAppear(OperatorPanelPage.TABLE_TYPE.INBOUND,30);
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT * 2);
 
-
-        step("4：拖动到[RingGroup]6301");
+        step("5：拖动到[RingGroup]6301");
         auto.operatorPanelPage().dragAndDrop(OperatorPanelPage.DOMAIN.INBOUND, "1000", OperatorPanelPage.DOMAIN.RINGGROUP, "6301");
         sleep(WaitUntils.SHORT_WAIT * 2);
 
         assertStep("[VCP显示]");
         List<Record> allRecordList = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if (message.equalsIgnoreCase("SIP_ACCOUNT")) {
-            softAssertPlus.assertThat(allRecordList).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
-                    .contains(tuple(ringGroupName_1 + vcpCaller, "1005 F [1005]", "Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
+        softAssertPlus.assertThat(allRecordList).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
+                    .contains(
+                            tuple(ringGroupName_1 + vcpCaller, "1005 F [1005]", "Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
                             tuple(ringGroupName_1 + vcpCaller, "1006 G [1006]", "Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-        } else {
-            softAssertPlus.assertThat(allRecordList).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
-                    .contains(tuple(ringGroupName_1 + vcpCaller, "1005 F [1005]", "Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()),
-                            tuple(ringGroupName_1 + vcpCaller, "1006 G [1006]", "Ringing", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-        }
 
-        softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
-
+//        softAssertPlus.assertThat(allRecordList).as("验证RingGroup数量").size().isEqualTo(ringGroupNum_1.size());
 
         step("5:1005 接通");
+        log.debug("接通前 [1005]getExtensionStatus-->"+getExtensionStatus(1005,TALKING,5));
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_Answer_Call(1005, false);
+        log.debug("接通后 [1005]getExtensionStatus-->"+getExtensionStatus(1005,TALKING,5));
+        refresh();
 
         assertStep("6:[VCP验证]");
-        sleep(WaitUntils.SHORT_WAIT * 2);
+//        sleep(WaitUntils.SHORT_WAIT * 2);
         List<Record> allRecordListAfter = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
-        if (message.equalsIgnoreCase("SIP_ACCOUNT")) {
-            softAssertPlus.assertThat(allRecordListAfter).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
-                    .contains(tuple("RG1:4000 [4000]", "1005 F [1005]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-        } else {
-            softAssertPlus.assertThat(allRecordListAfter).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
-                    .contains(tuple("RG1:2000 [2000]", "1005 F [1005]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
-        }
+        softAssertPlus.assertThat(allRecordListAfter).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller", "callee", "status", "details")
+                    .contains(tuple("RG1:2000 [2000]".replace("2000",caller+""), "1005 F [1005]", "Talking", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
+        pjsip.Pj_hangupCall(1005);
+        log.debug("接通后 [1005]getExtensionStatus-->"+getExtensionStatus(1005,HUNGUP,5));
         softAssertPlus.assertThat(allRecordListAfter).size().isEqualTo(1);
-        pjsip.Pj_Hangup_All();
-        sleep(5000);
         softAssertPlus.assertAll();
     }
 
@@ -680,7 +671,7 @@ public class TestOperatorIVR_1 extends TestCaseBaseNew {
         softAssertPlus.assertThat(allRecordList).as("验证数量").size().isEqualTo(1);
 
         softAssertPlus.assertAll();
-        pjsip.Pj_Hangup_All();
+
     }
 
     @Epic("P_Series")

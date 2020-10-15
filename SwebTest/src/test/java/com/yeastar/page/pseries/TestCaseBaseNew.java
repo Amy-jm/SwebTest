@@ -111,8 +111,8 @@ public class TestCaseBaseNew extends BaseMethod {
             log.debug("[hangup all sleep time]:"+(System.currentTimeMillis()-startTime)/1000+" Seconds");
             log.debug("[after method hangup all] "+pjsip);
         }
-
-        log.debug("[pjsip hangup all] ",pjsip.Pj_Hangup_All());
+//
+//        log.debug("[pjsip hangup all] ",pjsip.Pj_Hangup_All());
         log.debug("[clean remote session to null]{}",webDriver);
         log.info( "\r\n****** [TearDown] "+ getTestName(method)+" [Times] "+ DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss")+"**********************");
     }
