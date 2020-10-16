@@ -22,7 +22,7 @@ public class PjsipDll {
         /**
          *  adapt local testNG ok
          */
-        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
 
 
         /**
@@ -46,7 +46,7 @@ public class PjsipDll {
 
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary("YsAutoTestPjsua_sound",pjsipdll.class);
 //
-//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
 
         /**
          * adapt for coderserver
