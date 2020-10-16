@@ -194,7 +194,7 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         conferenceMember2.add("1005");
 
         if(lhrFlag && !runRecoveryEnvFlag){
-            //registerAllExtension();
+            registerAllExtension();
             lhrFlag = false;
         }
 
@@ -1019,7 +1019,8 @@ public class TestOperatorRingGroup_2 extends TestCaseBase {
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).as("[VCP校验] Time："+ DataUtils.getCurrentTime()).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName+":"+vcpCaller,"1004 E [1004]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
-
+        pjsip.Pj_Answer_Call(1004,180,false);
+        sleep(WaitUntils.TALKING_WAIT);
         assertStep("预期响分机1004 挂断，进入Voicemail");
         pjsip.Pj_Answer_Call(1004,404,false);
 //        sleep(WaitUntils.TALKING_WAIT*16);
