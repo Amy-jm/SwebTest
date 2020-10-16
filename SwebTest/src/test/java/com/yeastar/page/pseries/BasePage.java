@@ -7,10 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 import java.util.Collections;
@@ -70,8 +67,8 @@ public class BasePage implements IButton{
      * @param arg 需要选择的文本
      */
     public void selectComm(SelenideElement ele, String arg) {
-        ele.click();
-        $(By.xpath(String.format(SELECT_COMM_XPATH, arg))).click();
+        ele.shouldBe(Condition.visible).click();
+        $(By.xpath(String.format(SELECT_COMM_XPATH, arg))).shouldBe(Condition.visible).click();
         return;
     }
 
@@ -127,7 +124,7 @@ public class BasePage implements IButton{
      * 点击保存并应用
      */
     public void clickSaveAndApply(){
-        if(waitElementDisplay(saveBtn,WaitUntils.SHORT_WAIT*2) && saveBtn.isEnabled()){
+        if(waitElementDisplay(saveBtn,WaitUntils.SHORT_WAIT*2) && saveBtn.has(Condition.visible)){
             saveBtn.click();
         }
 //        saveBtn.shouldBe(Condition.enabled).click();
@@ -238,5 +235,23 @@ public class BasePage implements IButton{
      */
     public void moveByOffsetAndClick(int x,int y){
         actions().moveByOffset(x,y).perform();
+    }
+
+    public void clickElementFromJS(WebElement element){
+        try {
+            if (element.isEnabled() && element.isDisplayed()) {
+                System.out.println("Clicking on element with using java script click");
+
+                ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", element);
+            } else {
+                log.error("Unable to click on element");
+            }
+        } catch (StaleElementReferenceException e) {
+            log.error("Element is not attached to the page document "+ e.getStackTrace());
+        } catch (NoSuchElementException e) {
+            log.error("Element was not found in DOM "+ e.getStackTrace());
+        } catch (Exception e) {
+            log.error("Unable to click on element "+ e.getStackTrace());
+        }
     }
 }

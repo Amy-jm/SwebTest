@@ -93,7 +93,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             pjsip.Pj_Answer_Call(0,200,false);
             sleep(15000);
             pjsip.Pj_Hangup_All();
-            pjsip.Pj_Destory();
+//            pjsip.Pj_Destory();
             auto.extensionPage().clickSave();
             softAssert.assertAll();
 

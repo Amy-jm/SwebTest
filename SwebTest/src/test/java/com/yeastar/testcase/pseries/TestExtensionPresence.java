@@ -40,6 +40,10 @@ public class TestExtensionPresence extends TestCaseBase{
             ArrayList<String> list = new ArrayList<>();
             ArrayList<String> list2 = new ArrayList<>();
 
+            step("【环境准备】3、创建Trunk");
+            apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
+            apiUtil.apply();
+
             step("【环境准备】1、登录pbx");
             loginWithAdmin();
 
@@ -62,11 +66,10 @@ public class TestExtensionPresence extends TestCaseBase{
             softAssert.assertEquals(getExtensionStatus(0, RING, 8),RING,"预期分机0响铃");
             pjsip.Pj_Answer_Call(0,200,false);
             sleep(15000);
-            pjsip.Pj_Hangup_All();
-            pjsip.Pj_Destory();
+            pjsip.Pj_hangupCall(0);
+            // 移动到 Method
+            //pjsip.Pj_Destory();
 
-            step("【环境准备】3、创建Trunk");
-            apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS);
 
             step("【环境准备】4、创建队列");
             auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_queue);
@@ -110,8 +113,8 @@ public class TestExtensionPresence extends TestCaseBase{
             list2.clear();
             list2.add("Yeastar Test0 朗视信息科技");
             list2.add("Yeastar Test9999999 朗视信息科技");
-            auto.outBoundRoutePage().deleteAllOutboundRoutes()
-                    .createOutbound("Outbound1",list,list2)
+            auto.outBoundRoutePage().deleteAllOutboundRoutes().clickSaveAndApply();
+            auto.outBoundRoutePage().createOutbound("Outbound1",list,list2)
                     .addPatternAndStrip(0,"90.","2").clickSaveAndApply();
 
             auto.homePage().logout();

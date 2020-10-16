@@ -12,10 +12,7 @@ import com.sun.jna.platform.win32.Wdm;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 import javax.lang.model.util.Elements;
@@ -25,6 +22,7 @@ import java.util.concurrent.ExecutorService;
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 import static com.yeastar.untils.TableUtils.strTableXPATH;
 
 /**
@@ -147,7 +145,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},userPassword:{1},email:{3}")
     public ExtensionPage createSipExtensionWithEmail(String extensionNumber,String userPassword,String strEmail,String roleName) {
         addBtn.shouldBe(Condition.enabled).click();
-//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         ele_extension_user_first_name.setValue(extensionNumber);
         inputComm("Email Address", strEmail);//todo 24版本ID新增后替换
 //        ele_extension_user_role_id.setValue(roleName);
@@ -206,7 +204,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage createSipExtension(String extensionNumber, String userPassword,String registrationPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         ele_extension_user_first_name.setValue(extensionNumber);
         ele_extension_user_user_password.setValue(userPassword);
         ele_extension_user_number.setValue(extensionNumber);
@@ -224,7 +222,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
     @Step("extensionNumber:{0},UserPassword:{1},registrationPassword:{2}")
     public ExtensionPage createSipExtensionAndConf(String extensionNumber, String UserPassword,String registrationPassword) {
         addBtn.shouldBe(Condition.enabled).click();
-//        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
+        ele_add_DropDown_add_Btn.shouldBe(Condition.enabled).click();
         inputComm("First Name", extensionNumber);
         inputComm("User Password", UserPassword);
         inputComm("Extension Number", extensionNumber);
@@ -247,7 +245,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         isCheckbox(ele_extension_presence_forward_enb_in_always_forward_checkBox,enable);
         if(enable){
             ele_extension_presence_forward_in_always_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_always_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_always_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_always_forward_prefix_input.setValue(dest2);
@@ -294,7 +293,9 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_in_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_in_no_answer_forward_checkBox,true);
             ele_extension_presence_forward_in_no_answer_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_no_answer_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+            sleep(1000);
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_no_answer_forward_dest']//span[contains(@title,'%s')]", dest1))).click();
+            sendTextFromAction(dest1);
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_no_answer_forward_prefix_input.setValue(dest2);
@@ -343,12 +344,12 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_in_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_in_busy_forward_checkBox,true);
             ele_extension_presence_forward_in_busy_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_busy_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
-            if(!dest2.isEmpty()){
-                if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_in_busy_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
+            if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_in_busy_forward_prefix_input.setValue(dest2);
                 }else{
-                    selectComm(ele_extension_presence_forward_in_busy_forward_value_combobox,dest2);
+//                    selectComm(ele_extension_presence_forward_in_busy_forward_value_combobox,dest2);
                 }
                 if(!dest3.isEmpty()){
                     if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
@@ -357,7 +358,6 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
                         selectComm(ele_extension_presence_forward_play_in_busy_forward_prefix_combobox,dest3);
                     }
                 }
-            }
 
         }else{
             isCheckbox(ele_extension_presence_forward_enb_in_busy_forward_checkBox,enable);
@@ -390,7 +390,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,enable);
         if(enable){
             ele_extension_presence_forward_ex_always_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_always_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_always_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_always_forward_prefix_input.setValue(dest2);
@@ -436,7 +437,8 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_ex_no_answer_forward_checkBox,true);
             ele_extension_presence_forward_ex_no_answer_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_no_answer_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_no_answer_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_no_answer_forward_prefix_input.setValue(dest2);
@@ -484,7 +486,9 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
             isCheckbox(ele_extension_presence_forward_enb_ex_always_forward_checkBox,false);
             isCheckbox(ele_extension_presence_forward_enb_ex_busy_forward_checkBox,true);
             ele_extension_presence_forward_ex_busy_forward_dest_combobox.click();
-            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_busy_forward_dest']/../../../../../div[2]//li[contains(text(),'%s')]", dest1))).click();
+//            $(By.xpath(String.format("//div[@id='extension_presence_forward_ex_busy_forward_dest']//span[contains(@title,'%s')]", dest1))).shouldBe(Condition.visible).click();
+            sendTextFromAction(dest1);
+
             if(!dest2.isEmpty()){
                 if(dest1.equals(CALL_FORWARDING_DESTINATION.EXTERNAL_NUMBER.getAlias()) || dest1.equals(CALL_FORWARDING_DESTINATION.MOBILE_NUMBER.getAlias())){
                     ele_extension_presence_forward_ex_busy_forward_prefix_input.setValue(dest2);
@@ -572,6 +576,17 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      */
     public ExtensionPage editExtension(WebDriver driver, String extNum){
         TableUtils.clickTableEidtBtn(driver,"Extension Number",extNum);
+        return this;
+    }
+
+    /**
+     * 编辑指定分机号的分机
+     * @param
+     * @param extNum
+     * @return
+     */
+    public ExtensionPage editExtension(String extNum){
+        TableUtils.clickTableEidtBtn(getWebDriver(),"Extension Number",extNum);
         return this;
     }
 
@@ -827,7 +842,7 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
      * @return
      */
     public ExtensionPage switchWebClient(){
-        $(By.xpath("//section/div")).shouldBe(Condition.visible).click();
+        $(By.xpath("//span[contains(text(),'Access Management Portal')]")).shouldBe(Condition.visible).click();
         sleep(WaitUntils.SHORT_WAIT);
         return this;
     }
@@ -852,6 +867,18 @@ public class ExtensionPage extends BasePage implements IExtensionPageElement {
         actions().sendKeys(userType+"").sendKeys(Keys.ENTER).build().perform();
         $$(By.xpath(String.format(buttonLocationXpath,"Save"))).get(1).click();
         return this;
+    }
+
+    /**
+     * 通过键盘输入
+     * @param dest1
+     */
+    private void sendTextFromAction(String dest1){
+        actions().sendKeys(dest1).build().perform();
+        if(dest1.startsWith("Hang")){ //兼容 Hang Up 与 Play Greeting then Hang up 选项
+            actions().sendKeys(Keys.DOWN).build().perform();
+        }
+        actions().sendKeys(Keys.ENTER).build().perform();
     }
 
 }

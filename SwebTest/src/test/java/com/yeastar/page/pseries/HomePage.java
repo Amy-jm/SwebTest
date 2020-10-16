@@ -122,7 +122,7 @@ public class HomePage extends BasePage{
      public SelenideElement header_box_name = $(By.xpath("//span[contains(@class,'ant-avatar')]/following-sibling::span"));//login username   //span[contains(@class,'ant-avatar')]/following-sibling::span
 
 
-    public SelenideElement menu_first_level_user_dropdown = $(By.xpath("//div[contains(@class,'ant-dropdown-link ant-dropdown-trigger')]//i[contains(@class,\"anticon anticon-down\")]"));
+    public SelenideElement menu_first_level_user_dropdown = $(By.xpath("//div[contains(@class,'ant-dropdown-link ant-dropdown-trigger')]//i[contains(@class,\"anticon anticon-down\")]/..//i[contains(@aria-label,'user')]"));
     public SelenideElement user_tree_setting = $(By.id("h_admin_setting"));
     public SelenideElement user_tree_change_password = $(By.id("h_change_password"));
     public SelenideElement user_tree_privacy_policy_agreement =  $(By.id("h_privacy_policy"));
@@ -145,6 +145,14 @@ public class HomePage extends BasePage{
      * logout pbx
      */
     public void logout() {
+        menu_first_level_user_dropdown.click();
+        user_tree_logout.waitUntil(Condition.visible,3*1000).click();
+    }
+
+    /**
+     * logout pbx
+     */
+    public void logoutWithExtension() {
         menu_first_level_user_dropdown.click();
         user_tree_logout.waitUntil(Condition.visible,3*1000).click();
     }

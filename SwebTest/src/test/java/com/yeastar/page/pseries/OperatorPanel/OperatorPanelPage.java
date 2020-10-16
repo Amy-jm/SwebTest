@@ -636,7 +636,12 @@ public class OperatorPanelPage extends BasePage {
      * @return
      */
     public List<Record> waitTableRecordAppear(TABLE_TYPE tableType,int timeout){
-        return getAllRecord(tableType,timeout);
+        List<Record> records=null;
+        records = getTableData(tableType,timeout);
+        if(records.size()==0){
+            throw new NoSuchElementException("[表格无数据！！！]");
+        }
+        return  records;
     }
 
     /**

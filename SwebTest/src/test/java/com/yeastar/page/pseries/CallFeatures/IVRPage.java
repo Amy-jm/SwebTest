@@ -23,6 +23,7 @@ public class IVRPage extends BasePage implements IIVRPageElement {
         if (ele_delete_all_checkbox.isEnabled()) {
             Selenide.actions().click(ele_delete_all_checkbox).perform();
             deleteBtn.shouldBe(Condition.visible).click();
+            sleep(WaitUntils.RETRY_WAIT);
             OKAlertBtn.shouldBe(Condition.visible).click();
             sleep(WaitUntils.RETRY_WAIT);
 //            applyBtn.shouldBe(Condition.visible).click();

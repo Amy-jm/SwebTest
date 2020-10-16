@@ -31,8 +31,6 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 @Log4j2
 public class BaseMethod extends WebDriverFactory {
 
-
-
 	@Step("{0}")
 	public void step(String desc){
 		log.debug("[step] "+desc);
@@ -207,6 +205,8 @@ public class BaseMethod extends WebDriverFactory {
 		while (time <= timeout) {
 			sleep(1000);
 			account = pjsip.getUserAccountInfo(username);
+//			account = getPjsip().getUserAccountInfo(username);
+
 			if (account == null) {
 				status = -1;
 			}

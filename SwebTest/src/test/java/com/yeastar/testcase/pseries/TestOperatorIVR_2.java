@@ -6,8 +6,11 @@ import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.*;
 import com.yeastar.page.pseries.OperatorPanel.Record;
 import com.yeastar.page.pseries.TestCaseBase;
-import com.yeastar.untils.*;
+import com.yeastar.page.pseries.TestCaseBaseNew;
 import com.yeastar.untils.APIObject.IVRObject;
+import com.yeastar.untils.APIUtil;
+import com.yeastar.untils.SSHLinuxUntils;
+import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -23,7 +26,7 @@ import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.groups.Tuple.tuple;
 
 @Log4j2
-public class TestOperatorIVR_2 extends TestCaseBase {
+public class TestOperatorIVR_2 extends TestCaseBaseNew {
     private APIUtil apiUtil = new APIUtil();
     private boolean runRecoveryEnvFlag = true;
     private boolean lhrFlag = !runRecoveryEnvFlag;
@@ -33,7 +36,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
             ,enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)),enBase64(EXTENSION_PASSWORD));
 
     private String reqDataCreateFxs = String.format("" +
-            "{\"type\":\"FXS\",\"first_name\":\"EXTENSIONNUM\",\"last_name\":\"EXTENSIONLASTNAME\",\"email_addr\":\"\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"OTQxMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"enb_ctl_record\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"fxs_port\":\"FXSPORT\",\"enb_hotline\":0,\"hotline_number\":\"\",\"delay_dial\":2,\"min_flash_detect\":300,\"max_flash_detect\":1000,\"rx_volume\":\"0\",\"rx_gain\":0,\"tx_volume\":\"0\",\"tx_gain\":0,\"enb_call_waiting\":0,\"enb_dtmf_passthrough\":0,\"enb_echo_cancel\":1}"
+                    "{\"type\":\"FXS\",\"first_name\":\"EXTENSIONNUM\",\"last_name\":\"EXTENSIONLASTNAME\",\"email_addr\":\"\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"OTQxMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"enb_ctl_record\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"fxs_port\":\"FXSPORT\",\"enb_hotline\":0,\"hotline_number\":\"\",\"delay_dial\":2,\"min_flash_detect\":300,\"max_flash_detect\":1000,\"rx_volume\":\"0\",\"rx_gain\":0,\"tx_volume\":\"0\",\"tx_gain\":0,\"enb_call_waiting\":0,\"enb_dtmf_passthrough\":0,\"enb_echo_cancel\":1}"
             ,enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)),enBase64(EXTENSION_PASSWORD));
 
 
@@ -41,7 +44,6 @@ public class TestOperatorIVR_2 extends TestCaseBase {
                     "{\"name\":\"%s\",\"enable\":1,\"country\":\"general\",\"itsp\":\"\",\"type\":\"peer\",\"transport\":\"udp\",\"codec_sel\":\"ulaw,alaw,g729\",\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_srtp\":0,\"enb_t38_support\":0,\"enb_inband_progress\":0,\"max_call_chans\":0,\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"\",\"from_user\":\"\",\"from_user_part\":\"default\",\"from_disp_name\":\"\",\"from_disp_name_part\":\"default\",\"from_host\":\"\",\"from_host_part\":\"domain\",\"diversion_user\":\"\",\"diversion_user_part\":\"\",\"rpid_user\":\"\",\"rpid_user_part\":\"\",\"pai_user\":\"\",\"pai_user_part\":\"\",\"ppi_user\":\"\",\"ppi_user_part\":\"\",\"enb_privacy_id\":0,\"enb_user_phone\":0,\"caller_id_from\":\"follow_system\",\"did_from\":\"follow_system\",\"user_agent\":\"\",\"enb_100rel\":0,\"max_ptime\":\"default\",\"rtp_reinvite\":\"\",\"enb_guest_auth\":0,\"enb_early_media\":0,\"enb_message\":0,\"did_list\":[],\"inbound_cid_list\":[],\"outbound_cid_list\":[],\"hostname\":\"%s\",\"port\":5060,\"domain\":\"%s\"}"
             ,SPS,DEVICE_ASSIST_2,DEVICE_ASSIST_2);
 
-    private final String cdrCallee = "IVR IR<6200>";
     private final String queueListName = "QU";
     private final String ringGroupName = "RG";//6300
     private final String conferenceName = "CO";
@@ -63,11 +65,11 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
     Object[][] routes = new Object[][] {
             {"99",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SPS"},//sps   前缀 替换
-//            {"88",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
-//            {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
-//            {"66",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
-//            {""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
-//            {"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
+            {"88",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"BRI"},//BRI   前缀 替换
+            {""  ,2000,"2005",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"FXO"},//FXO --77 不输   2005（FXS）
+            {"66",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"E1"},//E1     前缀 替换
+            {""  ,3001,"3000",DEVICE_ASSIST_1,"3001 [3001]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_REGISTER"},
+            {"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias(),"SIP_ACCOUNT"}//SIP  --55 REGISTER
     };
     /**
      * 多线路测试数据
@@ -89,7 +91,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
                     }else if (groups.equalsIgnoreCase("E1")) {
                         group = new Object[][] {{"66",2000,"6400",DEVICE_ASSIST_2,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"E1"}};
                     }else if (groups.equalsIgnoreCase("SIP_REGISTER")) {
-                        group = new Object[][] {{""  ,2000,"2001",DEVICE_ASSIST_1,"2000 [2000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"}};
+                        group = new Object[][] {{""  ,3001,"3000",DEVICE_ASSIST_1,"3001 [3001]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_REGISTER"}};
                     }else if (groups.equalsIgnoreCase("SIP_ACCOUNT")) {
                         group = new Object[][] {{"44",4000,"6400",DEVICE_ASSIST_3,"4000 [4000]", RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias(),"SIP_ACCOUNT"}};
                     }else {
@@ -114,6 +116,9 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1005,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(4000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
@@ -123,6 +128,9 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1005,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist(4000,DEVICE_ASSIST_3);
 
         boolean reg=true;
         if(getExtensionStatus(1000, IDLE, 5) != IDLE) {
@@ -298,7 +306,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -345,7 +353,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -365,7 +373,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
-       
+
         pjsip.Pj_Send_Dtmf(2000,"0");
         pjsip.Pj_Answer_Call(1001,200,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -401,7 +409,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -420,7 +428,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         //pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Make_Call_No_Answer(caller,routePrefix+callee,deviceAssist,false);
         sleep(WaitUntils.TALKING_WAIT);
-       
+
         pjsip.Pj_Send_Dtmf(2000,"0");
         pjsip.Pj_Answer_Call(1001,200,false);
         sleep(WaitUntils.TALKING_WAIT);
@@ -429,14 +437,6 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         auto.operatorPanelPage().rightTableAction(OperatorPanelPage.TABLE_TYPE.INBOUND,"1001", OperatorPanelPage.RIGHT_EVENT.HANG_UP,"2000");
         sleep(5000);
 
-        assertStep("[CDR显示]");
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","0<0> hung up"));
-
-        softAssertPlus.assertAll();
         //todo cdr校验
     }
 
@@ -455,9 +455,10 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     @Test(groups = {"P0","VCP","Operator Panel","testIVRIncomingTalkingRightClickListen","Regression","PSeries","VCP2","IVR","VCP_IVR_2",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIVRIncomingTalkingRightClickListen(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
+
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -501,16 +502,6 @@ public class TestOperatorIVR_2 extends TestCaseBase {
                 .contains(tuple(ivrName+":"+vcpCaller,"1001 B [1001]",op_talking, RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
         softAssertPlus.assertAll();
 
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(4);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-//                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),//todo 不显示
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> hung up".replace("2000",caller+"")),
-                        tuple("Monitor", "0<0>", "ANSWERED", "0<0> call monitored 1001 B<1001>"));
-        softAssertPlus.assertAll();
         //todo cdr校验
     }
 
@@ -533,7 +524,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -594,9 +585,10 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     @Test(groups = {"P0","VCP","OperatorPanel","testIVRIncomingTalkingRightClickWhisper","Regression","PSeries","VCP2","IVR","VCP_IVR_2",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIVRIncomingTalkingRightClickBarge(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
+
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -627,7 +619,6 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         sleep(3000);
 
         assertStep("4.断言：分机0的来显应为Call Monitor，分机0处于Talking状态");
-        //todo [分机0的来显应为Call Monitor] expected:<"[Call ]Monitor"> but was:<"[tor" <sip:]Monitor">
         softAssertPlus.assertThat(pjsip.getUserAccountInfo(0).callerId).as("分机0的来显应为Call Monitor").isEqualTo("Call Monitor");
         softAssertPlus.assertThat(getExtensionStatus(0, RING, 8)).as("预期分机0通话中").isEqualTo(RING);
 
@@ -638,18 +629,8 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(ivrName+":"+vcpCaller,"1001 B [1001]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
-
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(4);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-//                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),//todo 不显示
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> hung up"));
         softAssertPlus.assertAll();
-        //todo cdr debug 校验
-
+        //todo cdr校验
 
     }
 
@@ -672,7 +653,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -739,7 +720,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -779,18 +760,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(ivrName+":"+vcpCaller,"0 [0]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
-        //todo cdr校验 ----待确定
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(6);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-//                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),//todo 不显示
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>", "ANSWERED", "2000<2000> parked at 6000"),
-                        tuple("2000", "0<0>", "ANSWERED", "2000 hung up"),
-                        tuple("0<0>", "", "ANSWERED", "0<0> hung up"),//todo park  callto * ?
-                        tuple("2000<2000>".replace("2000",caller+""), "0<0>", "ANSWERED", "2000<2000> hung up"));
+        //todo cdr校验
         softAssertPlus.assertAll();
 
     }
@@ -814,7 +784,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -871,7 +841,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -905,17 +875,8 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(ringGroupName2+":"+vcpCaller,"1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_RING_GROUP.getAlias()));
 
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
         //todo cdr校验
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(4);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "RingGroup RI<6301>","ANSWERED","0<0> blind transferred , RingGroup RI<6301> connected"),
-                        tuple("2000<2000>", "1004 E<1004>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+"")));
-        softAssertPlus.assertAll();
+        softAssertPlus.assertAll();;
 
     }
 
@@ -938,7 +899,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -974,17 +935,8 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(queueListName2+":"+vcpCaller,"1004 E [1004]",op_talking, RECORD_DETAILS.EXTERNAL_QUEUE.getAlias()));
 
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
         //todo cdr校验
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(4);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "Queue QE<6401>","ANSWERED","0<0> blind transferred , Queue QE<6401> connected"),
-                        tuple("2000<2000>".replace("2000",caller+""), "1004 E<1004>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+"")));
-        softAssertPlus.assertAll();
+        softAssertPlus.assertAll();;
 
     }
 
@@ -997,13 +949,14 @@ public class TestOperatorIVR_2 extends TestCaseBase {
             "3：进入1004voicemail" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("send 404 callto exception")
+    @Issue("")
     @Test(groups = {"P0","VCP","OperatorPanel","testIVRIncomingTalkingRightClickTransferToVoicemail","Regression","PSeries","VCP2","IVR","VCP_IVR_2",
             "SPS","BRI","FXO","FXS","E1","SIP_REGISTER","SIP_ACCOUNT","GSM"},dataProvider = "routes")
     public void testIVRIncomingTalkingRightClickTransferToVoicemail(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
+
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1030,25 +983,15 @@ public class TestOperatorIVR_2 extends TestCaseBase {
                 .contains(tuple(ivrName+":"+vcpCaller,"1004 E [1004]",op_ringing, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
         assertStep("预期响分机1004 挂断，进入Voicemail");
-//        pjsip.Pj_Answer_Call(1004,404,false);
-        sleep(60000);
+        pjsip.Pj_Answer_Call(1004,404,false);
+        sleep(12000);
         softAssertPlus.assertThat(getExtensionStatus(1004, HUNGUP, 8)).as("预期分机1004已挂断，进入Voicemail ").isEqualTo(HUNGUP);
         resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(ivrName+":"+vcpCaller,"1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_VOICEMAIL.getAlias()));
 
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
         //todo cdr校验
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(5);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1004 E<1004>","NO ANSWER","0<0> blind transferred , 1004 E<1004> forwarded"),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "Voicemail 1004 E<1004>","VOICEMAIL","2000<2000> hung up".replace("2000",caller+"")));
-        softAssertPlus.assertAll();
+        softAssertPlus.assertAll();;
 
     }
 
@@ -1071,7 +1014,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1107,17 +1050,9 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(ivrName2+":"+vcpCaller,"1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias()));
 
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
         //todo cdr校验
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(6);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>", "ANSWERED", "2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "IVR IV<6201>","ANSWERED","0<0> blind transferred , 2000<2000> dialed Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1004 E<1004>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+"")));
-        softAssertPlus.assertAll();
+        softAssertPlus.assertAll();;
+
     }
 
     @Epic("P_Series")
@@ -1139,7 +1074,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1173,18 +1108,10 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         assertStep("控制面板显示");
         List<Record> resultSum = auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND);
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
-                .contains(tuple(ivrName+":"+vcpCaller,"6000",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_PARKED.getAlias()));
+                .contains(tuple(queueListName2+":"+vcpCaller,"6000",op_talking, OperatorPanelPage.RECORD_DETAILS.INTERNAL_PARKED.getAlias()));
 
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
         //todo cdr校验
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>", "ANSWERED", "2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "*","ANSWERED","2000<2000> hung up".replace("2000",caller+"")));
-        softAssertPlus.assertAll();
+        softAssertPlus.assertAll();;
 
     }
 
@@ -1207,7 +1134,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
 
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1230,16 +1157,9 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(ivrName+":"+vcpCaller,conferenceName2+" [6501]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL_CONFERENCE.getAlias()));
 
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
         //todo cdr校验
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>", "ANSWERED", "2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "Conference CF<6501>","ANSWERED","2000<2000> hung up".replace("2000",caller+"")));
-        softAssertPlus.assertAll();
+        softAssertPlus.assertAll();;
+
     }
 
 
@@ -1257,7 +1177,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingTalkingRightClickTransferInternalAHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1288,16 +1208,9 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(ivrName+":"+vcpCaller,"1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
-        pjsip.Pj_hangupCall(caller);
-        sleep(2000);
+        pjsip.Pj_hangupCall(2000);
         //todo cdr校验
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1004 E<1004>","ANSWERED","0<0> blind transferred , 2000<2000> hung up".replace("2000",caller+"")));
-        softAssertPlus.assertAll();
+        softAssertPlus.assertAll();;
 
     }
 
@@ -1315,7 +1228,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingTalkingRightClickTransferInternalCHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1346,16 +1259,10 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         softAssertPlus.assertThat(resultSum).extracting("caller","callee","status","details")
                 .contains(tuple(ivrName+":"+vcpCaller,"1004 E [1004]",op_talking, OperatorPanelPage.RECORD_DETAILS.EXTERNAL.getAlias()));
 
-        pjsip.Pj_hangupCall(1004);
-        sleep(2000);
+        pjsip.Pj_hangupCall(1001);
         //todo cdr校验
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1004 E<1004>","ANSWERED","0<0> blind transferred , 1004 E<1004> hung up"));
-        softAssertPlus.assertAll();
+        softAssertPlus.assertAll();;
+
     }
 
     @Epic("P_Series")
@@ -1372,7 +1279,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingTalkingCallerHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1393,15 +1300,9 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         pjsip.Pj_hangupCall(2000);
         softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).as("主叫挂断,控制面板没有记录").isEqualTo(0);
 
-        sleep(2000);
-        //todo cdr校验 --待确认
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-//                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> hung up".replace("2000",caller+"")));
-        softAssertPlus.assertAll();
+        //todo cdr校验
+        softAssertPlus.assertAll();;
+
     }
 
     @Epic("P_Series")
@@ -1418,7 +1319,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingTalkingCalleeHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
         auto.homePage().header_box_name.shouldHave(Condition.text("0"));
 
@@ -1444,15 +1345,8 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         pjsip.Pj_hangupCall(1001);
         softAssertPlus.assertThat(auto.operatorPanelPage().getAllRecord(OperatorPanelPage.TABLE_TYPE.INBOUND).size()).isEqualTo(0).as("被叫挂断,控制面板没有记录");
 
-        sleep(2000);
-        //todo cdr校验--待确认
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason")
-                .contains(
-                        tuple("2000<2000>".replace("2000",caller+""), cdrCallee,"ANSWERED","2000<2000> called Extension".replace("2000",caller+"")),
-//                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","2000<2000> called 1001 B<1001>".replace("2000",caller+"")),
-                        tuple("2000<2000>".replace("2000",caller+""), "1001 B<1001>","ANSWERED","1001 B<1001> hung up"));
-        softAssertPlus.assertAll();
+        //todo cdr校验
+        softAssertPlus.assertAll();;
 
     }
 
@@ -1472,7 +1366,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropWithCTalking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1534,7 +1428,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropWithCIdle(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1596,7 +1490,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropWithCUnregistered(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("勾选显示未注册分机");
@@ -1654,7 +1548,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropRingGroup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1711,7 +1605,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropQueue(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1768,7 +1662,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropParking(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1821,7 +1715,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropParkingRightClickTransfer(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1877,7 +1771,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropParkingRightClickUnpark(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1933,7 +1827,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropParkingRightClickHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -1984,7 +1878,7 @@ public class TestOperatorIVR_2 extends TestCaseBase {
     public void testIVRIncomingDragAndDropParkingHangup(String routePrefix,int caller,String callee,String deviceAssist,String vcpCaller,String vcpDetail,String message) {
         prerequisite();
 
-        step("1:login web client ,test trunk "+message);
+        step("1:login web client");
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
 
         step("2:进入Operator panel 界面");
@@ -2018,5 +1912,4 @@ public class TestOperatorIVR_2 extends TestCaseBase {
         softAssertPlus.assertAll();
         pjsip.Pj_Hangup_All();
     }
-
 }

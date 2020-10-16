@@ -4,22 +4,23 @@ import com.codeborne.selenide.Condition;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
-import com.yeastar.untils.AllureReporterListener;
-import com.yeastar.untils.TableUtils;
-import com.yeastar.untils.TestNGListenerP;
-import com.yeastar.untils.WaitUntils;
+import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.io.IOException;
+import java.util.List;
+
 import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
+import static org.assertj.core.groups.Tuple.tuple;
 
 
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
 public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
+    private APIUtil apiUtil = new APIUtil();
 
     @Epic("P_Series")
     @Feature("Extension")
@@ -133,9 +134,11 @@ public class TestExtensionBasicDisplayAndRegistration extends TestCaseBase {
         assertStep("[CDR]4.第一条记录：Communication Type=Internal ");
         //todo cdr 显示全选
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        //todo delete sleep
-        ys_waitingTime(WaitUntils.SHORT_WAIT);
-        Assert.assertEquals(TableUtils.getTableForHeader(getDriver(),"Communication Type",0),"Internal");
+
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","communicatonType","status","reason")
+                .contains(tuple("Yeastar Test0 朗视信息科技<0>", "Yeastar Test9999999 朗视信息科技<9999999>", "Internal","ANSWERED", "Yeastar Test0 朗视信息科技<0> hung up"));
+        softAssertPlus.assertAll();
     }
 
 }
