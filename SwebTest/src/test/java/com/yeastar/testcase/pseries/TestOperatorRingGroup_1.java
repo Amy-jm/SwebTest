@@ -83,7 +83,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBaseNew {
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-//        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(4000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
         pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
@@ -103,7 +103,7 @@ public class TestOperatorRingGroup_1 extends TestCaseBaseNew {
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
-//        pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(4000,DEVICE_ASSIST_3);
 
         boolean reg=false;
