@@ -50,8 +50,8 @@ public class CDRObject {
         ringDuration = getValue("ring_duration");
         talkDuration = getValue("talk_duration");
         status = UIMapUtils.getValueByKey(getValue("disposition").toLowerCase().replace(" ","_"));
-        sourceTrunk = getValue("src_trunk");
-        destinationTrunk = getValue("dst_trunk");
+        sourceTrunk = getValue("src_trunk").replace(prefix,"");;
+        destinationTrunk = getValue("dst_trunk").replace(prefix,"");;
         communicatonType = getValue("call_type").replace(prefix,"");;
         did = getValue("did_number");
         dod = getValue("dod_number");

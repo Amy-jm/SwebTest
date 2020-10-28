@@ -10,7 +10,7 @@ public class ExtensionGroupObject {
 
     public ExtensionGroupObject(JSONObject jsonObject){
         this.id = Integer.parseInt(getValueByString(jsonObject,"id"));
-        this.name = getValueByString(jsonObject,"type");
+        this.name = getValueByString(jsonObject,"name");
 
     }
 

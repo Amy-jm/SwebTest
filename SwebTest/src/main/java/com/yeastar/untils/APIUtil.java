@@ -2,8 +2,6 @@ package com.yeastar.untils;
 import com.yeastar.untils.APIObject.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.log.output.ServletOutputLogTarget;
-import org.apache.xerces.xs.StringList;
 import org.testng.Assert;
 import top.jfunc.json.JsonArray;
 import top.jfunc.json.JsonObject;
@@ -369,6 +367,20 @@ public class APIUtil {
     }
 
     /**
+     * 获取分机组概要列表
+     * 对应API：api/v1.0/extension/searchsummary
+     */
+    public ExtensionGroupObject getExtensionGroupSummary(String name){
+        List<ExtensionGroupObject> extensionGroupSummary = getExtensionGroupSummary();
+        for (ExtensionGroupObject object : extensionGroupSummary){
+            if(object.name.equals(name)){
+                return object;
+            }
+        }
+        return null;
+    }
+
+    /**
      * 删除当前存在的所有分机组
      * */
     public APIUtil deleteAllExtensionGroup(){
@@ -378,6 +390,23 @@ public class APIUtil {
         for(ExtensionGroupObject object : extensionGroupObjects){
             list.add(object.id);
         }
+        if(list != null && !list.isEmpty()){
+            deleteExtensionGroup(list);
+        }
+        return this;
+    }
+
+    /**
+     * 删除当前存在的所有分机组
+     * */
+    public APIUtil deleteExtensionGroup(String extensionGroupName){
+        List<ExtensionGroupObject> extensionGroupObjects = getExtensionGroupSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(ExtensionGroupObject object : extensionGroupObjects){
+            if(object.name.equals(extensionGroupName)){
+              list.add(object.id);
+        }}
         if(list != null && !list.isEmpty()){
             deleteExtensionGroup(list);
         }
@@ -406,6 +435,34 @@ public class APIUtil {
      * @param request  请求包中的完整body赋值给request
      */
     public APIUtil createExtensionGroup(String request){
+        //获取默认分机组
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/create",request);
+        return this;
+    }
+
+    /**
+     * 创建分机组
+     * @param request  请求包中的完整body赋值给request
+     */
+    public APIUtil createExtensionGroup(String name,List<String> extensions){
+        JSONArray jsonArray = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        for (String ext : extensions){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("ext_id",Integer.valueOf(extensionObject.id));
+                    a.put("caller_id_name",extensionObject.callerIdName);
+                    a.put("user_type","user");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"name\":\"%s\",\"member_list\":%s,\"member_select\":\"sel_specific\",\"share_group_info_to\":\"all_ext\",\"specific_extensions\":[],\"mgr_enb_widget_in_calls\":1,\"mgr_enb_widget_out_calls\":1,\"mgr_enb_widget_ext_list\":1,\"mgr_enb_widget_ring_group_list\":1,\"mgr_enb_widget_queue_list\":1,\"mgr_enb_widget_park_ext_list\":1,\"mgr_enb_widget_vm_group_list\":1,\"mgr_enb_chg_presence\":1,\"mgr_enb_call_distribution\":1,\"mgr_enb_call_conn\":1,\"mgr_enb_monitor\":1,\"mgr_enb_call_park\":1,\"mgr_enb_ctrl_ivr\":1,\"mgr_enb_office_time_switch\":0,\"mgr_enb_mgr_recording\":0,\"user_enb_widget_in_calls\":0,\"user_enb_widget_out_calls\":0,\"user_enb_widget_ext_list\":0,\"user_enb_widget_ring_group_list\":0,\"user_enb_widget_queue_list\":0,\"user_enb_widget_park_ext_list\":0,\"user_enb_widget_vm_group_list\":0,\"user_enb_chg_presence\":0,\"user_enb_call_distribution\":0,\"user_enb_call_conn\":0,\"user_enb_monitor\":0,\"user_enb_call_park\":0,\"user_enb_ctrl_ivr\":0}"
+                ,name,jsonArray.toString());
+        log.debug("【creat Extension Group】 "+request);
         //获取默认分机组
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/create",request);
         return this;
@@ -671,6 +728,23 @@ public class APIUtil {
     }
 
     /**
+     * 删除当前存在的所有IVR
+     * */
+    public APIUtil deleteIVR(String name){
+        List<IVRObject> IVRObjectList = getIVRSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(IVRObject object : IVRObjectList){
+            if(object.name.equals(name)){
+            list.add(object.id);
+        }}
+        if(list != null && !list.isEmpty()){
+            deleteIVR(list);
+        }
+        return this;
+    }
+
+    /**
      * 通过分机的ID删除指定分机
      * 对应接口：/api/v1.0/outboundroute/batchdelete
      * @param idLsit  int类型的id组成的list
@@ -746,6 +820,49 @@ public class APIUtil {
     }
 
     /**
+     * 创建呼出路由
+     * @param request
+     */
+    public APIUtil createOutbound(String name, List<String> trunks, List<String> extensions,String dialPattern,int strip){
+
+        List<TrunkObject> trunkObjects = getTrunkSummary();
+        JSONArray jsonArray = new JSONArray();
+        JSONArray jsonArray2 = new JSONArray();
+
+        for (int i=0; i<trunks.size(); i++){
+            for (int j=0; j<trunkObjects.size(); j++){
+                if (trunks.get(i).equals(trunkObjects.get(j).name)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",trunkObjects.get(j).name);
+                    a.put("value",String.valueOf(trunkObjects.get(j).id));
+                    a.put("type",trunkObjects.get(j).type);
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        for (String ext : extensions){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray2.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"name\":\"%s\",\"outb_cid\":\"\",\"enb_rrmemory_hunt\":0,\"pin_protect\":\"disable\",\"pin\":\"\",\"pin_list\":\"\",\"available_time\":\"always\",\"enb_office_time\":1,\"enb_out_of_office_time\":0,\"enb_holiday\":0,\"trunk_list\":%s,\"ext_list\":%s,\"role_list\":[],\"dial_pattern_list\":[{\"dial_pattern\":\"%s\",\"prepend\":\"\",\"strip\":%s}],\"office_time_list\":[]}"
+                ,name,jsonArray.toString() ,jsonArray2.toString(),dialPattern,strip);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/create",request);
+        return this;
+    }
+
+    /**
      * 创建IVR
      * @param request
      */
@@ -796,7 +913,7 @@ public class APIUtil {
             Assert.fail("[API Create IVR] ,pressKeyObjects.size(): "+ pressKeyObjects.size());
         }
 
-        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"prompt\":\"default\",\"prompt_repeat\":3,\"resp_timeout\":3,\"digit_timeout\":3,\"dial_ext_option\":\"disable\",\"dial_ext_list\":[],\"restrict_dial_ext_list\":[],\"enb_dial_outb_routes\":0,\"dial_outb_route_list\":[],\"enb_dial_check_vm\":0,%s}",
+        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"prompt\":\"default\",\"prompt_repeat\":3,\"resp_timeout\":3,\"digit_timeout\":3,\"dial_ext_option\":\"all\",\"dial_ext_list\":[],\"restrict_dial_ext_list\":[],\"enb_dial_outb_routes\":0,\"dial_outb_route_list\":[],\"enb_dial_check_vm\":0,%s}",
                 number,name,jsonArray.toString().replace("[{","").replace("}]","").replace("},{",","));
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ivr/create",request);

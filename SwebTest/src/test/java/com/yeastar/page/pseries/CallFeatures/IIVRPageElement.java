@@ -49,12 +49,39 @@ public interface IIVRPageElement {
         }
     }
 
+    enum DIAL_EXTENSIONS{
+        DISABLE(UI_MAP.getString("call_features.ivr.disable").trim()),
+        ALL_EXTENSIONS(UI_MAP.getString("call_features.ivr.all").trim()),
+        ALLOWED_EXTENSIONS(UI_MAP.getString("call_features.ivr.allow").trim()),
+        RESTRICTED_EXTENSIONS(UI_MAP.getString("call_features.ivr.restrict").trim());
+
+        private final String alias;
+
+        DIAL_EXTENSIONS(String alias) {
+            this.alias = alias;
+        }
+
+        public String getAlias() {
+            return alias;
+        }
+    }
+
     SelenideElement searchIpt = $(By.xpath("//input[@placeholder='"+UI_MAP.getString("header.search_placeholder")+"']"));
     SelenideElement ele_delete_all_checkbox = $(By.xpath("//table//thead//input[1]"));
 
     SelenideElement ele_ivr_basic_number = $(By.id("ivr_basic_number"));
     SelenideElement ele_ivr_basic_name = $(By.id("ivr_basic_name"));
+    SelenideElement ele_ivr_basic_extra_prompt = $(By.xpath("//*[@id=\"extra_prompt\"]//input"));
+    SelenideElement ele_ivr_basic_ivr_basic_prompt_repeat = $(By.id("ivr_basic_prompt_repeat"));
+    SelenideElement ele_ivr_basic_ivr_basic_resp_timeout = $(By.id("ivr_basic_resp_timeout"));
+    SelenideElement ele_ivr_basic_ivr_basic_digit_timeout = $(By.id("ivr_basic_digit_timeout"));
+    SelenideElement ele_ivr_basic_ivr_basic_dial_ext_option = $(By.xpath("//*[@id=\"ivr_basic_dial_ext_option\"]"));
+    SelenideElement ele_ivr_basic_dial_outb_routes_checkbox = $(By.id("ivr_basic_enb_dial_outb_routes"));
+    SelenideElement ele_ivr_basic_dial_check_vm_checkbox = $(By.id("ivr_basic_enb_dial_check_vm"));
 
+    //Dial Extensions，Allowed Extensions table
+    String allowed_extensions = "//*[contains(@id,'transfer_left_ivr_basic_extension')]//table//tr//td[contains(@title,\"%s\")]/..//input";
+    SelenideElement ele_allowed_extension_right_button = $(By.xpath("//button//i[contains(@class,'anticon-right')]"));
     SelenideElement ele_ivr_key_press_event_press0_dest = $(By.id("ivr_key_press_event_press0_dest"));
     SelenideElement ele_ivr_key_press_event_press0_dest_value = $(By.id("ivr_key_press_event_press0_dest_value"));
 }
