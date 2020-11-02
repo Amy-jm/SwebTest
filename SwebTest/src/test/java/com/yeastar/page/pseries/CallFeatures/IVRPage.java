@@ -11,12 +11,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.yeastar.controllers.WebDriverFactory.getDriver;
+import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public class IVRPage extends BasePage implements IIVRPageElement {
     /**
@@ -70,6 +72,13 @@ public class IVRPage extends BasePage implements IIVRPageElement {
         return this;
     }
 
+    public IVRPage createIVR(String number, String name){
+        addBtn.click();
+        ele_ivr_basic_number.shouldBe(Condition.enabled).setValue(number);
+        ele_ivr_basic_name.setValue(name);
+        return this;
+    }
+
     /** Tab 菜单切换 **/
     public IVRPage switchToTab(String enumTabMenu){
         baseSwitchToTab(enumTabMenu);
@@ -120,7 +129,7 @@ public class IVRPage extends BasePage implements IIVRPageElement {
         return this;
     }
 
-    public IVRPage selectAllowExtensionsToRight(String[] callerIDName){
+    public IVRPage selectAllowExtensionsToRight(String... callerIDName){
         for(String name:callerIDName) {
             SelenideElement element = $(By.xpath(String.format(allowed_extensions,name)));
             actions().moveToElement(element).click().build().perform();
@@ -128,5 +137,37 @@ public class IVRPage extends BasePage implements IIVRPageElement {
         }
         getDriver().findElements(By.xpath("//i[contains(@class,'anticon-right')]/..")).get(1).click();
         return this;
+    }
+    /**
+     * checkbox 设置
+     * @param element
+     * @param isChecked
+     * @return
+     */
+    public IVRPage isCheckbox(SelenideElement element, boolean isChecked){
+        if(element.getAttribute("checked") == null && isChecked){   //未勾选状态,isChecked为True，希望勾选
+            new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
+        }else if(element.getAttribute("checked") != null && !isChecked){  //勾选状态,isChecked为false，取消勾选
+            new Actions(getWebDriver()).moveToElement(element,2,2).click().build().perform();
+        }
+        return this;
+    }
+
+    public enum KEY_PRESS_EVENT{
+        EXTENSION(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        EXTENSION_VOICEMAIL(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        IVR(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        RING_GROUP(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        QUEUE(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        DIAL_BY_Name(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        EXTERNAL_NUMBER(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim()),
+        PLAY_PROMPT_AND_EXIT(UI_MAP.getString("web_client.queue_live.queue_panel.table_desc.ringing").trim());
+        private final String alias;
+        KEY_PRESS_EVENT(String alias) {
+            this.alias = alias;
+        }
+        public String getAlias() {
+            return alias;
+        }
     }
 }
