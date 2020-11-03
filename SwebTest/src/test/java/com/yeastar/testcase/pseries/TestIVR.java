@@ -411,7 +411,7 @@ public class TestIVR extends TestCaseBaseNew{
         step("===========[Extension]  create & register extension  end =========");
         return reg;
     }
-    private boolean isDebugInitExtensionFlag = true;
+    private boolean isDebugInitExtensionFlag = false;
     @Test
     public void prerequisite() {
         //local debug
