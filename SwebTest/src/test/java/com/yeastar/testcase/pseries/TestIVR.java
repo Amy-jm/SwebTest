@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.sleep;
+import static com.yeastar.page.pseries.CallFeatures.IIVRPageElement.ele_ivr_basic_dial_outb_routes_checkbox;
+import static com.yeastar.page.pseries.CdrRecording.CDRPage.CALLFROM.FXO;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -45,6 +47,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @Log4j2
 public class TestIVR extends TestCaseBaseNew{
     private boolean isRunRecoveryEnvFlag = true;
+    private boolean isRunRestIVR6201EnvFlag = true;
 
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
@@ -158,27 +161,24 @@ public class TestIVR extends TestCaseBaseNew{
         String methodName = method.getName();
         //sps呼入--sip呼出
         if(methodName.equals("testDialOutboundRoutes_1") || methodName.equals("testDialOutboundRoutes_8")){
-            return  new Object[][]{ {"99", 2000, "1000", DEVICE_ASSIST_2,"1",3000, "SPS", "SIP_ACCOUNT"}};//SIP  --55 R
+            return  new Object[][]{ {"99", 2000, "1000", DEVICE_ASSIST_2,"1",3001,3001, SPS, SIPTrunk}};//SIP  --55 R
         }
         //
         if(methodName.equals("testDialOutboundRoutes_2To7")){
             Object[][] routes = new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + DTMF + RingExtension + InBoundTrunk(呼入线路) + OutBoundTrunk(呼出线路)
-                    {"", 3001, "3000", DEVICE_ASSIST_1, "2",2222,"RingExtension","SIP_REGISTER", "SPS"},//SIP  --55 REGISTER
-                    {"99", 2000, "1000", DEVICE_ASSIST_2,"3",2001,"RingExtension","SPS", "SIP_ACCOUNT"},
-                    {"", 3001, "3000", DEVICE_ASSIST_1, "4",2000,"RingExtension","SIP_REGISTER", "FXO"},
-                    {"", 3001, "3000", DEVICE_ASSIST_1, "5",5555,"RingExtension","SIP_REGISTER", "BRI"},
-                    {"", 3001, "3000", DEVICE_ASSIST_1, "6",6666,"RingExtension","SIP_REGISTER",  "EI"},
-                    {"", 3001, "3000", DEVICE_ASSIST_1, "7",DEVICE_ASSIST_GSM, "RingExtension","SIP_REGISTER", "EI"}
+                    {"", 3001, "3000", DEVICE_ASSIST_1, "2",2000,2000,SIPTrunk, SPS},//SIP  --55 REGISTER
+                    {"99", 2000, "1000", DEVICE_ASSIST_2,"3",4000,4000,SPS, ACCOUNTTRUNK},
+                    {"", 3001, "3000", DEVICE_ASSIST_1, "4",2000,2000,SIPTrunk, FXO_1},
+                    {"", 3001, "3000", DEVICE_ASSIST_1, "5",2000,2000,SIPTrunk, BRI_1},
+                    {"", 3001, "3000", DEVICE_ASSIST_1, "6",2000,2000,SIPTrunk,  E1},
+//                    {"", 3001, "3000", DEVICE_ASSIST_1, "7",DEVICE_ASSIST_GSM, "2000","SIP_REGISTER", "GSM"}
             };
-        }
-        //sps呼入--sip呼出 ；内部分机呼入--sps呼出
-        if(methodName.equals("testDialOutboundRoutes_9To10")){
-
+            return routes;
         }
         //sip呼入--sps呼出
-        if(methodName.equals("testDialOutboundRoutes_11") || methodName.equals("testDialOutboundRoutes_12"))
-
+        if(methodName.equals("testDialOutboundRoutes_11") || methodName.equals("testDialOutboundRoutes_12")  || methodName.equals("testDialOutboundRoutes_9")|| methodName.equals("testDialOutboundRoutes_10"))
+            return  new Object[][]{{"", 3001, "3000", DEVICE_ASSIST_1, "2",2000,2000,SIPTrunk, SPS}};//SIP  --55 REGISTER
         //jenkins  run with xml and ITestContext c will be null
         if (group == null) {
             group = routesOutbound; //default run all routes
@@ -356,7 +356,7 @@ public class TestIVR extends TestCaseBaseNew{
 
 
     private boolean registerAllExtension(){
-        log.debug("[prerequisite] init extension");
+        step("=========== register extension  start =========");
         pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -410,19 +410,22 @@ public class TestIVR extends TestCaseBaseNew{
             reg=true;
             log.debug("4000注册失败");
         }
+        step("=========== register extension  end =========");
         return reg;
     }
     private boolean isDebugInitExtensionFlag = false;
     public void prerequisite() {
         //local debug
+        long startTime=System.currentTimeMillis();
         if(isDebugInitExtensionFlag){
-            log.debug("*****************init extension************");
             registerAllExtension();
             isRunRecoveryEnvFlag = false;
         }
 
-        long startTime=System.currentTimeMillis();
+//        long startTime=System.currentTimeMillis();
         if (isRunRecoveryEnvFlag) {
+            step("=========== init before class  start =========");
+
             List<String> trunk1 = new ArrayList<>();
             List<String> trunk2 = new ArrayList<>();
             List<String> trunk3 = new ArrayList<>();
@@ -441,7 +444,7 @@ public class TestIVR extends TestCaseBaseNew{
             trunk5.add(BRI_1);
             trunk6.add(E1);
             trunk7.add(GSM);
-            trunk8.add(GSM);
+            trunk8.add(SPS);
             trunk9.add(SPS);
             trunk9.add(BRI_1);
             trunk9.add(FXO_1);
@@ -552,10 +555,12 @@ public class TestIVR extends TestCaseBaseNew{
             apiUtil.loginWebClient("1001", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
             isRunRecoveryEnvFlag = registerAllExtension();
         }
+        step("=========== init before class  end =========");
         log.debug("[prerequisite time]:"+(System.currentTimeMillis()-startTime)/1000+" Seconds");
     }
 
-    public void restIVR(){
+    public void restIVR_6201(){
+        step("=========== rest ivr 6201  start =========");
         ArrayList<PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
         pressKeyObjects_0.add(new PressKeyObject(PressKey.press0, "extension", "", "1000", 0));
 
@@ -570,6 +575,8 @@ public class TestIVR extends TestCaseBaseNew{
         trunk9.add(ACCOUNTTRUNK);
         trunk9.add(GSM);
         apiUtil.deleteAllInbound().createInbound("Inbound1", trunk9, "IVR", "6201").apply();
+
+        step("=========== rest ivr 6201  end =========");
     }
 
     public void restIVRForKeyPressEvent(){
@@ -1078,6 +1085,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_1"}, dataProvider = "routes")
     public void testDialExtension_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
+        restIVR_6201();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1093,12 +1101,18 @@ public class TestIVR extends TestCaseBaseNew{
         softAssertPlus.assertThat(getExtensionStatus(2000,TALKING,30)).as("[通话校验]").isEqualTo(3);
         pjsip.Pj_hangupCall(caller);
 
+//        step("[CDR校验]");
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime())
+//                .extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+//                .contains(tuple(CDRPage.CALLFROM.SIP, CDRPage.CALLTO.IVR1_6201, CDRPage.STATUS.ANSWER, CDRPage.REASON.SIP_DIALED_EXTENSION,trunk,"", CDRPage.COMMUNICATION_TYPE.INBOUND))
+//                .contains(tuple(CDRPage.CALLFROM.SIP, CDRPage.CALLTO.Extension_1020, CDRPage.STATUS.ANSWER, CDRPage.REASON.SIP_HUNGUP,trunk,"", CDRPage.COMMUNICATION_TYPE.INBOUND));
+
         step("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime())
-                .extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(CDRPage.CALLFROM.SIP, CDRPage.CALLTO.IVR1_6201, CDRPage.STATUS.ANSWER, CDRPage.REASON.SIP_DIALED_EXTENSION,trunk,"", CDRPage.COMMUNICATION_TYPE.INBOUND))
-                .contains(tuple(CDRPage.CALLFROM.SIP, CDRPage.CALLTO.Extension_1020, CDRPage.STATUS.ANSWER, CDRPage.REASON.SIP_HUNGUP,trunk,"", CDRPage.COMMUNICATION_TYPE.INBOUND));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> dialed Extension", "sipRegister", "", "Inbound"))
+                .contains(tuple("3001<3001>", "1020 1020<1020>", "ANSWERED", "3001<3001> hung up", "sipRegister", "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1114,6 +1128,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_2"}, dataProvider = "routes")
     public void testDialExtension_2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1139,6 +1154,8 @@ public class TestIVR extends TestCaseBaseNew{
                 .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", invalidKey ,trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
+
+        restIVR_6201();
     }
 
     @Epic("P_Series")
@@ -1153,7 +1170,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_3"}, dataProvider = "routes")
     public void testDialExtension_3(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1181,6 +1198,8 @@ public class TestIVR extends TestCaseBaseNew{
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
+
+        restIVR_6201();
     }
 
     @Epic("P_Series")
@@ -1195,7 +1214,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_4"}, dataProvider = "routes")
     public void testDialExtension_4(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1234,7 +1253,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_5"}, dataProvider = "routes")
     public void testDialExtension_5(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1277,7 +1296,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_6"})
     public void testDialExtension_6() {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: 内部分机");
         auto.loginPage().loginWithAdmin();
@@ -1320,7 +1339,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_7"}, dataProvider = "routes")
     public void testDialExtension_7(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1363,7 +1382,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_2"})
     public void testDialExtension_8() {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: 内部分机");
         auto.loginPage().loginWithAdmin();
@@ -1403,7 +1422,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_9"}, dataProvider = "routes")
     public void testDialExtension_9(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1441,7 +1460,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_10"}, dataProvider = "routes")
     public void testDialExtension_10(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1467,7 +1486,7 @@ public class TestIVR extends TestCaseBaseNew{
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
                 .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Extension",trunk,"","Inbound"))
-                .contains(tuple("2000<2000>".replace("2000",caller+""), "test C<1002>", "ANSWERED", "testta C<1002> hung up",trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "testta C<1002>", "ANSWERED", "testta C<1002> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1484,7 +1503,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_11"}, dataProvider = "routes")
     public void testDialExtension_11(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1522,7 +1541,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_12"})
     public void testDialExtension_12() {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: 内部分机");
         auto.loginPage().loginWithAdmin();
@@ -1560,7 +1579,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_13"}, dataProvider = "routes")
     public void testDialExtension_13(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1600,7 +1619,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_14"})
     public void testDialExtension_14() {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: 内部分机 ");
         auto.loginPage().loginWithAdmin();
@@ -1724,7 +1743,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_17"}, dataProvider = "routes")
     public void testDialExtension_17(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite();
-        restIVR();  //重置ivr and inbound
+        restIVR_6201();  //重置ivr and inbound
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1755,247 +1774,300 @@ public class TestIVR extends TestCaseBaseNew{
         softAssertPlus.assertAll();
     }
 
-//    @Epic("P_Series")
-//    @Feature("IVR")
-//    @Story("DialOutboundRoutes")
-//    @Description("1.1.通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001\n" +
-//                "2.3001正常响铃，接听，查看cdr\n" )
-//    @Severity(SeverityLevel.BLOCKER)
-//    @TmsLink(value = "")
-//    @Issue("")
-//    @Test(groups = {"P2", "IVR","DialExtension", "testDialOutboundRoutes_","Trunk","OutboundRoute","DialOutboundRoutes"}, dataProvider = "routesOutbound")
-//    public void testDialOutboundRoutes_1(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, String inbound, String outbound) {
-//        prerequisite();
-//        restIVR();  //重置ivr and inbound
+    @Epic("P_Series")
+    @Feature("IVR")
+    @Story("DialOutboundRoutes")
+    @Description("1.1.通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001\n" +
+                "2.3001正常响铃，接听，查看cdr\n" )
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "IVR","DialExtension", "testDialOutboundRoutes_","Trunk","OutboundRoute","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    public void testDialOutboundRoutes_1(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, int ringExtension,String inbound, String outbound) {
+        prerequisite();
+//        restIVR_6201();  //重置ivr and inbound
+
+        step("1:login with admin,trunk: "+inbound);
+        auto.loginPage().loginWithAdmin();
+
+        step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
+        auto.ivrPage().editIVR("IVR1_6201").
+                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
+                selectAllowExtensionsToRight("Out1","Out2","Out3","Out4","Out5","Out6","Out7","Out8","Out9").
+                clickSaveAndApply();
+
+        step("2:1.通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001");
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        log.debug("[DTMF] " +prfix + OutCallee);
+        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
+
+        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(2);
+        pjsip.Pj_Answer_Call(ringExtension,false);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        pjsip.Pj_hangupCall(caller);
+
+        step("[CDR校验]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound",inbound,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), prfix + OutCallee + "", "ANSWERED", "2000<2000> hung up",inbound,outbound,"Outbound"));
+
+        softAssertPlus.assertAll();
+    }
+
+
+    @Epic("P_Series")
+    @Feature("IVR")
+    @Story("DialOutboundRoutes")
+    @Description("2.通过sip外线呼入到IVR1，按22222通过sps外线呼出到辅助2分机2000\n" +
+            "\t正常响铃，接听，查看cdr\n" +
+            "3.通过sps外线呼入到IVR1，按3xxx通过Account外线呼出到辅助3分机xxx\n" +
+            "\t正常响铃，接听，查看cdr\n" +
+            "4.通过sip外线呼入到IVR1，按42000通过FXO外线呼出到辅助2分机2000\n" +
+            "\t正常响铃，接听，查看cdr\n" +
+            "5.通过sip外线呼入到IVR1，按5xxxx通过BRI外线呼出到辅助2分机2000\n" +
+            "\t正常响铃，接听，查看cdr\n" +
+            "6.通过sip外线呼入到IVR1，按6xxxx通过E1外线呼出到辅助2分机2000\n" +
+            "\t正常响铃，接听，查看cdr\n" +
+            "7.通过sip外线呼入到IVR1，按7+辅助2的gsm号码通过gsm外线呼出到辅助2分机2000\n" +
+            "\t正常响铃，接听，查看cdr" )
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("ID1034912 BRI/E1 exception")
+    @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_2To7","Trunk","OutboundRoute","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    public void testDialOutboundRoutes_2To7(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee,int ringExtesnion, String inbound, String outbound) {
+        prerequisite();
+//        restIVR_6201(); //重置ivr and inbound
+
+        step("1:login with admin,trunk: "+inbound);
+        auto.loginPage().loginWithAdmin();
+
+        step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
+        auto.ivrPage().editIVR("IVR1_6201").
+                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
+                selectAllowExtensionsToRight("Out1","Out2","Out3","Out4","Out5","Out6","Out7","Out8","Out9").
+                clickSaveAndApply();
+
+        step("2:");
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        log.debug("[DTMF] " +prfix + OutCallee + "#");
+        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee + "#");
+
+        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
+        softAssertPlus.assertThat(getExtensionStatus(ringExtesnion,RING,20)).as("[通话校验]").isEqualTo(2);
+        pjsip.Pj_Answer_Call(OutCallee,false);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtesnion,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_hangupCall(caller);
+
+        step("[CDR校验]");
+//        if(prfix.equals("5") || prfix.equals("6")){
+//            List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+//                    .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound".replace("2000",caller+""),inbound,"","Inbound"))
+//                    .contains(tuple("2000<2000>".replace("2000",caller+""), OutCallee + "", "ANSWERED", "42000 hung up",inbound,outbound,"Outbound"));
 //
-//        step("1:login with admin,trunk: "+inbound);
-//        auto.loginPage().loginWithAdmin();
-//
-//        step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-//        auto.ivrPage().editIVR("IVR1_6201").
-//                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
-//                selectAllowExtensionsToRight("Out1","Out2","Out3","Out4","Out5","Out6","Out7","Out8","Out9").
-//                clickSaveAndApply();
-//
-//        step("2:");
-//        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-//        sleep(WaitUntils.SHORT_WAIT*2);
-//
-//        log.debug("[DTMF] " +prfix + OutCallee + "#");
-//        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee + "#");
-//
-//        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,RING,20)).as("[通话校验]").isEqualTo(2);
-//        pjsip.Pj_Answer_Call(OutCallee,false);
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,TALKING,20)).as("[通话校验]").isEqualTo(3);
-//        pjsip.Pj_hangupCall(caller);
-//
-//        step("[CDR校验]");
-////        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-////        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension","SPS1","","Inbound"))
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up","SPS1","","Inbound"));
-//
-//        softAssertPlus.assertAll();
-//    }
-//
-//
-//    @Epic("P_Series")
-//    @Feature("IVR")
-//    @Story("DialOutboundRoutes")
-//    @Description("2.通过sip外线呼入到IVR1，按22222通过sps外线呼出到辅助2分机2000\n" +
-//            "\t正常响铃，接听，查看cdr\n" +
-//            "3.通过sps外线呼入到IVR1，按3xxx通过Account外线呼出到辅助3分机xxx\n" +
-//            "\t正常响铃，接听，查看cdr\n" +
-//            "4.通过sip外线呼入到IVR1，按42000通过FXO外线呼出到辅助2分机2000\n" +
-//            "\t正常响铃，接听，查看cdr\n" +
-//            "5.通过sip外线呼入到IVR1，按5xxxx通过BRI外线呼出到辅助2分机2000\n" +
-//            "\t正常响铃，接听，查看cdr\n" +
-//            "6.通过sip外线呼入到IVR1，按6xxxx通过E1外线呼出到辅助2分机2000\n" +
-//            "\t正常响铃，接听，查看cdr\n" +
-//            "7.通过sip外线呼入到IVR1，按7+辅助2的gsm号码通过gsm外线呼出到辅助2分机2000\n" +
-//            "\t正常响铃，接听，查看cdr" )
-//    @Severity(SeverityLevel.BLOCKER)
-//    @TmsLink(value = "")
-//    @Issue("")
-//    @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_2To7","Trunk","OutboundRoute","DialOutboundRoutes"}, dataProvider = "routesOutbound")
-//    public void testDialOutboundRoutes_2To7(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, String inbound, String outbound) {
-//        prerequisite();
-//        restIVR();  //重置ivr and inbound
-//
-//        step("1:login with admin,trunk: "+inbound);
-//        auto.loginPage().loginWithAdmin();
-//
-//        step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-//        auto.ivrPage().editIVR("IVR1_6201").
-//                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
-//                selectAllowExtensionsToRight("Out1","Out2","Out3","Out4","Out5","Out6","Out7","Out8","Out9").
-//                clickSaveAndApply();
-//
-//        step("2:");
-//        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-//        sleep(WaitUntils.SHORT_WAIT*2);
-//
-//        log.debug("[DTMF] " +prfix + OutCallee + "#");
-//        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee + "#");
-//
-//        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,RING,20)).as("[通话校验]").isEqualTo(2);
-//        pjsip.Pj_Answer_Call(OutCallee,false);
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,TALKING,20)).as("[通话校验]").isEqualTo(3);
-//        pjsip.Pj_hangupCall(caller);
-//
-//        step("[CDR校验]");
-////        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-////        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension","SPS1","","Inbound"))
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up","SPS1","","Inbound"));
-//
-//        softAssertPlus.assertAll();
-//    }
-//
-//    @Epic("P_Series")
-//    @Feature("IVR")
-//    @Story("DialOutboundRoutes")
-//    @Description("编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】\n" +
-//            "8.通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001\n" +
-//                 "呼出失败，通话挂断")
-//    @Severity(SeverityLevel.BLOCKER)
-//    @TmsLink(value = "")
-//    @Issue("")
-//    @Test(groups = {"P2", "IVR","DialExtension", "testDialOutboundRoutes_8","DialOutboundRoutes"}, dataProvider = "routesOutbound")
-//    public void testDialOutboundRoutes_8(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, String inbound, String outbound) {
-//        prerequisite();
-//        restIVR();  //重置ivr and inbound
-//
-//        step("1:login with admin,trunk: "+inbound);
-//        auto.loginPage().loginWithAdmin();
-//
-//        step("2.编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】");
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-//        auto.ivrPage().editIVR("IVR1_6201").
-//                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
-//                selectAllowExtensionsToRight("Out8").
-//                clickSaveAndApply();
-//
-//        step("2:");
-//        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-//        sleep(WaitUntils.SHORT_WAIT*2);
-//
-//        log.debug("[DTMF] " +prfix + OutCallee + "#");
-//        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee + "#");
-//
-//        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,RING,20)).as("[通话校验]").isEqualTo(2);
-//        pjsip.Pj_Answer_Call(OutCallee,false);
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,TALKING,20)).as("[通话校验]").isEqualTo(3);
-//        pjsip.Pj_hangupCall(caller);
-//
-//        step("[CDR校验]");
-////        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-////        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension","SPS1","","Inbound"))
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up","SPS1","","Inbound"));
-//
-//        softAssertPlus.assertAll();
-//    }
-//
-//    @Epic("P_Series")
-//    @Feature("IVR")
-//    @Story("DialOutboundRoutes")
-//    @Description("编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】\n" +
-//            "9.通过sip外线呼入到IVR1，按2222通过sps外线呼出到辅助2分机2000\n" +
-//            "\t正常响铃，接听，查看cdr\n" +
-//            "10.分机1003呼入到IVR1，按2222通过sps外线呼出到辅助2分机2000\n" +
-//            "\t正常响铃，接听，查看cdr" )
-//    @Severity(SeverityLevel.BLOCKER)
-//    @TmsLink(value = "")
-//    @Issue("")
-//    @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_9To10","DialOutboundRoutes"}, dataProvider = "routesOutbound")
-//    public void testDialOutboundRoutes_9To10(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, String inbound, String outbound) {
-//        prerequisite();
-//        restIVR();  //重置ivr and inbound
-//
-//        step("1:login with admin,trunk: "+inbound);
-//        auto.loginPage().loginWithAdmin();
-//
-//        step("2.编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】");
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-//        auto.ivrPage().editIVR("IVR1_6201").
-//                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
-//                selectAllowExtensionsToRight("Out8").
-//                clickSaveAndApply();
-//
-//        step("2:");
-//        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-//        sleep(WaitUntils.SHORT_WAIT*2);
-//
-//        log.debug("[DTMF] " +prfix + OutCallee + "#");
-//        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee + "#");
-//
-//        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,RING,20)).as("[通话校验]").isEqualTo(2);
-//        pjsip.Pj_Answer_Call(OutCallee,false);
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,TALKING,20)).as("[通话校验]").isEqualTo(3);
-//        pjsip.Pj_hangupCall(caller);
-//
-//        step("[CDR校验]");
-////        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-////        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension","SPS1","","Inbound"))
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up","SPS1","","Inbound"));
-//
-//        softAssertPlus.assertAll();
-//    }
-//
-//
-//    @Epic("P_Series")
-//    @Feature("IVR")
-//    @Story("DialOutboundRoutes")
-//    @Description("编辑IVR1，呼出路由选择Out9、Out2【Out9 呼出外线不可用】\n" +
-//            "\t11.通过sip外线呼入到IVR1，按22222通过sps外线呼出到辅助2分机2000\n" +
-//            "\t\tOut9呼出失败，通过Out2呼出成功，正常响铃，接听，查看cdr" )
-//    @Severity(SeverityLevel.BLOCKER)
-//    @TmsLink(value = "")
-//    @Issue("")
-//    @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_11","DialOutboundRoutes"}, dataProvider = "routesOutbound")
-//    public void testDialOutboundRoutes_11(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, String inbound, String outbound) {
-//        prerequisite();
-//        restIVR();  //重置ivr and inbound
-//
-//        step("1:login with admin,trunk: "+inbound);
-//        auto.loginPage().loginWithAdmin();
-//
-//        step("2.编辑IVR1，呼出路由选择Out9、Out2【Out9 呼出外线不可用】");
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-//        auto.ivrPage().editIVR("IVR1_6201").
-//                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
-//                selectAllowExtensionsToRight("Out2","Out9").
-//                clickSaveAndApply();
-//
-//        step("2:");
-//        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-//        sleep(WaitUntils.SHORT_WAIT*2);
-//
-//        log.debug("[DTMF] " +prfix + OutCallee + "#");
-//        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee + "#");
-//
-//        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,RING,20)).as("[通话校验]").isEqualTo(2);
-//        pjsip.Pj_Answer_Call(OutCallee,false);
-//        softAssertPlus.assertThat(getExtensionStatus(OutCallee,TALKING,20)).as("[通话校验]").isEqualTo(3);
-//        pjsip.Pj_hangupCall(caller);
-//
-//        step("[CDR校验]");
-////        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
-////        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension","SPS1","","Inbound"))
-////                .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up","SPS1","","Inbound"));
-//
-//        softAssertPlus.assertAll();
-//    }
+//        }else{
+
+            List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                    .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound".replace("2000",caller+""),inbound,"","Inbound"))
+                    .contains(tuple("2000<2000>".replace("2000",caller+""), prfix + OutCallee + "", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),inbound,outbound,"Outbound"));
+
+//        }
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("IVR")
+    @Story("DialOutboundRoutes")
+    @Description("编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】\n" +
+            "8.通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001\n" +
+                 "呼出失败，通话挂断")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "IVR","DialExtension", "testDialOutboundRoutes_8","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    public void testDialOutboundRoutes_8(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, int ringExtension,String inbound, String outbound) {
+        prerequisite();
+//        restIVR_6201(); //重置ivr and inbound
+
+        step("1:login with admin,trunk: "+inbound);
+        auto.loginPage().loginWithAdmin();
+
+        step("2.编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
+        auto.ivrPage().editIVR("IVR1_6201").
+                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
+                selectAllowExtensionsToRight("Out8").
+                clickSaveAndApply();
+
+        step("2:通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001");
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        log.debug("[DTMF] " +prfix + OutCallee);
+        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
+
+        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,IDLE,10)).as("[通话校验]").isEqualTo(0);
+        softAssertPlus.assertThat(getExtensionStatus(caller,HUNGUP,10)).as("[通话校验]").isEqualTo(4);
+        pjsip.Pj_hangupCall(caller);
+
+        step("[CDR校验]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound",inbound,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "FAILED", "call_unreachable / call_congestion","SPS1","","Inbound"));
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("IVR")
+    @Story("DialOutboundRoutes")
+    @Description("编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】\n" +
+            "9.通过sip外线呼入到IVR1，按2222通过sps外线呼出到辅助2分机2000\n" +
+            "\t正常响铃，接听，查看cdr\n" )
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_9","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    public void testDialOutboundRoutes_9(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, int ringExtension,String inbound, String outbound) {
+        prerequisite();
+        restIVR_6201(); //重置ivr and inbound
+
+        step("1:login with admin,trunk: "+inbound);
+        auto.loginPage().loginWithAdmin();
+
+        step("2.编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
+        auto.ivrPage().editIVR("IVR1_6201").
+                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
+                selectAllowExtensionsToRight("Out8").
+                clickSaveAndApply();
+
+        step("3:通过sip外线呼入到IVR1，按22000通过sps外线呼出到辅助2分机2000 " + "[caller]：" + caller + ",[callee]：" + routePrefix + callee);
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        log.debug("[DTMF] " +prfix + OutCallee);
+        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
+
+        step("[通话状态校验]");
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(2);
+        pjsip.Pj_Answer_Call(ringExtension,false);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        pjsip.Pj_hangupCall(caller);
+
+        step("[CDR校验]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("3001<3001>", cdrIVR1_6201, "ANSWERED", "3001<3001> dialed Outbound",inbound,"","Inbound"))
+                .contains(tuple("3001<3001>", prfix + OutCallee + "", "ANSWERED", "3001<3001> hung up",inbound,outbound,"Outbound"));
+
+        softAssertPlus.assertAll();
+    }
+
+
+    @Epic("P_Series")
+    @Feature("IVR")
+    @Story("DialOutboundRoutes")
+    @Description("编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】\n" +
+            "10.分机1003呼入到IVR1，按2222通过sps外线呼出到辅助2分机2000\n" +
+            "\t正常响铃，接听，查看cdr" )
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_10","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    public void testDialOutboundRoutes_10(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee,int ringExtension, String inbound, String outbound) {
+        prerequisite();
+        restIVR_6201(); //重置ivr and inbound
+
+        step("1:login with admin,trunk: "+inbound);
+        auto.loginPage().loginWithAdmin();
+
+        step("2.编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
+        auto.ivrPage().editIVR("IVR1_6201").
+                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
+                selectAllowExtensionsToRight("Out8").
+                clickSaveAndApply();
+
+        step("2:分机1003呼入到IVR1，按22000通过sps外线呼出到辅助2分机2000");
+        pjsip.Pj_Make_Call_No_Answer(1003, "6201", DEVICE_IP_LAN, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        log.debug("[DTMF] " +prfix + OutCallee);
+        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
+
+        step("[通话状态校验] ringExtension"+ringExtension);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(2);
+        pjsip.Pj_Answer_Call(ringExtension,false);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        pjsip.Pj_hangupCall(caller);
+
+        step("[CDR校验]");
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("testa D<1003>", cdrIVR1_6201, "ANSWERED", "3001<3001> dialed Outbound",inbound,"","Inbound"))
+                .contains(tuple("3001<3001>", prfix + OutCallee + "", "ANSWERED", "3001<3001> hung up",inbound,outbound,"Outbound"));
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("IVR")
+    @Story("DialOutboundRoutes")
+    @Description("编辑IVR1，呼出路由选择Out9、Out2【Out9 呼出外线不可用】\n" +
+            "\t11.通过sip外线呼入到IVR1，按22222通过sps外线呼出到辅助2分机2000\n" +
+            "\t\tOut9呼出失败，通过Out2呼出成功，正常响铃，接听，查看cdr" )
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_11","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    public void testDialOutboundRoutes_11(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, String inbound, String outbound) {
+        prerequisite();
+        restIVR_6201(); //重置ivr and inbound
+
+        step("1:login with admin,trunk: "+inbound);
+        auto.loginPage().loginWithAdmin();
+
+        step("2.编辑IVR1，呼出路由选择Out9、Out2【Out9 呼出外线不可用】");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
+        auto.ivrPage().editIVR("IVR1_6201").
+                isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
+                selectAllowExtensionsToRight("Out2","Out9").
+                clickSaveAndApply();
+
+        step("2:");
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        log.debug("[DTMF] " +prfix + OutCallee + "#");
+        pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee + "#");
+
+        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
+        softAssertPlus.assertThat(getExtensionStatus(OutCallee,RING,20)).as("[通话校验]").isEqualTo(2);
+        pjsip.Pj_Answer_Call(OutCallee,false);
+        softAssertPlus.assertThat(getExtensionStatus(OutCallee,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        pjsip.Pj_hangupCall(caller);
+
+        step("[CDR校验]");
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+//                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension","SPS1","","Inbound"))
+//                .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up","SPS1","","Inbound"));
+
+        softAssertPlus.assertAll();
+    }
 //
 //    @Epic("P_Series")
 //    @Feature("IVR")
@@ -2955,8 +3027,6 @@ public class TestIVR extends TestCaseBaseNew{
         List<String> list = TableUtils.getTableForHeader(getDriver(),"Number");
         softAssertPlus.assertThat(list).doesNotContain("6202");
         softAssertPlus.assertAll();
-
-        isRunRecoveryEnvFlag = true;
     }
 
     @Epic("P_Series")
@@ -2969,7 +3039,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P2", "IVR","KeyPressEvent", "testDelete_2"})
     public void testDelete_2() {
         prerequisite();
-        isRunRecoveryEnvFlag = true;
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
@@ -2985,8 +3055,7 @@ public class TestIVR extends TestCaseBaseNew{
         softAssertPlus.assertThat(list.size()).isEqualTo(0);
         softAssertPlus.assertAll();
 
-        restIVR();
-//        isRunRecoveryEnvFlag = false;
+        restIVR_6201();
     }
 
     /**
