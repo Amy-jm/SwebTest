@@ -2072,7 +2072,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Feature("IVR")
     @Story("KeyPressEvent")
     @Description("默认Key选择[None]\n" +
-            "1.通过sip外线呼入到IVR1，按1\n" +
+            "1.1.通过sip外线呼入到IVR1，按4到IVR0,再按1\n" +
             "\t通话被挂断" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -2081,23 +2081,25 @@ public class TestIVR extends TestCaseBaseNew{
     public void testKeyPressEvent_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
        prerequisite();
        
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
-        step("2:通过sip外线呼入到IVR1，按1");
+        step("2:通过sip外线呼入到IVR1，按4到IVR0,再按1" +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] 4 -->1");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_Send_Dtmf(caller, "4");//转到IVR0
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_Send_Dtmf(caller,"1");//转到IVR0
 
-        pjsip.Pj_Send_Dtmf(caller, "1");
-
-        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
+        assertStep(caller + "[通话状态校验] 3001正常响铃，接听，查看cdr");
         Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4);
 
-       assertStep("[CDR校验]");
+        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", invalidKey ,trunk,"","Inbound"));
+                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> IVR IVR1_6201<6201>", "sipRegister", "", "Inbound"))
+                .contains(tuple("3001<3001>", "IVR IVR0_6200<6200>", "ANSWERED", "Invalid key", "sipRegister", "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2106,8 +2108,6 @@ public class TestIVR extends TestCaseBaseNew{
     @Feature("IVR")
     @Story("KeyPressEvent")
     @Description("默认Key选择[None]\n" +
-            "\t1.通过sip外线呼入到IVR1，按4到IVR0,再按1\n" +
-            "\t\t通话被挂断\n" +
             "\t2.通过sip外线呼入到IVR1，按4到IVR0,再按5\n" +
             "\t\t通话被挂断\n" +
             "\t3.通过sip外线呼入到IVR1，按4到IVR0,再按*\n" +
@@ -2236,7 +2236,7 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        sleep(10000);
+        sleep(30000);
         pjsip.Pj_hangupCall(caller);
 
         //loginWeb 1001
