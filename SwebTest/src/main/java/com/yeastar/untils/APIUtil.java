@@ -918,6 +918,9 @@ public class APIUtil {
                             a.put(pressKey.toString()+"_dest_value", Integer.toString(getQueueSummary(pressKeyObject.getDestValue()).id));//Queue id
                         }else if(getIVRSummary(pressKeyObject.getDestValue()) != null){
                             a.put(pressKey.toString()+"_dest_value", Integer.toString(getIVRSummary(pressKeyObject.getDestValue()).id));//IVR id
+                        }else{
+                            //prompt
+                            a.put(pressKey.toString()+"_dest_value", pressKeyObject.getDestValue());
                         }
                         if(HasDigit(pressKeyObject.getPressKeyNum())){
                             a.put("allow_out_record"+pressKey.toString().substring(pressKey.toString().length() -1, pressKey.toString().length()), pressKeyObject.getIsAllowOutRecord());
