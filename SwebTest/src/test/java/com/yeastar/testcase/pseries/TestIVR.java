@@ -1411,7 +1411,7 @@ public class TestIVR extends TestCaseBaseNew{
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
-        step("3:通过sps外线呼入到IVR1，按分机号1002");
+        step("3:通过sps外线呼入到IVR1，按分机号1002,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -1454,7 +1454,7 @@ public class TestIVR extends TestCaseBaseNew{
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
-        step("3:通过sps外线呼入到IVR1，按分机号1001");
+        step("3:通过sps外线呼入到IVR1，按分机号1001,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -1530,7 +1530,7 @@ public class TestIVR extends TestCaseBaseNew{
                 selectAllowExtensionsToRight("ExGroup1").
                 clickSaveAndApply();
 
-        step("3:通过sps外线呼入到IVR1，按分机号1001");
+        step("3:通过sps外线呼入到IVR1，按分机号1001,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -1613,7 +1613,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALL_EXTENSIONS.getAlias()).
                 clickSaveAndApply();
 
-        step("3:通过sps外线呼入到IVR1按分机号1001到分机B");
+        step("3:通过sps外线呼入到IVR1按分机号1001到分机B,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -1752,7 +1752,7 @@ public class TestIVR extends TestCaseBaseNew{
                 selectAllowExtensionsToRight("Out1","Out2","Out3","Out4","Out5","Out6","Out7","Out8","Out9").
                 clickSaveAndApply();
 
-        step("2:1.通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001");
+        step("2:1.通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -1808,7 +1808,7 @@ public class TestIVR extends TestCaseBaseNew{
                 selectAllowExtensionsToRight("Out1","Out2","Out3","Out4","Out5","Out6","Out7","Out8","Out9").
                 clickSaveAndApply();
 
-        step("2:");
+        step("2:,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -1864,7 +1864,7 @@ public class TestIVR extends TestCaseBaseNew{
                 selectAllowExtensionsToRight("Out8").
                 clickSaveAndApply();
 
-        step("2:通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001");
+        step("2:通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -1956,7 +1956,7 @@ public class TestIVR extends TestCaseBaseNew{
                 selectAllowExtensionsToRight("Out8").
                 clickSaveAndApply();
 
-        step("2:分机1003呼入到IVR1，按22000通过sps外线呼出到辅助2分机2000");
+        step("2:分机1003呼入到IVR1，按22000通过sps外线呼出到辅助2分机2000,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(1003, "6201", DEVICE_IP_LAN, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -2003,7 +2003,7 @@ public class TestIVR extends TestCaseBaseNew{
                 selectAllowExtensionsToRight("Out2","Out9").
                 clickSaveAndApply();
 
-        step("2:");
+        step("2:,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
@@ -2048,7 +2048,7 @@ public class TestIVR extends TestCaseBaseNew{
                 isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,false).
                 clickSaveAndApply();
 
-        step("3:通过sip外线呼入到IVR1，按22222通过sps外线呼出到辅助2分机2000");
+        step("3:通过sip外线呼入到IVR1，按22222通过sps外线呼出到辅助2分机2000,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
