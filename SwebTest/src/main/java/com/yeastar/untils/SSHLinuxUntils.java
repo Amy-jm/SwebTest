@@ -130,11 +130,6 @@ public class SSHLinuxUntils {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param user
-     * @param password
      * @param command
      * @return
      * @throws JSchException
@@ -170,26 +165,26 @@ public class SSHLinuxUntils {
         channelExec.connect();
         String msg = null;
         int tmp=0;
-        long startTime = System.currentTimeMillis();
+//        long startTime = System.currentTimeMillis();
         while ((msg = br.readLine()) != null && tmp <= timout) {
             outputstream.append(msg).append("\n");
             log.debug("[CLI]"+ msg);
             if(msg.contains(containsString)){
                 AsteriskObject  asteriskObject1 = new AsteriskObject();
-                log.debug("[get key success ，appear "+appearCount+"] "+(System.currentTimeMillis() - startTime)/1000+" Seconds ！"+msg);
+//                log.debug("[get key success ，appear "+appearCount+"] "+(System.currentTimeMillis() - startTime)/1000+" Seconds ！"+msg);
                 asteriskObject1.setName(msg);
-                asteriskObject1.setTime(msg.substring(1,20));
+//                asteriskObject1.setTime(msg.substring(1,20));
                 if(msg.contains("'")){
                     String[] str = msg.split("'");
                     asteriskObject1.setKeyword(str[1]);
                     asteriskObjectList.add(asteriskObject1);
                 }
             }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             tmp++;
 //            if(tmp==timout){
 //                AsteriskObject  asteriskObject2 = new AsteriskObject();
@@ -200,7 +195,7 @@ public class SSHLinuxUntils {
 //                asteriskObjectList.add(asteriskObject2);
 //            }
         }
-        log.debug("[get cli time] "+(System.currentTimeMillis() - startTime)/1000+" Seconds");
+//        log.debug("[get cli time] "+(System.currentTimeMillis() - startTime)/1000+" Seconds");
         channelExec.disconnect();
         session.disconnect();
 
@@ -216,7 +211,8 @@ public class SSHLinuxUntils {
      * @throws JSchException
      */
     public static void getPbxlog(String containsStr, int appearCount, int seconds, List<AsteriskObject> asteriskObject)  {
-        String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;tail -f /ysdisk/syslog/pbxlog.0";
+        String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;tail -c +100 /ysdisk/syslog/pbxlog.0";
+        String ASTERISK = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx";
         log.debug("[============= CLI start loading =====================]\n"+ASTERISK_CLI);
         try {
            SSHLinuxUntils.exePjsipNew(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, ASTERISK_CLI,containsStr,appearCount,seconds, asteriskObject);

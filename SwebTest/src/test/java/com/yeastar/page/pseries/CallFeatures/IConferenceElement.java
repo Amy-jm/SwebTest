@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public interface IConference {
+public interface IConferenceElement {
 
     SelenideElement ele_conference_partic_password = $(By.id("conference_partic_password"));
     SelenideElement ele_conference_moderator_password = $(By.id("conference_moderator_password"));

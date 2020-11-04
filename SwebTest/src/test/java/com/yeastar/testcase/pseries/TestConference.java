@@ -324,7 +324,7 @@ public class TestConference extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P1", "Conference","Basic","Trunk","InboundRoute","testConference_1"}, dataProvider = "routes")
-    public void testConference_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    public void testConference_01(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite();
         String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
 
@@ -357,45 +357,652 @@ public class TestConference extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("Conference")
     @Story("DialExtension")
-    @Description("1.通过sip外线呼入到Conference1-6501\n" +
+    @Description("2.通过SIP、SPS、Account、FXO、BRI、E1、GSM外线分别呼入到Conference1-6501\n" +
             "\tasterisk -rx \"meetme list 6501\"\n" +
-            "后台查看会议室6501存在一个成员\n" +
-            "\t\t通过sps外线呼入到Conference1-6501\n" +
-            "\t\t\t后台查看会议室6501多一个成员\n" +
-            "\t\t\t\t分机1004呼入到6501\n" +
-            "\t\t\t\t\t后台查看会议室6501多一个成员\n" +
-            "\t\t\t\t\t\tsip外线主叫、sps外线主叫、分机分别挂断；查看挂断时会议室成员相应减少，cdr正确；")
+            "后台查看会议室6501成员依次递增\n" +
+            "\t\tsip、sps、Account、FXO、BRI、E1、GSM外线分别退出Conference1-6501\n" +
+            "\t\t\tasterisk -rx \"meetme list 6501\"\n" +
+            "后台查看会议室6501成员依次递减")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P1", "Conference","Basic","Trunk","InboundRoute"}, dataProvider = "routes")
-    public void testConference_2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_2"}, dataProvider = "routes")
+    public void testConference_02(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite();
         String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
 
-        step("2.");
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456" +
+            "3.通过sip外线呼入到Conference1-6501，输入密码123\n" +
+            "\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_3"}, dataProvider = "routes")
+    public void testConference_03(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
+        auto.conferencePage().edit("Number","6501").
+                setElementValue(auto.conferencePage().ele_conference_partic_password,"123").
+                setElementValue(auto.conferencePage().ele_conference_moderator_password,"456").clickSaveAndApply();
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456" +
+            "4.通过sip外线呼入到Conference1-6501，连续3次输入密码1234\n" +
+            "\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501没有新增一个成员sip主叫\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_4"}, dataProvider = "routes")
+    public void testConference_04(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456" +
+            "5.通过sip外线呼入到Conference1-6501,不输入密码\n" +
+            "\tasterisk后台查看分别播放了3次conf-getpin.gsm、conf-invalidpin.gsm 提示音后，通话被挂断\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_5"}, dataProvider = "routes")
+    public void testConference_05(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456" +
+            "6.通过sip外线呼入到Conference1-6501,输入密码456\n" +
+            "\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_6"}, dataProvider = "routes")
+    public void testConference_06(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456" +
+            "7.通过sip外线呼入到Conference1-6501,第一次输入密码124，第2次输入密码126，第3次输入密码123\n" +
+            "\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_7"}, dataProvider = "routes")
+    public void testConference_07(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456" +
+            "8.通过sip外线呼入到Conference1-6501,第一次输入密码124，第2次输入密码126，第3次输入密码456\n" +
+            "\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_8"}, dataProvider = "routes")
+    public void testConference_08(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456" +
+            "9.通过sip外线呼入到Conference1-6501，输入密码123\n" +
+            "通过sps外线呼入到Conference1-6501，输入密码456\n" +
+            "\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501新增2个成员\n" +
+            "\t\t保持通话，修改Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888\n" +
+            "\t\t\t分机1000呼入Conference1-6501，不输入密码；\n" +
+            "分机1001呼入Conference1-6501，输入密码888；\n" +
+            "\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员递增\n" +
+            "\t\t\t\t\tsip、sps外线主叫挂断通话\n" +
+            "\t\t\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员分别递减1个\n" +
+            "\t\t\t\t\t\t\t通过sip外线呼入到Conference1-6501，输入密码123\n" +
+            "通过sps外线呼入到Conference1-6501，输入密码456\n" +
+            "\t\t\t\t\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员没有递增\n" +
+            "\t\t\t\t\t\t\t\t\t通过sip外线呼入到Conference1-6501，不输入密码\n" +
+            "通过sps外线呼入到Conference1-6501，输入密码888\n" +
+            "\t\t\t\t\t\t\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员分别递增1个")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_9"}, dataProvider = "routes")
+    public void testConference_09(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888" +
+            "10.通过sip外线呼入到Conference1-6501,不输入密码\n" +
+            "\tasterisk后台查看分别播放了1次conf-getpin.gsm后，加入会议室成功；\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_10"}, dataProvider = "routes")
+    public void testConference_10(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888" +
+            "11.通过sip外线呼入到Conference1-6501，输入密码888\n" +
+            "\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫 ，且是Admin\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_11"}, dataProvider = "routes")
+    public void testConference_11(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为999，ModeratorPassword 为空" +
+            "12.通过sip外线呼入到Conference1-6501,不输入密码\n" +
+            "\tasterisk后台查看分别播放了1次conf-getpin.gsm后，加入会议室成功；\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫，且是Admin\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_12"}, dataProvider = "routes")
+    public void testConference_12(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为999，ModeratorPassword 为空" +
+            "13.通过sip外线呼入到Conference1-6501，输入密码999\n" +
+            "\tasterisk后台查看分别播放了1次conf-getpin.gsm后，加入会议室成功；\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫，且是普通成员\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_13"}, dataProvider = "routes")
+    public void testConference_13(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为空\n" +
+            "\t14.通过sip外线呼入到Conference1-6501,不输入密码\n" +
+            "\t\tasterisk后台查看分别播放了1次conf-getpin.gsm后，加入会议室成功；\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫，且是普通成员\n" +
+            "\t\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_14"}, dataProvider = "routes")
+    public void testConference_14(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator" +
+            "15.通过sip/sps外线分别呼入到Conference1-6501，不输入密码\n" +
+            "\t呼入时asterisk后台都会打印播放提示音conf-waitforleader.gsm\n" +
+            "\t\t分机1004呼入Conference1-6501，输入密码123\n" +
+            "\t\t\tasterisk后台打印播放提示音conf-placeintoconf.gsm\n" +
+            "\t\t\t\t分机1004挂断通话\n" +
+            "\t\t\t\t\t呼入时asterisk后台都会打印播放提示音conf-waitforleader.gsm")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_15"}, dataProvider = "routes")
+    public void testConference_15(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501的PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator" +
+            "16.编辑Conference1-6501，不勾选WaitforModerator\n" +
+            "\t通过sip/sps外线分别呼入到Conference1-6501，不输入密码\n" +
+            "\t\t呼入时asterisk后台都不会打印播放提示音conf-waitforleader.gsm")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_16"}, dataProvider = "routes")
+    public void testConference_16(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501，勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为空，不勾选WaitforModerator\n" +
+            "\t17.分机1000呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室\n" +
+            "\t\t辅助1的3001分机响铃、接听\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫\n" +
+            "\t\t\t分机1000按#23001 邀请辅助2的2000加入会议室;\n" +
+            "分机1000按#1001 邀请分机1001加入会议室；\n" +
+            "\t\t\t\t辅助2的2000分机响铃、接听；asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sps主叫、一个成员1001分机\n" +
+            "\t\t\t\t\t通话挂断，所有分机退出会议室；cdr正确；")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_17"}, dataProvider = "routes")
+    public void testConference_17(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501，不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为空，不勾选WaitforModerator，Moderators 选择分机1001\n" +
+            "18.分机1000呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室\n" +
+            "\t辅助1的3001分机不会响铃；asterisk -如下“meetme list 6501\" 后台查看会议室6501没有新增成员sip\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_18"}, dataProvider = "routes")
+    public void testConference_18(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501，不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为空，不勾选WaitforModerator，Moderators 选择分机1001\n" +
+            "19.分机1001呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室\n" +
+            "\t辅助1的3001分机响铃、接听\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫\n" +
+            "\t\t通话挂断，cdr正确")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_19"}, dataProvider = "routes")
+    public void testConference_19(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("1.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1" +
+            "2.分机1002呼入Conference1-6501" +
+            "20.通过sip外线呼入到Conference1-6501，不输入密码\n" +
+            "\t呼入时asterisk后台不会打印播放提示音conf-waitforleader.gsm")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_20"}, dataProvider = "routes")
+    public void testConference_20(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1" +
+            "2.分机1002呼入Conference1-6501" +
+            "21.1002按#13001邀请辅助1的3001加入会议室\n" +
+            "\t辅助1的3001分机响铃、接听\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_21"}, dataProvider = "routes")
+    public void testConference_21(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1" +
+            "分机1000呼入Conference1-6501\n" +
+            "\t22.1000按#13001邀请辅助1的3001加入会议室\n" +
+            "\t\t辅助1的3001分机响铃、接听\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_22"}, dataProvider = "routes")
+    public void testConference_22(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1" +
+            "分机1001呼入Conference1-6501\n" +
+            "\t23.1001按#13001邀请辅助1的3001加入会议室\n" +
+            "\t\t辅助1的3001分机响铃、接听\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_23"}, dataProvider = "routes")
+    public void testConference_23(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1" +
+            "编辑Conference1-6501，Moderators 选择分机1002、1003\n" +
+            "\t24.分机1000呼入Conference1-6501\n" +
+            "\t\t呼入时asterisk后台会打印播放提示音conf-waitforleader.gsm\n" +
+            "\t\t\t分机1003呼入Conference-6501\n" +
+            "\t\t\t\tasterisk后台打印播放提示音conf-placeintoconf.gsm;\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501有2个成员\n" +
+            "\t\t\t分机1002呼入Conference-6501\n" +
+            "\t\t\t\tasterisk后台打印播放提示音conf-placeintoconf.gsm;\n" +
+            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501有2个成员")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_24"}, dataProvider = "routes")
+    public void testConference_24(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1" +
+            "25.分机1001、1002先后呼入Conference1-6501\n" +
+            "\t分机1001按* 再按2锁住会议室6501\n" +
+            "\t\t通过sip外线呼入到Conference1-6501，不输入密码\n" +
+            "\t\t\tasterisk -rx \"meetme list 6501\" 后台查看只有2个成员\n" +
+            "\t\t\t\t分机1001按* 再按2开放会议室6501\n" +
+            "\t\t\t\t\t通过sip外线呼入到Conference1-6501，不输入密码\n" +
+            "\t\t\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看有3个成员")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_25"}, dataProvider = "routes")
+    public void testConference_25(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1" +
+            "26.分机1001、1002、sps外线、sip外线先后呼入到Conference1-6501\n" +
+            "\tasterisk -rx \"meetme list 6501\" 后台查看只有4个成员\n" +
+            "\t\t分机1001按* 再按3剔除最后一个成员加入会议室\n" +
+            "\t\t\tasterisk -rx \"meetme list 6501\" 后台查看只有3个成员")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_26"}, dataProvider = "routes")
+    public void testConference_26(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1" +
+            "27.分机1002、sps外线、sip外线、分机1001先后呼入到Conference1-6501\n" +
+            "\tasterisk -rx \"meetme list 6501\" 后台查看只有4个成员\n" +
+            "\t\t分机1001按* 再按3剔除最后一个成员加入会议室\n" +
+            "\t\t\tasterisk -rx \"meetme list 6501\" 后台查看还是有4个成员\n" +
+            "\t\t分机1002按* 再按3剔除最后一个成员加入会议室\n" +
+            "\t\t\t管理员不会被剔除，asterisk -rx \"meetme list 6501\" 后台查看还是有4个成员")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3", "Conference","Basic","Trunk","InboundRoute","testConference_27"}, dataProvider = "routes")
+    public void testConference_27(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
+        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("28.单条删除Conference1\n" +
+            "\t检查列表Conference1被删除成功")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_28"}, dataProvider = "routes")
+    public void testConference_28(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();step("1:login with admin");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:进入IVR界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
-                selectAllowExtensionsToRight("ExGroup1","1001","1003").
-                clickSaveAndApply();
 
-        step("3:通过sps外线呼入到IVR1，按分机号1002");
-        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        List<String> lists = TableUtils.getTableForHeader(getDriver(),"Number");
+        if(!lists.contains("6502")){
+            auto.ivrPage().createIVR("6202","IVR2_6202").clickSaveAndApply();
+        }
+        step("3:删除IVR");
+        auto.ivrPage().deleDataByDeleImage("6202").clickSaveAndApply();
 
-        pjsip.Pj_Send_Dtmf(caller, "1","0","0","2");
-        step("[通话状态校验] 分机1002不会响铃，通话被挂断");
-        softAssertPlus.assertThat(getExtensionStatus(1002,IDLE,20)).as("[通话校验]").isEqualTo(0);
-        sleep(10000);
+        assertStep("[删除成功]");
+        List<String> list = TableUtils.getTableForHeader(getDriver(),"Number");
+        softAssertPlus.assertThat(list).doesNotContain("6202");
+        softAssertPlus.assertAll();
+    }
 
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-//                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", invalidKey ,trunk,"","Inbound"));
+    @Epic("P_Series")
+    @Feature("Conference")
+    @Story("DialExtension")
+    @Description("29.再次创建Conference2\n" +
+            "\t批量选择删除Conference2\n" +
+            "\t\t检查列表Conference2被删除成功")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_29"}, dataProvider = "routes")
+    public void testConference_29(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite();
 
+        step("1:login with admin");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:进入IVR界面");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
+
+        step("3:批量删除IVR1");
+        auto.ivrPage().deleAllIVR().clickSaveAndApply();
+
+        assertStep("[删除成功]");
+        List<String> list = TableUtils.getTableForHeader(getDriver(),"Number");
+        softAssertPlus.assertThat(list.size()).isEqualTo(0);
         softAssertPlus.assertAll();
     }
 }
