@@ -1494,6 +1494,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("3:内部分机1004呼入到IVR1，按分机号1003");
         pjsip.Pj_Make_Call_No_Answer(1004, "6201", DEVICE_IP_LAN, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         pjsip.Pj_Send_Dtmf(1004, "1","0","0","3");
         step("[通话状态校验] 分机D不会响铃，通话被挂断");
