@@ -1498,7 +1498,8 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(1004, "1","0","0","3");
         step("[通话状态校验] 分机D不会响铃，通话被挂断");
-        softAssertPlus.assertThat(getExtensionStatus(1003,IDLE,20)).as("[通话校验]").isEqualTo(0);
+        Assert.assertEquals(getExtensionStatus(1004,HUNGUP,20),4);
+        Assert.assertEquals(getExtensionStatus(1003,IDLE,20),0);
 
        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
