@@ -1024,7 +1024,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_1"}, dataProvider = "routes",priority = 1009)
     public void testDialExtension_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();restIVR_6201();
+       prerequisite();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1095,8 +1095,6 @@ public class TestIVR extends TestCaseBaseNew{
                 .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", invalidKey ,trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
-
-        restIVR_6201();
     }
 
     @Epic("P_Series")
@@ -1139,8 +1137,6 @@ public class TestIVR extends TestCaseBaseNew{
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
-
-        restIVR_6201();
     }
 
     @Epic("P_Series")
@@ -1899,7 +1895,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_9","DialOutboundRoutes"}, dataProvider = "routesOutbound",priority = 1027)
     public void testDialOutboundRoutes_9(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee, int ringExtension,String inbound, String outbound) {
-       prerequisite();restIVR_6201(); //重置ivr and inbound
+       prerequisite(); //重置ivr and inbound
 
         step("1:login with admin,trunk: "+inbound);
         auto.loginPage().loginWithAdmin();
@@ -1993,7 +1989,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_11","DialOutboundRoutes"}, dataProvider = "routesOutbound",priority = 1029)
     public void testDialOutboundRoutes_11(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee,int ringExtension, String inbound, String outbound) {
-       prerequisite();restIVR_6201(); //重置ivr and inbound
+       prerequisite(); //重置ivr and inbound
 
         step("1:login with admin,trunk: "+inbound);
         auto.loginPage().loginWithAdmin();
@@ -2039,7 +2035,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialOutboundRoutes_11","DialOutboundRoutes"}, dataProvider = "routesOutbound",priority = 1030)
     public void testDialOutboundRoutes_12(String routePrefix, int caller, String callee, String deviceAssist,String prfix, int OutCallee,int ringExtension, String inbound, String outbound) {
-       prerequisite();restIVR_6201(); //重置ivr and inbound
+       prerequisite(); //重置ivr and inbound
 
         step("1:login with admin,trunk: "+inbound);
         auto.loginPage().loginWithAdmin();
