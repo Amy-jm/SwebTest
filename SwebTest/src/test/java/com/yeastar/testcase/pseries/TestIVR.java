@@ -51,6 +51,7 @@ public class TestIVR extends TestCaseBaseNew{
 
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
+    ArrayList<PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
 
 
     private String IVR_GREETING_DIAL_EXT= "ivr-greeting-dial-ext.slin";
@@ -411,8 +412,8 @@ public class TestIVR extends TestCaseBaseNew{
         step("===========[Extension]  create & register extension  end =========");
         return reg;
     }
-    private boolean isDebugInitExtensionFlag = true;
-    @Test
+    private boolean isDebugInitExtensionFlag = false;
+
     public void prerequisite() {
         //local debug
         long startTime=System.currentTimeMillis();
@@ -467,13 +468,13 @@ public class TestIVR extends TestCaseBaseNew{
             apiUtil.deleteAllRingGroup().createRingGroup("RingGroup0", "6300", ringGroupNum_0,10,"extension","","1000");
 
             step("5.创建IVR IVR0_6200,IVR1_6201,IVR2_6202");
-            ArrayList<PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
+
             pressKeyObjects_0.add(new PressKeyObject(PressKey.press0, "extension", "", "1000", 0));
 
 //            ArrayList<PressKeyObject> pressKeyObjects_all = new ArrayList<>();
             pressKeyObjects_1.add(new PressKeyObject(PressKey.press0, "extension", "", "1020", 0));
-            pressKeyObjects_1.add(new PressKeyObject(PressKey.press1, "extension","", "1001", 0));
-            pressKeyObjects_1.add(new PressKeyObject(PressKey.press2, "end_call","", "1000", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press1, "end_call","", "1000", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press2, "extension","", "1001", 0));
             pressKeyObjects_1.add(new PressKeyObject(PressKey.press3, "ext_vm","", "1001", 0));
             pressKeyObjects_1.add(new PressKeyObject(PressKey.press4, "ivr","", "6200", 0));
             pressKeyObjects_1.add(new PressKeyObject(PressKey.press5, "ring_group","", "6300", 0));
@@ -575,6 +576,29 @@ public class TestIVR extends TestCaseBaseNew{
         }
     }
 
+    /**
+     * 重置ivr6201to default，只有按0到分机A
+     */
+    public void restIVR_6201ToDefault(){
+
+            step("=========== rest ivr 6201 to press key null start =========");
+
+            apiUtil.deleteIVR("IVR1_6201").createIVR("6201", "IVR1_6201", pressKeyObjects_0).apply();
+            step("创建呼入路由InRoute3,目的地到IVR 6200");
+            List<String> trunk9 = new ArrayList<>();
+            trunk9.add(SPS);
+            trunk9.add(BRI_1);
+            trunk9.add(FXO_1);
+            trunk9.add(E1);
+            trunk9.add(SIPTrunk);
+            trunk9.add(ACCOUNTTRUNK);
+            trunk9.add(GSM);
+            apiUtil.deleteAllInbound().createInbound("Inbound1", trunk9, "IVR", "6201").apply();
+
+            step("=========== rest ivr 6201  end =========");
+
+    }
+
     @Epic("P_Series")
     @Feature("IVR")
     @Story("Trunk")
@@ -623,14 +647,17 @@ public class TestIVR extends TestCaseBaseNew{
     @TmsLink(value = "")
     @Test(groups = {"P1", "IVR", "InboundRoute","Basic", "Trunk", "testIVRBaseTrunk_1"}, dataProvider = "routes",priority = 1001)
     public void testIVRBaseTrunk_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
        
        step("1:login with admin,trunk: "+message);
        auto.loginPage().loginWithAdmin();
 
         step("2:通过sip外线呼入到IVR1按0到分机A,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(3000);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT * 2);
         pjsip.Pj_Answer_Call(1000,false);
@@ -656,10 +683,12 @@ public class TestIVR extends TestCaseBaseNew{
     @TmsLink(value = "")
     @Test(groups = {"P1", "IVR", "InboundRoute","Basic", "Trunk", "testIVRBaseTrunk_2"}, dataProvider = "routes",priority = 1002)
     public void testIVRBaseTrunk_2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2.通过sps外线呼入到IVR1按分机号1001到分机B,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -693,7 +722,12 @@ public class TestIVR extends TestCaseBaseNew{
     @TmsLink(value = "")
     @Test(groups = {"P2", "IVR", "Prompt","testPPRD_1","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes",priority = 1003)
     public void testPPRD_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();new Thread(new AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start(); //启动子线程，监控asterisk log
+       prerequisite();
+       restIVR_6201ToDefault();
+       isRunRestIVR6201EnvFlag = true;
+
+       asteriskObjectList.clear();
+       new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start(); //启动子线程，监控asterisk log
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -710,15 +744,15 @@ public class TestIVR extends TestCaseBaseNew{
         sleep(3000);
 
         assertStep("[Asterisk校验]进入asterisk检查播放提示音文件ivr-greeting-dial-ext.slin 播放3遍提示音后挂断");
-        softAssertPlus.assertThat(getExtensionStatus(caller,HUNGUP,10)).as("[Asterisk校验] 播放3遍提示音后挂断 "+ DataUtils.getCurrentTime()).isEqualTo(4);
+        softAssertPlus.assertThat(getExtensionStatus(caller,HUNGUP,60)).as("[Asterisk校验] 播放3遍提示音后挂断 "+ DataUtils.getCurrentTime()).isEqualTo(4);
 
         assertStep("[Asterisk校验]进入asterisk检查播放提示音文件ivr-greeting-dial-ext.slin");
         softAssertPlus.assertThat(asteriskObjectList.get(0).getName()).as("[Asterisk校验] Time："+ DataUtils.getCurrentTime()).contains("ivr-greeting-dial-ext.slin");
 
-//        log.debug("[asterisk object size] "+ asteriskObjectList.size());
-//        for(int i = 0 ; i < asteriskObjectList.size() ; i++){
-//            log.debug(i+"_[asterisk object name] "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
-//        }
+        log.debug("[asterisk object size] "+ asteriskObjectList.size());
+        for(int i = 0 ; i < asteriskObjectList.size() ; i++){
+            log.debug(i+"_[asterisk object name] "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
+        }
 //
         assertStep("[Asterisk校验]进入asterisk检查播放提示音文件ivr-greeting-dial-ext.slin 3遍");
         softAssertPlus.assertThat(asteriskObjectList.size()).as("[Asterisk校验] Time："+ DataUtils.getCurrentTime()).isEqualTo(3);
@@ -735,9 +769,12 @@ public class TestIVR extends TestCaseBaseNew{
     @TmsLink(value = "")
     @Test(groups = {"P2", "IVR", "Prompt","testPPRD_2","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes",priority = 1004)
     public void testPPRD_1_2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();//启动子线程，监控asterisk log
+        prerequisite();//启动子线程，监控asterisk log
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
+
         List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
-        Thread thread = new Thread(new AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT));
+        Thread thread = new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT));
         thread.start();
 
         step("1:login with admin,trunk: "+message);
@@ -754,7 +791,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller,"0");
         assertStep("[Asterisk校验]");
-        softAssertPlus.assertThat(getExtensionStatus(1000,RING,10)).as("[Asterisk校验] 播放2 遍提示音后，按0，转分机 "+ DataUtils.getCurrentTime()).isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1000,RING,30)).as("[Asterisk校验] 播放2 遍提示音后，按0，转分机 "+ DataUtils.getCurrentTime()).isEqualTo(2);
         pjsip.Pj_Answer_Call(1000,false);
         sleep(3000);
         pjsip.Pj_hangupCall(1000);
@@ -775,10 +812,7 @@ public class TestIVR extends TestCaseBaseNew{
         softAssertPlus.assertAll();
 
     }
-
-
-
-
+    
     @SneakyThrows
     @Epic("P_Series")
     @Feature("IVR")
@@ -789,7 +823,10 @@ public class TestIVR extends TestCaseBaseNew{
     @TmsLink(value = "")
     @Test(groups = {"P3", "IVR", "Prompt","testPPRD_2","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes",priority = 1005)
     public void testPPRD_2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();new Thread(new AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start();
 
 
         step("1:login with admin,trunk: "+message);
@@ -828,8 +865,11 @@ public class TestIVR extends TestCaseBaseNew{
     @TmsLink(value = "")
     @Test(groups = {"P3", "IVR", "Prompt","testPPRD_3","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes",priority = 1006)
     public void testPPRD_3(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();asteriskObjectList.clear();
-        new Thread(new AsteriskThread(asteriskObjectList,PROMPT_1)).start();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
+        asteriskObjectList.clear();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_1)).start();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -897,7 +937,10 @@ public class TestIVR extends TestCaseBaseNew{
     @TmsLink(value = "")
     @Test(groups = {"P3", "IVR", "Prompt","testPPRD_4","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes",priority = 1007)
     public void testPPRD_4(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();new Thread(new AsteriskThread(asteriskObjectList,"Playing 'record/prompt")).start();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"Playing 'record/prompt")).start();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -967,7 +1010,10 @@ public class TestIVR extends TestCaseBaseNew{
     @TmsLink(value = "")
     @Test(groups = {"P3", "IVR", "Prompt","testPPRD_5","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes",priority = 1008)
     public void testPPRD_5(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();new Thread(new AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1068,7 +1114,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_2"}, dataProvider = "routes",priority = 1010)
     public void testDialExtension_2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();isRunRestIVR6201EnvFlag = true;
+       prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1108,7 +1156,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_3"}, dataProvider = "routes",priority = 1011)
     public void testDialExtension_3(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();isRunRestIVR6201EnvFlag = true;
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1121,7 +1171,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("3:通过sps外线呼入到IVR1，按分机号1000");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-
+        sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","0");
         step("[通话状态校验] 分机A响铃，可正常接听，分机1000挂断，检查cdr");
         softAssertPlus.assertThat(getExtensionStatus(1000,RING,5)).as("[通话校验]").isEqualTo(2);
@@ -1151,6 +1201,8 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_4"}, dataProvider = "routes",priority = 1012)
     public void testDialExtension_4(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1189,7 +1241,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_5"}, dataProvider = "routes",priority = 1013)
     public void testDialExtension_5(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1232,7 +1286,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_6"})
     public void testDialExtension_6() {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: 内部分机");
         auto.loginPage().loginWithAdmin();
@@ -1245,6 +1301,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("3:内部分机1004呼入到IVR1，按分机号1003");
         pjsip.Pj_Make_Call_No_Answer(1004, "6201", DEVICE_IP_LAN, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         pjsip.Pj_Send_Dtmf(1004, "1","0","0","3");
         step("[通话状态校验] 分机1003响铃，接听，1004主叫挂断，检查cdr");
@@ -1275,7 +1332,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_7"}, dataProvider = "routes",priority = 104)
     public void testDialExtension_7(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1288,6 +1347,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("3:7.通过sps外线呼入到IVR1，按分机号1001");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
 
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","1");
         step("[通话状态校验] 分机1001响铃，接听，外线主叫挂断，检查cdr");
@@ -1318,7 +1378,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_2"},priority = 1015)
     public void testDialExtension_8() {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: 内部分机");
         auto.loginPage().loginWithAdmin();
@@ -1358,7 +1420,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_9"}, dataProvider = "routes",priority = 1016)
     public void testDialExtension_9(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1396,7 +1460,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_10"}, dataProvider = "routes",priority = 1017)
     public void testDialExtension_10(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1439,7 +1505,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_11"}, dataProvider = "routes",priority = 1018)
     public void testDialExtension_11(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1477,7 +1545,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_12"})
     public void testDialExtension_12() {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: 内部分机");
         auto.loginPage().loginWithAdmin();
@@ -1490,7 +1560,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("3:内部分机1004呼入到IVR1，按分机号1003");
         pjsip.Pj_Make_Call_No_Answer(1004, "6201", DEVICE_IP_LAN, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT);
 
         pjsip.Pj_Send_Dtmf(1004, "1","0","0","3");
         step("[通话状态校验] 分机D不会响铃，通话被挂断");
@@ -1499,7 +1569,7 @@ public class TestIVR extends TestCaseBaseNew{
 
        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
                 .contains(tuple("t estX<1004>", cdrIVR1_6201, "ANSWERED", "Invalid key","","","Internal"));
 
@@ -1517,7 +1587,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_13"}, dataProvider = "routes",priority = 1019)
     public void testDialExtension_13(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1557,7 +1629,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_14"},priority = 1020)
     public void testDialExtension_14() {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: 内部分机 ");
         auto.loginPage().loginWithAdmin();
@@ -1599,10 +1673,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR","DialExtension", "testDialExtension_15"}, dataProvider = "routes",priority = 1021)
+    @Test(groups = {"P1", "IVR","DialExtension", "testDialExtension_15","Basic","Trunk"}, dataProvider = "routes",priority = 1021)
     public void testDialExtension_15(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
-       
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
+
        step("1:login with admin,trunk: "+message);
        auto.loginPage().loginWithAdmin();
 
@@ -1644,8 +1720,10 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_2"}, dataProvider = "routes",priority = 1022)
     public void testDialExtension_16(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
-       prerequisite();
-       
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
+
        step("1:login with admin,trunk: "+message);
        auto.loginPage().loginWithAdmin();
 
@@ -1696,7 +1774,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testDialExtension_17"}, dataProvider = "routes",priority = 1023)
     public void testDialExtension_17(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite();
+        prerequisite();
+        restIVR_6201ToDefault();
+        isRunRestIVR6201EnvFlag = true;
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -2152,7 +2232,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testKeyPressEvent_5"}, dataProvider = "routesKeyPressEvent",priority = 1033)
+    @Test(groups = {"P1", "IVR","KeyPressEvent", "testKeyPressEvent_5","Basic","Trunk"}, dataProvider = "routesKeyPressEvent",priority = 1033)
     public void testKeyPressEvent_5(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage,String trunk, String message) {
        prerequisite();
        
@@ -2618,7 +2698,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","KeyPressEvent", "testKeyPressEvent_15"}, dataProvider = "routesKeyPressEvent",priority = 1043)
     public void testKeyPressEvent_15(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage,String trunk, String message) {
-       prerequisite();new Thread(new AsteriskThread(asteriskObjectList,DIR_USINGKEYPAD)).start(); //启动子线程，监控asterisk log
+       prerequisite();new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,DIR_USINGKEYPAD)).start(); //启动子线程，监控asterisk log
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -2673,7 +2753,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","KeyPressEvent", "testKeyPressEvent_16"}, dataProvider = "routesKeyPressEvent",priority = 1044)
     public void testKeyPressEvent_16(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage,String trunk, String message) {
-       prerequisite();new Thread(new AsteriskThread(asteriskObjectList,DIR_USINGKEYPAD)).start(); //启动子线程，监控asterisk log
+       prerequisite();new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,DIR_USINGKEYPAD)).start(); //启动子线程，监控asterisk log
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -2767,7 +2847,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","KeyPressEvent", "testKeyPressEvent_18"}, dataProvider = "routesKeyPressEvent",priority = 1046)
     public void testKeyPressEvent_18(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage,String trunk, String message) {
        prerequisite();
-       new Thread(new AsteriskThread(asteriskObjectList,PROMPT_1)).start();
+       new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_1)).start();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -2845,7 +2925,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Test(groups = {"P3", "IVR","KeyPressEvent", "testKeyPressEvent_20"}, dataProvider = "routesKeyPressEvent",priority = 1048)
     public void testKeyPressEvent_20(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage,String trunk, String message) {
        prerequisite();
-       new Thread(new AsteriskThread(asteriskObjectList,PROMPT_2)).start();
+       new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_2)).start();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -3037,23 +3117,23 @@ public class TestIVR extends TestCaseBaseNew{
         softAssertPlus.assertAll();
     }
 
-    /**
-     * 子线程，监控 asterisk的日志输出
-     */
-    class AsteriskThread extends Thread {
-        List<AsteriskObject> asteriskObject;
-        String asteriskKey;
-
-        AsteriskThread(List<AsteriskObject> asteriskObject,String asteriskKey) {
-            this.asteriskObject=asteriskObject;
-            this.asteriskKey=asteriskKey;
-        }
-
-        public void run() {
-         log.debug("[PbxLog Thread]" + "正在执行...");
-//         SSHLinuxUntils.getPbxlog("ivr-greeting-dial-ext.slin",1,60,asteriskObject);
-            SSHLinuxUntils.getPbxlog(asteriskKey,1,12000,asteriskObject);//2分钟 1200 * 100
-        }
-    }
+//    /**
+//     * 子线程，监控 asterisk的日志输出
+//     */
+//    static class AsteriskThread extends Thread {
+//        List<AsteriskObject> asteriskObject;
+//        String asteriskKey;
+//
+//        AsteriskThread(List<AsteriskObject> asteriskObject,String asteriskKey) {
+//            this.asteriskObject=asteriskObject;
+//            this.asteriskKey=asteriskKey;
+//        }
+//
+//        public void run() {
+//         log.debug("[PbxLog Thread]" + "正在执行...");
+////         SSHLinuxUntils.getPbxlog("ivr-greeting-dial-ext.slin",1,60,asteriskObject);
+//            SSHLinuxUntils.getPbxlog(asteriskKey,1,12000,asteriskObject);//2分钟 1200 * 100
+//        }
+//    }
 }
 

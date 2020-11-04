@@ -140,6 +140,21 @@ public class SSHLinuxUntils {
      * @throws JSchException
      * @throws IOException
      */
+    public static String exePjsip(String command) throws JSchException, IOException {
+        return exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD,command);
+    }
+
+    /**
+     *
+     * @param host
+     * @param port
+     * @param user
+     * @param password
+     * @param command
+     * @return
+     * @throws JSchException
+     * @throws IOException
+     */
     public static String exePjsipNew(String host, int port, String user, String password, String command,String containsString,int appearCount,int timout,List<AsteriskObject> asteriskObjectList) throws JSchException, IOException {
         JSch jsch = new JSch();
         outputstream = new StringBuffer();
@@ -211,5 +226,24 @@ public class SSHLinuxUntils {
             e.printStackTrace();
         }
         log.debug("[asterisk result] "+outputstream);
+    }
+
+    /**
+     * 子线程，监控 asterisk的日志输出
+     */
+    public static class AsteriskThread extends Thread {
+        List<AsteriskObject> asteriskObject;
+        String asteriskKey;
+
+        public AsteriskThread(List<AsteriskObject> asteriskObject, String asteriskKey) {
+            this.asteriskObject=asteriskObject;
+            this.asteriskKey=asteriskKey;
+        }
+
+        public void run() {
+            log.debug("[PbxLog Thread]" + "正在执行...");
+//         SSHLinuxUntils.getPbxlog("ivr-greeting-dial-ext.slin",1,60,asteriskObject);
+            SSHLinuxUntils.getPbxlog(asteriskKey,1,12000,asteriskObject);//2分钟 1200 * 100
+        }
     }
 }
