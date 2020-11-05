@@ -645,6 +645,9 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Answer_Call(1000,false);
         assertStep("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1000,TALKING,30),3);
+        if(message.equals("GSM")){
+            sleep(80000);
+        }
         pjsip.Pj_hangupCall(1000);
 
        assertStep("[CDR校验]");
