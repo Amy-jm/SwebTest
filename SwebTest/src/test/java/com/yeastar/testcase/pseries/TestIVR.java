@@ -749,12 +749,15 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.通过sps外线呼入到IVR1,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-
+        sleep(WaitUntils.SHORT_WAIT*2);
         int tmp = 0;
         while (asteriskObjectList.size() !=3 && tmp <= 600){
            sleep(50);
            tmp++;
            log.debug("[tmp]_"+tmp);
+        }
+        if(tmp == 601){
+            Assert.assertTrue(false,"[没有检测到提示音文件！！！]");
         }
         sleep(3000);
 
