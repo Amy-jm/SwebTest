@@ -8,6 +8,7 @@ import top.jfunc.json.JsonObject;
 import top.jfunc.json.impl.JSONArray;
 import top.jfunc.json.impl.JSONObject;
 
+import javax.net.ssl.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -35,15 +36,27 @@ import static org.apache.log4j.spi.Configurator.NULL;
 @Log4j2
 public class APIUtil {
 
-    private  String webSession = NULL;
-
+    private String webSession = NULL;
+    private String m_loginName = "";
+    private String m_loginPwd = "";
     /**
      * 登录aip，获取cookie
      * @return
      */
-    public APIUtil loginWeb(){
+    public APIUtil loginWeb(String loginName,String loginPwd){
 
-        String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username="+LOGIN_USERNAME+"&password="+enBase64(DigestUtils.md5Hex(LOGIN_PASSWORD));
+        if (loginName.isEmpty() )
+            m_loginName = LOGIN_USERNAME;
+        else
+            m_loginName = loginName;
+
+        if (loginPwd.isEmpty())
+            m_loginPwd = LOGIN_PASSWORD;
+        else
+            m_loginPwd = loginPwd;
+
+        String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username="+m_loginName+"&password="+enBase64(DigestUtils.md5Hex(m_loginPwd));
+//        String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username=0&password="+enBase64(DigestUtils.md5Hex("Yeastar123"));
         m_getRequest(req);
         return this ;
     }
@@ -210,7 +223,7 @@ public class APIUtil {
     public  List<CDRObject> getCDRRecord(int num){
         String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/search?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
         String respondJson = getRequest(req);
-
+        System.out.println("cdr record :"+respondJson);
         List<CDRObject> cdrList = new ArrayList<>();
         try {
             for (int k = 0; k < num; k++) {
@@ -974,6 +987,23 @@ public class APIUtil {
         return flag;
     }
 
+    public MenuOptionObject getRingGroupMenuOption(){
+
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/getmenuoption?menu=extension+ext_group+ivr+ring_group+queue+custom_prompt");
+
+        System.out.println("DDDDDDDDDDD");
+        System.out.println(jsonString);
+        JSONObject jsonObject = new JSONObject(jsonString);
+        MenuOptionObject menuOptionObject = new MenuOptionObject(jsonObject);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            return menuOptionObject;
+        }else {
+
+            Assert.fail("[API getRingGroupMenuOption] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return menuOptionObject;
+    }
     /**
      * 获取概要列表
      * 对应API：api/v1.0/ringgroup/searchsummary
@@ -1131,6 +1161,25 @@ public class APIUtil {
         return this;
     }
 
+    /**
+     * 创建响铃组路由
+     * @param request
+     */
+    public APIUtil createRingGroup(String name,String number, List<String> extensions){
+        createRingGroup(name,number,extensions,new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * 编辑响铃组
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editRingGroup(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/update",String.format("{%s,\"id\":%s}",request,getRingGroupSummary(number).id));
+        return this;
+    }
 
     /**
      * 找到指定conference
@@ -1204,23 +1253,6 @@ public class APIUtil {
     }
 
     /**
-     * 删除当前存在的Conference
-     * */
-    public APIUtil deleteConference(String name){
-        List<ConferenceObject> conferenceObjectList = getConferenceSummary();
-
-        List<Integer> list = new ArrayList<>();
-        for(ConferenceObject object : conferenceObjectList){
-            if(object.number.equals(name)){
-                list.add(object.id);
-            }}
-        if(list != null && !list.isEmpty()){
-            deleteConference(list);
-        }
-        return this;
-    }
-
-    /**
      * 创建呼出路由
      * @param request
      */
@@ -1252,34 +1284,21 @@ public class APIUtil {
     }
 
     /**
-     * 编辑Conference
-     * @param request  请求包中的完整body赋值给request
+     * 更新会议室
+     * @param request
      */
-    public APIUtil editConference(String number,String particPassword,String moderatorPassword,String soundPrompt,int enbWaitModerator,int allowParticInvite,List<String> extensions){
+    public APIUtil editConferenceWithExtension0(String number,String particPassword,String moderatorPassword){
         JSONArray jsonArray = new JSONArray();
 
-        List<ExtensionObject> extensionObjects = getExtensionSummary();
-        for (String ext : extensions){
-            for (ExtensionObject extensionObject: extensionObjects) {
-                if (ext.equals(extensionObject.number)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.callerIdName);
-                    a.put("text2",extensionObject.number);
-                    a.put("value",String.valueOf(extensionObject.id));
-                    a.put("type","extension");
-                    jsonArray.put(a);
-                }
-            }
-        }
+        String request = String.format("{\"partic_password\":\"%s\",\"moderator_password\":\"%s\",\"id\":%s}"
+                ,particPassword,moderatorPassword,getConferenceSummary(number).id);
 
-        String request = String.format("{\"partic_password\":\"%s\",\"moderator_password\":\"%s\",\"sound_prompt\":\"%s\",\"enb_wait_moderator\":%s,\"allow_partic_invite\":%s,\"moderator_list\":%s,\"id\":%s}"
-                ,particPassword,moderatorPassword,soundPrompt,enbWaitModerator,allowParticInvite,jsonArray.toString(),getConferenceSummary(number).id);
-        log.debug("【update Extension Group】 "+request);
-        //获取默认分机组
-        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/update",request);
+        String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/update",request);
+
+        JSONObject jsonObject = new JSONObject(respone);
+        Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createConference: ] num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
         return this;
     }
-
 
     /**
      * 找到指定 Queue
@@ -1501,7 +1520,7 @@ public class APIUtil {
      * @return
      */
     public String getRequest(String urlpath){
-        loginWeb();
+        loginWeb(m_loginName,m_loginPwd);
         return m_getRequest(urlpath);
     }
 
@@ -1612,7 +1631,7 @@ public class APIUtil {
      * @return
      */
     public String postRequest(String urlpath,String args1) {
-        loginWeb();
+        loginWeb(m_loginName,m_loginPwd);
         return m_postRequest(urlpath,args1);
     }
 

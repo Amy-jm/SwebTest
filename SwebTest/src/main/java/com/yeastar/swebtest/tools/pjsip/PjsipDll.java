@@ -2,13 +2,9 @@ package com.yeastar.swebtest.tools.pjsip;
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.win32.StdCallLibrary.*;
 import com.yeastar.untils.PropertiesUntils;
 
-
 import java.io.File;
-
-import static com.yeastar.swebtest.driver.Config.currentPath;
 
 /**
  * Created by GaGa on 2017-04-16.
