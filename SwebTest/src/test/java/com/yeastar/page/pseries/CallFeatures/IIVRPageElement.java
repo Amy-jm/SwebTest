@@ -32,8 +32,8 @@ public interface IIVRPageElement {
         EXTENSION(UI_MAP.getString("call_features.ivr.extension")),
         EXTENSION_VOICEMAIL(UI_MAP.getString("call_features.ivr.ext_vm")),
         IVR(UI_MAP.getString("call_features.ivr.ivr")),
-        RING_GROUP("Ring Group"),
-        QUEUE("Queue"),
+        RING_GROUP(UI_MAP.getString("call_features.ivr.ring_group")),
+        QUEUE(UI_MAP.getString("call_features.ivr.queue")),
         DIAL_BY_NAME(UI_MAP.getString("call_features.ivr.dial_by_name")),
         EXTERNAL_NUMBER(UI_MAP.getString("call_features.ivr.external_num")),
         PLAY_PROMPT_AND_EXIT(UI_MAP.getString("call_features.ivr.play_greeting"));
@@ -80,7 +80,7 @@ public interface IIVRPageElement {
     SelenideElement ele_ivr_basic_dial_check_vm_checkbox = $(By.id("ivr_basic_enb_dial_check_vm"));
 
     //Dial Extensions，Allowed Extensions table
-    String allowed_extensions = "//*[contains(@id,'transfer_left_ivr_basic_extension')]//table//tr//td[contains(@title,\"%s\")]/..//input";
+    String allowed_extensions ="//table//tr//td[contains(@title,\"%s\")]/..//input";// "//*[contains(@id,'transfer_left_ivr_basic_extension')]//table//tr//td[contains(@title,\"%s\")]/..//input";
     SelenideElement ele_allowed_extension_right_button = $(By.xpath("//button//i[contains(@class,'anticon-right')]"));
     SelenideElement ele_ivr_key_press_event_press0_dest = $(By.id("ivr_key_press_event_press0_dest"));
     SelenideElement ele_ivr_key_press_event_press0_dest_value = $(By.id("ivr_key_press_event_press0_dest_value"));

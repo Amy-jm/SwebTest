@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -62,6 +63,28 @@ public class TableUtils {
             log.debug("[getTableData]"+strReturn);
         }
         return strReturn;
+    }
+
+    /**
+     * 【默认表格对象】 通过标题 及行号 获取表格数据
+     * @param strHeader
+     * @param row
+     * @return
+     */
+    public static List<String> getTableForHeader(WebDriver driver,String strHeader){
+        List<String>  lists = new ArrayList<>();
+        WebElement tableElement = driver.findElement(By.xpath(strTableXPATH));
+        SeleniumTable table = SeleniumTable.getInstance(tableElement);
+        String strReturn = "";
+        if (table.hasColumn(strHeader)) {
+            List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
+            log.debug("[headerCell Size]"+header1Cells.size());
+           for(int i = 0;i<table.rowCount();i++){
+               lists.add(header1Cells.get(i).getText());
+           }
+            log.debug("[getTableData]"+strReturn);
+        }
+        return lists;
     }
 
     /**

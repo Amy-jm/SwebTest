@@ -5,6 +5,7 @@ package com.yeastar.page.pseries;
 import com.yeastar.page.pseries.CallControl.BusinessHoursAndHolidaysPage;
 import com.yeastar.page.pseries.CallControl.InboundRoute;
 import com.yeastar.page.pseries.CallControl.OutBoundRoutePage;
+import com.yeastar.page.pseries.CallFeatures.ConferencePage;
 import com.yeastar.page.pseries.CallFeatures.IVRPage;
 import com.yeastar.page.pseries.CallFeatures.QueuePage;
 import com.yeastar.page.pseries.CallFeatures.RingGroupPage;
@@ -44,6 +45,7 @@ public class PageEngine {
     QueuePage queuePage;
     Me_HomePage me_homePage;
     OperatorPanelPage operatorPanelPage;
+    ConferencePage conferencePage;
 
     public PageEngine() {
         log.debug("【PageEngine】。。。。");
@@ -63,6 +65,7 @@ public class PageEngine {
         queuePage = new QueuePage();
         me_homePage = new Me_HomePage();
         operatorPanelPage = new OperatorPanelPage();
+        conferencePage = new ConferencePage();
 
     }
     public BasePage basePage() { return basePage; }
@@ -81,4 +84,5 @@ public class PageEngine {
     public EmailPage emailPage(){return emailPage;}
     public Me_HomePage me_homePage() { return me_homePage; }
     public OperatorPanelPage operatorPanelPage(){return  operatorPanelPage;}
+    public ConferencePage conferencePage(){return conferencePage;}
 }
