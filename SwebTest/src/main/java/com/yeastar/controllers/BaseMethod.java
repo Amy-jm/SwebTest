@@ -151,7 +151,6 @@ public class BaseMethod extends WebDriverFactory {
 		byte[] bytes = str.getBytes();
 
 		String encoded = Base64.getEncoder().encodeToString(bytes);
-		System.out.println("Base 64 加密后：" + encoded);
 
 		return encoded;
 	}
