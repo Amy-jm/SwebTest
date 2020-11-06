@@ -43,7 +43,6 @@ public class RingGroupObject {
         }
     }
 
-
     private String getValueByString(JSONObject jsonObject,String key){
         if(jsonObject.containsKey(key)){
             return jsonObject.getString(key);

@@ -2,13 +2,9 @@ package com.yeastar.swebtest.tools.pjsip;
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import com.sun.jna.win32.StdCallLibrary.*;
 import com.yeastar.untils.PropertiesUntils;
 
-
 import java.io.File;
-
-import static com.yeastar.swebtest.driver.Config.currentPath;
 
 /**
  * Created by GaGa on 2017-04-16.
@@ -22,7 +18,7 @@ public class PjsipDll {
         /**
          *  adapt local testNG ok
          */
-//        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
 
 
         /**
@@ -46,7 +42,7 @@ public class PjsipDll {
 
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary("YsAutoTestPjsua_sound",pjsipdll.class);
 //
-        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
 
         /**
          * adapt for coderserver

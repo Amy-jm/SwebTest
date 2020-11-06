@@ -8,23 +8,16 @@ import top.jfunc.json.JsonObject;
 import top.jfunc.json.impl.JSONArray;
 import top.jfunc.json.impl.JSONObject;
 
+import javax.net.ssl.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.swebtest.driver.DataReader2.*;
@@ -210,7 +203,7 @@ public class APIUtil {
     public  List<CDRObject> getCDRRecord(int num){
         String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/search?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
         String respondJson = getRequest(req);
-
+        System.out.println("cdr record :"+respondJson);
         List<CDRObject> cdrList = new ArrayList<>();
         try {
             for (int k = 0; k < num; k++) {
@@ -936,6 +929,23 @@ public class APIUtil {
         return flag;
     }
 
+    public MenuOptionObject getRingGroupMenuOption(){
+
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/getmenuoption?menu=extension+ext_group+ivr+ring_group+queue+custom_prompt");
+
+        System.out.println("DDDDDDDDDDD");
+        System.out.println(jsonString);
+        JSONObject jsonObject = new JSONObject(jsonString);
+        MenuOptionObject menuOptionObject = new MenuOptionObject(jsonObject);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            return menuOptionObject;
+        }else {
+
+            Assert.fail("[API getRingGroupMenuOption] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return menuOptionObject;
+    }
     /**
      * 获取概要列表
      * 对应API：api/v1.0/ringgroup/searchsummary
@@ -1008,21 +1018,37 @@ public class APIUtil {
     }
 
     /**
-     * 创建呼出路由
-     * @param request
+     * 创建响铃组
+     * @param name
+     * @param number
+     * @param extensions
+     * @param extGroups
+     * @return
      */
-    public APIUtil createRingGroup(String name,String number, List<String> extensions){
+    public APIUtil createRingGroup(String name,String number, List<String> extensions, List<String> extGroups){
         JSONArray jsonArray = new JSONArray();
 
-        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        MenuOptionObject menuOptionObject = getRingGroupMenuOption();
         for (String ext : extensions){
-            for (ExtensionObject extensionObject: extensionObjects) {
-                if (ext.equals(extensionObject.number)){
+            for (MenuOptionObject.MemberList extensionObject: menuOptionObject.extensionOptions) {
+                if (ext.equals(extensionObject.text2)){
                     JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.callerIdName);
-                    a.put("text2",extensionObject.number);
-                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("text",extensionObject.text);
+                    a.put("text2",extensionObject.text2);
+                    a.put("value",extensionObject.value);
                     a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        for (String extGroup : extGroups){
+            for (MenuOptionObject.MemberList extensionGroupObject : menuOptionObject.extGroupOptions) {
+                if(extGroup.equals(extensionGroupObject.text)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionGroupObject.text);
+                    a.put("value",extensionGroupObject.value);
+                    a.put("type","ext_group");
                     jsonArray.put(a);
                 }
             }
@@ -1038,6 +1064,25 @@ public class APIUtil {
         return this;
     }
 
+    /**
+     * 创建响铃组路由
+     * @param request
+     */
+    public APIUtil createRingGroup(String name,String number, List<String> extensions){
+        createRingGroup(name,number,extensions,new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * 编辑响铃组
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editRingGroup(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/update",String.format("{%s,\"id\":%s}",request,getRingGroupSummary(number).id));
+        return this;
+    }
 
     /**
      * 找到指定conference
