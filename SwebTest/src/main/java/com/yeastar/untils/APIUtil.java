@@ -1251,6 +1251,35 @@ public class APIUtil {
         return this;
     }
 
+    /**
+     * 编辑Conference
+     * @param request  请求包中的完整body赋值给request
+     */
+    public APIUtil editConference(String number,String particPassword,String moderatorPassword,String soundPrompt,int enbWaitModerator,int allowParticInvite,List<String> extensions){
+        JSONArray jsonArray = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        for (String ext : extensions){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.callerIdName);
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"partic_password\":\"%s\",\"moderator_password\":\"%s\",\"sound_prompt\":\"%s\",\"enb_wait_moderator\":%s,\"allow_partic_invite\":%s,\"moderator_list\":%s,\"id\":%s}"
+                ,particPassword,moderatorPassword,soundPrompt,enbWaitModerator,allowParticInvite,jsonArray.toString(),getConferenceSummary(number).id);
+        log.debug("【update Extension Group】 "+request);
+        //获取默认分机组
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/update",request);
+        return this;
+    }
+
 
     /**
      * 找到指定 Queue

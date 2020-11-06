@@ -115,7 +115,7 @@ public class TestConference extends TestCaseBaseNew {
         step("===========[Extension]  create & register extension  end =========");
         return reg;
     }
-    private boolean isDebugInitExtensionFlag = true;
+    private boolean isDebugInitExtensionFlag = false;
 
     public void prerequisite(boolean isRestConference6501ToDefault) {
         //local debug
@@ -252,7 +252,8 @@ public class TestConference extends TestCaseBaseNew {
         step("=========== rest conference 6501 to default start =========");
         List<String> moderators = new ArrayList<>();
         moderators.add("1000");
-        apiUtil.deleteConference("6501").createConference("Conference1","6501",moderators).apply();
+        apiUtil.deleteConference("6501").apply();
+        apiUtil.createConference("Conference1","6501",moderators).apply();
 
         step("7.创建呼入路由InRoute1,目的地到Conference 6500");
         List<String> trunk9 = new ArrayList<>();
@@ -689,18 +690,18 @@ public class TestConference extends TestCaseBaseNew {
             "9.通过sip外线呼入到Conference1-6501，输入密码123\n" +
             "通过sps外线呼入到Conference1-6501，输入密码456\n" +
             "\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501新增2个成员\n" +
-            "\t\t保持通话，修改Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888\n" +
-            "\t\t\t分机1000呼入Conference1-6501，不输入密码；\n" +
+            "保持通话，修改Conference1-6501的ParticipantPassword为555，ModeratorPassword 为888\n" +
+            "\t分机1000呼入Conference1-6501，输入密码555；\n" +
             "分机1001呼入Conference1-6501，输入密码888；\n" +
-            "\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员递增\n" +
-            "\t\t\t\t\tsip、sps外线主叫挂断通话\n" +
-            "\t\t\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员分别递减1个\n" +
-            "\t\t\t\t\t\t\t通过sip外线呼入到Conference1-6501，输入密码123\n" +
+            "\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员递增\n" +
+            "\t\t\tsip、sps外线主叫挂断通话\n" +
+            "\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员分别递减1个\n" +
+            "\t\t\t\t\t通过sip外线呼入到Conference1-6501，输入密码123\n" +
             "通过sps外线呼入到Conference1-6501，输入密码456\n" +
-            "\t\t\t\t\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员没有递增\n" +
-            "\t\t\t\t\t\t\t\t\t通过sip外线呼入到Conference1-6501，不输入密码\n" +
+            "\t\t\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员没有递增\n" +
+            "\t\t\t\t\t\t\t通过sip外线呼入到Conference1-6501，输入密码555\n" +
             "通过sps外线呼入到Conference1-6501，输入密码888\n" +
-            "\t\t\t\t\t\t\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员分别递增1个")
+            "\t\t\t\t\t\t\t\tasterisk -rx \"meetme list 6501\" 后台查看会议室6501成员分别递增1个")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -731,11 +732,12 @@ public class TestConference extends TestCaseBaseNew {
 
         step("5.保持通话，修改Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888");
         auto.conferencePage().edit("Number","6501").
-                setValueToNull(auto.conferencePage().ele_conference_partic_password).
+                setElementValue(auto.conferencePage().ele_conference_partic_password,"555").
                 setElementValue(auto.conferencePage().ele_conference_moderator_password,"888").clickSaveAndApply();
 
         step("6.分机1000呼入Conference1-6501，不输入密码；");
         pjsip.Pj_Make_Call_No_Answer(1000, "6501", DEVICE_IP_LAN, false);
+        pjsip.Pj_Send_Dtmf(1001, "555");
 
         step("7.分机1001呼入Conference1-6501，输入密码888；");
         pjsip.Pj_Make_Call_No_Answer(1001, "6501", DEVICE_IP_LAN, false);
@@ -769,14 +771,15 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(caller);
         pjsip.Pj_hangupCall(2000);
 
-        step("通过sip外线呼入到Conference1-6501，不输入密码");
+        step("通过sip外线呼入到Conference1-6501，输入密码555");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"SIP 呼入失败");
+        pjsip.Pj_Send_Dtmf(caller, "555");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"SIP 呼入失败");
 
         step("通过sps外线呼入到Conference1-6501，输入密码888");
         pjsip.Pj_Make_Call_No_Answer(2000, "996501", DEVICE_ASSIST_2, false);
         pjsip.Pj_Send_Dtmf(2000, "888");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"SIP 呼入失败");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("4 users in that conference."),"SIP 呼入失败");
 
         pjsip.Pj_hangupCall(1000);
         pjsip.Pj_hangupCall(1001);
@@ -1203,7 +1206,14 @@ public class TestConference extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"P2", "Conference","Basic","Trunk","InboundRoute","testConference_17"}, dataProvider = "routes")
     public void testConference_17(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+        prerequisite(true);
 
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
+
+        step("2.编辑Conference1-6501，勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为空，不勾选WaitforModerator");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
+//        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
     }
 
     @Epic("P_Series")
