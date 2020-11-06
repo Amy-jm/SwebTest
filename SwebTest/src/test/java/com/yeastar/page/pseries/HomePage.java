@@ -136,7 +136,7 @@ public class HomePage extends BasePage{
      */
      public SelenideElement left_menu_first_level_operator_panel = $(By.xpath("//a[contains(@id,\"m_w_visual_control_panel\")]/.."));//todo adapt for linux chrome
      public SelenideElement left_menu_first_level_call_log = $(By.id("m_w_call_log"));
-     public SelenideElement left_menu_first_level_voicemails = $(By.id("m_w_voicemail"));
+     public SelenideElement left_menu_first_level_voicemails = $(By.xpath("//a[contains(@id,\"m_w_voicemail\")]/.."));
      public SelenideElement left_menu_first_level_recordings = $(By.id("m_w_recordings"));
      public SelenideElement left_menu_first_level_preferences =$(By.xpath("//a[contains(@id,\"m_w_preferences\")]/.."));//todo adapt for linux chrome
 

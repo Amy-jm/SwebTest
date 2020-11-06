@@ -4,6 +4,9 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.page.pseries.CallFeatures.ConferencePage;
+import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
+import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
@@ -254,4 +257,26 @@ public class BasePage implements IButton{
             log.error("Unable to click on element "+ e.getStackTrace());
         }
     }
+    /**
+     * 分机删除
+     * extensionNumber 分机号
+     * @return
+     */
+    public BasePage deleDataByDeleImage(String extensionNumber){
+        $(By.xpath(String.format(DELETE_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH
+                ,extensionNumber))).click();
+        OKAlertBtn.shouldBe(Condition.visible).click();
+        return this;
+    }
+
+    /**
+     * 编辑指定name的IVR
+     * @param name
+     * @return
+     */
+    public BasePage edit(String header,String name){
+        TableUtils.clickTableEidtBtn(getWebDriver(),"Number",name);
+        return this;
+    }
+
 }

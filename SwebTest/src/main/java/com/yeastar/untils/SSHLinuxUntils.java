@@ -1,5 +1,4 @@
 package com.yeastar.untils;
-
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
@@ -131,6 +130,16 @@ public class SSHLinuxUntils {
     }
 
     /**
+     * @param command
+     * @return
+     * @throws JSchException
+     * @throws IOException
+     */
+    public static String exePjsip(String command) throws JSchException, IOException {
+        return exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD,command);
+    }
+
+    /**
      *
      * @param host
      * @param port
@@ -156,26 +165,26 @@ public class SSHLinuxUntils {
         channelExec.connect();
         String msg = null;
         int tmp=0;
-        long startTime = System.currentTimeMillis();
+//        long startTime = System.currentTimeMillis();
         while ((msg = br.readLine()) != null && tmp <= timout) {
             outputstream.append(msg).append("\n");
             log.debug("[CLI]"+ msg);
             if(msg.contains(containsString)){
                 AsteriskObject  asteriskObject1 = new AsteriskObject();
-                log.debug("[get key success ，appear "+appearCount+"] "+(System.currentTimeMillis() - startTime)/1000+" Seconds ！"+msg);
+//                log.debug("[get key success ，appear "+appearCount+"] "+(System.currentTimeMillis() - startTime)/1000+" Seconds ！"+msg);
                 asteriskObject1.setName(msg);
-                asteriskObject1.setTime(msg.substring(1,20));
+//                asteriskObject1.setTime(msg.substring(1,20));
                 if(msg.contains("'")){
                     String[] str = msg.split("'");
                     asteriskObject1.setKeyword(str[1]);
                     asteriskObjectList.add(asteriskObject1);
                 }
             }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             tmp++;
 //            if(tmp==timout){
 //                AsteriskObject  asteriskObject2 = new AsteriskObject();
@@ -186,7 +195,7 @@ public class SSHLinuxUntils {
 //                asteriskObjectList.add(asteriskObject2);
 //            }
         }
-        log.debug("[get cli time] "+(System.currentTimeMillis() - startTime)/1000+" Seconds");
+//        log.debug("[get cli time] "+(System.currentTimeMillis() - startTime)/1000+" Seconds");
         channelExec.disconnect();
         session.disconnect();
 
@@ -202,7 +211,8 @@ public class SSHLinuxUntils {
      * @throws JSchException
      */
     public static void getPbxlog(String containsStr, int appearCount, int seconds, List<AsteriskObject> asteriskObject)  {
-        String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;tail -f /ysdisk/syslog/pbxlog.0";
+        String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;tail -c +100 /ysdisk/syslog/pbxlog.0";
+        String ASTERISK = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx";
         log.debug("[============= CLI start loading =====================]\n"+ASTERISK_CLI);
         try {
            SSHLinuxUntils.exePjsipNew(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, ASTERISK_CLI,containsStr,appearCount,seconds, asteriskObject);
@@ -212,5 +222,24 @@ public class SSHLinuxUntils {
             e.printStackTrace();
         }
         log.debug("[asterisk result] "+outputstream);
+    }
+
+    /**
+     * 子线程，监控 asterisk的日志输出
+     */
+    public static class AsteriskThread extends Thread {
+        List<AsteriskObject> asteriskObject;
+        String asteriskKey;
+
+        public AsteriskThread(List<AsteriskObject> asteriskObject, String asteriskKey) {
+            this.asteriskObject=asteriskObject;
+            this.asteriskKey=asteriskKey;
+        }
+
+        public void run() {
+            log.debug("[PbxLog Thread]" + "正在执行...");
+//         SSHLinuxUntils.getPbxlog("ivr-greeting-dial-ext.slin",1,60,asteriskObject);
+            SSHLinuxUntils.getPbxlog(asteriskKey,1,12000,asteriskObject);//2分钟 1200 * 100
+        }
     }
 }
