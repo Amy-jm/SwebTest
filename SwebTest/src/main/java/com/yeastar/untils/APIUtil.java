@@ -1204,6 +1204,23 @@ public class APIUtil {
     }
 
     /**
+     * 删除当前存在的Conference
+     * */
+    public APIUtil deleteConference(String name){
+        List<ConferenceObject> conferenceObjectList = getConferenceSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(ConferenceObject object : conferenceObjectList){
+            if(object.name.equals(name)){
+                list.add(object.id);
+            }}
+        if(list != null && !list.isEmpty()){
+            deleteConference(list);
+        }
+        return this;
+    }
+
+    /**
      * 创建呼出路由
      * @param request
      */

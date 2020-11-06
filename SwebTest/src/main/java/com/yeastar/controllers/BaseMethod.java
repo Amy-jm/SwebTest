@@ -205,15 +205,23 @@ public class BaseMethod extends WebDriverFactory {
 		while (time <= timeout) {
 			sleep(1000);
 			account = pjsip.getUserAccountInfo(username);
-//			account = getPjsip().getUserAccountInfo(username);
+//                        account = getPjsip().getUserAccountInfo(username);
 
 			if (account == null) {
 				status = -1;
 			}
-			if (account.status == expectStatus) {
-				status = account.status;
-				return status;
+			if (expectStatus == IDLE || expectStatus == HUNGUP){
+				if (account.status == IDLE || account.status == HUNGUP) {
+					status = expectStatus;//account.status;
+					return status;
+				}
+			}else{
+				if (account.status == expectStatus) {
+					status = account.status;
+					return status;
+				}
 			}
+
 			if (time == timeout) {
 				status = account.status;
 			}

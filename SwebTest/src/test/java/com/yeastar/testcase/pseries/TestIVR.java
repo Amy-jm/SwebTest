@@ -673,8 +673,8 @@ public class TestIVR extends TestCaseBaseNew{
     public void testIVR01_trunk(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite(true);
        
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:通过sip外线呼入到IVR1按0到分机A,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);

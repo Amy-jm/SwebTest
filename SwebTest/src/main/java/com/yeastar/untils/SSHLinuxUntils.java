@@ -136,7 +136,9 @@ public class SSHLinuxUntils {
      * @throws IOException
      */
     public static String exePjsip(String command) throws JSchException, IOException {
-        return exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD,command);
+        String result = exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD,command);
+        log.debug("[exePjsip result] "+ result);
+        return result;
     }
 
     /**

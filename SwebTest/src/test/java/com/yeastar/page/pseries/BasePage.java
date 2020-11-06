@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.yeastar.page.pseries.CallFeatures.ConferencePage;
+import com.yeastar.page.pseries.CallFeatures.IVRPage;
 import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
 import com.yeastar.untils.TableUtils;
 import com.yeastar.untils.WaitUntils;
@@ -279,4 +280,17 @@ public class BasePage implements IButton{
         return this;
     }
 
+    /**
+     * 元素设置为null   eg.密码为空
+     * @param element
+     * @return
+     */
+    public BasePage setValueToNull(WebElement element){
+        actions().moveToElement(element,1,1).click().build().perform();
+        sleep(2000);
+        actions().keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).perform();
+        sleep(2000);
+        actions().sendKeys(Keys.DELETE).build().perform();
+        return this;
+    }
 }
