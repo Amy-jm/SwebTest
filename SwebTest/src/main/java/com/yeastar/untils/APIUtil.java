@@ -1211,7 +1211,7 @@ public class APIUtil {
 
         List<Integer> list = new ArrayList<>();
         for(ConferenceObject object : conferenceObjectList){
-            if(object.name.equals(name)){
+            if(object.number.equals(name)){
                 list.add(object.id);
             }}
         if(list != null && !list.isEmpty()){
