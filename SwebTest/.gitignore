@@ -7,7 +7,7 @@ log/
 .vscode/
 .vscode/*
 log/*
-build/*
+/build/*
 allure-results
 allure-results/*
 localLog
@@ -22,3 +22,4 @@ pic
 /src/main/resources/driver/chrome/chromedriver3.exe
 /src/test/java/com/yeastar/testcase/pseries/mytest.java
 /src/test/resources/config.properties
+
