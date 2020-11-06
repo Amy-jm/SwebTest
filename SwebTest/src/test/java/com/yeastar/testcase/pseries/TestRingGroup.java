@@ -236,6 +236,7 @@ public class TestRingGroup extends TestCaseBaseNew {
         apiUtil.editRingGroup(ringGroupNum1,String.format("\"member_list\":%s,\"ring_strategy\":\"ring_all\",\"ring_timeout\":60",jsonArray.toString())).apply();
     }
 
+
     private String editRingGroup1Extension(List<String> extensions){
 
         JSONArray jsonArray = new JSONArray();
@@ -653,8 +654,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", trunk, "", "Inbound"))
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1002, CDRObject.STATUS.ANSWER, ext_1002+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", trunk, "", "Inbound"))
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1002, CDRObject.STATUS.ANSWER.toString(), ext_1002+" hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -706,8 +707,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(ext_1001, cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", "", "", CDRObject.COMMUNICATION_TYPE.INTERNAL.toString()))
-                .contains(tuple(ext_1001, ext_1003, CDRObject.STATUS.ANSWER, ext_1003+" hung up", "", "", CDRObject.COMMUNICATION_TYPE.INTERNAL.toString()));
+                .contains(tuple(ext_1001, cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", "", "", CDRObject.COMMUNICATION_TYPE.INTERNAL.toString()))
+                .contains(tuple(ext_1001, ext_1003, CDRObject.STATUS.ANSWER.toString(), ext_1003+" hung up", "", "", CDRObject.COMMUNICATION_TYPE.INTERNAL.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -729,8 +730,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         step("网页admin登录 ");
         auto.loginPage().loginWithAdmin();
 
-        step("通过" + trunk + "外线呼入到RingGroup1,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
-        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        step("通过Accunt外线呼入到RingGroup1,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
+        pjsip.Pj_Make_Call_No_Answer(4000, routePrefix + callee, deviceAssist, false);
 
         step("分机1000,1001,1002,1003同时响铃");
         softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[通话校验]:1000分机10s内响铃").isEqualTo(RING);
@@ -753,8 +754,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("4000<4000>", cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", trunk, "", "Inbound"))
-                .contains(tuple("4000<4000>", ext_1001, CDRObject.STATUS.ANSWER, ext_1001+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("4000<4000>", cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", trunk, "", "Inbound"))
+                .contains(tuple("4000<4000>", ext_1001, CDRObject.STATUS.ANSWER.toString(), ext_1001+" hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -800,8 +801,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", trunk, "", "Inbound"))
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1002, CDRObject.STATUS.ANSWER, ext_1002+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", trunk, "", "Inbound"))
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1002, CDRObject.STATUS.ANSWER.toString(), ext_1002+" hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -847,8 +848,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", trunk, "", "Inbound"))
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1003, CDRObject.STATUS.ANSWER, ext_1003+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", trunk, "", "Inbound"))
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1003, CDRObject.STATUS.ANSWER.toString(), ext_1003+" hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -894,8 +895,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", trunk, "", "Inbound"))
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1003, CDRObject.STATUS.ANSWER, ext_1003+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", trunk, "", "Inbound"))
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1003, CDRObject.STATUS.ANSWER.toString(), ext_1003+" hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -940,8 +941,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", trunk, "", "Inbound"))
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1001, CDRObject.STATUS.ANSWER, ext_1001+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", trunk, "", "Inbound"))
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1001, CDRObject.STATUS.ANSWER.toString(), ext_1001+" hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1039,8 +1040,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", trunk, "", "Inbound"))
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1000, CDRObject.STATUS.ANSWER, ext_1000+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", trunk, "", "Inbound"))
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1000, CDRObject.STATUS.ANSWER.toString(), ext_1000+" hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
 
@@ -1103,8 +1104,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", trunk, "", "Inbound"))
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1002, CDRObject.STATUS.ANSWER, ext_1002+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", trunk, "", "Inbound"))
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1002, CDRObject.STATUS.ANSWER.toString(), ext_1002+" hung up", trunk, "", "Inbound"));
         
         softAssertPlus.assertAll();
 
@@ -1177,8 +1178,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " timed out, failover", trunk, "", "Inbound"))
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1004, CDRObject.STATUS.ANSWER, ext_1004+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " timed out, failover", trunk, "", "Inbound"))
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1004, CDRObject.STATUS.ANSWER.toString(), ext_1004+" hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
 
@@ -1285,8 +1286,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER, cdrRingGroup1 + " connected", trunk, "", "Inbound"))
-                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1001, CDRObject.STATUS.ANSWER, ext_1001+" hung up", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), cdrRingGroup1, CDRObject.STATUS.ANSWER.toString(), cdrRingGroup1 + " connected", trunk, "", "Inbound"))
+                .contains(tuple("2000<2000>".replace("2000", caller + ""), ext_1001, CDRObject.STATUS.ANSWER.toString(), ext_1001+" hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
 

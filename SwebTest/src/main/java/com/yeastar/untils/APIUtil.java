@@ -28,15 +28,27 @@ import static org.apache.log4j.spi.Configurator.NULL;
 @Log4j2
 public class APIUtil {
 
-    private  String webSession = NULL;
-
+    private String webSession = NULL;
+    private String m_loginName = "";
+    private String m_loginPwd = "";
     /**
      * 登录aip，获取cookie
      * @return
      */
-    public APIUtil loginWeb(){
+    public APIUtil loginWeb(String loginName,String loginPwd){
 
-        String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username="+LOGIN_USERNAME+"&password="+enBase64(DigestUtils.md5Hex(LOGIN_PASSWORD));
+        if (loginName.isEmpty() )
+            m_loginName = LOGIN_USERNAME;
+        else
+            m_loginName = loginName;
+
+        if (loginPwd.isEmpty())
+            m_loginPwd = LOGIN_PASSWORD;
+        else
+            m_loginPwd = loginPwd;
+
+        String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username="+m_loginName+"&password="+enBase64(DigestUtils.md5Hex(m_loginPwd));
+//        String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/login?username=0&password="+enBase64(DigestUtils.md5Hex("Yeastar123"));
         m_getRequest(req);
         return this ;
     }
@@ -1019,6 +1031,50 @@ public class APIUtil {
 
     /**
      * 创建响铃组
+     * @param request
+     */
+    public APIUtil createRingGroup(String name,String number, List<String> extensions,int ringTimeout,String failDest,String failDestPrefix,String failDestValue){
+        JSONArray jsonArray = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        List<ExtensionGroupObject> extensionGroupObjects = getExtensionGroupSummary();
+        for (String ext : extensions){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.callerIdName);
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+
+            for (ExtensionGroupObject extensionGroupObject: extensionGroupObjects) {
+                if (ext.equals(extensionGroupObject.name)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionGroupObject.name);
+                    a.put("text2",extensionGroupObject.name);
+                    a.put("value",String.valueOf(extensionGroupObject.id));
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"member_list\":%s,\"ring_strategy\":\"ring_all\",\"ring_timeout\":%s,\"fail_dest\":\"%s\",\"fail_dest_prefix\":\"%s\",\"fail_dest_value\":\"%s\"}"
+                ,number,name,jsonArray.toString(),ringTimeout,failDest,failDestPrefix,getExtensionSummary(failDestValue).id);
+
+        String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/create",request);
+
+        JSONObject jsonObject = new JSONObject(respone);
+        Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createRingGroup: ]响铃组 num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
+        return this;
+    }
+
+
+    /**
+     * 创建响铃组
      * @param name
      * @param number
      * @param extensions
@@ -1186,6 +1242,22 @@ public class APIUtil {
         return this;
     }
 
+    /**
+     * 更新会议室
+     * @param request
+     */
+    public APIUtil editConferenceWithExtension0(String number,String particPassword,String moderatorPassword){
+        JSONArray jsonArray = new JSONArray();
+
+        String request = String.format("{\"partic_password\":\"%s\",\"moderator_password\":\"%s\",\"id\":%s}"
+                ,particPassword,moderatorPassword,getConferenceSummary(number).id);
+
+        String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/update",request);
+
+        JSONObject jsonObject = new JSONObject(respone);
+        Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createConference: ] num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
+        return this;
+    }
 
     /**
      * 找到指定 Queue
@@ -1321,6 +1393,65 @@ public class APIUtil {
     }
 
     /**
+     * 创建呼出路由
+     * @param request
+     */
+    public APIUtil createQueue(String name,String number,int waitTimeout, List<String> dynamicAgentList, List<String> staticAgentList, List<String> managerList,String failDest,String failDestValue,String pressKey,String keyDest,String keyDestValue){
+        JSONArray jsonArray1 = new JSONArray();
+        JSONArray jsonArray2 = new JSONArray();
+        JSONArray jsonArray3 = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+
+        for (ExtensionObject extensionObject: extensionObjects) {
+            if(dynamicAgentList != null && !dynamicAgentList.isEmpty()){
+                for (String ext : dynamicAgentList){
+                    if (ext.equals(extensionObject.number)){
+                        JSONObject a = new JSONObject();
+                        a.put("text",extensionObject.callerIdName);
+                        a.put("text2",extensionObject.number);
+                        a.put("value",String.valueOf(extensionObject.id));
+                        a.put("type","extension");
+                        jsonArray1.put(a);
+                    }
+                }
+            }
+            if(staticAgentList != null && !staticAgentList.isEmpty()) {
+                for (String ext : staticAgentList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.callerIdName);
+                        a.put("text2", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray2.put(a);
+                    }
+                }
+            }
+            if(managerList != null && !managerList.isEmpty()) {
+                for (String ext : managerList) {
+                    if (ext.equals(extensionObject.number)) {
+                        JSONObject a = new JSONObject();
+                        a.put("text", extensionObject.callerIdName);
+                        a.put("text2", extensionObject.number);
+                        a.put("value", String.valueOf(extensionObject.id));
+                        a.put("type", "extension");
+                        jsonArray3.put(a);
+                    }
+                }
+            }
+        }
+
+        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"ring_strategy\":\"ring_all\",\"moh\":\"default\",\"max_wait_time\":%s,\"fail_dest\":\"%s\",\"fail_dest_prefix\":\"\",\"fail_dest_value\":\"%s\",\"enb_group_vm\":0,\"agent_timeout\":30,\"retry_time\":30,\"wrap_up_time\":30,\"agent_prompt\":\"\",\"enb_ring_in_use\":0,\"dynamic_agent_list\":%s,\"static_agent_list\":%s,\"manager_list\":%s,\"enb_email_miss_call\":1,\"enb_email_abandon_call\":1,\"enb_email_sla_alarm\":1,\"max_calls\":0,\"enb_leave_empty\":1,\"enb_join_empty\":0,\"sla_time\":60,\"sla_interval\":30,\"sla_alarm_threshold\":80,\"join_prompt\":\"\",\"enb_announce_agent_id\":0,\"enb_announce_pos\":1,\"enb_announce_hold_time\":1,\"caller_announce_freq\":30,\"sys_announce_prompt\":\"\",\"sys_announce_freq\":60,\"satisfa_survey_prompt\":\"\",\"press_key\":\"%s\",\"key_dest\":\"%s\",\"key_dest_value\":\"%s\",\"key_dest_prefix\":\"\",\"enb_mgr_agent_status\":1,\"enb_mgr_call_dist\":1,\"enb_mgr_call_conn\":1,\"enb_mgr_monitor\":1,\"enb_mgr_call_park\":1,\"enb_mgr_record\":1,\"enb_agent_call_dist\":1,\"enb_agent_call_conn\":1,\"enb_agent_call_park\":1}"
+                ,number,name,waitTimeout,failDest,getExtensionSummary(failDestValue).id,jsonArray1.toString(),jsonArray2.toString(),jsonArray3.toString(),pressKey,keyDest,getExtensionSummary(keyDestValue).id);
+
+        String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/queue/create",request);
+        JSONObject jsonObject = new JSONObject(respone);
+        Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createQueue: ]队列 num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
+
+        return this;
+    }
+    /**
      * Preference 更新
      * @param request
      * @return
@@ -1347,7 +1478,7 @@ public class APIUtil {
      * @return
      */
     public String getRequest(String urlpath){
-        loginWeb();
+        loginWeb(m_loginName,m_loginPwd);
         return m_getRequest(urlpath);
     }
 
@@ -1458,7 +1589,7 @@ public class APIUtil {
      * @return
      */
     public String postRequest(String urlpath,String args1) {
-        loginWeb();
+        loginWeb(m_loginName,m_loginPwd);
         return m_postRequest(urlpath,args1);
     }
 

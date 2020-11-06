@@ -167,10 +167,10 @@ public class CDRObject {
      * cdr field status
      */
     public enum STATUS {
-        ANSWER("\"ANSWERED\""),
-        NO_ANSWER("\"NO ANSWER\""),
-        BUSY("\"BUSY\""),
-        VOICEMAIL("\"VOICEMAIL\"");
+        ANSWER("ANSWERED"),
+        NO_ANSWER("NO ANSWER"),
+        BUSY("BUSY"),
+        VOICEMAIL("VOICEMAIL");
 
 
         private final String alias;
