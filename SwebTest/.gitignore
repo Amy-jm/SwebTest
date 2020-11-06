@@ -21,3 +21,4 @@ pic
 /CDR修改说明.txt
 /src/main/resources/driver/chrome/chromedriver3.exe
 /src/test/java/com/yeastar/testcase/pseries/mytest.java
+/src/test/resources/config.properties
