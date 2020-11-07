@@ -187,9 +187,9 @@ public class CDRObject {
      * cdr field COMMUNICATION TYPE
      */
     public enum COMMUNICATION_TYPE {
-        INBOUND("\"Inbound\""),
-        OUTBOUND("\"Outbound\""),
-        INTERNAL("\"Internal\"");
+        INBOUND("Inbound"),
+        OUTBOUND("Outbound"),
+        INTERNAL("Internal");
 
         private final String alias;
         COMMUNICATION_TYPE(String alias) {

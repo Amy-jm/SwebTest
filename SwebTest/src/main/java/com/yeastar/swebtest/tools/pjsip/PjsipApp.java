@@ -455,10 +455,10 @@ public class PjsipApp extends PjsipDll {
             CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
             String uri = "";
             uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
-//        System.out.println("uri: "+ uri);//todo 待后续按日志等级输出
+            log.debug("Pj_Make_Call_No_Answer: "+ uri);//todo 待后续按日志等级输出
             if (CallerAccount.accId != -1) {
                 pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false); //todo 待后续按日志等级输出
-//            System.out.println("make call no answer:"+pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false));
+
             }
             ys_waitingTime(2000);
         } catch (java.lang.NullPointerException ex) {
@@ -473,6 +473,11 @@ public class PjsipApp extends PjsipDll {
     @Step("【pjsip】拨号 不会自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2} ")
     public String Pj_Make_Call_No_Answer(int CallerNum, String Callee, String ServerIp) {
         return Pj_Make_Call_No_Answer(CallerNum, Callee, ServerIp, true);
+    }
+
+    @Step("【pjsip】被叫方手动接听 默认 code =  200： callerNum：{0} , Assert：{1")
+    public int Pj_Answer_Call(int CalleeNum) {
+        return Pj_Answer_Call(CalleeNum, 200, false);
     }
 
     //   //被叫方手动接听 默认 code =  200

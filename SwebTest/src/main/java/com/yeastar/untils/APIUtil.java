@@ -347,6 +347,16 @@ public class APIUtil {
     }
 
     /**
+     * 编辑分机
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editExtension(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/update",String.format("{%s,\"id\":%s}",request,getExtensionSummary(number).id));
+        return this;
+    }
+    /**
      * 获取分机组概要列表
      * 对应API：api/v1.0/extension/searchsummary
      */
@@ -548,6 +558,21 @@ public class APIUtil {
     }
 
     /**
+     * 找到指定Inbound
+     * @param name
+     * @return
+     */
+    public InboundRouteObject getInboundSummary(String name){
+        List<InboundRouteObject> inboundRouteObjects = getInboundSummary();
+        for (InboundRouteObject object : inboundRouteObjects){
+            if(object.name.equals(name)){
+                return object;
+            }
+        }
+        return null;
+    }
+
+    /**
      * 删除当前存在的所有分机
      * */
     public APIUtil deleteAllInbound(){
@@ -631,6 +656,10 @@ public class APIUtil {
      */
     public APIUtil editInbound(String request){
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/update",request);
+        return this;
+    }
+    public APIUtil editInbound(String name, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/update",String.format("{%s,\"id\":%s}",request,getInboundSummary(name).id));
         return this;
     }
 
