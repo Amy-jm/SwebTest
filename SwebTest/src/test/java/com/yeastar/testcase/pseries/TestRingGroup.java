@@ -1737,7 +1737,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","RingGroup", "FailoverDestination", "SPS"})
-    public void testFailoverDestination1() {
+    public void testFailoverDestination01() {
         prerequisite();
 
         step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择[None]");
@@ -1783,7 +1783,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","RingGroup", "FailoverDestination", "SPS"})
-    public void testFailoverDestination2() {
+    public void testFailoverDestination02() {
         prerequisite();
 
         step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择Hang Up");
@@ -1830,7 +1830,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","RingGroup", "FailoverDestination", "SPS"})
-    public void testFailoverDestination3() {
+    public void testFailoverDestination03() {
         prerequisite();
 
         step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择Extension-分机1004");
@@ -1881,7 +1881,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","RingGroup", "FailoverDestination", "SPS"})
-    public void testFailoverDestination4() {
+    public void testFailoverDestination04() {
         prerequisite();
 
         step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择Extension-分机1020");
@@ -1933,7 +1933,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","RingGroup", "FailoverDestination", "SPS"})
-    public void testFailoverDestination5() {
+    public void testFailoverDestination05() {
         prerequisite();
 
         step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择Extension Voicemail-分机1004");
@@ -1968,7 +1968,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","RingGroup", "FailoverDestination", "SPS"})
-    public void testFailoverDestination6() {
+    public void testFailoverDestination06() {
         prerequisite();
 
         step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择IVR0-6200，按0");
@@ -2022,7 +2022,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","RingGroup", "FailoverDestination", "SPS"})
-    public void testFailoverDestination7() {
+    public void testFailoverDestination07() {
         prerequisite();
 
         step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择RingGroup0-6300");
@@ -2079,7 +2079,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","RingGroup", "FailoverDestination", "SPS"})
-    public void testFailoverDestination8() {
+    public void testFailoverDestination08() {
         prerequisite();
 
         step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择RingGroup0-6300");
@@ -2139,7 +2139,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","RingGroup", "FailoverDestination", "SPS"})
-    public void testFailoverDestination9() {
+    public void testFailoverDestination09() {
         prerequisite();
 
         step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择Queue0-6400");
