@@ -27,7 +27,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean runRecoveryEnvFlag = false;
+    private boolean runRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !runRecoveryEnvFlag;
 
     private final String IVR_GREETING_DIAL_EXT = "ivr-greeting-dial-ext.slin";
