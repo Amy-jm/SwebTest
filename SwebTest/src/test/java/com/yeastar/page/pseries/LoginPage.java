@@ -13,6 +13,8 @@ import org.openqa.selenium.html5.Location;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.yeastar.swebtest.driver.DataReader2.LOGIN_PASSWORD;
+import static com.yeastar.swebtest.driver.DataReader2.LOGIN_USERNAME;
 import static com.yeastar.untils.WaitUntils.SHORT_WAIT;
 
 @Log4j2

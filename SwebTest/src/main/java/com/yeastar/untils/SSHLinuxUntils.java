@@ -213,7 +213,7 @@ public class SSHLinuxUntils {
      * @throws JSchException
      */
     public static void getPbxlog(String containsStr, int appearCount, int seconds, List<AsteriskObject> asteriskObject)  {
-        String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;tail -c +100 /ysdisk/syslog/pbxlog.0";
+        String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;tail -f /ysdisk/syslog/pbxlog.0";
         String ASTERISK = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx";
         log.debug("[============= CLI start loading =====================]\n"+ASTERISK_CLI);
         try {

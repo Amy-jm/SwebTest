@@ -1079,49 +1079,6 @@ public class APIUtil {
      * 创建响铃组
      * @param request
      */
-    public APIUtil createRingGroup(String name,String number, List<String> extensions){
-        JSONArray jsonArray = new JSONArray();
-
-        List<ExtensionObject> extensionObjects = getExtensionSummary();
-        List<ExtensionGroupObject> extensionGroupObjects = getExtensionGroupSummary();
-        for (String ext : extensions){
-            for (ExtensionObject extensionObject: extensionObjects) {
-                if (ext.equals(extensionObject.number)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.callerIdName);
-                    a.put("text2",extensionObject.number);
-                    a.put("value",String.valueOf(extensionObject.id));
-                    a.put("type","extension");
-                    jsonArray.put(a);
-                }
-            }
-
-            for (ExtensionGroupObject extensionGroupObject: extensionGroupObjects) {
-                if (ext.equals(extensionGroupObject.name)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionGroupObject.name);
-                    a.put("text2",extensionGroupObject.name);
-                    a.put("value",String.valueOf(extensionGroupObject.id));
-                    a.put("type","extension");
-                    jsonArray.put(a);
-                }
-            }
-        }
-
-        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"member_list\":%s,\"ring_strategy\":\"ring_all\",\"ring_timeout\":60,\"fail_dest\":\"end_call\",\"fail_dest_prefix\":\"\",\"fail_dest_value\":\"\"}"
-                ,number,name,jsonArray.toString() );
-
-        String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/create",request);
-
-        JSONObject jsonObject = new JSONObject(respone);
-        Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createRingGroup: ]响铃组 num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
-        return this;
-    }
-
-    /**
-     * 创建响铃组
-     * @param request
-     */
     public APIUtil createRingGroup(String name,String number, List<String> extensions,int ringTimeout,String failDest,String failDestPrefix,String failDestValue){
         JSONArray jsonArray = new JSONArray();
 
@@ -1153,6 +1110,54 @@ public class APIUtil {
 
         String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"member_list\":%s,\"ring_strategy\":\"ring_all\",\"ring_timeout\":%s,\"fail_dest\":\"%s\",\"fail_dest_prefix\":\"%s\",\"fail_dest_value\":\"%s\"}"
                 ,number,name,jsonArray.toString(),ringTimeout,failDest,failDestPrefix,getExtensionSummary(failDestValue).id);
+
+        String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/create",request);
+
+        JSONObject jsonObject = new JSONObject(respone);
+        Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createRingGroup: ]响铃组 num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
+        return this;
+    }
+
+
+    /**
+     * 创建响铃组
+     * @param name
+     * @param number
+     * @param extensions
+     * @param extGroups
+     * @return
+     */
+    public APIUtil createRingGroup(String name,String number, List<String> extensions, List<String> extGroups){
+        JSONArray jsonArray = new JSONArray();
+
+        MenuOptionObject menuOptionObject = getRingGroupMenuOption();
+        for (String ext : extensions){
+            for (MenuOptionObject.MemberList extensionObject: menuOptionObject.extensionOptions) {
+                if (ext.equals(extensionObject.text2)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.text);
+                    a.put("text2",extensionObject.text2);
+                    a.put("value",extensionObject.value);
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        for (String extGroup : extGroups){
+            for (MenuOptionObject.MemberList extensionGroupObject : menuOptionObject.extGroupOptions) {
+                if(extGroup.equals(extensionGroupObject.text)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionGroupObject.text);
+                    a.put("value",extensionGroupObject.value);
+                    a.put("type","ext_group");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"number\":\"%s\",\"name\":\"%s\",\"member_list\":%s,\"ring_strategy\":\"ring_all\",\"ring_timeout\":60,\"fail_dest\":\"end_call\",\"fail_dest_prefix\":\"\",\"fail_dest_value\":\"\"}"
+                ,number,name,jsonArray.toString() );
 
         String respone = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/create",request);
 
@@ -1253,6 +1258,23 @@ public class APIUtil {
     }
 
     /**
+     * 删除当前存在的Conference
+     * */
+    public APIUtil deleteConference(String name){
+        List<ConferenceObject> conferenceObjectList = getConferenceSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(ConferenceObject object : conferenceObjectList){
+            if(object.number.equals(name)){
+                list.add(object.id);
+            }}
+        if(list != null && !list.isEmpty()){
+            deleteConference(list);
+        }
+        return this;
+    }
+
+    /**
      * 创建呼出路由
      * @param request
      */
@@ -1297,6 +1319,54 @@ public class APIUtil {
 
         JSONObject jsonObject = new JSONObject(respone);
         Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createConference: ] num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
+        return this;
+    }
+
+    /**
+     * 编辑 conference
+     * @param number
+     * @param particPassword
+     * @param moderatorPassword
+     * @param soundPrompt
+     * @param enbWaitModerator
+     * @param allowParticInvite
+     * @param extensions
+     * @return
+     */
+    public APIUtil editConference(String number,String particPassword,String moderatorPassword,String soundPrompt,int enbWaitModerator,int allowParticInvite,List<String> extensions){
+        JSONArray jsonArray = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        List<ExtensionGroupObject> extensionGroupObjects = getExtensionGroupSummary();
+        for (String ext : extensions){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.callerIdName);
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+
+            for (ExtensionGroupObject extensionGroupObject: extensionGroupObjects) {
+                if (ext.equals(extensionGroupObject.name)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionGroupObject.name);
+                    a.put("text2",extensionGroupObject.name);
+                    a.put("value",String.valueOf(extensionGroupObject.id));
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"partic_password\":\"%s\",\"moderator_password\":\"%s\",\"sound_prompt\":\"%s\",\"enb_wait_moderator\":%s,\"allow_partic_invite\":%s,\"moderator_list\":%s,\"id\":%s}"
+                ,particPassword,moderatorPassword,soundPrompt,enbWaitModerator,allowParticInvite,jsonArray.toString(),getConferenceSummary(number).id);
+        log.debug("【update Extension Group】 "+request);
+        //获取默认分机组
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/update",request);
         return this;
     }
 
