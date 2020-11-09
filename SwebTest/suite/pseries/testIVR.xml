@@ -9,7 +9,7 @@
     </listeners>
     <test name="TestIVR">
         <classes>
-            <class name="com.yeastar.testcase.pseries.TestIVR"/>
+            <class name="com.yeastar.testcase.pseries.TestRingGroup"/>
         </classes>
     </test>
 </suite>
