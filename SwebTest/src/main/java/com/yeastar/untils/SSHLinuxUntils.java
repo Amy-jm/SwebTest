@@ -136,7 +136,9 @@ public class SSHLinuxUntils {
      * @throws IOException
      */
     public static String exePjsip(String command) throws JSchException, IOException {
-        return exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD,command);
+        String result = exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD,command);
+        log.debug("[exePjsip result] "+ result);
+        return result;
     }
 
     /**
@@ -211,7 +213,7 @@ public class SSHLinuxUntils {
      * @throws JSchException
      */
     public static void getPbxlog(String containsStr, int appearCount, int seconds, List<AsteriskObject> asteriskObject)  {
-        String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;tail -c +100 /ysdisk/syslog/pbxlog.0";
+        String ASTERISK_CLI = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;tail -f /ysdisk/syslog/pbxlog.0";
         String ASTERISK = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;asterisk -rx";
         log.debug("[============= CLI start loading =====================]\n"+ASTERISK_CLI);
         try {

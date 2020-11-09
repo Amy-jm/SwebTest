@@ -19,6 +19,13 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.swebtest.driver.DataReader2.*;
 import static org.apache.log4j.spi.Configurator.NULL;
@@ -484,6 +491,34 @@ public class APIUtil {
     }
 
     /**
+     * 创建分机组
+     * @param request  请求包中的完整body赋值给request
+     */
+    public APIUtil editExtensionGroup(String name,List<String> extensions){
+        JSONArray jsonArray = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        for (String ext : extensions){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("ext_id",Integer.valueOf(extensionObject.id));
+                    a.put("caller_id_name",extensionObject.callerIdName);
+                    a.put("user_type","user");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"member_list\":%s,\"id\":%s}"
+                ,jsonArray.toString(),getExtensionGroupSummary(name).id);
+        log.debug("【update Extension Group】 "+request);
+        //获取默认分机组
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/update",request);
+        return this;
+    }
+
+    /**
      * 获取Trunk概要列表
      * 对应API：api/v1.0/extension/searchsummary
      */
@@ -662,6 +697,7 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/update",String.format("{%s,\"id\":%s}",request,getInboundSummary(name).id));
         return this;
     }
+
 
     /**
      * 获取概要列表
@@ -917,6 +953,15 @@ public class APIUtil {
                         log.debug("[getExtensionSummary id] "+pressKeyObject.getDestValue());
                         if(getExtensionSummary(pressKeyObject.getDestValue())!= null ){
                             a.put(pressKey.toString()+"_dest_value", Integer.toString(getExtensionSummary(pressKeyObject.getDestValue()).id));//getExtensionSummary id
+                        }else if(getRingGroupSummary(pressKeyObject.getDestValue()) != null){
+                            a.put(pressKey.toString()+"_dest_value", Integer.toString(getRingGroupSummary(pressKeyObject.getDestValue()).id));//Ring Group id
+                        }else if(getQueueSummary(pressKeyObject.getDestValue()) != null){
+                            a.put(pressKey.toString()+"_dest_value", Integer.toString(getQueueSummary(pressKeyObject.getDestValue()).id));//Queue id
+                        }else if(getIVRSummary(pressKeyObject.getDestValue()) != null){
+                            a.put(pressKey.toString()+"_dest_value", Integer.toString(getIVRSummary(pressKeyObject.getDestValue()).id));//IVR id
+                        }else{
+                            //prompt
+                            a.put(pressKey.toString()+"_dest_value", pressKeyObject.getDestValue());
                         }
                         if(HasDigit(pressKeyObject.getPressKeyNum())){
                             a.put("allow_out_record"+pressKey.toString().substring(pressKey.toString().length() -1, pressKey.toString().length()), pressKeyObject.getIsAllowOutRecord());
@@ -1241,6 +1286,23 @@ public class APIUtil {
     }
 
     /**
+     * 删除当前存在的Conference
+     * */
+    public APIUtil deleteConference(String name){
+        List<ConferenceObject> conferenceObjectList = getConferenceSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(ConferenceObject object : conferenceObjectList){
+            if(object.number.equals(name)){
+                list.add(object.id);
+            }}
+        if(list != null && !list.isEmpty()){
+            deleteConference(list);
+        }
+        return this;
+    }
+
+    /**
      * 创建呼出路由
      * @param request
      */
@@ -1285,6 +1347,54 @@ public class APIUtil {
 
         JSONObject jsonObject = new JSONObject(respone);
         Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createConference: ] num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
+        return this;
+    }
+
+    /**
+     * 编辑 conference
+     * @param number
+     * @param particPassword
+     * @param moderatorPassword
+     * @param soundPrompt
+     * @param enbWaitModerator
+     * @param allowParticInvite
+     * @param extensions
+     * @return
+     */
+    public APIUtil editConference(String number,String particPassword,String moderatorPassword,String soundPrompt,int enbWaitModerator,int allowParticInvite,List<String> extensions){
+        JSONArray jsonArray = new JSONArray();
+
+        List<ExtensionObject> extensionObjects = getExtensionSummary();
+        List<ExtensionGroupObject> extensionGroupObjects = getExtensionGroupSummary();
+        for (String ext : extensions){
+            for (ExtensionObject extensionObject: extensionObjects) {
+                if (ext.equals(extensionObject.number)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionObject.callerIdName);
+                    a.put("text2",extensionObject.number);
+                    a.put("value",String.valueOf(extensionObject.id));
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+
+            for (ExtensionGroupObject extensionGroupObject: extensionGroupObjects) {
+                if (ext.equals(extensionGroupObject.name)){
+                    JSONObject a = new JSONObject();
+                    a.put("text",extensionGroupObject.name);
+                    a.put("text2",extensionGroupObject.name);
+                    a.put("value",String.valueOf(extensionGroupObject.id));
+                    a.put("type","extension");
+                    jsonArray.put(a);
+                }
+            }
+        }
+
+        String request = String.format("{\"partic_password\":\"%s\",\"moderator_password\":\"%s\",\"sound_prompt\":\"%s\",\"enb_wait_moderator\":%s,\"allow_partic_invite\":%s,\"moderator_list\":%s,\"id\":%s}"
+                ,particPassword,moderatorPassword,soundPrompt,enbWaitModerator,allowParticInvite,jsonArray.toString(),getConferenceSummary(number).id);
+        log.debug("【update Extension Group】 "+request);
+        //获取默认分机组
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/update",request);
         return this;
     }
 
@@ -1485,6 +1595,7 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/queue/update",String.format("{%s,\"id\":%s}",request,getQueueSummary(number).id));
         return this;
     }
+
     /**
      * Preference 更新
      * @param request
