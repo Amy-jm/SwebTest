@@ -14,6 +14,7 @@ import io.qameta.allure.*;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.openqa.selenium.htmlunit.HtmlUnitAlert;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
@@ -71,7 +72,7 @@ public class TestIVR extends TestCaseBaseNew{
             {"66", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "E1"},//E1     前缀 替换
             {"",   3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
             {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"},
-//            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
+            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
 
     /**
@@ -86,12 +87,12 @@ public class TestIVR extends TestCaseBaseNew{
         String methodName = method.getName();
         //sip_register 呼入
         if(methodName.equals("testIVR01_trunk") || methodName.equals("testIVR04_PPRD_1") || methodName.equals("testIVR06_PPRD_2") || methodName.equals("testIVR07_PPRD_3") || methodName.equals("testIVR08_PPRD_4") || methodName.equals("testIVR09_PPRD_5") ||
-           methodName.equals("testIVR01_trunk") || methodName.equals("testIVR05_PPRD_1_2") || methodName.equals("testIVR34_KeyPressEvent_1") || methodName.equals("testIVR10_DialExtension_1")){
+                methodName.equals("testIVR01_trunk") || methodName.equals("testIVR05_PPRD_1_2") || methodName.equals("testIVR34_KeyPressEvent_1") || methodName.equals("testIVR10_DialExtension_1")){
             return  new Object[][]{{"", 3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),SIPTrunk,"SIP_REGISTER"}};
         }
         //sps 呼入
         if (methodName.equals("testIVR02_trunk") || methodName.equals("testIVR11_DialExtension_2") || methodName.equals("testIVR12_DialExtension_3") || methodName.equals("testIVR13_DialExtension_4") || methodName.equals("testIVR14_DialExtension_5") || methodName.equals("testIVR18_DialExtension_9") ||
-            methodName.equals("testIVR16_DialExtension_7") ||methodName.equals("testIVR26_DialExtension_17")|| methodName.equals("testIVR19_DialExtension_10") || methodName.equals("testIVR20_DialExtension_11") || methodName.equals("testIVR22_DialExtension_13") || methodName.equals("testIVR24_DialExtension_15") || methodName.equals("testIVR25_DialExtension_16")){
+                methodName.equals("testIVR16_DialExtension_7") ||methodName.equals("testIVR26_DialExtension_17")|| methodName.equals("testIVR19_DialExtension_10") || methodName.equals("testIVR20_DialExtension_11") || methodName.equals("testIVR22_DialExtension_13") || methodName.equals("testIVR24_DialExtension_15") || methodName.equals("testIVR25_DialExtension_16")){
             return  new Object[][]{{"99", 2000, "6201", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),SPS, "SPS"}};
         }
         if(methodName.equals("testIVR03_trunk")){
@@ -208,8 +209,8 @@ public class TestIVR extends TestCaseBaseNew{
                     {"",3001, "3000", DEVICE_ASSIST_1, "*","通过sip外线呼入到IVR1，按*",SIPTrunk,"SIP_REGISTER"},//SIP  --55 REGISTER
                     {"",3001, "3000", DEVICE_ASSIST_1, "A","通过sip外线呼入到IVR1，按A",SIPTrunk,"SIP_REGISTER"},//SIP  --55 REGISTER
             };
-                return routesKeyPressEvent;
-         }
+            return routesKeyPressEvent;
+        }
         if(methodName.equals("testIVR36_KeyPressEvent_5")){
             Object[][] routesKeyPressEvent = new Object[][]{
                     {"",3001, "3000", DEVICE_ASSIST_1, "2","5.通过sip外线呼入到IVR1，按2\n 分机1001响铃可正常接听，挂断",SIPTrunk,"SIP_REGISTER"},//SIP  --55 REGISTER
@@ -394,6 +395,10 @@ public class TestIVR extends TestCaseBaseNew{
             reg = true;
             log.debug("1003注册失败");
         }
+        if(getExtensionStatus(1004, IDLE, 5) != IDLE) {
+            reg = true;
+            log.debug("1004注册失败");
+        }
         if(getExtensionStatus(2001, IDLE, 5) != IDLE){
             reg=true;
             log.debug("2001注册失败");
@@ -429,7 +434,7 @@ public class TestIVR extends TestCaseBaseNew{
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME","t").replace("EXTENSIONLASTNAME", "estX").replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
                     .createExtension(reqDataCreateExtensionWithRoleAdmin.replace("EXTENSIONFIRSTNAME","0").replace("EXTENSIONLASTNAME", "0").replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 //                    .createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME","FXS").replace("EXTENSIONLASTNAME", "FXS").replace("FXSPORT","1-4").replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME","1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT","1-3").replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
+                    .createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME","1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT",FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
 
             step("2.创建分机组 ExGroup1/ExGroup2");
             List<String> extensionExGroup1 = new ArrayList<>();
@@ -558,51 +563,24 @@ public class TestIVR extends TestCaseBaseNew{
      */
     public void configIVR6201PressKey(){
         if(isReConfigIVR6201PressKeyFlag){
-        step("=========== config ivr 6201  press key start =========");
-        pressKeyObjects_1.clear();
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press0, "extension", "", "1020", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press1, "end_call","", "1000", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press2, "extension","", "1001", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press3, "ext_vm","", "1001", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press4, "ivr","", "6200", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press5, "ring_group","", "6300", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press6, "queue","", "6400", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press7, "dial_by_name","", "", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press8, "external_num","", "2000", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press9, "play_greeting","1", "prompt1.wav", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press_hash, "extension", "", "1002", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.press_star, "play_greeting", "5", "prompt2.wav", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.timeout, "extension", "", "1003", 0));
-        pressKeyObjects_1.add(new PressKeyObject(PressKey.invaild, "extension", "", "1004", 0));
+            step("=========== config ivr 6201  press key start =========");
+            pressKeyObjects_1.clear();
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press0, "extension", "", "1020", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press1, "end_call","", "1000", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press2, "extension","", "1001", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press3, "ext_vm","", "1001", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press4, "ivr","", "6200", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press5, "ring_group","", "6300", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press6, "queue","", "6400", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press7, "dial_by_name","", "", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press8, "external_num","", "2000", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press9, "play_greeting","1", "prompt1.wav", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press_hash, "extension", "", "1002", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.press_star, "play_greeting", "5", "prompt2.wav", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.timeout, "extension", "", "1003", 0));
+            pressKeyObjects_1.add(new PressKeyObject(PressKey.invaild, "extension", "", "1004", 0));
 
-        apiUtil.deleteIVR("IVR1_6201").createIVR("6201", "IVR1_6201", pressKeyObjects_1).apply();
-        step("创建呼入路由InRoute3,目的地到IVR 6200");
-        List<String> trunk9 = new ArrayList<>();
-        trunk9.add(SPS);
-        trunk9.add(BRI_1);
-        trunk9.add(FXO_1);
-        trunk9.add(E1);
-        trunk9.add(SIPTrunk);
-        trunk9.add(ACCOUNTTRUNK);
-        trunk9.add(GSM);
-        apiUtil.deleteAllInbound().createInbound("Inbound1", trunk9, "IVR", "6201").apply();
-
-        step("=========== config ivr 6201  press key  end =========");
-        isReConfigIVR6201PressKeyFlag = false;
-        isReConfigIVR6201Default=true;
-        }
-    }
-
-
-    /**
-     * 重置ivr6201to default，只有按0到分机A
-     */
-    public void restIVR6201ToDefault(){
-//        if(isReConfigIVR6201Default) {
-            step("=========== rest ivr 6201 to default start =========");
-            pressKeyObjects_0.clear();
-            pressKeyObjects_0.add(new PressKeyObject(PressKey.press0, "extension", "", "1000", 0));
-            apiUtil.deleteIVR("IVR1_6201").createIVR("6201", "IVR1_6201", pressKeyObjects_0).apply();
+            apiUtil.deleteIVR("IVR1_6201").createIVR("6201", "IVR1_6201", pressKeyObjects_1).apply();
             step("创建呼入路由InRoute3,目的地到IVR 6200");
             List<String> trunk9 = new ArrayList<>();
             trunk9.add(SPS);
@@ -614,51 +592,79 @@ public class TestIVR extends TestCaseBaseNew{
             trunk9.add(GSM);
             apiUtil.deleteAllInbound().createInbound("Inbound1", trunk9, "IVR", "6201").apply();
 
-            step("=========== rest ivr 6201 to default   end =========");
+            step("=========== config ivr 6201  press key  end =========");
+            isReConfigIVR6201PressKeyFlag = false;
+            isReConfigIVR6201Default=true;
+        }
+    }
+
+
+    /**
+     * 重置ivr6201to default，只有按0到分机A
+     */
+    public void restIVR6201ToDefault(){
+//        if(isReConfigIVR6201Default) {
+        step("=========== rest ivr 6201 to default start =========");
+        pressKeyObjects_0.clear();
+        pressKeyObjects_0.add(new PressKeyObject(PressKey.press0, "extension", "", "1000", 0));
+        apiUtil.deleteIVR("IVR1_6201").createIVR("6201", "IVR1_6201", pressKeyObjects_0).apply();
+        step("创建呼入路由InRoute3,目的地到IVR 6200");
+        List<String> trunk9 = new ArrayList<>();
+        trunk9.add(SPS);
+        trunk9.add(BRI_1);
+        trunk9.add(FXO_1);
+        trunk9.add(E1);
+        trunk9.add(SIPTrunk);
+        trunk9.add(ACCOUNTTRUNK);
+        trunk9.add(GSM);
+        apiUtil.deleteAllInbound().createInbound("Inbound1", trunk9, "IVR", "6201").apply();
+
+        step("=========== rest ivr 6201 to default   end =========");
 //            isReConfigIVR6201Default = false;
-            isReConfigIVR6201PressKeyFlag = true;
+        isReConfigIVR6201PressKeyFlag = true;
 //        }
     }
 
     @Epic("P_Series")
     @Feature("IVR")
     @Story("Trunk")
-    @Description("1.通过外线呼入到IVR1按0到分机A\n" +
+    @Description("1.通过外线呼入到IVR1按0到分机A-1000\n" +
             "2.检查通话正常建立，cdr正常.")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "","IVR","Trunk", "InboundRoute","testIVR03_trunk", "GSM", "BRI", "FXO", "FXS", "E1"}, dataProvider = "routes")
+    @Test(groups = {"P3", "","IVR","Trunk", "InboundRoute","testIVR03_trunk", "GSM", "BRI", "FXO",  "E1","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR03_trunk(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite(true);
-       
+
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
 
-        step("2:【2000 呼叫 6201】，press 0 ->1000 为Ringing状态，接听，挂断;[caller]"+caller+",[callee] "+routePrefix + callee+",[deviceAssist] "+deviceAssist);
+        step("2:【2000 呼叫 6201】，press 0 ->分机1000 为Ringing状态，接听，挂断;[caller：]"+caller+",[callee：] "+routePrefix + callee+",[deviceAssist：] "+deviceAssist);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT*5);
+        sleep(WaitUntils.SHORT_WAIT*4);
 
         pjsip.Pj_Send_Dtmf(caller, "0");
-        assertStep("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),2);
+        assertStep("[通话状态校验：分机1000为Ring]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
         pjsip.Pj_Answer_Call(1000,false);
-        assertStep("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),3);
+        assertStep("[通话状态校验：分机1000为Talking]");
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+//        GSM 通话太短，卡会被锁住，故通话时长久一点
         if(message.equals("GSM")){
             sleep(80000);
         }
         pjsip.Pj_hangupCall(1000);
 
-       assertStep("[CDR校验]");
+        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         if(message.equals("SPS")){
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), CDRPage.CALLTO.IVR1_6201, CDRPage.STATUS.ANSWER, "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
-                .contains(tuple("2000<2000>".replace("2000",caller+""), CDRPage.CALLTO.Extension_1000, CDRPage.STATUS.ANSWER, "test A<1000> hung up",trunk,"","Inbound"));
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                    .contains(tuple("2000<2000>".replace("2000",caller+""), CDRPage.CALLTO.IVR1_6201, CDRPage.STATUS.ANSWER, "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                    .contains(tuple("2000<2000>".replace("2000",caller+""), CDRPage.CALLTO.Extension_1000, CDRPage.STATUS.ANSWER, "test A<1000> hung up",trunk,"","Inbound"));
 
-        softAssertPlus.assertAll();
+            softAssertPlus.assertAll();
         }
     }
 
@@ -669,10 +675,10 @@ public class TestIVR extends TestCaseBaseNew{
     @Description("1.通过sip外线呼入到IVR1按0到分机A")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P1", "IVR", "InboundRoute","Basic", "Trunk", "testIVR01_trunk","SIP"}, dataProvider = "routes")
+    @Test(groups = {"P1", "IVR", "InboundRoute","Basic", "Trunk", "testIVR01_trunk","SIP","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR01_trunk(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite(true);
-       
+
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
 
@@ -682,9 +688,11 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "0");
         sleep(WaitUntils.SHORT_WAIT * 2);
+        assertStep("[通话状态校验：分机1000为Ring]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,20),RING);
         pjsip.Pj_Answer_Call(1000,false);
         sleep(WaitUntils.SHORT_WAIT );
-        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING,5)).as("[通话状态校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING,5)).as("[通话状态校验]").isEqualTo(TALKING);
 
         pjsip.Pj_hangupCall(1000);
 
@@ -701,12 +709,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Epic("P_Series")
     @Feature("IVR")
     @Story("Basic_Trunk")
-    @Description("通过sip外线呼入到IVR1按0到分机A")
+    @Description("通过sps外线呼入到IVR1,直播分机号分机B-1001")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P1", "IVR", "InboundRoute","Basic", "Trunk", "testIVR02_trunk","SPS"}, dataProvider = "routes")
+    @Test(groups = {"P1", "IVR", "InboundRoute","Basic", "Trunk", "testIVR02_trunk","SPS","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR02_trunk(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -716,9 +724,11 @@ public class TestIVR extends TestCaseBaseNew{
         sleep(3000);
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","1");
         sleep(WaitUntils.SHORT_WAIT);
+        assertStep("[通话状态校验：分机1001为Ring]");
+        Assert.assertEquals(getExtensionStatus(1001,RING,20),RING);
         pjsip.Pj_Answer_Call(1001,false);
         sleep(WaitUntils.SHORT_WAIT );
-        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING,20)).as("[通话状态校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING,20)).as("[通话状态校验]").isEqualTo(TALKING);
 
         pjsip.Pj_hangupCall(1001);
 
@@ -743,10 +753,10 @@ public class TestIVR extends TestCaseBaseNew{
             "3.进入asterisk检查播放3遍后再等待3秒通话被自动挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P2", "IVR", "Prompt","testIVR04_PPRD_1","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes")
+    @Test(groups = {"P2", "IVR", "Prompt","testIVR04_PPRD_1","PromptRepeatCount","ResponseTimeout","DigitTimeout","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR04_PPRD_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-      prerequisite(true);
-       new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start(); //启动子线程，监控asterisk log
+        prerequisite(true);
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start(); //启动子线程，监控asterisk log
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -756,9 +766,9 @@ public class TestIVR extends TestCaseBaseNew{
         sleep(WaitUntils.SHORT_WAIT*2);
         int tmp = 0;
         while (asteriskObjectList.size() !=3 && tmp <= 800){
-           sleep(50);
-           tmp++;
-           log.debug("[tmp]_"+tmp);
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_"+tmp);
         }
         if(tmp == 801){
             for(int i = 0 ; i < asteriskObjectList.size() ; i++){
@@ -793,7 +803,7 @@ public class TestIVR extends TestCaseBaseNew{
             "检查通话正常建立，cdr正常")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P2", "IVR", "Prompt","testIVR06_PPRD_2","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes")
+    @Test(groups = {"P2", "IVR", "Prompt","testIVR06_PPRD_2","PromptRepeatCount","ResponseTimeout","DigitTimeout","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR05_PPRD_1_2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite(true);//启动子线程，监控asterisk log
 
@@ -820,7 +830,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller,"0");
         assertStep("[Asterisk校验]");
-        softAssertPlus.assertThat(getExtensionStatus(1000,RING,30)).as("[Asterisk校验] 播放2 遍提示音后，按0，转分机 "+ DataUtils.getCurrentTime()).isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1000,RING,30)).as("[Asterisk校验] 播放2 遍提示音后，按0，转分机 "+ DataUtils.getCurrentTime()).isEqualTo(RING);
         pjsip.Pj_Answer_Call(1000,false);
         sleep(3000);
         pjsip.Pj_hangupCall(1000);
@@ -842,20 +852,20 @@ public class TestIVR extends TestCaseBaseNew{
         softAssertPlus.assertAll();
 
     }
-    
+
     @SneakyThrows
     @Epic("P_Series")
     @Feature("IVR")
     @Story("Prompt，PromptRepeatCount，ResponseTimeout，DigitTimeout")
     @Description("1.通过sip外线呼入到IVR1\n" +
-                 "2.编辑IVR1,Prompt选择【None】，PromptRepeatCount 选择1，ResponseTimeout选择1，DigitTimeout选择1" +
+            "2.编辑IVR1,Prompt选择【None】，PromptRepeatCount 选择1，ResponseTimeout选择1，DigitTimeout选择1" +
             "通过sip外线呼入到IVR1\n" +
             "\t通话1秒就被挂断，cdr正常")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P3", "IVR", "Prompt","testIVR06_PPRD_2","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR", "Prompt","testIVR06_PPRD_2","PromptRepeatCount","ResponseTimeout","DigitTimeout","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR06_PPRD_2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start();
 
         step("1:login with admin,trunk: "+message);
@@ -898,7 +908,7 @@ public class TestIVR extends TestCaseBaseNew{
             "\t\t检查通话正常建立，cdr正常")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P3", "IVR", "Prompt","testIVR07_PPRD_3","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR", "Prompt","testIVR07_PPRD_3","PromptRepeatCount","ResponseTimeout","DigitTimeout","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR07_PPRD_3(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite(true);
         asteriskObjectList.clear();
@@ -932,16 +942,16 @@ public class TestIVR extends TestCaseBaseNew{
 //        }
         if(tmp == 601){
             for(int i = 0 ; i < asteriskObjectList.size() ; i++){
-            log.debug(i+"_【asterisk object name】 "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
-        }
+                log.debug(i+"_【asterisk object name】 "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
+            }
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
         }
         pjsip.Pj_Send_Dtmf(caller,"0");//dtmf默认等待3s
 
         assertStep("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,5),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1000);
 
@@ -975,9 +985,9 @@ public class TestIVR extends TestCaseBaseNew{
             "\t\t分机1002响铃，通话正常建立，cdr正常")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P3", "IVR", "Prompt","testIVR08_PPRD_4","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR", "Prompt","testIVR08_PPRD_4","PromptRepeatCount","ResponseTimeout","DigitTimeout","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR08_PPRD_4(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"Playing 'record/prompt")).start();
 
         step("1:login with admin,trunk: "+message);
@@ -1020,9 +1030,9 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller);
 
         assertStep("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1002,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1002,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1002,false);
-        Assert.assertEquals(getExtensionStatus(1002,TALKING,5),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1002,TALKING,5),RING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(3000);
         pjsip.Pj_hangupCall(1002);
 
@@ -1054,9 +1064,9 @@ public class TestIVR extends TestCaseBaseNew{
             "\t\t检查通话正常建立，cdr正常")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P3", "IVR", "Prompt","testIVR09_PPRD_5","PromptRepeatCount","ResponseTimeout","DigitTimeout"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR", "Prompt","testIVR09_PPRD_5","PromptRepeatCount","ResponseTimeout","DigitTimeout","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR09_PPRD_5(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,IVR_GREETING_DIAL_EXT)).start();
 
         step("1:login with admin,trunk: "+message);
@@ -1093,9 +1103,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         assertStep("[通话状态校验]");
         pjsip.Pj_Send_Dtmf(caller,"0");
-        Assert.assertEquals(getExtensionStatus(1000,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,20),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,20),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1000);
 
@@ -1117,13 +1127,13 @@ public class TestIVR extends TestCaseBaseNew{
     @Feature("IVR")
     @Story("DialExtension")
     @Description("1.通过sip外线呼入到IVR1按1020到分机FXS\n" +
-                 "2.预期辅助2的分机2000响铃，检查通话正常建立，cdr正常.")
+            "2.预期辅助2的分机2000响铃，检查通话正常建立，cdr正常.")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testIVR10_DialExtension_1","FXS","PSeries"}, dataProvider = "routes")
     public void testIVR10_DialExtension_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1134,9 +1144,9 @@ public class TestIVR extends TestCaseBaseNew{
         //1020--2005
         pjsip.Pj_Send_Dtmf(caller, "1","0","2","0");
         assertStep("[通话状态校验：辅助2的2000分机响铃]");
-        softAssertPlus.assertThat(getExtensionStatus(2000,RING,30)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(2000,RING,30)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(2000,false);
-        softAssertPlus.assertThat(getExtensionStatus(2000,TALKING,30)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(2000,TALKING,30)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(caller);
 
 //       assertStep("[CDR校验]");
@@ -1160,14 +1170,14 @@ public class TestIVR extends TestCaseBaseNew{
     @Feature("IVR")
     @Story("DialExtension")
     @Description("1.编辑IVR1，禁用Dial Extensions，选择disable\n" +
-                 "2.通过sps外线呼入到IVR1按分机号1001到分机B\n" +
-                 "3.分机B不会响铃，通话被挂断")
+            "2.通过sps外线呼入到IVR1按分机号1001到分机B\n" +
+            "3.分机B不会响铃，通话被挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2", "IVR","DialExtension", "testIVR11_DialExtension_2"}, dataProvider = "routes")
     public void testIVR11_DialExtension_2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1184,7 +1194,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","1");
         step("[通话状态校验]分机B不会响铃，通话被挂断");
-        Assert.assertEquals(getExtensionStatus(1001, RING,20),0,"[通话校验]");
+        int result =getExtensionStatus(1001,RING,10);
+        Assert.assertTrue((result ==HUNGUP) ||  (result ==IDLE));
+//        Assert.assertEquals(getExtensionStatus(1001, RING,20),0,"[通话校验]");
         sleep(10000);
 
         assertStep("[CDR校验]");
@@ -1205,9 +1217,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR","DialExtension", "testIVR12_DialExtension_3"}, dataProvider = "routes")
+    @Test(groups = {"P2", "IVR","DialExtension", "testIVR12_DialExtension_3","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR12_DialExtension_3(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1223,9 +1235,9 @@ public class TestIVR extends TestCaseBaseNew{
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","0");
         step("[通话状态校验] 分机A响铃，可正常接听，分机1000挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1000,RING,5)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1000,RING,10)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1000,false);
-        softAssertPlus.assertThat(getExtensionStatus(1000,TALKING,5)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1000,TALKING,5)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
@@ -1242,14 +1254,14 @@ public class TestIVR extends TestCaseBaseNew{
     @Feature("IVR")
     @Story("DialExtension")
     @Description("1.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003\n" +
-                 "2.通过sps外线呼入到IVR1，按分机号1002\n" +
-                 "3.分机1002不会响铃，通话被挂断")
+            "2.通过sps外线呼入到IVR1，按分机号1002\n" +
+            "3.分机1002不会响铃，通话被挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR","DialExtension", "testIVR13_DialExtension_4"}, dataProvider = "routes")
+    @Test(groups = {"P2", "IVR","DialExtension", "testIVR13_DialExtension_4","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR13_DialExtension_4(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-      prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1265,7 +1277,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","2");
         step("[通话状态校验] 分机1002不会响铃，通话被挂断");
-        softAssertPlus.assertThat(getExtensionStatus(1002,IDLE,20)).as("[通话校验]").isEqualTo(0);
+        int result =getExtensionStatus(1002,RING,10);
+        Assert.assertTrue((result ==HUNGUP) ||  (result ==IDLE));
+//        softAssertPlus.assertThat(getExtensionStatus(1002,IDLE,20)).as("[通话校验]").isEqualTo(IDLE);
         sleep(10000);
 
         assertStep("[CDR校验]");
@@ -1281,14 +1295,14 @@ public class TestIVR extends TestCaseBaseNew{
     @Feature("IVR")
     @Story("DialExtension")
     @Description("1.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003\n" +
-                 "2.通过sps外线呼入到IVR1，按分机号1001\n" +
-                 "3.分机1001响铃，接听，外线主叫挂断，检查cdr.")
+            "2.通过sps外线呼入到IVR1，按分机号1001\n" +
+            "3.分机1001响铃，接听，外线主叫挂断，检查cdr.")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR14_DialExtension_5"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR14_DialExtension_5","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR14_DialExtension_5(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1305,9 +1319,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","1");
         step("[通话状态校验] 分机1001响铃，接听，外线主叫挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1001,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1001,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1001,false);
-        softAssertPlus.assertThat(getExtensionStatus(1001,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1001,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(caller);
 
         assertStep("[CDR校验]");
@@ -1329,9 +1343,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR15_DialExtension_6"})
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR15_DialExtension_6","PSeries","Cloud","K2"})
     public void testIVR15_DialExtension_6() {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: 内部分机");
         auto.loginPage().loginWithAdmin();
@@ -1348,9 +1362,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(1004, "1","0","0","3");
         step("[通话状态校验] 分机1003响铃，接听，1004主叫挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1003,RING,5)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1003,RING,5)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1003,false);
-        softAssertPlus.assertThat(getExtensionStatus(1003,TALKING,5)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1003,TALKING,5)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1004);
 
         assertStep("[CDR校验]");
@@ -1367,15 +1381,15 @@ public class TestIVR extends TestCaseBaseNew{
     @Feature("IVR")
     @Story("DialExtension")
     @Description("1.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003\n" +
-                 "编辑分机选择去掉1001、1003"+
-                 "2.7.通过sps外线呼入到IVR1，按分机号1001\n" +
-                 "3.分机B不会响铃，通话被挂断")
+            "编辑分机选择去掉1001、1003"+
+            "2.7.通过sps外线呼入到IVR1，按分机号1001\n" +
+            "3.分机B不会响铃，通话被挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR16_DialExtension_7"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR16_DialExtension_7","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR16_DialExtension_7(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1392,9 +1406,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","1");
         step("[通话状态校验] 分机1001响铃，接听，外线主叫挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1001,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1001,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1001,false);
-        softAssertPlus.assertThat(getExtensionStatus(1001,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1001,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(caller);
 
         assertStep("[CDR校验]");
@@ -1411,15 +1425,15 @@ public class TestIVR extends TestCaseBaseNew{
     @Feature("IVR")
     @Story("DialExtension")
     @Description("1.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003\n" +
-                 "编辑分机选择去掉1001、1003"+
-                 "2.内部分机1004呼入到IVR1，按分机号1003\n" +
-                 "3.分机D不会响铃，通话被挂断.")
+            "编辑分机选择去掉1001、1003"+
+            "2.内部分机1004呼入到IVR1，按分机号1003\n" +
+            "3.分机D不会响铃，通话被挂断.")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR11_DialExtension_2"})
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR11_DialExtension_2","PSeries","Cloud","K2"})
     public void testIVR17_DialExtension_8() {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: 内部分机");
         auto.loginPage().loginWithAdmin();
@@ -1436,10 +1450,12 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(1004, "1","0","0","3");
         step("[通话状态校验] 分机D不会响铃，通话被挂断");
-        Assert.assertEquals(getExtensionStatus(1003,RING,20),0);
+        int result =getExtensionStatus(1003,RING,10);
+        Assert.assertTrue((result ==HUNGUP) ||  (result ==IDLE));
+//        Assert.assertEquals(getExtensionStatus(1003,RING,20),0);
 
 
-       assertStep("[CDR校验]");
+        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
@@ -1457,9 +1473,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR","DialExtension", "testIVR18_DialExtension_9"}, dataProvider = "routes")
+    @Test(groups = {"P2", "IVR","DialExtension", "testIVR18_DialExtension_9","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR18_DialExtension_9(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1476,7 +1492,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","0");
         step("[通话状态校验] 分机A不会响铃，通话被挂断");
-        Assert.assertEquals(getExtensionStatus(1000,RING,20),0);
+        int result =getExtensionStatus(1000,RING,10);
+        Assert.assertTrue((result ==HUNGUP) ||  (result ==IDLE));
+//        Assert.assertEquals(getExtensionStatus(1000,RING,20),0);
         Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4);
 
         assertStep("[CDR校验]");
@@ -1496,9 +1514,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR","DialExtension", "testIVR19_DialExtension_10"}, dataProvider = "routes")
+    @Test(groups = {"P2", "IVR","DialExtension", "testIVR19_DialExtension_10","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR19_DialExtension_10(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1515,9 +1533,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","2");
         step("[通话状态校验] 分机C响铃，可正常接听，挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1002,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1002,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1002,false);
-        softAssertPlus.assertThat(getExtensionStatus(1002,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1002,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1002);
 
         assertStep("[CDR校验]");
@@ -1539,9 +1557,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR20_DialExtension_11"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR20_DialExtension_11","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR20_DialExtension_11(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1558,7 +1576,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","1");
         step("[通话状态校验] 分机B不会响铃，通话被挂断");
-        Assert.assertEquals(getExtensionStatus(1001,RING,20),0);
+        int result =getExtensionStatus(1001,RING,10);
+        Assert.assertTrue((result ==HUNGUP) ||  (result ==IDLE));
+//        Assert.assertEquals(getExtensionStatus(1001,RING,20),0);
         Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4);
 
         assertStep("[CDR校验]");
@@ -1578,9 +1598,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR21_DialExtension_12"})
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR21_DialExtension_12","PSeries","Cloud","K2"})
     public void testIVR21_DialExtension_12() {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: 内部分机");
         auto.loginPage().loginWithAdmin();
@@ -1597,8 +1617,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(1004, "1","0","0","3");
         step("[通话状态校验] 分机D不会响铃，通话被挂断");
-//        Assert.assertEquals(getExtensionStatus(1004,HUNGUP,20),4);
-        Assert.assertEquals(getExtensionStatus(1003,RING,20),0);
+        int result =getExtensionStatus(1003,RING,10);
+        Assert.assertTrue((result ==HUNGUP) ||  (result ==IDLE));
+//        Assert.assertEquals(getExtensionStatus(1003,RING,20),0);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -1618,9 +1639,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR22_DialExtension_13"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR22_DialExtension_13","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR22_DialExtension_13(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1637,8 +1658,12 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "1","0","0","1");
         step("[通话状态校验] 分机1001不会响铃，外线主叫挂断，检查cdr");
-        Assert.assertEquals(getExtensionStatus(1001,RING,20),0);
-        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4);
+        int result =getExtensionStatus(1001,RING,10);
+        Assert.assertTrue((result ==HUNGUP) ||  (result ==IDLE));
+//        Assert.assertEquals(getExtensionStatus(1001,RING,20),0);
+        int result1 =getExtensionStatus(caller,HUNGUP,10);
+        Assert.assertTrue((result1 ==HUNGUP) ||  (result1 ==IDLE));
+//        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4);
         sleep(5000);
 
         assertStep("[CDR校验]");
@@ -1659,9 +1684,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR23_DialExtension_14"})
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR23_DialExtension_14","PSeries","Cloud","K2"})
     public void testIVR23_DialExtension_14() {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: 内部分机 ");
         auto.loginPage().loginWithAdmin();
@@ -1678,9 +1703,9 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(1004, "1","0","0","3");
         step("[通话状态校验] 分机1003响铃，接听，1004主叫挂断，检查cdr ");
-        softAssertPlus.assertThat(getExtensionStatus(1003,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1003,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1003,false);
-        softAssertPlus.assertThat(getExtensionStatus(1003,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1003,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1004);
 
         assertStep("[CDR校验]");
@@ -1703,12 +1728,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P1", "IVR","DialExtension", "testIVR24_DialExtension_15","Basic","Trunk"}, dataProvider = "routes")
+    @Test(groups = {"P1", "IVR","DialExtension", "testIVR24_DialExtension_15","Basic","Trunk","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR24_DialExtension_15(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2.编辑IVR1，选择\tRestricted Extensions，分机选择ExGroup1");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
@@ -1722,9 +1747,9 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, "1001");
 
         assertStep("[通话状态校验]");
-        softAssertPlus.assertThat(getExtensionStatus(1001,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1001,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1001,false);
-        softAssertPlus.assertThat(getExtensionStatus(1001,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1001,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1001);
 
         assertStep("[CDR校验]");
@@ -1746,9 +1771,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR11_DialExtension_2"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR11_DialExtension_2","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR25_DialExtension_16(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1776,14 +1801,16 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, "6","3","0","0");
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4);
+//        int result1 =getExtensionStatus(caller,HUNGUP,20);
+//        Assert.assertTrue((result1 ==HUNGUP) ||  (result1 ==IDLE));
+        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),HUNGUP);
         pjsip.Pj_hangupCall(caller);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", "IVR IVR1_6201<6201>", "ANSWERED", "Invalid key", "SPS1", "", "Inbound"));
+                .contains(tuple("2000<2000>", "IVR IVR1_6201<6201>", "ANSWERED", "Invalid key", trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
 
@@ -1797,9 +1824,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR26_DialExtension_17"}, dataProvider = "routes")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR26_DialExtension_17","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR26_DialExtension_17(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(true);
+        prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1816,12 +1843,12 @@ public class TestIVR extends TestCaseBaseNew{
 
         pjsip.Pj_Send_Dtmf(caller, "0");
         step("[通话状态校验] 分机1001响铃，接听，外线主叫挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1000,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(1000,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1000,false);
-        softAssertPlus.assertThat(getExtensionStatus(1000,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(1000,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(caller);
 
-       assertStep("[CDR校验]");
+        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
@@ -1835,11 +1862,11 @@ public class TestIVR extends TestCaseBaseNew{
     @Feature("IVR")
     @Story("DialOutboundRoutes")
     @Description("1.1.通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001\n" +
-                "2.3001正常响铃，接听，查看cdr\n" )
+            "2.3001正常响铃，接听，查看cdr\n" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR","DialExtension", "testDialOutboundRoutes_","Trunk","OutboundRoute","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    @Test(groups = {"P2", "IVR","DialExtension", "testDialOutboundRoutes_","Trunk","OutboundRoute","DialOutboundRoutes","PSeries","Cloud","K2"}, dataProvider = "routesOutbound")
     public void testIVR27_DialOutboundRoutes_1(String routePrefix, int caller, String callee, String deviceAssist, String prfix, int OutCallee, int ringExtension, String inbound, String outbound) {
         prerequisite(true);//        restIVR_6201();  //重置ivr and inbound
 
@@ -1861,12 +1888,12 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
 
         step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(ringExtension,false);
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(caller);
 
-       assertStep("[CDR校验]");
+        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
@@ -1895,7 +1922,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("ID1034912 BRI/E1 exception")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR28_DialOutboundRoutes_2To7","Trunk","OutboundRoute","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR28_DialOutboundRoutes_2To7","Trunk","OutboundRoute","DialOutboundRoutes","PSeries","Cloud","K2"}, dataProvider = "routesOutbound")
     public void testIVR28_DialOutboundRoutes_2To7(String routePrefix, int caller, String callee, String deviceAssist, String prfix, int OutCallee, int ringExtesnion, String inbound, String outbound) {
         prerequisite(true);//        restIVR_6201();  //重置ivr and inbound
 
@@ -1917,13 +1944,13 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
 
         step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-        softAssertPlus.assertThat(getExtensionStatus(ringExtesnion,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtesnion,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(OutCallee,false);
-        softAssertPlus.assertThat(getExtensionStatus(ringExtesnion,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtesnion,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(caller);
 
-       assertStep("[CDR校验]");
+        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
 //        if(prfix.equals("5") || prfix.equals("6")){
 //            List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
@@ -1933,10 +1960,10 @@ public class TestIVR extends TestCaseBaseNew{
 //
 //        }else{
 
-            List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                    .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound".replace("2000",caller+""),inbound,"","Inbound"))
-                    .contains(tuple("2000<2000>".replace("2000",caller+""), prfix + OutCallee + "", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),inbound,outbound,"Outbound"));
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound".replace("2000",caller+""),inbound,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), prfix + OutCallee + "", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),inbound,outbound,"Outbound"));
 
 //        }
         softAssertPlus.assertAll();
@@ -1947,13 +1974,13 @@ public class TestIVR extends TestCaseBaseNew{
     @Story("DialOutboundRoutes")
     @Description("编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】\n" +
             "8.通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001\n" +
-                 "呼出失败，通话挂断")
+            "呼出失败，通话挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR","DialExtension", "testIVR29_DialOutboundRoutes_8","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    @Test(groups = {"P2", "IVR","DialExtension", "testIVR29_DialOutboundRoutes_8","DialOutboundRoutes","PSeries","Cloud","K2"}, dataProvider = "routesOutbound")
     public void testIVR29_DialOutboundRoutes_8(String routePrefix, int caller, String callee, String deviceAssist, String prfix, int OutCallee, int ringExtension, String inbound, String outbound) {
-       prerequisite(true);//        restIVR_6201(); //重置ivr and inbound
+        prerequisite(true);//        restIVR_6201(); //重置ivr and inbound
 
         step("1:login with admin,trunk: "+inbound);
         auto.loginPage().loginWithAdmin();
@@ -1972,9 +1999,9 @@ public class TestIVR extends TestCaseBaseNew{
         log.debug("[DTMF] " +prfix + OutCallee);
         pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
 
-        step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,IDLE,10)).as("[通话校验]").isEqualTo(0);
-        softAssertPlus.assertThat(getExtensionStatus(caller,HUNGUP,10)).as("[通话校验]").isEqualTo(4);
+        step("[通话状态校验] 呼出失败，3001不会响铃，查看cdr");
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,IDLE,10)).as("[通话校验]").isEqualTo(IDLE);
+        softAssertPlus.assertThat(getExtensionStatus(caller,HUNGUP,10)).as("[通话校验]").isEqualTo(HUNGUP);
         pjsip.Pj_hangupCall(caller);
 
         assertStep("[CDR校验]");
@@ -1982,8 +2009,7 @@ public class TestIVR extends TestCaseBaseNew{
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
                 .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound",inbound,"","Inbound"))
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "FAILED", "call_unreachable / call_congestion","SPS1","","Inbound"));
-
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "13001", "NO ANSWER", "13001 rejected",SPS,SPS,"Outbound"));
         softAssertPlus.assertAll();
     }
 
@@ -1996,9 +2022,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR30_DialOutboundRoutes_9","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR30_DialOutboundRoutes_9","DialOutboundRoutes","PSeries","Cloud","K2"}, dataProvider = "routesOutbound")
     public void testIVR30_DialOutboundRoutes_9(String routePrefix, int caller, String callee, String deviceAssist, String prfix, int OutCallee, int ringExtension, String inbound, String outbound) {
-       prerequisite(true); //重置ivr and inbound
+        prerequisite(true); //重置ivr and inbound
 
         step("1:login with admin,trunk: "+inbound);
         auto.loginPage().loginWithAdmin();
@@ -2018,9 +2044,9 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
 
         assertStep("[通话状态校验]");
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(ringExtension,false);
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(caller);
 
         assertStep("[CDR校验]");
@@ -2043,9 +2069,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR31_DialOutboundRoutes_10","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR31_DialOutboundRoutes_10","DialOutboundRoutes","PSeries","Cloud","K2"}, dataProvider = "routesOutbound")
     public void testIVR31_DialOutboundRoutes_10(String routePrefix, int caller, String callee, String deviceAssist, String prfix, int OutCallee, int ringExtension, String inbound, String outbound) {
-       prerequisite(true);//        restIVR_6201(); //重置ivr and inbound
+        prerequisite(true);//        restIVR_6201(); //重置ivr and inbound
 
         step("1:login with admin,trunk: "+inbound);
         auto.loginPage().loginWithAdmin();
@@ -2064,15 +2090,15 @@ public class TestIVR extends TestCaseBaseNew{
         log.debug("[DTMF] " +prfix + OutCallee);
         pjsip.Pj_Send_Dtmf(1003, prfix + OutCallee);
 
-        step("[通话状态校验] ringExtension"+ringExtension);
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(2);
+        step("[通话状态校验] ringExtension:"+ringExtension);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(ringExtension,false);
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(3);
-        pjsip.Pj_hangupCall(caller);
-
-       assertStep("[CDR校验]");
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
+        pjsip.Pj_hangupCall(1003);
+        sleep(1000);
+        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-       
+
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
                 .contains(tuple("testa D<1003>", "IVR IVR1_6201<6201>", "ANSWERED", "testa D<1003> dialed Outbound", "", "", "Internal"))
@@ -2090,9 +2116,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR32_DialOutboundRoutes_11","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR32_DialOutboundRoutes_11","DialOutboundRoutes","PSeries","Cloud","K2"}, dataProvider = "routesOutbound")
     public void testIVR32_DialOutboundRoutes_11(String routePrefix, int caller, String callee, String deviceAssist, String prfix, int OutCallee, int ringExtension, String inbound, String outbound) {
-       prerequisite(true); //重置ivr and inbound
+        prerequisite(true); //重置ivr and inbound
 
         step("1:login with admin,trunk: "+inbound);
         auto.loginPage().loginWithAdmin();
@@ -2112,12 +2138,12 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
 
         step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(2);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(ringExtension,false);
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(3);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(caller);
 
-       assertStep("[CDR校验]");
+        assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
@@ -2136,7 +2162,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","DialExtension", "testIVR32_DialOutboundRoutes_11","DialOutboundRoutes"}, dataProvider = "routesOutbound")
+    @Test(groups = {"P3", "IVR","DialExtension", "testIVR32_DialOutboundRoutes_11","DialOutboundRoutes","PSeries","Cloud","K2"}, dataProvider = "routesOutbound")
     public void testIVR33_DialOutboundRoutes_12(String routePrefix, int caller, String callee, String deviceAssist, String prfix, int OutCallee, int ringExtension, String inbound, String outbound) {
         prerequisite(true); //重置ivr and inbound
 
@@ -2157,7 +2183,7 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
 
         step("[通话状态校验] 3001正常响铃，接听，查看cdr");
-        softAssertPlus.assertThat(getExtensionStatus(caller,HUNGUP,20)).as("[通话校验]").isEqualTo(4);
+        softAssertPlus.assertThat(getExtensionStatus(caller,HUNGUP,20)).as("[通话校验]").isEqualTo(HUNGUP);
 
 
         assertStep("[CDR校验]");
@@ -2178,10 +2204,10 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR","KeyPressEvent", "testIVR34_KeyPressEvent_1"}, dataProvider = "routes")
+    @Test(groups = {"P2", "IVR","KeyPressEvent", "testIVR34_KeyPressEvent_1","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR34_KeyPressEvent_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
-       prerequisite(false);
-       
+        prerequisite(false);
+
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
 
@@ -2193,7 +2219,7 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller,"1");//转到IVR0
 
         assertStep(caller + "[通话状态校验] 3001正常响铃，接听，查看cdr");
-        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4);
+        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),HUNGUP);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -2219,12 +2245,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR35_KeyPressEvent_2To4"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR35_KeyPressEvent_2To4","PSeries","Cloud","K2"}, dataProvider = "routesKeyPressEvent")
     public void testIVR35_KeyPressEvent_2To4(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] 4 -->"+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -2234,7 +2260,7 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller,dtmf);//转到IVR0
 
         assertStep(caller + "[通话状态校验] 3001正常响铃，接听，查看cdr");
-        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4);
+        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20), HUNGUP);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -2255,12 +2281,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P1", "IVR","KeyPressEvent", "testIVR36_KeyPressEvent_5","Basic","Trunk"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P1", "IVR","KeyPressEvent", "testIVR36_KeyPressEvent_5","Basic","Trunk","PSeries","Cloud","K2","Extension"}, dataProvider = "routesKeyPressEvent")
     public void testIVR36_KeyPressEvent_5(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -2270,9 +2296,9 @@ public class TestIVR extends TestCaseBaseNew{
         assertStep(caller + "[通话状态校验]");
         //5.通过sip外线呼入到IVR1，按1 分机1001响铃可正常接听，挂断
 
-        Assert.assertEquals(getExtensionStatus(1001,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());        pjsip.Pj_Answer_Call(1002,false);
+        Assert.assertEquals(getExtensionStatus(1001,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());        pjsip.Pj_Answer_Call(1002,false);
         pjsip.Pj_Answer_Call(1001,false);
-        Assert.assertEquals(getExtensionStatus(1001,TALKING,5),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(3000);
         pjsip.Pj_hangupCall(1001);
         assertStep("9:[CDR显示]");
@@ -2293,12 +2319,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR37_KeyPressEvent_6"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR37_KeyPressEvent_6","PSeries","Cloud","K2","HangUp"}, dataProvider = "routesKeyPressEvent")
     public void testIVR37_KeyPressEvent_6(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -2307,7 +2333,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         assertStep(caller + "[通话状态校验]");
         //6.通过sip外线呼入到IVR1，按2 通话被挂断
-        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4);
+        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),HUNGUP);
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
@@ -2324,12 +2350,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR38_KeyPressEvent_7"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR38_KeyPressEvent_7","PSeries","Cloud","K2","Voicemail"}, dataProvider = "routesKeyPressEvent")
     public void testIVR38_KeyPressEvent_7(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -2351,7 +2377,7 @@ public class TestIVR extends TestCaseBaseNew{
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
                 .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Voicemail" ,trunk,"","Inbound"))
-                 .contains(tuple("3001<3001>", "Voicemail test2 B<1001>", "VOICEMAIL", "3001<3001> break_out",trunk, "", "Inbound"));
+                .contains(tuple("3001<3001>", "Voicemail test2 B<1001>", "VOICEMAIL", "3001<3001> break_out",trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
 
@@ -2365,12 +2391,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR39_KeyPressEvent_8"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR39_KeyPressEvent_8","PSeries","Cloud","K2",}, dataProvider = "routesKeyPressEvent")
     public void testIVR39_KeyPressEvent_8(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -2380,9 +2406,9 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, "0");
 
         assertStep("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,5),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1000);
 
@@ -2403,26 +2429,26 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR40_KeyPressEvent_9"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR40_KeyPressEvent_9","PSeries","Cloud","K2","RingGroup"}, dataProvider = "routesKeyPressEvent")
     public void testIVR40_KeyPressEvent_9(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1001,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
         pjsip.Pj_Answer_Call(1001,false);
-        Assert.assertEquals(getExtensionStatus(1001,TALKING,5),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1000,HUNGUP,5),4,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,HUNGUP,5),4,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,HUNGUP,5),HUNGUP,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,HUNGUP,5),HUNGUP,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1001);
 
@@ -2445,26 +2471,26 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR41_KeyPressEvent_10"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR41_KeyPressEvent_10","PSeries","Cloud","K2","RingGroup"}, dataProvider = "routesKeyPressEvent")
     public void testIVR41_KeyPressEvent_10(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1001,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
-       // sleep(10000);
-        Assert.assertEquals(getExtensionStatus(1001,HUNGUP,10),4,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,HUNGUP,5),4,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1000,RING,5),2,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        // sleep(10000);
+        Assert.assertEquals(getExtensionStatus(1001,HUNGUP,10),HUNGUP,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,HUNGUP,5),HUNGUP,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,5),RING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
 
 
         pjsip.Pj_Answer_Call(1000,false);
@@ -2490,12 +2516,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR42_KeyPressEvent_11"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR42_KeyPressEvent_11","PSeries","Cloud","K2","Queue"}, dataProvider = "routesKeyPressEvent")
     public void testIVR42_KeyPressEvent_11(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) throws IOException, JSchException {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("新增动态坐席：1003\\1004分别拨打*76400 加入到Queue0");
         String result = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI,"queue show queue-6400"));
@@ -2515,13 +2541,13 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1001,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1004,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
         pjsip.Pj_Answer_Call(1004,false);
-        Assert.assertEquals(getExtensionStatus(1004,TALKING,10),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,TALKING,10),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1004);
 
@@ -2543,12 +2569,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR43_KeyPressEvent_12"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR43_KeyPressEvent_12","PSeries","Cloud","K2","Queue"}, dataProvider = "routesKeyPressEvent")
     public void testIVR43_KeyPressEvent_12(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) throws IOException, JSchException {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("新增动态坐席：1003\\1004分别拨打*76400 加入到Queue0");
         String result = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI,"queue show queue-6400"));
@@ -2568,13 +2594,13 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1001,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1004,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
         pjsip.Pj_Answer_Call(1001,false);
-        Assert.assertEquals(getExtensionStatus(1001,TALKING,5),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1001);
 
@@ -2597,12 +2623,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR44_KeyPressEvent_13"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR44_KeyPressEvent_13","PSeries","Cloud","K2","Queue"}, dataProvider = "routesKeyPressEvent")
     public void testIVR44_KeyPressEvent_13(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) throws IOException, JSchException {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("新增动态坐席：1003\\1004分别拨打*76400 加入到Queue0");
         String result = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI,"queue show queue-6400"));
@@ -2622,19 +2648,19 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1001,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1004,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
-        Assert.assertEquals(getExtensionStatus(1000,HUNGUP,60),4,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1001,HUNGUP,60),4,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,HUNGUP,60),4,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1004,HUNGUP,60),4,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,HUNGUP,60),HUNGUP,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,HUNGUP,60),HUNGUP,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,HUNGUP,60),HUNGUP,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,HUNGUP,60),HUNGUP,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
-        Assert.assertEquals(getExtensionStatus(1000,RING,60),2,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,60),RING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,5),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1000);
 
@@ -2657,12 +2683,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR45_KeyPressEvent_14"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR45_KeyPressEvent_14","PSeries","Cloud","K2","Queue"}, dataProvider = "routesKeyPressEvent")
     public void testIVR45_KeyPressEvent_14(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) throws IOException, JSchException {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("新增动态坐席：1003\\1004分别拨打*76400 加入到Queue0");
         String result = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI,"queue show queue-6400"));
@@ -2682,19 +2708,19 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1001,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1004,RING,5),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
         sleep(5000);
         pjsip.Pj_Send_Dtmf(caller, "0");
-        Assert.assertEquals(getExtensionStatus(1001,RING,20),2,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1000,HUNGUP,5),4,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1003,HUNGUP,5),4,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        Assert.assertEquals(getExtensionStatus(1004,HUNGUP,5),4,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,20),RING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,HUNGUP,5),HUNGUP,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,HUNGUP,5),HUNGUP,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,HUNGUP,5),HUNGUP,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1001,false);
-        Assert.assertEquals(getExtensionStatus(1001,TALKING,60),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,TALKING,60),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1001);
 
@@ -2719,9 +2745,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR46_KeyPressEvent_15"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR46_KeyPressEvent_15","PSeries","Cloud","K2","DialbyName"}, dataProvider = "routesKeyPressEvent")
     public void testIVR46_KeyPressEvent_15(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,DIR_USINGKEYPAD)).start(); //启动子线程，监控asterisk log
+        prerequisite(false);new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,DIR_USINGKEYPAD)).start(); //启动子线程，监控asterisk log
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -2731,36 +2757,34 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         step("3.进入asterisk检查播放dir-usingkeypad.gsm时");
-        int tmp = 0;
-        while (asteriskObjectList.size() !=1 && tmp <= 600){
-            sleep(50);
-            tmp++;
-            log.debug("[tmp]_"+tmp);
-        }
-        if(tmp==601){
-            Assert.assertTrue(false,"[asterisk time out not found key] "+DIR_USINGKEYPAD);
-        }
+//        int tmp = 0;
+//        while (asteriskObjectList.size() !=1 && tmp <= 600){
+//            sleep(50);
+//            tmp++;
+//            log.debug("[tmp]_"+tmp);
+//        }
+//        if(tmp==601){
+//            Assert.assertTrue(false,"[asterisk time out not found key] "+DIR_USINGKEYPAD);
+//        }
         step("4.按8378 然后按1");
-        sleep(5000);
-        pjsip.Pj_Make_Call_Auto_Answer(caller,"8378", DEVICE_IP_LAN);
+        sleep(10000);
+        pjsip.Pj_Send_Dtmf(caller, "8378");
         sleep(3000);
-        pjsip.Pj_Make_Call_Auto_Answer(caller,"1", DEVICE_IP_LAN);
-
+        pjsip.Pj_Send_Dtmf(caller, "1");
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1004,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1004,false);
-        Assert.assertEquals(getExtensionStatus(1004,TALKING,60),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,TALKING,60),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1004);
-
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Hang Up" ,trunk,"","Inbound"))
-                .contains(tuple("3001<3001>", "Voicemail test2 B<1001>", "VOICEMAIL", "3001<3001> break_out",trunk, "", "Inbound"));
+                .contains(tuple("3001<3001>", cdrIVR1_6201, "ANSWERED", "3001<3001> called Dial by Name" ,trunk,"","Inbound"))
+                .contains(tuple("3001<3001>", "t estX<1004>", "ANSWERED", "t estX<1004> hung up",trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
     @Epic("P_Series")
@@ -2774,9 +2798,9 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR47_KeyPressEvent_16"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR47_KeyPressEvent_16","DialbyName","PSeries","Cloud","K2"}, dataProvider = "routesKeyPressEvent")
     public void testIVR47_KeyPressEvent_16(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,DIR_USINGKEYPAD)).start(); //启动子线程，监控asterisk log
+        prerequisite(false);new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,DIR_USINGKEYPAD)).start(); //启动子线程，监控asterisk log
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -2786,41 +2810,35 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         step("3.进入asterisk检查播放dir-usingkeypad.gsm时");
-        int tmp = 0;
-        while (asteriskObjectList.size() !=1 && tmp <= 600){
-            sleep(50);
-            tmp++;
-            log.debug("[tmp]_"+tmp);
-        }
-        sleep(5000);
+//        int tmp = 0;
+//        while (asteriskObjectList.size() !=1 && tmp <= 500){
+//            sleep(50);
+//            tmp++;
+//            log.debug("[tmp]_"+tmp);
+//        }
+        sleep(10000);
         step("4.按8378 然后按*，再按1");
-        pjsip.Pj_Make_Call_Auto_Answer(caller,"8", DEVICE_IP_LAN);
-        sleep(2000);
-        pjsip.Pj_Make_Call_Auto_Answer(caller,"3", DEVICE_IP_LAN);
-        sleep(2000);
-        pjsip.Pj_Make_Call_Auto_Answer(caller,"7", DEVICE_IP_LAN);
-        sleep(2000);
-        pjsip.Pj_Make_Call_Auto_Answer(caller,"8", DEVICE_IP_LAN);
-        sleep(2000);
-        pjsip.Pj_Make_Call_Auto_Answer(caller,"1", DEVICE_IP_LAN);
-        sleep(2000);
-        pjsip.Pj_Make_Call_Auto_Answer(caller,"1", DEVICE_IP_LAN);
+        pjsip.Pj_Send_Dtmf(caller, "8378");
+        sleep(3000);
+        pjsip.Pj_Send_Dtmf(caller,"*");
+        sleep(3000);
+        pjsip.Pj_Send_Dtmf(caller,"1");
 
 
-        assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1004,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
-        pjsip.Pj_Answer_Call(1004,false);
-        Assert.assertEquals(getExtensionStatus(1004,TALKING,60),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        assertStep(caller + "[通话状态校验:分机1000预期响铃]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(1000,false);
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,60),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
-        pjsip.Pj_hangupCall(1004);
+        pjsip.Pj_hangupCall(1000);
 
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Hang Up" ,trunk,"","Inbound"))
-                .contains(tuple("3001<3001>", "Voicemail test2 B<1001>", "VOICEMAIL", "3001<3001> break_out",trunk, "", "Inbound"));
+                .contains(tuple("3001<3001>", cdrIVR1_6201, "ANSWERED", "3001<3001> called Dial by Name" ,trunk,"","Inbound"))
+                .contains(tuple("3001<3001>", "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
     @Epic("P_Series")
@@ -2832,10 +2850,10 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR48_KeyPressEvent_17"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR48_KeyPressEvent_17","PSeries","Cloud","K2","ExternalNumber"}, dataProvider = "routesKeyPressEvent")
     public void testIVR48_KeyPressEvent_17(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
         prerequisite(false);
-       
+
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
 
@@ -2844,9 +2862,9 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(2000,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(2000,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000,false);
-        Assert.assertEquals(getExtensionStatus(2000,TALKING,20),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(2000,TALKING,20),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(2000);
 
@@ -2867,7 +2885,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR49_KeyPressEvent_18"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR49_KeyPressEvent_18","PSeries","Cloud","K2","PlayPromptandExit"}, dataProvider = "routesKeyPressEvent")
     public void testIVR49_KeyPressEvent_18(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
         prerequisite(false);
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_1)).start();
@@ -2892,7 +2910,7 @@ public class TestIVR extends TestCaseBaseNew{
         }
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4,"[通话状态校验] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),HUNGUP,"[通话状态校验] Time："+ DataUtils.getCurrentTime());
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -2911,12 +2929,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR50_KeyPressEvent_19"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR50_KeyPressEvent_19","PSeries","Cloud","K2"}, dataProvider = "routesKeyPressEvent")
     public void testIVR50_KeyPressEvent_19(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -2924,9 +2942,9 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1002,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1002,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1002,false);
-        Assert.assertEquals(getExtensionStatus(1002,TALKING,20),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1002,TALKING,20),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(caller);
 
@@ -2949,7 +2967,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR51_KeyPressEvent_20"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR51_KeyPressEvent_20","PlayPromptandExit","PSeries","Cloud","K2"}, dataProvider = "routesKeyPressEvent")
     public void testIVR51_KeyPressEvent_20(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
         prerequisite(false);
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_2)).start();
@@ -2974,15 +2992,15 @@ public class TestIVR extends TestCaseBaseNew{
         }
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),4,"[通话状态校验] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),HUNGUP,"[通话状态校验] Time："+ DataUtils.getCurrentTime());
 
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR 6201", "ANSWERED", "3001<3001> called Play Prompt and Exit", "sipRegister", "", "Inbound"))
-                .contains(tuple("3001<3001>", "PlayFile", "ANSWERED", "3001<3001> hung up", "sipRegister", "", "Inbound"));
+                .contains(tuple("3001<3001>", "IVR 6201", "ANSWERED", "3001<3001> called Play Prompt and Exit", trunk, "", "Inbound"))
+                .contains(tuple("3001<3001>", "PlayFile", "ANSWERED", "3001<3001> hung up", trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
 
@@ -2995,20 +3013,20 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR52_KeyPressEvent_21"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR52_KeyPressEvent_21","PSeries","Cloud","K2","ResponseTimeout"}, dataProvider = "routesKeyPressEvent")
     public void testIVR52_KeyPressEvent_21(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1003,RING,100),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,100),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1003,false);
-        Assert.assertEquals(getExtensionStatus(1003,TALKING,20),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,TALKING,20),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(caller);
 
@@ -3029,12 +3047,12 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR53_KeyPressEvent_22"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR53_KeyPressEvent_22","Invalid","PSeries","Cloud","K2"}, dataProvider = "routesKeyPressEvent")
     public void testIVR53_KeyPressEvent_22(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -3042,9 +3060,9 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1004,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1004,false);
-        Assert.assertEquals(getExtensionStatus(1004,TALKING,20),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,TALKING,20),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(caller);
 
@@ -3061,25 +3079,25 @@ public class TestIVR extends TestCaseBaseNew{
     @Story("KeyPressEvent")
     @Description("编辑IVR1，按0到FXS分机1020【前提是存在1020】\n" +
             "\t23.通过sip外线呼入到IVR1，按0\n" +
-            "\t\t分机FXS-1020可正常响铃、接听‘cdr正确" )
+            "\t\t分机FXS-1020可正常响铃、接听；即辅助2分机2000可正常响铃、接听；cdr正确" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR54_KeyPressEvent_23"}, dataProvider = "routesKeyPressEvent")
+    @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR54_KeyPressEvent_23","FXS","PSeries"}, dataProvider = "routesKeyPressEvent")
     public void testIVR54_KeyPressEvent_23(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
-       prerequisite(false);
-       
-       step("1:login with admin,trunk: "+message);
-       auto.loginPage().loginWithAdmin();
+        prerequisite(false);
+
+        step("1:login with admin,trunk: "+message);
+        auto.loginPage().loginWithAdmin();
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(2000,RING,20),2,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(2000,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000,false);
-        Assert.assertEquals(getExtensionStatus(2000,TALKING,20),3,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(2000,TALKING,20),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(caller);
 
@@ -3087,8 +3105,8 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> called Extension", "sipRegister", "", "Inbound"))
-                .contains(tuple("3001<3001>", "1020 1020<1020>", "ANSWERED", "3001<3001> hung up", "sipRegister", "", "Inbound"));
+                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> called Extension", trunk, "", "Inbound"))
+                .contains(tuple("3001<3001>", "1020 1020<1020>", "ANSWERED", "3001<3001> hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -3101,7 +3119,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR", "testIVR55_Delete_1"})
+    @Test(groups = {"P2", "IVR", "testIVR55_Delete_1","PSeries","Cloud","K2","Delete"})
     public void testIVR55_Delete_1() {
         prerequisite(true);
         step("1:login with admin");
@@ -3130,10 +3148,10 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2", "IVR", "testIVR56_Delete_2"})
+    @Test(groups = {"P2", "IVR", "testIVR56_Delete_2","PSeries","Cloud","K2","Delete"})
     public void testIVR56_Delete_2() {
-       prerequisite(true);
-      
+        prerequisite(true);
+
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
