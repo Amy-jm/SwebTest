@@ -1480,6 +1480,11 @@ public class APIUtil {
 
         return this;
     }
+
+    public APIUtil editQueue(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/queue/update",String.format("{%s,\"id\":%s}",request,getQueueSummary(number).id));
+        return this;
+    }
     /**
      * Preference 更新
      * @param request
