@@ -37,6 +37,7 @@ public class TestConference extends TestCaseBaseNew {
     private String CONF_GETPIN_GSM = "conf-getpin.gsm";
     private String CONF_WAITFORLEADER_GSM = "conf-waitforleader.gsm";
     private String CONF_PLACEINTOCONF_GSM = "conf-placeintoconf.gsm";
+    private String CONF_ONLYPERSION_GSM = "conf-onlyperson.gsm";
     String  CDR_CONFERENCE_6501 ="Conference Conference1<6501>";//6201
 
     private String reqDataCreateExtension = String.format("" +
@@ -457,12 +458,7 @@ public class TestConference extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456");
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
-//        auto.conferencePage().edit("Number","6501").
-//                setElementValue(auto.conferencePage().ele_conference_partic_password,"123").
-//                setElementValue(auto.conferencePage().ele_conference_moderator_password,"456").clickSaveAndApply();
         List<String> extensions = new ArrayList<>();
-        extensions.add("0");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","123","456","default",0,0,extensions).apply();
 
 
@@ -504,7 +500,6 @@ public class TestConference extends TestCaseBaseNew {
 
         step("编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456");
         List<String> extensions = new ArrayList<>();
-        extensions.add("0");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","123","456","default",0,0,extensions).apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
@@ -552,7 +547,6 @@ public class TestConference extends TestCaseBaseNew {
 
         step("2.编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456");
         List<String> extensions = new ArrayList<>();
-        extensions.add("0");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","123","456","default",0,0,extensions).apply();
         sleep(WaitUntils.SHORT_WAIT*4);
         step("[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
@@ -616,9 +610,7 @@ public class TestConference extends TestCaseBaseNew {
 
         step("编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456");
         List<String> extensions = new ArrayList<>();
-        extensions.add("0");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","123","456","default",0,0,extensions).apply();
-
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -657,7 +649,6 @@ public class TestConference extends TestCaseBaseNew {
 
         step("编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456");
         List<String> extensions = new ArrayList<>();
-        extensions.add("0");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","123","456","default",0,0,extensions).apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
@@ -701,7 +692,6 @@ public class TestConference extends TestCaseBaseNew {
 
         step("编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456");
         List<String> extensions = new ArrayList<>();
-        extensions.add("0");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","123","456","default",0,0,extensions).apply();
 
 
@@ -862,7 +852,6 @@ public class TestConference extends TestCaseBaseNew {
 
         step("2.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888");
         List<String> extensions = new ArrayList<>();
-        extensions.add("0");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","888","default",0,0,extensions).apply();
 
 
@@ -915,7 +904,6 @@ public class TestConference extends TestCaseBaseNew {
         step("2.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
-        extensions.add("0");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","888","default",0,0,extensions).apply();
 
 
@@ -933,10 +921,11 @@ public class TestConference extends TestCaseBaseNew {
     @Feature("Conference")
     @Story("ParticipantPassword,ModeratorPassword")
     @Description("1.编辑Conference1-6501的ParticipantPassword为999，ModeratorPassword 为空" +
-            "12.通过sip外线呼入到Conference1-6501,不输入密码\n" +
-            "\tasterisk后台查看分别播放了1次conf-getpin.gsm后，加入会议室成功；\n" +
-            "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫，且是Admin\n" +
-            "\t\t通话挂断，cdr正确")
+            "12.分机1002呼入到Conference1-6501,不输入密码\n" +
+            "\t不输入密码不会直接成为管理员，asterisk检测播放三次提示音conf-invalidpin.gsm 后，主叫被挂断；\n" +
+            "\t\t通话挂断，cdr正确\n" +
+            "\t\t\t通过sip外线呼入到Conference1-6501,不输入密码\n" +
+            "\t\t\t\t不输入密码不会直接成为管理员，asterisk检测播放三次提示音conf-invalidpin.gsm 后，主叫被挂断；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -944,46 +933,61 @@ public class TestConference extends TestCaseBaseNew {
     public void testConference_12(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_GETPIN_GSM)).start();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_INVALIDPIN_GSM)).start();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
 
         step("2.编辑Conference1-6501的ParticipantPassword为999，ModeratorPassword 为空");
         List<String> extensions = new ArrayList<>();
-        extensions.add("0");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","999","","default",0,0,extensions).apply();
 
 
-        step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
-        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        step("分机1002呼入到Conference1-6501,不输入密码");
+        pjsip.Pj_Make_Call_No_Answer(1002, "6501", DEVICE_IP_LAN, false);
 
         int tmp = 0;
-        while (asteriskObjectList.size() !=1 && tmp <= 600){
+        while (asteriskObjectList.size() != 3 && tmp <= 300){
             sleep(50);
             tmp++;
             log.debug("[tmp]_"+tmp);
         }
-        if(tmp == 601){
+        if(tmp == 301){
             for(int i = 0 ; i < asteriskObjectList.size() ; i++){
                 log.debug(i+"_【asterisk object name】 "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
             }
-            Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
+            Assert.assertFalse(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
         }
 
         assertStep("[Asterisk校验]");
-        sleep(WaitUntils.SHORT_WAIT*2);
-        String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
-        Assert.assertTrue(result.contains("1 users in that conference."),"用户验证失败");
-        Assert.assertTrue(result.contains("Admin"),"Admin验证失败");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("0 users in that conference."),"用户验证失败");
 
-        pjsip.Pj_hangupCall(caller);
+        //SIP呼入
+        asteriskObjectList.clear();
+        step("通过sip外线呼入到Conference1-6501,不输入密码");
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        tmp = 0;
+        while (asteriskObjectList.size() != 3 && tmp <= 300){
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_"+tmp);
+        }
+        if(tmp == 301){
+            for(int i = 0 ; i < asteriskObjectList.size() ; i++){
+                log.debug(i+"_【asterisk object name】 "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
+            }
+            Assert.assertFalse(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
+        }
+        assertStep("[Asterisk校验]");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("0 users in that conference."),"用户验证失败");
+
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR =  apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(7);
+        List<CDRObject> resultCDR =  apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple("2000<2000>".replace("2000",caller+""), "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
+                contains(tuple("testta C<1002>", CDR_CONFERENCE_6501, "ANSWERED", "testta C<1002> hung up","", "", "Internal")).
+                contains(tuple("2000<2000>".replace("2000",caller+""), CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -1009,9 +1013,9 @@ public class TestConference extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("2.编辑Conference1-6501的ParticipantPassword为999，ModeratorPassword 为空");
-        List<String> extensions = new ArrayList<>();
-        extensions.add("0");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","999","","default",0,0,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","999","","default",0,0,new ArrayList<>()).
+                apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -1050,7 +1054,7 @@ public class TestConference extends TestCaseBaseNew {
     @Story("ParticipantPassword,ModeratorPassword")
     @Description("1.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为空\n" +
             "\t14.通过sip外线呼入到Conference1-6501,不输入密码\n" +
-            "\t\tasterisk后台查看分别播放了1次conf-getpin.gsm后，加入会议室成功；\n" +
+            "\t\tasterisk后台查看分别播放了1次conf-onlyperson.gsm后，加入会议室成功；\n" +
             "asterisk -rx \"meetme list 6501\" 后台查看会议室6501新增一个成员sip主叫，且是普通成员\n" +
             "\t\t\t通话挂断，cdr正确")
     @Severity(SeverityLevel.BLOCKER)
@@ -1060,26 +1064,25 @@ public class TestConference extends TestCaseBaseNew {
     public void testConference_14(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_GETPIN_GSM)).start();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_ONLYPERSION_GSM)).start();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
 
         step("2.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为空");
-        List<String> extensions = new ArrayList<>();
-        extensions.add("0");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","","default",0,0,extensions).apply();
-
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","","default",0,0,new ArrayList<>()).
+                apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         int tmp = 0;
-        while (asteriskObjectList.size() !=1 && tmp <= 600){
+        while (asteriskObjectList.size() !=1 && tmp <= 200){
             sleep(50);
             tmp++;
             log.debug("[tmp]_"+tmp);
         }
-        if(tmp == 601){
+        if(tmp == 201){
             for(int i = 0 ; i < asteriskObjectList.size() ; i++){
                 log.debug(i+"_【asterisk object name】 "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
             }
@@ -1130,10 +1133,9 @@ public class TestConference extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("2.编辑Conference1-6501的PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator");
-        List<String> extensions = new ArrayList<>();
-        extensions.add("0");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","123","default",1,0,extensions).apply();
-
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","123","default",1,0,new ArrayList<>()).
+                apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -1215,9 +1217,9 @@ public class TestConference extends TestCaseBaseNew {
 
         step("2.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为空");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
-        List<String> extensions = new ArrayList<>();
-        extensions.add("0");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","123","default",0,1,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","123","default",0,1,new ArrayList<>()).
+                apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -1258,9 +1260,9 @@ public class TestConference extends TestCaseBaseNew {
 
         step("2.编辑Conference1-6501，勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为空，不勾选WaitforModerator");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
-        List<String> extensions = new ArrayList<>();
-        extensions.add("0");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","","default",0,1,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","","default",0,1,new ArrayList<>()).
+                apply();
 
         step("分机1000呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1000, "6501", DEVICE_IP_LAN, false);
@@ -1324,7 +1326,9 @@ public class TestConference extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
         extensions.add("1001");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","","default",0,0,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","","default",0,0,extensions).
+                apply();
 
         step("分机1000呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1000, "6501", DEVICE_IP_LAN, false);
@@ -1371,7 +1375,9 @@ public class TestConference extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
         extensions.add("1001");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","","default",0,0,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","","default",0,0,extensions).
+                apply();
 
         step("分机1000呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1001, "6501", DEVICE_IP_LAN, false);
@@ -1424,7 +1430,9 @@ public class TestConference extends TestCaseBaseNew {
         extensions.add("1001");
         extensions.add("1002");
         extensions.add("ExGroup1");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","","default",1,0,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","","default",1,0,extensions).
+                apply();
 
         step("分机1000呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1002, "6501", DEVICE_IP_LAN, false);
@@ -1485,7 +1493,9 @@ public class TestConference extends TestCaseBaseNew {
         extensions.add("1001");
         extensions.add("1002");
         extensions.add("ExGroup1");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","123","default",1,0,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","123","default",1,0,extensions).
+                apply();
 
         step("分机1002呼入Conference1-6501,1002按#13001邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1002, "6501", DEVICE_IP_LAN, false);
@@ -1537,7 +1547,9 @@ public class TestConference extends TestCaseBaseNew {
         extensions.add("1001");
         extensions.add("1002");
         extensions.add("ExGroup1");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","123","default",1,0,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","123","default",1,0,extensions).
+                apply();
 
         step("分机1000呼入Conference1-6501,1000按#13001邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1000, "6501", DEVICE_IP_LAN, false);
@@ -1589,7 +1601,9 @@ public class TestConference extends TestCaseBaseNew {
         extensions.add("1001");
         extensions.add("1002");
         extensions.add("ExGroup1");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","123","default",1,0,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","123","default",1,0,extensions).
+                apply();
 
         step("分机1001呼入Conference1-6501,1001按#13001邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1001, "6501", DEVICE_IP_LAN, false);
@@ -1650,13 +1664,47 @@ public class TestConference extends TestCaseBaseNew {
         extensions.add("1001");
         extensions.add("1002");
         extensions.add("ExGroup1");
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","123","default",1,0,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","123","default",1,0,extensions).
+                apply();
 
-        step("分机1000呼入Conference1-6501,1001按#13001邀请辅助1的3001加入会议室");
+        step("分机1000呼入Conference1-6501\\n\" +\n" +
+                "入时asterisk后台会打印播放提示音conf-waitforleader.gsm");
         pjsip.Pj_Make_Call_No_Answer(1000, "6501", DEVICE_IP_LAN, false);
         sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_Send_Dtmf(1001, "#");
-        pjsip.Pj_Send_Dtmf(1001, "13001");
+        int tmp = 0;
+        while (asteriskObjectList_1.size() !=1 && tmp <= 200){
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_"+tmp);
+        }
+        if(tmp == 201){
+            for(int i = 0 ; i < asteriskObjectList_1.size() ; i++){
+                log.debug(i+"_【asterisk object name】 "+asteriskObjectList_1.get(i).getName() +" [asterisk object time] "+asteriskObjectList_1.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList_1.get(i).getTag());
+            }
+            Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_1.size());
+        }
+
+        step("分机1003呼入Conference-6501\\n\" +\n" +
+                "            \"\\t\\t\\t\\tasterisk后台打印播放提示音conf-placeintoconf.gsm;");
+        pjsip.Pj_Make_Call_No_Answer(1003, "6501", DEVICE_IP_LAN, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+         tmp = 0;
+        while (asteriskObjectList_2.size() !=1 && tmp <= 200){
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_"+tmp);
+        }
+        if(tmp == 201){
+            for(int i = 0 ; i < asteriskObjectList_2.size() ; i++){
+                log.debug(i+"_【asterisk object name】 "+asteriskObjectList_2.get(i).getName() +" [asterisk object time] "+asteriskObjectList_2.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList_2.get(i).getTag());
+            }
+            Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_2.size());
+        }
+
+        assertStep("[通话状态校验]");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
+
 //
 //        assertStep("[通话状态校验]");
 //        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
