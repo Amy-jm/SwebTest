@@ -107,21 +107,23 @@ public class CDRPage extends BasePage implements ICdrPageElement {
      * cdr field call to
      */
     public enum CALLTO {
-        Extension_1000("\"test A<1000>\""),
-        Extension_1001("\"test2 B<1001>\""),
-        Extension_1002("\"testta C<1002>\""),
-        Extension_1003("\"testa D<1003>\""),
-        Extension_1004("\"t estX<1004>\""),
-        Extension_1020("\"1020 1020<1020>\""),
+        Extension_1000("test A<1000>"),
+        Extension_1001("est2 B<1001>"),
+        Extension_1002("testta C<1002>"),
+        Extension_1003("testa D<1003>"),
+        Extension_1004("t estX<1004>"),
+        Extension_1020("1020 1020<1020>"),
 
-        IVR0_6200("\"IVR IVR0_6200<6200>\""),
-        IVR1_6201("\"IVR IVR1_6201<6201>\""),
+        IVR0_6200("IVR IVR0_6200<6200>\""),
+        IVR1_6201("IVR IVR1_6201<6201>\""),
 
-        RINGGROUP0_6300("\"RingGroup RingGroup0<6300>\""),
-        RINGGROUP1_6301("\"RingGroup RingGroup1<6301>\""),
+        RINGGROUP0_6300("RingGroup RingGroup0<6300>"),
+        RINGGROUP1_6301("RingGroup RingGroup1<6301>"),
 
-        QUEUE0_6400("\"Queue Queue0<6400>\""),
-        QUEUE1_6401("\"Queue Queue1<6401>\"");
+        QUEUE0_6400("Queue Queue0<6400>"),
+        QUEUE1_6401("Queue Queue1<6401>"),
+
+        Extension_1000_VOICEMAIL("Voicemail test A<1000>");
 
 
         private final String alias;
@@ -138,10 +140,10 @@ public class CDRPage extends BasePage implements ICdrPageElement {
      * cdr field status
      */
     public enum STATUS {
-        ANSWER("\"ANSWERED\""),
-        NO_ANSWER("\"NO ANSWER\""),
-        BUSY("\"BUSY\""),
-        VOICEMAIL("\"VOICEMAIL\"");
+        ANSWER("ANSWERED"),
+        NO_ANSWER("NO ANSWER"),
+        BUSY("BUSY"),
+        VOICEMAIL("VOICEMAIL");
 
 
         private final String alias;
@@ -180,8 +182,8 @@ public class CDRPage extends BasePage implements ICdrPageElement {
      * cdr field COMMUNICATION TYPE
      */
     public enum COMMUNICATION_TYPE {
-        INBOUND("\"Inbound\""),
-        OUTBOUND("\"Outbound\"");
+        INBOUND("Inbound"),
+        OUTBOUND("Outbound");
 
         private final String alias;
         COMMUNICATION_TYPE(String alias) {

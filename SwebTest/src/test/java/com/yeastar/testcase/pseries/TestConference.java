@@ -64,7 +64,6 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1020,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -77,7 +76,6 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1020,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
@@ -409,10 +407,10 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(2000, "666501", DEVICE_ASSIST_2, false);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("6 users in that conference."),"E1 呼入失败");
 
-        step("[GSM  呼入6501] ");
+        step("[GSM  呼入6501] DEVICE_TEST_GSM:"+DEVICE_TEST_GSM+" ,DEVICE_ASSIST_GSM:"+DEVICE_ASSIST_GSM);
         if(!DEVICE_TEST_GSM.equals("null") && !DEVICE_ASSIST_GSM.equals("null")){
             pjsip.Pj_Make_Call_No_Answer(2000, "33"+DEVICE_TEST_GSM, DEVICE_ASSIST_2, false);
-            sleep(WaitUntils.SHORT_WAIT*10);
+            sleep(WaitUntils.SHORT_WAIT*30);
             Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("7 users in that conference."),"GSM 呼入失败");
         }
 
@@ -444,7 +442,7 @@ public class TestConference extends TestCaseBaseNew {
                 contains(tuple ("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", SPS, "", "Internal"));
 
         if(!DEVICE_TEST_GSM.equals("null") && !DEVICE_ASSIST_GSM.equals("null")){
-            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验GSM] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
                 contains(tuple (DEVICE_ASSIST_GSM, CDR_CONFERENCE_6501, "ANSWERED", DEVICE_ASSIST_GSM+" hung up", GSM, "", "Internal"));
         }
 
