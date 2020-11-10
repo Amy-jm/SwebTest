@@ -25,8 +25,8 @@ public class Me_HomePage {
     /**
      * Vociemail
      */
-    public SelenideElement voicemail_mark_read = $(By.xpath("//span[contains(text(),'Mark read')]"));
-    public SelenideElement voicemail_delete = $(By.xpath("//span[contains(text(),'Delete')]"));
+    public SelenideElement voicemail_mark_read = $(By.id("w-voicemail-mark-read"));
+    public SelenideElement voicemail_delete = $(By.id("w-voicemail-delete"));
 
 
 
