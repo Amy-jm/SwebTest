@@ -118,8 +118,8 @@ public class CDRObject {
         Extension_3001("3001<3001>"),
         Extension_2000("2000<2000>"),
 
-        IVR0_6200("IVR IVR0_6200<6200>\""),
-        IVR1_6201("IVR IVR1_6201<6201>\""),
+        IVR0_6200("IVR IVR0_6200<6200>"),
+        IVR1_6201("IVR IVR1_6201<6201>"),
 
         RINGGROUP0_6300("RingGroup RingGroup0<6300>"),
         RINGGROUP1_6301("RingGroup RingGroup1<6301>"),
