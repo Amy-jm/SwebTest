@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import com.yeastar.untils.CDRObject.*;
 
 import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.api.Assertions.tuple;
@@ -36,6 +37,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     private boolean isRunRecoveryEnvFlag = true;
     APIUtil apiUtil = new APIUtil();
     List<String> trunk9 = new ArrayList<>();
+    private String EXTENSION_1000_HUNGUP = "test A<1000> hung up";
 
     TestInboundRouteBasic(){
         trunk9.add(SPS);
@@ -403,8 +405,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000.toString(), CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -443,8 +445,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000.toString(), CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -494,8 +496,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000.toString(), CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(), trunk, "", "Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "CDRNAME", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP.toString(), trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -533,8 +535,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1020.toString(), CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1020.toString(), STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -572,8 +574,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1020.toString(), CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1020.toString(), STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -613,8 +615,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1020.toString(), CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1020.toString(), STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -665,8 +667,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000.toString(), CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(), trunk, "", "Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "CDRNAME", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP.toString(), trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -822,8 +824,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000_VOICEMAIL.toString(), CDRPage.STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -869,8 +871,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000_VOICEMAIL.toString(), CDRPage.STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -913,8 +915,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000_VOICEMAIL.toString(), CDRPage.STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -968,8 +970,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000_VOICEMAIL.toString(), CDRPage.STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1007,8 +1009,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "21234567890", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "21234567890", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1048,8 +1050,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "13001", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1089,8 +1091,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "13001", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1154,8 +1156,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "13001", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1203,8 +1205,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "3000", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "3000", CDRObject.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1257,8 +1259,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "3000", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "3000", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1298,8 +1300,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "3000", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "3000", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1344,8 +1346,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "play_file", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "play_file", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1390,8 +1392,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "play_file", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "play_file", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1436,8 +1438,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "play_file", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Outbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "play_file", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1493,8 +1495,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(caller);
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "test A<1000>", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "test A<1000>", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1540,8 +1542,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         Assert.assertTrue((result == HUNGUP) ||  (result == IDLE));
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "test A<1000>", CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "test A<1000>", STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1575,8 +1577,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         Assert.assertTrue((result == HUNGUP) ||  (result == IDLE));
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "test A<1000>", CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","CDRNAME","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "test A<1000>", STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
 
