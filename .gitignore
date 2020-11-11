@@ -14,3 +14,4 @@ SwebTest/.vscode/settings.json
 SwebTest/log/browser.log
 SwebTest/log/browser.log
 SwebTest/pjsip.log
+SwebTest/src/test/resources/testUserProperties/aaa.txt
