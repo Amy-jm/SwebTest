@@ -18,7 +18,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
     APIUtil apiUtil = new APIUtil();
-    private boolean runRecoveryEnvFlag = false;
+    private boolean runRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !runRecoveryEnvFlag;
 
     /**
@@ -30,7 +30,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             log.debug("*****************init extension************");
 
             runRecoveryEnvFlag = false;
-            isDebugInitExtensionFlag = registerAllExtension();
+            isDebugInitExtensionFlag = registerAllExtensions();
         }
 
         if (runRecoveryEnvFlag) {
@@ -42,7 +42,6 @@ public class TestQueueBasic extends TestCaseBaseNew {
             initConference();
             initIVR();
             initOutbound();
-
 
             ArrayList<String> queueStaticMembers = new ArrayList<>();
             ArrayList<String> queueDynamicMembers = new ArrayList<>();
@@ -56,7 +55,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
             step("编辑呼入路由In1呼入目的地为Queue1-6401");
             apiUtil.editInbound("In1",String.format("\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"",apiUtil.getQueueSummary(queueNum1).id));
-            runRecoveryEnvFlag = registerAllExtension();
+            runRecoveryEnvFlag = registerAllExtensions();
 
             if(runRecoveryEnvFlag){
                 step("1000 1001拨号*76401，登录Queue1");
@@ -75,7 +74,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P1","RingGroup", "Basic,Trunk", "RingStategry", "RingTimeout", "InboundRoute",  "SIP_REGISTER"})
-    public void testQueueBasic01_BTIR(){
-
+    public void testQu01_BTIR(){
+        prerequisite();
     }
 }
