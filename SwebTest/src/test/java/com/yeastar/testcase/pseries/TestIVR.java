@@ -360,7 +360,6 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1020,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -372,7 +371,6 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1020,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
@@ -442,8 +440,8 @@ public class TestIVR extends TestCaseBaseNew{
             extensionExGroup1.add("1000");
             extensionExGroup1.add("1001");
 
+            extensionExGroup2.add("1000");
             extensionExGroup2.add("1002");
-            extensionExGroup2.add("1003");
 
             apiUtil.deleteAllExtensionGroup().createExtensionGroup("{  \"name\": \"Default_Extension_Group\",  \"member_list\": [],  \"member_select\": \"sel_all_ext\",  \"share_group_info_to\": \"all_ext\",  \"specific_extensions\": [],  \"mgr_enb_widget_in_calls\": 1,  \"mgr_enb_widget_out_calls\": 1,  \"mgr_enb_widget_ext_list\": 1,  \"mgr_enb_widget_ring_group_list\": 1,  \"mgr_enb_widget_queue_list\": 1,  \"mgr_enb_widget_park_ext_list\": 1,  \"mgr_enb_widget_vm_group_list\": 1,  \"mgr_enb_chg_presence\": 1,  \"mgr_enb_call_distribution\": 1,  \"mgr_enb_call_conn\": 1,  \"mgr_enb_monitor\": 1,  \"mgr_enb_call_park\": 1,  \"mgr_enb_ctrl_ivr\": 1,  \"mgr_enb_office_time_switch\": 1,  \"mgr_enb_mgr_recording\": 1,  \"user_enb_widget_in_calls\": 0,  \"user_enb_widget_out_calls\": 0,  \"user_enb_widget_ext_list\": 0,  \"user_enb_widget_ring_group_list\": 0,  \"user_enb_widget_queue_list\": 0,  \"user_enb_widget_park_ext_list\": 0,  \"user_enb_widget_vm_group_list\": 0,  \"user_enb_chg_presence\": 0,  \"user_enb_call_distribution\": 0,  \"user_enb_call_conn\": 0,  \"user_enb_monitor\": 0,  \"user_enb_call_park\": 0,  \"user_enb_ctrl_ivr\": 0 }").
                     createExtensionGroup("ExGroup1",extensionExGroup1).
@@ -633,7 +631,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3", "","IVR","Trunk", "InboundRoute","testIVR03_trunk", "GSM", "BRI", "FXO",  "E1","PSeries","Cloud","K2"}, dataProvider = "routes")
+    @Test(groups = {"P3", "","IVR","Trunk", "InboundRoute","testIVR03_trunk", "GSM", "BRI", "FXO",  "E1","ACCOUNT","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR03_trunk(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite(true);
 
@@ -675,7 +673,7 @@ public class TestIVR extends TestCaseBaseNew{
     @Description("1.通过sip外线呼入到IVR1按0到分机A")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Test(groups = {"P1", "IVR", "InboundRoute","Basic", "Trunk", "testIVR01_trunk","SIP","PSeries","Cloud","K2"}, dataProvider = "routes")
+    @Test(groups = {"P1", "IVR", "InboundRoute","Basic", "Trunk", "testIVR01_trunk","SIP_REGISTER","PSeries","Cloud","K2"}, dataProvider = "routes")
     public void testIVR01_trunk(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
         prerequisite(true);
 
