@@ -494,7 +494,7 @@ public class BaseMethod extends WebDriverFactory {
 				createOutbound("Out9", trunk9, extensionNum).apply();
 	}
 
-	public boolean registerAllExtension() {
+	public boolean registerAllExtensions() {
 		log.debug("[prerequisite] init extension");
 		pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
