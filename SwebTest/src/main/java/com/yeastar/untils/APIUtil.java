@@ -725,6 +725,21 @@ public class APIUtil {
     }
 
     /**
+     * 找到指定Inbound
+     * @param name
+     * @return
+     */
+    public OutBoundRouteObject getOutBoundRouteSummary(String name){
+        List<OutBoundRouteObject> outBoundRouteObjects = getOutboundSummary();
+        for (OutBoundRouteObject object : outBoundRouteObjects){
+            if(object.name.equals(name)){
+                return object;
+            }
+        }
+        return null;
+    }
+
+    /**
      * 获取概要列表
      * 对应API：api/v1.0/ivr/searchsummary
      */

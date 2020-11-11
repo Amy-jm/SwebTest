@@ -38,6 +38,7 @@ public class TestConference extends TestCaseBaseNew {
     private String CONF_WAITFORLEADER_GSM = "conf-waitforleader.gsm";
     private String CONF_PLACEINTOCONF_GSM = "conf-placeintoconf.gsm";
     private String CONF_ONLYPERSION_GSM = "conf-onlyperson.gsm";
+    private String CONF_LEADERHASLEFT_GSM = "conf-leaderhasleft.gsm";
     String  CDR_CONFERENCE_6501 ="Conference Conference1<6501>";//6201
 
     private String reqDataCreateExtension = String.format("" +
@@ -63,7 +64,6 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(1020,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -76,7 +76,6 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1003,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1020,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
@@ -99,6 +98,18 @@ public class TestConference extends TestCaseBaseNew {
         if(getExtensionStatus(1003, IDLE, 5) != IDLE) {
             reg = true;
             log.debug("1003注册失败");
+        }
+        if(getExtensionStatus(1004, IDLE, 5) != IDLE) {
+            reg = true;
+            log.debug("1004注册失败");
+        }
+        if(getExtensionStatus(1020, IDLE, 5) != IDLE) {
+            reg = true;
+            log.debug("1020注册失败");
+        }
+        if(getExtensionStatus(2000, IDLE, 5) != IDLE){
+            reg=true;
+            log.debug("2000注册失败");
         }
         if(getExtensionStatus(2001, IDLE, 5) != IDLE){
             reg=true;
@@ -273,7 +284,7 @@ public class TestConference extends TestCaseBaseNew {
             {"88", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "BRI"},//BRI   前缀 替换
             {"",   2000, "2005", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "FXO"},//FXO --77 不输   2005（FXS）
             {"66", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "E1"},//E1     前缀 替换
-            {"",   3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
+            {"",   3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP_REGISTER  --55 REGISTER
             {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"},
 //            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
@@ -284,7 +295,7 @@ public class TestConference extends TestCaseBaseNew {
         String methodName = method.getName();
         if(methodName.equals("AAAAA")){//SPS
             return  new Object[][]{{"99", 2000, "6201", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),SPS, "SPS"}};
-        }else{ //sip 呼入
+        }else{ //SIP_REGISTER 呼入
             return  new Object[][]{{"", 3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_CONFERENCE.getAlias(),SIPTrunk,"SIP_REGISTER"}};
         }
     }
@@ -292,9 +303,6 @@ public class TestConference extends TestCaseBaseNew {
     //############### asterisk 后台子进程 ####################
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
-
-
-
 
 
     @Epic("P_Series")
@@ -328,7 +336,6 @@ public class TestConference extends TestCaseBaseNew {
         sleep(WaitUntils.SHORT_WAIT*2);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
 
-
         step("[1004  呼入6501] ");
         pjsip.Pj_Make_Call_No_Answer(1004, "6501", DEVICE_IP_LAN, false);
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -350,9 +357,9 @@ public class TestConference extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(TALKING);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                 contains(tuple("3001<3001>", "Conference Conference1<6501>", "ANSWERED", "3001<3001> hung up", "sipRegister", "", "Internal")).
-                 contains(tuple("2000<2000>", "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up", "SPS1", "", "Internal")).
-                 contains(tuple("t estX<1004>", "Conference Conference1<6501>", "ANSWERED", "t estX<1004> hung up", "", "", "Internal"));
+                 contains(tuple("3001<3001>", CDR_CONFERENCE_6501, "ANSWERED", "3001<3001> hung up", SIPTrunk, "", "Internal")).
+                 contains(tuple("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", SPS, "", "Internal")).
+                 contains(tuple("t estX<1004>", CDR_CONFERENCE_6501, "ANSWERED", "t estX<1004> hung up", "", "", "Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -393,17 +400,17 @@ public class TestConference extends TestCaseBaseNew {
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("4 users in that conference."),"FXO 呼入失败");
 
         step("[BRI  呼入6501] ");
-        pjsip.Pj_Make_Call_No_Answer(2000, "886501", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "881000", DEVICE_ASSIST_2, false);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("5 users in that conference."),"BRI 呼入失败");
 
         step("[E1  呼入6501] ");
         pjsip.Pj_Make_Call_No_Answer(2000, "666501", DEVICE_ASSIST_2, false);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("6 users in that conference."),"E1 呼入失败");
 
-        step("[GSM  呼入6501] ");
+        step("[GSM  呼入6501] DEVICE_TEST_GSM:"+DEVICE_TEST_GSM+" ,DEVICE_ASSIST_GSM:"+DEVICE_ASSIST_GSM);
         if(!DEVICE_TEST_GSM.equals("null") && !DEVICE_ASSIST_GSM.equals("null")){
             pjsip.Pj_Make_Call_No_Answer(2000, "33"+DEVICE_TEST_GSM, DEVICE_ASSIST_2, false);
-            sleep(WaitUntils.SHORT_WAIT*10);
+            sleep(WaitUntils.SHORT_WAIT*30);
             Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("7 users in that conference."),"GSM 呼入失败");
         }
 
@@ -421,20 +428,22 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
         log.debug("【hangup 2000】"+ getConferenceUser()," 2000 hang up 异常");
 
+        pjsip.Pj_Hangup_All();
+
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(6);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple ("4000<6700>", "Conference Conference1<6501>", "ANSWERED", "4000<6700> hung up", ACCOUNTTRUNK, "", "Internal")).
-                contains(tuple ("3001<3001>", "Conference Conference1<6501>", "ANSWERED", "3001<3001> hung up", SIPTrunk, "", "Internal")).
-                contains(tuple ("2000<2000>", "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up", FXO_1, "", "Internal")).
-                contains(tuple ("2000<2000>", "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up", E1, "", "Internal")).
-                contains(tuple ("2000<2000>", "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up", BRI_1, "", "Internal")).
-                contains(tuple ("2000<2000>", "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up", SPS, "", "Internal"));
+                contains(tuple ("4000<6700>", CDR_CONFERENCE_6501, "ANSWERED", "4000<6700> hung up", ACCOUNTTRUNK, "", "Internal")).
+                contains(tuple ("3001<3001>", CDR_CONFERENCE_6501, "ANSWERED", "3001<3001> hung up", SIPTrunk, "", "Internal")).
+                contains(tuple ("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", FXO_1, "", "Internal")).
+                contains(tuple ("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", E1, "", "Internal")).
+                contains(tuple ("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", BRI_1, "", "Internal")).
+                contains(tuple ("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", SPS, "", "Internal"));
 
         if(!DEVICE_TEST_GSM.equals("null") && !DEVICE_ASSIST_GSM.equals("null")){
-            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple (DEVICE_ASSIST_GSM, "Conference Conference1<6501>", "ANSWERED", DEVICE_ASSIST_GSM+" hung up", GSM, "", "Internal"));
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验GSM] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
+                contains(tuple (DEVICE_ASSIST_GSM, CDR_CONFERENCE_6501, "ANSWERED", DEVICE_ASSIST_GSM+" hung up", GSM, "", "Internal"));
         }
 
         softAssertPlus.assertAll();
@@ -458,9 +467,9 @@ public class TestConference extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456");
-        List<String> extensions = new ArrayList<>();
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","123","456","default",0,0,extensions).apply();
-
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","123","456","default",0,0,new ArrayList<>()).
+                apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -474,9 +483,9 @@ public class TestConference extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        List<CDRObject> resultCDR = apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple("2000<2000>".replace("2000",caller+""), "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
+                contains(tuple("2000<2000>".replace("2000",caller+""), CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -586,7 +595,7 @@ public class TestConference extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple("2000<2000>".replace("2000",caller+""), "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
+                contains(tuple("2000<2000>".replace("2000",caller+""), CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -625,7 +634,7 @@ public class TestConference extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple("2000<2000>".replace("2000",caller+""), "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
+                contains(tuple("2000<2000>".replace("2000",caller+""), CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -649,11 +658,12 @@ public class TestConference extends TestCaseBaseNew {
 
         step("编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456");
         List<String> extensions = new ArrayList<>();
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","123","456","default",0,0,extensions).apply();
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","123","456","default",0,0,extensions).
+                apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_Send_Dtmf(caller, "124#");
         pjsip.Pj_Send_Dtmf(caller, "126#");
         pjsip.Pj_Send_Dtmf(caller, "123#");
@@ -668,7 +678,7 @@ public class TestConference extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple("2000<2000>".replace("2000",caller+""), "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
+                contains(tuple("2000<2000>".replace("2000",caller+""), CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -692,13 +702,12 @@ public class TestConference extends TestCaseBaseNew {
 
         step("编辑Conference1-6501的ParticipantPassword为123，ModeratorPassword 为456");
         List<String> extensions = new ArrayList<>();
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","123","456","default",0,0,extensions).apply();
-
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","123","456","default",0,0,extensions).
+                apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
         pjsip.Pj_Send_Dtmf(caller, "124#");
         pjsip.Pj_Send_Dtmf(caller, "126#");
         pjsip.Pj_Send_Dtmf(caller, "456#");
@@ -713,7 +722,7 @@ public class TestConference extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple("2000<2000>".replace("2000",caller+""), "Conference Conference1<6501>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
+                contains(tuple("2000<2000>".replace("2000",caller+""), CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk, "", "Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -851,9 +860,9 @@ public class TestConference extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("2.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888");
-        List<String> extensions = new ArrayList<>();
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","888","default",0,0,extensions).apply();
-
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","888","default",0,0,new ArrayList<>()).
+                apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -902,10 +911,9 @@ public class TestConference extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("2.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
-        List<String> extensions = new ArrayList<>();
-        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).editConference("6501","","888","default",0,0,extensions).apply();
-
+        apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
+                editConference("6501","","888","default",0,0,new ArrayList<>()).
+                apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -962,7 +970,7 @@ public class TestConference extends TestCaseBaseNew {
         assertStep("[Asterisk校验]");
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("0 users in that conference."),"用户验证失败");
 
-        //SIP呼入
+        //SIP_REGISTER呼入
         asteriskObjectList.clear();
         step("通过sip外线呼入到Conference1-6501,不输入密码");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
@@ -1116,7 +1124,7 @@ public class TestConference extends TestCaseBaseNew {
             "\t\t分机1004呼入Conference1-6501，输入密码123\n" +
             "\t\t\tasterisk后台打印播放提示音conf-placeintoconf.gsm\n" +
             "\t\t\t\t分机1004挂断通话\n" +
-            "\t\t\t\t\t呼入时asterisk后台都会打印播放提示音conf-waitforleader.gsm")
+            "\t\t\t\t\t呼入时asterisk后台都会打印播放提示音conf-leaderhasleft.gsm")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -1125,9 +1133,10 @@ public class TestConference extends TestCaseBaseNew {
         prerequisite(true);
         List<AsteriskObject> asteriskObjectList_1 = new ArrayList<AsteriskObject>();
         List<AsteriskObject> asteriskObjectList_2 = new ArrayList<AsteriskObject>();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_WAITFORLEADER_GSM)).start();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList_1,CONF_PLACEINTOCONF_GSM)).start();
-
+        List<AsteriskObject> asteriskObjectList_3 = new ArrayList<AsteriskObject>();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList_1,CONF_WAITFORLEADER_GSM)).start();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList_2,CONF_PLACEINTOCONF_GSM)).start();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList_3,CONF_LEADERHASLEFT_GSM)).start();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
@@ -1140,37 +1149,30 @@ public class TestConference extends TestCaseBaseNew {
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
 
+        int tmp = 0;
+        while (asteriskObjectList_1.size() !=1 && tmp <= 200){
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_"+tmp);
+        }
+        if(tmp == 201){
+            for(int i = 0 ; i < asteriskObjectList_1.size() ; i++){
+                log.debug(i+"_【asterisk object name】 "+asteriskObjectList_1.get(i).getName() +" [asterisk object time] "+asteriskObjectList_1.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList_1.get(i).getTag());
+            }
+            Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_1.size());
+        }
+
         step("[SPS  呼入6501] ");
+        asteriskObjectList_1.clear();
         pjsip.Pj_Make_Call_No_Answer(2000, "996501", DEVICE_ASSIST_2, false);
 
-        int tmp = 0;
-        while (asteriskObjectList.size() !=1 && tmp <= 600){
-            sleep(50);
-            tmp++;
-            log.debug("[tmp]_"+tmp);
-        }
-        if(tmp == 601){
-            for(int i = 0 ; i < asteriskObjectList.size() ; i++){
-                log.debug(i+"_【asterisk object name】 "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
-            }
-            Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
-        }
-
-        assertStep("[Asterisk校验]");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"SPS 呼入失败");
-
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList_2,CONF_WAITFORLEADER_GSM)).start();//
-        step("[1004  呼入6501] ");
-        pjsip.Pj_Make_Call_No_Answer(1004, "996501", DEVICE_IP_LAN, false);
-        pjsip.Pj_Send_Dtmf(1004,"123");
-
         tmp = 0;
-        while (asteriskObjectList_1.size() !=1 && tmp <= 600){
+        while (asteriskObjectList_1.size() !=1 && tmp <= 200){
             sleep(50);
             tmp++;
             log.debug("[tmp]_"+tmp);
         }
-        if(tmp == 601){
+        if(tmp == 201){
             for(int i = 0 ; i < asteriskObjectList_1.size() ; i++){
                 log.debug(i+"_【asterisk object name】 "+asteriskObjectList_1.get(i).getName() +" [asterisk object time] "+asteriskObjectList_1.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList_1.get(i).getTag());
             }
@@ -1178,21 +1180,48 @@ public class TestConference extends TestCaseBaseNew {
         }
 
         assertStep("[Asterisk校验]");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"SPS 呼入失败");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"SPS 呼入失败");
 
-        pjsip.Pj_hangupCall(1004);
+        step("分机1004呼入Conference1-6501，输入密码123");
+        pjsip.Pj_Make_Call_No_Answer(1004, "6501", DEVICE_IP_LAN, false);
+        pjsip.Pj_Send_Dtmf(1004,"12");
+        pjsip.Pj_Send_Dtmf(1004,"3#");
 
         tmp = 0;
-        while (asteriskObjectList_2.size() !=1 && tmp <= 600){
+        while (asteriskObjectList_2.size() !=2 && tmp <= 200){ //2个成员
             sleep(50);
             tmp++;
             log.debug("[tmp]_"+tmp);
         }
-        if(tmp == 601){
+        if(tmp == 201){
             for(int i = 0 ; i < asteriskObjectList_2.size() ; i++){
                 log.debug(i+"_【asterisk object name】 "+asteriskObjectList_2.get(i).getName() +" [asterisk object time] "+asteriskObjectList_2.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList_2.get(i).getTag());
             }
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_2.size());
+        }
+
+        for(int i = 0 ; i < asteriskObjectList_2.size() ; i++){
+            log.debug(i+"_【asterisk object name】 "+asteriskObjectList_2.get(i).getName() +" [asterisk object time] "+asteriskObjectList_2.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList_2.get(i).getTag());
+        }
+
+        assertStep("[Asterisk校验]");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"SPS 呼入失败");
+
+        step("分机1004挂断通话\\n\" +\n" +
+                "            \"\\t\\t\\t\\t\\t呼入时asterisk后台都会打印播放提示音conf-waitforleader.gsm");
+        pjsip.Pj_hangupCall(1004);
+
+        tmp = 0;
+        while (asteriskObjectList_3.size() != 2 && tmp <= 500){ //2个成员
+            sleep(50);
+            tmp++;
+            log.debug("[tmp3]_"+tmp);
+        }
+        if(tmp == 501) {
+            for (int i = 0; i < asteriskObjectList_3.size(); i++) {
+                log.debug(i + "_【asterisk3 object name】 " + asteriskObjectList_3.get(i).getName() + " [asterisk object time] " + asteriskObjectList_3.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList_3.get(i).getTag());
+            }
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList_3.size());
         }
     }
 
@@ -1210,6 +1239,7 @@ public class TestConference extends TestCaseBaseNew {
     @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","WaitforModerator","testConference_16"}, dataProvider = "routes")
     public void testConference_16(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
+        asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_WAITFORLEADER_GSM)).start();
 
         step("1:login with admin,trunk: "+message);
@@ -1218,7 +1248,7 @@ public class TestConference extends TestCaseBaseNew {
         step("2.编辑Conference1-6501的ParticipantPassword为空，ModeratorPassword 为空");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
-                editConference("6501","","123","default",0,1,new ArrayList<>()).
+                editConference("6501","","123","default",0,0,new ArrayList<>()).
                 apply();
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
@@ -1234,7 +1264,6 @@ public class TestConference extends TestCaseBaseNew {
             log.debug("[tmp]_"+tmp);
         }
         Assert.assertEquals(tmp,201,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());//没有提示音
-
     }
 
     @Epic("P_Series")
@@ -1659,11 +1688,9 @@ public class TestConference extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup\n");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
         extensions.add("1001");
         extensions.add("1002");
-        extensions.add("ExGroup1");
         apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).
                 editConference("6501","","123","default",1,0,extensions).
                 apply();
@@ -1671,31 +1698,51 @@ public class TestConference extends TestCaseBaseNew {
         step("分机1000呼入Conference1-6501\\n\" +\n" +
                 "入时asterisk后台会打印播放提示音conf-waitforleader.gsm");
         pjsip.Pj_Make_Call_No_Answer(1000, "6501", DEVICE_IP_LAN, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
         int tmp = 0;
-        while (asteriskObjectList_1.size() !=1 && tmp <= 200){
+        while (asteriskObjectList_1.size() !=1 && tmp <= 300){
             sleep(50);
             tmp++;
             log.debug("[tmp]_"+tmp);
         }
-        if(tmp == 201){
+        if(tmp == 301){
             for(int i = 0 ; i < asteriskObjectList_1.size() ; i++){
                 log.debug(i+"_【asterisk object name】 "+asteriskObjectList_1.get(i).getName() +" [asterisk object time] "+asteriskObjectList_1.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList_1.get(i).getTag());
             }
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_1.size());
         }
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("1 users in that conference."));
 
         step("分机1003呼入Conference-6501\\n\" +\n" +
                 "            \"\\t\\t\\t\\tasterisk后台打印播放提示音conf-placeintoconf.gsm;");
         pjsip.Pj_Make_Call_No_Answer(1003, "6501", DEVICE_IP_LAN, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
          tmp = 0;
-        while (asteriskObjectList_2.size() !=1 && tmp <= 200){
+        while (asteriskObjectList_2.size() >=1 && tmp <= 400){
             sleep(50);
             tmp++;
             log.debug("[tmp]_"+tmp);
         }
-        if(tmp == 201){
+
+        if(tmp == 401){
+            for(int i = 0 ; i < asteriskObjectList_2.size() ; i++){
+                log.debug(i+"_【asterisk object name】 "+asteriskObjectList_2.get(i).getName() +" [asterisk object time] "+asteriskObjectList_2.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList_2.get(i).getTag());
+            }
+            Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_2.size());
+        }
+        assertStep("[通话状态校验]");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
+
+        asteriskObjectList_2.clear();
+
+        step("分机1002呼入Conference-6501\\n\" +\n" +
+                "            \"\\t\\t\\t\\tasterisk后台打印播放提示音conf-placeintoconf.gsm;");
+        pjsip.Pj_Make_Call_No_Answer(1002, "6501", DEVICE_IP_LAN, false);
+        tmp = 0;
+        while (asteriskObjectList_2.size() != 2 && tmp <= 400){
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_"+tmp);
+        }
+        if(tmp == 401){
             for(int i = 0 ; i < asteriskObjectList_2.size() ; i++){
                 log.debug(i+"_【asterisk object name】 "+asteriskObjectList_2.get(i).getName() +" [asterisk object time] "+asteriskObjectList_2.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList_2.get(i).getTag());
             }
@@ -1703,28 +1750,8 @@ public class TestConference extends TestCaseBaseNew {
         }
 
         assertStep("[通话状态校验]");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."));
 
-//
-//        assertStep("[通话状态校验]");
-//        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
-//        pjsip.Pj_Answer_Call(3001,false);
-//        assertStep("[通话状态校验]");
-//        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
-//        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
-//
-//        pjsip.Pj_hangupCall(1001);
-//        pjsip.Pj_hangupCall(3001);
-//
-//        assertStep("[CDR校验]");
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-//        List<CDRObject> resultCDR = apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(4);
-//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-//                contains(tuple(CDR_CONFERENCE_6501, "13001", "ANSWERED", "test A<1000> invited 13001", "",SIPTrunk , "Outbound")).
-//                contains(tuple(CDR_CONFERENCE_6501, "23001", "ANSWERED", "test A<1000> invited 23001", "", SPS, "Outbound")).
-//                contains(tuple("test A<1000>", CDR_CONFERENCE_6501, "ANSWERED", "test A<1000> hung up", "", "", "Internal"));
-//
-//        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
@@ -1818,7 +1845,7 @@ public class TestConference extends TestCaseBaseNew {
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Make_Call_No_Answer(1002, "6501", DEVICE_IP_LAN, false);
         sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_Make_Call_No_Answer(caller, "6501", deviceAssist, false);//SIP
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix+callee, deviceAssist, false);//SIP_REGISTER
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Make_Call_No_Answer(2000, "996501", DEVICE_ASSIST_2, false);//SPS
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -1866,7 +1893,7 @@ public class TestConference extends TestCaseBaseNew {
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Make_Call_No_Answer(2000, "996501", DEVICE_ASSIST_2, false);//SPS
         sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_Make_Call_No_Answer(caller, callee, deviceAssist, false);//SIP
+        pjsip.Pj_Make_Call_No_Answer(caller, callee, deviceAssist, false);//SIP_REGISTER
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Make_Call_No_Answer(1001, "6501", DEVICE_IP_LAN, false);
         sleep(WaitUntils.SHORT_WAIT*2);
