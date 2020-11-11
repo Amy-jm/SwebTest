@@ -121,6 +121,10 @@ public class TestRingGroup extends TestCaseBaseNew {
             reg = true;
             log.debug("1003注册失败");
         }
+        if (getExtensionStatus(1004, IDLE, 5) != IDLE) {
+            reg = true;
+            log.debug("1004注册失败");
+        }
         if (getExtensionStatus(2000, IDLE, 5) != IDLE) {
             reg = true;
             log.debug("2000注册失败");
@@ -128,6 +132,9 @@ public class TestRingGroup extends TestCaseBaseNew {
         if (getExtensionStatus(4000, IDLE, 5) != IDLE) {
             reg = true;
             log.debug("4000注册失败");
+        }
+        if (!reg){
+            pjsip.Pj_Unregister_Accounts();
         }
         return reg;
     }
