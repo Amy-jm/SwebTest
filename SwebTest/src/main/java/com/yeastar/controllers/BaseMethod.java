@@ -359,7 +359,6 @@ public class BaseMethod extends WebDriverFactory {
 		step("创建响铃组6300 ");
 
 		ArrayList<String> ringGroupMembers0 = new ArrayList<>();
-		ArrayList<String> ringGroupMembers1 = new ArrayList<>();
 
 		ringGroupMembers0.add("group_ExGroup1");
 		ringGroupMembers0.add("1003");
@@ -367,7 +366,7 @@ public class BaseMethod extends WebDriverFactory {
 		ExtensionObject extensionObject = apiUtil.getExtensionSummary("1000");
 
 		apiUtil.deleteAllRingGroup().createRingGroup("RingGroup0", "6300", ringGroupMembers0)
-				.editRingGroup("RingGroup0", String.format("\"ring_strategy\":\"ring_all\",\"ring_timeout\":10,\"fail_dest\":\"extension\",\"" +
+				.editRingGroup("6300", String.format("\"ring_strategy\":\"ring_all\",\"ring_timeout\":10,\"fail_dest\":\"extension\",\"" +
 						"fail_dest_value\":\"%s\"", extensionObject.id)).apply();
 
 	}

@@ -22,4 +22,5 @@ pic
 /src/main/resources/driver/chrome/chromedriver3.exe
 /src/test/java/com/yeastar/testcase/pseries/mytest.java
 /src/test/resources/config.properties
-
+/src/test/resources/data.properties
+/src/test/resources/aaa.txt
