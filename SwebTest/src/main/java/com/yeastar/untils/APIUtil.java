@@ -640,6 +640,23 @@ public class APIUtil {
     }
 
     /**
+     * 删除当前存在的Inbound
+     * */
+    public APIUtil deleteInbound(String inboundName){
+        List<InboundRouteObject> inboundRoutesList = getInboundSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(InboundRouteObject object : inboundRoutesList){
+            if(object.name.equals(inboundName)){
+                list.add(object.id);
+            }}
+        if(list != null && !list.isEmpty()){
+            deleteInbound(list);
+        }
+        return this;
+    }
+
+    /**
      * 创建呼入路由
      * @param request
      * @param trunks

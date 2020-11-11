@@ -35,11 +35,22 @@ import static org.assertj.core.api.Assertions.tuple;
 public class TestInboundRouteBasic extends TestCaseBaseNew {
     private boolean isRunRecoveryEnvFlag = true;
     APIUtil apiUtil = new APIUtil();
+    List<String> trunk9 = new ArrayList<>();
 
+    TestInboundRouteBasic(){
+        trunk9.add(SPS);
+        trunk9.add(BRI_1);
+        trunk9.add(FXO_1);
+        trunk9.add(E1);
+        trunk9.add(SIPTrunk);
+        trunk9.add(ACCOUNTTRUNK);
+        trunk9.add(GSM);
+    }
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
     private String PROMPT_1 = "prompt1.slin";
     private String PROMPT_2 = "prompt2.slin";
+    private String FAX_TO_EMAIL_1001 = "1001@fax_to_email";
 
     private String reqDataCreateExtension = String.format("" +
                     "{\"type\":\"SIP\",\"first_name\":\"EXTENSIONFIRSTNAME\",\"last_name\":\"EXTENSIONLASTNAME\",\"email_addr\":\"\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"reg_name\":\"EXTENSIONNUM\",\"reg_password\":\"%s\",\"allow_reg_remotely\":1,\"enb_user_agent_ident\":0,\"enb_ip_rstr\":0}"
@@ -82,7 +93,6 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         pjsip.Pj_CreateAccount(1005, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(2001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(3000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(3001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(4000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 
@@ -95,7 +105,6 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         pjsip.Pj_Register_Account_WithoutAssist(1005, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist(3000, DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
 
@@ -288,7 +297,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         Object[][] group = null;
         String methodName = method.getName();
         //SIP_REGISTER,SPS,ACCOUNT
-        if (methodName.equals("testIRBasic_01_03")) {
+        if (methodName.contains("_01_03")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"", 3001, "3000", DEVICE_ASSIST_1,"3001<3001>",SIPTrunk},//SIP  --55 REGISTER
@@ -297,8 +306,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
             };
         }
         //BRI,E1
-        if(methodName.equals("testIRBasic_04_05") || methodName.equals("testIRBasic_10_11") || methodName.equals("testIRBasic_17_18") || methodName.equals("testIRBasic_24_25") ||
-                methodName.equals("testIRBasic_31_32")){
+        if(methodName.contains("_04_05") || methodName.contains("_10_11") || methodName.contains("_17_18") || methodName.contains("_24_25") ||
+                methodName.contains("_31_32")){
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"88", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",BRI_1},//BRI   前缀 替换
@@ -306,8 +315,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
             };
         }
         //FXO,GSM
-        if(methodName.equals("testIRBasic_06_07") || methodName.equals("testIRBasic_12_13") || methodName.equals("testIRBasic_19_20") || methodName.equals("testIRBasic_26_27") ||
-            methodName.equals("testIRBasic_33_34") || methodName.equals("testIRBasic_36_37")){
+        if(methodName.contains("_06_07") || methodName.contains("_12_13") || methodName.contains("_19_20") || methodName.contains("_26_27") ||
+            methodName.contains("_33_34") || methodName.contains("_36_37")){
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"", 2000, "2005", DEVICE_ASSIST_2, "2000<2000>", FXO_1},//FXO --77 不输   2005（FXS）
@@ -316,8 +325,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
 
         //SIP_REGEIST
-        if (methodName.equals("testIRBasic_08") || methodName.equals("testIRBasic_14") ||methodName.equals("testIRBasic_21") || methodName.equals("testIRBasic_28") ||
-            methodName.equals("testIRBasic_35") || methodName.equals("testIRBasic_45")) {
+        if (methodName.contains("_08") || methodName.contains("_14") ||methodName.contains("_21") || methodName.contains("_28") ||
+            methodName.contains("_35") || methodName.contains("_45") || methodName.contains("_46")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"", 3001, "3000", DEVICE_ASSIST_1,"3001<3001>",SIPTrunk},//SIP  --55 REGISTER
@@ -325,7 +334,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
 
         //ACCOUNT
-        if (methodName.equals("testIRBasic_09") || methodName.equals("testIRBasic_38")) {
+        if (methodName.contains("_09") || methodName.contains("_38")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"44", 4000, "1000", DEVICE_ASSIST_3,"4000<6700>",ACCOUNTTRUNK},
@@ -333,7 +342,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
 
         //SPS,ACCOUNT
-        if (methodName.equals("testIRBasic_15_16") || methodName.equals("testIRBasic_22_23") || methodName.equals("testIRBasic_29_30")) {
+        if (methodName.contains("_15_16") || methodName.contains("_22_23") || methodName.contains("_29_30")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"99", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
@@ -342,18 +351,9 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
 
         //SPS
-        if (methodName.equals("testIRBasic_43") || methodName.equals("testIRBasic_42") || methodName.equals("testIRBasic_47") || methodName.equals("testIRBasic_44")) {
+        if (methodName.contains("_43") || methodName.contains("_42") || methodName.contains("_47") || methodName.contains("_44")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
-                    {"99", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
-            };
-        }
-        // SIP_REGISTER SPS
-        //SIP_REGISTER,SPS,ACCOUNT
-        if (methodName.equals("testIRBasic_46")) {
-            return new Object[][]{
-                    //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
-                    {"", 3001, "3000", DEVICE_ASSIST_1,"3001<3001>",SIPTrunk},//SIP  --55 REGISTER
                     {"99", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
             };
         }
@@ -380,11 +380,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P1", "Basic","Trunk","InboundRoute","Extension","SIP"}, dataProvider = "routes")
-    public void testIRBasic_01_03(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_01_03_Basic(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
-
         step("编辑呼入路由In1的目的地为分机1000");
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -421,10 +420,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P1", "Basic","Trunk","InboundRoute","Extension","SIP"}, dataProvider = "routes")
-    public void testIRBasic_04_05(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_04_05_Basic(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为分机1000");
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -462,7 +461,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P1", "Basic","Trunk","InboundRoute","Extension","SIP"}, dataProvider = "routes")
-    public void testIRBasic_06_07(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk) throws IOException, JSchException {
+    public void testIRB_06_07_Basic(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk) throws IOException, JSchException {
         if(trunk.equals("null") || trunk.equals("")){
             Assert.assertTrue(false,"FXO 线路 不通！");
         }
@@ -471,7 +470,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
         prerequisite();
         step("编辑呼入路由In1的目的地为分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -481,7 +480,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         sleep(WaitUntils.SHORT_WAIT * 2);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000, RING, 60), RING);
+        Assert.assertEquals(getExtensionStatus(1000, RING, 120), RING);
         pjsip.Pj_Answer_Call(1000, false);
         Assert.assertEquals(getExtensionStatus(1000, TALKING, 60), TALKING);
 
@@ -510,11 +509,11 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","FXS","testIRBasic_08"}, dataProvider = "routes")
-    public void testIRBasic_08(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","FXS","_08"}, dataProvider = "routes")
+    public void testIRB_08_FXS(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("判断是否存在FXS分机1020，存在则执行编辑呼入路由In1的目的地为FXS分机1020");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -550,10 +549,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","FXS"}, dataProvider = "routes")
-    public void testIRBasic_09(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_09_FXS(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("判断是否存在FXS分机1020，存在则执行编辑呼入路由In1的目的地为FXS分机1020");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -591,10 +590,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","FXS"}, dataProvider = "routes")
-    public void testIRBasic_10_11(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_10_11_FXS(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("判断是否存在FXS分机1020，存在则执行编辑呼入路由In1的目的地为FXS分机1020");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -633,7 +632,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","FXS"}, dataProvider = "routes")
-    public void testIRBasic_12_13(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_12_13_FXS(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         if(trunk.equals("null") || trunk.equals("")){
             Assert.assertTrue(false,"FXO 线路 不通！");
         }
@@ -642,7 +641,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
         prerequisite();
         step("编辑呼入路由In1的目的地为分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -652,7 +651,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         sleep(WaitUntils.SHORT_WAIT * 2);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000, RING, 60), RING);
+        Assert.assertEquals(getExtensionStatus(1000, RING, 120), RING);
         pjsip.Pj_Answer_Call(1000, false);
         Assert.assertEquals(getExtensionStatus(1000, TALKING, 60), TALKING);
 
@@ -682,10 +681,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","HangUp"}, dataProvider = "routes",enabled = true)
-    public void testIRBasic_14(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_14_HangUp(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为HangUp");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -710,10 +709,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","HangUp"}, dataProvider = "routes")
-    public void testIRBasic_15_16(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_15_16_HangUp(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为HangUp");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -737,10 +736,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","HangUp"}, dataProvider = "routes")
-    public void testIRBasic_17_18(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_17_18_HangUp(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为HangUp");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -764,7 +763,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","HangUp"}, dataProvider = "routes")
-    public void testIRBasic_19_20(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_19_20_HangUp(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         if(trunk.equals("null") || trunk.equals("")){
             Assert.assertTrue(false,"FXO 线路 不通！");
         }
@@ -773,7 +772,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
         prerequisite();
         step("编辑呼入路由In1的目的地为HangUp");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -798,10 +797,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","Voicemail"}, dataProvider = "routes")
-    public void testIRBasic_21(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_21_Voicemail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为Voicemail-分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -841,10 +840,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","Voicemail"}, dataProvider = "routes")
-    public void testIRBasic_22_23(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_22_23_Voicemail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为Voicemail-分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -888,10 +887,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","Voicemail"}, dataProvider = "routes")
-    public void testIRBasic_24_25(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_24_25_Voicemail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为Voicemail-分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -932,7 +931,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","Voicemail"}, dataProvider = "routes")
-    public void testIRBasic_26_27(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_26_27_Voicemail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         if(trunk.equals("null") || trunk.equals("")){
             Assert.assertTrue(false,"FXO 线路 不通！");
         }
@@ -942,7 +941,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
 
         prerequisite();
         step("编辑呼入路由In1的目的地为Voicemail-分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -985,10 +984,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRBasic_28(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_28_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为2，号码1234567890");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"2\",\"def_dest_value\":\"1234567890\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"2\",\"def_dest_value\":\"1234567890\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1026,10 +1025,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRBasic_29_30(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_29_30_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为1，号码3001");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1067,10 +1066,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRBasic_31_32(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_31_32_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为2，号码1234567890");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1121,7 +1120,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRBasic_33_34(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_33_34_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         if(trunk.equals("null") || trunk.equals("")){
             Assert.assertTrue(false,"FXO 线路 不通！");
         }
@@ -1130,7 +1129,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
         prerequisite();
         step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为2，号码1234567890");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1181,10 +1180,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_35(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_35_OutBoundRoute(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为OutboundRoute-Out8");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1225,7 +1224,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_36_37(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_36_37_OutBoundRoute(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         if(trunk.equals("null") || trunk.equals("")){
             Assert.assertTrue(false,"FXO 线路 不通！");
         }
@@ -1234,7 +1233,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
         prerequisite();
         step("编辑呼入路由In1的目的地为OutboundRoute-Out8");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("Out8").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1276,10 +1275,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_38(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_38_OutBoundRoute(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为OutboundRoute-Out8");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("Out8").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1317,9 +1316,9 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_42(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_42_PlayGreetign(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"prompt1.wav\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"prompt1.wav\"")).apply();
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_1)).start();
 
@@ -1346,7 +1345,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+                .contains(tuple(cdrCaller, "play_file", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1363,9 +1362,9 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_43(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_43_PlayGreetign(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"5\",\"def_dest_value\":\"prompt2.wav\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"5\",\"def_dest_value\":\"prompt2.wav\"")).apply();
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_2)).start();
 
@@ -1392,7 +1391,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+                .contains(tuple(cdrCaller, "play_file", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1408,11 +1407,39 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_44(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_44_FaxToEmail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
+        step("编辑呼入路由In1的目的地为Fax to Email-分机1001");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"fax_to_email\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1001").id)).apply();
+        asteriskObjectList.clear();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,FAX_TO_EMAIL_1001)).start();
 
         step("1:login with admin,trunk: " +trunk);
         auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+
+        int tmp = 0;
+        while (asteriskObjectList.size() >= 1 && tmp <= 300){
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_"+tmp);
+        }
+        if(tmp == 301){
+            for(int i = 0 ; i < asteriskObjectList.size() ; i++){
+                log.debug(i+"_【asterisk object name】 "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
+            }
+            Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
+        }
+
+        assertStep("[CDR校验]");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "play_file", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Outbound"));
+
+        softAssertPlus.assertAll();
 
     }
 
@@ -1429,48 +1456,129 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_45(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_45_Move(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SIPTrunk);
+        step("编辑呼入路由In1的目的地为分机1000 ; 新建呼入路由InRoute2的目的地为分机1001，Trunk选择sip");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").
+                createInbound("InRoute2", trunk1, "Extension", "1001").
+                apply();
 
         step("1:login with admin,trunk: " +trunk);
         auto.loginPage().loginWithAdmin();
 
+        step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);//sip
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,60),RING);
+        pjsip.Pj_Answer_Call(1000,false);
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(caller);
+
+        step("呼入路由List调整InRoute2在In1前面");//{"id":1612,"pos_from":2,"pos_to":1}
+        apiUtil.editInbound("InRoute2",String.format("\"pos_from\":2,\"pos_to\":1")).apply();
+
+
+        step("[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,60),RING);
+        pjsip.Pj_Answer_Call(1000,false);
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(caller);
+
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "test A<1000>", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
     @Feature("InboundRoute-Basic")
     @Story("Trunk,InboundRoute")
     @Description("46.编辑呼入路由In1的目的地为分机1000，Trunk只选择sip\n" +
-            "\t分别通过sip、sps外线呼入\n" +
-            "\t\t通过sip外线呼入时分机1000响铃，通过sps外线呼入失败；检查cdr\n" +
+            "\t分别通过sip、account外线呼入\n" +
+            "\t\t通过sip外线呼入时分机1000响铃，通过account外线呼入失败；检查cdr\n" +
             "\t\t\t编辑呼入路由In1的目的地为分机1000，Trunk全选")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_46(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_46_InboundRoute(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SIPTrunk);
+        step("编辑呼入路由In1的目的地为分机1000，Trunk只选择sip");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk1, "Extension", "1000").apply();
 
         step("1:login with admin,trunk: " +trunk);
         auto.loginPage().loginWithAdmin();
 
+        step("[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,60),RING);
+        pjsip.Pj_Answer_Call(1000,false);
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(1000);
+
+        step("通过account外线呼入失败");
+        step("[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(2000, "441000", DEVICE_ASSIST_2, false);
+
+        int result =getExtensionStatus(1000,RING,10);
+        log.debug("[result] "+result);
+        Assert.assertTrue((result == HUNGUP) ||  (result == IDLE));
+
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "test A<1000>", CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
+
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
     @Feature("InboundRoute-Basic")
     @Story("Trunk,InboundRoute")
     @Description("47.编辑呼入路由In1的目的地为[None]，全选外线\n" +
-            "\t通过sps外线呼入\n" +
+            "\t通过sps外线呼入 99999\n" +
             "\t\t通话被挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_47(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_47_InboundRoute(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SIPTrunk);
+        step("编辑呼入路由In1的目的地为[None]，全选外线");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk1, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"\"")).apply();
 
         step("1:login with admin,trunk: " +trunk);
         auto.loginPage().loginWithAdmin();
+
+        step("通过account外线呼入失败");
+        step("[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(caller, "999999", DEVICE_ASSIST_2, false);
+
+        int result =getExtensionStatus(1000,RING,10);
+        log.debug("[result] "+result);
+        Assert.assertTrue((result == HUNGUP) ||  (result == IDLE));
+
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "test A<1000>", CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
+
+        softAssertPlus.assertAll();
 
     }
 
@@ -1485,11 +1593,21 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","OutboundRoute"})
-    public void testIRBasic_48(){
+    public void testIRB_48_Delete(){
         prerequisite();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").apply();
 
-        step("1:login with admin,trunk: ");
+        step("1:login with admin");
         auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control,HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+
+        step("单条删除");
+        auto.inboundRoute().deleDataByDeleImage("In1").clickSaveAndApply();
+
+        assertStep("[删除成功]");
+        List<String> list = TableUtils.getTableForHeader(getDriver(),"Name");
+        softAssertPlus.assertThat(list).doesNotContain("In1");
+        softAssertPlus.assertAll();
 
     }
 
@@ -1503,11 +1621,26 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","OutboundRoute"})
-    public void testIRBasic_49(){
+    public void testIRB_49_Delete(){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SIPTrunk);
+        step("编辑呼入路由In1的目的地为分机1000 ; 新建呼入路由InRoute2的目的地为分机1001，Trunk选择sip");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").
+                createInbound("InRoute2", trunk1, "Extension", "1001").
+                apply();
 
-        step("1:login with admin,trunk: ");
+        step("1:login with admin");
         auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control,HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+
+        step("2:批量删除");
+        auto.inboundRoute().deleteAllInboundRoutes().clickSaveAndApply();
+
+        assertStep("[删除成功]");
+        List<String> list = TableUtils.getTableForHeader(getDriver(),"Number");
+        softAssertPlus.assertThat(list.size()).isEqualTo(0);
+        softAssertPlus.assertAll();
 
     }
 }
