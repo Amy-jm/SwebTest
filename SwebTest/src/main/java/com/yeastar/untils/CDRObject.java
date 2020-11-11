@@ -108,17 +108,29 @@ public class CDRObject {
     /**
      * cdr field call from
      */
-    public enum CALLFROM {
-        SIP("\"3001<3001>\""),
-        SPS("2000<2000>"),
-        FXO("2000<2000>"),
-        GSM("GSM<GSM>"),
-        ACCOUNT("4000<4000>"),
-        E1("2000<2000>"),
-        BRI("2000<2000>");
+    public enum CDRNAME {
+        Extension_1000("test A<1000>"),
+        Extension_1001("est2 B<1001>"),
+        Extension_1002("testta C<1002>"),
+        Extension_1003("testa D<1003>"),
+        Extension_1004("t estX<1004>"),
+        Extension_1020("1020 1020<1020>"),
+        Extension_3001("3001<3001>"),
+        Extension_2000("2000<2000>"),
+
+        IVR0_6200("IVR IVR0_6200<6200>\""),
+        IVR1_6201("IVR IVR1_6201<6201>\""),
+
+        RINGGROUP0_6300("RingGroup RingGroup0<6300>"),
+        RINGGROUP1_6301("RingGroup RingGroup1<6301>"),
+
+        QUEUE0_6400("Queue Queue0<6400>"),
+        QUEUE1_6401("Queue Queue1<6401>"),
+
+        Extension_1000_VOICEMAIL("Voicemail test A<1000>");
 
         private final String alias;
-        CALLFROM(String alias) {
+        CDRNAME(String alias) {
             this.alias = alias;
         }
 
@@ -132,36 +144,6 @@ public class CDRObject {
         }
     }
 
-    /**
-     * cdr field call to
-     */
-    public enum CALLTO {
-        Extension_1000("\"test A<1000>\""),
-        Extension_1001("\"test2 B<1001>\""),
-        Extension_1002("\"testta C<1002>\""),
-        Extension_1003("\"testa D<1003>\""),
-        Extension_1004("\"t estX<1004>\""),
-        Extension_1020("\"1020 1020<1020>\""),
-
-        IVR0_6200("\"IVR IVR0_6200<6200>\""),
-        IVR1_6201("\"IVR IVR1_6201<6201>\""),
-
-        RINGGROUP0_6300("\"RingGroup RingGroup0<6300>\""),
-        RINGGROUP1_6301("\"RingGroup RingGroup1<6301>\""),
-
-        QUEUE0_6400("\"Queue Queue0<6400>\""),
-        QUEUE1_6401("\"Queue Queue1<6401>\"");
-
-
-        private final String alias;
-        CALLTO(String alias) {
-            this.alias = alias;
-        }
-        @Override
-        public String toString() {
-            return this.alias;
-        }
-    }
 
     /**
      * cdr field status
@@ -200,4 +182,5 @@ public class CDRObject {
             return this.alias;
         }
     }
+
 }
