@@ -1,11 +1,13 @@
 package com.yeastar.untils;
 
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import top.jfunc.json.impl.JSONObject;
 
 import java.io.IOException;
 
 @Log4j2
+@Getter
 public class CDRObject {
     private String prefix="cdr_recording.cdr.";
     private JSONObject obj;
@@ -133,11 +135,6 @@ public class CDRObject {
         CDRNAME(String alias) {
             this.alias = alias;
         }
-
-        public String getAlias() {
-            return alias;
-        }
-
         @Override
         public String toString() {
             return this.alias;
