@@ -48,6 +48,7 @@ import com.yeastar.untils.CDRObject.*;
 @Log4j2
 public class TestIVR extends TestCaseBaseNew{
     private boolean isRunRecoveryEnvFlag = true;
+    private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
     private boolean isReConfigIVR6201PressKeyFlag = true;
     private boolean isReConfigIVR6201Default = true;
 
@@ -406,10 +407,13 @@ public class TestIVR extends TestCaseBaseNew{
             reg=true;
             log.debug("4000注册失败");
         }
+        if (reg){
+            pjsip.Pj_Unregister_Accounts();
+        }
         step("===========[Extension]  create & register extension  end =========");
         return reg;
     }
-    private boolean isDebugInitExtensionFlag = false;
+
 
     public void prerequisite(boolean isRestIVR6201ToDefault) {
         //local debug
