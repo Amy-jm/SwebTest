@@ -82,65 +82,8 @@ public class TestRingGroup extends TestCaseBaseNew {
                     "{\"type\":\"FXS\",\"first_name\":\"EXTENSIONFIRSTNAME\",\"last_name\":\"EXTENSIONLASTNAME\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"OTkxMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"enb_ctl_record\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"fxs_port\":\"FXSPORT\",\"enb_hotline\":0,\"hotline_number\":\"\",\"delay_dial\":2,\"min_flash_detect\":300,\"max_flash_detect\":1000,\"rx_volume\":\"0\",\"rx_gain\":0,\"tx_volume\":\"0\",\"tx_gain\":0,\"enb_call_waiting\":0,\"enb_dtmf_passthrough\":0,\"enb_echo_cancel\":1}"
             , enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)), enBase64(EXTENSION_PASSWORD));
 
-    private boolean registerAllExtension() {
-        log.debug("[prerequisite] init extension");
-        pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(1004, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(2001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(3001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(4000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-
-        pjsip.Pj_Register_Account_WithoutAssist(1000, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1001, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(1004, DEVICE_IP_LAN);
-        pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
-        pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
-
-        boolean reg = false;
-        if (getExtensionStatus(1000, IDLE, 5) != IDLE) {
-            reg = true;
-            log.debug("1000注册失败");
-        }
-        if (getExtensionStatus(1001, IDLE, 5) != IDLE) {
-            reg = true;
-            log.debug("1001注册失败");
-        }
-        if (getExtensionStatus(1002, IDLE, 5) != IDLE) {
-            reg = true;
-            log.debug("1002注册失败");
-        }
-        if (getExtensionStatus(1003, IDLE, 5) != IDLE) {
-            reg = true;
-            log.debug("1003注册失败");
-        }
-        if (getExtensionStatus(1004, IDLE, 5) != IDLE) {
-            reg = true;
-            log.debug("1004注册失败");
-        }
-        if (getExtensionStatus(2000, IDLE, 5) != IDLE) {
-            reg = true;
-            log.debug("2000注册失败");
-        }
-        if (getExtensionStatus(4000, IDLE, 5) != IDLE) {
-            reg = true;
-            log.debug("4000注册失败");
-        }
-        if (!reg){
-            pjsip.Pj_Unregister_Accounts();
-        }
-        return reg;
-    }
-
     private void resetRingGroup1(){
-        ringGroupMembers1 = new ArrayList<>();
+        ringGroupMembers1 = new ArrayList<>(); 
         ringGroupExtGroupMembers1 = new ArrayList<>();
 
 
@@ -225,7 +168,7 @@ public class TestRingGroup extends TestCaseBaseNew {
             log.debug("*****************init extension************");
 
             runRecoveryEnvFlag = false;
-            isDebugInitExtensionFlag = registerAllExtension();
+            isDebugInitExtensionFlag = registerAllExtensions();
         }
 
         long startTime = System.currentTimeMillis();
@@ -265,8 +208,6 @@ public class TestRingGroup extends TestCaseBaseNew {
             queueMembers = new ArrayList<>();
             ringGroupMembers0 = new ArrayList<>();
             ringGroupMembers1 = new ArrayList<>();
-            ringGroupExtGroupMembers0 = new ArrayList<>();
-            ringGroupExtGroupMembers1 = new ArrayList<>();
             conferenceMember = new ArrayList<>();
 
             extensionNum.add("0");
@@ -313,17 +254,16 @@ public class TestRingGroup extends TestCaseBaseNew {
 
             step("创建响铃组6300 6301");
             ringGroupMembers0.add("1003");
-            ringGroupExtGroupMembers0.add("ExGroup1");
-            ringGroupExtGroupMembers1.add("ExGroup1");
+            ringGroupMembers0.add("group_ExGroup1");
+            ringGroupMembers1.add("group_ExGroup1");
             ringGroupMembers1.add("1001");
             ringGroupMembers1.add("1002");
             ringGroupMembers1.add("1003");
 
-
             ExtensionObject extensionObject = apiUtil.getExtensionSummary("1000");
             ExtensionObject extensionObject2 = apiUtil.getExtensionSummary("1004");
-            apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName0, ringGroupNum0, ringGroupMembers0, ringGroupExtGroupMembers0)
-                    .createRingGroup(ringGroupName1, ringGroupNum1, ringGroupMembers1, ringGroupExtGroupMembers1)
+            apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName0, ringGroupNum0, ringGroupMembers0)
+                    .createRingGroup(ringGroupName1, ringGroupNum1, ringGroupMembers1)
                     .editRingGroup(ringGroupNum0, String.format("\"ring_strategy\":\"ring_all\",\"ring_timeout\":10,\"fail_dest\":\"extension\",\"fail_dest_value\":\"%s\"", extensionObject.id))
                     .editRingGroup(ringGroupNum1, String.format("\"ring_strategy\":\"ring_all\",\"fail_dest\":\"extension\",\"fail_dest_value\":\"%s\"", extensionObject2.id));
 
@@ -357,7 +297,7 @@ public class TestRingGroup extends TestCaseBaseNew {
             apiUtil.apply();
             //todo role_id 需要获取
             apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW).editExtension("0","\"role_id\":1").apply();
-            runRecoveryEnvFlag = registerAllExtension();
+            runRecoveryEnvFlag = registerAllExtensions();
 
             step("1003 1004拨号*76400，登录Queue0");
             pjsip.Pj_Make_Call_No_Answer(1003,  "*76400", DEVICE_IP_LAN, false);
@@ -373,12 +313,11 @@ public class TestRingGroup extends TestCaseBaseNew {
 
             step("[环境恢复]： 响铃组只保留6300");
             ringGroupMembers0 = new ArrayList<>();
-            ringGroupExtGroupMembers0 = new ArrayList<>();
             ringGroupMembers0.add("1003");
-            ringGroupExtGroupMembers0.add("ExGroup1");
+            ringGroupMembers0.add("group_ExGroup1");
 
             ExtensionObject extensionObject = apiUtil.getExtensionSummary("1000");
-            apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName0, ringGroupNum0, ringGroupMembers0, ringGroupExtGroupMembers0)
+            apiUtil.deleteAllRingGroup().createRingGroup(ringGroupName0, ringGroupNum0, ringGroupMembers0)
                     .editRingGroup(ringGroupNum0, String.format("\"ring_strategy\":\"ring_all\",\"ring_timeout\":10,\"fail_dest\":\"extension\",\"fail_dest_value\":\"%s\"", extensionObject.id))
             .editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -1956,36 +1895,44 @@ public class TestRingGroup extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"P2","RingGroup", "FailoverDestination", "SPS","PSeries","Cloud","K2"})
     public void testRG30_FailoverDestination05() {
-//        prerequisite();
-//
-//        step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择Extension Voicemail-分机1004");
-//        ArrayList<String> extList = new ArrayList<>();
-//        extList.add("1000");
-//        extList.add("1001");
-//        extList.add("group_ExGroup2");
-//        apiUtil.editRingGroup(ringGroupNum1, String.format("\"member_list\":%s,\"ring_strategy\":\"ring_all\",\"ring_timeout\":10," +
-//                "\"fail_dest\":\"ext_vm\",\"fail_dest_value\":\"%s\"", editRingGroup1Extension(extList),apiUtil.getExtensionSummary("1004").id))
-//                .apply();
-//
-//        pjsip.Pj_Make_Call_No_Answer(2000,  "996301", DEVICE_ASSIST_2, false);
-//
-//        step("分机1000 1001 1002同时响铃");
-//        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 5)).as("[通话校验]:1000分机响铃").isEqualTo(RING);
-//        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[通话校验]:1001分机响铃").isEqualTo(RING);
-//        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[通话校验]:1002分机响铃").isEqualTo(RING);
-//
-//        sleep(10000);
+        prerequisite();
 
-//        step("所有分机1000\\1001\\1002同时响铃10s后，进入到分机1004的语音留言，登录1004查看新增一条语音留言，Name记录正确");
-//        //todo
-//        step("网页admin登录,进入ringgroup界面 ");
-////        auto.loginPage().loginWithExtension("1004", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW);
-//        auto.loginPage().login("1004", EXTENSION_PASSWORD_NEW);
-////        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
-//        auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
-//        softAssertPlus.assertThat(TableUtils.getTableForHeader(getDriver(),"Name",0)).contains("2000");
-//
-//        sleep(5000);
+        step("编辑RingGroup1，成员选择1000、1001、ExGroup2；RingStategry 选择Ring All，响铃时间为10s；FailoverDestination选择Extension Voicemail-分机1004");
+        ArrayList<String> extList = new ArrayList<>();
+        extList.add("1000");
+        extList.add("1001");
+        extList.add("group_ExGroup2");
+        apiUtil.editRingGroup(ringGroupNum1, String.format("\"member_list\":%s,\"ring_strategy\":\"ring_all\",\"ring_timeout\":10," +
+                "\"fail_dest\":\"ext_vm\",\"fail_dest_value\":\"%s\"", editRingGroup1Extension(extList),apiUtil.getExtensionSummary("1004").id))
+                .apply();
+
+        pjsip.Pj_Make_Call_No_Answer(2000,  "996301", DEVICE_ASSIST_2, false);
+
+        step("分机1000 1001 1002同时响铃");
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 5)).as("[通话校验]:1000分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[通话校验]:1001分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[通话校验]:1002分机响铃").isEqualTo(RING);
+
+        sleep(15000);
+        pjsip.Pj_Hangup_All();
+
+        step("所有分机1000\\1001\\1002同时响铃10s后，进入到分机1004的语音留言，登录1004查看新增一条语音留言，Name记录正确");
+
+        step("网页admin登录,进入ringgroup界面 ");
+        auto.loginPage().login("1004", EXTENSION_PASSWORD_NEW);
+        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
+
+        List<String> lists = TableUtils.getTableForHeader(getDriver(),"Name");
+
+        System.out.println("at 0 "+lists.get(0));
+        softAssertPlus.assertThat(lists.size() > 0).as("至少有一条语音留言记录");
+        if (lists.size() > 0){
+            softAssertPlus.assertThat(lists.get(0)).as("最新一条记录是分机2000分机的记录").isEqualTo("2000\n" +
+                    "External Number");
+        }
+
+        sleep(5000);
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
@@ -2619,9 +2566,25 @@ public class TestRingGroup extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING ,  6)).as("[通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1)).as("[通话校验]:1000分机未响铃").isEqualTo(HUNGUP);
 
-        sleep(5000);
         step("所有分机1000\\1001\\1002同时响铃10s后，进入到分机1004的语音留言，登录1004查看新增一条语音留言，Name记录正确");
-        //todo
+        sleep(10000);
+        pjsip.Pj_Hangup_All();
+
+        step("网页admin登录,进入ringgroup界面 ");
+        auto.loginPage().login("1004", EXTENSION_PASSWORD_NEW);
+        auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
+
+        List<String> lists = TableUtils.getTableForHeader(getDriver(),"Name");
+
+        System.out.println("at 0 "+lists.get(0));
+        softAssertPlus.assertThat(lists.size() > 0).as("至少有一条语音留言记录");
+        if (lists.size() > 0){
+            softAssertPlus.assertThat(lists.get(0)).as("最新一条记录是分机2000分机的记录").isEqualTo("2000\n" +
+                    "External Number");
+        }
+
+        sleep(5000);
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")

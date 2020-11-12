@@ -19,13 +19,6 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.swebtest.driver.DataReader2.*;
 import static org.apache.log4j.spi.Configurator.NULL;
@@ -640,6 +633,23 @@ public class APIUtil {
     }
 
     /**
+     * 删除当前存在的Inbound
+     * */
+    public APIUtil deleteInbound(String inboundName){
+        List<InboundRouteObject> inboundRoutesList = getInboundSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(InboundRouteObject object : inboundRoutesList){
+            if(object.name.equals(inboundName)){
+                list.add(object.id);
+            }}
+        if(list != null && !list.isEmpty()){
+            deleteInbound(list);
+        }
+        return this;
+    }
+
+    /**
      * 创建呼入路由
      * @param request
      * @param trunks
@@ -1166,35 +1176,36 @@ public class APIUtil {
      * 创建响铃组
      * @param name
      * @param number
-     * @param extensions
-     * @param extGroups
+     * @param members  list中 分机填写分机号，响铃组填写 group_响铃组名称（即在响铃组名称前面加上“group_”表示这是一个响铃组）
      * @return
      */
-    public APIUtil createRingGroup(String name,String number, List<String> extensions, List<String> extGroups){
+    public APIUtil createRingGroup(String name,String number, List<String> members){
         JSONArray jsonArray = new JSONArray();
 
         MenuOptionObject menuOptionObject = getRingGroupMenuOption();
-        for (String ext : extensions){
-            for (MenuOptionObject.MemberList extensionObject: menuOptionObject.extensionOptions) {
-                if (ext.equals(extensionObject.text2)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionObject.text);
-                    a.put("text2",extensionObject.text2);
-                    a.put("value",extensionObject.value);
-                    a.put("type","extension");
-                    jsonArray.put(a);
-                }
-            }
-        }
 
-        for (String extGroup : extGroups){
-            for (MenuOptionObject.MemberList extensionGroupObject : menuOptionObject.extGroupOptions) {
-                if(extGroup.equals(extensionGroupObject.text)){
-                    JSONObject a = new JSONObject();
-                    a.put("text",extensionGroupObject.text);
-                    a.put("value",extensionGroupObject.value);
-                    a.put("type","ext_group");
-                    jsonArray.put(a);
+        for (String ext : members){
+            if (ext.startsWith("group_")){
+                String m_groupName = ext.replace("group_","");
+                for (MenuOptionObject.MemberList extensionGroupObject : menuOptionObject.extGroupOptions) {
+                    if(m_groupName.equals(extensionGroupObject.text)){
+                        JSONObject a = new JSONObject();
+                        a.put("text",extensionGroupObject.text);
+                        a.put("value",extensionGroupObject.value);
+                        a.put("type","ext_group");
+                        jsonArray.put(a);
+                    }
+                }
+            }else{
+                for (MenuOptionObject.MemberList extensionObject: menuOptionObject.extensionOptions) {
+                    if (ext.equals(extensionObject.text2)){
+                        JSONObject a = new JSONObject();
+                        a.put("text",extensionObject.text);
+                        a.put("text2",extensionObject.text2);
+                        a.put("value",extensionObject.value);
+                        a.put("type","extension");
+                        jsonArray.put(a);
+                    }
                 }
             }
         }
@@ -1208,16 +1219,6 @@ public class APIUtil {
         Assert.assertEquals( String.valueOf(0), jsonObject.getString("errcode"),"[createRingGroup: ]响铃组 num="+number+"创建失败,errmsg:"+jsonObject.getString("errmsg"));
         return this;
     }
-
-    /**
-     * 创建响铃组路由
-     * @param request
-     */
-    public APIUtil createRingGroup(String name,String number, List<String> extensions){
-        createRingGroup(name,number,extensions,new ArrayList<>());
-        return this;
-    }
-
     /**
      * 编辑响铃组
      * @param number
