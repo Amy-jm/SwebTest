@@ -469,9 +469,10 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
         confnum = confnum - 1;
         if (confnum==0) {
-            Assert.assertEquals(confnum, getConferenceUser(), "4000 hang up 异常");
-        }else {
             Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
+        }else {
+            Assert.assertEquals(confnum, getConferenceUser(), "4000 hang up 异常");
+
         }
 
         if (PRODUCT.toLowerCase().equals("p550") || PRODUCT.toLowerCase().equals("p560") || PRODUCT.toLowerCase().equals("p570")) {
@@ -480,9 +481,11 @@ public class TestConference extends TestCaseBaseNew {
                 pjsip.Pj_hangupCall(2001);
                 confnum = confnum - 1;
                 if (confnum==0) {
-                    Assert.assertEquals(confnum, getConferenceUser(), "2001 hang up 异常");
-                }else {
                     Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
+
+                }else {
+                    Assert.assertEquals(confnum, getConferenceUser(), "2001 hang up 异常");
+
                 }
             }
             if (!BRI_1.equals("null")) {
@@ -490,9 +493,10 @@ public class TestConference extends TestCaseBaseNew {
                 pjsip.Pj_hangupCall(2002);
                 confnum = confnum - 1;
                 if (confnum==0) {
-                    Assert.assertEquals(confnum, getConferenceUser(), "2002 hang up 异常");
-                }else {
                     Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
+                }else {
+                    Assert.assertEquals(confnum, getConferenceUser(), "2002 hang up 异常");
+
                 }
             }
             if (!E1.equals("null")) {
@@ -500,9 +504,9 @@ public class TestConference extends TestCaseBaseNew {
                 pjsip.Pj_hangupCall(2003);
                 confnum = confnum - 1;
                 if (confnum==0) {
-                    Assert.assertEquals(confnum, getConferenceUser(), "2003 hang up 异常");
-                }else {
                     Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
+                }else {
+                    Assert.assertEquals(confnum, getConferenceUser(), "2003 hang up 异常");
                 }
             }
             if (!GSM.equals("null")) {
@@ -980,6 +984,7 @@ public class TestConference extends TestCaseBaseNew {
         }
 
         assertStep("[Asterisk校验]");
+        sleep(5000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("1 users in that conference."),"SIP 呼叫失败");
 
         pjsip.Pj_hangupCall(caller);
@@ -1577,7 +1582,7 @@ public class TestConference extends TestCaseBaseNew {
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501，不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为空，不勾选WaitforModerator，Moderators 选择分机1001\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -1643,7 +1648,7 @@ public class TestConference extends TestCaseBaseNew {
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -1700,7 +1705,7 @@ public class TestConference extends TestCaseBaseNew {
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -1757,7 +1762,7 @@ public class TestConference extends TestCaseBaseNew {
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -1846,6 +1851,7 @@ public class TestConference extends TestCaseBaseNew {
             }
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_1.size());
         }
+        sleep(5000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("1 users in that conference."));
 
         step("分机1003呼入Conference-6501\\n\" +\n" +
@@ -1865,6 +1871,7 @@ public class TestConference extends TestCaseBaseNew {
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_2.size());
         }
         assertStep("[通话状态校验]");
+        sleep(5000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
 
         asteriskObjectList_2.clear();
@@ -1910,6 +1917,7 @@ public class TestConference extends TestCaseBaseNew {
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
+        sleep(3000);
 
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
@@ -1967,6 +1975,7 @@ public class TestConference extends TestCaseBaseNew {
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
+        sleep(3000);
 
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
@@ -2015,7 +2024,7 @@ public class TestConference extends TestCaseBaseNew {
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -2056,7 +2065,7 @@ public class TestConference extends TestCaseBaseNew {
     public void testConference_28_Delete1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);step("1:login with admin");
         auto.loginPage().loginWithAdmin();
-
+        sleep(2000);
         step("2:进入IVR界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
 
@@ -2088,7 +2097,7 @@ public class TestConference extends TestCaseBaseNew {
 
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
-
+        sleep(2000);
         step("2:进入IVR界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
 
