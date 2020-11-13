@@ -359,7 +359,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
                     {"99", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
             };
         }
-        return routes;
+        return null;
     }
 
 //    @BeforeMethod(alwaysRun = true)
@@ -1031,88 +1031,6 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
                 .contains(tuple(cdrCaller, "21234567890", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
-
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("InboundRoute-Basic")
-    @Story("Trunk,InboundRoute,ExternalNumber")
-    @Description("编辑呼入路由In1的目的地为ExternalNumber: Prefix为1，号码3001\n" +
-            "\t29.通过sps外线呼入\n" +
-            "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr\n" +
-            "\t30.通过Account外线呼入\n" +
-            "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRB_29_30_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
-        prerequisite();
-        step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为1，号码3001");
-        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
-
-        step("1:login with admin,trunk: " + trunk);
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
-        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
-        pjsip.Pj_Answer_Call(3001,false);
-        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(caller);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
-
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("InboundRoute-Basic")
-    @Story("Trunk,InboundRoute,ExternalNumber")
-    @Description("编辑呼入路由In1的目的地为ExternalNumber: Prefix为1，号码3001\n" +
-            "\t29.通过sps外线呼入\n" +
-            "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr\n" +
-            "\t30.通过Account外线呼入\n" +
-            "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr\n")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRB_30_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
-        prerequisite();
-        step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为1，号码3001");
-        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
-
-        step("1:login with admin,trunk: " + trunk);
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
-        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
-        pjsip.Pj_Answer_Call(3001,false);
-        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(caller);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
     }
