@@ -175,12 +175,12 @@ public class SSHLinuxUntils {
                 AsteriskObject  asteriskObject1 = new AsteriskObject();
 //                log.debug("[get key success ，appear "+appearCount+"] "+(System.currentTimeMillis() - startTime)/1000+" Seconds ！"+msg);
                 asteriskObject1.setName(msg);
-//                asteriskObject1.setTime(msg.substring(1,20));
-                if(msg.contains("'")){
+                asteriskObject1.setTime(msg.substring(1,20));
+                if(containsString.contains("'") && msg.contains("'")){
                     String[] str = msg.split("'");
                     asteriskObject1.setKeyword(str[1]);
-                    asteriskObjectList.add(asteriskObject1);
                 }
+                asteriskObjectList.add(asteriskObject1);
             }
 //            try {
 //                Thread.sleep(100);
