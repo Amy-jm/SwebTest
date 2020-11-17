@@ -533,8 +533,52 @@ public class APIUtil {
             Assert.fail("[API getTrunkSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
         }
         return trunkObjList;
+    } /**
+     * 获取Trunk概要列表
+     * 对应API：api/v1.0/extension/searchsummary
+     */
+    public TrunkObject getTrunkSummary(String num){
+        List<TrunkObject> trunkObjectList = getTrunkSummary();
+        for (TrunkObject object : trunkObjectList){
+            if(object.name.equals(num)){
+                return object;
+            }
+        }
+        return null;
     }
 
+    /**
+     * 编辑FXO
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editFXOTrunk(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/fxotrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
+        return this;
+    }
+
+    /**
+     * 编辑E1
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editDigitalTrunk(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/digitaltrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
+        return this;
+    }
+
+    /**
+     * 编辑GSM
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editGSMTrunk(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/gsmtrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
+        return this;
+    }
     /**
      * 通过Trunk的ID删除
      * 对应接口：/api/v1.0/trunk/batchdelete
@@ -708,7 +752,15 @@ public class APIUtil {
         return this;
     }
 
-
+    /**
+     *
+     * @param request
+     * @return
+     */
+    public APIUtil editFXO(String name, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/fxotrunk/update",String.format("{%s,\"id\":%s}",request,getInboundSummary(name).id));
+        return this;
+    }
     /**
      * 获取概要列表
      * 对应API：api/v1.0/outboundroute/searchsummary

@@ -112,7 +112,7 @@ public class CDRObject {
      */
     public enum CDRNAME {
         Extension_1000("test A<1000>"),
-        Extension_1001("est2 B<1001>"),
+        Extension_1001("test2 B<1001>"),
         Extension_1002("testta C<1002>"),
         Extension_1003("testa D<1003>"),
         Extension_1004("t estX<1004>"),
