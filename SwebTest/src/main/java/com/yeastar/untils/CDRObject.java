@@ -129,7 +129,9 @@ public class CDRObject {
         QUEUE0_6400("Queue Queue0<6400>"),
         QUEUE1_6401("Queue Queue1<6401>"),
 
-        Extension_1000_VOICEMAIL("Voicemail test A<1000>");
+        Extension_1000_VOICEMAIL("Voicemail test A<1000>"),
+
+        Conference0_6500("Conference Conference0<6500>");
 
         private final String alias;
         CDRNAME(String alias) {

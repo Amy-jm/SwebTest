@@ -4,6 +4,7 @@ import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.TestCaseBaseNew;
+import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.SIP;
 import com.yeastar.untils.APIObject.IVRObject;
 import com.yeastar.untils.*;
 import com.yeastar.untils.CDRObject.CDRNAME;
@@ -37,7 +38,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
     private String EXTENSION_1000_HUNGUP = "test A<1000> hung up";
 
@@ -283,7 +284,6 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         apiUtil.deleteAllInbound().createInbound("Inbound1", trunk1, "Extension", "1001").
                 editInbound("Inbound1", String.format("\"did_pattern_list\":[{\"did_pattern\":\"+123456\"},{\"did_pattern\":\"s\"},{\"did_pattern\":\"abcdefghijklmno\"},{\"did_pattern\":\"056789+\"}]")).
                 apply();
-
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
@@ -802,7 +802,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Feature("InboundRoute-DIDPattern")
     @Story("InboundRoute,DIDPattern")
     @Description("编辑呼入路由Inbound4，DID Pattern选择“DID Pattern\"，添加规则： 13001，呼入目的地Queue-Queue0\n" +
-            "\t26.通过sps外线拨打9913001\n" +
+            "\t26.通过sps外线拨打通过sps外线拨打9913001\n" +
             "\t\t进入到Queue0，坐席1000、1001、1003、1004同时响铃，分机1004接听，挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -810,27 +810,37 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","InboundRoute", "DIDPattern","SPS","P3"})
     public void testIRDID_26_DIDPattern(){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SPS);
+        step("编辑呼入路由Inbound4，DID Pattern选择“DID Pattern\"，添加规则： 13001，呼入目的地Queue-Queue0\n");
+        apiUtil.deleteAllInbound().createInbound("Inbound4", trunk1, "Extension", "1000").
+                editInbound("Inbound4", String.format("\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"", apiUtil.getQueueSummary("6400").id)).
+                editInbound("Inbound4", String.format("\"did_pattern_list\":[{\"did_pattern\":\"13001\"}]")).apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 通过sps外线拨打9913001" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1000,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
+        pjsip.Pj_Answer_Call(1004,false);
+
+        Assert.assertEquals(getExtensionStatus(1004,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_hangupCall(1004);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.QUEUE0_6400.toString(), STATUS.ANSWER.toString(), "Queue Queue0<6400> connected",SPS,"","Inbound"))
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1004.toString(), STATUS.ANSWER.toString(), "t estX<1004> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -847,18 +857,24 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","InboundRoute", "DIDPattern","SPS","P3"})
     public void testIRDID_27_DIDPattern(){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SPS);
+        step("编辑呼入路由Inbound4，DID Pattern选择“DID Pattern\"，添加规则： 13001，呼入目的地External Number：prefix : 1 ,号码：3001");
+        apiUtil.deleteAllInbound().createInbound("Inbound4", trunk1, "Extension", "1000").
+                editInbound("Inbound4", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).
+                editInbound("Inbound4", String.format("\"did_pattern_list\":[{\"did_pattern\":\"13001\"}]"))
+                .apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 9913001" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
+        pjsip.Pj_Answer_Call(3001,false);
+        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -867,7 +883,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>","13001", STATUS.ANSWER.toString(), "2000<2000> hung up",SPS, SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -884,18 +900,24 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","InboundRoute", "DIDPattern","SPS","P3"})
     public void testIRDID_28_DIDPattern(){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SPS);
+        step("编辑呼入路由Inbound4，DID Pattern选择“DID Pattern\"，添加规则： 13001，呼入目的地External Number：prefix : 1 ,号码：3001");
+        apiUtil.deleteAllInbound().createInbound("Inbound4", trunk1, "Extension", "1000").
+                editInbound("Inbound4", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out1").id)).
+                editInbound("Inbound4", String.format("\"did_pattern_list\":[{\"did_pattern\":\"13001\"}]"))
+                .apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 9913001" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
+        pjsip.Pj_Answer_Call(3001,false);
+        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -904,7 +926,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>","13001", STATUS.ANSWER.toString(), "2000<2000> hung up",SPS, SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -921,18 +943,35 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","InboundRoute", "DIDPattern","SPS","P3"})
     public void testIRDID_29_DIDPattern(){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SPS);
+        step("编辑呼入路由Inbound4，DID Pattern选择“DID Pattern\"，添加规则： 13001，呼入目的地Play Greeting then HangUp 选择prompt1，播放1遍");
+        apiUtil.deleteAllInbound().createInbound("Inbound4", trunk1, "Extension", "1000").
+                editInbound("Inbound4", String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"prompt1.wav\"")).
+                editInbound("Inbound4", String.format("\"did_pattern_list\":[{\"did_pattern\":\"13001\"}]"))
+                .apply();
+
+        asteriskObjectList.clear();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_1)).start();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 9913001" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
 
-        step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        int tmp = 0;
+        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_" + tmp);
+        }
+        if (tmp == 301) {
+            for (int i = 0; i < asteriskObjectList.size(); i++) {
+                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
+            }
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
+        }
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -941,7 +980,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>","play_file", STATUS.ANSWER.toString(), "2000<2000> hung up",SPS, "","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -958,18 +997,22 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P2"})
     public void testIRDID_30_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 991001" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991001", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1001,RING,30),RING);
+        pjsip.Pj_Answer_Call(1001,false);
+        Assert.assertEquals(getExtensionStatus(1001,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -978,7 +1021,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -995,18 +1038,23 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P2"})
     public void testIRDID_31_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        step("2:[caller] 2000"+",[callee] 991002" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991002", DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1002,RING,30),RING);
+        pjsip.Pj_Answer_Call(1002,false);
+        Assert.assertEquals(getExtensionStatus(1002,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1015,7 +1063,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1002.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1032,18 +1080,22 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_32_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2001"+",[callee] 991020" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2001, "991020", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(2000,RING,30),RING);
+        pjsip.Pj_Answer_Call(2000,false);
+        Assert.assertEquals(getExtensionStatus(2000,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1052,7 +1104,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1020.toString(), STATUS.ANSWER.toString(), "1020 1020<1020> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1069,18 +1121,22 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_33_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 881003" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "881003", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1003,RING,30),RING);
+        pjsip.Pj_Answer_Call(1003,false);
+        Assert.assertEquals(getExtensionStatus(1003,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1089,7 +1145,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1003.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",BRI_1,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1106,18 +1162,22 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_34_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 661004" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "661004", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1004,RING,30),RING);
+        pjsip.Pj_Answer_Call(1004,false);
+        Assert.assertEquals(getExtensionStatus(1004,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1126,7 +1186,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1004.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",E1,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1143,13 +1203,17 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_35_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 4000"+",[callee] 441000" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(4000, "441000", DEVICE_ASSIST_3, false);
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
@@ -1157,13 +1221,13 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
 
         step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
+        pjsip.Pj_hangupCall(4000);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("4000<4000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "4000<4000> hung up",ACCOUNTTRUNK,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1171,7 +1235,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
             "\t36.通过sps外线拨打99+12310010591012\n" +
             "\t\t分机1001响铃，接听，挂断；检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
@@ -1180,18 +1244,22 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_36_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"123{{.Ext}}0591XZN\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1003").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 9912310010591012" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9912310010591012", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1001,RING,30),RING);
+        pjsip.Pj_Answer_Call(1001,false);
+        Assert.assertEquals(getExtensionStatus(1001,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1200,7 +1268,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1209,7 +1277,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
     @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
-            "\t37.通过sps外线拨打99+1231003059199999\n" +
+            "\t37.通过sps外线拨打991231003059199999\n" +
             "\t\t分机1003响铃，接听，挂断；检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1217,18 +1285,22 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_37_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"123{{.Ext}}0591XZN!\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1003").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 991231003059199999" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991231003059199999", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1003,RING,30),RING);
+        pjsip.Pj_Answer_Call(1003,false);
+        Assert.assertEquals(getExtensionStatus(1003,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1237,7 +1309,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1003.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1245,8 +1317,8 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
-            "\t38.通过sps外线拨打99+12310020591012\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+            "\t38.通过sps外线拨打9912310020591012\n" +
             "\t\t打不通，通话被自动挂断\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1254,37 +1326,29 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_38_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"123{{.Ext}}0591XZN\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1003").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 9912310020591012" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9912310020591012", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
     }
 
 
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
-            "\t39.通过sps外线拨打99123100105910123\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+            "\t39.通过sps外线拨打9912310010592012\n" +
             "\t\t打不通，通话被自动挂断\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1292,37 +1356,29 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_39_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"123{{.Ext}}0591XZN\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1003").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 9912310010592012" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9912310010592012", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
     }
 
 
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
-            "\t40.通过sps外线拨打99+1231001059100222\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+            "\t40.通过sps外线拨打9912310010591002\n" +
             "\t\t打不通，通话被自动挂断\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1330,36 +1386,28 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_40_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"123{{.Ext}}0591XZN\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1003").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 9912310010591002" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9912310010591002", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
     }
 
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
-            "\t41.通过sps外线拨打99+12310010590012\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+            "\t41.通过sps外线拨打9912310010591011\n" +
             "\t\t打不通，通话被自动挂断\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1367,36 +1415,27 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_41_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"123{{.Ext}}0591XZN\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1003").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
+        step("2:[caller] 2000"+",[callee] 9912310010591011" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9912310010591011", DEVICE_ASSIST_2, false);
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
     }
 
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
-            "\t42.通过sps外线拨打99+12310010591011\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+1230591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+            "\t42-1.通过sps外线拨打99+1230591012\n" +
             "\t\t打不通，通话被自动挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1404,55 +1443,52 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_42_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"+1230591XZN\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1003").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 99+1230591012" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "99+1230591012", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
 
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004\n" +
-            "\t43.通过sps外线拨打991002a\n" +
-            "\t\t分机1002响铃，接听，挂断；检查cdr\n")
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+1230591XZN，选择所有外线；呼入目的地选择Extension-分机1001\n" +
+            "\t43.通过sps外线拨打99+1230591012\n" +
+            "\t分机1001响铃，接听，挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_43_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+1230591XZN，选择所有外线；呼入目的地选择Extension-分机1001\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1001").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"+1230591XZN\",\"def_dest\":\"extension\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 99+1230591012" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "99+1230591012", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1001,RING,30),RING);
+        pjsip.Pj_Answer_Call(1001,false);
+        Assert.assertEquals(getExtensionStatus(1001,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1461,7 +1497,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1469,64 +1505,60 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004\n" +
-            "\t44.通过sps外线拨打991002\n" +
-            "\t\t打不通，通话被自动挂断\n")
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004\n" +
+            "\t43.通过sps外线拨打991002a\n" +
+            "\t\t分机1002响铃，接听，挂断；检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_44_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1002").id, apiUtil.getExtensionSummary("1004").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 991002a" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991002a", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
     }
 
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004\n" +
-            "\t45.通过sps外线拨打9910041234567890\n" +
-            "\t\t分机1004响铃，接听，挂断；检查cdr\n")
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004\n" +
+            "\t45.通过sps外线拨打991002\n" +
+            "\t分机1002响铃，接听，挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_45_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1002").id, apiUtil.getExtensionSummary("1004").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 991002" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991002", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1002,RING,30),RING);
+        pjsip.Pj_Answer_Call(1002,false);
+        Assert.assertEquals(getExtensionStatus(1002,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1535,16 +1567,17 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1002.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
 
+
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004\n" +
-            "\t46.通过sps外线拨打99100333\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004\n" +
+            "\t46.通过sps外线拨打991003\n" +
             "\t\t打不通，通话被自动挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1552,29 +1585,21 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_46_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1002").id, apiUtil.getExtensionSummary("1004").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 991003" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991003", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
     }
 
     @Epic("P_Series")
@@ -1589,12 +1614,17 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_47_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"extension\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1000").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        step("2:[caller] 2000"+",[callee] 991003" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991003", DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         step("[通话状态校验]");
@@ -1626,13 +1656,17 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_48_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"extension\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1000").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 99999999" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "99999999", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
@@ -1663,27 +1697,34 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_49_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"ring_group\",\"def_dest_value\":\"%s\"",apiUtil.getRingGroupSummary("6300").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
+        Assert.assertEquals(getExtensionStatus(1001,RING,30),RING);
+        Assert.assertEquals(getExtensionStatus(1003,RING,30),RING);
+        pjsip.Pj_Answer_Call(1003,false);
+        Assert.assertEquals(getExtensionStatus(1003,TALKING,30),TALKING);
+        sleep(WaitUntils.SHORT_WAIT*2);
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.RINGGROUP0_6300.toString(), STATUS.ANSWER.toString(), "RingGroup RingGroup0<6300> connected",SPS,"","Inbound"))
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1003.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1700,29 +1741,21 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_50_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择HangUp\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
     }
 
     @Epic("P_Series")
@@ -1737,27 +1770,39 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_51_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).
+                apply();
 
-        step("1:login with admin,trunk: "+SPS);
+        step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        step("2:[caller] 2000"+",[callee] 991001" +",[trunk] "+SPS);
+        String callTime = DataUtils.getCurrentTime("HH:mm:ss");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991001", DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        sleep(15 * 1000);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
+        step("登录分机1000查看新增一条语音留言，Name记录正确");
+        auto.homePage().logout();
+        auto.loginPage().login("1000", EXTENSION_PASSWORD_NEW);
+        sleep(WaitUntils.SHORT_WAIT * 2);
+        auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        Assert.assertTrue(TableUtils.getTableForHeader(getDriver(), "Name", 0).contains("2000"),"没有检测到录音文件！");
+
+        String voiceMailTime = TableUtils.getTableForHeader(getDriver(), "Time", 0);
+        log.debug("[callTime] " + callTime + " ,[voiceMailTime] " + voiceMailTime);
+        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);
+
         assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(),  "2000<2000> hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1774,13 +1819,33 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_52_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择IVR-IVR0\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"ivr\",\"def_dest_value\":\"%s\"", apiUtil.getIVRSummary("6200").id)).
+                apply();
+        asteriskObjectList.clear();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 991002" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991002", DEVICE_ASSIST_2, false);
+        int tmp = 0;
+        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_" + tmp);
+        }
+        if (tmp == 301) {
+            for (int i = 0; i < asteriskObjectList.size(); i++) {
+                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
+            }
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
+        }
+
+        pjsip.Pj_Send_Dtmf(2000,"0");
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
@@ -1811,18 +1876,18 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_53_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Conference-Conference0\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"conference\",\"def_dest_value\":\"%s\"", apiUtil.getConferenceSummary("6500").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        step("2:[caller] 2000"+",[callee] 991003" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991003", DEVICE_ASSIST_2, false);
+        sleep(WaitUntils.SHORT_WAIT*5);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1831,7 +1896,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Conference0_6500.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -1846,29 +1911,50 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
-    public void testIRDID_54_MatchDIDToExt(){
+    public void testIRDID_54_MatchDIDToExt() throws IOException, JSchException {
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Queue-Queue0\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"", apiUtil.getQueueSummary("6400").id)).
+                apply();
+
+        step("新增动态坐席：1003\\1004分别拨打*76400 加入到Queue0");
+        String result = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI,"queue show queue-6400"));
+        log.debug("[queue show queue-6400] "+result);
+        if(!result.contains("1003")){
+            pjsip.Pj_Make_Call_Auto_Answer(1003,"*76400", DEVICE_IP_LAN);
+        }
+        if(!result.contains("1004")){
+            pjsip.Pj_Make_Call_Auto_Answer(1004,"*76400", DEVICE_IP_LAN);
+        }
+        String resultAfter = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI,"queue show queue-6400"));
+        log.debug("[queue show queue-6400 resultAfter] "+resultAfter);
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 991003" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991003", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,30),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,30),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,RING,30),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
+        pjsip.Pj_Answer_Call(1004,false);
+
+        Assert.assertEquals(getExtensionStatus(1004,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_hangupCall(1004);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.QUEUE0_6400.toString(), STATUS.ANSWER.toString(), "Queue Queue0<6400> connected",SPS,"","Inbound"))
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1004.toString(), STATUS.ANSWER.toString(), "t estX<1004> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1885,6 +1971,11 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_55_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择External Number：prefix : 1 ,号码：3001");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
@@ -1922,18 +2013,23 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_56_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"",apiUtil.getOutBoundRouteSummary("Out1").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        step("2:[caller] 2000"+",[callee] 9913001" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
+        pjsip.Pj_Answer_Call(3001,false);
+        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1942,7 +2038,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", "13001", STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1959,27 +2055,39 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_57_MatchDIDToExt(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择IVR-IVR0\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"prompt2.wav\"")).
+                apply();
+        asteriskObjectList.clear();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "prompt2.wav")).start();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 9913001" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
+        int tmp = 0;
+        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_" + tmp);
+        }
+        if (tmp == 301) {
+            for (int i = 0; i < asteriskObjectList.size(); i++) {
+                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
+            }
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
+        }
 
-        step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", "play_file", STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1996,13 +2104,17 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P2"})
     public void testIRDID_58_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", "\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"range_to_ext\",\"def_dest_value\":\"1000-1004\"").
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 995503300" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
@@ -2033,18 +2145,23 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P2"})
     public void testIRDID_59_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", "\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"range_to_ext\",\"def_dest_value\":\"1000-1004\"").
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        step("2:[caller] 2000"+",[callee] 995503304" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503304", DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1004,RING,30),RING);
+        pjsip.Pj_Answer_Call(1004,false);
+        Assert.assertEquals(getExtensionStatus(1004,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -2053,7 +2170,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1004.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2070,18 +2187,23 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_60_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", "\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"range_to_ext\",\"def_dest_value\":\"1000-1004\"").
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        step("2:[caller] 2000"+",[callee] 885503301" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "885503301", DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1001,RING,30),RING);
+        pjsip.Pj_Answer_Call(1001,false);
+        Assert.assertEquals(getExtensionStatus(1001,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -2090,7 +2212,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",BRI_1,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2106,18 +2228,22 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_61_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", "\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"range_to_ext\",\"def_dest_value\":\"1000-1004\"").
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 665503302" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "665503302", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1002,RING,30),RING);
+        pjsip.Pj_Answer_Call(1002,false);
+        Assert.assertEquals(getExtensionStatus(1002,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -2126,7 +2252,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1002.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",E1,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2143,29 +2269,21 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_62_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", "\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"range_to_ext\",\"def_dest_value\":\"1000-1004\"").
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 995503305" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503305", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
     }
 
     @Epic("P_Series")
@@ -2180,29 +2298,21 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_63_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Hang up\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", "\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"end_call\",\"def_dest_value\":\"\"").
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 995503300" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
-
-        softAssertPlus.assertAll();
+        int result = getExtensionStatus(2000, HUNGUP, 30);
+        Assert.assertTrue((result == HUNGUP) || (result == IDLE));
     }
 
     @Epic("P_Series")
@@ -2217,18 +2327,22 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_64_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Extension-分机1002\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1002").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 995503300" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1002,RING,30),RING);
+        pjsip.Pj_Answer_Call(1002,false);
+        Assert.assertEquals(getExtensionStatus(1002,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -2237,7 +2351,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1002.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2254,27 +2368,39 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_65_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Extension Voicemail-分机1000\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).
+                apply();
 
-        step("1:login with admin,trunk: "+SPS);
+        step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        step("2:[caller] 2000"+",[callee] 995503300" +",[trunk] "+SPS);
+        String callTime = DataUtils.getCurrentTime("HH:mm:ss");
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        sleep(15 * 1000);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
+        step("登录分机1000查看新增一条语音留言，Name记录正确");
+        auto.homePage().logout();
+        auto.loginPage().login("1000", EXTENSION_PASSWORD_NEW);
+        sleep(WaitUntils.SHORT_WAIT * 2);
+        auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        Assert.assertTrue(TableUtils.getTableForHeader(getDriver(), "Name", 0).contains("2000"),"没有检测到录音文件！");
+
+        String voiceMailTime = TableUtils.getTableForHeader(getDriver(), "Time", 0);
+        log.debug("[callTime] " + callTime + " ,[voiceMailTime] " + voiceMailTime);
+        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);
+
         assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(),  "2000<2000> hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2291,13 +2417,33 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_66_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Extension Voicemail-分机1000\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"ivr\",\"def_dest_value\":\"%s\"", apiUtil.getIVRSummary("6200").id)).
+                apply();
+        asteriskObjectList.clear();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        int tmp = 0;
+        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_" + tmp);
+        }
+        if (tmp == 301) {
+            for (int i = 0; i < asteriskObjectList.size(); i++) {
+                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
+            }
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
+        }
+
+        pjsip.Pj_Send_Dtmf(2000,"0");
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
@@ -2328,27 +2474,34 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_67_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择RingGroup-RingGroup0\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"ring_group\",\"def_dest_value\":\"%s\"", apiUtil.getRingGroupSummary("6300").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 995503300" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1001,RING,30),RING);
+        Assert.assertEquals(getExtensionStatus(1003,RING,30),RING);
+        pjsip.Pj_Answer_Call(1003,false);
+        Assert.assertEquals(getExtensionStatus(1003,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.RINGGROUP0_6300.toString(), STATUS.ANSWER.toString(), "RingGroup RingGroup0<6300> connected",SPS,"","Inbound"))
+                 .contains(tuple("2000<2000>", CDRNAME.Extension_1003.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2363,29 +2516,50 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
-    public void testIRDID_68_MatchDIDToExtRange(){
+    public void testIRDID_68_MatchDIDToExtRange() throws IOException, JSchException {
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择RingGroup-RingGroup0\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"", apiUtil.getQueueSummary("6400").id)).
+                apply();
+
+        step("新增动态坐席：1003\\1004分别拨打*76400 加入到Queue0");
+        String result = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI,"queue show queue-6400"));
+        log.debug("[queue show queue-6400] "+result);
+        if(!result.contains("1003")){
+            pjsip.Pj_Make_Call_Auto_Answer(1003,"*76400", DEVICE_IP_LAN);
+        }
+        if(!result.contains("1004")){
+            pjsip.Pj_Make_Call_Auto_Answer(1004,"*76400", DEVICE_IP_LAN);
+        }
+        String resultAfter = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI,"queue show queue-6400"));
+        log.debug("[queue show queue-6400 resultAfter] "+resultAfter);
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 995503300" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1001,RING,30),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1003,RING,30),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1004,RING,30),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
 
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
+        pjsip.Pj_Answer_Call(1004,false);
+
+        Assert.assertEquals(getExtensionStatus(1004,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        sleep(WaitUntils.SHORT_WAIT);
+        pjsip.Pj_hangupCall(1004);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.QUEUE0_6400.toString(), STATUS.ANSWER.toString(), "Queue Queue0<6400> connected",SPS,"","Inbound"))
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1004.toString(), STATUS.ANSWER.toString(), "t estX<1004> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2403,18 +2577,18 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_69_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择RingGroup-RingGroup0\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"conference\",\"def_dest_value\":\"%s\"", apiUtil.getConferenceSummary("6500").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        step("2:[caller] 2000"+",[callee] 995503300" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
+        sleep(WaitUntils.SHORT_WAIT*5);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -2423,7 +2597,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Conference0_6500.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -2440,18 +2614,22 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_70_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择External Number ,prefix : 1 ,号码：3001\n\n");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 995503300" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
+        pjsip.Pj_Answer_Call(3001,false);
+        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -2460,7 +2638,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+                .contains(tuple("2000<2000>", "13001", STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2468,7 +2646,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDRangetoExtensionRange")
-    @Description("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Outbound Route-Out1\n" +
+    @Description("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 13001-13004，呼入目的地选择Outbound Route-Out1\n" +
             "\t71.通过sps外线拨打995503300\n" +
             "\t\t转到呼出路由Out1，辅助1的分机3001响铃，接听，挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
@@ -2477,27 +2655,31 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_71_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Outbound Route-Out1");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"13001\",\"did_to_ext_end\":\"13004\",\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out1").id)).
+                apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:[caller] 2000"+",[callee] 9913001" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
+        pjsip.Pj_Answer_Call(3001,false);
+        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
         assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple("2000<2000>", "13001", "ANSWERED", "2000<2000> hung up", SPS, SIPTrunk, "Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2514,27 +2696,37 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDRangetoExtensionRange","SPS","P3"})
     public void testIRDID_72_MatchDIDToExtRange(){
         prerequisite();
+        step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Play Greeting then Hang Up选择prompt3，播放1遍");
+        apiUtil.deleteAllInbound().
+                createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1",  String.format("\"did_option\":\"range_to_ext\",\"did_to_ext_start\":\"5503300\",\"did_to_ext_end\":\"5503304\",\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"prompt3.wav\"")).
+                apply();
+        asteriskObjectList.clear();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_3)).start();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991000" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
-
-        step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
-        pjsip.Pj_Answer_Call(1000,false);
-        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(2000);
+        step("2:[caller] 2000"+",[callee] 995503300" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
+        int tmp = 0;
+        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_" + tmp);
+        }
+        if (tmp == 301) {
+            for (int i = 0; i < asteriskObjectList.size(); i++) {
+                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
+            }
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
+        }
 
         assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple("2000<2000>", "play_file", STATUS.ANSWER.toString(), "2000<2000> hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }

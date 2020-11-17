@@ -60,6 +60,7 @@ public class BaseMethod extends WebDriverFactory {
 	public final String IVR_GREETING_DIAL_EXT = "ivr-greeting-dial-ext.slin";
 	public final String PROMPT_1 = "prompt1.slin";
 	public final String PROMPT_2 = "prompt2.slin";
+	public final String PROMPT_3 = "prompt3.slin";
 	public final String FAX_TO_EMAIL_1001 = "1001@fax_to_email";
 	public final String ringGroupName0 = "RingGroup0";//6300
 	public final String ringGroupName1 = "RingGroup1";//6301
