@@ -53,7 +53,7 @@ public class DataUtils {
         return sdf.format(date);
     }
 
-    public static String getYestoadayTime(String DataForm){
+    public static String getYesterdayTime(String DataForm){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE,-1);
         SimpleDateFormat sdf = new SimpleDateFormat(DataForm);
@@ -65,6 +65,19 @@ public class DataUtils {
         String[] weekDays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
         Calendar cal = Calendar.getInstance();
         int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0)
+            w = 0;
+        return weekDays[w];
+    }
+
+    /**
+     * sun mon tue wed thu fri sat
+     * @return
+     */
+    public static String getYesterdayWeekDay(){
+        String[] weekDays = {"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
+        Calendar cal = Calendar.getInstance();
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 2;
         if (w < 0)
             w = 0;
         return weekDays[w];
