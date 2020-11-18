@@ -38,7 +38,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = true;
+    private boolean isRunRecoveryEnvFlag = false;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
     private String EXTENSION_1000_HUNGUP = "test A<1000> hung up";
 
@@ -112,13 +112,12 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
                     {"99", 2000, "056789+", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
             };
         }
-        if (methodName.contains("testIRDID_08_11_DIDPattern")) {
+        if (methodName.contains("testIRDID_08_10_DIDPattern")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"99", 2000, "s", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
                     {"99", 2000, "abcdefghijklmno", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
                     {"99", 2000, "056789+", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
-                    {"99", 2000, "123456", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
             };
         }
           if (methodName.contains("testIRDID_18_22_DIDPattern")) {
@@ -270,13 +269,17 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Feature("InboundRoute-DIDPattern")
     @Story("InboundRoute,DIDPattern")
     @Description("新建呼入路由Inbound1,DID Pattern选择“DID Pattern\",添加规则1：+123456 ，规则2：s ,规则3：abcdefghijklmno，规则4：99056789+\n" +
-            "\t8.通过sps外线拨打99s\n" +
-            "\t\t分机1001响铃，接听，挂断；检查cdr\n" )
+            "8.通过sps外线拨打99s\n" +
+            "\t分机1001响铃，接听，挂断；检查cdr\n" +
+            "9.通过sps外线拨打99abcdefghijklmno\n" +
+            "\t分机1001响铃，接听，挂断；检查cdr\n" +
+            "10.通过sps外线拨打99056789+\n" +
+            "\t分机1001响铃，接听，挂断；检查cdr" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","InboundRoute", "DIDPattern","SPS","P3"},dataProvider = "routes")
-    public void testIRDID_08_11_DIDPattern(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+    public void testIRDID_08_10_DIDPattern(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -290,7 +293,6 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
 
         step("2:[caller] " + caller + ",[callee] " + routePrefix + callee + ",[trunk] " + trunk);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix+callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1001,RING,30),RING);
@@ -305,6 +307,49 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
                 .contains(tuple("2000<2000>", CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
+
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("InboundRoute-DIDPattern")
+    @Story("InboundRoute,DIDPattern")
+    @Description("新建呼入路由Inbound1,DID Pattern选择“DID Pattern\",添加规则1：+123456 ，规则2：s ,规则3：abcdefghijklmno，规则4：99056789+\n" +
+            "11.通过sps外线拨打99123456\n" +
+            "\t分机1000响铃，接听，挂断；检查cdr" )
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","InboundRoute", "DIDPattern","SPS","P3"})
+    public void testIRDID_11_DIDPattern(){
+        prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SPS);
+        step("新建呼入路由Inbound1，DID Pattern选择“DID Pattern”，添加规则0123456789；Trunk选择sps外线，呼入目的地为分机B-1001");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000")
+                .createInbound("Inbound1", trunk1, "Extension", "1001").
+                editInbound("Inbound1", String.format("\"did_pattern_list\":[{\"did_pattern\":\"+123456\"},{\"did_pattern\":\"s\"},{\"did_pattern\":\"abcdefghijklmno\"},{\"did_pattern\":\"056789+\"}]")).
+                apply();
+
+        step("1:login with admin,trunk: "+SPS);
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 2000"  + ",[callee]99123456 "  + ",[trunk] " );
+        pjsip.Pj_Make_Call_No_Answer(2000, "99123456", DEVICE_ASSIST_2, false);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
+        pjsip.Pj_Answer_Call(1000,false);
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(2000);
+
+        assertStep("[CDR校验]");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up",SPS,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -434,7 +479,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         step("2:[caller] 2000"+",[callee] 991234abc" +",[trunk] "+SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991234abc", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -480,31 +525,16 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
         step("新建呼入路由Inbound2，DID Pattern选择“DID Pattern\"，添加规则：123! ，呼入目的地为IVR-IVR0");
-        apiUtil.deleteAllInbound().createInbound("Inbound2", trunk1, "Extension", "1000").
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000")
+                .createInbound("Inbound2", trunk1, "Extension", "1000").
                 editInbound("Inbound2", String.format("\"def_dest\":\"ivr\",\"def_dest_value\":\"%s\"", apiUtil.getIVRSummary("6200").id)).
                 editInbound("Inbound2", String.format("\"did_pattern_list\":[{\"did_pattern\":\"123!\"}]")).apply();
-        asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000"+",[callee] 9912" +",[trunk] "+SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "9912", DEVICE_ASSIST_2, false);
-        int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
-            sleep(50);
-            tmp++;
-            log.debug("[tmp]_" + tmp);
-        }
-        if (tmp == 301) {
-            for (int i = 0; i < asteriskObjectList.size(); i++) {
-                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
-            }
-            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
-        }
-
-        pjsip.Pj_Send_Dtmf(2000,"0");
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1000,RING,30),RING);
@@ -1235,7 +1265,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003" +
             "\t36.通过sps外线拨打99+12310010591012\n" +
             "\t\t分机1001响铃，接听，挂断；检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
@@ -1276,8 +1306,8 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
-            "\t37.通过sps外线拨打991231003059199999\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003" +
+            "\t37.通过sps外线拨打9912310030591999\n" +
             "\t\t分机1003响铃，接听，挂断；检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1285,17 +1315,17 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","InboundRoute-DIDPattern","MatchDIDPatterntoExtensions","SPS","P3"})
     public void testIRDID_37_MatchDIDToExt(){
         prerequisite();
-        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
+        step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003");
         apiUtil.deleteAllInbound().
                 createInbound("In1", trunk9, "Extension", "1000").
-                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"123{{.Ext}}0591XZN!\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1003").id)).
+                editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"123{{.Ext}}0591XZN\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"},{\"value\":\"%s\"}]", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1003").id)).
                 apply();
 
         step("1:login with admin,trunk: "+SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000"+",[callee] 991231003059199999" +",[trunk] "+SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991231003059199999", DEVICE_ASSIST_2, false);
+        step("2:[caller] 2000"+",[callee] 9912310030591999" +",[trunk] "+SPS);
+        pjsip.Pj_Make_Call_No_Answer(2000, "9912310030591999", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(1003,RING,30),RING);
@@ -1317,7 +1347,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003" +
             "\t38.通过sps外线拨打9912310020591012\n" +
             "\t\t打不通，通话被自动挂断\n")
     @Severity(SeverityLevel.BLOCKER)
@@ -1347,7 +1377,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003" +
             "\t39.通过sps外线拨打9912310010592012\n" +
             "\t\t打不通，通话被自动挂断\n")
     @Severity(SeverityLevel.BLOCKER)
@@ -1377,7 +1407,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003" +
             "\t40.通过sps外线拨打9912310010591002\n" +
             "\t\t打不通，通话被自动挂断\n")
     @Severity(SeverityLevel.BLOCKER)
@@ -1406,7 +1436,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-DIDPattern")
     @Story("MatchDIDPatterntoExtensions")
-    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\n" +
+    @Description("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003" +
             "\t41.通过sps外线拨打9912310010591011\n" +
             "\t\t打不通，通话被自动挂断\n")
     @Severity(SeverityLevel.BLOCKER)
