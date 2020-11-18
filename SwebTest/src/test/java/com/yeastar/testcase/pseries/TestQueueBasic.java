@@ -30,7 +30,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             log.debug("*****************init extension************");
 
             runRecoveryEnvFlag = false;
-            isDebugInitExtensionFlag = registerAllExtension();
+            isDebugInitExtensionFlag = registerAllExtensions();
         }
 
         if (runRecoveryEnvFlag) {
@@ -56,7 +56,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
             step("编辑呼入路由In1呼入目的地为Queue1-6401");
             apiUtil.editInbound("In1",String.format("\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"",apiUtil.getQueueSummary(queueNum1).id));
-            runRecoveryEnvFlag = registerAllExtension();
+            runRecoveryEnvFlag = registerAllExtensions();
 
             if(runRecoveryEnvFlag){
                 step("1000 1001拨号*76401，登录Queue1");
