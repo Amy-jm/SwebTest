@@ -630,6 +630,54 @@ public class APIUtil {
     }
 
     /**
+     * 获取officetime概要列表
+     * 对应API：api/v1.0/officetime/searchsummary
+     */
+    public List<OfficeTimeObject> getOfficeTimeSummary(){
+
+        List<OfficeTimeObject> officeTimeObjectList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/officetime/list?page=1&page_size=10&sort_by=id&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("office_time_list"))
+                return officeTimeObjectList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("office_time_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                officeTimeObjectList.add(new OfficeTimeObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+        }else {
+            Assert.fail("[API getInboundSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return officeTimeObjectList;
+    }
+
+    /**
+     * 获取holiday概要列表
+     * 对应API：api/v1.0/holiday/list
+     */
+    public List<HolidayObject> getHolidaySummary(){
+
+        List<HolidayObject> holidayObjectList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/holiday/list?page=1&page_size=10&sort_by=id&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("holiday_list"))
+                return holidayObjectList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("holiday_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                holidayObjectList.add(new HolidayObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+        }else {
+            Assert.fail("[API getHolidaySummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return holidayObjectList;
+    }
+
+    /**
      * 找到指定Inbound
      * @param name
      * @return
@@ -659,6 +707,38 @@ public class APIUtil {
         }
         return this;
     }
+    /**
+     * 删除当前存在的所有OfficeTime
+     * */
+    public APIUtil deleteAllOfficeTime(){
+        List<OfficeTimeObject> officeTimeObjectList = getOfficeTimeSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(OfficeTimeObject object : officeTimeObjectList){
+            list.add(object.id);
+        }
+        if (!list.isEmpty() || list.size() != 0) {
+            deleteOfficeTime(list);
+        }
+        return this;
+    }
+
+    /**
+     * 删除当前存在的所有Holiday
+     * */
+    public APIUtil deleteAllHoliday(){
+        List<HolidayObject> holidayObjectList = getHolidaySummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(HolidayObject object : holidayObjectList){
+            list.add(object.id);
+        }
+        if (!list.isEmpty() || list.size() != 0) {
+            deleteHoliday(list);
+        }
+        return this;
+    }
+
 
     /**
      * 通过分机的ID删除指定分机
@@ -673,6 +753,38 @@ public class APIUtil {
         JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/batchdelete",jsonObject.toString());
+        return this;
+    }
+
+    /**
+     * 通过分机的ID删除officetime
+     * 对应接口：/api/v1.0/officetime/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteOfficeTime(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/officetime/batchdelete",jsonObject.toString());
+        return this;
+    }
+
+    /**
+     * 通过分机的ID删除holiday
+     * 对应接口：/api/v1.0/holiday/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteHoliday(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/holiday/batchdelete",jsonObject.toString());
         return this;
     }
 
@@ -734,6 +846,74 @@ public class APIUtil {
         request = String.format("{\"name\":\"%s\",\"did_option\":\"patterns\",\"did_pattern_to_ext\":\"\",\"did_to_ext_start\":\"\",\"did_to_ext_end\":\"\",\"cid_option\":\"patterns\",\"phonebook\":\"\",\"def_dest\":\"%s\",\"def_dest_prefix\":\"\",\"def_dest_value\":\"%s\",\"def_dest_ext_list\":[],\"enb_time_condition\":0,\"time_condition\":\"global\",\"office_time_dest\":\"end_call\",\"office_time_dest_ext_list\":[],\"office_time_dest_prefix\":\"\",\"office_time_dest_value\":\"\",\"outoffice_time_dest\":\"end_call\",\"outoffice_time_dest_prefix\":\"\",\"outoffice_time_dest_value\":\"\",\"outoffice_time_dest_ext_list\":[],\"holiday_dest\":\"end_call\",\"holiday_dest_ext_list\":[],\"holiday_dest_prefix\":\"\",\"holiday_dest_value\":\"\",\"enb_fax_detect\":0,\"fax_dest\":\"extension\",\"fax_dest_value\":\"\",\"trunk_list\":%s,\"did_pattern_list\":[],\"cid_pattern_list\":[],\"office_time_list\":[]}"
                 ,name,dest.toLowerCase(),id ,jsonArray.toString());
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/create",request);
+        return this;
+    }
+
+    /**
+     * 创建OfficeTime
+     * @param daysOfWeek   sun mon tue wed thu fri sat
+     * @param officeTimes  "08:45-12:00"
+     * @param resetTimes   "08:45-12:00"
+     * @return
+     */
+    public  APIUtil createOfficeTime(String daysOfWeek, List<String> officeTimes, List<String> resetTimes){
+        List<OfficeTimeObject> officeTimeObjects = getOfficeTimeSummary();
+        JSONArray jsonArrayOfficeTimes = new JSONArray();
+        JSONArray jsonArrayResetTimes = new JSONArray();
+        String request = "";
+
+        for (int i=0; i<officeTimes.size(); i++){
+            JSONObject a = new JSONObject();
+            a.put("value",String.valueOf(officeTimes.get(i).toString()));
+            jsonArrayOfficeTimes.put(a);
+        }
+
+        for (int i=0; i<resetTimes.size(); i++){
+            JSONObject a = new JSONObject();
+            a.put("value",String.valueOf(resetTimes.get(i).toString()));
+            jsonArrayResetTimes.put(a);
+        }
+        request = String.format("{\"office_times\":%s,\"reset_times\":%s,\"days_of_week\":\"%s\"}"
+                ,jsonArrayOfficeTimes.toString(),jsonArrayResetTimes.toString(),daysOfWeek);
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/officetime/create",request);
+        return this;
+    }
+
+    /**
+     * 创建 holiday
+     * @param name
+     * @param type week
+     * @param month
+     * @param howWeek
+     * @param weekDay
+     * @return
+     */
+    public  APIUtil createHolidayTime(String name,String type, String month,int howWeek,String weekDay){
+        List<HolidayObject> officeTimeObjects = getHolidaySummary();
+
+        String request = "";
+
+        request = String.format("{\"name\":\"%s\",\"type\":\"%s\",\"month\":\"%s\",\"how_week\":%d,\"weekday\":\"%s\"}"
+                ,name,type,month,howWeek,weekDay);
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/holiday/create",request);
+        return this;
+    }
+
+    /**
+     * createHolidayTime by date or by month
+     * @param name
+     * @param type  支持类型：date/month
+     * @param day  对应的格式：date="11/18/2020-11/18/2020"   month:"12/16-12/23"
+     * @return
+     */
+    public  APIUtil createHolidayTime(String name,String type, String day){
+        List<HolidayObject> officeTimeObjects = getHolidaySummary();
+
+        String request = "";
+
+        request = String.format("{\"name\":\"%s\",\"type\":\"%s\",\"date\":\"%s\"}"
+                ,name,type,day);
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/holiday/create",request);
         return this;
     }
 
