@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.tuple;
  * @create: 2020/11/04
  */
 @Log4j2
-public class TestInboundRouteBCTP extends TestCaseBaseNew {
+public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     List<String> trunk9 = new ArrayList<>();
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
@@ -34,7 +34,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
-    TestInboundRouteBCTP() {
+    TestInboundRouteCustomTime() {
         trunk9.add(SPS);
         trunk9.add(BRI_1);
         trunk9.add(FXO_1);
@@ -138,7 +138,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
         Assert.assertTrue(result.contains("0 results found"), "*99 切换上下班时间 异常");
 
         step("分机1000拨打*99 切换上下班时间；");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
 
         String resultAfter = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"));
         log.debug("[database show FORCEDEST ] " + resultAfter);
@@ -222,7 +222,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
         Assert.assertTrue(result.contains("0 results found"), "*99 切换上下班时间 异常");
 
         step("分机1000拨打*99 切换上下班时间；");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
 
         String resultAfter = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"));
         log.debug("[database show FORCEDEST ] " + resultAfter);
@@ -1113,7 +1113,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
                 .contains(tuple("2000<2000>", CDRNAME.Extension_1002.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up", SPS, "", "Inbound"));
 
         step("分机1000拨打*99 切换上下班时间；");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
 
         String resultAfter = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"));
         log.debug("[database show FORCEDEST ] " + resultAfter);
@@ -1171,10 +1171,8 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
         apiUtil.deleteAllInbound().
                 createInbound("In1", trunk9, "Extension", "1000").
                 editInbound("In1", String.format("\"enb_time_condition\":1,\"time_condition\":\"custom\",\"outoffice_time_dest\":\"extension\",\"outoffice_time_dest_value\":\"%s\",\"holiday_dest\":\"extension\",\"holiday_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1002").id)).
-                editInbound("In1", String.format("\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-05:00\"},{\"value\":\"05:00-12:00\"},{\"value\":\"12:00-15:00\"},{\"value\":\"15:00-16:00\"},{\"value\":\"14:30-23:59\"}],\"dest\":\"extension\",\"dest_prefix\":\"\",\"dest_value\":\"%s\",\"dest_ext_list\":[],\"pos\":1}]", apiUtil.getExtensionSummary("1003").id)).
+                editInbound("In1", String.format("\"office_time_list\":[{\"days_of_week\":\"%s\",\"office_times\":[{\"value\":\"00:00-23:00\"}],\"dest\":\"extension\",\"dest_prefix\":\"\",\"dest_value\":\"%s\",\"dest_ext_list\":[],\"pos\":1}]",DataUtils.getYesterdayWeekDay(), apiUtil.getExtensionSummary("1003").id)).
                 apply();
-
-        apiUtil.createOfficeTime(DataUtils.getYesterdayWeekDay(), officeTimes, resetTimes).apply();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
