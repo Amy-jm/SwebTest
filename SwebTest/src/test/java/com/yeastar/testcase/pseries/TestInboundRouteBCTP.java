@@ -264,7 +264,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_03_BCTP() throws IOException, JSchException {
+    public void testIR_03_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -304,7 +304,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_04_BCTP() throws IOException, JSchException {
+    public void testIR_04_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -344,7 +344,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_05_BCTP() throws IOException, JSchException {
+    public void testIR_05_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -404,7 +404,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_06_BCTP() throws IOException, JSchException {
+    public void testIR_06_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -472,7 +472,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_07_BCTP() throws IOException, JSchException {
+    public void testIR_07_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -596,7 +596,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_09_BCTP() throws IOException, JSchException {
+    public void testIR_09_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -644,7 +644,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_10_BCTP() throws IOException, JSchException {
+    public void testIR_10_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -696,7 +696,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_11_BCTP() throws IOException, JSchException {
+    public void testIR_11_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -744,7 +744,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_12_BCTP() throws IOException, JSchException {
+    public void testIR_12_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -802,7 +802,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_13_BCTP() throws IOException, JSchException {
+    public void testIR_13_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -855,7 +855,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_14_BCTP() throws IOException, JSchException {
+    public void testIR_14_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -908,7 +908,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_15_BCTP() throws IOException, JSchException {
+    public void testIR_15_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -962,7 +962,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_16_BCTP() throws IOException, JSchException {
+    public void testIR_16_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -1016,7 +1016,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
-    public void testIR_17_BCTP() throws IOException, JSchException {
+    public void testIR_17_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
@@ -1155,7 +1155,7 @@ public class TestInboundRouteBCTP extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P2"})
-    public void testIR_19_BCTP() throws IOException, JSchException {
+    public void testIR_19_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
