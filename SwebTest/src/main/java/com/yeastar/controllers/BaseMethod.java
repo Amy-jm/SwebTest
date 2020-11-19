@@ -2,9 +2,8 @@ package com.yeastar.controllers;
 
 import com.jcraft.jsch.JSchException;
 import com.yeastar.swebtest.tools.pjsip.UserAccount;
-import com.yeastar.untils.*;
-import com.yeastar.untils.APIObject.ExtensionObject;
 import com.yeastar.untils.APIObject.IVRObject;
+import com.yeastar.untils.*;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -237,7 +236,120 @@ public class BaseMethod extends WebDriverFactory {
 		log.debug("[asterisk_command_return_string] "+str);
 		return str;
 	}
+	private String findExtCdrRecordByExtNum(String extNum){
+		if (extNum.equals("1000")){
+			return CDRObject.CDRNAME.Extension_1000.toString();
+		}else if (extNum.equals("1001")){
+			return CDRObject.CDRNAME.Extension_1001.toString();
+		}else if (extNum.equals("1002")){
+			return CDRObject.CDRNAME.Extension_1002.toString();
+		}else if (extNum.equals("1003")){
+			return CDRObject.CDRNAME.Extension_1003.toString();
+		}else if (extNum.equals("1004")){
+			return CDRObject.CDRNAME.Extension_1004.toString();
+		}else if (extNum.equals("1020")){
+			return CDRObject.CDRNAME.Extension_1020.toString();
+		}else if (extNum.equals("2000")){
+			return CDRObject.CDRNAME.Extension_2000.toString();
+		}else if (extNum.equals("3001")){
+			return CDRObject.CDRNAME.Extension_3001.toString();
+		}else if (extNum.equals("2001")){
+			return CDRObject.CDRNAME.Extension_2001.toString();
+		}else if (extNum.equals("4000")){
+			return CDRObject.CDRNAME.Extension_4000.toString();
+		}
+		return "";
+	}
+	/**
+	 * 根据响铃策略找到队列最先响铃的分机
+	 * @param queuenum
+	 * @param ringStrategy : least_recent /
+	 * @return
+	 */
+	@Step("根据响铃策略找到队列最先响铃的分机")
+	public String getQueueExtNumWithRingStrategy(String queuenum, String ringStrategy, int index) {
+		List<Quartet<String, String, String, String>> q =getQueueExtNumWithRingStrategy(queuenum,ringStrategy);
+		if (q.size() > index){
+			return q.get(index).getValue3();
+		}
+		return "";
+	}
+	/**
+	 * 根据响铃策略找到队列最先响铃的分机
+	 * @param queuenum
+	 * @param ringStrategy : least_recent /
+	 * @return
+	 */
+	@Step("根据响铃策略找到队列最先响铃的分机信息")
+	public List<Quartet<String, String, String, String>> getQueueExtNumWithRingStrategy(String queuenum, String ringStrategy) {
 
+		List<Quartet<String, String, String, String>> roleList = new ArrayList<Quartet<String,String, String, String>>();
+		String queueInfo = execAsterisk("queue show queue-"+queuenum);
+		String[] queueInfoList = queueInfo.substring(queueInfo.indexOf("0:"),queueInfo.indexOf("No Callers")).split("\n");
+
+		for (int i = 0; i <queueInfoList.length-1; i++) {
+			String str = queueInfoList[i];
+			if (str.trim().isEmpty())
+				continue;
+			String extNum = "";
+			String state = "";
+			String cdrRecord = "";
+			String hasTakenCall = "0";
+			String lastCallInterval="9999999";
+			if (str.contains("Unavailable"))
+				state = "Unavailable";
+			else if (str.contains("Not in use"))
+				state = "Not in use";
+			else if (str.contains("In use"))
+				state = "In use";
+			else if (str.contains("Ringing"))
+				state = "Ringing";
+
+			if (!state.equals("Not in use"))
+				continue;
+
+			if (!str.contains("has taken no calls yet")){
+				lastCallInterval = str.substring(str.indexOf("last was ")+9, str.indexOf(" secs ago"));
+			}
+
+			if (str.substring(str.indexOf("Local/")+6, str.indexOf("Local/")+10).trim().equals("1020")){
+				cdrRecord = findExtCdrRecordByExtNum("1020");
+				extNum = "2000";
+			}else{
+				extNum = str.substring(str.indexOf("Local/")+6, str.indexOf("Local/")+10).trim();
+				cdrRecord = findExtCdrRecordByExtNum(extNum);
+			}
+
+			if (!str.substring(str.indexOf("has taken ")+10, str.indexOf("has taken ")+12).equals("no") ){
+				hasTakenCall = str.substring(str.indexOf("has taken ")+10, str.indexOf("has taken ")+12);
+			}
+
+			Quartet<String, String, String, String> t = TupleUtils.with(
+					extNum, //extension number
+					cdrRecord, //是否注册，是否可用状态
+					hasTakenCall,//通话数量
+					lastCallInterval//距离上次通话的时间
+			);
+			roleList.add(t);
+		}
+
+		for (int i=0; i < roleList.size(); i++){
+			for (int j=i+1; j < roleList.size(); j++){
+				if (ringStrategy.toLowerCase().equals("least_recent")){
+					if (Integer.parseInt(roleList.get(i).getValue3().trim()) <= Integer.parseInt(roleList.get(j).getValue3().trim())){
+						roleList.set(i, roleList.set(j, roleList.get(i)));
+					}
+				}
+				if (ringStrategy.toLowerCase().equals("fewest_calls")){
+					if (Integer.parseInt(roleList.get(i).getValue2().trim()) >= Integer.parseInt(roleList.get(j).getValue2().trim())){
+						roleList.set(i, roleList.set(j, roleList.get(i)));
+					}
+				}
+			}
+		}
+		log.debug(roleList);
+		return roleList;
+	}
 	@Step("...清空/ysdisk/syslog/pbxlog.0文件")
 	public String clearasteriskLog()  {
 		log.debug("[CLEAR_CLI_LOG_command]"+CLEAR_CLI_LOG);

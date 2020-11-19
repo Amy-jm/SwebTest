@@ -2,7 +2,6 @@ package com.yeastar.testcase.pseries;
 
 import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.CallFeatures.IIVRPageElement;
-import com.yeastar.page.pseries.CdrRecording.CDRPage;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage.RECORD_DETAILS;
