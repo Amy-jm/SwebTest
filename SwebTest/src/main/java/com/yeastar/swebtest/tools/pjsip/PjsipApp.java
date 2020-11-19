@@ -54,7 +54,7 @@ public class PjsipApp extends PjsipDll {
         @Override
         public int fptr_regstate(int id, int registerCode) {
             try {
-                System.out.println("RegisterCallBack :" + id + " code:" + registerCode);
+                log.debug("RegisterCallBack :" + id + " code:" + registerCode);
                 if (registerCode == 200) {
                     for (int i = 0; i < accounts.size(); i++) {
                         if (accounts.get(i).accId == id)
@@ -86,7 +86,7 @@ public class PjsipApp extends PjsipDll {
          * number  对方送来的callid（来显？）
          */
         public int fptr_callincoming(int id, String number, int accid) {
-            System.out.println("incomingcallback" + number + "callid:" + id + "accid:" + accid + "accounts.size(): " + accounts.size());
+            log.debug("incomingcallback" + number + "callid:" + id + "accid:" + accid + "accounts.size(): " + accounts.size());
 
             for (int i = 0; i < accounts.size(); i++) {
                 if (accounts.get(i).accId == accid) {
@@ -103,10 +103,10 @@ public class PjsipApp extends PjsipDll {
         @Override
         public int fptr_callstate(int id, int accId, int callCode) {
             try {
-                System.out.println("CallstateCallBack callid:" + id + " accId:" + accId + " code:" + callCode);
+                log.debug("1.CallstateCallBack callid:" + id + " accId:" + accId + " code:" + callCode);
                 for (int i = 0; i < accounts.size(); i++) {
                     if (accounts.get(i).accId == accId) {
-                        System.out.println("CallstateCallBack : username :" + accounts.get(i).username);
+                        log.debug("2.CallstateCallBack : username :" + accounts.get(i).username);
                         switch (callCode) {
                             case PJSIP_INV_STATE_NULL:
                                 accounts.get(i).callId = id;
@@ -148,7 +148,7 @@ public class PjsipApp extends PjsipDll {
     public pjsipdll.DtmfCallBack dtmfCallBack = new pjsipdll.DtmfCallBack() {
         @Override
         public int fptr_dtmfdigit(int id, int dtmf) {
-            System.out.println("DtmfCallBack id:" + id + "dtmf:" + dtmf);
+            log.debug("DtmfCallBack id:" + id + "dtmf:" + dtmf);
             return 0;
         }
     };
@@ -254,10 +254,10 @@ public class PjsipApp extends PjsipDll {
 //        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+String.valueOf(port), "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true);
             account.accId = pjsipdll.instance.ys_registerAccount(account.uriHead + String.valueOf(username) + "@" + ip + ":" + account.port, "sip:" + ip + ":" + account.port, "*", String.valueOf(username), account.password, "", true, 99999);
 
-            System.out.println("sip: ." + account.uriHead + String.valueOf(username) + "@" + ip + ":" + account.port + "......." + account.accId);
-            System.out.println("sip register: " + "sip:" + ip + ":" + account.port);
-            System.out.println("username:" + String.valueOf(username));
-            System.out.println("pwd :" + account.password);
+            log.debug("sip: ." + account.uriHead + String.valueOf(username) + "@" + ip + ":" + account.port + "......." + account.accId);
+            log.debug("sip register: " + "sip:" + ip + ":" + account.port);
+            log.debug("username:" + String.valueOf(username));
+            log.debug("pwd :" + account.password);
             if (isAsserst) {
                 pageDeskTop.taskBar_Main.click();
                 pageDeskTop.pbxmonitorShortcut.click();
@@ -296,10 +296,10 @@ public class PjsipApp extends PjsipDll {
 //        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+String.valueOf(port), "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true);
             account.accId = pjsipdll.instance.ys_registerAccount(account.uriHead + String.valueOf(username) + "@" + ip + ":" + account.port, "sip:" + ip + ":" + account.port, "*", String.valueOf(username), account.password, "", true, 99999);
 
-//        System.out.println("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
-//        System.out.println("sip register: "+"sip:"+ip+":"+account.port);
-//        System.out.println("username:"+String.valueOf(username));
-//        System.out.println("pwd :" +account.password);
+//        log.debug("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
+//        log.debug("sip register: "+"sip:"+ip+":"+account.port);
+//        log.debug("username:"+String.valueOf(username));
+//        log.debug("pwd :" +account.password);
             if (false) {
                 pageDeskTop.taskBar_Main.click();
                 pageDeskTop.pbxmonitorShortcut.click();
@@ -454,13 +454,17 @@ public class PjsipApp extends PjsipDll {
             UserAccount CallerAccount;
             CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
             String uri = "";
-            uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
+            if (ServerIp.isEmpty())
+                uri = "sip:" + Callee + "@" + CallerAccount.ip + ":" + CallerAccount.port;
+            else
+                uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
+
             log.debug("Pj_Make_Call_No_Answer: "+ uri);//todo 待后续按日志等级输出
             if (CallerAccount.accId != -1) {
                 pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, false); //todo 待后续按日志等级输出
 
             }
-            ys_waitingTime(2000);
+            ys_waitingTime(1000);
         } catch (java.lang.NullPointerException ex) {
             log.error("【Pjsip NullPointerException  Pj_Make_Call_No_Answer】" + ex);
             throw new NullPointerException();
@@ -472,7 +476,12 @@ public class PjsipApp extends PjsipDll {
 
     @Step("【pjsip】拨号 不会自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2} ")
     public String Pj_Make_Call_No_Answer(int CallerNum, String Callee, String ServerIp) {
-        return Pj_Make_Call_No_Answer(CallerNum, Callee, ServerIp, true);
+        return Pj_Make_Call_No_Answer(CallerNum, Callee, ServerIp, false);
+    }
+
+    @Step("【pjsip】拨号 不会自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2} ")
+    public String Pj_Make_Call_No_Answer(int CallerNum, String Callee) {
+        return Pj_Make_Call_No_Answer(CallerNum, Callee, "", false);
     }
 
     @Step("【pjsip】被叫方手动接听 默认 code =  200： callerNum：{0} , Assert：{1")
@@ -486,6 +495,11 @@ public class PjsipApp extends PjsipDll {
         return Pj_Answer_Call(CalleeNum, 200, Assert);
     }
 
+    @Step("【pjsip】被叫方手动接听 默认 code =  200： callerNum：{0} , Assert：{1")
+    public int Pj_Answer_Call(int CalleeNum, int code) {
+        return Pj_Answer_Call(CalleeNum, code, false);
+    }
+
     //被叫方手动接听 可以自定义 code   486 （Busy )  200(ok)  180(ring)
     @Step("【pjsip】被叫方手动接听 可以自定义 code   486 （Busy )  200(ok)  180(ring)： callerNum：{0} , code：{1} , Assert：{2}")
     public int Pj_Answer_Call(int CalleeNum, int code, boolean Assert) {
@@ -496,10 +510,10 @@ public class PjsipApp extends PjsipDll {
             String caller_status = null;
             String callee_status = null;
             CalleeAccount = findAccountByUsername(String.valueOf(CalleeNum));
-            System.out.println("Answer Call  "+CalleeAccount.callId+"  "+CalleeAccount.username);//todo 待后续日志等级输出
+            log.debug("Answer Call  "+CalleeAccount.callId+"  "+CalleeAccount.username);//todo 待后续日志等级输出
             if (CalleeAccount.callId != -1) {
                 int answer = pjsipdll.instance.ys_answerCall(CalleeAccount.callId, code);
-                System.out.println("answer return: "+answer);
+                log.debug("answer return: "+answer);
             } else {
 
             }
@@ -538,34 +552,16 @@ public class PjsipApp extends PjsipDll {
             CallerAccount = findAccountByUsername(String.valueOf(CallerNum));
             String uri = "";
 
-
-            //+":"+CalleeAccount.port
-//        uri = CalleeAccount.uriHead+CalleeAccount.username+"@"+ServerIp;
-            uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
+            if (ServerIp.isEmpty())
+                uri = "sip:" + Callee + "@" + CallerAccount.ip + ":" + CallerAccount.port;
+            else
+                uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
 
             log.debug("uri/./.........." + uri + "  " + CallerAccount.accId);
             int retMakecall = pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, true);
             log.debug("[Make call Auto] " + retMakecall);
-            if (Assert) {
-                pageDeskTop.taskBar_Main.click();
-                pageDeskTop.pbxmonitorShortcut.click();
-                if (CallerAccount.pos != -1) {
-                    int timeer = 5;
-                    while (timeer > 0) {
-                        ys_waitingTime(1000);
-                        caller_status = String.valueOf(gridExtensonStatus(extensions.grid_status, CallerAccount.pos, 0));
-                        if (caller_status.equals("Busy")) {
-                            break;
-                        }
-                        timeer--;
-                    }
-                }
 
-//            YsAssert.assertEquals(caller_status,"Busy");
-//            YsAssert.assertEquals(callee_status,"Busy");
-            }
-//        m_extension.closeMonitorWindow();
-//        pageDeskTop.CDRandRecording.click();
+
 
         } catch (Throwable ex) {
             log.error("【PjsipException Make_Call_Auto_Answer】" + ex);
@@ -582,10 +578,14 @@ public class PjsipApp extends PjsipDll {
         String uri = "";
         String caller_status = null;
         String callee_status = null;
+
         try {
             //+":"+CalleeAccount.port
 //        uri = CalleeAccount.uriHead+CalleeAccount.username+"@"+ServerIp;
-            uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
+            if (ServerIp.isEmpty())
+                uri = "sip:" + Callee + "@" + CallerAccount.ip + ":" + CallerAccount.port;
+            else
+                uri = "sip:" + Callee + "@" + ServerIp + ":" + CallerAccount.port;
 
             log.debug("uri/./.........." + uri + "  " + CallerAccount.accId);
             int retMakecall = pjsipdll.instance.ys_makeCall(CallerAccount.accId, uri, true);
@@ -626,6 +626,11 @@ public class PjsipApp extends PjsipDll {
         return Pj_Make_Call_Auto_Answer(CallerNum, CalleeNum, ServerIp, false);
     }
 
+    @Step("【pjsip】拨号 自动应答： callerNum：{0} , Callee：{1} , ServerIp：{2}")
+    public String Pj_Make_Call_Auto_Answer(int CallerNum, String CalleeNum) {
+        return Pj_Make_Call_Auto_Answer(CallerNum, CalleeNum, "", false);
+    }
+
     //通话全部挂断
     @Step("【pjsip】通话全部挂断")
     public int Pj_Hangup_All() {
@@ -649,13 +654,14 @@ public class PjsipApp extends PjsipDll {
                 account = accounts.get(i);
                 if (account.username.equals(String.valueOf(number))) {
                     if (account.status == HUNGUP) {
-                        Reporter.infoCheck("分机:" + account.username + "处于hungup");
+                        log.debug("pj_hangupCall: 分机:" + account.username + "处于hungup");
                         return suc;
                     }
                 }
             }
             UserAccount HangupAccont = findAccountByUsername(String.valueOf(number));
             suc = pjsipdll.instance.ys_releaseCall(HangupAccont.callId);
+            log.debug("pj_hangupCall sus: "+suc);
             ys_waitingTime(3000);
 
         } catch (Throwable ex) {
@@ -707,7 +713,6 @@ public class PjsipApp extends PjsipDll {
     public int Pj_Send_Dtmf(int username, String... dtmf) {
         int suc = -1;
         try {
-            ys_waitingTime(3000);//等待输入DTMF的提示出现
             ArrayList<String> dtmfList = new ArrayList<>();
             for (String index : dtmf) {
                 dtmfList.add(index);
@@ -715,10 +720,10 @@ public class PjsipApp extends PjsipDll {
 
             UserAccount CallerAccont = findAccountByUsername(String.valueOf(username));
             for (int i = 0; i < dtmfList.size(); i++) {
-                System.out.println("callId: " + CallerAccont.callId + "send dtmf :" + dtmfList.get(i) + " num:");
+                log.debug("callId: " + CallerAccont.callId + "send dtmf :" + dtmfList.get(i) + " num:");
                 if (CallerAccont.callId != -1) {
                     suc = pjsipdll.instance.ys_dialDtmf(CallerAccont.callId, dtmfList.get(i), 1);
-                    System.out.println("send dtmf end ...");
+                    log.debug("send dtmf end ...");
                 }
                 ys_waitingTime(500);
             }
@@ -731,28 +736,26 @@ public class PjsipApp extends PjsipDll {
 
 
     public int Pj_Send_Dtmf(int username, int callid, String... dtmf) {
-        ys_waitingTime(6000);//等待输入DTMF的提示出现
         ArrayList<String> dtmfList = new ArrayList<>();
         for (String index : dtmf) {
             dtmfList.add(index);
         }
         int suc = -1;
         for (int i = 0; i < dtmfList.size(); i++) {
-            System.out.println("callId: " + callid + "send dtmf :" + dtmfList.get(i) + " num:");
+            log.debug("callId: " + callid + "send dtmf :" + dtmfList.get(i) + " num:");
             suc = pjsipdll.instance.ys_dialDtmf(callid, dtmfList.get(i), 1);
-            System.out.println("send dtmf end ...");
+            log.debug("send dtmf end ...");
             ys_waitingTime(500);
         }
         return suc;
     }
 
     public int Pj_Send_Dtmf(int username, List<String> dtmf) {
-        ys_waitingTime(6000);//等待输入DTMF的提示出现
         int suc = -1;
         try {
             UserAccount CallerAccont = findAccountByUsername(String.valueOf(username));
             for (int i = 0; i < dtmf.size(); i++) {
-                System.out.println("callId: " + CallerAccont.callId + "send dtmf :" + dtmf.get(i) + " num:");
+                log.debug("callId: " + CallerAccont.callId + "send dtmf :" + dtmf.get(i) + " num:");
                 suc = pjsipdll.instance.ys_dialDtmf(CallerAccont.callId, dtmf.get(i), 1);
                 ys_waitingTime(1000);
             }
@@ -779,9 +782,9 @@ public class PjsipApp extends PjsipDll {
         UserAccount account = null;
         for (int i = 0; i < accounts.size(); i++) {
             account = accounts.get(i);
-//            System.out.println("finding account "+account.username);
+//            log.debug("finding account "+account.username);
             if (account.username.equals(username)) {
-//                System.out.println("find this "+account.username+" IP:"+account.ip);
+//                log.debug("find this "+account.username+" IP:"+account.ip);
                 return account;
             }
         }
