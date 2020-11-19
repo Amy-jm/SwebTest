@@ -1,11 +1,13 @@
 package com.yeastar.untils;
 
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import top.jfunc.json.impl.JSONObject;
 
 import java.io.IOException;
 
 @Log4j2
+@Getter
 public class CDRObject {
     private String prefix="cdr_recording.cdr.";
     private JSONObject obj;
@@ -127,7 +129,12 @@ public class CDRObject {
         RINGGROUP1_6301("RingGroup RingGroup1<6301>"),
 
         QUEUE0_6400("Queue Queue0<6400>"),
-        QUEUE1_6401("Queue Queue1<6401>");
+        QUEUE1_6401("Queue Queue1<6401>"),
+
+        Extension_1000_VOICEMAIL("Voicemail test A<1000>"),
+        Extension_1001_VOICEMAIL("Voicemail test2 B<1001>"),
+
+        Conference0_6500("Conference Conference0<6500>");
 
 
         private final String alias;
@@ -140,6 +147,7 @@ public class CDRObject {
             return this.alias;
         }
     }
+
 
     /**
      * cdr field status

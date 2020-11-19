@@ -1,7 +1,6 @@
 package com.yeastar.testcase.pseries;
 
 import com.jcraft.jsch.JSchException;
-import com.yeastar.page.pseries.CdrRecording.CDRPage;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.TestCaseBaseNew;
@@ -12,17 +11,18 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.testng.Assert;
 import org.testng.ITestContext;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.yeastar.untils.CDRObject.*;
 
 import static com.codeborne.selenide.Selenide.sleep;
+import static org.assertj.core.api.Assertions.setRemoveAssertJRelatedElementsFromStackTrace;
 import static org.assertj.core.api.Assertions.tuple;
 
 /**
@@ -34,15 +34,29 @@ import static org.assertj.core.api.Assertions.tuple;
 @Log4j2
 public class TestInboundRouteBasic extends TestCaseBaseNew {
     private boolean isRunRecoveryEnvFlag = true;
+    private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
     APIUtil apiUtil = new APIUtil();
+    List<String> trunk9 = new ArrayList<>();
+    private String EXTENSION_1000_HUNGUP = "test A<1000> hung up";
 
+    TestInboundRouteBasic(){
+        trunk9.add(SPS);
+        trunk9.add(BRI_1);
+        trunk9.add(FXO_1);
+        trunk9.add(E1);
+        trunk9.add(SIPTrunk);
+        trunk9.add(ACCOUNTTRUNK);
+        trunk9.add(GSM);
+    }
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
     private String PROMPT_1 = "prompt1.slin";
     private String PROMPT_2 = "prompt2.slin";
+    private String FAX_TO_EMAIL_1001 = "1001@fax_to_email";
+    private  int ROLEID = 0;
 
     private String reqDataCreateExtension = String.format("" +
-                    "{\"type\":\"SIP\",\"first_name\":\"EXTENSIONFIRSTNAME\",\"last_name\":\"EXTENSIONLASTNAME\",\"email_addr\":\"\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":0,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"reg_name\":\"EXTENSIONNUM\",\"reg_password\":\"%s\",\"allow_reg_remotely\":1,\"enb_user_agent_ident\":0,\"enb_ip_rstr\":0}"
+                    "{\"type\":\"SIP\",\"first_name\":\"EXTENSIONFIRSTNAME\",\"last_name\":\"EXTENSIONLASTNAME\",\"email_addr\":\"\",\"mobile_number\":\"\",\"user_password\":\"%s\",\"role_id\":ROLEID,\"number\":\"EXTENSIONNUM\",\"caller_id\":\"EXTENSIONNUM\",\"emergency_caller_id\":\"\",\"trunk_caller_id_list\":[],\"presence_status\":\"available\",\"presence_status_text\":\"\",\"enb_vm\":1,\"enb_vm_pin\":1,\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"no\",\"after_vm_notify\":\"no\",\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"follow_system\",\"enb_email_pwd_chg\":1,\"enb_email_miss_call\":0,\"presence_list\":[{\"status\":\"available\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"away\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"do_not_disturb\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"launch\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"business_trip\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"},{\"status\":\"off_work\",\"information\":\"\",\"enb_in_always_forward\":0,\"in_always_forward_dest\":\"ext_vm\",\"in_always_forward_prefix\":\"\",\"in_always_forward_num\":\"\",\"in_always_forward_value\":\"\",\"enb_in_no_answer_forward\":1,\"in_no_answer_forward_dest\":\"ext_vm\",\"in_no_answer_forward_prefix\":\"\",\"in_no_answer_forward_num\":\"\",\"in_no_answer_forward_value\":\"\",\"enb_in_busy_forward\":1,\"in_busy_forward_dest\":\"ext_vm\",\"in_busy_forward_prefix\":\"\",\"in_busy_forward_num\":\"\",\"in_busy_forward_value\":\"\",\"enb_ex_always_forward\":0,\"ex_always_forward_dest\":\"ext_vm\",\"ex_always_forward_prefix\":\"\",\"ex_always_forward_num\":\"\",\"ex_always_forward_value\":\"\",\"enb_ex_no_answer_forward\":1,\"ex_no_answer_forward_dest\":\"ext_vm\",\"ex_no_answer_forward_prefix\":\"\",\"ex_no_answer_forward_num\":\"\",\"ex_no_answer_forward_value\":\"\",\"enb_ex_busy_forward\":1,\"ex_busy_forward_dest\":\"ext_vm\",\"ex_busy_forward_prefix\":\"\",\"ex_busy_forward_num\":\"\",\"ex_busy_forward_value\":\"\",\"enb_ring1_endpoints\":1,\"enb_ring1_mobile_client\":1,\"enb_ring1_desktop_client\":1,\"enb_ring1_web_client\":1,\"enb_ring2_endpoints\":0,\"enb_ring2_mobile_client\":0,\"enb_ring2_desktop_client\":0,\"enb_ring2_web_client\":0,\"enb_ring_mobile\":0,\"mobile_prefix\":\"\",\"mobile_number\":\"\",\"dynamic_agent_action\":\"no_action\",\"ring_timeout\":30,\"vm_greeting\":\"\"}],\"disable_outb_call\":0,\"disable_office_time_outb_call\":0,\"max_outb_call_duration\":-1,\"enb_mobile_client\":1,\"enb_desktop_client\":1,\"enb_web_client\":1,\"group_list\":GROUPLIST,\"dtmf_mode\":\"rfc4733\",\"enb_qualify\":1,\"enb_t38_support\":0,\"transport\":\"udp\",\"enb_nat\":1,\"enb_srtp\":0,\"reg_name\":\"EXTENSIONNUM\",\"reg_password\":\"%s\",\"allow_reg_remotely\":1,\"enb_user_agent_ident\":0,\"enb_ip_rstr\":0}"
             , enBase64(DigestUtils.md5Hex(EXTENSION_PASSWORD)), enBase64(EXTENSION_PASSWORD));
 
     private String reqDataCreateExtensionWithRoleAdmin = String.format("" +
@@ -82,7 +96,6 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         pjsip.Pj_CreateAccount(1005, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(2001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-        pjsip.Pj_CreateAccount(3000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(3001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
         pjsip.Pj_CreateAccount(4000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 
@@ -95,7 +108,6 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         pjsip.Pj_Register_Account_WithoutAssist(1005, DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist(3000, DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
 
@@ -136,18 +148,18 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
             reg=true;
             log.debug("4000注册失败");
         }
+        if(reg){
+            pjsip.Pj_Unregister_Accounts();
+        }
         step("===========[Extension]  create & register extension  end =========");
         return reg;
     }
-
-    private boolean isDebugInitExtensionFlag = true;
 
     public void prerequisite() {
         //local debug
         long startTime = System.currentTimeMillis();
         if (isDebugInitExtensionFlag) {
-            registerAllExtension();
-            isDebugInitExtensionFlag = false;
+            isDebugInitExtensionFlag = registerAllExtension();
             isRunRecoveryEnvFlag = false;
         }
 
@@ -164,7 +176,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
                     .createExtension(reqDataCreateExtensionWithRoleHumanRes.replace("EXTENSIONFIRSTNAME", "t").replace("EXTENSIONLASTNAME", "estX").replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
                     .createExtension(reqDataCreateExtensionWithRoleAccount.replace("EXTENSIONFIRSTNAME", "First").replace("EXTENSIONLASTNAME", "Last").replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
                     .createExtension(reqDataCreateExtensionWithRoleAdmin.replace("EXTENSIONFIRSTNAME", "0").replace("EXTENSIONLASTNAME", "0").replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", "1-3").replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
+                    .createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
 
             step("2.创建分机组 ExGroup1/ExGroup2");
             List<String> extensionExGroup1 = new ArrayList<>();
@@ -279,7 +291,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
             {"", 2000, "2005", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), FXO_1},//FXO --77 不输   2005（FXS）
             {"66", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), E1},//E1     前缀 替换
             {"", 3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), SIPTrunk},//SIP  --55 REGISTER
-            {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), ACCOUNTTRUNK},
+            {"44", 4000, "4444", DEVICE_ASSIST_3, "4000 [4000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), ACCOUNTTRUNK},
 //            {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
     };
 
@@ -288,17 +300,17 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         Object[][] group = null;
         String methodName = method.getName();
         //SIP_REGISTER,SPS,ACCOUNT
-        if (methodName.equals("testIRBasic_01_03")) {
+        if (methodName.contains("_01_03")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"", 3001, "3000", DEVICE_ASSIST_1,"3001<3001>",SIPTrunk},//SIP  --55 REGISTER
                     {"99", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
-                    {"44", 4000, "1000", DEVICE_ASSIST_3,"4000<6700>",ACCOUNTTRUNK},
+                    {"44", 4000, "4444", DEVICE_ASSIST_3,"4000<4000>",ACCOUNTTRUNK},
             };
         }
         //BRI,E1
-        if(methodName.equals("testIRBasic_04_05") || methodName.equals("testIRBasic_10_11") || methodName.equals("testIRBasic_17_18") || methodName.equals("testIRBasic_24_25") ||
-                methodName.equals("testIRBasic_31_32")){
+        if(methodName.contains("_04_05") || methodName.contains("_10_11") || methodName.contains("_17_18") || methodName.contains("_24_25") ||
+                methodName.contains("_31_32")){
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"88", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",BRI_1},//BRI   前缀 替换
@@ -306,8 +318,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
             };
         }
         //FXO,GSM
-        if(methodName.equals("testIRBasic_06_07") || methodName.equals("testIRBasic_12_13") || methodName.equals("testIRBasic_19_20") || methodName.equals("testIRBasic_26_27") ||
-            methodName.equals("testIRBasic_33_34") || methodName.equals("testIRBasic_36_37")){
+        if(methodName.contains("_06_07") || methodName.contains("_12_13") || methodName.contains("_19_20") || methodName.contains("_26_27") ||
+            methodName.contains("_33_34") || methodName.contains("_36_37")){
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"", 2000, "2005", DEVICE_ASSIST_2, "2000<2000>", FXO_1},//FXO --77 不输   2005（FXS）
@@ -316,8 +328,8 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
 
         //SIP_REGEIST
-        if (methodName.equals("testIRBasic_08") || methodName.equals("testIRBasic_14") ||methodName.equals("testIRBasic_21") || methodName.equals("testIRBasic_28") ||
-            methodName.equals("testIRBasic_35") || methodName.equals("testIRBasic_45")) {
+        if (methodName.contains("_08") || methodName.contains("_14") ||methodName.contains("_21") || methodName.contains("_28") ||
+            methodName.contains("_35") || methodName.contains("_45") || methodName.contains("_46")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"", 3001, "3000", DEVICE_ASSIST_1,"3001<3001>",SIPTrunk},//SIP  --55 REGISTER
@@ -325,35 +337,26 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         }
 
         //ACCOUNT
-        if (methodName.equals("testIRBasic_09") || methodName.equals("testIRBasic_38")) {
+        if (methodName.contains("_09") || methodName.contains("_38")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
-                    {"44", 4000, "1000", DEVICE_ASSIST_3,"4000<6700>",ACCOUNTTRUNK},
+                    {"44", 4000, "4444", DEVICE_ASSIST_3,"4000<4000>",ACCOUNTTRUNK},
             };
         }
 
         //SPS,ACCOUNT
-        if (methodName.equals("testIRBasic_15_16") || methodName.equals("testIRBasic_22_23") || methodName.equals("testIRBasic_29_30")) {
+        if (methodName.contains("_15_16") || methodName.contains("_22_23") || methodName.contains("_29_30")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"99", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
-                    {"44", 4000, "1000", DEVICE_ASSIST_3,"4000<6700>",ACCOUNTTRUNK},
+                    {"44", 4000, "1000", DEVICE_ASSIST_3,"4000<4000>",ACCOUNTTRUNK},
             };
         }
 
         //SPS
-        if (methodName.equals("testIRBasic_43") || methodName.equals("testIRBasic_42") || methodName.equals("testIRBasic_47") || methodName.equals("testIRBasic_44")) {
+        if (methodName.contains("_39_") || methodName.contains("_43") || methodName.contains("_42") || methodName.contains("_47") || methodName.contains("_44")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
-                    {"99", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
-            };
-        }
-        // SIP_REGISTER SPS
-        //SIP_REGISTER,SPS,ACCOUNT
-        if (methodName.equals("testIRBasic_46")) {
-            return new Object[][]{
-                    //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
-                    {"", 3001, "3000", DEVICE_ASSIST_1,"3001<3001>",SIPTrunk},//SIP  --55 REGISTER
                     {"99", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
             };
         }
@@ -379,12 +382,11 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P1", "Basic","Trunk","InboundRoute","Extension","SIP"}, dataProvider = "routes")
-    public void testIRBasic_01_03(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "Cloud", "K2", "P1", "Basic","Trunk","InboundRoute","Extension","SPS","SIP_REGISTER","SIP_ACCOUNT"}, dataProvider = "routes")
+    public void testIRB_01_03_Basic(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
-
         step("编辑呼入路由In1的目的地为分机1000");
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -399,14 +401,22 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
 
         step("[主叫挂断]");
-        pjsip.Pj_hangupCall(caller);
+        if (caller==3001) {
+            pjsip.Pj_hangupCall(caller);
+        }else{
+            pjsip.Pj_hangupCall(1000);
+        }
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000.toString(), CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
-
+        if(caller==3001){
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                    .contains(tuple(cdrCaller, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+        }else {
+            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                    .contains(tuple(cdrCaller, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP, trunk, "", "Inbound"));
+        }
         softAssertPlus.assertAll();
     }
 
@@ -420,11 +430,14 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P1", "Basic","Trunk","InboundRoute","Extension","SIP"}, dataProvider = "routes")
-    public void testIRBasic_04_05(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "P1", "Basic","Trunk","InboundRoute","Extension","BRI","E1"}, dataProvider = "routes")
+    public void testIRB_04_05_Basic(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        if(trunk.trim().equalsIgnoreCase("null") || trunk.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,trunk+"线路不测试！");
+        }
         prerequisite();
         step("编辑呼入路由In1的目的地为分机1000");
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1001").editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -445,7 +458,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000.toString(), CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -461,17 +474,17 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P1", "Basic","Trunk","InboundRoute","Extension","SIP"}, dataProvider = "routes")
-    public void testIRBasic_06_07(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk) throws IOException, JSchException {
-        if(trunk.equals("null") || trunk.equals("")){
-            Assert.assertTrue(false,"FXO 线路 不通！");
+    @Test(groups = {"PSeries", "P1", "Basic","Trunk","InboundRoute","Extension","GSM","FXO"}, dataProvider = "routes")
+    public void testIRB_06_07_Basic(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk) throws IOException, JSchException {
+        if(trunk.trim().equalsIgnoreCase("null") || trunk.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"GSM或FXO线路不测试！");
         }
-        if(DEVICE_TEST_GSM.equals("") || DEVICE_TEST_GSM.equals("null") || DEVICE_ASSIST_GSM.equals("") ||  DEVICE_ASSIST_GSM.equals("null")){
-            Assert.assertTrue(false,"GSM 线路 不通！");
-        }
+//        if(DEVICE_TEST_GSM.trim().equalsIgnoreCase("") || DEVICE_TEST_GSM.trim().equalsIgnoreCase("null") || DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("") ||  DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("null")){
+//            Assert.assertTrue(false,"GSM 线路不测试！");
+//        }
         prerequisite();
         step("编辑呼入路由In1的目的地为分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -481,12 +494,12 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         sleep(WaitUntils.SHORT_WAIT * 2);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000, RING, 60), RING);
+        Assert.assertEquals(getExtensionStatus(1000, RING, 120), RING);
         pjsip.Pj_Answer_Call(1000, false);
         Assert.assertEquals(getExtensionStatus(1000, TALKING, 60), TALKING);
 
         //GSM 通话时长必须大于 60s
-        if(trunk.equals(GSM)){
+        if(trunk.trim().equalsIgnoreCase(GSM)){
             sleep(WaitUntils.SHORT_WAIT*30);
         }
         step("[被叫挂断]");
@@ -496,7 +509,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000.toString(), CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(), trunk, "", "Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP.toString(), trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -510,11 +523,15 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","FXS","testIRBasic_08"}, dataProvider = "routes")
-    public void testIRBasic_08(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "P2", "Trunk","InboundRoute","FXS","_08","SIP_REGISTER"}, dataProvider = "routes")
+    public void testIRB_08_FXS_1callerhangup(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        if(FXS_1.trim().equalsIgnoreCase("null") || FXS_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXS 分机不存在！");
+        }
         prerequisite();
         step("判断是否存在FXS分机1020，存在则执行编辑呼入路由In1的目的地为FXS分机1020");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
+
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -535,10 +552,54 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1020.toString(), CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1020.toString(), STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
+
+    @Epic("P_Series")
+    @Feature("InboundRoute-Basic")
+    @Story("Trunk,InboundRoute,FXS")
+    @Description("判断是否存在FXS分机1020，存在则执行编辑呼入路由In1的目的地为FXS分机1020" +
+            "8.通过sip外线呼入到分机1020\n" +
+            "\t辅助2对应的分机2000响铃，接听，主叫挂断；检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "P2", "Trunk","InboundRoute","FXS","_08","SPS"})
+    public void testIRB_08_FXS_2CalleeHangup(){
+        if(FXS_1.trim().equalsIgnoreCase("null") || FXS_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXS 分机不存在！");
+        }
+        prerequisite();
+        step("判断是否存在FXS分机1020，存在则执行编辑呼入路由In1的目的地为FXS分机1020");
+
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
+
+        step("1:login with admin,trunk: ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:辅助2通过2001拨打99999呼入");
+        pjsip.Pj_Make_Call_No_Answer(2001, "999999", DEVICE_ASSIST_2, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(2000,RING,30),RING);
+        pjsip.Pj_Answer_Call(2000,false);
+        Assert.assertEquals(getExtensionStatus(2000,TALKING,30),TALKING);
+
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(2000);
+
+        assertStep("[CDR校验]");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1020.toString(), STATUS.ANSWER.toString(), "1020 1020<1020> hung up",SPS,"","Inbound"));
+
+        softAssertPlus.assertAll();
+    }
+
 
     @Epic("P_Series")
     @Feature("InboundRoute-Basic")
@@ -549,11 +610,14 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","FXS"}, dataProvider = "routes")
-    public void testIRBasic_09(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "P3", "Trunk","InboundRoute","FXS","SIP_ACCOUNT"}, dataProvider = "routes")
+    public void testIRB_09_FXS(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        if(FXS_1.trim().equalsIgnoreCase("null") || FXS_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXS 分机不存在！");
+        }
         prerequisite();
         step("判断是否存在FXS分机1020，存在则执行编辑呼入路由In1的目的地为FXS分机1020");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -574,7 +638,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1020.toString(), CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1020.toString(), STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -590,11 +654,14 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","FXS"}, dataProvider = "routes")
-    public void testIRBasic_10_11(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
-        prerequisite();
+    @Test(groups = {"PSeries", "P3", "Trunk","InboundRoute","FXS","BRI","E1"}, dataProvider = "routes")
+    public void testIRB_10_11_FXS(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         step("判断是否存在FXS分机1020，存在则执行编辑呼入路由In1的目的地为FXS分机1020");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
+        if(FXS_1.trim().equalsIgnoreCase("null") || FXS_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXS 分机不存在！");
+        }
+        prerequisite();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1020").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -615,7 +682,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1020.toString(), CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1020.toString(), STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -632,17 +699,21 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","FXS"}, dataProvider = "routes")
-    public void testIRBasic_12_13(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
-        if(trunk.equals("null") || trunk.equals("")){
-            Assert.assertTrue(false,"FXO 线路 不通！");
+    @Test(groups = {"PSeries", "P3", "Trunk","InboundRoute","FXS","FXO","GSM"}, dataProvider = "routes")
+    public void testIRB_12_13_FXS(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        step("判断是否存在FXS分机1020，存在则执行编辑呼入路由In1的目的地为FXS分机1020");
+        if(FXS_1.trim().equalsIgnoreCase("null") || FXS_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXS 分机不存在！");
         }
-        if(DEVICE_TEST_GSM.equals("") || DEVICE_TEST_GSM.equals("null") || DEVICE_ASSIST_GSM.equals("") ||  DEVICE_ASSIST_GSM.equals("null")){
-            Assert.assertTrue(false,"GSM 线路 不通！");
+        if(trunk.trim().equalsIgnoreCase("null") || trunk.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO或GSM 线路不测试！");
         }
+//        if(DEVICE_TEST_GSM.trim().equalsIgnoreCase("") || DEVICE_TEST_GSM.trim().equalsIgnoreCase("null") || DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("") ||  DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("null")){
+//            Assert.assertTrue(false,"GSM 线路 不通！");
+//        }
         prerequisite();
         step("编辑呼入路由In1的目的地为分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -652,12 +723,12 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         sleep(WaitUntils.SHORT_WAIT * 2);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1000, RING, 60), RING);
+        Assert.assertEquals(getExtensionStatus(1000, RING, 120), RING);
         pjsip.Pj_Answer_Call(1000, false);
         Assert.assertEquals(getExtensionStatus(1000, TALKING, 60), TALKING);
 
         //GSM 通话时长必须大于 60s
-        if(trunk.equals(GSM)){
+        if(trunk.trim().equalsIgnoreCase(GSM)){
             sleep(WaitUntils.SHORT_WAIT*30);
         }
         step("[被叫挂断]");
@@ -667,7 +738,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000.toString(), CDRPage.STATUS.ANSWER.toString(), CDRPage.REASON.EXTENSION_1000_HUNGUP.toString(), trunk, "", "Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP.toString(), trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -682,10 +753,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","HangUp"}, dataProvider = "routes",enabled = true)
-    public void testIRBasic_14(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_14_HangUp(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为HangUp");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -710,10 +781,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","HangUp"}, dataProvider = "routes")
-    public void testIRBasic_15_16(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_15_16_HangUp(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为HangUp");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -737,10 +808,13 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","HangUp"}, dataProvider = "routes")
-    public void testIRBasic_17_18(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_17_18_HangUp(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        if(trunk.trim().equalsIgnoreCase("null") || trunk.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"BRI 或E1 线路 不测试！");
+        }
         prerequisite();
         step("编辑呼入路由In1的目的地为HangUp");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -764,16 +838,14 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","HangUp"}, dataProvider = "routes")
-    public void testIRBasic_19_20(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
-        if(trunk.equals("null") || trunk.equals("")){
-            Assert.assertTrue(false,"FXO 线路 不通！");
+    public void testIRB_19_20_HangUp(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        if(trunk.trim().equalsIgnoreCase("null") || trunk.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO 或GSM 线路 不测试！");
         }
-        if(DEVICE_TEST_GSM.equals("") || DEVICE_TEST_GSM.equals("null") || DEVICE_ASSIST_GSM.equals("") ||  DEVICE_ASSIST_GSM.equals("null")){
-            Assert.assertTrue(false,"GSM 线路 不通！");
-        }
+
         prerequisite();
         step("编辑呼入路由In1的目的地为HangUp");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"end_call\",\"def_dest_value\":\"\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -782,7 +854,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
 
         //FXO 线路不判断
-        if(trunk.equals(GSM)) {
+        if(trunk.trim().equalsIgnoreCase(GSM)) {
             step("[通话状态校验]");
             Assert.assertEquals(getExtensionStatus(caller, HUNGUP, 100), HUNGUP, "[caller] " + caller);
         }
@@ -798,15 +870,16 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","Voicemail"}, dataProvider = "routes")
-    public void testIRBasic_21(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_21_Voicemail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为Voicemail-分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        String callTime = DataUtils.getCurrentTime("HH:mm:ss");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
         sleep(20*1000);
@@ -817,14 +890,19 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         step("登录分机1000查看新增一条语音留言，Name记录正确");
         auto.homePage().logout();
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
-        softAssertPlus.assertThat(TableUtils.getTableForHeader(getDriver(),"Name",0)).contains(caller+"");
+        sleep(1000);
+        Assert.assertTrue(TableUtils.getTableForHeader(getDriver(),"Name",0).contains(caller+""),"没有生成语音留言");
+
+        String voiceMailTime =TableUtils.getTableForHeader(getDriver(),"Time",0);
+        log.debug("[callTime] " + callTime+" ,[voiceMailTime] " + voiceMailTime);
+        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);
 
         assertStep("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000_VOICEMAIL.toString(), CDRPage.STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -841,15 +919,16 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","Voicemail"}, dataProvider = "routes")
-    public void testIRBasic_22_23(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_22_23_Voicemail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为Voicemail-分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        String callTime = DataUtils.getCurrentTime("HH:mm:ss");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
         sleep(20*1000);
@@ -860,18 +939,19 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         step("登录分机1000查看新增一条语音留言，Name记录正确");
         auto.homePage().logout();
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
-        if(trunk.equals(ACCOUNTTRUNK)){
-            softAssertPlus.assertThat(TableUtils.getTableForHeader(getDriver(), "Name", 0)).contains("6700");
-        }else {
-            softAssertPlus.assertThat(TableUtils.getTableForHeader(getDriver(), "Name", 0)).contains(caller + "");
-        }
+        sleep(1000);
+        Assert.assertTrue(TableUtils.getTableForHeader(getDriver(),"Name",0).contains(caller+""),"没有生成语音留言");
+
+        String voiceMailTime =TableUtils.getTableForHeader(getDriver(),"Time",0);
+        log.debug("[callTime] " + callTime+" ,[voiceMailTime] " + voiceMailTime);
+        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);
 
         assertStep("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000_VOICEMAIL.toString(), CDRPage.STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -888,15 +968,19 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","Voicemail"}, dataProvider = "routes")
-    public void testIRBasic_24_25(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_24_25_Voicemail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        if(trunk.trim().equalsIgnoreCase("null") || trunk.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"BRI 或E1线路 不测试！");
+        }
         prerequisite();
         step("编辑呼入路由In1的目的地为Voicemail-分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        String callTime = DataUtils.getCurrentTime("HH:mm:ss");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
         sleep(20*1000);
@@ -907,15 +991,19 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         step("登录分机1000查看新增一条语音留言，Name记录正确");
         auto.homePage().logout();
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
-        sleep(WaitUntils.SHORT_WAIT);
+        sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
-        softAssertPlus.assertThat(TableUtils.getTableForHeader(getDriver(),"Name",0)).contains(caller+"");
+        sleep(1000);
+        Assert.assertTrue(TableUtils.getTableForHeader(getDriver(),"Name",0).contains(caller+""),"没有生成语音留言");
 
+        String voiceMailTime =TableUtils.getTableForHeader(getDriver(),"Time",0);
+        log.debug("[callTime] " + callTime+" ,[voiceMailTime] " + voiceMailTime);
+        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);
 
         assertStep("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000_VOICEMAIL.toString(), CDRPage.STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -932,26 +1020,25 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","Voicemail"}, dataProvider = "routes")
-    public void testIRBasic_26_27(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
-        if(trunk.equals("null") || trunk.equals("")){
-            Assert.assertTrue(false,"FXO 线路 不通！");
+    public void testIRB_26_27_Voicemail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        if(trunk.trim().equalsIgnoreCase("null") || trunk.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO 或GSM线路 不测试！");
         }
-        if(DEVICE_TEST_GSM.equals("") || DEVICE_TEST_GSM.equals("null") || DEVICE_ASSIST_GSM.equals("") ||  DEVICE_ASSIST_GSM.equals("null")){
-            Assert.assertTrue(false,"GSM 线路 不通！");
-        }
+
 
         prerequisite();
         step("编辑呼入路由In1的目的地为Voicemail-分机1000");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        String callTime = DataUtils.getCurrentTime("HH:mm:ss");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
         //GSM 通话时长必须大于 60s
-        if(trunk.equals(GSM)){
+        if(trunk.trim().equalsIgnoreCase(GSM)){
             sleep(WaitUntils.SHORT_WAIT*30);
         }else {
             sleep(20 * 1000);
@@ -962,15 +1049,24 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         step("登录分机1000查看新增一条语音留言，Name记录正确");
         auto.homePage().logout();
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
-        sleep(WaitUntils.SHORT_WAIT);
-        auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
-        softAssertPlus.assertThat(TableUtils.getTableForHeader(getDriver(),"Name",0)).contains(caller+"");
+        sleep(WaitUntils.SHORT_WAIT*2);
 
+        auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        sleep(1000);
+        if(trunk.trim().equalsIgnoreCase(GSM)){
+            Assert.assertTrue(TableUtils.getTableForHeader(getDriver(),"Name",0).contains(DEVICE_ASSIST_GSM),"没有生成语音留言");
+        }else{
+            Assert.assertTrue(TableUtils.getTableForHeader(getDriver(),"Name",0).contains(caller+""),"没有生成语音留言");
+        }
+
+        String voiceMailTime =TableUtils.getTableForHeader(getDriver(),"Time",0);
+        log.debug("[callTime] " + callTime+" ,[voiceMailTime] " + voiceMailTime);
+        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);
 
         assertStep("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, CDRPage.CALLTO.Extension_1000_VOICEMAIL.toString(), CDRPage.STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+                .contains(tuple(cdrCaller, CDRNAME.Extension_1000_VOICEMAIL.toString(), STATUS.VOICEMAIL.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -985,10 +1081,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRBasic_28(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_28_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为2，号码1234567890");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"2\",\"def_dest_value\":\"1234567890\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"2\",\"def_dest_value\":\"1234567890\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1009,7 +1105,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "21234567890", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+                .contains(tuple(cdrCaller, "21234567890", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1026,10 +1122,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRBasic_29_30(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_29_30_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为1，号码3001");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1050,7 +1146,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
+                .contains(tuple(cdrCaller, "13001", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1061,16 +1157,19 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Description("编辑呼入路由In1的目的地为ExternalNumber: Prefix为1，号码3001\n" +
             "\t31.通过BRI外线呼入\n" +
             "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr\n" +
-            "\t32.通过E1s外线呼入\n" +
+            "\t32.通过E1外线呼入\n" +
             "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRBasic_31_32(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Issue("Bug CDR HangUp exception")
+    @Test(groups = {"PSeries", "P3", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
+    public void testIRB_31_32_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        if(trunk.trim().equalsIgnoreCase("null") || trunk.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"BRI 或E1线路 不测试！");
+        }
         prerequisite();
-        step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为2，号码1234567890");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
+        step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为1，号码3001");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1091,21 +1190,9 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
+                .contains(tuple(cdrCaller, "13001", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
-
-        // todo check
-        /**
-         * Expecting ArrayList:
-         *  <[("2000<2000>", "13001", "ANSWERED", "13001 hung up", "BRI1-7", "sipRegister", "Outbound")]>
-         * to contain:
-         *  <[("2000<2000>", "13001", "ANSWERED", "2000<2000> hung up", "BRI1-7", "sipRegister", "Outbound")]>
-         * but could not find the following element(s):
-         *  <[("2000<2000>", "13001", "ANSWERED", "2000<2000> hung up", "BRI1-7", "sipRegister", "Outbound")]>
-         *
-         */
-
     }
 
     @Epic("P_Series")
@@ -1119,18 +1206,18 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
             "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("Bug CDR HangUp exception")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","ExternalNumber"}, dataProvider = "routes")
-    public void testIRBasic_33_34(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
-        if(trunk.equals("null") || trunk.equals("")){
+    public void testIRB_33_34_ExternalNumber(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
+        if(trunk.trim().equalsIgnoreCase("null") || trunk.trim().equalsIgnoreCase("")){
             Assert.assertTrue(false,"FXO 线路 不通！");
         }
-        if(DEVICE_TEST_GSM.equals("") || DEVICE_TEST_GSM.equals("null") || DEVICE_ASSIST_GSM.equals("") ||  DEVICE_ASSIST_GSM.equals("null")){
-            Assert.assertTrue(false,"GSM 线路 不通！");
-        }
+//        if(DEVICE_TEST_GSM.trim().equalsIgnoreCase("") || DEVICE_TEST_GSM.trim().equalsIgnoreCase("null") || DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("") ||  DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("null")){
+//            Assert.assertTrue(false,"GSM 线路 不通！");
+//        }
         prerequisite();
-        step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为2，号码1234567890");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
+        step("编辑呼入路由In1的目的地为ExternalNumber: Prefix为1，号码3001");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1145,7 +1232,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
 
         //GSM 通话时长必须大于 60s
-        if(trunk.equals(GSM)){
+        if(trunk.trim().equalsIgnoreCase(GSM)){
             sleep(WaitUntils.SHORT_WAIT*30);
         }
 
@@ -1156,19 +1243,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
+                .contains(tuple(cdrCaller, "13001", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
 
-        // todo check
-        /**
-        *Expecting ArrayList:
-         *  <[("2000<2000>", "13001", "ANSWERED", "13001 hung up", "FXO1-5", "sipRegister", "Outbound")]>
-         * to contain:
-         *  <[("2000<2000>", "13001", "ANSWERED", "2000<2000> hung up", "FXO1-5", "", "Outbound")]>
-         * but could not find the following element(s):
-         *  <[("2000<2000>", "13001", "ANSWERED", "2000<2000> hung up", "FXO1-5", "", "Outbound")]>
-         */
     }
 
     @Epic("P_Series")
@@ -1181,10 +1259,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_35(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_35_OutBoundRoute(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为OutboundRoute-Out8");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1205,7 +1283,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "3000", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+                .contains(tuple(cdrCaller, "3000", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1216,31 +1294,71 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Story("Trunk,InboundRoute,OutboundRoute")
     @Description("编辑呼入路由In1的目的地为OutboundRoute-Out8\n" +
             "\t36.辅助2分机2001通过GSM外线呼入\n" +
-            "\t\t辅助2的分机2000响铃，接听，挂断；检查cdr\n" +
-            "\t\t未实测跑不通过时Q一下\n" +
-            "\t37.辅助2分机2001拨打2010通过FXO外线呼入\n" +
-            "\t\t辅助2的分机2000响铃，接听，挂断；检查cdr\n" +
-            "\t\t未实测跑不通过时Q一下\n")
+            "\t\t辅助2的分机2000响铃，接听，挂断；检查cdr\n" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_36_37(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
-        if(trunk.equals("null") || trunk.equals("")){
-            Assert.assertTrue(false,"FXO 线路 不通！");
-        }
-        if(DEVICE_TEST_GSM.equals("") || DEVICE_TEST_GSM.equals("null") || DEVICE_ASSIST_GSM.equals("") ||  DEVICE_ASSIST_GSM.equals("null")){
-            Assert.assertTrue(false,"GSM 线路 不通！");
+    @Test(groups = {"PSeries", "P3", "Trunk","InboundRoute","OutboundRoute"})
+    public void testIRB_36_OutBoundRoute(){
+        if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"GSM线路 不测试！");
         }
         prerequisite();
         step("编辑呼入路由In1的目的地为OutboundRoute-Out8");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("Out8").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
 
-        step("1:login with admin,trunk: " + trunk);
+        step("1:login with admin,trunk: " );
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
-        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        step("2:辅助2分机2001通过GSM外线呼入");
+        pjsip.Pj_Make_Call_No_Answer(2001, 33 + DEVICE_TEST_GSM, DEVICE_ASSIST_2, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(2000,RING,40),RING);
+        pjsip.Pj_Answer_Call(2000,false);
+        Assert.assertEquals(getExtensionStatus(2000,TALKING,30),TALKING);
+
+        sleep(WaitUntils.SHORT_WAIT*30);
+
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(2001);
+
+        assertStep("[CDR校验]");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(DEVICE_ASSIST_GSM+"<"+DEVICE_ASSIST_GSM+">", 7+DEVICE_ASSIST_GSM, STATUS.ANSWER.toString(), "2001<2001> hung up",GSM,SPS,"Outbound"));
+
+        softAssertPlus.assertAll();
+
+    }
+
+
+    @Epic("P_Series")
+    @Feature("InboundRoute-Basic")
+    @Story("Trunk,InboundRoute,OutboundRoute")
+    @Description("编辑呼入路由In1的目的地为OutboundRoute-Out8\n" +
+            "\t37.辅助2分机2001拨打2010通过FXO外线呼入\n" +
+            "\t\t辅助2的分机2000响铃，接听，挂断；检查cdr\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "P3", "Trunk","InboundRoute","OutboundRoute"})
+    public void testIRB_37_OutBoundRoute(){
+        if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO 线路 不测！");
+        }
+
+        prerequisite();
+        step("编辑呼入路由In1的目的地为OutboundRoute-Out8");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
+
+        step("1:login with admin" );
+        auto.loginPage().loginWithAdmin();
+
+        step("2:辅助2分机2001拨打2010通过FXO外线呼入 ");
+        pjsip.Pj_Make_Call_No_Answer(2001, "2005" , DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT*2);
 
         step("[通话状态校验]");
@@ -1248,18 +1366,14 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(2000,false);
         Assert.assertEquals(getExtensionStatus(2000,TALKING,30),TALKING);
 
-        //GSM 通话时长必须大于 60s
-        if(trunk.equals(GSM)){
-            sleep(WaitUntils.SHORT_WAIT*30);
-        }
         step("[主叫挂断]");
-        pjsip.Pj_hangupCall(caller);
+        pjsip.Pj_hangupCall(2001);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "3000", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+                .contains(tuple("2001<2001>", "13000", STATUS.ANSWER.toString(), "2001<2001> hung up",FXO_1,SPS,"Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1276,10 +1390,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_38(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    public void testIRB_38_OutBoundRoute(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
         step("编辑呼入路由In1的目的地为OutboundRoute-Out8");
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("Out8").id)).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
 
         step("1:login with admin,trunk: " + trunk);
         auto.loginPage().loginWithAdmin();
@@ -1300,7 +1414,134 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "3000", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+                .contains(tuple(cdrCaller, "4444", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+
+        softAssertPlus.assertAll();
+
+    }
+
+    @Epic("P_Series")
+    @Feature("InboundRoute-Basic")
+    @Story("Trunk,InboundRoute,OutboundRoute")
+    @Description("编辑呼入路由In1的目的地为OutboundRoute-Out1\n" +
+            "\t39.通过sps外线拨打9913001呼入\n" +
+            "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"})
+    public void testIRB_39_OutBoundRoute(){
+        prerequisite();
+        step("编辑呼入路由In1的目的地为OutboundRoute-Out1");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out1").id)).apply();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 2000"+",[callee] 9913001");
+        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
+        pjsip.Pj_Answer_Call(3001,false);
+        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
+
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(2000);
+
+        assertStep("[CDR校验]");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("2000<2000>", "13001", "ANSWERED", "2000<2000> hung up", SPS, SIPTrunk, "Outbound"));
+
+        softAssertPlus.assertAll();
+
+    }
+
+    @Epic("P_Series")
+    @Feature("InboundRoute-Basic")
+    @Story("Trunk,InboundRoute,OutboundRoute")
+    @Description("编辑呼入路由In1的目的地为OutboundRoute-Out1\n" +
+            "\t40.通过BRI外线拨打8813001呼入\n" +
+            "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "P3", "Trunk","InboundRoute","OutboundRoute"})
+    public void testIRB_40_OutBoundRoute_BRI(){
+        if(BRI_1.trim().equalsIgnoreCase("null") || BRI_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"BRI 线路 不测试！");
+        }
+        prerequisite();
+        step("编辑呼入路由In1的目的地为OutboundRoute-Out1");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out1").id)).apply();
+
+        step("1:login with admin,trunk: " );
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 2000"+",[callee] 8813001");
+        pjsip.Pj_Make_Call_No_Answer(2000, "8813001", DEVICE_ASSIST_2, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
+        pjsip.Pj_Answer_Call(3001,false);
+        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
+
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(2000);
+
+        assertStep("[CDR校验]");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("2000<2000>", "13001", STATUS.ANSWER.toString(), "2000<2000> hung up",BRI_1,SIPTrunk,"Outbound"));
+
+        softAssertPlus.assertAll();
+
+    }
+
+
+    @Epic("P_Series")
+    @Feature("InboundRoute-Basic")
+    @Story("Trunk,InboundRoute,OutboundRoute")
+    @Description("编辑呼入路由In1的目的地为OutboundRoute-Out1\n" +
+            "\t41.通过E1外线拨打6613001呼入\n" +
+            "\t\t辅助1的分机3001响铃，接听，挂断；检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "P3", "Trunk","InboundRoute","OutboundRoute"})
+    public void testIRB_41_OutBoundRoute_E1(){
+        if(E1.trim().equalsIgnoreCase("null") || E1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"E1线路 不测试！");
+        }
+        prerequisite();
+        step("编辑呼入路由In1的目的地为OutboundRoute-Out1");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"", apiUtil.getOutBoundRouteSummary("Out1").id)).apply();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 2000,[callee] 6613001");
+        pjsip.Pj_Make_Call_No_Answer(2000, "6613001", DEVICE_ASSIST_2, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(3001,RING,30),RING);
+        pjsip.Pj_Answer_Call(3001,false);
+        Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
+
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(2000);
+
+        assertStep("[CDR校验]");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple("2000<2000>", "13001", STATUS.ANSWER.toString(), "2000<2000> hung up",E1,SIPTrunk,"Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1316,10 +1557,12 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_42(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","PlayGreetingthenHangUp"}, dataProvider = "routes")
+    public void testIRB_42_PlayGreetign(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"prompt1.wav\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").
+                editInbound("In1", String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"prompt1.wav\"")).
+                apply();
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_1)).start();
 
@@ -1341,12 +1584,12 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
             }
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
         }
-
+        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,50),HUNGUP);
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+                .contains(tuple(cdrCaller, "play_file", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
 
@@ -1362,10 +1605,10 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_43(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","PlayGreetingthenHangUp"}, dataProvider = "routes")
+    public void testIRB_43_PlayGreetign(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
-        apiUtil.editInbound("In1", String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"5\",\"def_dest_value\":\"prompt2.wav\"")).apply();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"5\",\"def_dest_value\":\"prompt2.wav\"")).apply();
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_2)).start();
 
@@ -1392,7 +1635,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple(cdrCaller, "13001", CDRPage.STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,SPS,"Outbound"));
+                .contains(tuple(cdrCaller, "play_file", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
 
@@ -1407,12 +1650,40 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_44(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","FaxToEmail"}, dataProvider = "routes")
+    public void testIRB_44_FaxToEmail(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
+        step("编辑呼入路由In1的目的地为Fax to Email-分机1001");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"fax_to_email\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1001").id)).apply();
+        asteriskObjectList.clear();
+        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,FAX_TO_EMAIL_1001)).start();
 
         step("1:login with admin,trunk: " +trunk);
         auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+
+        int tmp = 0;
+        while (asteriskObjectList.size() >= 1 && tmp <= 300){
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_"+tmp);
+        }
+        if(tmp == 301){
+            for(int i = 0 ; i < asteriskObjectList.size() ; i++){
+                log.debug(i+"_【asterisk object name】 "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
+            }
+            Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
+        }
+
+        assertStep("[CDR校验]");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "play_file", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+
+        softAssertPlus.assertAll();
 
     }
 
@@ -1428,49 +1699,122 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_45(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","Move"}, dataProvider = "routes")
+    public void testIRB_45_Move(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SIPTrunk);
+        step("编辑呼入路由In1的目的地为分机1000 ; 新建呼入路由InRoute2的目的地为分机1001，Trunk选择sip");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").
+                createInbound("InRoute2", trunk1, "Extension", "1001").
+                apply();
 
         step("1:login with admin,trunk: " +trunk);
         auto.loginPage().loginWithAdmin();
 
+        step("2:[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);//sip
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,60),RING);
+        pjsip.Pj_Answer_Call(1000,false);
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(caller);
+
+        step("呼入路由List调整InRoute2在In1前面");//{"id":1612,"pos_from":2,"pos_to":1}
+        apiUtil.editInbound("InRoute2",String.format("\"pos_from\":2,\"pos_to\":1")).apply();
+
+
+        step("[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,60),RING);
+        pjsip.Pj_Answer_Call(1000,false);
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(caller);
+
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "test A<1000>", STATUS.ANSWER.toString(), cdrCaller+" hung up",trunk,"","Inbound"));
+
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
     @Feature("InboundRoute-Basic")
     @Story("Trunk,InboundRoute")
     @Description("46.编辑呼入路由In1的目的地为分机1000，Trunk只选择sip\n" +
-            "\t分别通过sip、sps外线呼入\n" +
-            "\t\t通过sip外线呼入时分机1000响铃，通过sps外线呼入失败；检查cdr\n" +
+            "\t分别通过sip、account外线呼入\n" +
+            "\t\t通过sip外线呼入时分机1000响铃，通过account外线呼入失败；检查cdr\n" +
             "\t\t\t编辑呼入路由In1的目的地为分机1000，Trunk全选")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_46(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute"}, dataProvider = "routes")
+    public void testIRB_46_InboundRoute(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SIPTrunk);
+        step("编辑呼入路由In1的目的地为分机1000，Trunk只选择sip");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk1, "Extension", "1000").apply();
 
         step("1:login with admin,trunk: " +trunk);
         auto.loginPage().loginWithAdmin();
 
+        step("[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*2);
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1000,RING,60),RING);
+        pjsip.Pj_Answer_Call(1000,false);
+        Assert.assertEquals(getExtensionStatus(1000,TALKING,30),TALKING);
+        sleep(WaitUntils.SHORT_WAIT*2);
+        pjsip.Pj_hangupCall(1000);
+
+        step("通过account外线呼入失败");
+        step("[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(2000, "441000", DEVICE_ASSIST_2, false);
+
+        int result =getExtensionStatus(1000,RING,10);
+        log.debug("[result] "+result);
+        Assert.assertTrue((result == HUNGUP) ||  (result == IDLE));
+
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
+                .contains(tuple(cdrCaller, "test A<1000>", STATUS.ANSWER.toString(), EXTENSION_1000_HUNGUP.toString(),trunk,"","Inbound"));
+
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
     @Feature("InboundRoute-Basic")
     @Story("Trunk,InboundRoute")
     @Description("47.编辑呼入路由In1的目的地为[None]，全选外线\n" +
-            "\t通过sps外线呼入\n" +
+            "\t通过sps外线呼入 99999\n" +
             "\t\t通话被挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","OutboundRoute"}, dataProvider = "routes")
-    public void testIRBasic_47(String routePrefix, int caller, String callee, String deviceAssist,String cdrCaller, String trunk){
+    @Test(groups = {"PSeries", "Cloud", "K2", "P3", "Trunk","InboundRoute","None"}, dataProvider = "routes")
+    public void testIRB_47_InboundRoute(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk){
         prerequisite();
+        step("编辑呼入路由In1的目的地为[None]，全选外线");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").editInbound("In1", String.format("\"def_dest\":\"\"")).apply();
 
         step("1:login with admin,trunk: " +trunk);
         auto.loginPage().loginWithAdmin();
+
+        step("通过account外线呼入失败");
+        step("[caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+trunk);
+        pjsip.Pj_Make_Call_No_Answer(caller, "999999", DEVICE_ASSIST_2, false);
+
+        int result =getExtensionStatus(caller,HUNGUP,30);
+        log.debug("[result] "+result);
+        Assert.assertTrue((result == HUNGUP) ||  (result == IDLE));
 
     }
 
@@ -1485,11 +1829,21 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","OutboundRoute"})
-    public void testIRBasic_48(){
+    public void testIRB_48_Delete(){
         prerequisite();
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").apply();
 
-        step("1:login with admin,trunk: ");
+        step("1:login with admin");
         auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control,HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+
+        step("单条删除");
+        auto.inboundRoute().deleDataByDeleImage("In1").clickSaveAndApply();
+
+        assertStep("[删除成功]");
+        List<String> list = TableUtils.getTableForHeader(getDriver(),"Name");
+        softAssertPlus.assertThat(list).doesNotContain("In1");
+        softAssertPlus.assertAll();
 
     }
 
@@ -1503,11 +1857,26 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "P2", "Trunk","InboundRoute","OutboundRoute"})
-    public void testIRBasic_49(){
+    public void testIRB_49_Delete(){
         prerequisite();
+        List<String> trunk1 = new ArrayList<>();
+        trunk1.add(SIPTrunk);
+        step("编辑呼入路由In1的目的地为分机1000 ; 新建呼入路由InRoute2的目的地为分机1001，Trunk选择sip");
+        apiUtil.deleteAllInbound().createInbound("In1", trunk9, "Extension", "1000").
+                createInbound("InRoute2", trunk1, "Extension", "1001").
+                apply();
 
-        step("1:login with admin,trunk: ");
+        step("1:login with admin");
         auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control,HomePage.Menu_Level_2.call_control_tree_inbound_routes);
+
+        step("2:批量删除");
+        auto.inboundRoute().deleteAllInboundRoutes().clickSaveAndApply();
+
+        assertStep("[删除成功]");
+        List<String> list = TableUtils.getTableForHeader(getDriver(),"Number");
+        softAssertPlus.assertThat(list.size()).isEqualTo(0);
+        softAssertPlus.assertAll();
 
     }
 }

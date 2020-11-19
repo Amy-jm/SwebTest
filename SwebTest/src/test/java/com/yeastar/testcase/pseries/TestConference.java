@@ -31,6 +31,7 @@ import static org.assertj.core.api.Assertions.tuple;
 @Log4j2
 public class TestConference extends TestCaseBaseNew {
     private boolean isRunRecoveryEnvFlag = true;
+    private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
     APIUtil apiUtil = new APIUtil();
     private String MEETME_LIST_6501 = "meetme list 6501";
     private String CONF_INVALIDPIN_GSM = "conf-invalidpin.gsm";
@@ -58,7 +59,7 @@ public class TestConference extends TestCaseBaseNew {
 
     private boolean registerAllExtension(){
         step("===========[Extension]  create & register extension  start =========");
-        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+//        pjsip.Pj_CreateAccount(0,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(1002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
@@ -66,11 +67,13 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_CreateAccount(1004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(2001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
-        pjsip.Pj_CreateAccount(3000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2002,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2003,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
+        pjsip.Pj_CreateAccount(2004,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(3001,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
         pjsip.Pj_CreateAccount(4000,EXTENSION_PASSWORD,"UDP",UDP_PORT,-1);
 
-        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
+//        pjsip.Pj_Register_Account_WithoutAssist(0,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1000,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1001,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(1002,DEVICE_IP_LAN);
@@ -78,7 +81,9 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Register_Account_WithoutAssist(1004,DEVICE_IP_LAN);
         pjsip.Pj_Register_Account_WithoutAssist(2000,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(2001,DEVICE_ASSIST_2);
-        pjsip.Pj_Register_Account_WithoutAssist(3000,DEVICE_ASSIST_1);
+        pjsip.Pj_Register_Account_WithoutAssist(2002,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist(2003,DEVICE_ASSIST_2);
+        pjsip.Pj_Register_Account_WithoutAssist(2004,DEVICE_ASSIST_2);
         pjsip.Pj_Register_Account_WithoutAssist(3001,DEVICE_ASSIST_1);
         pjsip.Pj_Register_Account_WithoutAssist(4000,DEVICE_ASSIST_3);
 
@@ -103,10 +108,6 @@ public class TestConference extends TestCaseBaseNew {
             reg = true;
             log.debug("1004注册失败");
         }
-        if(getExtensionStatus(1020, IDLE, 5) != IDLE) {
-            reg = true;
-            log.debug("1020注册失败");
-        }
         if(getExtensionStatus(2000, IDLE, 5) != IDLE){
             reg=true;
             log.debug("2000注册失败");
@@ -115,20 +116,40 @@ public class TestConference extends TestCaseBaseNew {
             reg=true;
             log.debug("2001注册失败");
         }
+        if(getExtensionStatus(2002, IDLE, 5) != IDLE){
+            reg=true;
+            log.debug("2002注册失败");
+        }
+        if(getExtensionStatus(2003, IDLE, 5) != IDLE){
+            reg=true;
+            log.debug("2003注册失败");
+        }
+        if(getExtensionStatus(2004, IDLE, 5) != IDLE){
+            reg=true;
+            log.debug("2004注册失败");
+        }
+        if(getExtensionStatus(3001, IDLE, 5) != IDLE){
+            reg=true;
+            log.debug("3001注册失败");
+        }
         if(getExtensionStatus(4000, IDLE, 5) != IDLE){
             reg=true;
             log.debug("4000注册失败");
         }
+        if (reg){
+            pjsip.Pj_Unregister_Accounts();
+        }
         step("===========[Extension]  create & register extension  end =========");
         return reg;
     }
-    private boolean isDebugInitExtensionFlag = true;
+
 
     public void prerequisite(boolean isRestConference6501ToDefault) {
         //local debug
         long startTime=System.currentTimeMillis();
         if(isDebugInitExtensionFlag){
-            registerAllExtension();
+
+            isDebugInitExtensionFlag =  registerAllExtension();
             isRunRecoveryEnvFlag = false;
         }
 
@@ -319,8 +340,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P1", "Conference","Basic","Trunk","InboundRoute","testConference_1"}, dataProvider = "routes")
-    public void testConference_01(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P1", "Conference","Basic","Trunk","InboundRoute","testConference_1","Extension","SPS","SIP_REGISTER"}, dataProvider = "routes")
+    public void testConference_01_basic(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -377,75 +398,151 @@ public class TestConference extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","Basic","Trunk","InboundRoute","testConference_2"}, dataProvider = "routes")
-    public void testConference_02(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    public void testConference_02_Trunk(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
-        step("1:login with admin,trunk: "+message);
+        step("1:login with admin,trunk: " + message);
         auto.loginPage().loginWithAdmin();
-
-        step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
+        int confnum = 1;
+        step("3:[SIP 呼入6501][caller] " + caller + ",[callee] " + routePrefix + callee + ",[trunk] " + message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("1 users in that conference."),"SIP 呼入失败");
-
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI, MEETME_LIST_6501)).contains(confnum + " users in that conference."), "SIP 呼入失败");
+        confnum = confnum + 1;
         step("[SPS  呼入6501] ");
         pjsip.Pj_Make_Call_No_Answer(2000, "996501", DEVICE_ASSIST_2, false);
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"SPS 呼入失败");
-
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI, MEETME_LIST_6501)).contains(confnum + " users in that conference."), "SPS 呼入失败");
+        confnum = confnum + 1;
         step("[Account  呼入6501] ");
         pjsip.Pj_Make_Call_No_Answer(4000, "446501", DEVICE_ASSIST_3, false);
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"Account 呼入失败");
-
-        step("[FXO  呼入6501] ");
-        pjsip.Pj_Make_Call_No_Answer(2000, "2005", DEVICE_ASSIST_2, false);
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("4 users in that conference."),"FXO 呼入失败");
-
-        step("[BRI  呼入6501] ");
-        pjsip.Pj_Make_Call_No_Answer(2000, "881000", DEVICE_ASSIST_2, false);
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("5 users in that conference."),"BRI 呼入失败");
-
-        step("[E1  呼入6501] ");
-        pjsip.Pj_Make_Call_No_Answer(2000, "666501", DEVICE_ASSIST_2, false);
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("6 users in that conference."),"E1 呼入失败");
-
-        step("[GSM  呼入6501] DEVICE_TEST_GSM:"+DEVICE_TEST_GSM+" ,DEVICE_ASSIST_GSM:"+DEVICE_ASSIST_GSM);
-        if(!DEVICE_TEST_GSM.equals("null") && !DEVICE_ASSIST_GSM.equals("null")){
-            pjsip.Pj_Make_Call_No_Answer(2000, "33"+DEVICE_TEST_GSM, DEVICE_ASSIST_2, false);
-            sleep(WaitUntils.SHORT_WAIT*30);
-            Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("7 users in that conference."),"GSM 呼入失败");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI, MEETME_LIST_6501)).contains(confnum + " users in that conference."), "Account 呼入失败");
+        confnum = confnum + 1;
+        if (PRODUCT.toLowerCase().equals("p550") || PRODUCT.toLowerCase().equals("p560") || PRODUCT.toLowerCase().equals("p570")) {
+            if (FXO_1 != null) {
+                step("[FXO  呼入6501] ");
+                pjsip.Pj_Make_Call_No_Answer(2001, "2005", DEVICE_ASSIST_2, false);
+                sleep(5000);
+                Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI, MEETME_LIST_6501)).contains(confnum + " users in that conference."), "FXO 呼入失败");
+                confnum = confnum + 1;
+            }
         }
 
-        int sum = getConferenceUser();
+        if (PRODUCT.toLowerCase().equals("p550") || PRODUCT.toLowerCase().equals("p560") || PRODUCT.toLowerCase().equals("p570")) {
+            if (BRI_1 != null) {
+                step("[BRI  呼入6501] ");
+                pjsip.Pj_Make_Call_No_Answer(2002, "881000", DEVICE_ASSIST_2, false);
+                Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI, MEETME_LIST_6501)).contains(confnum + " users in that conference."), "BRI 呼入失败");
+                confnum = confnum + 1;
+            }
+        }
 
+        if (PRODUCT.toLowerCase().equals("p550") || PRODUCT.toLowerCase().equals("p560") || PRODUCT.toLowerCase().equals("p570")) {
+            if (E1 != null) {
+                step("[E1  呼入6501] ");
+                pjsip.Pj_Make_Call_No_Answer(2003, "666501", DEVICE_ASSIST_2, false);
+                Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI, MEETME_LIST_6501)).contains(confnum + " users in that conference."), "E1 呼入失败");
+                confnum = confnum + 1;
+            }
+        }
+
+        if (PRODUCT.toLowerCase().equals("p550") || PRODUCT.toLowerCase().equals("p560") || PRODUCT.toLowerCase().equals("p570")) {
+            if (GSM != null) {
+                step("[GSM  呼入6501] DEVICE_TEST_GSM:" + DEVICE_TEST_GSM + " ,DEVICE_ASSIST_GSM:" + DEVICE_ASSIST_GSM);
+                if (!DEVICE_TEST_GSM.equals("null") && !DEVICE_ASSIST_GSM.equals("null")) {
+                    pjsip.Pj_Make_Call_No_Answer(2004, "33" + DEVICE_TEST_GSM, DEVICE_ASSIST_2, false);
+                    sleep(WaitUntils.SHORT_WAIT * 30);
+                    Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI, MEETME_LIST_6501)).contains(confnum + " users in that conference."), "GSM 呼入失败");
+                }
+            }
+        }
+//        测试退出会议室
         step("[sip hangup] ");
         pjsip.Pj_hangupCall(caller);//3001
-        Assert.assertEquals(sum-1,getConferenceUser(),"sip hang up 异常");
+        confnum = confnum - 1;
+        Assert.assertEquals(confnum, getConferenceUser(), "3001 hang up 异常");
+
+        step("[Account hangup] ");
+        pjsip.Pj_hangupCall(4000);
+        confnum = confnum - 1;
+        Assert.assertEquals(confnum, getConferenceUser(), "4000 hang up 异常");
 
         step("[sps hangup] ");
-        pjsip.Pj_hangupCall(4000);
-        Assert.assertEquals(sum-2,getConferenceUser(),"sip hang up 异常");
-
-        step("[2000 hangup] ");
         pjsip.Pj_hangupCall(2000);
-        log.debug("【hangup 2000】"+ getConferenceUser()," 2000 hang up 异常");
+        confnum = confnum - 1;
+        if (confnum==0) {
+            Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
+        }else {
+            Assert.assertEquals(confnum, getConferenceUser(), "4000 hang up 异常");
+
+        }
+
+        if (PRODUCT.toLowerCase().equals("p550") || PRODUCT.toLowerCase().equals("p560") || PRODUCT.toLowerCase().equals("p570")) {
+            if (!FXO_1.equals("null")) {
+                step("[FXO hangup] ");
+                pjsip.Pj_hangupCall(2001);
+                confnum = confnum - 1;
+                if (confnum==0) {
+                    Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
+
+                }else {
+                    Assert.assertEquals(confnum, getConferenceUser(), "2001 hang up 异常");
+
+                }
+            }
+            if (!BRI_1.equals("null")) {
+                step("[BRI hangup] ");
+                pjsip.Pj_hangupCall(2002);
+                confnum = confnum - 1;
+                if (confnum==0) {
+                    Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
+                }else {
+                    Assert.assertEquals(confnum, getConferenceUser(), "2002 hang up 异常");
+
+                }
+            }
+            if (!E1.equals("null")) {
+                step("[E1 hangup] ");
+                pjsip.Pj_hangupCall(2003);
+                confnum = confnum - 1;
+                if (confnum==0) {
+                    Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
+                }else {
+                    Assert.assertEquals(confnum, getConferenceUser(), "2003 hang up 异常");
+                }
+            }
+            if (!GSM.equals("null")) {
+                step("[GSM hangup] ");
+                pjsip.Pj_hangupCall(2004);
+                Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
+            }
+        }
 
         pjsip.Pj_Hangup_All();
 
         assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(6);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple ("4000<6700>", CDR_CONFERENCE_6501, "ANSWERED", "4000<6700> hung up", ACCOUNTTRUNK, "", "Internal")).
-                contains(tuple ("3001<3001>", CDR_CONFERENCE_6501, "ANSWERED", "3001<3001> hung up", SIPTrunk, "", "Internal")).
-                contains(tuple ("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", FXO_1, "", "Internal")).
-                contains(tuple ("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", E1, "", "Internal")).
-                contains(tuple ("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", BRI_1, "", "Internal")).
-                contains(tuple ("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", SPS, "", "Internal"));
-
-        if(!DEVICE_TEST_GSM.equals("null") && !DEVICE_ASSIST_GSM.equals("null")){
-            softAssertPlus.assertThat(resultCDR).as("[CDR校验GSM] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
-                contains(tuple (DEVICE_ASSIST_GSM, CDR_CONFERENCE_6501, "ANSWERED", DEVICE_ASSIST_GSM+" hung up", GSM, "", "Internal"));
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(7);
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType").
+                contains(tuple("3001<3001>", CDR_CONFERENCE_6501, "ANSWERED", "3001<3001> hung up", SIPTrunk, "", "Internal")).
+                contains(tuple("4000<4000>", CDR_CONFERENCE_6501, "ANSWERED", "4000<4000> hung up", ACCOUNTTRUNK, "", "Internal")).
+                contains(tuple("2000<2000>", CDR_CONFERENCE_6501, "ANSWERED", "2000<2000> hung up", SPS, "", "Internal"));
+        if (PRODUCT.toLowerCase().equals("p550") || PRODUCT.toLowerCase().equals("p560") || PRODUCT.toLowerCase().equals("p570")){
+            if(!FXO_1.equals("null")) {
+                softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType").
+                        contains(tuple("2001<2001>", CDR_CONFERENCE_6501, "ANSWERED", "2001<2001> hung up", FXO_1, "", "Internal"));
+            }
+            if (!BRI_1.equals("null")){
+                softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType").
+                        contains(tuple("2002<2002>", CDR_CONFERENCE_6501, "ANSWERED", "2002<2002> hung up", BRI_1, "", "Internal"));
+            }
+            if (!E1.equals("null")) {
+                softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType").
+                        contains(tuple("2003<2003>", CDR_CONFERENCE_6501, "ANSWERED", "2003<2003> hung up", E1, "", "Internal"));
+            }
+            if(!GSM.equals("null")){
+                softAssertPlus.assertThat(resultCDR).as("[CDR校验GSM] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
+                        contains(tuple (DEVICE_ASSIST_GSM+"<"+DEVICE_ASSIST_GSM+">", CDR_CONFERENCE_6501, "ANSWERED", DEVICE_ASSIST_GSM+"<"+DEVICE_ASSIST_GSM+"> hung up", GSM, "", "Internal"));
+            }
         }
-
         softAssertPlus.assertAll();
     }
 
@@ -460,7 +557,7 @@ public class TestConference extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","ParticipantPassword","ModeratorPassword","testConference_3"}, dataProvider = "routes")
-    public void testConference_03(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    public void testConference_03_Password1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -474,8 +571,8 @@ public class TestConference extends TestCaseBaseNew {
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_Send_Dtmf(caller, "123");
-
+        pjsip.Pj_Send_Dtmf(caller, "123#");
+        sleep(2000);
         assertStep("[Asterisk校验]");
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("1 users in that conference."),"SIP 呼入失败");
 
@@ -501,7 +598,7 @@ public class TestConference extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_4"}, dataProvider = "routes")
-    public void testConference_04(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    public void testConference_04_Password2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -514,12 +611,12 @@ public class TestConference extends TestCaseBaseNew {
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_Send_Dtmf(caller, "1234");
-        pjsip.Pj_Send_Dtmf(caller, "1234");
-        pjsip.Pj_Send_Dtmf(caller, "1234");
+        pjsip.Pj_Send_Dtmf(caller, "1234#");
+        pjsip.Pj_Send_Dtmf(caller, "1234#");
+        pjsip.Pj_Send_Dtmf(caller, "1234#");
 
         sleep(WaitUntils.SHORT_WAIT*2);
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("0 users in that conference."),"SIP 呼入失败");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("No active MeetMe conferences."),"SIP 呼入失败");
 
         pjsip.Pj_hangupCall(caller);
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -544,7 +641,7 @@ public class TestConference extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_5"}, dataProvider = "routes")
-    public void testConference_05(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    public void testConference_05_Password3(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         List<AsteriskObject> asteriskObjectList_1 = new ArrayList<AsteriskObject>();
         List<AsteriskObject> asteriskObjectList_2 = new ArrayList<AsteriskObject>();
@@ -611,7 +708,7 @@ public class TestConference extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","ParticipantPassword","ModeratorPassword","testConference_6"}, dataProvider = "routes")
-    public void testConference_06(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    public void testConference_06_Password4(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -650,7 +747,7 @@ public class TestConference extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_7"}, dataProvider = "routes")
-    public void testConference_07(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    public void testConference_07_Password5(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -694,7 +791,7 @@ public class TestConference extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_8"}, dataProvider = "routes")
-    public void testConference_08(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    public void testConference_08_Password6(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -750,7 +847,7 @@ public class TestConference extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_9"}, dataProvider = "routes")
-    public void testConference_09(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    public void testConference_09_Password7(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -765,51 +862,55 @@ public class TestConference extends TestCaseBaseNew {
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        pjsip.Pj_Send_Dtmf(caller, "123");
+        pjsip.Pj_Send_Dtmf(caller, "123#");
 
         step("4:[SPS  呼入6501] ");
-        pjsip.Pj_Make_Call_No_Answer(2000, "996501", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Send_Dtmf(2000, "456");
-
+        pjsip.Pj_Make_Call_No_Answer(2000, "999999", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Send_Dtmf(2000, "456#");
+        sleep(2000);
         assertStep("[Asterisk校验]");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"SIP 呼入失败");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"预期：通过SIP、SPS 呼入到会议室6501");
 
-        step("5.保持通话，修改Conference1-6501的ParticipantPassword为空，ModeratorPassword 为888");
+        step("5.保持通话，修改Conference1-6501的ParticipantPassword为555，ModeratorPassword 为888");
         auto.conferencePage().edit("Number","6501").
                 setElementValue(auto.conferencePage().ele_conference_partic_password,"555").
                 setElementValue(auto.conferencePage().ele_conference_moderator_password,"888").clickSaveAndApply();
 
-        step("6.分机1000呼入Conference1-6501，不输入密码；");
+        step("6.分机1000呼入Conference1-6501，输入密码555；");
         pjsip.Pj_Make_Call_No_Answer(1000, "6501", DEVICE_IP_LAN, false);
-        pjsip.Pj_Send_Dtmf(1001, "555");
+        pjsip.Pj_Send_Dtmf(1000, "555#");
+        sleep(2000);
+        assertStep("[Asterisk校验] asterisk -rx \"meetme list 6501\" 后台查看会议室6501成员递增");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"预期分机1000输入新的普通密码成功加入会议室6501");
 
         step("7.分机1001呼入Conference1-6501，输入密码888；");
         pjsip.Pj_Make_Call_No_Answer(1001, "6501", DEVICE_IP_LAN, false);
-        pjsip.Pj_Send_Dtmf(1001, "888");
-
+        pjsip.Pj_Send_Dtmf(1001, "888#");
+        sleep(2000);
         assertStep("[Asterisk校验] asterisk -rx \"meetme list 6501\" 后台查看会议室6501成员递增");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("4 users in that conference."),"SIP 失败");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("4 users in that conference."),"预期分机1001输入新的管理员密码成功加入会议室6501");
 
         step("8.sip、sps外线主叫挂断通话");
         pjsip.Pj_hangupCall(caller);
         assertStep("[Asterisk校验]");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"SIP 失败");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"SIP外线主叫挂断， 退出会议室失败");
 
         pjsip.Pj_hangupCall(2000);
         sleep(2000);
         assertStep("[Asterisk校验]");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"SPS 失败");
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"SPS外线主叫挂断，退出会议室失败");
 
         step("通过sip外线呼入到Conference1-6501，输入密码123");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        pjsip.Pj_Send_Dtmf(caller, "123");
-        sleep(5000);
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"SIP 呼入失败");
+        pjsip.Pj_Send_Dtmf(caller, "123#");
+        sleep(3000);
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"预期SIP外线输入旧的普通成员密码加入失败");
 
         step("通过sps外线呼入到Conference1-6501，输入密码456");
         pjsip.Pj_Make_Call_No_Answer(2000, "996501", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Send_Dtmf(2000, "456");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"SIP 呼入失败");
+        pjsip.Pj_Send_Dtmf(2000, "456#");
+        sleep(3000);
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."),"预期SPS外线输入旧的管理员密码加入失败");
 
         //挂断电话，后面重新拨打
         pjsip.Pj_hangupCall(caller);
@@ -817,13 +918,15 @@ public class TestConference extends TestCaseBaseNew {
 
         step("通过sip外线呼入到Conference1-6501，输入密码555");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        pjsip.Pj_Send_Dtmf(caller, "555");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"SIP 呼入失败");
+        pjsip.Pj_Send_Dtmf(caller, "555#");
+        sleep(2000);
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."),"预期SIP外线输入新的普通成员密码加入成功");
 
         step("通过sps外线呼入到Conference1-6501，输入密码888");
         pjsip.Pj_Make_Call_No_Answer(2000, "996501", DEVICE_ASSIST_2, false);
-        pjsip.Pj_Send_Dtmf(2000, "888");
-        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("4 users in that conference."),"SIP 呼入失败");
+        pjsip.Pj_Send_Dtmf(2000, "888#");
+        sleep(2000);
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("4 users in that conference."),"预期SPS外线输入新的管理员密码加入失败");
 
         pjsip.Pj_hangupCall(1000);
         pjsip.Pj_hangupCall(1001);
@@ -850,8 +953,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_10"}, dataProvider = "routes")
-    public void testConference_10(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_10_Password8"}, dataProvider = "routes")
+    public void testConference_10_Password8(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_GETPIN_GSM)).start();
@@ -881,6 +984,7 @@ public class TestConference extends TestCaseBaseNew {
         }
 
         assertStep("[Asterisk校验]");
+        sleep(5000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("1 users in that conference."),"SIP 呼叫失败");
 
         pjsip.Pj_hangupCall(caller);
@@ -903,8 +1007,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_11"}, dataProvider = "routes")
-    public void testConference_11(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_11_Password9"}, dataProvider = "routes")
+    public void testConference_11_Password9(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -917,8 +1021,8 @@ public class TestConference extends TestCaseBaseNew {
 
         step("3:[SIP 呼入6501][caller] "+caller+",[callee] "+routePrefix + callee +",[trunk] "+message);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        pjsip.Pj_Send_Dtmf(caller, "888");
-
+        pjsip.Pj_Send_Dtmf(caller, "888#");
+        sleep(2000);
         assertStep("[Asterisk校验]");
         String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
         Assert.assertTrue(result.contains("1 users in that conference."),"用户验证失败");
@@ -937,8 +1041,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_12"}, dataProvider = "routes")
-    public void testConference_12(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_12_Password10"}, dataProvider = "routes")
+    public void testConference_12_Password10(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_INVALIDPIN_GSM)).start();
@@ -1011,8 +1115,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_13"}, dataProvider = "routes")
-    public void testConference_13(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ParticipantPassword","ModeratorPassword","testConference_13_Password11"}, dataProvider = "routes")
+    public void testConference_13_Password11(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_GETPIN_GSM)).start();
@@ -1039,7 +1143,7 @@ public class TestConference extends TestCaseBaseNew {
             }
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
         }
-        pjsip.Pj_Send_Dtmf(caller,"999");
+        pjsip.Pj_Send_Dtmf(caller,"999#");
 
         assertStep("[Asterisk校验]");
         String result = SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501));
@@ -1068,8 +1172,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","ParticipantPassword","ModeratorPassword","testConference_14"}, dataProvider = "routes")
-    public void testConference_14(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","ParticipantPassword","ModeratorPassword","testConference_14_Password12"}, dataProvider = "routes")
+    public void testConference_14_Password12(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_ONLYPERSION_GSM)).start();
@@ -1128,8 +1232,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","WaitforModerator","testConference_15"}, dataProvider = "routes")
-    public void testConference_15(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","WaitforModerator","testConference_15_WaitforModerator1"}, dataProvider = "routes")
+    public void testConference_15_WaitforModerator1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         List<AsteriskObject> asteriskObjectList_1 = new ArrayList<AsteriskObject>();
         List<AsteriskObject> asteriskObjectList_2 = new ArrayList<AsteriskObject>();
@@ -1236,8 +1340,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","WaitforModerator","testConference_16"}, dataProvider = "routes")
-    public void testConference_16(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","WaitforModerator","testConference_16_WaitforModerator2"}, dataProvider = "routes")
+    public void testConference_16_WaitforModerator2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_WAITFORLEADER_GSM)).start();
@@ -1280,8 +1384,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","AllowParticipantstoInvite","testConference_17"}, dataProvider = "routes")
-    public void testConference_17(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","AllowParticipantstoInvite","testConference_17_AllowParticipantstoInvite1"}, dataProvider = "routes")
+    public void testConference_17_AllowParticipantstoInvite1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -1295,8 +1399,10 @@ public class TestConference extends TestCaseBaseNew {
 
         step("分机1000呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1000, "6501", DEVICE_IP_LAN, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        getExtensionStatus(1000,TALKING,30);
+        sleep(WaitUntils.SHORT_WAIT*3);
         pjsip.Pj_Send_Dtmf(1000, "#");
+        sleep(2000);
         pjsip.Pj_Send_Dtmf(1000, "13001");
 
         assertStep("[通话状态校验]");
@@ -1304,11 +1410,13 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(3001,false);
         assertStep("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
+        sleep(16000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
 
 
         step("分机1000按#23001 邀请辅助2的2000加入会议室;");
         pjsip.Pj_Send_Dtmf(1000, "#");
+        sleep(2000);
         pjsip.Pj_Send_Dtmf(1000, "23001");
 
         assertStep("[通话状态校验]");
@@ -1316,18 +1424,36 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(2000,false);
         assertStep("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(2000,TALKING,30),TALKING);
+        sleep(16000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("3 users in that conference."));
+
+
+        step("分机1000按#1001 邀请内部分机1001加入会议室;");
+        pjsip.Pj_Send_Dtmf(1000, "#");
+        sleep(2000);
+        pjsip.Pj_Send_Dtmf(1000, "1001");
+
+        assertStep("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1001,RING,30),RING);
+        pjsip.Pj_Answer_Call(1001,false);
+        assertStep("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1001,TALKING,10),TALKING);
+        sleep(16000);
+        Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("4 users in that conference."));
 
         pjsip.Pj_hangupCall(1000);
         pjsip.Pj_hangupCall(2000);
         pjsip.Pj_hangupCall(3001);
+        pjsip.Pj_hangupCall(1001);
+
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(4);
+        List<CDRObject> resultCDR = apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD).getCDRRecord(5);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType").
                 contains(tuple(CDR_CONFERENCE_6501, "13001", "ANSWERED", "test A<1000> invited 13001", "",SIPTrunk , "Outbound")).
                 contains(tuple(CDR_CONFERENCE_6501, "23001", "ANSWERED", "test A<1000> invited 23001", "", SPS, "Outbound")).
+                contains(tuple(CDR_CONFERENCE_6501, "test2 B<1001>", "ANSWERED", "test A<1000> invited test2 B<1001>", "", "", "Internal")).
                 contains(tuple("test A<1000>", CDR_CONFERENCE_6501, "ANSWERED", "test A<1000> hung up", "", "", "Internal"));
 
         softAssertPlus.assertAll();
@@ -1344,8 +1470,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","AllowParticipantstoInvite","testConference_18"}, dataProvider = "routes")
-    public void testConference_18(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","AllowParticipantstoInvite","testConference_18_AllowParticipantstoInvite2"}, dataProvider = "routes")
+    public void testConference_18_AllowParticipantstoInvite2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -1364,6 +1490,7 @@ public class TestConference extends TestCaseBaseNew {
         sleep(WaitUntils.SHORT_WAIT*2);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("1 users in that conference."));
         pjsip.Pj_Send_Dtmf(1000, "#");
+        sleep(2000);
         pjsip.Pj_Send_Dtmf(1000, "13001");
 
         assertStep("[通话状态校验]");
@@ -1393,8 +1520,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","AllowParticipantstoInvite","testConference_19"}, dataProvider = "routes")
-    public void testConference_19(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","AllowParticipantstoInvite","testConference_19_AllowParticipantstoInvite3"}, dataProvider = "routes")
+    public void testConference_19_AllowParticipantstoInvite3(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -1408,10 +1535,12 @@ public class TestConference extends TestCaseBaseNew {
                 editConference("6501","","","default",0,0,extensions).
                 apply();
 
-        step("分机1000呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室");
+        step("分机1001呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1001, "6501", DEVICE_IP_LAN, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        getExtensionStatus(1001,TALKING,30);
+        sleep(WaitUntils.SHORT_WAIT*3);
         pjsip.Pj_Send_Dtmf(1001, "#");
+        sleep(2000);
         pjsip.Pj_Send_Dtmf(1001, "13001");
 
         assertStep("[通话状态校验]");
@@ -1419,6 +1548,7 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(3001,false);
         assertStep("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
+        sleep(16000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
 
         pjsip.Pj_hangupCall(1001);
@@ -1444,15 +1574,15 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_20"}, dataProvider = "routes")
-    public void testConference_20(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_20_Moderators1"}, dataProvider = "routes")
+    public void testConference_20_Moderators1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         asteriskObjectList.clear();
         new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CONF_WAITFORLEADER_GSM)).start();
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501，不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为空，不勾选WaitforModerator，Moderators 选择分机1001\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -1465,8 +1595,10 @@ public class TestConference extends TestCaseBaseNew {
 
         step("分机1000呼入Conference1-6501,按#13001 邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1002, "6501", DEVICE_IP_LAN, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        getExtensionStatus(1002,TALKING,30);
+        sleep(WaitUntils.SHORT_WAIT*3);
         pjsip.Pj_Send_Dtmf(1002, "#");
+        sleep(2000);
         pjsip.Pj_Send_Dtmf(1002, "13001");
 
         assertStep("[通话状态校验]");
@@ -1483,6 +1615,7 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(3001,false);
         assertStep("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
+        sleep(15000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
 
         pjsip.Pj_hangupCall(1002);
@@ -1509,13 +1642,13 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_21"}, dataProvider = "routes")
-    public void testConference_21(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_21_Moderators2"}, dataProvider = "routes")
+    public void testConference_21_Moderators2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -1528,8 +1661,10 @@ public class TestConference extends TestCaseBaseNew {
 
         step("分机1002呼入Conference1-6501,1002按#13001邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1002, "6501", DEVICE_IP_LAN, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        getExtensionStatus(1002,TALKING,10);
+        sleep(WaitUntils.SHORT_WAIT*3);
         pjsip.Pj_Send_Dtmf(1002, "#");
+        sleep(2000);
         pjsip.Pj_Send_Dtmf(1002, "13001");
 
         assertStep("[通话状态校验]");
@@ -1537,6 +1672,7 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(3001,false);
         assertStep("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
+        sleep(15000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
 
         pjsip.Pj_hangupCall(1002);
@@ -1563,13 +1699,13 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_22"}, dataProvider = "routes")
-    public void testConference_22(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_22_Moderators3"}, dataProvider = "routes")
+    public void testConference_22_Moderators3(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -1582,8 +1718,10 @@ public class TestConference extends TestCaseBaseNew {
 
         step("分机1000呼入Conference1-6501,1000按#13001邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1000, "6501", DEVICE_IP_LAN, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        getExtensionStatus(1000,TALKING,30);
+        sleep(WaitUntils.SHORT_WAIT*3);
         pjsip.Pj_Send_Dtmf(1000, "#");
+        sleep(2000);
         pjsip.Pj_Send_Dtmf(1000, "13001");
 
         assertStep("[通话状态校验]");
@@ -1591,6 +1729,7 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(3001,false);
         assertStep("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
+        sleep(15000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
 
         pjsip.Pj_hangupCall(1000);
@@ -1617,13 +1756,13 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_23"}, dataProvider = "routes")
-    public void testConference_23(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_23_Moderators4"}, dataProvider = "routes")
+    public void testConference_23_Moderators4(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -1636,7 +1775,8 @@ public class TestConference extends TestCaseBaseNew {
 
         step("分机1001呼入Conference1-6501,1001按#13001邀请辅助1的3001加入会议室");
         pjsip.Pj_Make_Call_No_Answer(1001, "6501", DEVICE_IP_LAN, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        getExtensionStatus(1001,TALKING,10);
+        sleep(WaitUntils.SHORT_WAIT*3);
         pjsip.Pj_Send_Dtmf(1001, "#");
         pjsip.Pj_Send_Dtmf(1001, "13001");
 
@@ -1645,6 +1785,7 @@ public class TestConference extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(3001,false);
         assertStep("[通话状态校验]");
         Assert.assertEquals(getExtensionStatus(3001,TALKING,30),TALKING);
+        sleep(15000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
 
         pjsip.Pj_hangupCall(1001);
@@ -1676,8 +1817,8 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_24"}, dataProvider = "routes")
-    public void testConference_24(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","Moderators","testConference_24_Moderators5"}, dataProvider = "routes")
+    public void testConference_24_Moderators5(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
         List<AsteriskObject> asteriskObjectList_1 = new ArrayList<AsteriskObject>();
         List<AsteriskObject> asteriskObjectList_2 = new ArrayList<AsteriskObject>();
@@ -1710,6 +1851,7 @@ public class TestConference extends TestCaseBaseNew {
             }
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_1.size());
         }
+        sleep(5000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("1 users in that conference."));
 
         step("分机1003呼入Conference-6501\\n\" +\n" +
@@ -1729,6 +1871,7 @@ public class TestConference extends TestCaseBaseNew {
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList_2.size());
         }
         assertStep("[通话状态校验]");
+        sleep(5000);
         Assert.assertTrue(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,MEETME_LIST_6501)).contains("2 users in that conference."));
 
         asteriskObjectList_2.clear();
@@ -1768,12 +1911,13 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ConferenceMenu","testConference_25"}, dataProvider = "routes")
-    public void testConference_25(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ConferenceMenu","testConference_25_Menu1"}, dataProvider = "routes")
+    public void testConference_25_Menu1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
+        sleep(3000);
 
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
@@ -1825,12 +1969,13 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ConferenceMenu","testConference_26"}, dataProvider = "routes")
-    public void testConference_26(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ConferenceMenu","testConference_26_Menu2"}, dataProvider = "routes")
+    public void testConference_26_Menu2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
+        sleep(3000);
 
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
@@ -1873,13 +2018,13 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ConferenceMenu","testConference_27"}, dataProvider = "routes")
-    public void testConference_27(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P3", "Conference","ConferenceMenu","testConference_27_Menu3"}, dataProvider = "routes")
+    public void testConference_27_Menu3(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
         auto.loginPage().loginWithAdmin();
-
+        sleep(3000);
         step("2.编辑Conference1-6501,不勾选AllowParticipantstoInvite,PartcipantPassword为空，ModeratorPassword为123，勾选WaitforModerator，Moderators 选择分机1001、1002、ExGroup1\n");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
         List<String> extensions = new ArrayList<>();
@@ -1916,11 +2061,11 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","Delete","testConference_28"}, dataProvider = "routes")
-    public void testConference_28(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","Delete","testConference_28_Delete1"}, dataProvider = "routes")
+    public void testConference_28_Delete1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);step("1:login with admin");
         auto.loginPage().loginWithAdmin();
-
+        sleep(2000);
         step("2:进入IVR界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
 
@@ -1946,13 +2091,13 @@ public class TestConference extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","Delete","testConference_29"}, dataProvider = "routes")
-    public void testConference_29(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
+    @Test(groups = {"PSeries","Cloud","K2","P2", "Conference","Delete","testConference_29_Delete2"}, dataProvider = "routes")
+    public void testConference_29_Delete2(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) throws IOException, JSchException {
         prerequisite(true);
 
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
-
+        sleep(2000);
         step("2:进入IVR界面");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_conference);
 
