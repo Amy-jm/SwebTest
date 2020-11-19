@@ -599,4 +599,12 @@ public class BaseMethod extends WebDriverFactory {
 		}
 		return reg;
 	}
+
+	/**
+	 * 设置只允许分机1000设置上下班切换
+	 */
+	public void initFeatureCode(){
+		step("Feature Code 设置只允许分机1000设置上下班切换");
+		apiUtil.editFeatureCode(String.format("\"enb_office_time\":1,\"office_time_permit_list\":[{\"value\":\"%s\",\"type\":\"extension\",\"text\":\"test A\",\"text2\":\"1000\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
+	}
 }

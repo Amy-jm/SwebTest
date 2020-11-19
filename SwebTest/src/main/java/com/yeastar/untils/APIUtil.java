@@ -678,6 +678,30 @@ public class APIUtil {
     }
 
     /**
+     * 获取featurecode
+     * 对应API：api/v1.0/featurecode/get
+     */
+    public List<FeatureCodeObject> getFeatureCodeSummary(){
+
+        List<FeatureCodeObject> featureCodeObject = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/featurecode/get");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("feature_code"))
+                return featureCodeObject;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("office_time_permit_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                featureCodeObject.add(new FeatureCodeObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+        }else {
+            Assert.fail("[API getHolidaySummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return featureCodeObject;
+    }
+
+    /**
      * 找到指定Inbound
      * @param name
      * @return
@@ -785,6 +809,21 @@ public class APIUtil {
         JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/holiday/batchdelete",jsonObject.toString());
+        return this;
+    }
+
+
+    public APIUtil deleteHoliday(String name){
+        List<HolidayObject> holidayObjectList = getHolidaySummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(HolidayObject object : holidayObjectList){
+            if(object.name.equals(name)){
+                list.add(object.id);
+            }}
+        if(list != null && !list.isEmpty()){
+            deleteHoliday(list);
+        }
         return this;
     }
 
@@ -931,7 +970,6 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/update",String.format("{%s,\"id\":%s}",request,getInboundSummary(name).id));
         return this;
     }
-
     /**
      *
      * @param request
@@ -1841,6 +1879,12 @@ public class APIUtil {
 
     public APIUtil editQueue(String number, String request){
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/queue/update",String.format("{%s,\"id\":%s}",request,getQueueSummary(number).id));
+        return this;
+    }
+
+
+    public APIUtil editFeatureCode(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/featurecode/update",String.format("{%s}",request));
         return this;
     }
 
