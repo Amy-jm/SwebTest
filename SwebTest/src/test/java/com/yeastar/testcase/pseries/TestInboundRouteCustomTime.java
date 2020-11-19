@@ -777,6 +777,8 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
             }
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(2000);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);

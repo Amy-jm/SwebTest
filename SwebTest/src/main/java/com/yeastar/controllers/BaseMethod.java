@@ -376,13 +376,16 @@ public class BaseMethod extends WebDriverFactory {
 	 * 初始化IVR
 	 * 号码：6200
 	 * 名称：IVR0
-	 * 其他：按0到分机A，其它默认设置
+	 * 其他：按0到分机A，
+	 * 勾选允许Dial Outbound Routes，全选呼出路由
 	 */
 	public void initIVR(){
 		step("创建IVR 6200");
 		ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
 		pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0, "extension", "", "1000", 0));
-		apiUtil.deleteAllIVR().createIVR("6200", "IVR0", pressKeyObjects_0).apply();
+		apiUtil.deleteAllIVR().createIVR("6200", "IVR0", pressKeyObjects_0)
+				.editIVR("6200",String.format("\"enb_dial_outb_routes\":1,\"dial_outb_route_list\":[{\"text\":\"Out1\",\"value\":\"%s\"},{\"text\":\"Out2\",\"value\":\"%s\"},{\"text\":\"Out3\",\"value\":\"%s\"},{\"text\":\"Out4\",\"value\":\"%s\"},{\"text\":\"Out5\",\"value\":\"%s\"},{\"text\":\"Out6\",\"value\":\"%s\"},{\"text\":\"Out7\",\"value\":\"%s\"},{\"text\":\"Out8\",\"value\":\"%s\"},{\"text\":\"Out9\",\"value\":\"27\"}]",
+						apiUtil.getOutBoundRouteSummary("Out1").id,apiUtil.getOutBoundRouteSummary("Out2").id,apiUtil.getOutBoundRouteSummary("Out3").id,apiUtil.getOutBoundRouteSummary("Out4").id,apiUtil.getOutBoundRouteSummary("Out5").id,apiUtil.getOutBoundRouteSummary("Out6").id,apiUtil.getOutBoundRouteSummary("Out7").id,apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
 	}
 
 	/**
