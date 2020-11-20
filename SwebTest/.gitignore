@@ -15,6 +15,11 @@ pic/*
 pjsip.log
 
 ##----------other----------
-/src/main/java/com/yeastar/yeastar/swebtest/tools/pjsip/PjsipDll.java
+PjsipDll.java
 /src/test/resources/config.properties
 /src/test/resources/data.properties
+SwebTest.iml
+src/main/resources/driver/
+src/main/resources/env/
+src/main/resources/pjsip/windows-i386-32/
+src/main/resources/win32-x86/
