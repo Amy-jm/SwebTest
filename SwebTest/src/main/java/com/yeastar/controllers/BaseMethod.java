@@ -706,7 +706,7 @@ public class BaseMethod extends WebDriverFactory {
 			reg = true;
 			log.debug("4000注册失败");
 		}
-		if(!reg){
+		if(reg){
 			pjsip.Pj_Unregister_Accounts();
 		}else{
 			step("1003 1004拨号*76400，登录Queue0");
