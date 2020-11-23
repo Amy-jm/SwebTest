@@ -1,25 +1,20 @@
 package com.yeastar.testcase.pseries;
 
 import com.jcraft.jsch.JSchException;
-import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBaseNew;
-import com.yeastar.untils.*;
 import com.yeastar.untils.CDRObject.CDRNAME;
 import com.yeastar.untils.CDRObject.STATUS;
+import com.yeastar.untils.DataUtils;
+import com.yeastar.untils.SSHLinuxUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
-import org.assertj.core.api.Condition;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.api.Assertions.*;
-import static org.hamcrest.CoreMatchers.containsString;
 
 /**
  * @program: SwebTest
@@ -61,7 +56,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
             initQueue();
             initConference();
             initIVR();
-//            initInbound();
+            initInbound();
             initOutbound();
             initFeatureCode();
 
@@ -81,7 +76,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
      * Business Hours and Holidays->Business Hours 删除所有；添加一条
      * 00:00-00:00，	Sunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday
      * Business Hours and Holidays->Holidays 删除所有；
-     **
+     * *
      */
     public void initBusinessHours() {
         List<String> officeTimes = new ArrayList<>();
@@ -109,8 +104,8 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
         initBusinessHours();
         step("编辑In1启用时间条件，Time-based Routing Mode选择Based on Custom Business Hours；添加自定义办公时间：00:00-10:00;09:00-23:59\\tSunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday；\\n\" +\n" +
                 "            \"设置Business Hours Destination到分机A-1000；Outside Business Hours Destination到分机B-1001；Holidays Destination到分机C-1002；");
-        apiUtil.editInbound("In1",String.format("\"enb_time_condition\":1,\"time_condition\":\"route_scope\",\"office_time_dest\":\"extension\",\"office_time_dest_value\":\"%s\",\"outoffice_time_dest\":\"extension\",\"outoffice_time_dest_value\":\"%s\",\"holiday_dest\":\"extension\",\"holiday_dest_value\":\"%s\",\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-10:00\"},{\"value\":\"09:00-23:59\"}],\"pos\":1}]",
-                apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1001").id,apiUtil.getExtensionSummary("1002").id)).apply();
+        apiUtil.editInbound("In1", String.format("\"enb_time_condition\":1,\"time_condition\":\"route_scope\",\"office_time_dest\":\"extension\",\"office_time_dest_value\":\"%s\",\"outoffice_time_dest\":\"extension\",\"outoffice_time_dest_value\":\"%s\",\"holiday_dest\":\"extension\",\"holiday_dest_value\":\"%s\",\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-10:00\"},{\"value\":\"09:00-23:59\"}],\"pos\":1}]",
+                apiUtil.getExtensionSummary("1000").id, apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1002").id)).apply();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -127,13 +122,13 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat( apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple("2000<2000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up", SPS, "", "Inbound"));
 
         step("分机1000拨打*99 切换上下班时间 ,99不会切换自定义办公时间状态");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
-                .has(anyOf(contains("/FORCEDEST/global                                 : office"),contains("0 results found"))).as( "99不会切换自定义办公时间状态 异常");
+                .has(anyOf(contains("/FORCEDEST/global                                 : office"), contains("0 results found"))).as("99不会切换自定义办公时间状态 异常");
 
 
         step("3:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
@@ -176,8 +171,8 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
         initBusinessHours();
         step("编辑In1启用时间条件，Time-based Routing Mode选择Based on Custom Business Hours；添加自定义办公时间：00:00-10:00;09:00-23:59\\tSunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday；\\n\" +\n" +
                 "            \"设置Business Hours Destination到分机A-1000；Outside Business Hours Destination到分机B-1001；Holidays Destination到分机C-1002；");
-        apiUtil.editInbound("In1",String.format("\"enb_time_condition\":1,\"time_condition\":\"route_scope\",\"office_time_dest\":\"extension\",\"office_time_dest_value\":\"%s\",\"outoffice_time_dest\":\"extension\",\"outoffice_time_dest_value\":\"%s\",\"holiday_dest\":\"extension\",\"holiday_dest_value\":\"%s\",\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-10:00\"},{\"value\":\"09:00-23:59\"}],\"pos\":1}]",
-                apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1001").id,apiUtil.getExtensionSummary("1002").id)).apply();
+        apiUtil.editInbound("In1", String.format("\"enb_time_condition\":1,\"time_condition\":\"route_scope\",\"office_time_dest\":\"extension\",\"office_time_dest_value\":\"%s\",\"outoffice_time_dest\":\"extension\",\"outoffice_time_dest_value\":\"%s\",\"holiday_dest\":\"extension\",\"holiday_dest_value\":\"%s\",\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-10:00\"},{\"value\":\"09:00-23:59\"}],\"pos\":1}]",
+                apiUtil.getExtensionSummary("1000").id, apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1002").id)).apply();
         step("Business Hours and Holidays->Holidays，添加Holidays1，Type：By Date ，Date：2020-1-1~2030-12-31 为假期");
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
@@ -202,7 +197,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
         step("分机1000拨打*99 切换上班时间；");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
-                .has(anyOf(contains("/FORCEDEST/global                                 : office"),contains("0 results found"))).as( "99不会切换自定义办公时间状态 异常");
+                .has(anyOf(contains("/FORCEDEST/global                                 : office"), contains("0 results found"))).as("99不会切换自定义办公时间状态 异常");
 
         step("分机1002响铃，接听，挂断；检查cdr" + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991002", DEVICE_ASSIST_2, false);
@@ -244,8 +239,8 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
         prerequisite();
         initBusinessHours();
         step("编辑呼入路由In1,DID Pattern选择DID Pattern，模式为空，Caller IDPattern为空，Business Hours Destination选择Hang up");
-        apiUtil.editInbound("In1",String.format("\"enb_time_condition\":1,\"time_condition\":\"route_scope\",\"office_time_dest\":\"extension\",\"office_time_dest_value\":\"%s\",\"outoffice_time_dest\":\"extension\",\"outoffice_time_dest_value\":\"%s\",\"holiday_dest\":\"extension\",\"holiday_dest_value\":\"%s\",\"office_time_list\":[{\"days_of_week\":\"%s\",\"office_times\":[{\"value\":\"00:00-10:00\"},{\"value\":\"09:00-23:59\"}],\"pos\":1}]",
-        apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1001").id,apiUtil.getExtensionSummary("1002").id,DataUtils.getYesterdayWeekDay())).apply();
+        apiUtil.editInbound("In1", String.format("\"enb_time_condition\":1,\"time_condition\":\"route_scope\",\"office_time_dest\":\"extension\",\"office_time_dest_value\":\"%s\",\"outoffice_time_dest\":\"extension\",\"outoffice_time_dest_value\":\"%s\",\"holiday_dest\":\"extension\",\"holiday_dest_value\":\"%s\",\"office_time_list\":[{\"days_of_week\":\"%s\",\"office_times\":[{\"value\":\"00:00-10:00\"},{\"value\":\"09:00-23:59\"}],\"pos\":1}]",
+                apiUtil.getExtensionSummary("1000").id, apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1002").id, DataUtils.getYesterdayWeekDay())).apply();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -268,7 +263,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
         step("分机1000拨打*99 切换上班时间；");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
-                .has(anyOf(contains("/FORCEDEST/global                                 : office"),contains("0 results found"))).as( "99不会切换自定义办公时间状态 异常");
+                .has(anyOf(contains("/FORCEDEST/global                                 : office"), contains("0 results found"))).as("99不会切换自定义办公时间状态 异常");
 
         step("分机1001响铃，接听，挂断；检查cdr" + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991001", DEVICE_ASSIST_2, false);
@@ -300,15 +295,15 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessCustomBusiness", "SPS", "P3"})
-    public void testIR_04_CustomBusiness()  {
+    public void testIR_04_CustomBusiness() {
         prerequisite();
         initBusinessHours();
         step("编辑In1启用时间条件，Time-based Routing Mode选择Based on Custom Business Hours；添加自定义办公时间：00:00-10:00;09:00-23:59\\tSunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday；\\n\" +\n" +
                 "            \"设置Business Hours Destination到分机A-1000；Outside Business Hours Destination到分机B-1001；Holidays Destination到分机C-1002；");
-        apiUtil.editInbound("In1",String.format("\"enb_time_condition\":1,\"time_condition\":\"route_scope\",\"office_time_dest\":\"extension\",\"office_time_dest_value\":\"%s\",\"outoffice_time_dest\":\"extension\",\"outoffice_time_dest_value\":\"%s\",\"holiday_dest\":\"extension\",\"holiday_dest_value\":\"%s\",\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-10:00\"},{\"value\":\"09:00-23:59\"}],\"pos\":1}]",
-                apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1001").id,apiUtil.getExtensionSummary("1002").id)).apply();
+        apiUtil.editInbound("In1", String.format("\"enb_time_condition\":1,\"time_condition\":\"route_scope\",\"office_time_dest\":\"extension\",\"office_time_dest_value\":\"%s\",\"outoffice_time_dest\":\"extension\",\"outoffice_time_dest_value\":\"%s\",\"holiday_dest\":\"extension\",\"holiday_dest_value\":\"%s\",\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-10:00\"},{\"value\":\"09:00-23:59\"}],\"pos\":1}]",
+                apiUtil.getExtensionSummary("1000").id, apiUtil.getExtensionSummary("1001").id, apiUtil.getExtensionSummary("1002").id)).apply();
         step("编辑In1删除所有Custom Business Hours；");
-        apiUtil.editInbound("In1","\"office_time_list\":[]").apply();
+        apiUtil.editInbound("In1", "\"office_time_list\":[]").apply();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -329,9 +324,5 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
                 .contains(tuple("2000<2000>", CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
-    }
-
-    private static Condition<String> contains(String s) {
-        return new Condition<>(value -> value.contains(s), "contains " + s);
     }
 }
