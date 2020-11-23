@@ -1,4 +1,6 @@
 package com.yeastar.untils;
+import com.yeastar.swebtest.pobject.Settings.PBX.CallFeatures.RingGroup.RingGroup;
+import com.yeastar.swebtest.pobject.Settings.PBX.Extensions.ExtensionGroup.ExtensionGroup;
 import com.yeastar.untils.APIObject.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -971,6 +973,20 @@ public class APIUtil {
         return this;
     }
     /**
+     * 对已有的呼出路由编辑 update
+     * @param name
+     * @param request
+     * @return
+     */
+    public APIUtil editOutbound(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/update",request);
+        return this;
+    }
+    public APIUtil editOutbound(String name, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/update",String.format("{%s,\"id\":%s}",request,getOutBoundRouteSummary(name).id));
+        return this;
+    }
+    /**
      *
      * @param request
      * @return
@@ -1215,6 +1231,71 @@ public class APIUtil {
                     a.put("text2",extensionObject.number);
                     a.put("value",String.valueOf(extensionObject.id));
                     a.put("type","extension");
+                    jsonArray2.put(a);
+                }
+            }
+        }
+
+        List<ExtensionGroupObject> extensionGroupObjects = getExtensionGroupSummary();
+        for (String ext : extensions){
+            for (ExtensionGroupObject ExtensionGroupObject: extensionGroupObjects) {
+                if (ext.equals(ExtensionGroupObject.name)){
+                    JSONObject a = new JSONObject();
+                    a.put("text2",ExtensionGroupObject.name);
+                    a.put("value",String.valueOf(ExtensionGroupObject.id));
+                    a.put("type","ext_group");
+                    jsonArray2.put(a);
+                }
+            }
+        }
+
+        List<RingGroupObject> ringGroupObjects = getRingGroupSummary();
+        for (String ext : extensions){
+            for (RingGroupObject ringGroupObject: ringGroupObjects) {
+                if (ext.equals(ringGroupObject.name)){
+                    JSONObject a = new JSONObject();
+                    a.put("text2",ringGroupObject.name);
+                    a.put("value",String.valueOf(ringGroupObject.id));
+                    a.put("type","ring_group");
+                    jsonArray2.put(a);
+                }
+            }
+        }
+
+        List<QueueObject> queueObjects = getQueueSummary();
+        for (String ext : extensions){
+            for (QueueObject queueObject: queueObjects) {
+                if (ext.equals(queueObject.name)){
+                    JSONObject a = new JSONObject();
+                    a.put("text2",queueObject.name);
+                    a.put("value",String.valueOf(queueObject.id));
+                    a.put("type","queue");
+                    jsonArray2.put(a);
+                }
+            }
+        }
+
+        List<IVRObject> ivrObjects = getIVRSummary();
+        for (String ext : extensions){
+            for (IVRObject ivrObject: ivrObjects) {
+                if (ext.equals(ivrObject.name)){
+                    JSONObject a = new JSONObject();
+                    a.put("text2",ivrObject.name);
+                    a.put("value",String.valueOf(ivrObject.id));
+                    a.put("type","ivr");
+                    jsonArray2.put(a);
+                }
+            }
+        }
+
+        List<ConferenceObject> conferenceObjects = getConferenceSummary();
+        for (String ext : extensions){
+            for (ConferenceObject conferenceObject: conferenceObjects) {
+                if (ext.equals(conferenceObject.name)){
+                    JSONObject a = new JSONObject();
+                    a.put("text2",conferenceObject.name);
+                    a.put("value",String.valueOf(conferenceObject.id));
+                    a.put("type","ivr");
                     jsonArray2.put(a);
                 }
             }
