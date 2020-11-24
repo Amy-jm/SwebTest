@@ -59,9 +59,9 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
             initRingGroup();
             initQueue();
             initConference();
+            initOutbound();
             initIVR();
             initInbound();
-            initOutbound();
             initFeatureCode();
 
             isRunRecoveryEnvFlag = registerAllExtensions();
@@ -98,7 +98,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2","testIR_01_CallerID"})
     public void testIR_01_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -134,7 +134,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2","testIR_02_CallerID"})
     public void testIR_02_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -160,7 +160,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_03_CallerID"})
     public void testIR_03_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -196,7 +196,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_04_CallerID"})
     public void testIR_04_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -222,7 +222,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_05_CallerID"})
     public void testIR_05_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -248,7 +248,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_06_CallerID"})
     public void testIR_06_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -284,7 +284,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_07_CallerID"})
     public void testIR_07_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -310,7 +310,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_08_CallerID"})
     public void testIR_08_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -346,7 +346,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_09_CallerID"})
     public void testIR_09_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -382,7 +382,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2","testIR_10_CallerID"})
     public void testIR_10_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -419,7 +419,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_11_CallerID"})
     public void testIR_11_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -456,14 +456,15 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "DIDPattern", "SPS", "P3","testIR_12_CallerID"})
     public void testIR_12_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "IVR", "6200").
                 editInbound("In1", "\"did_option\":\"patterns\",\"did_pattern_list\":[{\"did_pattern\":\"+0591XXZNZN[25-8].\"}]").
                 editInbound("In1", "\"cid_pattern_list\":[{\"cid_pattern\":\"2000\"},{\"cid_pattern\":\"3xxx\"}]").apply();
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, IVR_GREETING_DIAL_EXT)).start();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList, IVR_GREETING_DIAL_EXT);
+        thread.start();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -481,8 +482,10 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
             for (int i = 0; i < asteriskObjectList.size(); i++) {
                 log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
             }
+            thread.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
+        thread.flag = false;
         pjsip.Pj_Send_Dtmf(2000, "0");
 
         step("[通话状态校验]");
@@ -509,7 +512,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "DIDPattern", "SPS", "P3","testIR_13_CallerID"})
     public void testIR_13_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "IVR", "6200").

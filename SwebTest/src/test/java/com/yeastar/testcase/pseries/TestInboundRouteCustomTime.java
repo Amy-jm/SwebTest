@@ -60,10 +60,9 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
             initRingGroup();
             initQueue();
             initConference();
+            initOutbound();
             initIVR();
             initInbound();
-            initOutbound();
-
             isRunRecoveryEnvFlag = registerAllExtensions();
         }
         step("=========== init before class  end =========");
@@ -418,7 +417,8 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
                 editInbound("In1", String.format("\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-05:00\"},{\"value\":\"05:00-12:00\"},{\"value\":\"12:00-15:00\"},{\"value\":\"15:00-16:00\"},{\"value\":\"14:30-23:59\"}],\"dest\":\"ivr\",\"dest_prefix\":\"\",\"dest_value\":\"%s\",\"dest_ext_list\":[],\"pos\":1}]", apiUtil.getIVRSummary("6200").id)).
                 apply();
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList, IVR_GREETING_DIAL_EXT);
+        thread.start();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -435,8 +435,10 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
             for (int i = 0; i < asteriskObjectList.size(); i++) {
                 log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
             }
+            thread.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
+        thread.flag = false;
 
         pjsip.Pj_Send_Dtmf(2000, "0");
 
@@ -758,7 +760,8 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
                 editInbound("In1", String.format("\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-05:00\"},{\"value\":\"05:00-12:00\"},{\"value\":\"12:00-15:00\"},{\"value\":\"15:00-16:00\"},{\"value\":\"14:30-23:59\"}],\"dest\":\"play_greeting\",\"dest_prefix\":\"1\",\"dest_value\":\"prompt3.wav\",\"dest_ext_list\":[],\"pos\":1}]")).
                 apply();
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_3)).start();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_3);
+        thread.start();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -775,8 +778,10 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
             for (int i = 0; i < asteriskObjectList.size(); i++) {
                 log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
             }
+            thread.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
+        thread.flag = false;
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 

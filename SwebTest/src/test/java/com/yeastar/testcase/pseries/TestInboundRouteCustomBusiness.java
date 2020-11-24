@@ -55,9 +55,9 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
             initRingGroup();
             initQueue();
             initConference();
+            initOutbound();
             initIVR();
             initInbound();
-            initOutbound();
             initFeatureCode();
 
             isRunRecoveryEnvFlag = registerAllExtensions();

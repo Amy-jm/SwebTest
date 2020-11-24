@@ -116,6 +116,7 @@ public class CDRObject {
         Extension_1002("testta C<1002>"),
         Extension_1003("testa D<1003>"),
         Extension_1004("t estX<1004>"),
+        Extension_1005("First Last<1005>"),
         Extension_1020("1020 1020<1020>"),
         Extension_3001("3001<3001>"),
         Extension_2000("2000<2000>"),

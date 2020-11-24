@@ -5,7 +5,7 @@ import top.jfunc.json.impl.JSONObject;
 public class TrunkObject {
     public int id;
     public String name;
-    public int enable;
+//    public int enable;
     public String type;
     public String hostPort ;
     public String defOutBoundCid;
@@ -14,7 +14,7 @@ public class TrunkObject {
     public TrunkObject(JSONObject jsonObject){
         this.id = Integer.parseInt(getValueByString(jsonObject,"id"));
         this.name = getValueByString(jsonObject,"name");
-        this.enable = Integer.parseInt(getValueByString(jsonObject,"enable"));
+//        this.enable = Integer.parseInt(getValueByString(jsonObject,"enable"));
         this.type = getValueByString(jsonObject,"type");
         this.hostPort = getValueByString(jsonObject, "host_port");
         this.defOutBoundCid = getValueByString(jsonObject,"def_outbound_cid");

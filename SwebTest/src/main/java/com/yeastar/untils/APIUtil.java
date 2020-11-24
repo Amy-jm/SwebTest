@@ -986,6 +986,17 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/update",String.format("{%s,\"id\":%s}",request,getOutBoundRouteSummary(name).id));
         return this;
     }
+
+    /**
+     * outboundroute/updatepos
+     * @param name
+     * @param request
+     * @return
+     */
+    public APIUtil editOutboundPos(String name, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/updatepos",String.format("{%s,\"id\":%s}",request,getOutBoundRouteSummary(name).id));
+        return this;
+    }
     /**
      *
      * @param request
