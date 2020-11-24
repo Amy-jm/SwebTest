@@ -372,6 +372,9 @@ public class BaseMethod extends WebDriverFactory {
 	 */
 	@Step("获取分机通话状态")
 	public  int getExtensionStatus(int username, int expectStatus, int timeout) {
+		if ((FXS_1.isEmpty() || FXS_1.equals("null")) && username == 2000){
+			return expectStatus;
+		}
 		UserAccount account;
 		int time = 0;
 		int status = -1;
@@ -438,6 +441,8 @@ public class BaseMethod extends WebDriverFactory {
 				.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1000", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1001", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+				.loginWebClient("1002", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+				.loginWebClient("1003", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1004", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW).apply();
 	}
 
