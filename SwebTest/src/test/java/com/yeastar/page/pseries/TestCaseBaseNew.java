@@ -170,4 +170,13 @@ public class TestCaseBaseNew extends BaseMethod {
         auto.homePage().header_box_name.shouldHave(Condition.text(LOGIN_USERNAME));
     }
 
+    /**
+     * assert contains
+     * @param s
+     * @return
+     */
+    public static org.assertj.core.api.Condition<String> contains(String s) {
+        return new org.assertj.core.api.Condition<>(value -> value.contains(s), "contains " + s);
+    }
+
 }

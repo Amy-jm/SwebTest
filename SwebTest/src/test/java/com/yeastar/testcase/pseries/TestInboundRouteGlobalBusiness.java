@@ -370,7 +370,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
-
+        log.debug("【Voicemail 1000】 "+getExtensionStatus(1000,HUNGUP,10));
         step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
@@ -1018,12 +1018,12 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Feature("InboundRoute-BasedonGlobalBusinessHours")
     @Story("OutsideBusinessHoursDestination")
     @Description("进入后台执行asterisk -rx \"database show FORCEDEST\" ，若返回结果为：0 results found. 则执行分机1000拨打*99切换为下班状态；" +
-            "")
+            "21.编辑呼入路由In1,DID Pattern选择DID Pattern，模式为空，Caller IDPattern为空，OutsideBusinessHoursDestination选择ExtensionVoicemail-1000\\n\" +\n" +
+            "            \"\\t通过sps外线呼入\\n\" +\n" +
+            "            \"\\t\\t进入到分机1000的语音留言，通话15s,挂断；分机1000登录查看新增一条语音留言，Name正确显示")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("21.编辑呼入路由In1,DID Pattern选择DID Pattern，模式为空，Caller IDPattern为空，OutsideBusinessHoursDestination选择ExtensionVoicemail-1000\n" +
-            "\t通过sps外线呼入\n" +
-            "\t\t进入到分机1000的语音留言，通话15s,挂断；分机1000登录查看新增一条语音留言，Name正确显示")
+    @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
     public void testIR_21_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
@@ -1038,10 +1038,10 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 9913001" + ",[trunk] " + SPS);
+        log.debug("【Voicemail 1000】 "+getExtensionStatus(1000,HUNGUP,10));
+        step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991001", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
 
         sleep(15 * 1000);
 
@@ -1751,6 +1751,8 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
 
+        log.debug("【Voicemail 1000】 "+getExtensionStatus(1000,HUNGUP,10));
+
         step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
@@ -1938,12 +1940,12 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Feature("InboundRoute-BasedonGlobalBusinessHours")
     @Story("HolidaysDestination")
     @Description("【前置步骤】Business Hours and Holidays->Holidays，添加Holidays1，Type：By Date ，Date：2020-1-1~2030-12-31 为假期【判断是否存在，存在则不用重复添加】" +
-            "")
+            "41.编辑呼入路由In1,DID Pattern选择DID Pattern，模式为空，Caller IDPattern为空，Holidays Destination选择Conference-Conference0\\n\" +\n" +
+            "            \"\\t通过sps外线呼入\\n\" +\n" +
+            "            \"\\t\\t进入到Conference0，通话10s,挂断；检查cdr;")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("41.编辑呼入路由In1,DID Pattern选择DID Pattern，模式为空，Caller IDPattern为空，Holidays Destination选择Conference-Conference0\n" +
-            "\t通过sps外线呼入\n" +
-            "\t\t进入到Conference0，通话10s,挂断；检查cdr;")
+    @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
     public void testIR_41_HolidaysDestination()  {
         prerequisite();
