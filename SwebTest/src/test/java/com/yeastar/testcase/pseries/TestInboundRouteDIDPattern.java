@@ -79,12 +79,13 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
             initExtension();
             initExtensionGroup();
             initTrunk();
+            initOutbound();
             initRingGroup();
             initQueue();
             initConference();
             initIVR();
             initInbound();
-            initOutbound();
+
 
             isRunRecoveryEnvFlag = registerAllExtensions();
         }
@@ -147,7 +148,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"}, dataProvider = "routes")
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "SPS", "P3"}, dataProvider = "routes")
     public void testIRDID_01_05_DIDPattern(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk) {
         prerequisite();
 
@@ -185,7 +186,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "SPS", "P2"})
     public void testIRDID_06_DIDPattern() {
         prerequisite();
         List<String> trunk = new ArrayList<>();
@@ -227,12 +228,12 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "SPS", "P2"})
     public void testIRDID_07_DIDPattern() {
         prerequisite();
         List<String> trunk = new ArrayList<>();
         trunk.add(SPS);
-        step("新建呼入路由Inbound1，DID Pattern选择“DID Pattern”，添加规则0123456789；Trunk选择sps外线，呼入目的地为分机B-1001");
+        step("新建呼入路由Inbound1,DID Pattern选择“DID Pattern\",添加规则1：+123456 ，规则2：s ,规则3：abcdefghijklmno，规则4：99056789+");
         apiUtil.deleteInbound("Inbound1").createInbound("Inbound1", trunk, "Extension", "1001").
                 editInbound("Inbound1", String.format("\"did_pattern_list\":[{\"did_pattern\":\"+123456\"},{\"did_pattern\":\"s\"},{\"did_pattern\":\"abcdefghijklmno\"},{\"did_pattern\":\"99056789+\"}]")).apply();
 
@@ -273,12 +274,12 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"}, dataProvider = "routes")
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "SPS", "P3"}, dataProvider = "routes")
     public void testIRDID_08_10_DIDPattern(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk) {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
-        step("新建呼入路由Inbound1，DID Pattern选择“DID Pattern”，添加规则0123456789；Trunk选择sps外线，呼入目的地为分机B-1001");
+        step("新建呼入路由Inbound1,DID Pattern选择“DID Pattern\",添加规则1：+123456 ，规则2：s ,规则3：abcdefghijklmno，规则4：99056789+");
         apiUtil.deleteAllInbound().createInbound("Inbound1", trunk1, "Extension", "1001").
                 editInbound("Inbound1", String.format("\"did_pattern_list\":[{\"did_pattern\":\"+123456\"},{\"did_pattern\":\"s\"},{\"did_pattern\":\"abcdefghijklmno\"},{\"did_pattern\":\"056789+\"}]")).
                 apply();
@@ -315,7 +316,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "Extension", "P3"})
     public void testIRDID_11_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -358,7 +359,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "SPS", "P3"})
     public void testIRDID_12_DIDPattern() {
         prerequisite();
         step("编辑呼入路由In1,DID Pattern选择“DID Pattern\",添加规则： .\n");
@@ -398,7 +399,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "IVR", "P3"})
     public void testIRDID_13_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -417,12 +418,14 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 99123" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "99123", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
+            log.debug("【asteriskObjectList.size()】"+asteriskObjectList.size());
             log.debug("[tmp]_" + tmp);
         }
         if (tmp == 301) {
+            log.debug("【asteriskObjectList.size()】"+asteriskObjectList.size());
             for (int i = 0; i < asteriskObjectList.size(); i++) {
                 log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
             }
@@ -458,7 +461,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "IVR", "P3"})
     public void testIRDID_14_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -518,7 +521,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "InboundRoute", "DIDPattern", "IVR", "P3"})
     public void testIRDID_15_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -561,12 +564,12 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P2"})
     public void testIRDID_16_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
-        step("新建呼入路由Inbound2，DID Pattern选择“DID Pattern\"，添加规则：123! ，呼入目的地为IVR-IVR0");
+        step("新建呼入路由Inbound3,DID Pattern选择“DID Pattern\"，添加规则： +0591XXZNZN[25-8].  呼入目的地为RingGroup-RingGroup0");
         apiUtil.deleteAllInbound().createInbound("Inbound3", trunk1, "Extension", "1000").
                 editInbound("Inbound3", String.format("\"def_dest\":\"ring_group\",\"def_dest_value\":\"%s\"", apiUtil.getRingGroupSummary("6300").id)).
                 editInbound("Inbound3", String.format("\"did_pattern_list\":[{\"did_pattern\":\"+0591XXZNZN[25-8].\"}]")).apply();
@@ -608,12 +611,12 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "RingGroup", "P3"})
     public void testIRDID_17_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
-        step("新建呼入路由Inbound2，DID Pattern选择“DID Pattern\"，添加规则：123! ，呼入目的地为IVR-IVR0");
+        step("新建呼入路由Inbound3,DID Pattern选择“DID Pattern\"，添加规则： +0591XXZNZN[25-8].  呼入目的地为RingGroup-RingGroup0");
         apiUtil.deleteAllInbound().createInbound("Inbound3", trunk1, "Extension", "1000").
                 editInbound("Inbound3", String.format("\"def_dest\":\"ring_group\",\"def_dest_value\":\"%s\"", apiUtil.getRingGroupSummary("6300").id)).
                 editInbound("Inbound3", String.format("\"did_pattern_list\":[{\"did_pattern\":\"+0591XXZNZN[25-8].\"}]")).apply();
@@ -663,12 +666,12 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"}, dataProvider = "routes")
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "InboundRoute", "DIDPattern", "RingGroup", "P3"}, dataProvider = "routes")
     public void testIRDID_18_22_DIDPattern(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk) {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
-        step("新建呼入路由Inbound2，DID Pattern选择“DID Pattern\"，添加规则：123! ，呼入目的地为IVR-IVR0");
+        step("新建呼入路由Inbound3,DID Pattern选择“DID Pattern\"，添加规则： +0591XXZNZN[25-8].  呼入目的地为RingGroup-RingGroup0");
         apiUtil.deleteAllInbound().
                 createInbound("In1", trunk9, "Extension", "1000").
                 createInbound("Inbound3", trunk1, "Extension", "1000").
@@ -708,7 +711,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "InboundRoute", "DIDPattern", "HangUp", "P3"})
     public void testIRDID_23_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -739,12 +742,12 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "Voicemail", "P3"})
     public void testIRDID_24_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
-        step("新建呼入路由Inbound4，DID Pattern选择“DID Pattern\"，添加规则： 13001，呼入目的地HangUp\n");
+        step("编辑呼入路由Inbound4，DID Pattern选择“DID Pattern\"，添加规则： 13001，呼入目的地Extension Voicemail-分机1001\n");
         apiUtil.deleteAllInbound().createInbound("Inbound4", trunk1, "Extension", "1000").
                 editInbound("Inbound4", String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1001").id)).
                 editInbound("Inbound4", String.format("\"did_pattern_list\":[{\"did_pattern\":\"13001\"}]"))
@@ -769,6 +772,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.loginPage().login("1001", EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT * 2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        sleep(1000);
         softAssertPlus.assertThat(TableUtils.getTableForHeader(getDriver(), "Name", 0)).contains("2000");
 
         String voiceMailTime = TableUtils.getTableForHeader(getDriver(), "Time", 0);
@@ -792,7 +796,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "Conference", "P3"})
     public void testIRDID_25_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -836,7 +840,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "Queue", "P3"})
     public void testIRDID_26_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -883,7 +887,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "ExternalNumber", "P3"})
     public void testIRDID_27_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -926,7 +930,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "OutboundRoute", "P3"})
     public void testIRDID_28_DIDPattern() {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -969,9 +973,14 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "InboundRoute", "DIDPattern", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "PlayGreetingthenHangUp", "P3"})
     public void testIRDID_29_DIDPattern() {
         prerequisite();
+
+        asteriskObjectList.clear();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_1);
+        thread.start();
+
         List<String> trunk1 = new ArrayList<>();
         trunk1.add(SPS);
         step("编辑呼入路由Inbound4，DID Pattern选择“DID Pattern\"，添加规则： 13001，呼入目的地Play Greeting then HangUp 选择prompt1，播放1遍");
@@ -980,23 +989,20 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
                 editInbound("Inbound4", String.format("\"did_pattern_list\":[{\"did_pattern\":\"13001\"}]"))
                 .apply();
 
-        asteriskObjectList.clear();
-        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_1);
-        thread.start();
-
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 9913001" + ",[trunk] " + SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
 
+        pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
         }
         if (tmp == 301) {
+            log.debug("【asteriskObjectList.size()】"+asteriskObjectList.size());
             for (int i = 0; i < asteriskObjectList.size(); i++) {
                 log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
             }
@@ -1026,7 +1032,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "MatchSelectedExtensions", "P2"})
     public void testIRDID_30_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
@@ -1067,7 +1073,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "MatchSelectedExtensions", "P2"})
     public void testIRDID_31_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
@@ -1109,7 +1115,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries","FXS", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "MatchSelectedExtensions", "P3"})
     public void testIRDID_32_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
@@ -1125,7 +1131,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(2001, "991020", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(2000, RING, 30), RING);
+        Assert.assertEquals(getExtensionStatus(2000, RING, 45), RING);
         pjsip.Pj_Answer_Call(2000, false);
         Assert.assertEquals(getExtensionStatus(2000, TALKING, 30), TALKING);
 
@@ -1150,8 +1156,11 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "BRI", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_33_MatchDIDToExt() {
+        if(BRI_1.trim().equalsIgnoreCase("null") || BRI_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"BRI线路未配置！");
+        }
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
         apiUtil.deleteAllInbound().
@@ -1191,8 +1200,11 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "E1", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_34_MatchDIDToExt() {
+        if(E1.trim().equalsIgnoreCase("null") || E1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"E1线路未配置！");
+        }
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
         apiUtil.deleteAllInbound().
@@ -1200,10 +1212,10 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
                 editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).
                 apply();
 
-        step("1:login with admin,trunk: " + SPS);
+        step("1:login with admin,trunk: " + E1);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000" + ",[callee] 661004" + ",[trunk] " + SPS);
+        step("2:[caller] 2000" + ",[callee] 661004" + ",[trunk] " + E1);
         pjsip.Pj_Make_Call_No_Answer(2000, "661004", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
@@ -1232,7 +1244,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "SIP_ACCOUNT","MatchSelectedExtensions", "P3"})
     public void testIRDID_35_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
@@ -1273,7 +1285,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_36_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
@@ -1314,7 +1326,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_37_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003");
@@ -1355,7 +1367,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_38_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
@@ -1385,7 +1397,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_39_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
@@ -1415,7 +1427,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "MatchSelectedExtensions","P3"})
     public void testIRDID_40_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
@@ -1444,7 +1456,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_41_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：123{{.Ext}}0591XZN，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
@@ -1472,7 +1484,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_42_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\\\" ,值为：+123{{.Ext}}0591XZN！ ，选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1001,1003\\n\"");
@@ -1502,7 +1514,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_43_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：+1230591XZN，选择所有外线；呼入目的地选择Extension-分机1001\n");
@@ -1543,7 +1555,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_44_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004");
@@ -1572,7 +1584,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "MatchSelectedExtensions", "P3"})
     public void testIRDID_45_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004");
@@ -1614,7 +1626,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_46_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}.选择所有外线；呼入目的地选择Match Selected Extensions-选择分机1002,1004");
@@ -1643,7 +1655,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","Extension", "P3"})
     public void testIRDID_47_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
@@ -1685,7 +1697,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "Extension", "P3"})
     public void testIRDID_48_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
@@ -1726,7 +1738,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "RingGroup", "P3"})
     public void testIRDID_49_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
@@ -1770,7 +1782,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "HangUp", "P3"})
     public void testIRDID_50_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择HangUp\n");
@@ -1799,7 +1811,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "Voicemail", "P3"})
     public void testIRDID_51_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
@@ -1825,6 +1837,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.loginPage().login("1000", EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT * 2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        sleep(1000);
         Assert.assertTrue(TableUtils.getTableForHeader(getDriver(), "Name", 0).contains("2000"), "没有检测到录音文件！");
 
         String voiceMailTime = TableUtils.getTableForHeader(getDriver(), "Time", 0);
@@ -1848,7 +1861,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "IVR", "P3"})
     public void testIRDID_52_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择IVR-IVR0\n");
@@ -1865,12 +1878,14 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 991002" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991002", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
+            log.debug("【asteriskObjectList.size()】"+asteriskObjectList.size());
         }
         if (tmp == 301) {
+            log.debug("【asteriskObjectList.size()】"+asteriskObjectList.size());
             for (int i = 0; i < asteriskObjectList.size(); i++) {
                 log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
             }
@@ -1906,7 +1921,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "Conference", "P3"})
     public void testIRDID_53_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Conference-Conference0\n");
@@ -1943,7 +1958,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "Queue", "P3"})
     public void testIRDID_54_MatchDIDToExt() throws IOException, JSchException {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Queue-Queue0\n");
@@ -2001,7 +2016,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "ExternalNumber", "P3"})
     public void testIRDID_55_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择External Number：prefix : 1 ,号码：3001");
@@ -2043,7 +2058,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "OutboundRoute", "P3"})
     public void testIRDID_56_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Extension-分机1000\n");
@@ -2085,7 +2100,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDPatterntoExtensions", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "PlayGreetingthenHangUp", "P3"})
     public void testIRDID_57_MatchDIDToExt() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择IVR-IVR0\n");
@@ -2102,10 +2117,12 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 9913001" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "9913001", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
+            log.debug("【asteriskObjectList.size()】"+asteriskObjectList.size());
+
         }
         if (tmp == 301) {
             for (int i = 0; i < asteriskObjectList.size(); i++) {
@@ -2135,7 +2152,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "MatchExtensionRange", "P2"})
     public void testIRDID_58_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
@@ -2176,7 +2193,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "MatchExtensionRange", "P2"})
     public void testIRDID_59_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
@@ -2218,7 +2235,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "MatchExtensionRange", "P3"})
     public void testIRDID_60_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
@@ -2260,7 +2277,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "MatchExtensionRange", "P3"})
     public void testIRDID_61_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
@@ -2301,7 +2318,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "MatchExtensionRange", "P3"})
     public void testIRDID_62_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
@@ -2330,7 +2347,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "HangUp", "P3"})
     public void testIRDID_63_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Hang up\n");
@@ -2359,7 +2376,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "Extension", "P3"})
     public void testIRDID_64_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Extension-分机1002\n");
@@ -2400,7 +2417,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "Voicemail", "P3"})
     public void testIRDID_65_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Extension Voicemail-分机1000\n");
@@ -2426,6 +2443,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.loginPage().login("1000", EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT * 2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        sleep(1000);
         Assert.assertTrue(TableUtils.getTableForHeader(getDriver(), "Name", 0).contains("2000"), "没有检测到录音文件！");
 
         String voiceMailTime = TableUtils.getTableForHeader(getDriver(), "Time", 0);
@@ -2449,7 +2467,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "IVR", "P3"})
     public void testIRDID_66_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Extension Voicemail-分机1000\n");
@@ -2507,7 +2525,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "RingGroup", "P3"})
     public void testIRDID_67_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择RingGroup-RingGroup0\n");
@@ -2551,7 +2569,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "Queue", "P3"})
     public void testIRDID_68_MatchDIDToExtRange() throws IOException, JSchException {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择RingGroup-RingGroup0\n");
@@ -2610,7 +2628,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "Conference", "P3"})
     public void testIRDID_69_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择RingGroup-RingGroup0\n");
@@ -2647,7 +2665,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "ExternalNumber", "P3"})
     public void testIRDID_70_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择External Number ,prefix : 1 ,号码：3001\n\n");
@@ -2688,7 +2706,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "OutboundRoute", "P3"})
     public void testIRDID_71_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Outbound Route-Out1");
@@ -2729,7 +2747,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-DIDPattern", "MatchDIDRangetoExtensionRange", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "PlayGreetingthenHangUp", "P3"})
     public void testIRDID_72_MatchDIDToExtRange() {
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Play Greeting then Hang Up选择prompt3，播放1遍");
@@ -2746,10 +2764,11 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 995503300" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
+            log.debug("【asteriskObjectList.size()】"+asteriskObjectList.size());
         }
         if (tmp == 301) {
             for (int i = 0; i < asteriskObjectList.size(); i++) {
