@@ -199,15 +199,13 @@ public class SSHLinuxUntils {
         public String exePjsipNew(String host, int port, String user, String password, String command, String containsString, int appearCount, int timout, List<AsteriskObject> asteriskObjectList)
                 throws JSchException, IOException
         {
-            System.out.println("111111111111");
+
             JSch jsch = new JSch();
             outputstream = new StringBuffer();
             Session session = jsch.getSession(user, host, port);
             session.setConfig("StrictHostKeyChecking", "no");
             session.setPassword(password);
-            System.out.println("33333333333333333");
             session.connect();
-            System.out.println("222222222222222222");
             ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
             BufferedReader br = new BufferedReader(new InputStreamReader(channelExec.getInputStream()));
             channelExec.setCommand(command);
@@ -216,8 +214,6 @@ public class SSHLinuxUntils {
             String msg = null;
             int tmp=0;
 //        long startTime = System.currentTimeMillis();
-            System.out.println("!@!@!@!@!@!@");
-
             while ((msg = br.readLine()) != null && tmp <= timout && flag) {
                 outputstream.append(msg).append("\n");
                 log.debug("[containsString:]"+this.isInterrupted()+" "+containsString + "[CLI]"+ msg);
