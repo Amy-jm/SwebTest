@@ -319,6 +319,7 @@ public class HomePage extends BasePage{
                 break;
             case cdr_recording_tree_cdr:
                 cdr_recording_tree_cdr.click();
+                sleep(2000);
                 break;
             case cdr_recording_tree_recording:
                 cdr_recording_tree_recording.click();

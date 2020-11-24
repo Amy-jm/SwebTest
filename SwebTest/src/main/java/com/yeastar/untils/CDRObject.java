@@ -108,7 +108,7 @@ public class CDRObject {
     }
 
     /**
-     * cdr field call from
+     * cdr field call to
      */
     public enum CDRNAME {
         Extension_1000("test A<1000>"),
@@ -119,9 +119,11 @@ public class CDRObject {
         Extension_1020("1020 1020<1020>"),
         Extension_3001("3001<3001>"),
         Extension_2000("2000<2000>"),
+        Extension_2001("2001<2001>"),
+        Extension_4000("4000<4000>"),
 
-        IVR0_6200("IVR IVR0_6200<6200>"),
-        IVR1_6201("IVR IVR1_6201<6201>"),
+        IVR0_6200("IVR IVR0<6200>"),
+        IVR1_6201("IVR IVR1<6201>"),
 
         RINGGROUP0_6300("RingGroup RingGroup0<6300>"),
         RINGGROUP1_6301("RingGroup RingGroup1<6301>"),
@@ -134,12 +136,14 @@ public class CDRObject {
 
         Conference0_6500("Conference Conference0<6500>");
 
+
         private final String alias;
         CDRNAME(String alias) {
             this.alias = alias;
         }
         @Override
         public String toString() {
+
             return this.alias;
         }
     }
@@ -182,5 +186,4 @@ public class CDRObject {
             return this.alias;
         }
     }
-
 }

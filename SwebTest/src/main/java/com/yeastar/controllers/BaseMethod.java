@@ -2,14 +2,12 @@ package com.yeastar.controllers;
 
 import com.jcraft.jsch.JSchException;
 import com.yeastar.swebtest.tools.pjsip.UserAccount;
-import com.yeastar.untils.APIObject.ExtensionObject;
 import com.yeastar.untils.APIObject.IVRObject;
-import com.yeastar.untils.APIUtil;
-import com.yeastar.untils.SSHLinuxUntils;
-import com.yeastar.untils.WaitUntils;
+import com.yeastar.untils.*;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.javatuples.Quartet;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -238,7 +236,120 @@ public class BaseMethod extends WebDriverFactory {
 		log.debug("[asterisk_command_return_string] "+str);
 		return str;
 	}
+	private String findExtCdrRecordByExtNum(String extNum){
+		if (extNum.equals("1000")){
+			return CDRObject.CDRNAME.Extension_1000.toString();
+		}else if (extNum.equals("1001")){
+			return CDRObject.CDRNAME.Extension_1001.toString();
+		}else if (extNum.equals("1002")){
+			return CDRObject.CDRNAME.Extension_1002.toString();
+		}else if (extNum.equals("1003")){
+			return CDRObject.CDRNAME.Extension_1003.toString();
+		}else if (extNum.equals("1004")){
+			return CDRObject.CDRNAME.Extension_1004.toString();
+		}else if (extNum.equals("1020")){
+			return CDRObject.CDRNAME.Extension_1020.toString();
+		}else if (extNum.equals("2000")){
+			return CDRObject.CDRNAME.Extension_2000.toString();
+		}else if (extNum.equals("3001")){
+			return CDRObject.CDRNAME.Extension_3001.toString();
+		}else if (extNum.equals("2001")){
+			return CDRObject.CDRNAME.Extension_2001.toString();
+		}else if (extNum.equals("4000")){
+			return CDRObject.CDRNAME.Extension_4000.toString();
+		}
+		return "";
+	}
+	/**
+	 * 根据响铃策略找到队列最先响铃的分机
+	 * @param queuenum
+	 * @param ringStrategy : least_recent /
+	 * @return
+	 */
+	@Step("根据响铃策略找到队列最先响铃的分机")
+	public String getQueueExtNumWithRingStrategy(String queuenum, String ringStrategy, int index) {
+		List<Quartet<String, String, String, String>> q =getQueueExtNumWithRingStrategy(queuenum,ringStrategy);
+		if (q.size() > index){
+			return q.get(index).getValue3();
+		}
+		return "";
+	}
+	/**
+	 * 根据响铃策略找到队列最先响铃的分机
+	 * @param queuenum
+	 * @param ringStrategy : least_recent /
+	 * @return
+	 */
+	@Step("根据响铃策略找到队列最先响铃的分机信息")
+	public List<Quartet<String, String, String, String>> getQueueExtNumWithRingStrategy(String queuenum, String ringStrategy) {
 
+		List<Quartet<String, String, String, String>> roleList = new ArrayList<Quartet<String,String, String, String>>();
+		String queueInfo = execAsterisk("queue show queue-"+queuenum);
+		String[] queueInfoList = queueInfo.substring(queueInfo.indexOf("0:"),queueInfo.indexOf("No Callers")).split("\n");
+
+		for (int i = 0; i <queueInfoList.length-1; i++) {
+			String str = queueInfoList[i];
+			if (str.trim().isEmpty())
+				continue;
+			String extNum = "";
+			String state = "";
+			String cdrRecord = "";
+			String hasTakenCall = "0";
+			String lastCallInterval="9999999";
+			if (str.contains("Unavailable"))
+				state = "Unavailable";
+			else if (str.contains("Not in use"))
+				state = "Not in use";
+			else if (str.contains("In use"))
+				state = "In use";
+			else if (str.contains("Ringing"))
+				state = "Ringing";
+
+			if (!state.equals("Not in use"))
+				continue;
+
+			if (!str.contains("has taken no calls yet")){
+				lastCallInterval = str.substring(str.indexOf("last was ")+9, str.indexOf(" secs ago"));
+			}
+
+			if (str.substring(str.indexOf("Local/")+6, str.indexOf("Local/")+10).trim().equals("1020")){
+				cdrRecord = findExtCdrRecordByExtNum("1020");
+				extNum = "2000";
+			}else{
+				extNum = str.substring(str.indexOf("Local/")+6, str.indexOf("Local/")+10).trim();
+				cdrRecord = findExtCdrRecordByExtNum(extNum);
+			}
+
+			if (!str.substring(str.indexOf("has taken ")+10, str.indexOf("has taken ")+12).equals("no") ){
+				hasTakenCall = str.substring(str.indexOf("has taken ")+10, str.indexOf("has taken ")+12);
+			}
+
+			Quartet<String, String, String, String> t = TupleUtils.with(
+					extNum, //extension number
+					cdrRecord, //是否注册，是否可用状态
+					hasTakenCall,//通话数量
+					lastCallInterval//距离上次通话的时间
+			);
+			roleList.add(t);
+		}
+
+		for (int i=0; i < roleList.size(); i++){
+			for (int j=i+1; j < roleList.size(); j++){
+				if (ringStrategy.toLowerCase().equals("least_recent")){
+					if (Integer.parseInt(roleList.get(i).getValue3().trim()) <= Integer.parseInt(roleList.get(j).getValue3().trim())){
+						roleList.set(i, roleList.set(j, roleList.get(i)));
+					}
+				}
+				if (ringStrategy.toLowerCase().equals("fewest_calls")){
+					if (Integer.parseInt(roleList.get(i).getValue2().trim()) >= Integer.parseInt(roleList.get(j).getValue2().trim())){
+						roleList.set(i, roleList.set(j, roleList.get(i)));
+					}
+				}
+			}
+		}
+		log.debug(roleList);
+		return roleList;
+	}
 	@Step("...清空/ysdisk/syslog/pbxlog.0文件")
 	public String clearasteriskLog()  {
 		log.debug("[CLEAR_CLI_LOG_command]"+CLEAR_CLI_LOG);
@@ -309,7 +420,7 @@ public class BaseMethod extends WebDriverFactory {
 	 * 分机1004、名称：test2X     角色：Supervisor
 	 * 分机1005、名称：First Last    角色：Supervisor
 	 * fxs分机1020、名称：1020 1020  角色：Supervisor
-	 * 分机0   、名称：0          角色：Administrator
+	 * 分机0   、名称：0          角色：空
 	 */
 	public void initExtension(){
 		step("创建分机1000-1005、fxs 1020");
@@ -452,7 +563,7 @@ public class BaseMethod extends WebDriverFactory {
 	 * 选择所有外线，分机目的地设置为分机1000，其它默认
 	 */
 	public void initInbound(){
-		step("创创建呼入路由In1，目的地分机 1000");
+		step("创建呼入路由InRoute3,目的地到响铃组6300");
 
 		List<String> trunk9 = new ArrayList<>();
 
@@ -509,7 +620,7 @@ public class BaseMethod extends WebDriverFactory {
 		trunk5.add(BRI_1);
 		trunk6.add(E1);
 		trunk7.add(GSM);
-		trunk8.add(SPS);
+		trunk8.add(GSM);
 		trunk9.add(SPS);
 		trunk9.add(BRI_1);
 		trunk9.add(FXO_1);
@@ -528,6 +639,14 @@ public class BaseMethod extends WebDriverFactory {
 				createOutbound("Out9", trunk9, extensionNum).apply();
 	}
 
+	/**
+	 * 设置只允许分机1000设置上下班切换
+	 */
+	public void initFeatureCode(){
+		step("Feature Code 设置只允许分机1000设置上下班切换");
+		apiUtil.editFeatureCode(String.format("\"enb_office_time\":1,\"office_time_permit_list\":[{\"value\":\"%s\",\"type\":\"extension\",\"text\":\"test A\",\"text2\":\"1000\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
+	}
+
 	public boolean registerAllExtensions() {
 		log.debug("[prerequisite] init extension");
 		pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -535,7 +654,6 @@ public class BaseMethod extends WebDriverFactory {
 		pjsip.Pj_CreateAccount(1002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(1003, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(1004, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
-		pjsip.Pj_CreateAccount(1005, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(2001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(3001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -546,7 +664,6 @@ public class BaseMethod extends WebDriverFactory {
 		pjsip.Pj_Register_Account_WithoutAssist(1002, DEVICE_IP_LAN);
 		pjsip.Pj_Register_Account_WithoutAssist(1003, DEVICE_IP_LAN);
 		pjsip.Pj_Register_Account_WithoutAssist(1004, DEVICE_IP_LAN);
-		pjsip.Pj_Register_Account_WithoutAssist(1005, DEVICE_IP_LAN);
 		pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 		pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
 		pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
@@ -573,10 +690,6 @@ public class BaseMethod extends WebDriverFactory {
 			reg = true;
 			log.debug("1004注册失败");
 		}
-		if (getExtensionStatus(1005, IDLE, 5) != IDLE) {
-			reg = true;
-			log.debug("1005注册失败");
-		}
 		if (getExtensionStatus(2000, IDLE, 5) != IDLE) {
 			reg = true;
 			log.debug("2000注册失败");
@@ -601,13 +714,5 @@ public class BaseMethod extends WebDriverFactory {
 			pjsip.Pj_Make_Call_No_Answer(1004,  "*76400", DEVICE_IP_LAN, false);
 		}
 		return reg;
-	}
-
-	/**
-	 * 设置只允许分机1000设置上下班切换
-	 */
-	public void initFeatureCode(){
-		step("Feature Code 设置只允许分机1000设置上下班切换");
-		apiUtil.editFeatureCode(String.format("\"enb_office_time\":1,\"office_time_permit_list\":[{\"value\":\"%s\",\"type\":\"extension\",\"text\":\"test A\",\"text2\":\"1000\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
 	}
 }

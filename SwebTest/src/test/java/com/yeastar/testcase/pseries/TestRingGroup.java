@@ -1918,7 +1918,7 @@ public class TestRingGroup extends TestCaseBaseNew {
 
         step("所有分机1000\\1001\\1002同时响铃10s后，进入到分机1004的语音留言，登录1004查看新增一条语音留言，Name记录正确");
 
-        step("网页admin登录,进入ringgroup界面 ");
+        step("网页admin登录,进入voicemail界面 ");
         auto.loginPage().login("1004", EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
 
