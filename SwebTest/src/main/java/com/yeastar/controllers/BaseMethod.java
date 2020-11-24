@@ -710,9 +710,18 @@ public class BaseMethod extends WebDriverFactory {
 		if(reg){
 			pjsip.Pj_Unregister_Accounts();
 		}else{
-			step("1003 1004拨号*76400，登录Queue0");
-			pjsip.Pj_Make_Call_No_Answer(1003,  "*76400", DEVICE_IP_LAN, false);
-			pjsip.Pj_Make_Call_No_Answer(1004,  "*76400", DEVICE_IP_LAN, false);
+
+			String queueInfo = execAsterisk("queue show queue-"+queueNum0);
+
+			if (!queueInfo.contains("1003")){
+				step("1003拨号*76400，登录Queue0");
+				pjsip.Pj_Make_Call_No_Answer(1003,  "*76400", DEVICE_IP_LAN, false);
+			}
+
+			if (!queueInfo.contains("1004")){
+				step("1004拨号*76400，登录Queue0");
+				pjsip.Pj_Make_Call_No_Answer(1004,  "*76400", DEVICE_IP_LAN, false);
+			}
 		}
 		return reg;
 	}
