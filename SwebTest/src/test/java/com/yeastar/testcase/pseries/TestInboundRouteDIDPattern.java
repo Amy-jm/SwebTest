@@ -98,6 +98,14 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         Object[][] group = null;
         String methodName = method.getName();
 
+        //#### ci base on keyword
+//        for (String groups : c.getIncludedGroups()) {
+//           if (groups.equalsIgnoreCase("SPS")) {
+//               group = new Object[][]{{"99", 2000, "6200", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SPS"}};
+//           }
+//        }
+
+        //#### local base on test name###########
         if (methodName.contains("testIRDID_01_05_DIDPattern")) {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
@@ -129,7 +137,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         }
 
 
-        return null;
+        return group;
     }
 
     @Epic("P_Series")
@@ -148,7 +156,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "SPS", "P3"}, dataProvider = "routes")
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "SPS", "P3","testIRDID_01_05_DIDPattern"}, dataProvider = "routes")
     public void testIRDID_01_05_DIDPattern(String routePrefix, int caller, String callee, String deviceAssist, String cdrCaller, String trunk) {
         prerequisite();
 
@@ -186,7 +194,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "SPS", "P2","testIRDID_06_DIDPattern"})
     public void testIRDID_06_DIDPattern() {
         prerequisite();
         List<String> trunk = new ArrayList<>();
