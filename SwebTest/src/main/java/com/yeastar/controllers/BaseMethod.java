@@ -434,7 +434,7 @@ public class BaseMethod extends WebDriverFactory {
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.HumanResource.toString()).replace("EXTENSIONFIRSTNAME", "t").replace("EXTENSIONLASTNAME", "estX").replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Accounting.toString()).replace("EXTENSIONFIRSTNAME", "First").replace("EXTENSIONLASTNAME", "Last").replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Administrator.toString()).replace("EXTENSIONFIRSTNAME", "0").replace("EXTENSIONLASTNAME", "0").replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
-				.createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", "1-3").replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
+				.createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1000", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1001", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
@@ -481,6 +481,68 @@ public class BaseMethod extends WebDriverFactory {
 		}
 		step("创建SPS中继");
 		apiUtil.deleteTrunk(SPS).createSIPTrunk(reqDataCreateSPS_2).apply();
+	}
+
+	/**
+	 * 初始化呼出路由
+	 * Out1，号码规则：1.  ，删除前缀：1，选择外线：sip1，选择所有分机
+	 * Out2，号码规则：2. ，删除前缀：1，外线：sps，选择所有分机
+	 * Out3，号码规则：3. ，删除前缀：1，外线：account，选择所有分机
+	 * Out4，号码规则：4.，删除前缀：1，外线：FXO，选择所有分机
+	 * Out5，号码规则：5. ，删除前缀：1，外线：BRI，选择所有分机
+	 * Out6，号码规则：6.，删除前缀：1，外线：E1，选择所有分机
+	 * Out7，号码规则：7.，删除前缀：1，外线：LTE/GSM，选择所有分机
+	 * Out8，号码规则：X. ，删除前缀：空，外线sps外线，选择分机A
+	 * Out9，号码规则：X.，删除前缀：空，全选外线，全选分机
+	 */
+	public void initOutbound(){
+
+		step("创建呼出路由");
+
+		List<String> extensionNum = new ArrayList<>();
+		List<String> extensionNumA = new ArrayList<>();
+
+		extensionNum.add("0");
+		extensionNum.add("1000");
+		extensionNum.add("1001");
+		extensionNum.add("1002");
+		extensionNum.add("1003");
+		extensionNumA.add("1000");
+
+		List<String> trunk1 = new ArrayList<>();
+		List<String> trunk2 = new ArrayList<>();
+		List<String> trunk3 = new ArrayList<>();
+		List<String> trunk4 = new ArrayList<>();
+		List<String> trunk5 = new ArrayList<>();
+		List<String> trunk6 = new ArrayList<>();
+		List<String> trunk7 = new ArrayList<>();
+		List<String> trunk8 = new ArrayList<>();
+		List<String> trunk9 = new ArrayList<>();
+
+		trunk1.add(SIPTrunk);
+		trunk2.add(SPS);
+		trunk3.add(ACCOUNTTRUNK);
+		trunk4.add(FXO_1);
+		trunk5.add(BRI_1);
+		trunk6.add(E1);
+		trunk7.add(GSM);
+		trunk8.add(GSM);
+		trunk9.add(SPS);
+		trunk9.add(BRI_1);
+		trunk9.add(FXO_1);
+		trunk9.add(E1);
+		trunk9.add(SIPTrunk);
+		trunk9.add(ACCOUNTTRUNK);
+		trunk9.add(GSM);
+		apiUtil.deleteAllOutbound().createOutbound("Out1", trunk1, extensionNum, "1.", 1).
+				createOutbound("Out2", trunk2, extensionNum, "2.", 1).
+				createOutbound("Out3", trunk3, extensionNum, "3.", 1).
+				createOutbound("Out4", trunk4, extensionNum, "4.", 1).
+				createOutbound("Out5", trunk5, extensionNum, "5.", 1).
+				createOutbound("Out6", trunk6, extensionNum, "6.", 1).
+				createOutbound("Out7", trunk7, extensionNum, "7.", 1).
+				createOutbound("Out8", trunk8, extensionNumA).
+				createOutbound("Out9", trunk9, extensionNum).apply();
 	}
 
 	/**
@@ -577,67 +639,6 @@ public class BaseMethod extends WebDriverFactory {
 		apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").apply();
 	}
 
-	/**
-	 * 初始化呼出路由
-	 * Out1，号码规则：1.  ，删除前缀：1，选择外线：sip1，选择所有分机
-	 * Out2，号码规则：2. ，删除前缀：1，外线：sps，选择所有分机
-	 * Out3，号码规则：3. ，删除前缀：1，外线：account，选择所有分机
-	 * Out4，号码规则：4.，删除前缀：1，外线：FXO，选择所有分机
-	 * Out5，号码规则：5. ，删除前缀：1，外线：BRI，选择所有分机
-	 * Out6，号码规则：6.，删除前缀：1，外线：E1，选择所有分机
-	 * Out7，号码规则：7.，删除前缀：1，外线：LTE/GSM，选择所有分机
-	 * Out8，号码规则：X. ，删除前缀：空，外线sps外线，选择分机A
-	 * Out9，号码规则：X.，删除前缀：空，全选外线，全选分机
-	 */
-	public void initOutbound(){
-
-		step("创建呼出路由");
-
-		List<String> extensionNum = new ArrayList<>();
-		List<String> extensionNumA = new ArrayList<>();
-
-		extensionNum.add("0");
-		extensionNum.add("1000");
-		extensionNum.add("1001");
-		extensionNum.add("1002");
-		extensionNum.add("1003");
-		extensionNumA.add("1000");
-
-		List<String> trunk1 = new ArrayList<>();
-		List<String> trunk2 = new ArrayList<>();
-		List<String> trunk3 = new ArrayList<>();
-		List<String> trunk4 = new ArrayList<>();
-		List<String> trunk5 = new ArrayList<>();
-		List<String> trunk6 = new ArrayList<>();
-		List<String> trunk7 = new ArrayList<>();
-		List<String> trunk8 = new ArrayList<>();
-		List<String> trunk9 = new ArrayList<>();
-
-		trunk1.add(SIPTrunk);
-		trunk2.add(SPS);
-		trunk3.add(ACCOUNTTRUNK);
-		trunk4.add(FXO_1);
-		trunk5.add(BRI_1);
-		trunk6.add(E1);
-		trunk7.add(GSM);
-		trunk8.add(GSM);
-		trunk9.add(SPS);
-		trunk9.add(BRI_1);
-		trunk9.add(FXO_1);
-		trunk9.add(E1);
-		trunk9.add(SIPTrunk);
-		trunk9.add(ACCOUNTTRUNK);
-		trunk9.add(GSM);
-		apiUtil.deleteAllOutbound().createOutbound("Out1", trunk1, extensionNum, "1.", 1).
-				createOutbound("Out2", trunk2, extensionNum, "2.", 1).
-				createOutbound("Out3", trunk3, extensionNum, "3.", 1).
-				createOutbound("Out4", trunk4, extensionNum, "4.", 1).
-				createOutbound("Out5", trunk5, extensionNum, "5.", 1).
-				createOutbound("Out6", trunk6, extensionNum, "6.", 1).
-				createOutbound("Out7", trunk7, extensionNum, "7.", 1).
-				createOutbound("Out8", trunk8, extensionNumA).
-				createOutbound("Out9", trunk9, extensionNum).apply();
-	}
 
 	/**
 	 * 设置只允许分机1000设置上下班切换
