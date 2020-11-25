@@ -184,7 +184,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(3001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("网页admin登录 ,CDR校验");
         auto.loginPage().loginWithAdmin();
@@ -236,7 +236,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(2001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("网页admin登录 ,CDR校验");
         auto.loginPage().loginWithAdmin();
@@ -287,7 +287,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1004);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("网页admin登录 ,CDR校验");
         auto.loginPage().loginWithAdmin();
@@ -341,7 +341,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(4000);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -447,7 +447,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(2001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -500,7 +500,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(2001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -553,7 +553,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(2001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -634,7 +634,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -712,7 +712,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -772,7 +772,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1002);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -836,7 +836,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1003);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -873,7 +873,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("1000挂断");
         pjsip.Pj_hangupCall(1000);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -937,7 +937,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("1002挂断");
         pjsip.Pj_hangupCall(1002);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -974,7 +974,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("1000挂断");
         pjsip.Pj_hangupCall(1001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -1554,6 +1554,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),      ANSWER.toString(), QUEUE1_6401.toString() + " connected", SIPTrunk, "", INBOUND.toString()))
                 ;
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
@@ -1598,7 +1599,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1000);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -1647,7 +1648,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(3001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);

@@ -372,14 +372,11 @@ public class BaseMethod extends WebDriverFactory {
 	 */
 	@Step("获取分机通话状态")
 	public  int getExtensionStatus(int username, int expectStatus, int timeout) {
-		if ((FXS_1.isEmpty() || FXS_1.equals("null")) && username == 2000){
-			return expectStatus;
-		}
 		UserAccount account;
 		int time = 0;
 		int status = -1;
-		while (time <= timeout) {
-			sleep(1000);
+		while (time <= timeout*20) {
+			sleep(50);
 			account = pjsip.getUserAccountInfo(username);
 //                        account = getPjsip().getUserAccountInfo(username);
 
@@ -398,7 +395,7 @@ public class BaseMethod extends WebDriverFactory {
 				}
 			}
 
-			if (time == timeout) {
+			if (time == timeout*20) {
 				status = account.status;
 			}
 			time++;
@@ -437,7 +434,7 @@ public class BaseMethod extends WebDriverFactory {
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.HumanResource.toString()).replace("EXTENSIONFIRSTNAME", "t").replace("EXTENSIONLASTNAME", "estX").replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Accounting.toString()).replace("EXTENSIONFIRSTNAME", "First").replace("EXTENSIONLASTNAME", "Last").replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Administrator.toString()).replace("EXTENSIONFIRSTNAME", "0").replace("EXTENSIONLASTNAME", "0").replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
-				.createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", "1-3").replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
+				.createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1000", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1001", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
