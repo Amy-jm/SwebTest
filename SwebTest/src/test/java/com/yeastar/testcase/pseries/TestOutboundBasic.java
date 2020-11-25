@@ -160,7 +160,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 3001" + ",[callee] 122222");
+        step("2:[caller] 1002" + ",[callee] 122222");
         pjsip.Pj_Make_Call_No_Answer(1002, "122222", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
@@ -319,7 +319,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee]"+DEVICE_ASSIST_GSM);
+        step("2:[caller] 1000" + ",[callee]"+"15"+DEVICE_ASSIST_GSM);
         pjsip.Pj_Make_Call_No_Answer(1000, "15"+DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
@@ -337,7 +337,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
                 .contains(tuple( CDRNAME.Extension_1000.toString(), "15"+DEVICE_ASSIST_GSM, STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString()+" hung up", "",GSM, "Outbound"));
 
         step("################[被叫挂断]##############");
-        step("2:[caller] 1000" + ",[callee]"+DEVICE_ASSIST_GSM);
+        step("2:[caller] 1000" + ",[callee] 15"+DEVICE_ASSIST_GSM);
         pjsip.Pj_Make_Call_No_Answer(1000, "15"+DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
@@ -481,7 +481,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 3001" + ",[callee] 3211111000");
+        step("2:[caller] 1000" + ",[callee] 211111");
         pjsip.Pj_Make_Call_No_Answer(1000, "211111", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
@@ -556,7 +556,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1020" + ",[callee]77 211111");
+        step("2:[caller] 2001" + ",[callee]77211111");
         pjsip.Pj_Make_Call_No_Answer(2001, "77211111", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
@@ -630,7 +630,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 2000 " + ",[callee] 222222");
+        step("2:[caller] 1003 " + ",[callee] 222222");
         pjsip.Pj_Make_Call_No_Answer(1003, "222222", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
@@ -804,7 +804,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1002" + ",[callee] 3000");
+        step("2:[caller] 1002" + ",[callee] 25555");
         pjsip.Pj_Make_Call_No_Answer(1002, "25555", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
@@ -842,7 +842,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         step("1:login with admin");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1003" + ",[callee] 3000");
+        step("2:[caller] 1003" + ",[callee] 25555");
         pjsip.Pj_Make_Call_No_Answer(1003, "25555", DEVICE_IP_LAN, false);
         step("[通话状态校验]");
         assertThat(getExtensionStatus(1003, HUNGUP, 30)).isIn(HUNGUP,IDLE).as("通话状态校验 失败!");
@@ -1241,6 +1241,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         }
 
         thread.flag = false;
+        step("[DTMF] 1000->123#");
         pjsip.Pj_Send_Dtmf(1000,"123#");
 
         step("[通话状态校验]");
@@ -1297,7 +1298,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
             thread.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
-
+        step("[DTMF] 1000->122#");
         pjsip.Pj_Send_Dtmf(1000,"122#");
 
         step("## 第二次");
@@ -1314,6 +1315,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
             thread.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
+        step("[DTMF] 1000->122#");
         pjsip.Pj_Send_Dtmf(1000,"122#");
 
         step("## 第三次");
@@ -1330,6 +1332,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
             thread.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
+        step("[DTMF] 1000->122#");
         pjsip.Pj_Send_Dtmf(1000,"122#");
 
         thread.flag = false;
@@ -1381,7 +1384,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
             thread.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
-
+        step("[DTMF] 1000->456#");
         pjsip.Pj_Send_Dtmf(1000,"456#");
 
         step("## 第二次 输入密码789#");
@@ -1398,6 +1401,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
             thread.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
+        step("[DTMF] 1000->789#");
         pjsip.Pj_Send_Dtmf(1000,"789#");
 
         step("## 第三次 输入密码123#");
@@ -1414,6 +1418,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
             thread.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
+        step("[DTMF] 1000->123#");
         pjsip.Pj_Send_Dtmf(1000,"123#");
 
         thread.flag = false;
@@ -1478,6 +1483,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         }
 
         thread.flag = false;
+        step("[DTMF] 1000->123456789012345#");
         pjsip.Pj_Send_Dtmf(1003,"123456789012345#");
 
         step("[通话状态校验]");
