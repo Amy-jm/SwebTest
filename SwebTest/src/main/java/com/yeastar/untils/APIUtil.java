@@ -365,7 +365,7 @@ public class APIUtil {
     public List<ExtensionGroupObject> getExtensionGroupSummary(){
 
         List<ExtensionGroupObject> extObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
@@ -520,7 +520,7 @@ public class APIUtil {
     public List<TrunkObject> getTrunkSummary(){
 
         List<TrunkObject> trunkObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/trunk/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/trunk/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
@@ -614,7 +614,7 @@ public class APIUtil {
     public List<InboundRouteObject> getInboundSummary(){
 
         List<InboundRouteObject> extObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/inboundroute/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
@@ -638,7 +638,7 @@ public class APIUtil {
     public List<OfficeTimeObject> getOfficeTimeSummary(){
 
         List<OfficeTimeObject> officeTimeObjectList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/officetime/list?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/officetime/list?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
@@ -662,7 +662,7 @@ public class APIUtil {
     public List<HolidayObject> getHolidaySummary(){
 
         List<HolidayObject> holidayObjectList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/holiday/list?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/holiday/list?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
@@ -1013,7 +1013,7 @@ public class APIUtil {
     public List<OutBoundRouteObject> getOutboundSummary(){
 
         List<OutBoundRouteObject> extObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
@@ -1053,7 +1053,7 @@ public class APIUtil {
     public List<IVRObject> getIVRSummary(){
 
         List<IVRObject> extObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ivr/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ivr/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
@@ -1426,7 +1426,7 @@ public class APIUtil {
     public List<RingGroupObject> getRingGroupSummary(){
 
         List<RingGroupObject> extObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/ringgroup/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
@@ -1613,7 +1613,7 @@ public class APIUtil {
     public List<ConferenceObject> getConferenceSummary(){
 
         List<ConferenceObject> extObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/conference/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
@@ -1798,7 +1798,7 @@ public class APIUtil {
     public List<QueueObject> getQueueSummary(){
 
         List<QueueObject> extObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/queue/searchsummary?page=1&page_size=10&sort_by=id&order_by=asc");
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/queue/searchsummary?page=1&page_size=20&sort_by=id&order_by=asc");
         JSONObject jsonObject = new JSONObject(jsonString);
         if(jsonObject.getString("errcode").equals("0")){
 
