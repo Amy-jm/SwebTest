@@ -127,6 +127,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
 
         step("分机1000拨打*99 切换上下班时间 ,99不会切换自定义办公时间状态");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        getExtensionStatus(1000, HUNGUP, 30);
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
                 .has(anyOf(contains("/FORCEDEST/global                                 : office"), contains("0 results found"))).as("99不会切换自定义办公时间状态 异常");
 
@@ -196,6 +197,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
 
         step("分机1000拨打*99 切换上班时间；");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        getExtensionStatus(1000, HUNGUP, 30);
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
                 .has(anyOf(contains("/FORCEDEST/global                                 : office"), contains("0 results found"))).as("99不会切换自定义办公时间状态 异常");
 
@@ -262,6 +264,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
 
         step("分机1000拨打*99 切换上班时间；");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        getExtensionStatus(1000, HUNGUP, 30);
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
                 .has(anyOf(contains("/FORCEDEST/global                                 : office"), contains("0 results found"))).as("99不会切换自定义办公时间状态 异常");
 
