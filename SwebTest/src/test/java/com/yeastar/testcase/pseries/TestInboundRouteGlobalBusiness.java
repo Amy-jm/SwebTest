@@ -33,7 +33,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestInboundRouteGlobalBusiness() {
@@ -90,6 +90,13 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     public void initBusinessHoursAndIn1() {
         List<String> officeTimes = new ArrayList<>();
         List<String> resetTimes = new ArrayList<>();
+        step("创建初始环境：" +
+                "Business Hours and Holidays->Business Hours 添加上班时间条件00:00~23:59 选择星期一至星期日；\n" +
+                "Business Hours and Holidays->Holidays 删除所有；" +
+                "编辑呼入路由In1，启用Time Condition，Time-based Routing Mode选择“Based on Global Business Hours\"," +
+                "Business Hours Destination 选择分机1001，" +
+                "Outside Business Hours Destination选择分机1002，" +
+                "Holidays Destination 选择分机1003;");
         officeTimes.add("00:00-23:59");
         apiUtil.deleteAllHoliday().deleteAllOfficeTime().createOfficeTime("sun mon tue wed thu fri sat", officeTimes, resetTimes).apply();
         //init In1
@@ -112,7 +119,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "SwitchBusinessHoursStatus", "FeatureCode","P2"})
     public void testIR_01_HoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -140,6 +147,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
 
         step("分机1000拨打*99 切换上下班时间；");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
                 .contains("/FORCEDEST/global                                 : outoffice").as( "分机1000拨打*99切换为下班状态 异常");
 
@@ -160,6 +168,9 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
 
         step("分机1000拨打*99切换回上班状态");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
+
+
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
                 .contains("0 results found").as( "分机1000拨打*99切换回上班状态 异常");
         
@@ -199,7 +210,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "Holidays","SwitchBusinessHoursStatus", "FeatureCode", "P3"})
     public void testIR_02_HoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -209,7 +220,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
 
-        step("2:呼入到假期目的地，分机1003响铃，接听，挂断；检查cdr");
+        step("2:通过SPS外线呼入到假期目的地，分机1003响铃，接听，挂断；检查cdr");
         pjsip.Pj_Make_Call_No_Answer(2000, "991001", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
@@ -229,6 +240,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
 
         step("分机1000拨打*99 切换上班时间；");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
                 .contains("/FORCEDEST/global                                 : office").as( "分机1000拨打*99切换为上班状态 异常");
 
@@ -249,6 +261,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
 
         step("分机1000拨打*99切换回假期状态");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
         assertThat(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")))
                 .contains("0 results found").as( "切换回假期状态 异常");
 
@@ -298,7 +311,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "HangUp", "P3"})
     public void testIR_03_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -312,7 +325,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(2000, "991001", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, HUNGUP, 30)).isIn(HUNGUP,IDLE).as("通话状态校验 失败!");
+        assertThat(getExtensionStatus(2000, HUNGUP, 10)).isIn(HUNGUP,IDLE).as("通话状态校验 失败!");
     }
 
     @Epic("P_Series")
@@ -324,7 +337,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "FXS","Extension", "P3"})
     public void testIR_04_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -361,7 +374,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "Voicemail", "P3"})
     public void testIR_05_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -385,6 +398,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         auto.loginPage().login("1000", EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT * 2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        sleep(1000);
         Assert.assertTrue(TableUtils.getTableForHeader(getDriver(), "Name", 0).contains("2000"), "没有检测到录音文件！");
 
         String voiceMailTime = TableUtils.getTableForHeader(getDriver(), "Time", 0);
@@ -407,7 +421,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "IVR", "P3"})
     public void testIR_06_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -415,7 +429,9 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         apiUtil.editInbound("In1",String.format("\"enb_time_condition\": 1, \"office_time_dest\": \"ivr\", \"office_time_dest_value\": \"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
 
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
+//        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"ivr-greeting-dial-ext.slin");
+        thread.start();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -423,7 +439,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -434,7 +450,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
             }
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
-
+        thread.flag = false;
         pjsip.Pj_Send_Dtmf(2000, "0");
 
         step("[通话状态校验]");
@@ -462,7 +478,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "RingGroup", "P3"})
     public void testIR_07_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -504,7 +520,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "Queue", "P3"})
     public void testIR_08_HoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -560,7 +576,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "Conference", "P3"})
     public void testIR_09_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -594,7 +610,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "ExternalNumber", "P3"})
     public void testIR_10_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -632,7 +648,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "OutboundRoute", "P3"})
     public void testIR_11_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -663,13 +679,13 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("InboundRoute-BasedonGlobalBusinessHours")
     @Story("BusinessHoursDestination")
-    @Description("12.编辑呼入路由In1,DID Pattern选择DID Pattern，模式为空，Caller IDPattern为空，Business Hours Destination选择PlayGreetingeThenHangUp，选择prompt1，播放1遍\n" +
+    @Description("12.编辑呼入路由In1,DID Pattern选择DID Pattern，模式为空，Caller ID Pattern为空，Business Hours Destination选择PlayGreetingeThenHangUp，选择prompt1，播放1遍\n" +
             "\t通过sps外线呼入\n" +
             "\t\tasterisk后台查看播放提示音文件prompt1,挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "PlayGreetingeThenHangUp", "P3"})
     public void testIR_12_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -677,7 +693,9 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         apiUtil.editInbound("In1","\"enb_time_condition\": 1,\"office_time_dest\":\"play_greeting\",\"office_time_dest_prefix\":\"1\",\"office_time_dest_value\":\"prompt1.wav\"").apply();
 
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_1)).start();
+//        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_1)).start();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_1);
+        thread.start();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -685,7 +703,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 995503300" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -696,7 +714,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
             }
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
-
+        thread.flag = false;
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
@@ -717,7 +735,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "None", "P3"})
     public void testIR_13_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -743,7 +761,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIR_14_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -782,7 +800,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination","MatchDIDPatterntoExtensions", "MatchSelectedExtensions", "P3"})
     public void testIR_15_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -821,7 +839,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "MatchDIDRangetoExtensionRange","MatchExtensionRange", "P3"})
     public void testIR_16_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -860,7 +878,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "MatchDIDRangetoExtensionRange","MatchExtensionRange", "P3"})
     public void testIR_17_HoursDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -900,7 +918,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "DIDPattern", "P3"})
     public void testIR_18_HoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -941,7 +959,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "HangUp","SwitchBusinessHoursStatus","FeatureCode", "P3"})
     public void testIR_19_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -949,6 +967,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -980,7 +999,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "Extension","SwitchBusinessHoursStatus","FeatureCode", "P3"})
     public void testIR_20_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -988,6 +1007,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1024,7 +1044,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "Voicemail", "P3"})
     public void testIR_21_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1032,6 +1052,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1053,6 +1074,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         auto.loginPage().login("1000", EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT * 2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        sleep(1000);
         Assert.assertTrue(TableUtils.getTableForHeader(getDriver(), "Name", 0).contains("2000"), "没有检测到录音文件！");
 
         String voiceMailTime = TableUtils.getTableForHeader(getDriver(), "Time", 0);
@@ -1075,7 +1097,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "IVR", "P3"})
     public void testIR_22_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1083,11 +1105,14 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
+//        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"ivr-greeting-dial-ext.slin");
+        thread.start();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -1095,7 +1120,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -1106,7 +1131,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
             }
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
-
+        thread.flag = false;
         pjsip.Pj_Send_Dtmf(2000, "0");
 
         step("[通话状态校验]");
@@ -1134,7 +1159,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "RingGroup", "P3"})
     public void testIR_23_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1142,6 +1167,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1181,7 +1207,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "Queue", "P3"})
     public void testIR_24_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1189,6 +1215,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1242,7 +1269,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "Conference", "P3"})
     public void testIR_25_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1250,6 +1277,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1281,7 +1309,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "ExternalNumber", "P3"})
     public void testIR_26_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1289,6 +1317,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1324,7 +1353,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "OutboundRoute", "P3"})
     public void testIR_27_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1332,6 +1361,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1362,11 +1392,11 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Description("进入后台执行asterisk -rx \"database show FORCEDEST\" ，若返回结果为：0 results found. 则执行分机1000拨打*99切换为下班状态；" +
             "28.编辑呼入路由In1,DID Pattern选择DID Pattern，模式为空，Caller IDPattern为空，OutsideBusinessHoursDestination选择PlayGreetingeThenHangUp，选择prompt2，播放1遍\n" +
             "\t通过sps外线呼入\n" +
-            "\t\tasterisk后台查看播放提示音文件prompt1,挂断；检查cdr")
+            "\t\tasterisk后台查看播放提示音文件prompt2,挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "PlayGreetingeThenHangUp", "P3"})
     public void testIR_28_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1374,12 +1404,15 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
 
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_2)).start();
+//        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_2)).start();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_2);
+        thread.start();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -1387,7 +1420,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 995503300" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -1398,6 +1431,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
             }
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
+        thread.flag = false;
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
@@ -1419,7 +1453,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "None", "P3"})
     public void testIR_29_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1427,6 +1461,8 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
+
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1450,7 +1486,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "MatchSelectedExtensions","MatchDIDPatterntoExtensions", "P3"})
     public void testIR_30_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1459,6 +1495,8 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
+
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1495,7 +1533,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIR_31_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1504,6 +1542,8 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
+
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1540,7 +1580,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "MatchDIDRangetoExtensionRange","MatchExtensionRange", "P3"})
     public void testIR_32_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1549,6 +1589,8 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
+
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1585,7 +1627,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "MatchExtensionRange","MatchDIDRangetoExtensionRange" ,"P3"})
     public void testIR_33_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1594,6 +1636,8 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
+
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1630,7 +1674,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "OutsideBusinessHoursDestination", "DIDPattern","Extension", "P3"})
     public void testIR_34_OutSideHoursDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1639,6 +1683,8 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST"))
                 .contains("0 results found")){
             pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            assertThat(getExtensionStatus(1000, HUNGUP, 10)).isEqualTo(HUNGUP).as("[切换完毕，通话挂断] Time：" + DataUtils.getCurrentTime());
+
             sleep(WaitUntils.SHORT_WAIT);
             log.debug("[则执行分机1000拨打*99切换为下班状态 结果] " +SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
         }
@@ -1675,7 +1721,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","HangUp", "P3"})
     public void testIR_35_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1702,7 +1748,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","Extension", "P3"})
     public void testIR_36_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1742,7 +1788,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","Voicemail","P3"})
     public void testIR_37_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1750,8 +1796,6 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
                 editInbound("In1",String.format("\"enb_time_condition\": 1,\"holiday_dest\":\"ext_vm\",\"holiday_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
-
-        log.debug("【Voicemail 1000】 "+getExtensionStatus(1000,HUNGUP,10));
 
         step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
@@ -1767,6 +1811,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         auto.loginPage().login("1000", EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT * 2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        sleep(1000);
         Assert.assertTrue(TableUtils.getTableForHeader(getDriver(), "Name", 0).contains("2000"), "没有检测到录音文件！");
 
         String voiceMailTime = TableUtils.getTableForHeader(getDriver(), "Time", 0);
@@ -1790,7 +1835,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","IVR", "P3"})
     public void testIR_38_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1798,7 +1843,9 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
                 editInbound("In1",String.format("\"enb_time_condition\": 1,\"holiday_dest\":\"ivr\",\"holiday_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
 
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
+//        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "ivr-greeting-dial-ext.slin")).start();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"ivr-greeting-dial-ext.slin");
+        thread.start();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -1806,7 +1853,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -1817,7 +1864,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
             }
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
-
+        thread.flag = false;
         pjsip.Pj_Send_Dtmf(2000, "0");
 
         step("[通话状态校验]");
@@ -1846,7 +1893,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","RingGroup", "P3"})
     public void testIR_39_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1889,7 +1936,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","Queue", "P3"})
     public void testIR_40_HolidaysDestination() throws IOException, JSchException {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1946,7 +1993,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","Conference", "P3"})
     public void testIR_41_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -1981,7 +2028,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","ExternalNumber", "P3"})
     public void testIR_42_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -2020,7 +2067,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "OutboundRoute","Holidays","P3"})
     public void testIR_43_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -2058,7 +2105,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","PlayGreetingeThenHangUp", "P3"})
     public void testIR_44_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -2066,7 +2113,9 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         apiUtil.editInbound("In1","\"enb_time_condition\": 1,\"holiday_dest\":\"play_greeting\",\"holiday_dest_value\":\"prompt2.wav\"").apply();
 
         asteriskObjectList.clear();
-        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_2)).start();
+//        new Thread(new SSHLinuxUntils.AsteriskThread(asteriskObjectList, PROMPT_2)).start();
+        SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_2);
+        thread.start();
 
         step("1:login with admin,trunk: " + SPS);
         auto.loginPage().loginWithAdmin();
@@ -2074,7 +2123,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 995503300" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -2085,7 +2134,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
             }
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
-
+        thread.flag = false;
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
@@ -2107,7 +2156,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","None", "P3"})
     public void testIR_45_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -2134,7 +2183,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIR_46_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -2175,7 +2224,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","MatchDIDPatterntoExtensions","MatchSelectedExtensions" ,"P3"})
     public void testIR_47_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -2216,7 +2265,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","MatchDIDRangetoExtensionRange","MatchExtensionRange", "P3"})
     public void testIR_48_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -2257,7 +2306,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "Holidays","MatchDIDRangetoExtensionRange" ,"MatchExtensionRange","P3"})
     public void testIR_49_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
@@ -2298,7 +2347,7 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "HolidaysDestination", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","BasedonGlobalBusinessHours", "HolidaysDestination", "DIDPattern","Holidays", "Extension","P3"})
     public void testIR_50_HolidaysDestination()  {
         prerequisite();
         initBusinessHoursAndIn1();
