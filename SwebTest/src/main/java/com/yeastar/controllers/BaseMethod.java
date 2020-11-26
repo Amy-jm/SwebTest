@@ -625,7 +625,7 @@ public class BaseMethod extends WebDriverFactory {
 		trunk5.add(BRI_1);
 		trunk6.add(E1);
 		trunk7.add(GSM);
-		trunk8.add(GSM);
+		trunk8.add(SPS);
 		trunk9.add(SPS);
 		trunk9.add(BRI_1);
 		trunk9.add(FXO_1);

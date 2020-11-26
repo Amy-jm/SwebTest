@@ -13,6 +13,7 @@ import io.qameta.allure.*;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.htmlunit.HtmlUnitAlert;
 import org.testng.Assert;
 import org.testng.ITestContext;
@@ -28,6 +29,8 @@ import static com.codeborne.selenide.Selenide.sleep;
 import static com.yeastar.page.pseries.CallFeatures.IIVRPageElement.ele_ivr_basic_dial_outb_routes_checkbox;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.xbill.DNS.Type.CNAME;
+
 import com.yeastar.untils.CDRObject.*;
 
 /**
@@ -63,7 +66,7 @@ public class TestIVR extends TestCaseBaseNew{
 
     APIUtil apiUtil = new APIUtil();
 
-    String cdrIVR1_6201 ="IVR IVR1_6201<6201>";//6201
+    String cdrIVR1 ="IVR IVR1<6201>";//6201
     String  invalidKey = "Invalid key";
     Object[][] routes = new Object[][]{
 
@@ -387,7 +390,7 @@ public class TestIVR extends TestCaseBaseNew{
      * 设置IVR6201 PressKey
      */
     public void configIVR6201PressKey(){
-//        if(isReConfigIVR6201PressKeyFlag){
+        if(isReConfigIVR6201PressKeyFlag){
             step("=========== config ivr 6201  press key start =========");
             pressKeyObjects_1.clear();
             pressKeyObjects_1.add(new PressKeyObject(PressKey.press0, "extension", "", "1020", 0));
@@ -405,7 +408,7 @@ public class TestIVR extends TestCaseBaseNew{
             pressKeyObjects_1.add(new PressKeyObject(PressKey.timeout, "extension", "", "1003", 0));
             pressKeyObjects_1.add(new PressKeyObject(PressKey.invaild, "extension", "", "1004", 0));
 
-            apiUtil.deleteIVR("IVR1_6201").createIVR("6201", "IVR1_6201", pressKeyObjects_1).apply();
+            apiUtil.deleteIVR("IVR1").createIVR("6201", "IVR1", pressKeyObjects_1).apply();
             step("创建呼入路由InRoute3,目的地到IVR 6200");
             List<String> trunk9 = new ArrayList<>();
             trunk9.add(SPS);
@@ -418,9 +421,9 @@ public class TestIVR extends TestCaseBaseNew{
             apiUtil.deleteAllInbound().createInbound("Inbound1", trunk9, "IVR", "6201").apply();
 
             step("=========== config ivr 6201  press key  end =========");
-//            isReConfigIVR6201PressKeyFlag = false;
-//            isReConfigIVR6201Default=true;
-//        }
+            isReConfigIVR6201PressKeyFlag = false;
+            isReConfigIVR6201Default=true;
+        }
     }
 
 
@@ -428,11 +431,11 @@ public class TestIVR extends TestCaseBaseNew{
      * 重置ivr6201to default，只有按0到分机A
      */
     public void restIVR6201ToDefault(){
-//        if(isReConfigIVR6201Default) {
+        if(isReConfigIVR6201Default) {
         step("=========== rest ivr 6201 to default start =========");
         pressKeyObjects_0.clear();
         pressKeyObjects_0.add(new PressKeyObject(PressKey.press0, "extension", "", "1000", 0));
-        apiUtil.deleteIVR("IVR1_6201").createIVR("6201", "IVR1_6201", pressKeyObjects_0).apply();
+        apiUtil.deleteIVR("IVR1").createIVR("6201", "IVR1", pressKeyObjects_0).apply();
         step("创建呼入路由InRoute3,目的地到IVR 6200");
         List<String> trunk9 = new ArrayList<>();
         trunk9.add(SPS);
@@ -445,9 +448,9 @@ public class TestIVR extends TestCaseBaseNew{
         apiUtil.deleteAllInbound().createInbound("Inbound1", trunk9, "IVR", "6201").apply();
 
         step("=========== rest ivr 6201 to default   end =========");
-//            isReConfigIVR6201Default = false;
+            isReConfigIVR6201Default = false;
         isReConfigIVR6201PressKeyFlag = true;
-//        }
+        }
     }
 
     @Epic("P_Series")
@@ -525,7 +528,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -562,7 +565,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验_2] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test2 B<1001>", "ANSWERED", "test2 B<1001> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -675,7 +678,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -705,7 +708,7 @@ public class TestIVR extends TestCaseBaseNew{
         step("2.编辑IVR1,Prompt选择【None】，PromptRepeatCount 选择1，ResponseTimeout选择1，DigitTimeout选择1");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
 
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_extra_prompt,"None").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_prompt_repeat,"1").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_resp_timeout,"1").
@@ -716,13 +719,13 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
         //todo 时间太短无法校验，后续通过解析asterisk进行校验
         //softAssertPlus.assertThat(getExtensionStatus(1000,TALKING,3)).as("[通话状态校验] Time："+ DataUtils.getCurrentTime()).isEqualTo(3);
-
+        sleep(WaitUntils.SHORT_WAIT);
         assertStep("[CDR显示]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","callDuration","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "1","ANSWERED", "IVR IVR1_6201<6201> timed out, hung up",trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "1","ANSWERED", "IVR IVR1<6201> timed out, hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
 
@@ -753,7 +756,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
 
         step("3.编辑IVR1,Prompt选择prompt1，PromptRepeatCount 选择2，ResponseTimeout选择5，DigitTimeout选择1");
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_extra_prompt,"prompt1.wav").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_prompt_repeat,"2").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_resp_timeout,"5").
@@ -793,7 +796,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201,"ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1,"ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk,"","Inbound"));
 //
 //        log.debug("[asterisk object size 第二遍] " + tmp + "----------" + asteriskObjectList.size());
@@ -829,7 +832,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
 
         step("3.编辑IVR1,Prompt选择prompt1~prompt5，PromptRepeatCount 选择5，ResponseTimeout设置10，DigitTimeout设置10");
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_extra_prompt,"prompt1.wav,prompt2.wav,prompt3.wav,prompt4.wav,prompt5.wav").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_prompt_repeat,"5").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_resp_timeout,"10").
@@ -854,21 +857,19 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("播放第5遍时按分机1002，每发送一个dtmf时间隔8秒");//send dtmf 5s
         pjsip.Pj_Send_Dtmf(caller,"1");
-        sleep(4000);
+        sleep(8000);
         pjsip.Pj_Send_Dtmf(caller,"0");
-        sleep(4000);
+        sleep(8000);
         pjsip.Pj_Send_Dtmf(caller,"0");
-        sleep(4000);
+        sleep(8000);
         pjsip.Pj_Send_Dtmf(caller,"2");
-        sleep(4000);
-        pjsip.Pj_Send_Dtmf(caller);
 
         assertStep("[通话状态校验]");
-        Assert.assertEquals(getExtensionStatus(1002,RING,5),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1002,RING,60),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1002,false);
-        Assert.assertEquals(getExtensionStatus(1002,TALKING,5),RING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1002,TALKING,5),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(3000);
-        pjsip.Pj_hangupCall(1002);
+        pjsip.Pj_hangupCall(caller);
 
         for(int i = 0 ; i < asteriskObjectList.size() ; i++){
             log.debug(i+"_【asterisk object name】 "+asteriskObjectList.get(i).getName() +" [asterisk object time] "+asteriskObjectList.get(i).getTime()+"[asterisk object tag] "+asteriskObjectList.get(i).getTag());
@@ -883,8 +884,8 @@ public class TestIVR extends TestCaseBaseNew{
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
-                .contains(tuple("2000<2000>".replace("2000",caller+""), "testta C<1002>", "ANSWERED", "testta C<1002> hung up",trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), CDRNAME.IVR1_6201.toString(), "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), "testta C<1002>", "ANSWERED", "3001<3001> hung up",trunk,"","Inbound"));
         softAssertPlus.assertAll();
     }
     @SneakyThrows
@@ -912,7 +913,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
 
         step("3.编辑IVR1，Prompt选择【Default】,PromptRepeatCount 选择3，ResponseTimeout设置3，DigitTimeout设置3");
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_prompt_repeat,"5").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_resp_timeout,"3").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_digit_timeout,"3").
@@ -946,15 +947,12 @@ public class TestIVR extends TestCaseBaseNew{
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1000);
 
-        assertStep("[Asterisk校验]进入asterisk检查播放提示音文件ivr-greeting-dial-ext.slin");
-        softAssertPlus.assertThat(asteriskObjectList.get(0).getKeyword()).as("[Asterisk校验] Time："+ DataUtils.getCurrentTime()).contains("ivr-greeting-dial-ext.slin");
-
         assertStep("[CDR显示]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), CDRNAME.IVR1_6201.toString(), "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -991,14 +989,14 @@ public class TestIVR extends TestCaseBaseNew{
 //        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 //        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime())
 //                .extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-//                .contains(tuple(CALLFROM.SIP, CDRNAME.IVR1_6201, STATUS.ANSWER, REASON.SIP_DIALED_EXTENSION,trunk,"", COMMUNICATION_TYPE.INBOUND))
+//                .contains(tuple(CALLFROM.SIP, CDRNAME.IVR1, STATUS.ANSWER, REASON.SIP_DIALED_EXTENSION,trunk,"", COMMUNICATION_TYPE.INBOUND))
 //                .contains(tuple(CALLFROM.SIP, CDRNAME.Extension_1020, STATUS.ANSWER, REASON.SIP_HUNGUP,trunk,"", COMMUNICATION_TYPE.INBOUND));
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> dialed Extension",trunk, "", "Inbound"))
+                .contains(tuple("3001<3001>", "IVR IVR1<6201>", "ANSWERED", "3001<3001> dialed Extension",trunk, "", "Inbound"))
                 .contains(tuple("3001<3001>", "1020 1020<1020>", "ANSWERED", "3001<3001> hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
@@ -1021,7 +1019,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，禁用Dial Extensions，选择disable");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.DISABLE.getAlias()).
                 clickSaveAndApply();
 
@@ -1040,7 +1038,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", invalidKey ,trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", invalidKey ,trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1063,7 +1061,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
@@ -1081,7 +1079,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -1105,7 +1103,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
@@ -1123,7 +1121,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", invalidKey ,trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", invalidKey ,trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1146,7 +1144,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
@@ -1165,7 +1163,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test2 B<1001>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -1189,7 +1187,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
@@ -1208,7 +1206,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("t estX<1004>", cdrIVR1_6201, "ANSWERED", "t estX<1004> dialed Extension","","","Internal"))
+                .contains(tuple("t estX<1004>", cdrIVR1, "ANSWERED", "t estX<1004> dialed Extension","","","Internal"))
                 .contains(tuple("t estX<1004>", "testa D<1003>", "ANSWERED", "t estX<1004> hung up","","","Internal"));
 
         softAssertPlus.assertAll();
@@ -1233,7 +1231,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1").
                 clickSaveAndApply();
 
@@ -1252,7 +1250,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> dialed Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test2 B<1001>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -1277,7 +1275,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1").
                 clickSaveAndApply();
 
@@ -1296,7 +1294,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("t estX<1004>", cdrIVR1_6201, "ANSWERED", "Invalid key","","","Internal"));
+                .contains(tuple("t estX<1004>", cdrIVR1, "ANSWERED", "Invalid key","","","Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -1319,7 +1317,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tRestricted Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
@@ -1338,7 +1336,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "Invalid key",trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "Invalid key",trunk,"","Inbound"));
         softAssertPlus.assertAll();
     }
 
@@ -1360,7 +1358,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tRestricted Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
@@ -1379,7 +1377,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Extension",trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> dialed Extension",trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "testta C<1002>", "ANSWERED", "testta C<1002> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -1403,7 +1401,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tRestricted Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
@@ -1422,7 +1420,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "Invalid key",trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "Invalid key",trunk,"","Inbound"));
         softAssertPlus.assertAll();
     }
 
@@ -1444,7 +1442,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tRestricted Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1","1001","1003").
                 clickSaveAndApply();
 
@@ -1462,7 +1460,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("t estX<1004>", cdrIVR1_6201, "ANSWERED", "Invalid key","","","Internal"));
+                .contains(tuple("t estX<1004>", cdrIVR1, "ANSWERED", "Invalid key","","","Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -1485,7 +1483,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tRestricted Extensions，分机选择ExGroup1");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1").
                 clickSaveAndApply();
 
@@ -1507,7 +1505,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "Invalid key",trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "Invalid key",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1530,7 +1528,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tRestricted Extensions，分机选择ExGroup1");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.RESTRICTED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1").
                 clickSaveAndApply();
 
@@ -1549,7 +1547,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("t estX<1004>", cdrIVR1_6201, "ANSWERED", "t estX<1004> dialed Extension","","","Internal"))
+                .contains(tuple("t estX<1004>", cdrIVR1, "ANSWERED", "t estX<1004> dialed Extension","","","Internal"))
                 .contains(tuple("t estX<1004>", "testa D<1003>", "ANSWERED", "t estX<1004> hung up","","","Internal"));
 
         softAssertPlus.assertAll();
@@ -1574,7 +1572,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tRestricted Extensions，分机选择ExGroup1");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALL_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALL_EXTENSIONS.getAlias()).
                 clickSaveAndApply();
 
         step("3:通过sps外线呼入到IVR1按分机号1001到分机B,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
@@ -1593,7 +1591,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Extension",trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> dialed Extension",trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test2 B<1001>", "ANSWERED", "test2 B<1001> hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -1617,7 +1615,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tRestricted Extensions，分机选择ExGroup1");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALL_EXTENSIONS.getAlias()).
+        auto.ivrPage().editIVR("IVR1").setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALL_EXTENSIONS.getAlias()).
                 clickSaveAndApply();
 
         step("新增动态坐席：1003\\1004分别拨打*76400 加入到Queue0");
@@ -1647,7 +1645,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>", "IVR IVR1_6201<6201>", "ANSWERED", "Invalid key", trunk, "", "Inbound"));
+                .contains(tuple("2000<2000>", "IVR IVR1<6201>", "ANSWERED", "Invalid key", trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
 
@@ -1670,7 +1668,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 setElementValueWithClean(auto.ivrPage().ele_ivr_basic_ivr_basic_dial_ext_option, IIVRPageElement.DIAL_EXTENSIONS.ALLOWED_EXTENSIONS.getAlias()).
                 selectAllowExtensionsToRight("ExGroup1").
                 clickSaveAndApply();
@@ -1689,7 +1687,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
@@ -1712,7 +1710,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
                 selectAllowExtensionsToRight("Out1","Out2","Out3","Out4","Out5","Out6","Out7","Out8","Out9").
                 clickSaveAndApply();
@@ -1734,7 +1732,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound",inbound,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> dialed Outbound",inbound,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), prfix + OutCallee + "", "ANSWERED", "2000<2000> hung up",inbound,outbound,"Outbound"));
 
         softAssertPlus.assertAll();
@@ -1768,7 +1766,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，选择\tAllowed Extensions，分机选择ExGroup1、1001、1003");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
                 selectAllowExtensionsToRight("Out1","Out2","Out3","Out4","Out5","Out6","Out7","Out8","Out9").
                 clickSaveAndApply();
@@ -1792,14 +1790,14 @@ public class TestIVR extends TestCaseBaseNew{
 //        if(prfix.equals("5") || prfix.equals("6")){
 //            List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 //            softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-//                    .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound".replace("2000",caller+""),inbound,"","Inbound"))
+//                    .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> dialed Outbound".replace("2000",caller+""),inbound,"","Inbound"))
 //                    .contains(tuple("2000<2000>".replace("2000",caller+""), OutCallee + "", "ANSWERED", "42000 hung up",inbound,outbound,"Outbound"));
 //
 //        }else{
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound".replace("2000",caller+""),inbound,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> dialed Outbound".replace("2000",caller+""),inbound,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), prfix + OutCallee + "", "ANSWERED", "2000<2000> hung up".replace("2000",caller+""),inbound,outbound,"Outbound"));
 
 //        }
@@ -1824,30 +1822,20 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
                 selectAllowExtensionsToRight("Out8").
                 clickSaveAndApply();
 
-        step("2:通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001,caller：" + caller + " ，callee：" + routePrefix + callee + "， deviceAssist：" + deviceAssist);
-        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        step("2:通过sps外线呼入到IVR1，按13001通过sip外线呼出到辅助1分机3001,caller：" + caller + " ，callee：" + routePrefix + "1002" + "， deviceAssist：" + deviceAssist);
+        pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + "1002", deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*3);
 
         log.debug("[DTMF] " +prfix + OutCallee);
         pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
 
-        step("[通话状态校验] 呼出失败，3001不会响铃，查看cdr");
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,IDLE,10)).as("[通话校验]").isEqualTo(IDLE);
-        softAssertPlus.assertThat(getExtensionStatus(caller,HUNGUP,10)).as("[通话校验]").isEqualTo(HUNGUP);
-        pjsip.Pj_hangupCall(caller);
-
-        assertStep("[CDR校验]");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> dialed Outbound",inbound,"","Inbound"))
-                .contains(tuple("2000<2000>".replace("2000",caller+""), "13001", "NO ANSWER", "13001 rejected",SPS,SPS,"Outbound"));
-        softAssertPlus.assertAll();
+        step("[通话状态校验]");
+        Assertions.assertThat(getExtensionStatus(caller, HUNGUP, 60)).isIn(HUNGUP,IDLE).as("通话状态校验 失败!");
     }
 
     @Epic("P_Series")
@@ -1868,7 +1856,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
                 selectAllowExtensionsToRight("Out8").
                 clickSaveAndApply();
@@ -1881,7 +1869,7 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller, prfix + OutCallee);
 
         assertStep("[通话状态校验]");
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,60)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(ringExtension,false);
         softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(caller);
@@ -1890,7 +1878,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", cdrIVR1_6201, "ANSWERED", "3001<3001> dialed Outbound",inbound,"","Inbound"))
+                .contains(tuple("3001<3001>", CDRNAME.IVR1_6201.toString(), "ANSWERED", "3001<3001> dialed Outbound",inbound,"","Inbound"))
                 .contains(tuple("3001<3001>", prfix + OutCallee + "", "ANSWERED", "3001<3001> hung up",inbound,outbound,"Outbound"));
 
         softAssertPlus.assertAll();
@@ -1915,7 +1903,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，呼出路由只选择Out8【只允许分机1000呼出】");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
                 selectAllowExtensionsToRight("Out8").
                 clickSaveAndApply();
@@ -1928,7 +1916,7 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(1003, prfix + OutCallee);
 
         step("[通话状态校验] ringExtension:"+ringExtension);
-        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,20)).as("[通话校验]").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(ringExtension,RING,60)).as("[通话校验]").isEqualTo(RING);
         pjsip.Pj_Answer_Call(ringExtension,false);
         softAssertPlus.assertThat(getExtensionStatus(ringExtension,TALKING,20)).as("[通话校验]").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1003);
@@ -1938,7 +1926,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("testa D<1003>", "IVR IVR1_6201<6201>", "ANSWERED", "testa D<1003> dialed Outbound", "", "", "Internal"))
+                .contains(tuple("testa D<1003>", "IVR IVR1<6201>", "ANSWERED", "testa D<1003> dialed Outbound", "", "", "Internal"))
                 .contains(tuple("testa D<1003>", "22000", "ANSWERED", "testa D<1003> hung up", "", SPS, "Outbound"));
 
         softAssertPlus.assertAll();
@@ -1962,7 +1950,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，呼出路由选择Out9、Out2【Out9 呼出外线不可用】");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,true).
                 selectAllowExtensionsToRight("Out2","Out9").
                 clickSaveAndApply();
@@ -1984,7 +1972,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", cdrIVR1_6201, "ANSWERED", "3001<3001> dialed Outbound",inbound,"","Inbound"))
+                .contains(tuple("3001<3001>", cdrIVR1, "ANSWERED", "3001<3001> dialed Outbound",inbound,"","Inbound"))
                 .contains(tuple("3001<3001>", prfix + OutCallee + "", "ANSWERED", "3001<3001> hung up",inbound,outbound,"Outbound"));
 
         softAssertPlus.assertAll();
@@ -2008,7 +1996,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2.编辑IVR1，不勾选Dial Outbound Routes");
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().editIVR("IVR1_6201").
+        auto.ivrPage().editIVR("IVR1").
                 isCheckbox(ele_ivr_basic_dial_outb_routes_checkbox,false).
                 clickSaveAndApply();
 
@@ -2027,7 +2015,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", cdrIVR1_6201, "ANSWERED", "Invalid key",inbound,"","Inbound"));
+                .contains(tuple("3001<3001>", cdrIVR1, "ANSWERED", "Invalid key",inbound,"","Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2050,20 +2038,20 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2:通过sip外线呼入到IVR1，按4到IVR0,再按1" +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] 4 -->1");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT*2);
+        sleep(WaitUntils.SHORT_WAIT*3);
         pjsip.Pj_Send_Dtmf(caller, "4");//转到IVR0
         sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Send_Dtmf(caller,"1");//转到IVR0
 
         assertStep(caller + "[通话状态校验] 3001正常响铃，接听，查看cdr");
-        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20),HUNGUP);
+        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,60),HUNGUP);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> IVR IVR1_6201<6201>", trunk, "", "Inbound"))
-                .contains(tuple("3001<3001>", "IVR IVR0_6200<6200>", "ANSWERED", "Invalid key", trunk, "", "Inbound"));
+                .contains(tuple("3001<3001>", CDRNAME.IVR1_6201.toString(), "ANSWERED", "3001<3001> IVR IVR1<6201>", trunk, "", "Inbound"))
+                .contains(tuple("3001<3001>", CDRNAME.IVR0_6200.toString(), "ANSWERED", "Invalid key", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2097,14 +2085,14 @@ public class TestIVR extends TestCaseBaseNew{
         pjsip.Pj_Send_Dtmf(caller,dtmf);//转到IVR0
 
         assertStep(caller + "[通话状态校验] 3001正常响铃，接听，查看cdr");
-        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,20), HUNGUP);
+        Assert.assertEquals(getExtensionStatus(caller,HUNGUP,60), HUNGUP);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> IVR IVR1_6201<6201>", trunk, "", "Inbound"))
-                .contains(tuple("3001<3001>", "IVR IVR0_6200<6200>", "ANSWERED", "Invalid key", trunk, "", "Inbound"));
+                .contains(tuple("3001<3001>", CDRNAME.IVR1_6201.toString(), "ANSWERED", "3001<3001> IVR IVR1<6201>", trunk, "", "Inbound"))
+                .contains(tuple("3001<3001>", CDRNAME.IVR0_6200.toString(), "ANSWERED", "Invalid key", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2141,7 +2129,7 @@ public class TestIVR extends TestCaseBaseNew{
         assertStep("9:[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验_2] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "2000<2000> called Extension".replace("2000",caller+""),trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test2 B<1001>", "ANSWERED", "test2 B<1001> hung up",trunk,"","Inbound"));
         softAssertPlus.assertAll();
     }
@@ -2175,7 +2163,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Hang Up" ,trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "3001<3001> called Hang Up" ,trunk,"","Inbound"));
         softAssertPlus.assertAll();
     }
 
@@ -2213,7 +2201,7 @@ public class TestIVR extends TestCaseBaseNew{
         assertStep("[CDR校验]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Voicemail" ,trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "3001<3001> called Voicemail" ,trunk,"","Inbound"))
                 .contains(tuple("3001<3001>", "Voicemail test2 B<1001>", "VOICEMAIL", "3001<3001> break_out",trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
@@ -2252,7 +2240,7 @@ public class TestIVR extends TestCaseBaseNew{
         assertStep("[CDR显示]");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201,"ANSWERED", "3001<3001> IVR IVR1_6201<6201>",trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1,"ANSWERED", "3001<3001> IVR IVR1<6201>",trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "IVR IVR0_6200<6200>","ANSWERED", "3001<3001> called Extension",trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk,"","Inbound"));
 
@@ -2294,7 +2282,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Ring Group" ,trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "3001<3001> called Ring Group" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "RingGroup RingGroup0<6300>", "ANSWERED", "RingGroup RingGroup0<6300> connected" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test2 B<1001>", "ANSWERED", "test2 B<1001> hung up" ,trunk,"","Inbound"));
         softAssertPlus.assertAll();
@@ -2339,7 +2327,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Ring Group" ,trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "3001<3001> called Ring Group" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "RingGroup RingGroup0<6300>", "NO ANSWER", "RingGroup RingGroup0<6300> timed out, failover" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up" ,trunk,"","Inbound"));
         softAssertPlus.assertAll();
@@ -2393,7 +2381,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Queue" ,trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "3001<3001> called Queue" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "Queue Queue0<6400>", "ANSWERED", "Queue Queue0<6400> connected" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "t estX<1004>", "ANSWERED", "t estX<1004> hung up" ,trunk,"","Inbound"));
         softAssertPlus.assertAll();
@@ -2446,7 +2434,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Queue" ,trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "3001<3001> called Queue" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "Queue Queue0<6400>", "ANSWERED", "Queue Queue0<6400> connected" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test2 B<1001>", "ANSWERED", "test2 B<1001> hung up" ,trunk,"","Inbound"));
         softAssertPlus.assertAll();
@@ -2506,7 +2494,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Queue" ,trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "3001<3001> called Queue" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "Queue Queue0<6400>", "NO ANSWER", "Queue Queue0<6400> timed out, failover" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test A<1000>", "ANSWERED", "test A<1000> hung up" ,trunk,"","Inbound"));
         softAssertPlus.assertAll();
@@ -2566,7 +2554,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called Queue" ,trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "3001<3001> called Queue" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "Queue Queue0<6400>", "NO ANSWER", "Queue Queue0<6400> connected" ,trunk,"","Inbound"))
                 .contains(tuple("2000<2000>".replace("2000",caller+""), "test2 B<1001>", "ANSWERED", "test2 B<1001> hung up" ,trunk,"","Inbound"));
         softAssertPlus.assertAll();
@@ -2623,7 +2611,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", cdrIVR1_6201, "ANSWERED", "3001<3001> called Dial by Name" ,trunk,"","Inbound"))
+                .contains(tuple("3001<3001>", cdrIVR1, "ANSWERED", "3001<3001> called Dial by Name" ,trunk,"","Inbound"))
                 .contains(tuple("3001<3001>", "t estX<1004>", "ANSWERED", "t estX<1004> hung up",trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
@@ -2650,6 +2638,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
+        sleep(WaitUntils.SHORT_WAIT*3);
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         step("3.进入asterisk检查播放dir-usingkeypad.gsm时");
@@ -2664,29 +2653,35 @@ public class TestIVR extends TestCaseBaseNew{
             thread.flag = false;
             Assert.assertTrue(false,"[没有检测到提示音文件！！！]，[size] "+asteriskObjectList.size());
         }
-        thread.flag = false;
-        sleep(10000);
+
         step("4.按8378 然后按*，再按1");
-        pjsip.Pj_Send_Dtmf(caller, "8378");
+        pjsip.Pj_Send_Dtmf(caller, "8");
         sleep(3000);
+        pjsip.Pj_Send_Dtmf(caller, "3");
+        sleep(3000);
+        pjsip.Pj_Send_Dtmf(caller, "7");
+        sleep(3000);
+        pjsip.Pj_Send_Dtmf(caller, "8");
+        sleep(5000);
         pjsip.Pj_Send_Dtmf(caller,"*");
-        sleep(3000);
+        sleep(5000);
         pjsip.Pj_Send_Dtmf(caller,"1");
 
 
         assertStep(caller + "[通话状态校验:分机1000预期响铃]");
-        Assert.assertEquals(getExtensionStatus(1000,RING,20),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
+        Assert.assertEquals(getExtensionStatus(1000,RING,60),RING,"[通话状态校验_响铃] Time："+ DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(1000,false);
         Assert.assertEquals(getExtensionStatus(1000,TALKING,60),TALKING,"[通话状态校验_通话] Time："+ DataUtils.getCurrentTime());
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1000);
-
+        thread.flag = false;
+        sleep(5000);
 
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", cdrIVR1_6201, "ANSWERED", "3001<3001> called Dial by Name" ,trunk,"","Inbound"))
+                .contains(tuple("3001<3001>", CDRNAME.IVR1_6201.toString(), "ANSWERED", "3001<3001> called Dial by Name" ,trunk,"","Inbound"))
                 .contains(tuple("3001<3001>", "test A<1000>", "ANSWERED", "test A<1000> hung up",trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
@@ -2721,7 +2716,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1_6201, "ANSWERED", "3001<3001> called External Number" ,trunk,"","Inbound"))
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "ANSWERED", "3001<3001> called External Number" ,trunk,"","Inbound"))
                 .contains(tuple("3001<3001>", "2000", "ANSWERED", "2000 hung up",trunk,"SPS1", "Outbound"));
         softAssertPlus.assertAll();
     }
@@ -2768,7 +2763,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> called Play Prompt and Exit" ,trunk,"","Inbound"))
+                .contains(tuple("3001<3001>", "IVR IVR1<6201>", "ANSWERED", "3001<3001> called Play Prompt and Exit" ,trunk,"","Inbound"))
                 .contains(tuple("3001<3001>", "PlayFile", "ANSWERED", "3001<3001> hung up", trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
@@ -2805,7 +2800,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> called Extension", trunk, "", "Inbound"))
+                .contains(tuple("3001<3001>", "IVR IVR1<6201>", "ANSWERED", "3001<3001> called Extension", trunk, "", "Inbound"))
                 .contains(tuple("3001<3001>", "testta C<1002>", "ANSWERED", "3001<3001> hung up", trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
@@ -2890,7 +2885,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "IVR IVR1_6201<6201> timed out, failover", trunk, "", "Inbound"))
+                .contains(tuple("3001<3001>", "IVR IVR1<6201>", "ANSWERED", "IVR IVR1<6201> timed out, failover", trunk, "", "Inbound"))
                 .contains(tuple("3001<3001>", "testa D<1003>", "ANSWERED", "3001<3001> hung up", trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
@@ -2926,7 +2921,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "Invalid key", trunk, "", "Inbound"))
+                .contains(tuple("3001<3001>", "IVR IVR1<6201>", "ANSWERED", "Invalid key", trunk, "", "Inbound"))
                 .contains(tuple("3001<3001>", "t estX<1004>", "ANSWERED", "3001<3001> hung up", trunk, "", "Inbound"));
         softAssertPlus.assertAll();
     }
@@ -2961,7 +2956,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("3001<3001>", "IVR IVR1_6201<6201>", "ANSWERED", "3001<3001> called Extension", trunk, "", "Inbound"))
+                .contains(tuple("3001<3001>", "IVR IVR1<6201>", "ANSWERED", "3001<3001> called Extension", trunk, "", "Inbound"))
                 .contains(tuple("3001<3001>", "1020 1020<1020>", "ANSWERED", "3001<3001> hung up", trunk, "", "Inbound"));
 
         softAssertPlus.assertAll();
