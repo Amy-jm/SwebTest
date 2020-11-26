@@ -79,6 +79,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
      * *
      */
     public void initBusinessHours() {
+        step("初始化环境，设置每天都是下班时间");
         List<String> officeTimes = new ArrayList<>();
         List<String> resetTimes = new ArrayList<>();
         officeTimes.add("00:00-00:00");
@@ -86,7 +87,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("InboundRoute-BasedonGlobalBusinessHours")
+    @Feature("InboundRoute-BasedonCustomBusinessHours")
     @Story("BasedonCustomBusinessHours")
     @Description("编辑In1启用时间条件，Time-based Routing Mode选择Based on Custom Business Hours；添加自定义办公时间：00:00-10:00;09:00-23:59\tSunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday；\n" +
             "设置Business Hours Destination到分机A-1000；Outside Business Hours Destination到分机B-1001；Holidays Destination到分机C-1002；" +
@@ -98,7 +99,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessCustomBusiness", "SPS", "P1"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "CustomBusinessHours", "BusinessHoursDestination","FeatureCode","SwitchBusinessHoursStatus", "P1"})
     public void testIR_01_CustomBusiness() throws IOException, JSchException {
         prerequisite();
         initBusinessHours();
@@ -151,7 +152,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("InboundRoute-BasedonGlobalBusinessHours")
+    @Feature("InboundRoute-BasedonCustomBusinessHours")
     @Story("BasedonCustomBusinessHours")
     @Description("编辑In1启用时间条件，Time-based Routing Mode选择Based on Custom Business Hours；添加自定义办公时间：00:00-10:00;09:00-23:59\tSunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday；\n" +
             "设置Business Hours Destination到分机A-1000；Outside Business Hours Destination到分机B-1001；Holidays Destination到分机C-1002；" +
@@ -166,7 +167,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessCustomBusiness", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "CustomBusinessHours", "Holidays","HolidaysDestination","FeatureCode","SwitchBusinessHoursStatus", "P3"})
     public void testIR_02_CustomBusiness() throws IOException, JSchException {
         prerequisite();
         initBusinessHours();
@@ -223,7 +224,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("InboundRoute-BasedonGlobalBusinessHours")
+    @Feature("InboundRoute-BasedonCustomBusinessHours")
     @Story("BasedonCustomBusinessHours")
     @Description("编辑In1启用时间条件，Time-based Routing Mode选择Based on Custom Business Hours；添加自定义办公时间：00:00-10:00;09:00-23:59\tSunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday；\n" +
             "设置Business Hours Destination到分机A-1000；Outside Business Hours Destination到分机B-1001；Holidays Destination到分机C-1002；" +
@@ -236,7 +237,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessCustomBusiness", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "CustomBusinessHours", "OutsideBusinessHoursDestination", "FeatureCode","SwitchBusinessHoursStatus","P3"})
     public void testIR_03_CustomBusiness() throws IOException, JSchException {
         prerequisite();
         initBusinessHours();
@@ -287,7 +288,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("InboundRoute-BasedonGlobalBusinessHours")
+    @Feature("InboundRoute-BasedonCustomBusinessHours")
     @Story("BasedonCustomBusinessHours")
     @Description("编辑In1启用时间条件，Time-based Routing Mode选择Based on Custom Business Hours；添加自定义办公时间：00:00-10:00;09:00-23:59\tSunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday；\n" +
             "设置Business Hours Destination到分机A-1000；Outside Business Hours Destination到分机B-1001；Holidays Destination到分机C-1002；" +
@@ -297,7 +298,7 @@ public class TestInboundRouteCustomBusiness extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonGlobalBusinessHours", "BusinessCustomBusiness", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "CustomBusinessHours", "P3"})
     public void testIR_04_CustomBusiness() {
         prerequisite();
         initBusinessHours();
