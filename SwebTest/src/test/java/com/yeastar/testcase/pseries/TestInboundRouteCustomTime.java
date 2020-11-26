@@ -81,6 +81,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
      * Business Hours and Holidays->Holidays 删除所有；
      */
     public void initBusinessHoursAndHolidays() {
+        step("初始化设置每天都是下班时间");
         List<String> officeTimes = new ArrayList<>();
         List<String> resetTimes = new ArrayList<>();
         officeTimes.add("00:00-00:00");
@@ -99,7 +100,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods","DefaultDestination", "SwitchBusinessHoursStatus","FeatureCode","P2"})
     public void testIR_01_BCTP() throws IOException, JSchException {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -180,7 +181,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "Destination", "P2"})
     public void testIR_02_BCTP() throws IOException, JSchException {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -262,7 +263,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "HangUp", "P3"})
     public void testIR_03_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -302,7 +303,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "Extension", "P3"})
     public void testIR_04_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -342,7 +343,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "Voicemail", "P3"})
     public void testIR_05_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -374,6 +375,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
         auto.loginPage().login("1001", EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT * 2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        sleep(1000);
         Assert.assertTrue(TableUtils.getTableForHeader(getDriver(), "Name", 0).contains("2000"), "没有检测到录音文件！");
 
         String voiceMailTime = TableUtils.getTableForHeader(getDriver(), "Time", 0);
@@ -395,14 +397,16 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
             "Custom Time Periods: 00:00-05:00;05:00-12:00;12:00-15:00;15:00-16:00;14:30-23:59; \n" +
             "Days of Week: Sunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday\n" +
             "\t\n" +
-            "Destination: 分机1003；Holidays Destination 选择分机1002；Default Destination 选择分机1001；" +
+            "Destination: 分机1003；" +
+            "Holidays Destination 选择分机1002；" +
+            "Default Destination 选择分机1001；" +
             "6.编辑In1的Edit Custom Time Periods的Destination为IVR0\n" +
             "\t通过sps外线呼入\n" +
             "\t\tasterisk后台检测到播放提示音“ivr-greeting-dial-ext”，按0，分机1000响铃，接听，挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "IVR", "P3"})
     public void testIR_06_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -426,7 +430,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -473,7 +477,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "RingGroup", "P3"})
     public void testIR_07_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -528,7 +532,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "Queue", "P3"})
     public void testIR_08_BCTP() throws IOException, JSchException {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -597,7 +601,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "Conference", "P3"})
     public void testIR_09_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -645,7 +649,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "ExternalNumber", "P3"})
     public void testIR_10_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -697,7 +701,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "OutboundRoute", "P3"})
     public void testIR_11_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -745,7 +749,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "PlayGreetingthenHangUp", "P3"})
     public void testIR_12_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -769,7 +773,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 995503300" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
         int tmp = 0;
-        while (asteriskObjectList.size() >= 1 && tmp <= 300) {
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -808,7 +812,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIR_13_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -861,7 +865,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIR_14_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -914,7 +918,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "MatchDIDRangetoExtensionRange","MatchExtensionRange", "P3"})
     public void testIR_15_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -968,7 +972,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods","MatchDIDRangetoExtensionRange", "MatchExtensionRange", "P3"})
     public void testIR_16_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -1022,7 +1026,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P3"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "DIDPattern","Extension", "P3"})
     public void testIR_17_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -1081,7 +1085,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "Holidays","FeatureCode","SwitchBusinessHoursStatus", "P2"})
     public void testIR_18_BCTP() throws IOException, JSchException {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
@@ -1161,7 +1165,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-BasedonCustomTimePeriods", "BasedonCustomTimePeriods", "SPS", "P2"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "BasedonCustomTimePeriods", "DefaultDestination", "P2"})
     public void testIR_19_BCTP()  {
         prerequisite();
         List<String> trunk1 = new ArrayList<>();
