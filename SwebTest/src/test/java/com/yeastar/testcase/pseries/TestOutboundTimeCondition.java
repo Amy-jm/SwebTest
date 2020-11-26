@@ -69,6 +69,9 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
     }
 
+    /**
+     * 时间条件
+     */
     public void timeComdition(){
         step("######### time condition" +
                 "1、Business Hours and Holidays->Business Hours 添加上班时间条件:\n" +
