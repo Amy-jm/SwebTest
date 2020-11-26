@@ -216,7 +216,7 @@ public class SSHLinuxUntils {
 //        long startTime = System.currentTimeMillis();
             while ((msg = br.readLine()) != null && tmp <= timout && flag) {
                 outputstream.append(msg).append("\n");
-                log.debug("[containsString:]"+this.isInterrupted()+" "+containsString + "[CLI]"+ msg);
+                log.debug("[CLI]"+ msg);
                 if(this.isInterrupted()){
                     log.debug("主动退出线程");
                     break;

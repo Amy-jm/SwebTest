@@ -70,9 +70,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
             initRingGroup();
             initQueue();
             initConference();
+            initOutbound();
             initIVR();
             initInbound();
-            initOutbound();
+
 
             ArrayList<String> queueStaticMembers = new ArrayList<>();
             ArrayList<String> queueDynamicMembers = new ArrayList<>();
@@ -154,7 +155,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P1","QueueBasic","Basic","Trunk","InboundRoute","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P1","Queue","QueueBasic","Basic","Trunk","InboundRoute","SIP_REGISTER","PSeries","Cloud","K2"})
     public void testQu01_BasicTrunkInboundRoute1(){
 
         prerequisite();
@@ -184,7 +185,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(3001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("网页admin登录 ,CDR校验");
         auto.loginPage().loginWithAdmin();
@@ -206,7 +207,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P1","QueueBasic","Basic","Trunk","InboundRoute","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P1","Queue","QueueBasic","Basic","Trunk","InboundRoute","SPS","PSeries","Cloud","K2"})
     public void testQu02_BasicTrunkInboundRoute2(){
 
         prerequisite();
@@ -236,7 +237,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(2001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("网页admin登录 ,CDR校验");
         auto.loginPage().loginWithAdmin();
@@ -258,7 +259,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P1","QueueBasic","Basic","Trunk","InboundRoute","PSeries","Cloud","K2"})
+    @Test(groups = {"P1","Queue","QueueBasic","Basic","Trunk","Internal","PSeries","Cloud","K2"})
     public void testQu03_BasicTrunkInboundRoute3(){
         prerequisite();
 
@@ -287,7 +288,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1004);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("网页admin登录 ,CDR校验");
         auto.loginPage().loginWithAdmin();
@@ -309,7 +310,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","Trunk","InboundRoute","SIP_ACCOUNT","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","Trunk","InboundRoute","SIP_ACCOUNT","PSeries","Cloud","K2"})
     public void testQu04_TrunkInboundRoute1Account(){
         prerequisite();
 
@@ -341,7 +342,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(4000);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -362,7 +363,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","Trunk","InboundRoute","FXO"})
+    @Test(groups = {"P3","Queue","QueueBasic","Trunk","InboundRoute","FXO","PSeries"})
     public void testQu05_TrunkInboundRoute1FXO(){
         prerequisite();
 
@@ -415,7 +416,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","Trunk","InboundRoute","BRI"})
+    @Test(groups = {"P3","Queue","QueueBasic","Trunk","InboundRoute","BRI","PSeries"})
     public void testQu06_TrunkInboundRoute1BRI(){
         prerequisite();
 
@@ -447,7 +448,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(2001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -468,7 +469,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","Trunk","InboundRoute","E1"})
+    @Test(groups = {"P3","Queue","QueueBasic","Trunk","InboundRoute","E1","PSeries"})
     public void testQu07_TrunkInboundRoute1E1(){
         prerequisite();
 
@@ -500,7 +501,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(2001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -521,7 +522,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","Trunk","InboundRoute","GSM"})
+    @Test(groups = {"P3","Queue","QueueBasic","Trunk","InboundRoute","GSM","PSeries"})
     public void testQu08_TrunkInboundRoute1GSM(){
         prerequisite();
 
@@ -553,15 +554,15 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(2001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", GSM, "", INBOUND.toString()))
-                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_2001.toString()+" hung up",  GSM, "", INBOUND.toString()));
+                .contains(tuple(DEVICE_ASSIST_GSM+"<"+DEVICE_ASSIST_GSM+">".toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", GSM, "", INBOUND.toString()))
+                .contains(tuple(DEVICE_ASSIST_GSM+"<"+DEVICE_ASSIST_GSM+">".toString(), Extension_1000.toString(),ANSWER.toString(), DEVICE_ASSIST_GSM+"<"+DEVICE_ASSIST_GSM+">".toString()+" hung up",  GSM, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -574,7 +575,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2","RingAll"})
     public void testQu09_RingStrategy1() {
         prerequisite();
 
@@ -634,7 +635,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -656,7 +657,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2","RingAll"})
     public void testQu10_RingStrategy2() {
         prerequisite();
 
@@ -712,7 +713,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -734,7 +735,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2","RingAll"})
     public void testQu11_RingStrategy3() {
         prerequisite();
 
@@ -772,7 +773,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1002);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -791,20 +792,19 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Description("1.编辑Queue1的RingStrategy选择Ring All\n" +
             "2.分机1000拨打*76401退出Queue1" +
             "3.通过sps外线呼入到Queue1" +
-            "4.坐席1000不会响铃，其它坐席1001、1002、1003、1020同时响铃，1002接听正常，挂断；cdr正确；" +
+            "4.坐席1000不会响铃，其它坐席1001、1002、1003、1020同时响铃，1003接听正常，挂断；cdr正确；" +
             "5.分机1000拨打*76401进入Queue1；通过sps外线呼入到Queue1" +
             "6.坐席1000、1001、1002、1003、1020同时响铃，1000接听正常，挂断；cdr正确；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2","RingAll","FeatureCode"})
     public void testQu12_RingStrategy4() {
         prerequisite();
 
         step("[恢复环境]");
         resetQueue1();
-
-        apiUtil.editQueue(queueNum1,"\"ring_strategy\": \"ring_all\"").apply();
+        apiUtil.editQueue(queueNum1,"\"ring_strategy\": \"ring_all\",\"agent_timeout\":20").apply();
 
         step("网页admin登录 ");
         auto.loginPage().loginWithAdmin();
@@ -815,10 +815,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         assertStep("CLI验证：queue show queue 6401 确认分机1000退出6401");
         softAssertPlus.assertThat(!execAsterisk("queue show queue-"+queueNum1).contains("Local/1000"));
 
-        step("通过SIP外线呼入到Queue1");
+        step("通过SPS外线呼入到Queue1");
         pjsip.Pj_Make_Call_No_Answer(2001, "996401");
 
-        step("坐席1000、1001、1002、1003、1020同时响铃");
+        step("坐席1001、1002、1003、1020同时响铃");
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
@@ -836,11 +836,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1003);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
@@ -852,7 +852,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         assertStep("CLI验证：queue show queue 6401 确认分机1000已加入6401");
         softAssertPlus.assertThat(execAsterisk("queue show queue-"+queueNum1).contains("Local/1000"));
 
-        step("通过SIP外线呼入到Queue1");
+        step("通过SPS外线呼入到Queue1");
         pjsip.Pj_Make_Call_No_Answer(2001, "996401");
 
         step("坐席1000、1001、1002、1003、1020同时响铃");
@@ -873,11 +873,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("1000挂断");
         pjsip.Pj_hangupCall(1000);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        resultCDR = apiUtil.getCDRRecord(2);
+        resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
@@ -890,7 +890,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Feature("Queue")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Ring All\n" +
-            "2.分机1000拨打*076401暂停" +
+            "2.分机1001拨打*076401暂停" +
             "3.通过sps外线呼入到Queue1" +
             "4.坐席1001不会响铃，其它坐席1000、1002、1003、1020同时响铃，1002接听正常，挂断；cdr正确；" +
             "5.分机1001拨打*076401进入Queue1；通过sps外线呼入到Queue1" +
@@ -898,28 +898,29 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","RingStrategy","SPS","PSeries","Cloud","K2","FeatureCode"})
     public void testQu13_RingStrategy5() {
         prerequisite();
 
         step("[恢复环境]");
         resetQueue1();
 
-        apiUtil.editQueue(queueNum1,"\"ring_strategy\": \"ring_all\"").apply();
+        apiUtil.editQueue(queueNum1,"\"ring_strategy\": \"ring_all\",\"agent_timeout\":20").apply();
+//        apiUtil.editQueue(queueNum1,"\"ring_strategy\": \"ring_all\"").apply();
 
         step("网页admin登录 ");
         auto.loginPage().loginWithAdmin();
 
-        step("分机1000拨打*076401退出Queue1");
+        step("分机1001拨打*076401退出Queue1");
         pjsip.Pj_Make_Call_No_Answer(1001, "*076401");
 
         assertStep("CLI验证：queue show queue 6401 确认分机1001暂停");
         softAssertPlus.assertThat(execAsterisk("queue show queue-"+queueNum1).contains("1001@only-dialextension-q6401 (ringinuse disabled) (dynamic) (paused)"));
 
-        step("通过SIP外线呼入到Queue1");
+        step("通过SPS外线呼入到Queue1");
         pjsip.Pj_Make_Call_No_Answer(2001, "996401");
 
-        step("坐席1000、1001、1002、1003、1020同时响铃");
+        step("坐席1000、1002、1003、1020同时响铃,1001不会响铃");
         softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
@@ -937,23 +938,23 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("1002挂断");
         pjsip.Pj_hangupCall(1002);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2000.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
 
-        step("分机1001拨打*076401加入Queue1");
+        step("分机1001拨打*076401取消暂停");
         pjsip.Pj_Make_Call_No_Answer(1001, "*076401");
 
-        assertStep("CLI验证：queue show queue 6401 确认分机1000已加入6401");
+        assertStep("CLI验证：queue show queue 6401 确认分机1001已取消暂停");
         softAssertPlus.assertThat(execAsterisk("queue show queue-"+queueNum1).contains("1001@only-dialextension-q6401 (ringinuse disabled) (dynamic) (In use"));
-
-        step("通过SIP外线呼入到Queue1");
+        sleep(2000);
+        step("通过SPS外线呼入到Queue1");
         pjsip.Pj_Make_Call_No_Answer(2001, "996401");
 
         step("坐席1000、1001、1002、1003、1020同时响铃");
@@ -963,7 +964,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[3.通话校验]:1003分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[3.通话校验]:FXS分机响铃").isEqualTo(RING);
 
-        step("1000接听");
+        step("1001接听");
         pjsip.Pj_Answer_Call(1001);
         softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 5)).as("[4.通话校验]:1001分机接听").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[4.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
@@ -972,13 +973,13 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[4.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
         sleep(WaitUntils.TALKING_WAIT);
 
-        step("1000挂断");
+        step("1001挂断");
         pjsip.Pj_hangupCall(1001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        resultCDR = apiUtil.getCDRRecord(2);
+        resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
@@ -1000,7 +1001,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","LeastRecent"})
     public void testQu14_RingStrategy6() {
         prerequisite();
 
@@ -1081,7 +1082,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","FewestCalls"})
     public void testQu15_RingStrategy7() {
         prerequisite();
 
@@ -1158,7 +1159,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","Random"})
     public void testQu16_RingStrategy8() {
         prerequisite();
 
@@ -1215,7 +1216,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("待补充预期检查方法")
-    @Test(groups = {"P2","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","Rrmemory"})
     public void testQu17_RingStrategy9() {
         //todo 待补充预期检查方法
     }
@@ -1231,7 +1232,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","Linear"})
     public void testQu18_RingStrategy10() {
         prerequisite();
 
@@ -1324,7 +1325,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","Linear"})
     public void testQu19_RingStrategy11() {
         prerequisite();
 
@@ -1388,7 +1389,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","Linear"})
     public void testQu20_RingStrategy12() {
 
         prerequisite();
@@ -1465,7 +1466,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","RingAll"})
     public void testQu21_RingStrategy13() {
 
         prerequisite();
@@ -1518,7 +1519,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2","HangUp"})
     public void testQu22_MaximumWaitingTime1() {
         prerequisite();
 
@@ -1554,6 +1555,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),      ANSWER.toString(), QUEUE1_6401.toString() + " connected", SIPTrunk, "", INBOUND.toString()))
                 ;
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
@@ -1565,7 +1567,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2"})
     public void testQu23_MaximumWaitingTime2() {
         prerequisite();
 
@@ -1598,7 +1600,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1000);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -1619,7 +1621,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2"})
     public void testQu24_MaximumWaitingTime3() {
         prerequisite();
 
@@ -1647,7 +1649,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(3001);
-        pjsip.Pj_Hangup_All();
+//        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -1667,7 +1669,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2"})
     public void testQu25_MaximumWaitingTime4() {
         prerequisite();
 
@@ -1711,7 +1713,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2"})
     public void testQu26_FailoverDestination01() {
         prerequisite();
 
@@ -1759,7 +1761,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2","None"})
     public void testQu27_FailoverDestination02() {
         prerequisite();
 
@@ -1801,7 +1803,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2","Extension"})
     public void testQu28_FailoverDestination03() {
         prerequisite();
 
@@ -1859,7 +1861,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2","Extension"})
     public void testQu29_FailoverDestination04() {
         prerequisite();
 
@@ -1909,13 +1911,13 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("Queue")
     @Story("FailoverDestination")
-    @Description("1.编辑Queue1的RingStrategy选择fewest_calls，MaximumWaitingTime为10，Failover Destination为Extension-分机A-1000\n" +
+    @Description("1.编辑Queue1的RingStrategy选择Fewest Calls，MaximumWaitingTime为10，Failover Destination为Extension Voicemail-分机A-1000\n" +
             "2.通过sip外线呼入到Queue1" +
             "3.坐席xx响铃，10s内无人接听，进入到分机1000的语音留言；等待10s挂断；登录分机1000查看新增一条语音留言；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2","Voicemail"})
     public void testQu30_FailoverDestination05() {
         prerequisite();
 
@@ -1976,7 +1978,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2","IVR"})
     public void testQu31_FailoverDestination06() {
         prerequisite();
 
@@ -2042,7 +2044,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","RingGroup"})
     public void testQu32_FailoverDestination07() {
         prerequisite();
 
@@ -2091,7 +2093,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","RingGroup"})
     public void testQu33_FailoverDestination08() {
         prerequisite();
 
@@ -2143,7 +2145,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","Queue"})
     public void testQu34_FailoverDestination09() {
         prerequisite();
 
@@ -2193,7 +2195,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","Queue"})
     public void testQu35_FailoverDestination10() {
         prerequisite();
 
@@ -2245,7 +2247,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","Queue"})
     public void testQu36_FailoverDestination11() {
         prerequisite();
 
@@ -2297,7 +2299,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","ExternalNumber"})
     public void testQu37_FailoverDestination12() {
         prerequisite();
 
@@ -2340,7 +2342,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","PlayPromptandExit"})
     public void testQu38_FailoverDestination13() {
         prerequisite();
 
@@ -2389,7 +2391,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","PlayPromptandExit"})
     public void testQu39_FailoverDestination14() {
         prerequisite();
 
@@ -2442,7 +2444,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","HangUp"})
     public void testQu40_FailoverDestination15() {
         prerequisite();
 
@@ -2503,7 +2505,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2","HangUp"})
     public void testQu41_KeyPressEvent01() {
         prerequisite();
 
@@ -2552,7 +2554,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2","Extension"})
     public void testQu42_KeyPressEvent02() {
         prerequisite();
 
@@ -2611,7 +2613,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2","Voicemail"})
     public void testQu43_KeyPressEvent03() {
         prerequisite();
 
@@ -2668,7 +2670,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2","IVR"})
     public void testQu44_KeyPressEvent04() {
         prerequisite();
 
@@ -2742,7 +2744,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","RingGroup"})
     public void testQu45_KeyPressEvent05() {
         prerequisite();
 
@@ -2800,7 +2802,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","RingGroup"})
     public void testQu46_KeyPressEvent06() {
         prerequisite();
 
@@ -2853,7 +2855,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","Queue"})
     public void testQu47_KeyPressEvent07() {
         prerequisite();
 
@@ -2910,7 +2912,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","Queue"})
     public void testQu48_KeyPressEvent08() {
         prerequisite();
 
@@ -2974,7 +2976,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","Queue"})
     public void testQu49_KeyPressEvent09() {
         prerequisite();
 
@@ -3038,7 +3040,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","ExternalNumber",})
     public void testQu50_KeyPressEvent10() {
         prerequisite();
 
@@ -3088,7 +3090,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","PlayPromptandExit"})
     public void testQu51_KeyPressEvent11() {
         prerequisite();
 
@@ -3145,7 +3147,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","PlayPromptandExit"})
     public void testQu52_KeyPressEvent12() {
         prerequisite();
 
@@ -3200,7 +3202,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P3","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","PlayPromptandExit"})
     public void testQu53_KeyPressEvent13() {
         prerequisite();
 
@@ -3254,7 +3256,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","PlayPromptandExit"})
     public void testQu54_KeyPressEvent14() {
         prerequisite();
 
@@ -3308,7 +3310,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SPS","PSeries","Cloud","K2","None"})
     public void testQu55_KeyPressEvent15() {
         prerequisite();
 
@@ -3356,7 +3358,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","Delete","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","Delete","PSeries","Cloud","K2"})
     public void testQu56_Delete1() {
         prerequisite();
 
@@ -3390,7 +3392,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","QueueBasic","Delete","PSeries","Cloud","K2"})
+    @Test(groups = {"P2","Queue","QueueBasic","Delete","PSeries","Cloud","K2"})
     public void testQu57_Delete2() {
         prerequisite();
 
