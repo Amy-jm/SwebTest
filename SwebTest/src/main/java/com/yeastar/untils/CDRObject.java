@@ -52,13 +52,13 @@ public class CDRObject {
         ringDuration = getValue("ring_duration");
         talkDuration = getValue("talk_duration");
         status = UIMapUtils.getValueByKey(getValue("disposition").toLowerCase().replace(" ","_"));
-        sourceTrunk = getValue("src_trunk").replace(prefix,"");;
-        destinationTrunk = getValue("dst_trunk").replace(prefix,"");;
-        communicatonType = getValue("call_type").replace(prefix,"");;
-        did = getValue("did_number");
-        dod = getValue("dod_number");
+        sourceTrunk = getValue("src_trunk").replace(prefix,"");
+        destinationTrunk = getValue("dst_trunk").replace(prefix,"");
+        communicatonType = getValue("call_type").replace(prefix,"");
+        did = getValue("did_number").replace(prefix,"");
+        dod = getValue("dod_number").replace(prefix,"");
         callerIpAddr = getValue("src_addr");
-        reason = getReason().replace(prefix,"");;
+        reason = getReason().replace(prefix,"");
 
     }
 
