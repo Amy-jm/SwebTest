@@ -29,7 +29,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = true;
+    private boolean isRunRecoveryEnvFlag = false;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestOutboundTimeCondition() {
@@ -45,6 +45,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     public void prerequisite() {
         long startTime = System.currentTimeMillis();
         if (isDebugInitExtensionFlag) {
+            timeComdition();
             isDebugInitExtensionFlag = registerAllExtensions();
             isRunRecoveryEnvFlag = false;
         }
@@ -62,7 +63,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
             initIVR();
             initInbound();
             initFeatureCode();
-            timeComdition();
+            timeComdition();// todo 提交的时候 启用
             isRunRecoveryEnvFlag = registerAllExtensions();
         step("=========== init before class  end =========");
         }
@@ -72,6 +73,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     /**
      * 时间条件
      */
+//    @Test
     public void timeComdition(){
         step("######### time condition" +
                 "1、Business Hours and Holidays->Business Hours 添加上班时间条件:\n" +
@@ -91,7 +93,11 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
                 "9、新建呼出路由OR_CustomBusiness7，Dial Pattern：24.  ,Strip :2 ,外线选择sps外线，选择分机D-1003，Available Time选择Based on Custom Business Hours ，添加自定义时间00:00-00:01；选择星期一至星期天，勾选Outside Business Hours;\n" +
                 "10、新建呼出路由OR_CustomBusiness8，Dial Pattern：25.  ,Strip :2 ,外线选择sps外线，选择分机D-1003，Available Time选择Based on Custom Business Hours ，添加自定义时间00:00-12:00；12:00-23:59，获取当前运行时间是星期几，Days of week取前一天的，比如当前执行时间是星期一则Days of week选择sun，勾选Outside Business Hours;\n" +
                 "\n" +
-                "新建呼出路由OR_CustomBusiness9，Dial Pattern：26.  ,Strip :2 ,外线选择sps外线，选择分机D-1003，Available Time选择Based on Custom Business Hours ，添加自定义时间00:00-12:00，Days of week选择sun，勾选Business Hours、Outside Business Hours、Holidays;");
+                "新建呼出路由OR_CustomBusiness9，Dial Pattern：26.  ,Strip :2 ,外线选择sps外线，选择分机D-1003，Available Time选择Based on Custom Business Hours ，添加自定义时间00:00-12:00，Days of week选择sun，勾选Business Hours、Outside Business Hours、Holidays;" +
+                "11、新建呼出路由OR_CustomTime1，Dial Pattern：31. ，Strip：2 ，外线选择sps外线，选择分机1004，Available Time选择Based on Custom Time Periods,添加自定义时间00:00-12:00；12:00-23:59，选择星期一至星期天\n" +
+                "12、新建呼出路由OR_CustomTime2，Dial Pattern：32. ，Strip：2 ，外线选择sps外线，选择分机1004，Available Time选择Based on Custom Time Periods,添加自定义时间00:00-23:59，选择星期一至星期天，勾选Holidays\n" +
+                "13、新建呼出路由OR_CustomTime3，Dial Pattern：33. ，Strip：2 ，外线选择sps外线，选择分机1004，Available Time选择Based on Custom Time Periods,添加自定义时间00:00-00:01，选择星期一至星期天，勾选Holidays\n" +
+                "14、新建呼出路由OR_CustomTime4，Dial Pattern：34. ，Strip：2 ，外线选择sps外线，选择分机1004，Available Time选择Based on Custom Time Periods,添加自定义时间00:00-12:00；12:00-23:59，获取当前运行时间是星期几，Days of week取前一天的，比如当前执行时间是星期一则Days of week选择sun");
 
         List<String> officeTimes = new ArrayList<>();
         List<String> resetTimes = new ArrayList<>();
@@ -133,6 +139,18 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         apiUtil.createOutbound("OR_CustomBusiness9", asList(SPS), asList("1003"), "26.", 2).
                 editOutbound("OR_CustomBusiness9","\"available_time\":\"route_scope\",\"enb_office_time\":1,\"enb_out_of_office_time\":1,\"enb_holiday\": 1,\"office_time_list\":[{\"days_of_week\":\"sun\",\"office_times\":[{\"value\":\"00:00-00:12\"}],\"pos\":1}]").apply();
 
+        apiUtil.createOutbound("OR_CustomTime1", asList(SPS), asList("1004"), "31.", 2).
+                editOutbound("OR_CustomTime1","\"available_time\":\"custom\",\"enb_holiday\":0,\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-12:00\"},{\"value\":\"12:00-23:59\"}],\"pos\":1}]").apply();
+
+        apiUtil.createOutbound("OR_CustomTime2", asList(SPS), asList("1004"), "32.", 2).
+                editOutbound("OR_CustomTime2","\"available_time\":\"custom\",\"enb_holiday\":1,\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-23:59\"}],\"pos\":1}]").apply();
+
+        apiUtil.createOutbound("OR_CustomTime3", asList(SPS), asList("1004"), "33.", 2).
+                editOutbound("OR_CustomTime3","\"available_time\":\"custom\",\"enb_holiday\":1,\"office_time_list\":[{\"days_of_week\":\"sun mon tue wed thu fri sat\",\"office_times\":[{\"value\":\"00:00-00:01\"}],\"pos\":1}]").apply();
+
+        apiUtil.createOutbound("OR_CustomTime4", asList(SPS), asList("1004"), "34.", 2).
+                editOutbound("OR_CustomTime4",String.format("\"available_time\":\"custom\",\"enb_holiday\":0,\"office_time_list\":[{\"days_of_week\":\"%s\",\"office_times\":[{\"value\":\"00:00-12:00\"},{\"value\":\"12:00-23:59\"}],\"pos\":1}]",DataUtils.getYesterdayWeekDay())).apply();
+
     }
 
     @Epic("P_Series")
@@ -143,7 +161,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonGlobalBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonGlobalBusinessHours"})
     public void testOR_01_TimeCondition() {
         prerequisite();
 
@@ -175,7 +193,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonGlobalBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonGlobalBusinessHours"})
     public void testOR_02_TimeCondition() {
         prerequisite();
 
@@ -196,7 +214,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonGlobalBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonGlobalBusinessHours"})
     public void testOR_03_TimeCondition() {
         prerequisite();
 
@@ -217,7 +235,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonGlobalBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonGlobalBusinessHours"})
     public void testOR_04_TimeCondition() {
         prerequisite();
 
@@ -228,7 +246,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(1005, "2222", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        assertThat(getExtensionStatus(2000, RING, 60)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
@@ -249,7 +267,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
     public void testOR_05_TimeCondition() {
         prerequisite();
 
@@ -260,7 +278,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(1003, "212222", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        assertThat(getExtensionStatus(2000, RING, 60)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
@@ -281,7 +299,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
     public void testOR_06_TimeCondition() {
         prerequisite();
 
@@ -302,7 +320,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
     public void testOR_07_TimeCondition() {
         prerequisite();
 
@@ -323,7 +341,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
     public void testOR_08_TimeCondition() {
         prerequisite();
 
@@ -334,7 +352,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(1003, "24222", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        assertThat(getExtensionStatus(2000, RING, 60)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
@@ -355,7 +373,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
     public void testOR_09_TimeCondition() {
         prerequisite();
 
@@ -387,7 +405,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
     public void testOR_10_TimeCondition() {
         prerequisite();
 
@@ -419,7 +437,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
     public void testOR_11_TimeCondition() {
         prerequisite();
 
@@ -451,7 +469,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
     public void testOR_12_TimeCondition() {
         prerequisite();
 
@@ -483,7 +501,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
     public void testOR_13_TimeCondition() {
         prerequisite();
 
@@ -504,7 +522,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
     public void testOR_14_TimeCondition() {
         prerequisite();
 
@@ -534,31 +552,533 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","SwitchBusinessHoursStatus"},enabled = false)
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","SwitchBusinessHoursStatus"})
     public void testOR_15_TimeCondition() {
         prerequisite();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("分机1000拨打*99强制为下班时间");
+        step("****** 分机1000拨打*99强制为下班时间 *****");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        getExtensionStatus(1000, HUNGUP, 30);
 
-        step("2:[caller] 1000" + ",[callee] 616666");
-        pjsip.Pj_Make_Call_No_Answer(1000, "616666", DEVICE_IP_LAN, false);
+        step("#### [caller] 1000" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1000, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+
+        step("#### [caller] 1001" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1001, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1001);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1001.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString() + " hung up", "", SPS, "Outbound"));
+
+        step("#### [caller] 1002" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1002, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1002, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+
+        step("#### [caller] 1003" + ",[callee] 21222");
+        pjsip.Pj_Make_Call_No_Answer(1003, "21222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1003);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1003.toString(), "21222", STATUS.ANSWER.toString(), CDRNAME.Extension_1003.toString() + " hung up", "", SPS, "Outbound"));
+
+        step("#### [caller] 1004" + ",[callee] 31222");
+        pjsip.Pj_Make_Call_No_Answer(1004, "31222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1004);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1004.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1004.toString() + " hung up", "", SPS, "Outbound"));
+
+        step("#### [caller] 1005" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1005, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1005);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1005.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1005.toString() + " hung up", "", SPS, "Outbound"));
+
+        step("****** 分机1000拨打*99强制为下班时间 *****");
+        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        getExtensionStatus(1000, HUNGUP, 30);
+
+        step("#### [caller] 1000" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1000);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound"));
+
+        step("#### [caller] 1001" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1001, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1001, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+
+        step("#### [caller] 1002" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1002, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1002, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+
+        step("#### [caller] 1005" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1005, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1005);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1005.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1005.toString() + " hung up", "", SPS, "Outbound"));
+
+        softAssert.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "16.分机1000拨打2222呼出\n" +
+            "\t呼出失败，通话被挂断；")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_16_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 1000" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1000, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "17.分机1001拨打2222呼出\n" +
+            "\t呼出失败，通话被挂断；")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_17_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 1001" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1001, "2222", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1001, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "18.分机1002拨打2222呼出\n" +
+            "\t辅助2的分机2000响铃，接听，挂断；检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_18_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 1002" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1002, "2222", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
-
         step("[主叫挂断]");
-        pjsip.Pj_hangupCall(1000);
-
+        pjsip.Pj_hangupCall(1002);
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "616666", STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound"));
+                .contains(tuple(CDRNAME.Extension_1002.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1002.toString() + " hung up", "", SPS, "Outbound"));
 
-        softAssertPlus.assertAll();
+        softAssert.assertAll();
     }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "19.分机1005拨打2222呼出\n" +
+            "\t辅助2的分机2000响铃，接听，挂断；检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_19_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller]1005 " + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1005, "2222", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1005);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1005.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1005.toString() + " hung up", "", SPS, "Outbound"));
+
+        softAssert.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "20.分机1003拨打21222呼出\n" +
+            "\t呼出失败，通话被挂断；")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_20_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 1003" + ",[callee] 21222");
+        pjsip.Pj_Make_Call_No_Answer(1003, "21222", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1003, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "21.分机1003拨打22222呼出\n" +
+            "\t呼出失败，通话被挂断；")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_21_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller]1003 " + ",[callee] 22222");
+        pjsip.Pj_Make_Call_No_Answer(1003, "22222", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1003, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "22.分机1003拨打23222呼出\n" +
+            "\t辅助2的分机2000响铃，接听，挂断；检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_22_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 1003" + ",[callee] 23222");
+        pjsip.Pj_Make_Call_No_Answer(1003, "23222", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1005);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1003.toString(), "23222", STATUS.ANSWER.toString(), CDRNAME.Extension_1003.toString() + " hung up", "", SPS, "Outbound"));
+
+        softAssert.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "23.分机1003拨打26222呼出\n" +
+            "\t辅助2的分机2000响铃，接听，挂断；检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_23_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 1003" + ",[callee] 26222");
+        pjsip.Pj_Make_Call_No_Answer(1003, "26222", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1003);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1003.toString(), "26222", STATUS.ANSWER.toString(), CDRNAME.Extension_1003.toString() + " hung up", "", SPS, "Outbound"));
+
+        softAssert.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "24.分机1004拨打31222呼出\n" +
+            "\t呼出失败，通话被挂断；")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_24_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 1004" + ",[callee] 31222");
+        pjsip.Pj_Make_Call_No_Answer(1004, "31222", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1004, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+    }
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "25.分机1004拨打32222呼出\n" +
+            "\t辅助2的分机2000响铃，接听，挂断；检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_25_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller]1004 " + ",[callee] 32222");
+        pjsip.Pj_Make_Call_No_Answer(1004, "32222", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1004);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1004.toString(), "32222", STATUS.ANSWER.toString(), CDRNAME.Extension_1004.toString() + " hung up", "", SPS, "Outbound"));
+
+        softAssert.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "26.分机1004拨打333333呼出\n" +
+            "\t辅助2的分机2000响铃，接听，挂断；检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    public void testOR_26_Holidays() {
+        prerequisite();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("2:[caller] 1004" + ",[callee] 333333");
+        pjsip.Pj_Make_Call_No_Answer(1004, "333333", DEVICE_IP_LAN, false);
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1004);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1004.toString(), "333333", STATUS.ANSWER.toString(), CDRNAME.Extension_1004.toString() + " hung up", "", SPS, "Outbound"));
+
+        softAssert.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("OutboundRoute-TimeCondition")
+    @Story("TimeCondition")
+    @Description("Business Hours and Holidays->Holidays 添加2020-1-1~2030-12-31 为Holidays" +
+            "27.分机1000拨打*99强制为上班时间\n" +
+            "\t分机1000拨打2222呼出；\n" +
+            "分机1002拨打2222呼出；\n" +
+            "分机1004拨打32222呼出；\n" +
+            "\t\t1000呼出时，辅助2的分机2000响铃，接听，挂断；检查cdr；\n" +
+            "1002呼出时，呼出失败，通话被挂断；\n" +
+            "1004呼出时，辅助2的分机2000响铃，接听，挂断；检查cdr；【强制上下班时间只针对GlobalBusiness有效】\n" +
+            "\t\t\t分机1000拨打*99取消强制为上班时间\n" +
+            "\t\t\t\t分机1000拨打2222呼出；\n" +
+            "分机1002拨打2222呼出；\n" +
+            "分机1004拨打32222呼出；\n" +
+            "\t\t\t\t\t1002呼出时，辅助2的分机2000响铃，接听，挂断；检查cdr；\n" +
+            "1000呼出时，呼出失败，通话被挂断；\n" +
+            "1004呼出时，辅助2的分机2000响铃，接听，挂断；检查cdr；【强制上下班时间只针对GlobalBusiness有效】\n" +
+            "\t关键字：SwitchBusinessHoursStatus")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays","SwitchBusinessHoursStatus"})
+    public void testOR_27_Holidays() {
+        prerequisite();
+        apiUtil.createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
+
+        step("1:login with admin ");
+        auto.loginPage().loginWithAdmin();
+
+        step("****** 分机1000拨打*99强制为上班时间 *****");
+        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        getExtensionStatus(1000, HUNGUP, 30);
+
+        step("#### [caller] 1000" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1000);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound"));
+
+        step("#### [caller] 1002" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1002, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1002, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+
+        step("#### [caller] 1004" + ",[callee] 32222");
+        pjsip.Pj_Make_Call_No_Answer(1004, "32222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1004);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1004.toString(), "32222", STATUS.ANSWER.toString(), CDRNAME.Extension_1004.toString() + " hung up", "", SPS, "Outbound"));
+
+        step("#### [caller] 1005" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1005, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1005);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1005.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1005.toString() + " hung up", "", SPS, "Outbound"));
+
+        step("****** 分机1000拨打*99强制为上班时间 *****");
+        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        getExtensionStatus(1000, HUNGUP, 30);
+
+        step("#### [caller] 1000" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1000, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+
+        step("#### [caller] 1002" + ",[callee] 2222");
+        pjsip.Pj_Make_Call_No_Answer(1002, "2222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1002);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1002.toString(), "2222", STATUS.ANSWER.toString(), CDRNAME.Extension_1002.toString() + " hung up", "", SPS, "Outbound"));
+
+        step("#### [caller] 1004" + ",[callee] 32222");
+        pjsip.Pj_Make_Call_No_Answer(1004, "32222", DEVICE_IP_LAN, false);
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        pjsip.Pj_Answer_Call(2000, false);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        step("[主叫挂断]");
+        pjsip.Pj_hangupCall(1004);
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRNAME.Extension_1004.toString(), "32222", STATUS.ANSWER.toString(), CDRNAME.Extension_1004.toString() + " hung up", "", SPS, "Outbound"));
+
+        apiUtil.deleteAllHoliday().apply();
+        softAssert.assertAll();
+
+    }
+
 }
