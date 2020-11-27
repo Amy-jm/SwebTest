@@ -45,7 +45,6 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     public void prerequisite() {
         long startTime = System.currentTimeMillis();
         if (isDebugInitExtensionFlag) {
-            timeComdition();
             isDebugInitExtensionFlag = registerAllExtensions();
             isRunRecoveryEnvFlag = false;
         }
@@ -171,7 +170,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         step("2:[caller] 1000" + ",[callee] 2222");
         pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo debug
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
@@ -568,9 +567,9 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(1000, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
-        step("#### [caller] 1001" + ",[callee] 2222");
+        step("#### [caller] 1001" + ",[callee] 2222");//todo debug
         pjsip.Pj_Make_Call_No_Answer(1001, "2222", DEVICE_IP_LAN, false);
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo debug
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
@@ -674,6 +673,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_16_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -697,6 +697,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_17_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -720,6 +721,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_18_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -727,7 +729,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         step("2:[caller] 1002" + ",[callee] 2222");
         pjsip.Pj_Make_Call_No_Answer(1002, "2222", DEVICE_IP_LAN, false);
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo debug
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
@@ -752,6 +754,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_19_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -759,7 +762,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         step("2:[caller]1005 " + ",[callee] 2222");
         pjsip.Pj_Make_Call_No_Answer(1005, "2222", DEVICE_IP_LAN, false);
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo debug
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
@@ -784,6 +787,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_20_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -807,6 +811,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_21_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -830,6 +835,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_22_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -837,7 +843,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         step("2:[caller] 1003" + ",[callee] 23222");
         pjsip.Pj_Make_Call_No_Answer(1003, "23222", DEVICE_IP_LAN, false);
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo debug
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
@@ -862,6 +868,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_23_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -894,6 +901,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_24_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -916,6 +924,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_25_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -923,7 +932,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         step("2:[caller]1004 " + ",[callee] 32222");
         pjsip.Pj_Make_Call_No_Answer(1004, "32222", DEVICE_IP_LAN, false);
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo debug
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
@@ -948,6 +957,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
     public void testOR_26_Holidays() {
         prerequisite();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -955,7 +965,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         step("2:[caller] 1004" + ",[callee] 333333");
         pjsip.Pj_Make_Call_No_Answer(1004, "333333", DEVICE_IP_LAN, false);
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo debug
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
@@ -1004,7 +1014,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
 
         step("#### [caller] 1000" + ",[callee] 2222");
         pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo debug
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
