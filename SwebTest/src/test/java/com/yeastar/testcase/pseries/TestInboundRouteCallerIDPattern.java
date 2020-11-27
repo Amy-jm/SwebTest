@@ -76,21 +76,8 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
     }
 
-    /**
-     * Business Hours and Holidays->Business Hours 删除所有；添加一条
-     * 00:00-00:00，	Sunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday
-     * Business Hours and Holidays->Holidays 删除所有；
-     * *
-     */
-    public void initBusinessHours() {
-        List<String> officeTimes = new ArrayList<>();
-        List<String> resetTimes = new ArrayList<>();
-        officeTimes.add("00:00-00:00");
-        apiUtil.deleteAllHoliday().deleteAllOfficeTime().createOfficeTime("sun mon tue wed thu fri sat", officeTimes, resetTimes).apply();
-    }
-
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1，CallerIDPattern设置为3.\n" +
             "\t1.辅助1分机3001拨打3000呼入\n" +
@@ -98,16 +85,16 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2","testIR_01_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "SIP_REGISTER", "P2","testIR_01_CallerID"})
     public void testIR_01_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
                 editInbound("In1", "\"cid_pattern_list\":[{\"cid_pattern\":\"3.\"}]").apply();
 
-        step("1:login with admin,trunk: " + SPS);
+        step("1:login with admin,trunk: " + SIPTrunk);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 3001" + ",[callee] 3000" + ",[trunk] " + SPS);
+        step("2:[caller] 3001" + ",[callee] 3000" + ",[trunk] " + SIPTrunk);
         pjsip.Pj_Make_Call_No_Answer(3001, "3000", DEVICE_ASSIST_1, false);
 
         step("[通话状态校验]");
@@ -126,7 +113,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1，CallerIDPattern设置为3.\n" +
             "\t2.辅助2分机2000通过拨打9999呼入\n" +
@@ -134,7 +121,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2","testIR_02_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2","testIR_02_CallerID"})
     public void testIR_02_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -152,7 +139,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,Caller ID Pattern 设置为2xxx\n" +
             "\t3.辅助2分机2000通过拨打9999呼入\n" +
@@ -160,7 +147,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_03_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_03_CallerID"})
     public void testIR_03_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -188,7 +175,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,Caller ID Pattern 设置为2xxn\n" +
             "\t4.辅助2分机2000通过拨打9999呼入\n" +
@@ -196,7 +183,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_04_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "P3","testIR_04_CallerID"})
     public void testIR_04_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -214,7 +201,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,Caller ID Pattern 设置为2xxz\n" +
             "\t5.辅助2分机2000通过拨打9999呼入\n" +
@@ -222,7 +209,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_05_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute", "CallerIDPattern", "CallerIDMatchingSettings", "P3","testIR_05_CallerID"})
     public void testIR_05_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -240,7 +227,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,Caller ID Pattern 设置为2xxx!\n" +
             "\t6.辅助2分机2000通过拨打9999呼入\n" +
@@ -248,7 +235,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_06_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "P3","testIR_06_CallerID"})
     public void testIR_06_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -276,7 +263,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,Caller ID Pattern 设置为2xxx.\n" +
             "\t7.辅助2分机2000通过拨打9999呼入\n" +
@@ -284,7 +271,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_07_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_07_CallerID"})
     public void testIR_07_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -302,7 +289,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,Caller ID Pattern 设置为2xx.\n" +
             "\t8.辅助2分机2000通过拨打9999呼入\n" +
@@ -310,7 +297,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_08_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "P3","testIR_08_CallerID"})
     public void testIR_08_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -338,7 +325,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,Caller ID Pattern 设置为[1-5]00.\n" +
             "\t9.辅助2分机2000通过拨打9999呼入\n" +
@@ -346,7 +333,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_09_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "P3","testIR_09_CallerID"})
     public void testIR_09_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -374,7 +361,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,Caller ID Pattern 设置为2000\\3xxx\n" +
             "\t10.辅助1分机3001拨打3000呼入\n" +
@@ -382,7 +369,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P2","testIR_10_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "P2","testIR_10_CallerID"})
     public void testIR_10_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -411,7 +398,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,Caller ID Pattern 设置为2000\\3xxx\n" +
             "\t11.辅助2分机2000通过拨打9999呼入\n" +
@@ -419,7 +406,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "SPS", "P3","testIR_11_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "P3","testIR_11_CallerID"})
     public void testIR_11_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").
@@ -448,7 +435,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,DID Pattern选择“DID Pattern\"，添加规则： +0591XXZNZN[25-8].  ;Caller ID Pattern 设置为2000\\3xxx;呼入目的地为IVR-IVR0\n" +
             "\t12.辅助2分机2000通过拨打99+059100121222呼入\n" +
@@ -456,7 +443,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "DIDPattern", "SPS", "P3","testIR_12_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "DIDPattern","IVR" ,"P3","testIR_12_CallerID"})
     public void testIR_12_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "IVR", "6200").
@@ -504,7 +491,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("BasedonCustomBusinessHours")
+    @Feature("InboundRoute-CallerIDPattern")
     @Story("CallerIDPattern,CallerIDMatchingSettings")
     @Description("编辑In1,DID Pattern选择“DID Pattern\"，添加规则： +0591XXZNZN[25-8].  ;Caller ID Pattern 设置为2000\\3xxx;呼入目的地为IVR-IVR0\n" +
             "\t13.辅助2分机2000拨打99+059100000000呼入\n" +
@@ -512,7 +499,7 @@ public class TestInboundRouteCallerIDPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute-CallerIDPattern", "CallerIDPattern", "CallerIDMatchingSettings", "DIDPattern", "SPS", "P3","testIR_13_CallerID"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","CallerIDPattern", "CallerIDMatchingSettings", "DIDPattern", "IVR", "P3","testIR_13_CallerID"})
     public void testIR_13_CallerID() {
         prerequisite();
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "IVR", "6200").
