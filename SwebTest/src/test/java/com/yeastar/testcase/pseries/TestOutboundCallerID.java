@@ -470,12 +470,12 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
         step("2:[caller] 1000" + ",[callee] 60" + DEVICE_ASSIST_GSM);
         pjsip.Pj_Make_Call_No_Answer(1000, 60 + DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
 
-        sleep(WaitUntils.SHORT_WAIT*30);
-
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 120)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+
+        sleep(WaitUntils.SHORT_WAIT*30);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(1000);
