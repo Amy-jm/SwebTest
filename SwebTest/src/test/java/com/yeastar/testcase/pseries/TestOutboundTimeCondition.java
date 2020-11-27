@@ -1,15 +1,18 @@
 package com.yeastar.testcase.pseries;
 
+import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.TestCaseBaseNew;
 import com.yeastar.untils.AsteriskObject;
 import com.yeastar.untils.CDRObject.CDRNAME;
 import com.yeastar.untils.CDRObject.STATUS;
 import com.yeastar.untils.DataUtils;
+import com.yeastar.untils.SSHLinuxUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestOutboundTimeCondition() {
@@ -108,16 +111,16 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
 
         apiUtil.deleteAllHoliday().deleteAllOfficeTime().createOfficeTime("sun mon tue wed thu fri sat", officeTimes, resetTimes).apply();
         apiUtil.deleteAllHoliday().apply();
-        apiUtil.deleteAllOutbound().createOutbound("OR_GlobalBusiness1", asList(SPS), asList("1000"), "", 0).
+        apiUtil.deleteAllOutbound().createOutbound("OR_GlobalBusiness1", asList(SPS), asList("1000"), ".", 0).
                 editOutbound("OR_GlobalBusiness1","\"available_time\":\"global\"").apply();
 
-        apiUtil.createOutbound("OR_GlobalBusiness2", asList(SPS), asList("1001"), "", 0).
+        apiUtil.createOutbound("OR_GlobalBusiness2", asList(SPS), asList("1001"), ".", 0).
                 editOutbound("OR_GlobalBusiness2","\"available_time\": \"global\", \"enb_office_time\": 0, \"enb_out_of_office_time\": 1").apply();
 
-        apiUtil.createOutbound("OR_GlobalBusiness3", asList(SPS), asList("1002"), "", 0).
+        apiUtil.createOutbound("OR_GlobalBusiness3", asList(SPS), asList("1002"), ".", 0).
                 editOutbound("OR_GlobalBusiness3","\"available_time\":\"global\",\"enb_office_time\":0,\"enb_out_of_office_time\": 0,\"enb_holiday\":1").apply();
 
-        apiUtil.createOutbound("OR_GlobalBusiness4", asList(SPS), asList("1005"), "", 0).
+        apiUtil.createOutbound("OR_GlobalBusiness4", asList(SPS), asList("1005"), ".", 0).
                 editOutbound("OR_GlobalBusiness4","\"available_time\":\"route_scope\",\"enb_office_time\":1,\"enb_out_of_office_time\":1,\"enb_holiday\":1").apply();
 
         apiUtil.createOutbound("OR_CustomBusiness4", asList(SPS), asList("1003"), "21.", 2).
@@ -170,8 +173,8 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         step("2:[caller] 1000" + ",[callee] 2222");
         pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
 
-        step("[通话状态校验]");//todo debug
-        assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(2000, RING, 60)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
@@ -550,17 +553,21 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
             "1000、1005呼出时，辅助2的分机2000响铃，接听，挂断；检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("【ID1036407】\n" +
+            "【P系列】【自动化】+Outbound Route+Based on Custom Business hours、BasedonCustomTimePeriods 特征码切换时间会生效，预期特征码切换只会影响Global的时间条件设置")
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","SwitchBusinessHoursStatus"})
-    public void testOR_15_TimeCondition() {
+    public void testOR_15_TimeCondition() throws IOException, JSchException {
         prerequisite();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
         step("****** 分机1000拨打*99强制为下班时间 *****");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
-        getExtensionStatus(1000, HUNGUP, 30);
+        if(SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")).contains("0 results found")) {
+            pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+            getExtensionStatus(1000, HUNGUP, 30);
+        }
+        log.debug("[分机1000拨打*99切换班状态 结果] " + SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
 
         step("#### [caller] 1000" + ",[callee] 2222");
         pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
@@ -623,6 +630,8 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
         step("****** 分机1000拨打*99强制为下班时间 *****");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
         getExtensionStatus(1000, HUNGUP, 30);
+        log.debug("[分机1000拨打*99切换班状态 结果] " + SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, String.format(ASTERISK_CLI, "database show FORCEDEST")));
+
 
         step("#### [caller] 1000" + ",[callee] 2222");
         pjsip.Pj_Make_Call_No_Answer(1000, "2222", DEVICE_IP_LAN, false);
@@ -1003,7 +1012,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays","SwitchBusinessHoursStatus"})
     public void testOR_27_Holidays() {
         prerequisite();
-        apiUtil.createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
+        apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
