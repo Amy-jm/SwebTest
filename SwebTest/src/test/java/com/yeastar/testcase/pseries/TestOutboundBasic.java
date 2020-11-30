@@ -30,7 +30,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = true;
+    private boolean isRunRecoveryEnvFlag = false;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestOutboundBasic() {
@@ -83,6 +83,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
      * *
      */
     public void initBusinessHours() {
+        step("初始化设置每天都是下班时间");
         List<String> officeTimes = new ArrayList<>();
         List<String> resetTimes = new ArrayList<>();
         officeTimes.add("00:00-00:00");
@@ -98,7 +99,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Basic", "Trunk", "SIPREGISTER", "P1", "testOR_01_Basic_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute", "Basic", "Trunk", "SIP_REGISTER", "P1", "testOR_01_Basic_Trunk"})
     public void testOR_01_Basic_Trunk() {
         prerequisite();
         step("新建呼出路由OR1,Dial Pattern: 11. ,Strip:2，选择sip外线，选择Default_Extension_Group、分机A-1000，其它默认保存");
@@ -133,7 +134,6 @@ public class TestOutboundBasic extends TestCaseBaseNew {
 
         step("[被叫挂断]");
         pjsip.Pj_hangupCall(1000);
-
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_1000.toString(), "113001", STATUS.ANSWER.toString(), "test A<1000> hung up", "", SIPTrunk, "Outbound"));
@@ -150,7 +150,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Basic", "Trunk", "SPS", "P1", "testOR_02_Basic_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute", "Basic", "Trunk", "SPS", "P1", "testOR_02_Basic_Trunk"})
     public void testOR_02_Basic_Trunk() {
         prerequisite();
         step("新建呼出路由OR2,Dial Pattern: 12. ,Strip:2，选择sps外线，选择Default_Extension_Group、分机A-1000，其它默认保存");
@@ -183,7 +183,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
-        step("[主叫挂断]");
+        step("[被叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
         assertStep("[CDR校验]");
@@ -202,7 +202,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Basic", "Trunk", "ACCOUNTTRUNK", "P1", "testOR_03_Basic_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute", "Basic", "Trunk", "SIP_ACCOUNT", "P1", "testOR_03_Basic_Trunk"})
     public void testOR_03_Basic_Trunk() {
         prerequisite();
         step("新建呼出路由OR3,Dial Pattern: 13. ,Strip:2，选择account外线，选择Default_Extension_Group、分机A-1000，其它默认保存");
@@ -235,7 +235,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(4000, false);
         assertThat(getExtensionStatus(4000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
-        step("[主叫挂断]");
+        step("[被叫挂断]");
         pjsip.Pj_hangupCall(4000);
 
         assertStep("[CDR校验]");
@@ -253,7 +253,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Basic", "Trunk", "FXO", "P2", "testOR_04_Basic_Trunk"})
+    @Test(groups = {"PSeries", "OutboundRoute", "Basic", "Trunk", "FXO", "P2", "testOR_04_Basic_Trunk"})
     public void testOR_04_Basic_Trunk() {
         if (FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "FXO线路 不测试！");
@@ -280,6 +280,8 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_1000.toString(), "142000", STATUS.ANSWER.toString(), "test A<1000> hung up", "", FXO_1, "Outbound"));
 
+        sleep(3000);
+
         step("################[被叫挂断]##############");
         step("2:[caller] 1000" + ",[callee] 142000");
         pjsip.Pj_Make_Call_No_Answer(1000, "142000", DEVICE_IP_LAN, false);
@@ -288,10 +290,10 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         assertThat(getExtensionStatus(2000, RING, 60)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
-
-        step("[主叫挂断]");
+        sleep(2000);
+        step("[被叫挂断]");
         pjsip.Pj_hangupCall(2000);
-
+        sleep(2000);
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_1000.toString(), "142000", STATUS.ANSWER.toString(), "142000 hung up", "", FXO_1, "Outbound"));
@@ -307,7 +309,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Basic", "Trunk", "GSM", "P2", "testOR_05_Basic_Trunk"})
+    @Test(groups = {"PSeries", "OutboundRoute", "Basic", "Trunk", "GSM", "P2", "testOR_05_Basic_Trunk"})
     public void testOR_05_Basic_Trunk() {
         if (GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "GSM线路 不测试！");
@@ -347,9 +349,9 @@ public class TestOutboundBasic extends TestCaseBaseNew {
 
         sleep(WaitUntils.SHORT_WAIT * 30);
 
-        step("[主叫挂断]");
+        step("[被叫挂断]");
         pjsip.Pj_hangupCall(2000);
-
+        sleep(2000);
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_1000.toString(), "15" + DEVICE_ASSIST_GSM, STATUS.ANSWER.toString(), "15" + DEVICE_ASSIST_GSM + " hung up", "", GSM, "Outbound"));
@@ -367,7 +369,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("【ID1036056】\n" +
             "【P系列】【自动化测试】 呼出路由 E1/BRI CDR 被叫显示异常")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Basic", "Trunk", "BRI", "P2", "testOR_06_Basic_Trunk"})
+    @Test(groups = {"PSeries",  "OutboundRoute", "Basic", "Trunk", "BRI", "P2", "testOR_06_Basic_Trunk"})
     public void testOR_06_Basic_Trunk() {
         prerequisite();
         step("新建呼出路由OR6,Dial Pattern: 16. ,Strip:2，选择BRI外线，选择Default_Extension_Group、分机A-1000，其它默认保存");
@@ -420,7 +422,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("【ID1036056】\n" +
             "【P系列】【自动化测试】 呼出路由 E1/BRI CDR 被叫显示异常")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Basic", "Trunk", "P2", "testOR_07_Basic_Trunk"})
+    @Test(groups = {"PSeries", "E1", "OutboundRoute", "Basic", "Trunk", "P2", "testOR_07_Basic_Trunk"})
     public void testOR_07_Basic_Trunk() {
         prerequisite();
         step("新建呼出路由OR7,Dial Pattern: 17. ,Strip:2，选择E1外线，选择Default_Extension_Group、分机A-1000，其它默认保存");
@@ -473,7 +475,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P2", "testOR_08_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P2", "testOR_08_Extension_Role_ExtensionGroup"})
     public void testOR_08_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR8,Dial Pattern: 21. ,Strip:2，选择sps外线，选择Default_Extension_Group，其它默认保存");
@@ -509,7 +511,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_09_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_09_Extension_Role_ExtensionGroup"})
     public void testOR_09_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR8,Dial Pattern: 21. ,Strip:2，选择sps外线，选择Default_Extension_Group，其它默认保存");
@@ -545,7 +547,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_10_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_10_Extension_Role_ExtensionGroup"})
     public void testOR_10_Extension_Role_ExtensionGroup() {
         if (FXS_1.trim().equalsIgnoreCase("null") || FXS_1.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "FXS 分机不存在！");
@@ -584,7 +586,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_11_1_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_11_1_Extension_Role_ExtensionGroup"})
     public void testOR_11_1_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR9,Dial Pattern: 22. ,Strip:2，选择sps外线，选择ExGroup1、分机1003、1004");
@@ -623,7 +625,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_11_1_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_11_1_Extension_Role_ExtensionGroup"})
     public void testOR_11_2_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR9,Dial Pattern: 22. ,Strip:2，选择sps外线，选择ExGroup1、分机1003、1004");
@@ -671,7 +673,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_12_1_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_12_1_Extension_Role_ExtensionGroup"})
     public void testOR_12_1_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR10,Dial Pattern: 23. ,Strip:2，选择sps外线，Role选择Administrator，不选任意分机");
@@ -708,7 +710,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_12_2_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_12_2_Extension_Role_ExtensionGroup"})
     public void testOR_12_2_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR10,Dial Pattern: 23. ,Strip:2，选择sps外线，Role选择Administrator，不选任意分机");
@@ -734,7 +736,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P2", "testOR_13_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P2", "testOR_13_Extension_Role_ExtensionGroup"})
     public void testOR_13_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR11,Dial Pattern: 24. ,Strip:2，选择sps外线，Role选\tSupervisor，不选任意分机\n");
@@ -771,7 +773,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_14_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_14_Extension_Role_ExtensionGroup"})
     public void testOR_14_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR11,Dial Pattern: 24. ,Strip:2，选择sps外线，Role选\tSupervisor，不选任意分机\n");
@@ -797,7 +799,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P2", "testOR_15_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P2", "testOR_15_Extension_Role_ExtensionGroup"})
     public void testOR_15_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR12,Dial Pattern: 25. ,Strip:2，选择sps外线，Role选\tOperator，不选任意分机\n");
@@ -835,7 +837,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_16_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_16_Extension_Role_ExtensionGroup"})
     public void testOR_16_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR12,Dial Pattern: 25. ,Strip:2，选择sps外线，Role选\tOperator，不选任意分机\n");
@@ -860,7 +862,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P2", "testOR_17_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P2", "testOR_17_Extension_Role_ExtensionGroup"})
     public void testOR_17_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR13,Dial Pattern: 26. ,Strip:2，选择sps外线，Role选\\tEmployee，不选任意分机\\n\"");
@@ -898,7 +900,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_18_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_18_Extension_Role_ExtensionGroup"})
     public void testOR_18_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR13,Dial Pattern: 26. ,Strip:2，选择sps外线，Role选\\tEmployee，不选任意分机\\n\"");
@@ -924,7 +926,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P2", "testOR_19_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P2", "testOR_19_Extension_Role_ExtensionGroup"})
     public void testOR_19_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR14,Dial Pattern: 27. ,Strip:2，选择sps外线，Role选Human Resource，不选任意分机");
@@ -961,7 +963,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_20_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_20_Extension_Role_ExtensionGroup"})
     public void testOR_20_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR14,Dial Pattern: 27. ,Strip:2，选择sps外线，Role选Human Resource，不选任意分机");
@@ -987,7 +989,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P2", "testOR_21_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P2", "testOR_21_Extension_Role_ExtensionGroup"})
     public void testOR_21_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR15,Dial Pattern: 28. ,Strip:2，选择sps外线，Role选Accounting，不选任意分机");
@@ -1024,7 +1026,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_22_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_22_Extension_Role_ExtensionGroup"})
     public void testOR_22_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR15,Dial Pattern: 28. ,Strip:2，选择sps外线，Role选Accounting，不选任意分机");
@@ -1050,7 +1052,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P2", "testOR_23_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P2", "testOR_23_Extension_Role_ExtensionGroup"})
     public void testOR_23_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR16,Dial Pattern: 29. ,Strip:2，选择sps外线，Role选\tAccounting，分机选择ExGroup1,1003\n分机");
@@ -1087,7 +1089,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_24_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_24_Extension_Role_ExtensionGroup"})
     public void testOR_24_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR16,Dial Pattern: 29. ,Strip:2，选择sps外线，Role选\tAccounting，分机选择ExGroup1,1003\n分机");
@@ -1130,7 +1132,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_25_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_25_Extension_Role_ExtensionGroup"})
     public void testOR_25_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR16,Dial Pattern: 29. ,Strip:2，选择sps外线，Role选\tAccounting，分机选择ExGroup1,1003\n分机");
@@ -1187,7 +1189,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Extension", "Role", "ExtensionGroup", "P3", "testOR_26_Extension_Role_ExtensionGroup"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Extension", "Role", "ExtensionGroup", "P3", "testOR_26_Extension_Role_ExtensionGroup"})
     public void testOR_26_Extension_Role_ExtensionGroup() {
         prerequisite();
         step("新建呼出路由OR16,Dial Pattern: 29. ,Strip:2，选择sps外线，Role选\tAccounting，分机选择ExGroup1,1003\n分机");
@@ -1214,7 +1216,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "OutboundRoutePassword", "P2", "testOR_27_OutboundRoutePassword"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "OutboundRoutePassword", "P2", "testOR_27_OutboundRoutePassword"})
     public void testOR_27_OutboundRoutePassword() {
         prerequisite();
         step("新建呼出路由OR17,Dial Pattern: 31. ,Strip:2，选择sps外线，分机选择ExGroup1,1003,Outbound Route Password 选择single PIN，密码设置为123");
@@ -1272,7 +1274,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "OutboundRoutePassword", "P2", "testOR_28_OutboundRoutePassword"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "OutboundRoutePassword", "P2", "testOR_28_OutboundRoutePassword"})
     public void testOR_28_OutboundRoutePassword() {
         prerequisite();
         step("新建呼出路由OR17,Dial Pattern: 31. ,Strip:2，选择sps外线，分机选择ExGroup1,1003,Outbound Route Password 选择single PIN，密码设置为123");
@@ -1358,7 +1360,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "OutboundRoutePassword", "P3", "testOR_29_OutboundRoutePassword"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "OutboundRoutePassword", "P3", "testOR_29_OutboundRoutePassword"})
     public void testOR_29_OutboundRoutePassword() {
         prerequisite();
         step("新建呼出路由OR17,Dial Pattern: 31. ,Strip:2，选择sps外线，分机选择ExGroup1,1003,Outbound Route Password 选择single PIN，密码设置为123");
@@ -1456,7 +1458,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "OutboundRoutePassword", "P3", "testOR_30_OutboundRoutePassword"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "OutboundRoutePassword", "P3", "testOR_30_OutboundRoutePassword"})
     public void testOR_30_OutboundRoutePassword() {
         prerequisite();
         step("新建呼出路由OR17,Dial Pattern: 31. ,Strip:2，选择sps外线，分机选择ExGroup1,1003,Outbound Route Password 选择single PIN，密码设置为123456789012345");
@@ -1516,7 +1518,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "OutboundRoutePassword", "P3", "testOR_30_OutboundRoutePassword"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "OutboundRoutePassword", "P3", "testOR_30_OutboundRoutePassword"})
     public void testOR_31_OutboundRoutePassword() {
         prerequisite();
         step("新建呼出路由OR17,Dial Pattern: 31. ,Strip:2，选择sps外线，分机选择ExGroup1,1003,Outbound Route Password 选择single PIN，密码设置为123456789012345");
@@ -1559,7 +1561,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "RrmemoryHunt", "P2", "testOR_32_RrmemoryHunt"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "RrmemoryHunt", "P2", "testOR_32_RrmemoryHunt"})
     public void testOR_32_RrmemoryHunt() {
         prerequisite();
         step("新建呼出路由OR18,Dial Pattern: 41. ,Strip:2，选择sps外线、sip外线、Account外线，分机选择ExGroup1,1003,勾选Rrmemory Hunt");
@@ -1650,7 +1652,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "RrmemoryHunt", "P3", "testOR_33_RrmemoryHunt"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "RrmemoryHunt", "P3", "testOR_33_RrmemoryHunt"})
     public void testOR_33_RrmemoryHunt() {
         prerequisite();
         step("新建呼出路由OR18,Dial Pattern: 41. ,Strip:2，选择sps外线、sip外线、Account外线，分机选择ExGroup1,1003,勾选Rrmemory Hunt");
@@ -1726,7 +1728,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "RrmemoryHunt", "P3", "testOR_34_RrmemoryHunt"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "RrmemoryHunt", "P3", "testOR_34_RrmemoryHunt"})
     public void testOR_34_RrmemoryHunt() {
         prerequisite();
         step("新建呼出路由OR18,Dial Pattern: 41. ,Strip:2，选择sps外线、sip外线、Account外线，分机选择ExGroup1,1003,勾选Rrmemory Hunt");
@@ -1799,7 +1801,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "RrmemoryHunt", "P2", "testOR_35_RrmemoryHunt"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "RrmemoryHunt", "P2", "testOR_35_RrmemoryHunt"})
     public void testOR_35_RrmemoryHunt() {
         prerequisite();
         step("新建呼出路由OR19,Dial Pattern: 42. ,Strip:2，选择sps外线、sip外线、Account外线，分机选择ExGroup1,1003,不勾选Rrmemory Hunt");
@@ -1853,7 +1855,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Priority", "P2", "testOR_36_Priority"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Priority", "P2", "testOR_36_Priority"})
     public void testOR_36_Priority() {
         prerequisite();
         step("新建呼出路由OR19,Dial Pattern: 42. ,Strip:2，选择sps外线、sip外线、Account外线，分机选择ExGroup1,1003,不勾选Rrmemory Hunt");
@@ -1894,7 +1896,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Priority", "P2", "testOR_37_Priority"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Priority", "P2", "testOR_37_Priority"})
     public void testOR_37_Priority() {
         prerequisite();
         step("新建呼出路由OR19,Dial Pattern: 42. ,Strip:2，选择sps外线、sip外线、Account外线，分机选择ExGroup1,1003,不勾选Rrmemory Hunt");
@@ -1937,7 +1939,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Priority", "P2", "testOR_38_Priority"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Priority", "P2", "testOR_38_Priority"})
     public void testOR_38_Priority() {
         prerequisite();
         apiUtil.deleteAllOutbound().createOutbound("OR20", asList(SPS), asList("ExGroup1"), "51.", 2).
@@ -1978,7 +1980,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Priority", "P2", "testOR_38_Priority"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Priority", "P2", "testOR_38_Priority"})
     public void testOR_39_Priority() {
         prerequisite();
         apiUtil.deleteAllOutbound().createOutbound("OR20", asList(SPS), asList("ExGroup1"), "51.", 2).
@@ -2015,7 +2017,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Delete", "P2", "testOR_40_Delete"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Delete", "P2", "testOR_40_Delete"})
     public void testOR_40_Delete() {
         prerequisite();
         apiUtil.deleteAllOutbound().createOutbound("OR1", asList(SIPTrunk), asList("Default_Extension_Group", "1000"), "11.", 2).apply();
@@ -2041,7 +2043,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute-Basic", "Delete", "P2", "testOR_41_Delete"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "SPS", "OutboundRoute", "Delete", "P2", "testOR_41_Delete"})
     public void testOR_41_Delete() {
         prerequisite();
         apiUtil.deleteAllOutbound().createOutbound("OR1", asList(SIPTrunk), asList("Default_Extension_Group", "1000"), "11.", 2).
