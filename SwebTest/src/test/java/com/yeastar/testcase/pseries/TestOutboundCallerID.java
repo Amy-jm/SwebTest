@@ -5,6 +5,7 @@ import com.yeastar.untils.AsteriskObject;
 import com.yeastar.untils.CDRObject.CDRNAME;
 import com.yeastar.untils.CDRObject.STATUS;
 import com.yeastar.untils.DataUtils;
+import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
@@ -13,6 +14,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
@@ -29,7 +31,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestOutboundCallerID() {
@@ -472,6 +474,8 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
         assertThat(getExtensionStatus(2000, RING, 120)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+
+        sleep(WaitUntils.SHORT_WAIT*30);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(1000);
