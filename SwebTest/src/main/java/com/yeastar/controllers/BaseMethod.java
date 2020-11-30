@@ -7,7 +7,7 @@ import com.yeastar.untils.*;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -263,6 +263,18 @@ public class BaseMethod extends WebDriverFactory {
 		}
 		return "";
 	}
+
+	@Step("根据分机号在队列信息中找到对应信息")
+	public String getQueueExtInfoByExtNum(String queuenum, String extNum){
+		List<Quintet<String, String, String, String, String>> q =getQueueExtNumWithRingStrategy(queuenum,"");
+		for (int i=0; i< q.size(); i++){
+			if (q.get(i).getValue0().equals(extNum)){
+				log.debug("[find  get value4] "+q.get(i).getValue4());
+				return q.get(i).getValue4();
+			}
+		}
+		return null;
+	}
 	/**
 	 * 根据响铃策略找到队列最先响铃的分机
 	 * @param queuenum
@@ -271,7 +283,7 @@ public class BaseMethod extends WebDriverFactory {
 	 */
 	@Step("根据响铃策略找到队列最先响铃的分机")
 	public String getQueueExtNumWithRingStrategy(String queuenum, String ringStrategy, int index) {
-		List<Quartet<String, String, String, String>> q =getQueueExtNumWithRingStrategy(queuenum,ringStrategy);
+		List<Quintet<String, String, String, String, String>> q =getQueueExtNumWithRingStrategy(queuenum,ringStrategy);
 		if (q.size() > index){
 			return q.get(index).getValue3();
 		}
@@ -284,9 +296,9 @@ public class BaseMethod extends WebDriverFactory {
 	 * @return
 	 */
 	@Step("根据响铃策略找到队列最先响铃的分机信息")
-	public List<Quartet<String, String, String, String>> getQueueExtNumWithRingStrategy(String queuenum, String ringStrategy) {
+	public List<Quintet<String, String, String, String, String>> getQueueExtNumWithRingStrategy(String queuenum, String ringStrategy) {
 
-		List<Quartet<String, String, String, String>> roleList = new ArrayList<Quartet<String,String, String, String>>();
+		List<Quintet<String, String, String, String, String>> roleList = new ArrayList<Quintet<String,String, String, String, String>>();
 		String queueInfo = execAsterisk("queue show queue-"+queuenum);
 		String[] queueInfoList = queueInfo.substring(queueInfo.indexOf("0:"),queueInfo.indexOf("No Callers")).split("\n");
 
@@ -327,11 +339,12 @@ public class BaseMethod extends WebDriverFactory {
 				hasTakenCall = str.substring(str.indexOf("has taken ")+10, str.indexOf("has taken ")+12);
 			}
 
-			Quartet<String, String, String, String> t = TupleUtils.with(
+			Quintet<String, String, String, String, String> t = TupleUtils.with(
 					extNum, //extension number
 					cdrRecord, //是否注册，是否可用状态
 					hasTakenCall,//通话数量
-					lastCallInterval//距离上次通话的时间
+					lastCallInterval,//距离上次通话的时间
+					str//完整字符串
 			);
 			roleList.add(t);
 		}
@@ -437,8 +450,10 @@ public class BaseMethod extends WebDriverFactory {
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.HumanResource.toString()).replace("EXTENSIONFIRSTNAME", "t").replace("EXTENSIONLASTNAME", "estX").replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Accounting.toString()).replace("EXTENSIONFIRSTNAME", "First").replace("EXTENSIONLASTNAME", "Last").replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Administrator.toString()).replace("EXTENSIONFIRSTNAME", "0").replace("EXTENSIONLASTNAME", "0").replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
+				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Administrator.toString()).replace("EXTENSIONFIRSTNAME", "1").replace("EXTENSIONLASTNAME", "1").replace("EXTENSIONNUM", "1").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+				.loginWebClient("1", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1000", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1001", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1002", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)

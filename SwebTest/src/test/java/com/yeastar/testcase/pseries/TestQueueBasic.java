@@ -8,7 +8,7 @@ import com.yeastar.untils.APIObject.ExtensionObject;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
-import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import top.jfunc.json.impl.JSONArray;
@@ -76,14 +76,21 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
 
             ArrayList<String> queueStaticMembers = new ArrayList<>();
+            ArrayList<String> queueStaticMembers2 = new ArrayList<>();
             ArrayList<String> queueDynamicMembers = new ArrayList<>();
+            queueStaticMembers2.add("1002");
+            queueStaticMembers2.add("1003");
             queueStaticMembers.add("1002");
             queueStaticMembers.add("1003");
             queueStaticMembers.add("1020");
             queueDynamicMembers.add("1000");
             queueDynamicMembers.add("1001");
+            step("创建队列6401");
             apiUtil.createQueue(queueName1, queueNum1, queueDynamicMembers, queueStaticMembers, null)
-                    .editQueue(queueNum1,String.format("\"agent_timeout\":10,\"retry_time\":10,\"wrap_up_time\":10")).apply();
+                    .editQueue(queueNum1,String.format("\"agent_timeout\":10,\"retry_time\":10,\"wrap_up_time\":10"))
+
+                    .createQueue("Queue3","6402",queueStaticMembers2,queueDynamicMembers,null)
+                    .apply();
 
             step("编辑呼入路由In1呼入目的地为Queue1-6401");
             apiUtil.editInbound("In1",String.format("\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"",apiUtil.getQueueSummary(queueNum1).id));
@@ -148,7 +155,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("Basic,Trunk,InboundRoute")
     @Description("1.通过sip外线呼入到Queue1-6401\n" +
             "2.坐席1000、1001、1002、1003、1020同时响铃，分机1000接听后其它坐席停止响铃，主叫挂断，cdr正确")
@@ -199,7 +206,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("Basic,Trunk,InboundRoute")
     @Description("1.通过sps外线呼入到Queue1-6401\n" +
                  "2.坐席1000、1001、1002、1003、1020同时响铃，" +
@@ -251,7 +258,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("Basic,Trunk,InboundRoute")
     @Description("1.内部分机呼入到Queue1-6401\n" +
             "2.坐席1000、1001、1002、1003、1020同时响铃，" +
@@ -302,7 +309,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("Basic,Trunk,InboundRoute")
     @Description("1.通过Account外线呼入到Queue1-6401\n" +
             "2.坐席1000、1001、1002、1003、1020同时响铃，" +
@@ -355,7 +362,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("Basic,Trunk,InboundRoute")
     @Description("1.通过FXO外线呼入到Queue1-6401\n" +
             "2.坐席1000、1001、1002、1003、1020同时响铃，" +
@@ -408,7 +415,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("Basic,Trunk,InboundRoute")
     @Description("1.通过BRI外线呼入到Queue1-6401\n" +
             "2.坐席1000、1001、1002、1003、1020同时响铃，" +
@@ -461,7 +468,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("Basic,Trunk,InboundRoute")
     @Description("1.通过E1外线呼入到Queue1-6401\n" +
             "2.坐席1000、1001、1002、1003、1020同时响铃，" +
@@ -514,7 +521,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("Basic,Trunk,InboundRoute")
     @Description("1.通过GSM外线呼入到Queue1-6401\n" +
             "2.坐席1000、1001、1002、1003、1020同时响铃，" +
@@ -567,7 +574,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Ring All\n" +
             "2.通过sip外线呼入到Queue1，响铃2个周期后，坐席1000接听" +
@@ -649,7 +656,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Ring All，响铃时间20s\n" +
             "2.通过sps外线呼入到Queue1，坐席响铃时，分机1001拒接" +
@@ -727,7 +734,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Ring All\n" +
             "2.通过sps外线呼入到Queue1，坐席响铃时，分机1001拒接" +
@@ -787,7 +794,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Ring All\n" +
             "2.分机1000拨打*76401退出Queue1" +
@@ -887,7 +894,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Ring All\n" +
             "2.分机1001拨打*076401暂停" +
@@ -989,7 +996,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Least Recent\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1013,7 +1020,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         step("网页admin登录 ");
         auto.loginPage().loginWithAdmin();
 
-        List<Quartet<String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"least_recent");
+        List<Quintet<String, String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"least_recent");
         int ext1 = Integer.parseInt(extList.get(0).getValue0());
         int ext2 = Integer.parseInt(extList.get(1).getValue0());
 
@@ -1070,7 +1077,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Fewest Calls\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1094,7 +1101,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         step("网页admin登录 ");
         auto.loginPage().loginWithAdmin();
 
-        List<Quartet<String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"fewest_calls");
+        List<Quintet<String, String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"fewest_calls");
         int ext1 = Integer.parseInt(extList.get(0).getValue0());
         int ext2 = Integer.parseInt(extList.get(1).getValue0());
 
@@ -1151,7 +1158,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Random\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1173,7 +1180,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         step("网页admin登录 ");
         auto.loginPage().loginWithAdmin();
 
-        List<Quartet<String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"random");
+        List<Quintet<String, String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"random");
 
         step("通过SIP外线呼入到Queue1");
         pjsip.Pj_Make_Call_No_Answer(3001, "3000");
@@ -1208,7 +1215,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Rrmemory\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1222,7 +1229,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Linear\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1244,7 +1251,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         step("网页admin登录 ");
         auto.loginPage().loginWithAdmin();
 
-        List<Quartet<String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"linear");
+        List<Quintet<String, String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"linear");
         int ext1 = Integer.parseInt(extList.get(0).getValue0());
         int ext2 = Integer.parseInt(extList.get(1).getValue0());
         int ext3 = Integer.parseInt(extList.get(2).getValue0());
@@ -1315,7 +1322,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Linear\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1337,7 +1344,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         step("网页admin登录 ");
         auto.loginPage().loginWithAdmin();
 
-        List<Quartet<String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"linear");
+        List<Quintet<String, String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"linear");
         int ext1 = Integer.parseInt(extList.get(0).getValue0());
         int ext2 = Integer.parseInt(extList.get(1).getValue0());
         int ext3 = Integer.parseInt(extList.get(2).getValue0());
@@ -1380,7 +1387,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择Linear\n" +
             "2.编辑Queue1的静态坐席顺序为1003、1002" +
@@ -1458,7 +1465,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择RingAll\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1511,7 +1518,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("MaximumWaitingTime")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为20，Failover Destination为HangUp\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1559,7 +1566,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("MaximumWaitingTime")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为20，Failover Destination为HangUp\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1613,7 +1620,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertAll();
     }
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("MaximumWaitingTime")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为20，Failover Destination为HangUp\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1661,7 +1668,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertAll();
     }
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("MaximumWaitingTime")
     @Description("1.编辑Queue1的RingStrategy选择Rrmemory，MaximumWaitingTime为20，Failover Destination为HangUp\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1705,7 +1712,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为10，Failover Destination为HangUp\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1753,7 +1760,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择Least Recent，MaximumWaitingTime为10，Failover Destination为【None】\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1773,7 +1780,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("获取最久未被叫响铃的分机");
-        List<Quartet<String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"least_recent");
+        List<Quintet<String, String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"least_recent");
         int ext1 = Integer.parseInt(extList.get(0).getValue0());
 
         step("通过SIP外线呼入到Queue1");
@@ -1795,7 +1802,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为10，Failover Destination为Extension-分机A-1000\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1853,7 +1860,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为10，Failover Destination为Extension-分机A-1000\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1909,7 +1916,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择Fewest Calls，MaximumWaitingTime为10，Failover Destination为Extension Voicemail-分机A-1000\n" +
             "2.通过sip外线呼入到Queue1" +
@@ -1928,7 +1935,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
                 "\"fail_dest\":\"ext_vm\",\"fail_dest_value\":\"%s\"", apiUtil.getExtensionSummary("1000").id))
                 .apply();
 
-        List<Quartet<String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"fewest_calls");
+        List<Quintet<String, String, String, String, String>> extList = getQueueExtNumWithRingStrategy(queueNum1,"fewest_calls");
         int ext1 = Integer.parseInt(extList.get(0).getValue0());
         int ext2 = Integer.parseInt(extList.get(1).getValue0());
         int ext3 = Integer.parseInt(extList.get(2).getValue0());
@@ -1970,7 +1977,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertAll();
     }
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择Random，MaximumWaitingTime为10，Failover Destination为IVR-IVR0" +
             "2.通过sip外线呼入到Queue1" +
@@ -2036,7 +2043,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertAll();
     }
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择Rrmemory，MaximumWaitingTime为10，Failover Destination为RingGroup-RingGroup0" +
             "2.通过sps外线呼入到Queue1" +
@@ -2085,7 +2092,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择Rrmemory，MaximumWaitingTime为10，Failover Destination为RingGroup-RingGroup0" +
             "2.通过sps外线呼入到Queue1" +
@@ -2137,7 +2144,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择Linear，MaximumWaitingTime为10，Failover Destination为Queue-Queue0" +
             "2.通过sps外线呼入到Queue1" +
@@ -2187,7 +2194,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择Linear，MaximumWaitingTime为10，Failover Destination为Queue-Queue0" +
             "2.通过sps外线呼入到Queue1" +
@@ -2239,7 +2246,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择Linear，MaximumWaitingTime为10，Failover Destination为Queue-Queue0" +
             "2.通过sps外线呼入到Queue1" +
@@ -2291,7 +2298,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为10，Failover Destination为External Number，Prefix：1 号码：3001" +
             "2.通过sps外线呼入到Queue1" +
@@ -2334,7 +2341,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为10，Failover Destination为Play Prompt and Exit，选择prompt1，播放1遍" +
             "2.通过sps外线呼入到Queue1" +
@@ -2383,7 +2390,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertAll();
     }
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为10，Failover Destination为Play Prompt and Exit，选择prompt2，播放5遍" +
             "2.通过sps外线呼入到Queue1" +
@@ -2436,7 +2443,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("FailoverDestination")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Failover Destination为HangUp" +
             "2.通过sps外线呼入到Queue1" +
@@ -2497,7 +2504,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择1，目的地为Hang Up" +
             "2.通过sip外线呼入到Queue1" +
@@ -2546,7 +2553,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择2，目的地为Extension-分机1004" +
             "2.通过sip外线呼入到Queue1" +
@@ -2605,7 +2612,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择3，目的地为Extension Voicemail-分机1001" +
             "2.通过sip外线呼入到Queue1" +
@@ -2662,7 +2669,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择4，目的地为IVR-IVR0" +
             "2.通过sip外线呼入到Queue1" +
@@ -2736,7 +2743,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择5，目的地为RingGroup-RingGroup0" +
             "2.通过sps外线呼入到Queue1" +
@@ -2794,7 +2801,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择5，目的地为RingGroup-RingGroup0" +
             "2.通过sps外线呼入到Queue1" +
@@ -2847,7 +2854,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择6，目的地为Queue-Queue0" +
             "2.通过sps外线呼入到Queue1" +
@@ -2904,7 +2911,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择6，目的地为Queue-Queue0" +
             "2.通过sps外线呼入到Queue1" +
@@ -2968,7 +2975,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择6，目的地为Queue-Queue0" +
             "2.通过sps外线呼入到Queue1" +
@@ -3032,7 +3039,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择7，目的地为External Number：Prefix：1 号码3001" +
             "2.通过sps外线呼入到Queue1" +
@@ -3082,7 +3089,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择8，目的地为Play Prompt and Exit ，选择prompt3，播放1遍" +
             "2.通过sps外线呼入到Queue1" +
@@ -3139,7 +3146,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择9，目的地为Play Prompt and Exit ，选择prompt4，播放3遍" +
             "2.通过sps外线呼入到Queue1" +
@@ -3194,7 +3201,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择*，目的地为Play Prompt and Exit ，选择prompt5，播放5遍" +
             "2.通过sps外线呼入到Queue1" +
@@ -3248,7 +3255,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择#，目的地为Play Prompt and Exit ，选择prompt2，播放2遍" +
             "2.通过sps外线呼入到Queue1" +
@@ -3302,7 +3309,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("KeyPressEvent")
     @Description("1.编辑Queue1的RingStrategy选择RingAll，MaximumWaitingTime为600，Key Press Event选择0，目的地为[None]" +
             "2.通过sps外线呼入到Queue1" +
@@ -3350,8 +3357,471 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         softAssertPlus.assertAll();
     }
+
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
+    @Story("FeatureCode")
+    @Description("1.Queue2-6402，动态坐席选择1000、1001，静态坐席选择1002、1003，响铃策略RingAll，其它默认；" +
+            "2.编辑Feature Code-》Login/Logout 禁用；\n" +
+            "3.分机1000拨打*76402加入队列;" +
+            "4.asterisk检查加入失败" +
+            "5.编辑Feature Code-》Login/Logout 启用；\n" +
+            "6.分机1000拨打*76402加入队列；" +
+            "7.asterisk检查加入成功；分机1005拨打队列6402，分机1000、1002、1003同时响铃，主叫挂断，检查cdr；" +
+            "8.分机1000拨打*76402退出队列；" +
+            "9.asterisk检查退出成功；\n" +
+            "10.分机1005拨打队列6402，分机1002、1003同时响铃,1000不会响铃，主叫挂断，检查cdr；")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2","Queue","QueueBasic","FeatureCode","Login","Logout","SPS","PSeries","Cloud","K2","None"})
+    public void testQu56_FeatureCode1() {
+        prerequisite();
+
+        step("网页admin登录,进入Queue界面 ");
+        auto.loginPage().loginWithAdmin();
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_queue);
+
+        List<String> lists = TableUtils.getTableForHeader(getDriver(),"Number");
+        if (lists.contains("6402")){
+            step("删除队列6402");
+            auto.queuePage().deleDataByDeleImage("6402").clickApply();
+        }
+        step("创建队列Queue3-6402");
+        ArrayList<String> queueStaticMembers = new ArrayList<>();
+        ArrayList<String> queueDynamicMembers = new ArrayList<>();
+        queueStaticMembers.add("1002");
+        queueStaticMembers.add("1003");
+        queueDynamicMembers.add("1000");
+        queueDynamicMembers.add("1001");
+        apiUtil.createQueue("Queue2","6402",queueDynamicMembers,queueStaticMembers,null).apply();
+
+        step("编辑Feature Code-》Login/Logout 禁用");
+        apiUtil.editFeatureCode("\"enb_queue_login_logout\":0,\"enb_queue_pause_unpause\":0").apply();
+
+        step("分机1000拨打*76402加入队列;");
+        pjsip.Pj_Make_Call_No_Answer(1000,"*76402");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        String queueInfo = execAsterisk("queue show queue-6402");
+        softAssertPlus.assertThat(queueInfo.contains("1000")).as("1000登录队列6402失败").isFalse();
+
+        step("编辑Feature Code-》Login/Logout 启用");
+        apiUtil.editFeatureCode("\"enb_queue_login_logout\":1").apply();
+
+        step("分机1000拨打*76402加入队列;");
+        pjsip.Pj_Make_Call_No_Answer(1000,"*76402");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        queueInfo = execAsterisk("queue show queue-6402");
+        Assert.assertTrue(queueInfo.contains("1000"),"1000登录队列6402成功");
+
+        pjsip.Pj_Make_Call_No_Answer(1005,"6402");
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[1.通话校验]:1001分机未响铃").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("CDR校验");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), QUEUE2_6402.toString(),NO_ANSWER.toString(), Extension_1005.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), "*76402",ANSWER.toString(), Extension_1000.toString()+" logged in Queue",  "", "", INTERNAL.toString()));
+        softAssertPlus.assertAll();
+
+        step("分机1000拨打*76402退出队列;");
+        pjsip.Pj_Make_Call_No_Answer(1000,"*76402");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        queueInfo = execAsterisk("queue show queue-6402");
+        Assert.assertFalse(queueInfo.contains("1000"),"1000登录队列6402成功");
+
+        pjsip.Pj_Make_Call_No_Answer(1005,"6402");
+        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 10)).as("[1.通话校验]:1000分机未响铃").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[1.通话校验]:1001分机未响铃").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("CDR校验");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        resultCDR = apiUtil.getCDRRecord(2);
+
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), QUEUE2_6402.toString(),NO_ANSWER.toString(), Extension_1005.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), "*76402",ANSWER.toString(), Extension_1000.toString()+" logged out Queue",  "", "", INTERNAL.toString()));
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("QueueBasic")
+    @Story("FeatureCode")
+    @Description("1.Queue2-6402，动态坐席选择1000、1001，静态坐席选择1002、1003，响铃策略RingAll，其它默认；" +
+            "2.编辑Feature Code-》Login/Logout 特征码为***####；\n" +
+            "3.分机1000拨打*76402加入队列;" +
+            "4.asterisk检查加入失败" +
+            "5.分机1001拨打***####6402加入队列;；\n" +
+            "6.asterisk检查加入成功；" +
+            "7.分机1005拨打队列6402，分机1001、1002、1003同时响铃，主叫挂断，检查cdr；" +
+            "8.编辑Feature Code-》Login/Logout 特征码为*7；" +
+            "9.分机1001拨打*76402退出队列;；\n" +
+            "10.asterisk检查退出成功；\n" +
+            "11.分机1005拨打队列6402，分机1002、1003同时响铃,1001不会响铃，主叫挂断，检查cdr；；")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3","Queue","QueueBasic","FeatureCode","Login","Logout","SPS","PSeries","Cloud","K2","None"})
+    public void testQu57_FeatureCode2() {
+        prerequisite();
+
+        step("网页admin登录,进入Queue界面 ");
+        auto.loginPage().loginWithAdmin();
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_queue);
+
+        List<String> lists = TableUtils.getTableForHeader(getDriver(),"Number");
+        if (lists.contains("6402")){
+            step("删除队列6402");
+            auto.queuePage().deleDataByDeleImage("6402").clickApply();
+        }
+        step("创建队列Queue3-6402");
+        ArrayList<String> queueStaticMembers = new ArrayList<>();
+        ArrayList<String> queueDynamicMembers = new ArrayList<>();
+        queueStaticMembers.add("1002");
+        queueStaticMembers.add("1003");
+        queueDynamicMembers.add("1000");
+        queueDynamicMembers.add("1001");
+        apiUtil.createQueue("Queue2","6402",queueDynamicMembers,queueStaticMembers,null).apply();
+
+        step("编辑Feature Code-》Login/Logout 特征码#***6**");
+        apiUtil.editFeatureCode("\"enb_queue_login_logout\":1,\"queue_login_logout\":\"#***6**\"").apply();
+
+        step("分机1001拨打*76402加入队列;");
+        pjsip.Pj_Make_Call_No_Answer(1001,"*76402");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        String queueInfo = execAsterisk("queue show queue-6402");
+        softAssertPlus.assertThat(queueInfo.contains("1001")).as("1000登录队列6402失败").isFalse();
+
+        step("分机1001拨打#***6**6402加入队列;");
+        pjsip.Pj_Make_Call_No_Answer(1001,"#***6**6402");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        queueInfo = execAsterisk("queue show queue-6402");
+        softAssertPlus.assertThat(queueInfo.contains("1001")).as("1000登录队列6402成功").isTrue();
+
+        pjsip.Pj_Make_Call_No_Answer(1005,"6402");
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP,1 )).as("[1.通话校验]:1000分机未响铃").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("CDR校验");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), QUEUE2_6402.toString(),NO_ANSWER.toString(), Extension_1005.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), "#***6**6402",ANSWER.toString(), Extension_1001.toString()+" logged in Queue",  "", "", INTERNAL.toString()));
+        softAssertPlus.assertAll();
+
+        step("编辑Feature Code-》Login/Logout 特征码*7");
+        apiUtil.editFeatureCode("\"enb_queue_login_logout\":1,\"queue_login_logout\":\"*7\"").apply();
+
+        step("分机1000拨打*76402退出队列;");
+        pjsip.Pj_Make_Call_No_Answer(1001,"*76402");
+        sleep(WaitUntils.TALKING_WAIT);
+
+
+        queueInfo = execAsterisk("queue show queue-6402");
+        Assert.assertFalse(queueInfo.contains("1001"),"1001退出登录队列6402成功");
+
+        pjsip.Pj_Make_Call_No_Answer(1005,"6402");
+        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 10)).as("[1.通话校验]:1000分机未响铃").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[1.通话校验]:1001分机未响铃").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("CDR校验");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        resultCDR = apiUtil.getCDRRecord(2);
+
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), QUEUE2_6402.toString(),NO_ANSWER.toString(), Extension_1005.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), "*76402",ANSWER.toString(), Extension_1001.toString()+" logged out Queue",  "", "", INTERNAL.toString()));
+        softAssertPlus.assertAll();
+    }
+
+    @Epic("P_Series")
+    @Feature("QueueBasic")
+    @Story("FeatureCode")
+    @Description("1.新建Queue3-6403，静态坐席选择1000、1001，动态坐席选择1002、1003，响铃策略RingAll，其它默认；动态坐席1002、1003分别拨打*76403加入队列" +
+            "2.编辑Feature Code-》Pause/Unpause 禁用；\n" +
+            "3.分机1000拨打*076403暂停,分机1002拨打*076403暂停;" +
+            "4.asterisk检查暂停失败" +
+            "5.编辑Feature Code-》Pause/Unpause 启用；\n" +
+            "6.分机1000拨打*076403暂停,分机1002拨打*076403暂停" +
+            "7.asterisk检查坐席1000、1002为暂停服务状态；\n" +
+            "8.分机1005拨打队列号码6403，分机1001、1003同时响铃，主叫挂断，检查cdr;\n" +
+            "9.分机1000拨打*076403取消暂停,分机1002拨打*076403取消暂停" +
+            "10.asterisk检查坐席1000、1002为正常状态；\n" +
+            "11.分机1005拨打队列号码6403，分机1000、1001、1002、1003同时响铃，主叫挂断，检查cdr;\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P2","Queue","QueueBasic","FeatureCode","Pause","Unpause","SPS","PSeries","Cloud","K2","None"})
+    public void testQu58_FeatureCode3() {
+        prerequisite();
+
+        apiUtil.editFeatureCode("\"enb_queue_login_logout\":1,\"queue_login_logout\":\"*7\"").apply();
+
+        step("1.新建Queue3-6403，静态坐席选择1000、1001，动态坐席选择1002、1003，响铃策略RingAll，其它默认；");
+        auto.loginPage().loginWithAdmin();
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_queue);
+        List<String> lists = TableUtils.getTableForHeader(getDriver(),"Number");
+        if (lists.contains("6403")){
+            step("删除队列6403");
+            auto.queuePage().deleDataByDeleImage("6403").clickApply();
+        }
+        step("创建队列Queue3-6403");
+        ArrayList<String> queueStaticMembers = new ArrayList<>();
+        ArrayList<String> queueDynamicMembers = new ArrayList<>();
+        queueStaticMembers.add("1000");
+        queueStaticMembers.add("1001");
+        queueDynamicMembers.add("1002");
+        queueDynamicMembers.add("1003");
+        apiUtil.createQueue("Queue3","6403",queueDynamicMembers,queueStaticMembers,null).apply();
+
+
+        step("动态坐席1002、1003分别拨打*76403加入队列");
+        pjsip.Pj_Make_Call_No_Answer(1003,"*76403");
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(1002,"*76403");
+        sleep(WaitUntils.TALKING_WAIT);
+        step("2.编辑Feature Code-》Pause/Unpause 禁用；") ;
+        apiUtil.editFeatureCode("\"enb_queue_pause_unpause\":0").apply();
+
+        step("3.分机1000拨打*076403暂停,分机1002拨打*076403暂停;" );
+        pjsip.Pj_Make_Call_No_Answer(1000,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(1002,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("4.asterisk检查暂停失败") ;
+        String queue1000 = getQueueExtInfoByExtNum("6403","1000");
+        String queue1002 = getQueueExtInfoByExtNum("6403","1002");
+        softAssertPlus.assertThat(queue1000.contains("Not in use")).as("[asterisk校验]1000暂停失败").isTrue();
+        softAssertPlus.assertThat(queue1002.contains("Not in use")).as("[asterisk校验]1002暂停失败").isTrue();
+
+        step("5.编辑Feature Code-》Pause/Unpause 启用；") ;
+        apiUtil.editFeatureCode("\"enb_queue_pause_unpause\":1").apply();
+
+        step("6.分机1000拨打*076403暂停,分机1002拨打*076403暂停" );
+        pjsip.Pj_Make_Call_No_Answer(1000,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(1002,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("7.asterisk检查坐席1000、1002为暂停服务状态；" );
+        queue1000 = getQueueExtInfoByExtNum("6403","1000");
+        queue1002 = getQueueExtInfoByExtNum("6403","1002");
+        softAssertPlus.assertThat(queue1000.contains("paused")).as("[asterisk校验]1000暂停成功").isTrue();
+        softAssertPlus.assertThat(queue1002.contains("paused")).as("[asterisk校验]1002暂停成功").isTrue();
+
+        step("8.分机1005拨打队列号码6403，分机1001、1003同时响铃，主叫挂断，检查cdr;") ;
+        pjsip.Pj_Make_Call_No_Answer(1005,"6403");
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP,1 )).as("[1.通话校验]:1000分机未响铃").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[1.通话校验]:1002分未机响铃").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("CDR校验");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), QUEUE3_6403.toString(),NO_ANSWER.toString(), Extension_1005.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), "*076403",ANSWER.toString(), Extension_1000.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1002.toString(), "*076403",ANSWER.toString(), Extension_1002.toString()+" hung up",  "", "", INTERNAL.toString()));
+
+
+        step("9.分机1000拨打*076403取消暂停,分机1002拨打*076403取消暂停" );
+        pjsip.Pj_Make_Call_No_Answer(1000,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(1002,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("10.asterisk检查坐席1000、1002为正常状态；") ;
+        queue1000 = getQueueExtInfoByExtNum("6403","1000");
+        queue1002 = getQueueExtInfoByExtNum("6403","1002");
+        softAssertPlus.assertThat(queue1000.contains("Not in use")).as("[asterisk校验]1000取消暂停成功").isTrue();
+        softAssertPlus.assertThat(queue1002.contains("Not in use")).as("[asterisk校验]1002取消暂停成功").isTrue();
+
+        step("11.分机1005拨打队列号码6403，分机1000、1001、1002、1003同时响铃，主叫挂断，检查cdr;");
+        pjsip.Pj_Make_Call_No_Answer(1005,"6403");
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING,1 )).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("CDR校验");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        resultCDR = apiUtil.getCDRRecord(1);
+
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), QUEUE3_6403.toString(),NO_ANSWER.toString(), Extension_1005.toString()+" hung up",  "", "", INTERNAL.toString()));
+        softAssertPlus.assertAll();
+
+    }
+
+    @Epic("P_Series")
+    @Feature("QueueBasic")
+    @Story("FeatureCode")
+    @Description("1.新建Queue3-6403，静态坐席选择1000、1001，动态坐席选择1002、1003，响铃策略RingAll，其它默认；动态坐席1002、1003分别拨打*76403加入队列" +
+            "2.编辑Feature Code-》Pause/Unpause 特征码为#*8*6**；；\n" +
+            "3.分机1001拨打*076403暂停 分机1003拨打*076403暂停;" +
+            "4.asterisk检查暂停失败" +
+            "5.分机1001拨打#*8*6**6403暂停 分机1003拨打#*8*6**6403暂停" +
+            "7.asterisk检查坐席1001、1003为暂停服务状态；\n" +
+            "7.分机1005拨打队列号码6403，分机1000、1002同时响铃，主叫挂断，检查cdr;；\n" +
+            "8.编辑Feature Code-》Pause/Unpause 特征码为*07；\n" +
+            "9.分机1001拨打*076403取消暂停 分机1003拨打*076403取消暂停\n" +
+            "10.asterisk检查坐席1001、1003为正常状态；\n" +
+            "11.分机1005拨打队列号码6403，分机1000、1001、1002、1003同时响铃，主叫挂断，检查cdr;\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"P3","Queue","QueueBasic","FeatureCode","Pause","Unpause","SPS","PSeries","Cloud","K2","None"})
+    public void testQu59_FeatureCode4() {
+        prerequisite();
+
+        step("1.新建Queue3-6403，静态坐席选择1000、1001，动态坐席选择1002、1003，响铃策略RingAll，其它默认；");
+        auto.loginPage().loginWithAdmin();
+
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_queue);
+        List<String> lists = TableUtils.getTableForHeader(getDriver(),"Number");
+        if (lists.contains("6403")){
+            step("删除队列6403");
+            auto.queuePage().deleDataByDeleImage("6403").clickApply();
+        }
+        step("创建队列Queue3-6403");
+        ArrayList<String> queueStaticMembers = new ArrayList<>();
+        ArrayList<String> queueDynamicMembers = new ArrayList<>();
+        queueStaticMembers.add("1000");
+        queueStaticMembers.add("1001");
+        queueDynamicMembers.add("1002");
+        queueDynamicMembers.add("1003");
+        apiUtil.createQueue("Queue3","6403",queueDynamicMembers,queueStaticMembers,null).apply();
+
+        step("动态坐席1002、1003分别拨打*76403加入队列");
+        pjsip.Pj_Make_Call_No_Answer(1003,"*76403");
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(1002,"*76403");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("2.编辑Feature Code-》Pause/Unpause 特征码为#*8*6**；");
+        apiUtil.editFeatureCode("\"enb_queue_pause_unpause\":1,\"queue_pause_unpause\":\"#*8*6**\"").apply();
+
+        execAsterisk("queue show queue-6403");
+
+        step("3.分机1001拨打*076403暂停 分机1003拨打*076403暂停;");
+        pjsip.Pj_Make_Call_No_Answer(1001,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(1003,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("4.asterisk检查暂停失败") ;
+        String queue1001 = getQueueExtInfoByExtNum("6403","1001");
+        String queue1003 = getQueueExtInfoByExtNum("6403","1003");
+
+        softAssertPlus.assertThat(queue1001.contains("Not in use")).as("[asterisk校验]1001暂停失败").isTrue();
+        softAssertPlus.assertThat(queue1003.contains("Not in use")).as("[asterisk校验]1003暂停失败").isTrue();
+
+        step("分机1001拨打#*8*6**6403暂停,分机1003拨打#*8*6**6403暂停" );
+        pjsip.Pj_Make_Call_No_Answer(1001,"#*8*6**6403");
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(1003,"#*8*6**6403");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("asterisk检查坐席1001、1003为暂停服务状态；" );
+        queue1001 = getQueueExtInfoByExtNum("6403","1001");
+        queue1003 = getQueueExtInfoByExtNum("6403","1003");
+
+        softAssertPlus.assertThat(queue1001.contains("paused")).as("[asterisk校验]1001暂停成功").isTrue();
+        softAssertPlus.assertThat(queue1003.contains("paused")).as("[asterisk校验]1003暂停成功").isTrue();
+
+        step("分机1005拨打队列号码6403，分机1001、1003同时响铃，主叫挂断，检查cdr;") ;
+        pjsip.Pj_Make_Call_No_Answer(1005,"6403");
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP,1 )).as("[1.通话校验]:1001分机未响铃").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[1.通话校验]:1003分未机响铃").isEqualTo(HUNGUP);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("CDR校验");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), QUEUE3_6403.toString(),NO_ANSWER.toString(), Extension_1005.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), "#*8*6**6403",ANSWER.toString(), Extension_1001.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1003.toString(), "#*8*6**6403",ANSWER.toString(), Extension_1003.toString()+" hung up",  "", "", INTERNAL.toString()));
+
+        step("编辑Feature Code-》Pause/Unpause 特征码为*07；" );
+        apiUtil.editFeatureCode("\"queue_pause_unpause\":\"*07\"").apply();
+
+        step("分机1001拨打*076403取消暂停 分机1003拨打*076403取消暂停" );
+        pjsip.Pj_Make_Call_No_Answer(1001,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Make_Call_No_Answer(1003,"*076403");
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("10.asterisk检查坐席1001、1003为正常状态；") ;
+        queue1001 = getQueueExtInfoByExtNum("6403","1001");
+        queue1003 = getQueueExtInfoByExtNum("6403","1003");
+        softAssertPlus.assertThat(queue1001.contains("Not in use")).as("[asterisk校验]1001取消暂停成功").isTrue();
+        softAssertPlus.assertThat(queue1003.contains("Not in use")).as("[asterisk校验]1003取消暂停成功").isTrue();
+
+        step("11.分机1005拨打队列号码6403，分机1000、1001、1002、1003同时响铃，主叫挂断，检查cdr;");
+        pjsip.Pj_Make_Call_No_Answer(1005,"6403");
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING,1 )).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1005);
+
+        assertStep("CDR校验");
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        resultCDR = apiUtil.getCDRRecord(3);
+
+        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), QUEUE3_6403.toString(),NO_ANSWER.toString(), Extension_1005.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), "*076403",ANSWER.toString(), Extension_1001.toString()+" hung up",  "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1003.toString(), "*076403",ANSWER.toString(), Extension_1003.toString()+" hung up",  "", "", INTERNAL.toString()));
+        softAssertPlus.assertAll();
+
+    }
+
+
+    @Epic("P_Series")
+    @Feature("QueueBasic")
     @Story("Delete")
     @Description("1.单条删除Queue1" +
             "2.检查列表Queue1被删除成功")
@@ -3359,7 +3829,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","Queue","QueueBasic","Delete","PSeries","Cloud","K2"})
-    public void testQu56_Delete1() {
+    public void testQu60_Delete1() {
         prerequisite();
 
         step("网页admin登录,进入Queue界面 ");
@@ -3384,7 +3854,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     }
 
     @Epic("P_Series")
-    @Feature("Queue")
+    @Feature("QueueBasic")
     @Story("Delete")
     @Description("1.再次创建Queue2" +
             "2.批量选择删除Queue2" +
@@ -3393,7 +3863,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","Queue","QueueBasic","Delete","PSeries","Cloud","K2"})
-    public void testQu57_Delete2() {
+    public void testQu61_Delete2() {
         prerequisite();
 
         step("网页admin登录,进入Queue界面 ");

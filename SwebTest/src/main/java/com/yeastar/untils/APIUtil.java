@@ -1,6 +1,4 @@
 package com.yeastar.untils;
-import com.yeastar.swebtest.pobject.Settings.PBX.CallFeatures.RingGroup.RingGroup;
-import com.yeastar.swebtest.pobject.Settings.PBX.Extensions.ExtensionGroup.ExtensionGroup;
 import com.yeastar.untils.APIObject.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -215,6 +213,7 @@ public class APIUtil {
      * @throws IOException
      */
     public  List<CDRObject> getCDRRecord(int num){
+        sleep(2000);
         String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/search?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
         String respondJson = getRequest(req);
         System.out.println("cdr record :"+respondJson);

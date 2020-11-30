@@ -139,8 +139,11 @@ public class SSHLinuxUntils {
      * @throws IOException
      */
     public static String exePjsip(String command) throws JSchException, IOException {
+        if (!command.contains("export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;")){
+            command = "export LD_LIBRARY_PATH=/ysdisk/ysapps/pbxcenter/lib;"+command;
+        }
         String result = exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD,command);
-        log.debug("[exePjsip result] "+ result);
+        log.debug("[exePjsip result:] "+ result);
         return result;
     }
 
@@ -150,9 +153,9 @@ public class SSHLinuxUntils {
      */
     public static class AsteriskThread extends Thread {
         List<AsteriskObject> asteriskObject;
-        String asteriskKey;
+//        String asteriskKey;
         public volatile boolean flag = true;
-
+        public volatile String asteriskKey;
         public AsteriskThread(List<AsteriskObject> asteriskObject, String asteriskKey) {
             this.asteriskObject=asteriskObject;
             this.asteriskKey=asteriskKey;
@@ -216,17 +219,17 @@ public class SSHLinuxUntils {
 //        long startTime = System.currentTimeMillis();
             while ((msg = br.readLine()) != null && tmp <= timout && flag) {
                 outputstream.append(msg).append("\n");
-                log.debug("[CLI]"+ msg);
+                log.debug("[keyWord]"+asteriskKey+"[CLI]"+ msg);
                 if(this.isInterrupted()){
                     log.debug("主动退出线程");
                     break;
                 }
-                if(msg.contains(containsString)){
+                if(msg.contains(asteriskKey)){
                     AsteriskObject  asteriskObject1 = new AsteriskObject();
 //                log.debug("[get key success ，appear "+appearCount+"] "+(System.currentTimeMillis() - startTime)/1000+" Seconds ！"+msg);
                     asteriskObject1.setName(msg);
                     asteriskObject1.setTime(msg.substring(1,20));
-                    if(containsString.contains("'") && msg.contains("'")){
+                    if(asteriskKey.contains("'") && msg.contains("'")){
                         String[] str = msg.split("'");
                         asteriskObject1.setKeyword(str[1]);
                     }
@@ -234,7 +237,6 @@ public class SSHLinuxUntils {
                 }
                 tmp++;
             }
-            log.debug("flag : "+flag);
 //        log.debug("[get cli time] "+(System.currentTimeMillis() - startTime)/1000+" Seconds");
             channelExec.disconnect();
             session.disconnect();

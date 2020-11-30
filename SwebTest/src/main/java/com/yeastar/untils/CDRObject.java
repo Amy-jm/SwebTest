@@ -131,6 +131,8 @@ public class CDRObject {
 
         QUEUE0_6400("Queue Queue0<6400>"),
         QUEUE1_6401("Queue Queue1<6401>"),
+        QUEUE2_6402("Queue Queue2<6402>"),
+        QUEUE3_6403("Queue Queue3<6403>"),
 
         Extension_1000_VOICEMAIL("Voicemail test A<1000>"),
         Extension_1001_VOICEMAIL("Voicemail test2 B<1001>"),
