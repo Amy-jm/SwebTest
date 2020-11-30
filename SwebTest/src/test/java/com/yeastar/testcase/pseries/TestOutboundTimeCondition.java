@@ -77,7 +77,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
      */
 //    @Test
     public void timeComdition(){
-        step("######### time condition" +
+        step("#########前置环境 time condition" +
                 "1、Business Hours and Holidays->Business Hours 添加上班时间条件:\n" +
                 "Business Hours：00:00-06:00;06:00-08:00;13:00-18:00\n" +
                 "Break Hours：07:00-14:00;18:00-23:59\n" +
@@ -163,7 +163,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonGlobalBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "BusinessHours","P2","BasedonGlobalBusinessHours"})
     public void testOR_01_TimeCondition() {
         prerequisite();
 
@@ -195,7 +195,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonGlobalBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition","OutsideBusinessHours","P2","BasedonGlobalBusinessHours"})
     public void testOR_02_TimeCondition() {
         prerequisite();
 
@@ -216,7 +216,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonGlobalBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "Holidays","P3","BasedonGlobalBusinessHours"})
     public void testOR_03_TimeCondition() {
         prerequisite();
 
@@ -237,7 +237,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonGlobalBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "Holidays","BusinessHours","OutsideBusinessHours","P3","BasedonGlobalBusinessHours"})
     public void testOR_04_TimeCondition() {
         prerequisite();
 
@@ -269,7 +269,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition",  "BusinessHours","P2","BasedonCustomBusinessHours"})
     public void testOR_05_TimeCondition() {
         prerequisite();
 
@@ -301,7 +301,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition",  "OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
     public void testOR_06_TimeCondition() {
         prerequisite();
 
@@ -322,7 +322,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition",  "Holidays","P3","BasedonCustomBusinessHours"})
     public void testOR_07_TimeCondition() {
         prerequisite();
 
@@ -343,7 +343,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition","OutsideBusinessHours","P2","BasedonCustomBusinessHours"})
     public void testOR_08_TimeCondition() {
         prerequisite();
 
@@ -375,7 +375,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
     public void testOR_09_TimeCondition() {
         prerequisite();
 
@@ -407,7 +407,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","BasedonCustomBusinessHours"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition",  "BusinessHours","OutsideBusinessHours","Holidays","P3","BasedonCustomBusinessHours"})
     public void testOR_10_TimeCondition() {
         prerequisite();
 
@@ -439,7 +439,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition",  "P2","BasedonCustomTimePeriods"})
     public void testOR_11_TimeCondition() {
         prerequisite();
 
@@ -471,7 +471,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition","P2","BasedonCustomTimePeriods"})
     public void testOR_12_TimeCondition() {
         prerequisite();
 
@@ -503,7 +503,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "Holidays","P2","BasedonCustomTimePeriods"})
     public void testOR_13_TimeCondition() {
         prerequisite();
 
@@ -524,7 +524,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","BasedonCustomTimePeriods"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "P2","BasedonCustomTimePeriods"})
     public void testOR_14_TimeCondition() {
         prerequisite();
 
@@ -555,7 +555,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("【ID1036407】\n" +
             "【P系列】【自动化】+Outbound Route+Based on Custom Business hours、BasedonCustomTimePeriods 特征码切换时间会生效，预期特征码切换只会影响Global的时间条件设置")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P2","SwitchBusinessHoursStatus"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "FeatureCode", "P2","SwitchBusinessHoursStatus"})
     public void testOR_15_TimeCondition() throws IOException, JSchException {
         prerequisite();
 
@@ -679,7 +679,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition","BusinessHours","P3","Holidays"})
     public void testOR_16_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -703,7 +703,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition","OutsideBusinessHours","P3","Holidays"})
     public void testOR_17_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -727,7 +727,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","P3","Holidays"})
     public void testOR_18_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -760,7 +760,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition","OutsideBusinessHours","P3","Holidays"})
     public void testOR_19_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -793,7 +793,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","P3","Holidays"})
     public void testOR_20_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -817,7 +817,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition","OutsideBusinessHours","P3","Holidays"})
     public void testOR_21_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -874,7 +874,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "P3","Holidays"})
     public void testOR_23_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -907,7 +907,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "P3","Holidays"})
     public void testOR_24_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -930,7 +930,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition","P3","Holidays"})
     public void testOR_25_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -963,7 +963,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "P3","Holidays"})
     public void testOR_26_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
@@ -1009,7 +1009,7 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "TimeCondition", "BusinessHours","OutsideBusinessHours","P3","Holidays","SwitchBusinessHoursStatus"})
+    @Test(groups = {"PSeries", "Cloud", "K2","OutboundRoute","TimeCondition", "FeatureCode", "BusinessHours","P3","Holidays","SwitchBusinessHoursStatus"})
     public void testOR_27_Holidays() {
         prerequisite();
         apiUtil.deleteHoliday("Holidays1").createHolidayTime("Holidays1", "date", "01/01/2020-12/31/2030").apply();
