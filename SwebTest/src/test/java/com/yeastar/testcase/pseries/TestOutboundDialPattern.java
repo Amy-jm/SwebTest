@@ -31,7 +31,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestOutboundDialPattern() {
@@ -101,7 +101,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P2", "testOR_01_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "Trunk", "SPS","Extension", "P2", "testOR_01_Pattern_Trunk_Extesnion"})
     public void testOR_01_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern1，Dial Pattern为.   ,Strip：空，Prepend：空，外线：sps，分机：分机A-1000;\\n\" +\n" +
@@ -143,7 +143,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P2", "testOR_02_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "Trunk", "Extension", "P2", "testOR_02_Pattern_Trunk_Extesnion"})
     public void testOR_02_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern1，Dial Pattern为.   ,Strip：空，Prepend：空，外线：sps，分机：分机A-1000;\\n\" +\n" +
@@ -185,7 +185,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P2", "testOR_03_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern",  "P2", "testOR_03_Pattern_Trunk_Extesnion"})
     public void testOR_03_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern1，Dial Pattern为.   ,Strip：空，Prepend：空，外线：sps，分机：分机A-1000;\\n\" +\n" +
@@ -227,7 +227,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P2", "testOR_04_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "Trunk", "SIP_REGISTER","Extension", "P2", "testOR_04_Pattern_Trunk_Extesnion"})
     public void testOR_04_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern1，Dial Pattern为.   ,Strip：空，Prepend：空，外线：sps，分机：分机A-1000;\\n\" +\n" +
@@ -269,7 +269,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P2", "testOR_05_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P2", "testOR_05_Pattern_Trunk_Extesnion"})
     public void testOR_05_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern1，Dial Pattern为.   ,Strip：空，Prepend：空，外线：sps，分机：分机A-1000;\\n\" +\n" +
@@ -300,7 +300,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P2", "testOR_06_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "Trunk", "SIP_ACCOUNT","Extension", "P2", "testOR_06_Pattern_Trunk_Extesnion"})
     public void testOR_06_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern1，Dial Pattern为.   ,Strip：空，Prepend：空，外线：sps，分机：分机A-1000;\\n\" +\n" +
@@ -342,7 +342,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P2", "testOR_07_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P2", "testOR_07_Pattern_Trunk_Extesnion"})
     public void testOR_07_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern1，Dial Pattern为.   ,Strip：空，Prepend：空，外线：sps，分机：分机A-1000;\\n\" +\n" +
@@ -373,7 +373,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P2", "testOR_08_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P2", "testOR_08_Pattern_Trunk_Extesnion"})
     public void testOR_08_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern1，Dial Pattern为.   ,Strip：空，Prepend：空，外线：sps，分机：分机A-1000;\\n\" +\n" +
@@ -408,29 +408,20 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Feature("OutboundRoute-DialPattern")
     @Story("Pattern,Trunk,Extension")
     @Description("新建呼出路由OR_Pattern4,Dial Pattern为xxxx ，Strip：空，Prepend：空，外线：FXO，分机：分机D-1003；\n" +
-            "新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；\n" +
-            "新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；\n" +
-            "新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；\n" +
             "\t只有P系列支持，注意判断测试环境外线是否存在\n" +
             "\t9.分机1003拨打2000\n" +
             "\t\t辅助2的分机2000正常响铃，接听，挂断；检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_09_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "OutboundRoute","DialPattern", "Pattern", "Trunk", "FXO", "P3", "testOR_09_Pattern_Trunk_Extesnion"})
     public void testOR_09_Pattern_Trunk_Extesnion() {
         if (FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "FXO线路 不测试！");
         }
         prerequisite();
-        step("新建呼出路由OR_Pattern4,Dial Pattern为xxxx ，Strip：空，Prepend：空，外线：FXO，分机：分机D-1003；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；\\n\"");
-        apiUtil.deleteAllOutbound().createOutbound("OR_Pattern4", asList(FXO_1), asList("1003"), "xxxx", 0).
-                createOutbound("OR_Pattern5", asList(BRI_1), asList("1004"), "233.", 0).
-                createOutbound("OR_Pattern6", asList(E1), asList("1004"), "233!", 0).
-                createOutbound("OR_Pattern7", asList(GSM), asList("1005"), "1.", 0).apply();
+        step("新建呼出路由OR_Pattern4,Dial Pattern为xxxx ，Strip：空，Prepend：空，外线：FXO，分机：分机D-1003；");
+        apiUtil.deleteAllOutbound().createOutbound("OR_Pattern4", asList(FXO_1), asList("1003"), "xxxx", 0).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -456,29 +447,20 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("OutboundRoute-DialPattern")
     @Story("Pattern,Trunk,Extension")
-    @Description("新建呼出路由OR_Pattern4,Dial Pattern为xxxx ，Strip：空，Prepend：空，外线：FXO，分机：分机D-1003；\n" +
-            "新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；\n" +
-            "新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；\n" +
-            "新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；\n" +
+    @Description("新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；"+
             "\t10.分机1004拨打23333\n" +
             "\t\t辅助2的分机2000正常响铃，接听，挂断；检查cdr，呼出外线是BRI\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【ID1036056】【P系列】【自动化测试】 呼出路由 E1/BRI CDR 被叫显示异常")
-    @Test(groups = {"PSeries", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_10_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "OutboundRoute","DialPattern", "Pattern", "Trunk", "BRI", "P3", "testOR_10_Pattern_Trunk_Extesnion"})
     public void testOR_10_Pattern_Trunk_Extesnion() {
         if (BRI_1.trim().equalsIgnoreCase("null") || BRI_1.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "BRI_1线路 不测试！");
         }
         prerequisite();
-        step("新建呼出路由OR_Pattern4,Dial Pattern为xxxx ，Strip：空，Prepend：空，外线：FXO，分机：分机D-1003；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；\\n\"");
-        apiUtil.deleteAllOutbound().createOutbound("OR_Pattern4", asList(FXO_1), asList("1003"), "xxxx", 0).
-                createOutbound("OR_Pattern5", asList(BRI_1), asList("1004"), "233.", 0).
-                createOutbound("OR_Pattern6", asList(E1), asList("1004"), "233!", 0).
-                createOutbound("OR_Pattern7", asList(GSM), asList("1005"), "1.", 0).apply();
+        step("            \"新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；");
+        apiUtil.deleteAllOutbound().createOutbound("OR_Pattern5", asList(BRI_1), asList("1004"), "233.", 0).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -504,29 +486,20 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("OutboundRoute-DialPattern")
     @Story("Pattern,Trunk,Extension")
-    @Description("新建呼出路由OR_Pattern4,Dial Pattern为xxxx ，Strip：空，Prepend：空，外线：FXO，分机：分机D-1003；\n" +
-            "新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；\n" +
-            "新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；\n" +
-            "新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；\n" +
+    @Description("新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；\n" +
             "\t11.分机1004拨打233\n" +
             "\t\t辅助2的分机2000正常响铃，接听，挂断；检查cdr，呼出外线是E1\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【ID1036056】【P系列】【自动化测试】 呼出路由 E1/BRI CDR 被叫显示异常")
-    @Test(groups = {"PSeries", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_11_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "OutboundRoute","DialPattern", "Pattern", "Trunk", "E1", "P3", "testOR_11_Pattern_Trunk_Extesnion"})
     public void testOR_11_Pattern_Trunk_Extesnion() {
         if (E1.trim().equalsIgnoreCase("null") || E1.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "BRI_1线路 不测试！");
         }
         prerequisite();
-        step("新建呼出路由OR_Pattern4,Dial Pattern为xxxx ，Strip：空，Prepend：空，外线：FXO，分机：分机D-1003；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；\\n\"");
-        apiUtil.deleteAllOutbound().createOutbound("OR_Pattern4", asList(FXO_1), asList("1003"), "xxxx", 0).
-                createOutbound("OR_Pattern5", asList(BRI_1), asList("1004"), "233.", 0).
-                createOutbound("OR_Pattern6", asList(E1), asList("1004"), "233!", 0).
-                createOutbound("OR_Pattern7", asList(GSM), asList("1005"), "1.", 0).apply();
+        step("            \"新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；");
+        apiUtil.deleteAllOutbound().createOutbound("OR_Pattern6", asList(E1), asList("1004"), "233!", 0).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -552,29 +525,20 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("OutboundRoute-DialPattern")
     @Story("Pattern,Trunk,Extension")
-    @Description("新建呼出路由OR_Pattern4,Dial Pattern为xxxx ，Strip：空，Prepend：空，外线：FXO，分机：分机D-1003；\n" +
-            "新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；\n" +
-            "新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；\n" +
-            "新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；\n" +
+    @Description("新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；\n" +
             "\t12.分机1005拨打辅助2的GSM号码\n" +
             "\t\t辅助2的分机2000正常响铃，接听，挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_12_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "OutboundRoute","DialPattern", "Pattern", "Trunk", "GSM", "P3", "testOR_12_Pattern_Trunk_Extesnion"})
     public void testOR_12_Pattern_Trunk_Extesnion() {
         if (GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "BRI_1线路 不测试！");
         }
         prerequisite();
-        step("新建呼出路由OR_Pattern4,Dial Pattern为xxxx ，Strip：空，Prepend：空，外线：FXO，分机：分机D-1003；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern5,Dial Pattern 为233.  ,Strip：空，Prepend：空，外线BRI，分机：分机X-1004；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern6,Dial Pattern 为233!  ,Strip：空，Prepend：空，外线E1，分机：分机X-1004；\\n\" +\n" +
-                "            \"新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；\\n\"");
-        apiUtil.deleteAllOutbound().createOutbound("OR_Pattern4", asList(FXO_1), asList("1003"), "xxxx", 0).
-                createOutbound("OR_Pattern5", asList(BRI_1), asList("1004"), "233.", 0).
-                createOutbound("OR_Pattern6", asList(E1), asList("1004"), "233!", 0).
-                createOutbound("OR_Pattern7", asList(GSM), asList("1005"), "1.", 0).apply();
+        step("            \"新建呼出路由OR_Pattern7,Dial Pattern 为1.  ,Strip：空，Prepend：空，外线GSM，分机：分机X-1005；");
+        apiUtil.deleteAllOutbound().createOutbound("OR_Pattern7", asList(GSM), asList("1005"), "1.", 0).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -609,7 +573,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_13_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "OutboundRoute","DialPattern", "Pattern", "Trunk", "FXS", "P3", "testOR_13_Pattern_Trunk_Extesnion"})
     public void testOR_13_Pattern_Trunk_Extesnion() {
         if (FXS_1.trim().equalsIgnoreCase("null") || FXS_1.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "FXS_1线路 不测试！");
@@ -654,7 +618,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_14_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern",  "P3", "testOR_14_Pattern_Trunk_Extesnion"})
     public void testOR_14_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -697,7 +661,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_15_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_15_Pattern_Trunk_Extesnion"})
     public void testOR_15_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -729,7 +693,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_16_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_16_Pattern_Trunk_Extesnion"})
     public void testOR_16_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -772,7 +736,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_17_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_17_Pattern_Trunk_Extesnion"})
     public void testOR_17_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -804,7 +768,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_18_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_18_Pattern_Trunk_Extesnion"})
     public void testOR_18_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -847,7 +811,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_19_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_19_Pattern_Trunk_Extesnion"})
     public void testOR_19_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -879,7 +843,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_20_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_20_Pattern_Trunk_Extesnion"})
     public void testOR_20_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -922,7 +886,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_21_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_21_Pattern_Trunk_Extesnion"})
     public void testOR_21_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -954,7 +918,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_22_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_22_Pattern_Trunk_Extesnion"})
     public void testOR_22_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -986,7 +950,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_23_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_23_Pattern_Trunk_Extesnion"})
     public void testOR_23_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1018,7 +982,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_24_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_24_Pattern_Trunk_Extesnion"})
     public void testOR_24_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1061,7 +1025,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_25_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_25_Pattern_Trunk_Extesnion"})
     public void testOR_25_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1104,7 +1068,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_26_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_26_Pattern_Trunk_Extesnion"})
     public void testOR_26_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1136,7 +1100,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_27_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_27_Pattern_Trunk_Extesnion"})
     public void testOR_27_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1179,7 +1143,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_28_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_28_Pattern_Trunk_Extesnion"})
     public void testOR_28_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1222,7 +1186,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_29_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_29_Pattern_Trunk_Extesnion"})
     public void testOR_29_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1266,7 +1230,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Pattern", "Trunk", "Extension", "P3", "testOR_30_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Pattern", "P3", "testOR_30_Pattern_Trunk_Extesnion"})
     public void testOR_30_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1295,7 +1259,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Strip", "Prepend", "P2", "testOR_31_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Strip", "Prepend", "P2", "testOR_31_Pattern_Trunk_Extesnion"})
     public void testOR_31_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1335,7 +1299,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Strip", "Prepend", "P3", "testOR_32_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Strip", "Prepend", "P3", "testOR_32_Pattern_Trunk_Extesnion"})
     public void testOR_32_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1375,7 +1339,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Strip", "Prepend", "P2", "testOR_33_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Strip", "Prepend", "P2", "testOR_33_Pattern_Trunk_Extesnion"})
     public void testOR_33_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
@@ -1415,7 +1379,7 @@ public class TestOutboundDialPattern extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-DialPattern", "Strip", "Prepend", "P2", "testOR_34_Pattern_Trunk_Extesnion"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute","DialPattern", "Strip", "Prepend", "P2", "testOR_34_Pattern_Trunk_Extesnion"})
     public void testOR_34_Pattern_Trunk_Extesnion() {
         prerequisite();
         step("新建呼出路由OR_Pattern9，外线选择sps，分机选择1004,添加多个DialPattern：");
