@@ -3,8 +3,9 @@ package com.yeastar.swebtest.tools.pjsip;
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.yeastar.untils.PropertiesUntils;
 
-import static com.yeastar.swebtest.driver.ConfigP.currentPath;
+import java.io.File;
 
 /**
  * Created by GaGa on 2017-04-16.
@@ -18,17 +19,38 @@ public class PjsipDll {
         /**
          *  adapt local testNG ok
          */
-//        pjsipdll instance = (pjsipdll) Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+ File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll",pjsipdll.class);
-//        pjsipdll instance = (pjsipdll) Native.loadLibrary(currentPath+
-//                "\\src"+"\\main"+"\\resources"+"\\libYsAutoTestPjsua",pjsipdll.class);
+        pjsipdll instance = (pjsipdll) Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+ File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
 
 
+        /**
+         *  adapt local  maven test ok
+         */
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"classes"+ File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+
+        ///////////////////////////////////////////
+
+        /**
+         *  adapt testNG for Linux
+         */
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"linux-x86-64"+File.separator+"libpjsip.so",pjsipdll.class);
+
+
+        /**
+         *  adapt maven test for jenkins
+         *
+         *   home/pjsip/pjproject-2.6/out/lib
+         */
+
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary("YsAutoTestPjsua_sound",pjsipdll.class);
+//
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
         /**
          * adapt for coderserver
          *
          * home/pjsip/pjproject-2.6/out/lib
          */
-         pjsipdll instance = (pjsipdll) Native.loadLibrary(currentPath+ "/../src/main/resources/libYsAutoTestPjsua",pjsipdll.class);
+        // pjsipdll instance = (pjsipdll) Native.loadLibrary(currentPath + "/src/main/resources/libYsAutoTestPjsua.so",
+        //         pjsipdll.class);
         //PjsipDll.dll的通用API
         int ys_registerAccount(String uri, String reguri, String name, String username,
                                String password, String proxy, Boolean isdefault,int reg_timeout);
