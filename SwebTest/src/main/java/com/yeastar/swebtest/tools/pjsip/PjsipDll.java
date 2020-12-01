@@ -21,7 +21,7 @@ public class PjsipDll {
          */
 //        pjsipdll instance = (pjsipdll) Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+ File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll",pjsipdll.class);
         pjsipdll instance = (pjsipdll) Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+
-                File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua",pjsipdll.class);
+                "src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua",pjsipdll.class);
 
         /**
          * adapt for coderserver
