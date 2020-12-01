@@ -2,6 +2,9 @@ package com.yeastar.swebtest.tools.pjsip;
 
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
+import com.sun.jna.Native;
+
+import static com.yeastar.swebtest.driver.ConfigP.currentPath;
 
 /**
  * Created by GaGa on 2017-04-16.
@@ -25,6 +28,7 @@ public class PjsipDll {
          *
          * home/pjsip/pjproject-2.6/out/lib
          */
+         pjsipdll instance = (pjsipdll) Native.loadLibrary(currentPath+ "/src/main/resources/libYsAutoTestPjsua",pjsipdll.class);
         //PjsipDll.dll的通用API
         int ys_registerAccount(String uri, String reguri, String name, String username,
                                String password, String proxy, Boolean isdefault,int reg_timeout);
