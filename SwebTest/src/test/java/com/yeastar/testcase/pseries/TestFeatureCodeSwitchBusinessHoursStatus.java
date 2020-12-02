@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.tuple;
  */
 @Log4j2
 public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     public void prerequisite() {
@@ -53,7 +53,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
             initInbound();
             initFeatureCode();
             isRunRecoveryEnvFlag = registerAllExtensions();
-        step("=========== init before class  end =========");
+            step("=========== init before class  end =========");
         }
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
     }
@@ -64,7 +64,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
      * *
      */
     public void initBusinessHours() {
-        step("#### Business Hours and Holidays->Business Hours 添加上班时间条件00:00~23:59 选择星期一至星期日；");
+        log.info("#### Business Hours and Holidays->Business Hours 添加上班时间条件00:00~23:59 选择星期一至星期日；");
         List<String> officeTimes = new ArrayList<>();
         List<String> resetTimes = new ArrayList<>();
         officeTimes.add("00:00-23:59");
@@ -271,7 +271,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
         getExtensionStatus(1000, HUNGUP, 30);
 
         step("[Asterisk校验]");
-        assertThat(getAsteriskFORCEDEST()).contains("/FORCEDEST/global                                 : office").as("[asterisk 切换失败]");
+        assertThat(getAsteriskFORCEDEST()).doesNotContain("/FORCEDEST/global                                 : outoffice").as("[asterisk 切换失败]");
 
         step("分机1001拨打*99");
         pjsip.Pj_Make_Call_No_Answer(1001, "*99", DEVICE_IP_LAN, false);
@@ -310,7 +310,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
         getExtensionStatus(1002, HUNGUP, 30);
 
         step("[Asterisk校验]");
-        assertThat(getAsteriskFORCEDEST()).contains("/FORCEDEST/global                                 : office").as("[asterisk 切换失败]");
+        assertThat(getAsteriskFORCEDEST()).doesNotContain("/FORCEDEST/global                                 : outoffice").as("[asterisk 切换失败]");
 
         step("分机1003拨打*99");
         pjsip.Pj_Make_Call_No_Answer(1003, "*99", DEVICE_IP_LAN, false);
@@ -344,7 +344,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
         getExtensionStatus(1000, HUNGUP, 30);
 
         step("[Asterisk校验]");
-        assertThat(getAsteriskFORCEDEST()).contains("/FORCEDEST/global                                 : office").as("[asterisk 切换失败]");
+        assertThat(getAsteriskFORCEDEST()).doesNotContain("/FORCEDEST/global                                 : outoffice").as("[asterisk 切换失败]");
 
         step("分机1001拨打*99");
         pjsip.Pj_Make_Call_No_Answer(1001, "*99", DEVICE_IP_LAN, false);
@@ -379,7 +379,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
         getExtensionStatus(1002, HUNGUP, 30);
 
         step("[Asterisk校验]");
-        assertThat(getAsteriskFORCEDEST()).contains("/FORCEDEST/global                                 : office").as("[asterisk 切换失败]");
+        assertThat(getAsteriskFORCEDEST()).doesNotContain("/FORCEDEST/global                                 : outoffice").as("[asterisk 切换失败]");
 
         step("分机1003拨打*99");
         pjsip.Pj_Make_Call_No_Answer(1003, "*99", DEVICE_IP_LAN, false);
@@ -410,7 +410,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
         getExtensionStatus(1002, HUNGUP, 30);
 
         step("[Asterisk校验]");
-        assertThat(getAsteriskFORCEDEST()).doesNotContain("/FORCEDEST/global                                 : office").as("[asterisk 切换失败]");
+        assertThat(getAsteriskFORCEDEST()).doesNotContain("/FORCEDEST/global                                 : outoffice").as("[asterisk 切换失败]");
 
     }
 
