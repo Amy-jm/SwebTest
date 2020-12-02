@@ -450,9 +450,11 @@ public class BaseMethod extends WebDriverFactory {
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.HumanResource.toString()).replace("EXTENSIONFIRSTNAME", "t").replace("EXTENSIONLASTNAME", "estX").replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Accounting.toString()).replace("EXTENSIONFIRSTNAME", "First").replace("EXTENSIONLASTNAME", "Last").replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Administrator.toString()).replace("EXTENSIONFIRSTNAME", "0").replace("EXTENSIONLASTNAME", "0").replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
+				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Administrator.toString()).replace("EXTENSIONFIRSTNAME", "1030").replace("EXTENSIONLASTNAME", "1030").replace("EXTENSIONNUM", "1030").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Administrator.toString()).replace("EXTENSIONFIRSTNAME", "1").replace("EXTENSIONLASTNAME", "1").replace("EXTENSIONNUM", "1").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+				.loginWebClient("1030", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1000", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1001", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
@@ -616,12 +618,7 @@ public class BaseMethod extends WebDriverFactory {
 		List<String> extensionNum = new ArrayList<>();
 		List<String> extensionNumA = new ArrayList<>();
 
-		extensionNum.add("0");
-		extensionNum.add("1000");
-		extensionNum.add("1001");
-		extensionNum.add("1002");
-		extensionNum.add("1003");
-		extensionNumA.add("1000");
+		extensionNum.add("Default_Extension_Group");
 
 		List<String> trunk1 = new ArrayList<>();
 		List<String> trunk2 = new ArrayList<>();

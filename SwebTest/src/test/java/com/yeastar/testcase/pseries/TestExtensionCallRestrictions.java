@@ -13,9 +13,9 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static java.util.Arrays.asList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @program: SwebTest
@@ -44,11 +44,14 @@ public class TestExtensionCallRestrictions extends TestCaseBaseNew {
         trunk9.add(ACCOUNTTRUNK);
         trunk9.add(GSM);
 
-
-        step("##########\"Business Hours and Holidays->Business Hours 添加上班时间条件:\\n\" +\n" +
-                "            \"Business Hours：00:00-06:00;06:00-08:00;13:00-18:00\\n\" +\n" +
-                "            \"Break Hours：07:00-14:00;18:00-23:59\\n\" +\n" +
-                "            \"Days of week：\\tSunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday\" +");
+        /**
+         * ##########
+         * "Business Hours and Holidays->Business Hours 添加上班时间条件:\\n\" +\n" +
+         * "Business Hours：00:00-06:00;06:00-08:00;13:00-18:00\\n\" +\n" +
+         * "Break Hours：07:00-14:00;18:00-23:59\\n\" +\n" +
+         * "Days of week：\\tSunday.Monday.Tuesday.Wednesday.Thursday.Friday.Saturday\" +"
+         * ##########
+         */
         officeTimes.add("00:00-06:00");
         officeTimes.add("06:00-08:00");
         officeTimes.add("13:00-18:00");
@@ -59,7 +62,6 @@ public class TestExtensionCallRestrictions extends TestCaseBaseNew {
     public void prerequisite() {
         long startTime = System.currentTimeMillis();
         if (isDebugInitExtensionFlag) {
-            initBeforeClass();
             isDebugInitExtensionFlag = registerAllExtensions();
             isRunRecoveryEnvFlag = false;
         }
@@ -77,7 +79,7 @@ public class TestExtensionCallRestrictions extends TestCaseBaseNew {
             initIVR();
             initInbound();
             initFeatureCode();
-            initBeforeClass();// todo 提交的时候 启用
+            initOutBounds();// todo 提交的时候 启用
             isRunRecoveryEnvFlag = registerAllExtensions();
         step("=========== init before class  end =========");
         }
@@ -87,9 +89,8 @@ public class TestExtensionCallRestrictions extends TestCaseBaseNew {
     /**
      * 时间条件
      */
-    @Test
-    public void initBeforeClass(){
-        step("######### Beforeclass\n" +
+    public void initOutBounds(){
+        log.info("######### Beforeclass\n" +
                 "\t新建呼出路由OutRole1，Role选择Supervisor，Dial Pattern ：81. Strip:2，选择sps外线\n" +
                 "\t新建呼出路由OutBusinessHours2，Dial Pattern：82. ，Strip:2 ,选择sps外线，Time Condition 选择Always\n" +
                 "\t新建呼出路由OutBusinessHours3，Dial Pattern：83. ，Strip:2 ,选择sps外线，Time Condition 选择Based on Global Business Hours ，选择Business Hours、Outside Business Hours、Holidays\n" +
@@ -100,7 +101,7 @@ public class TestExtensionCallRestrictions extends TestCaseBaseNew {
                 "\t新建呼出路由OutBusinessHours8，Dial Pattern：88. ，Strip:2 ,选择sps外线，Time Condition 选择Based on Custom Time Periods ，自定义时间00:00-23:59 ,周一到周天，选择Holidays");
 
 
-        apiUtil.deleteAllOutbound().createOutbound("OutRole1", asList(SPS), asList("Default_Extension_Group"), "81.", 2).
+        apiUtil.createOutbound("OutRole1", asList(SPS), asList("Default_Extension_Group"), "81.", 2).
                 editOutbound("OutRole1","\"role_list\":[{\"value\":\"2\",\"text\":\"Supervisor\"}]").apply();
 
         apiUtil.createOutbound("OutBusinessHours2", asList(SPS), asList("Default_Extension_Group"), "82.", 2).
@@ -264,7 +265,7 @@ public class TestExtensionCallRestrictions extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","Extension", "CallRestrictions","DisableOutboundCalls","OutboundRoute","P3",""})
+    @Test(groups = {"PSeries","FXS","Extension", "CallRestrictions","DisableOutboundCalls","OutboundRoute","P3",""})
     public void testExtension_05_DisableOutboundCalls() {
         if(FXS_1.trim().equalsIgnoreCase("null") || FXS_1.trim().equalsIgnoreCase("")){
             Assert.assertTrue(false,"FXS 分机不存在！");
@@ -287,21 +288,22 @@ public class TestExtensionCallRestrictions extends TestCaseBaseNew {
 
         step("编辑分机1020，Security-》禁用Disable Outbound Calls ,不启用Disable Outbound Calls outside Business Hours ");
         apiUtil.editExtension("1020","\"disable_outb_call\":0,\"disable_office_time_outb_call\":0").apply();
+        sleep(5000);
 
         step("2:[caller] 2001" + ",[callee] 7713001");
         pjsip.Pj_Make_Call_No_Answer(2001, "7713001", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(3001, RING, 60)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
+        assertThat(getExtensionStatus(3001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         pjsip.Pj_Answer_Call(3001, false);
-        assertThat(getExtensionStatus(3001, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
+        assertThat(getExtensionStatus(3001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2001);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_2001.toString(), "7713001", STATUS.ANSWER.toString(), CDRNAME.Extension_2001.toString() + " hung up", "", SPS, "Outbound"));
+                .contains(tuple(CDRNAME.Extension_1020.toString(), "13001", STATUS.ANSWER.toString(), CDRNAME.Extension_1020.toString() + " hung up", "", SPS, "Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1218,18 +1220,7 @@ public class TestExtensionCallRestrictions extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(1001, "84888", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 60)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
-        pjsip.Pj_Answer_Call(2000, false);
-        assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
-
-        step("[主叫挂断]");
-        pjsip.Pj_hangupCall(1001);
-
-        assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_1001.toString(), "84888", STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString() + " hung up", "", SPS, "Outbound"));
-
-        softAssertPlus.assertAll();
+        assertThat(getExtensionStatus(1001, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
     }
     @Epic("P_Series")
     @Feature("Extension-CallRestrictions")

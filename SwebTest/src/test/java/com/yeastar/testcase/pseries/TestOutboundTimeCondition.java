@@ -75,9 +75,9 @@ public class TestOutboundTimeCondition extends TestCaseBaseNew {
     /**
      * 时间条件
      */
-//    @Test
+
     public void timeComdition(){
-        step("#########前置环境 time condition" +
+        log.info("#########前置环境 time condition" +
                 "1、Business Hours and Holidays->Business Hours 添加上班时间条件:\n" +
                 "Business Hours：00:00-06:00;06:00-08:00;13:00-18:00\n" +
                 "Break Hours：07:00-14:00;18:00-23:59\n" +
