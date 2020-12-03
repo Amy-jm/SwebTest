@@ -625,7 +625,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     public void testPreferences_15_MaxCallDuration() {
         prerequisite();
         step("15.编辑In1,呼入目的地为External Number，Prefix:1 号码3001");
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\""));
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
