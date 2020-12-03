@@ -213,7 +213,7 @@ public class APIUtil {
      * @throws IOException
      */
     public  List<CDRObject> getCDRRecord(int num){
-        sleep(2000);
+        sleep(3000);
         String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/search?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
         String respondJson = getRequest(req);
         System.out.println("cdr record :"+respondJson);
@@ -1979,6 +1979,14 @@ public class APIUtil {
         return this;
     }
 
+    public APIUtil editSSHAccess(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/sshaccess/update",String.format("{%s}",request));
+        return this;
+    }
+    public APIUtil createSpeeddial(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/speeddial/create",String.format("{%s}",request));
+        return this;
+    }
     /**
      * Preference 更新
      * @param request

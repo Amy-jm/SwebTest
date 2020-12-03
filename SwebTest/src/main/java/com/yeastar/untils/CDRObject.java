@@ -1,5 +1,6 @@
 package com.yeastar.untils;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import top.jfunc.json.impl.JSONObject;
@@ -47,7 +48,7 @@ public class CDRObject {
         callFrom = getValue("call_from").replace(prefix,"");
         callTo = getValue("call_to").replace(prefix,"");
         if(obj.containsKey("duration")){
-            callDuration = obj.getString("duration"); //todo 时间需要转化成00:00:00
+            callDuration =  DateUtil.secondToTime(Integer.parseInt(obj.getString("duration")));
         }
         ringDuration = getValue("ring_duration");
         talkDuration = getValue("talk_duration");
@@ -136,6 +137,8 @@ public class CDRObject {
 
         Extension_1000_VOICEMAIL("Voicemail test A<1000>"),
         Extension_1001_VOICEMAIL("Voicemail test2 B<1001>"),
+        Extension_1004_VOICEMAIL("Voicemail t estX<1004>"),
+
 
         Conference0_6500("Conference Conference0<6500>");
 
