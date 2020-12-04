@@ -358,6 +358,47 @@ public class APIUtil {
         return this;
     }
     /**
+     * 编辑分机
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editSipTrunk(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/siptrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
+        return this;
+    }
+    /**
+     * 编辑bri trunk
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editBriTrunk(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/britrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
+        return this;
+    }
+  /**
+     * 编辑gsm trunk
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editGSMTrunk(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/gsmtrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
+        return this;
+    }
+//    /**
+//     * 编辑E1 trunk
+//     * @param number
+//     * @param request
+//     * @return
+//     */
+//    public APIUtil editDigitalTrunk(String number, String request){
+//        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/gsmtrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
+//        return this;
+//    }
+
+    /**
      * 获取分机组概要列表
      * 对应API：api/v1.0/extension/searchsummary
      */
@@ -381,6 +422,30 @@ public class APIUtil {
         }
         return extObjList;
     }
+    /**
+     * 获取emergency概要列表
+     * 对应API：api/v1.0/emergency/searchsummary
+     */
+    public List<EmergencyObject> getEmergencySummary(){
+
+        List<EmergencyObject> extObjList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/emergency/list?page=1&page_size=20&sort_by=id&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("emergency_list"))
+                return extObjList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("emergency_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                extObjList.add(new EmergencyObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+
+        }else {
+            Assert.fail("[API getExtensionSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return extObjList;
+    }
 
     /**
      * 获取分机组概要列表
@@ -389,6 +454,19 @@ public class APIUtil {
     public ExtensionGroupObject getExtensionGroupSummary(String name){
         List<ExtensionGroupObject> extensionGroupSummary = getExtensionGroupSummary();
         for (ExtensionGroupObject object : extensionGroupSummary){
+            if(object.name.equals(name)){
+                return object;
+            }
+        }
+        return null;
+    }
+     /**
+     * get emergency
+     * 对应API：api/v1.0/emergency/searchsummary
+     */
+    public EmergencyObject getEmergencySummary(String name){
+        List<EmergencyObject> emergencySummary = getEmergencySummary();
+        for (EmergencyObject object : emergencySummary){
             if(object.name.equals(name)){
                 return object;
             }
@@ -428,6 +506,70 @@ public class APIUtil {
         }
         return this;
     }
+    /**
+     * 删除指定Emergency
+     * */
+    public APIUtil deleteEmergency(String emergencyName){
+        List<EmergencyObject> emergencyObjects = getEmergencySummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(EmergencyObject object : emergencyObjects){
+            if(object.name.equals(emergencyName)){
+              list.add(object.id);
+        }}
+        if(list != null && !list.isEmpty()){
+            deleteEmergency(list);
+        }
+        return this;
+    }
+ /**
+     * 删除指定Emergency
+     * */
+    public APIUtil deleteAllEmergency(){
+        List<EmergencyObject> emergencyObjects = getEmergencySummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(EmergencyObject object : emergencyObjects){
+              list.add(object.id);
+        }
+        if(list != null && !list.isEmpty()){
+            deleteEmergency(list);
+        }
+        return this;
+    }
+
+    /**
+     * 通过分机组的ID删除指定分机组
+     * 对应接口：/api/v1.0/extensiongroup/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteAllExtensionGroup(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/batchdelete",jsonObject.toString());
+
+        return this;
+    }
+
+    /**
+     * 对应接口：/api/v1.0/emergency/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteEmergency(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/emergency/batchdelete",jsonObject.toString());
+
+        return this;
+    }
 
     /**
      * 通过分机组的ID删除指定分机组
@@ -453,6 +595,24 @@ public class APIUtil {
     public APIUtil createExtensionGroup(String request){
         //获取默认分机组
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/create",request);
+        return this;
+    }
+    /**
+     * 创建emergency
+     * @param request  请求包中的完整body赋值给request
+     */
+    public APIUtil createEmergency(String request){
+        //获取默认分机组
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/emergency/create",request);
+        return this;
+    }
+  /**
+     * 创建emergency
+     * @param request  请求包中的完整body赋值给request
+     */
+    public APIUtil editEmergency(String request){
+        //获取默认分机组
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/emergency/update",request);
         return this;
     }
 
@@ -534,7 +694,9 @@ public class APIUtil {
             Assert.fail("[API getTrunkSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
         }
         return trunkObjList;
-    } /**
+    }
+
+    /**
      * 获取Trunk概要列表
      * 对应API：api/v1.0/extension/searchsummary
      */
@@ -558,6 +720,16 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/fxotrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
         return this;
     }
+ /**
+     * 编辑FXO
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editEmergency(String number, String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/emergency/update",String.format("{%s,\"id\":%s}",request,getEmergencySummary(number).id));
+        return this;
+    }
 
     /**
      * 编辑E1
@@ -570,16 +742,6 @@ public class APIUtil {
         return this;
     }
 
-    /**
-     * 编辑GSM
-     * @param number
-     * @param request
-     * @return
-     */
-    public APIUtil editGSMTrunk(String number, String request){
-        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/gsmtrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
-        return this;
-    }
     /**
      * 通过Trunk的ID删除
      * 对应接口：/api/v1.0/trunk/batchdelete
@@ -604,7 +766,6 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/siptrunk/create",request);
         return this;
     }
-
 
     /**
      * 获取呼出路由概要列表
