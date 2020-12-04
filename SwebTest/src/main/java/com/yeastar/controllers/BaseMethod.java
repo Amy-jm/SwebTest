@@ -63,6 +63,7 @@ public class BaseMethod extends WebDriverFactory {
 	public final String PROMPT_2 = "prompt2.slin";
 	public final String PROMPT_3 = "prompt3.slin";
 	public final String FAX_TO_EMAIL_1001 = "1001@fax_to_email";
+	public final String inboundName1 = "In1";
 	public final String ringGroupName0 = "RingGroup0";//6300
 	public final String ringGroupName1 = "RingGroup1";//6301
 	public final String ivrName0 = "IVR0";//6301
@@ -737,11 +738,13 @@ public class BaseMethod extends WebDriverFactory {
 			if (!queueInfo.contains("1003")){
 				step("1003拨号*76400，登录Queue0");
 				pjsip.Pj_Make_Call_No_Answer(1003,  "*76400", DEVICE_IP_LAN, false);
+				getExtensionStatus(1003, HUNGUP, 10);
 			}
 
 			if (!queueInfo.contains("1004")){
 				step("1004拨号*76400，登录Queue0");
 				pjsip.Pj_Make_Call_No_Answer(1004,  "*76400", DEVICE_IP_LAN, false);
+				getExtensionStatus(1004, HUNGUP, 10);
 			}
 		}
 		return reg;
