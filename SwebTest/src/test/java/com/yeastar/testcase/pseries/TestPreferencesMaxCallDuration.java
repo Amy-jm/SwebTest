@@ -49,7 +49,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     public void prerequisite() {
         long startTime = System.currentTimeMillis();
         if (isDebugInitExtensionFlag) {
-//            initTestEnv();
+//            initTestEnv(); //local debug open
             isDebugInitExtensionFlag = registerAllExtensions();
             isRunRecoveryEnvFlag = false;
         }
@@ -77,9 +77,9 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     /**
      * 时间条件
      */
-    @Test
+
     public void initTestEnv() {
-        step("######### 初始化测试环境\n" +
+        log.debug("######### 初始化测试环境\n" +
                 "1、编辑Preferences->Max Call Duration 设置为50s；\n" +
                 "2、编辑分机1000，Security-》Max Outbound Call Duration 设置为20s；\n" +
                 "3、编辑分机1001，Security-》Max Outbound Call Duration 设置为30s；\n" +
@@ -107,7 +107,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         if (!FXO_1.trim().equalsIgnoreCase("null") || !FXO_1.trim().equalsIgnoreCase("")) {
             apiUtil.editExtension("1020", "\"max_outb_call_duration\":20").apply();
         } else {
-            step("【FXS 分机不存在 初始环境失败！！！】7、编辑分机1020，Security-》Max Outbound Call Duration 设置为20s；【需判断FXS分机是否存在】");
+            log.debug("【FXS 分机不存在 初始环境失败！！！】7、编辑分机1020，Security-》Max Outbound Call Duration 设置为20s；【需判断FXS分机是否存在】");
         }
 
     }
@@ -201,7 +201,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
-        
+
         step("1000 自动挂断");
         assertThat(getExtensionStatus(1000, HUNGUP, 60)).as("通话状态校验 失败!").isIn(HUNGUP, IDLE);
 
@@ -483,7 +483,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
 
-        step("[通话状态校验]");//TODO DEBUG
+        step("[通话状态校验]");
         assertThat(getExtensionStatus(1000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         pjsip.Pj_Answer_Call(1000, false);
         assertThat(getExtensionStatus(1000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
@@ -525,7 +525,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(1000, false);
         assertThat(getExtensionStatus(1000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
-        step("2000 自动挂断");//TODO DEBUG
+        step("2000 自动挂断");
         assertThat(getExtensionStatus(2000, HUNGUP, 60)).as("通话状态校验 失败!").isIn(HUNGUP, IDLE);
 
         assertStep("[CDR校验]");
@@ -1225,7 +1225,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Preferences", "MaxCallDuration", "P3", "MaxCallDuration", "MaxOutboundCallDuration", ""})
     public void testPreferences_29_MaxCallDuration() {
         prerequisite();
-        apiUtil.createSpeeddial("\"code\":\"1\",\"phone_number\":\"13001\"").apply();
+        apiUtil.deleteAllSpeedDial().createSpeeddial("\"code\":\"1\",\"phone_number\":\"13001\"").apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -1277,14 +1277,13 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         softAssertPlus.assertAll();
     }
 
-//    @AfterClass(alwaysRun = true)
-//    public void restore() {
-//        step("#########  restore env start #########");
-//        step(" \"1、编辑Preferences->Max Call Duration 设置为1800s；\\n\" +\n");
-//        apiUtil.preferencesUpdate("{\"max_call_duration\":1800}").apply();
-//
-//        step("#########  restore env end #########");
-//
-//    }
+    @AfterClass
+    public void restore() {
+        step("#########  restore env start #########");
+        step(" \"1、编辑Preferences->Max Call Duration 设置为1800s；\\n\" +\n");
+        apiUtil.preferencesUpdate("{\"max_call_duration\":1800}").apply();
 
+        step("#########  restore env end #########");
+
+    }
 }

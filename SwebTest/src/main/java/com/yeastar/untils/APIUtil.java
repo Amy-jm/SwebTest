@@ -677,6 +677,29 @@ public class APIUtil {
         }
         return holidayObjectList;
     }
+    /**
+     * 获取speeddial概要列表
+     * 对应API：api/v1.0/speeddial/list
+     */
+    public List<SpeedDialObject> getSpeedDialSummary(){
+
+        List<SpeedDialObject> speedDialObjectArrayList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/speeddial/list?page=1&page_size=20&sort_by=id&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("speed_dial_list"))
+                return speedDialObjectArrayList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("speed_dial_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                speedDialObjectArrayList.add(new SpeedDialObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+        }else {
+            Assert.fail("[API get speed dial summary exception] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return speedDialObjectArrayList;
+    }
 
     /**
      * 获取featurecode
@@ -763,6 +786,22 @@ public class APIUtil {
         }
         return this;
     }
+    /**
+     * 删除当前存在的所有speed dial
+     * */
+    public APIUtil deleteAllSpeedDial(){
+        List<SpeedDialObject> speedDialObjects = getSpeedDialSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(SpeedDialObject object : speedDialObjects){
+            list.add(object.id);
+         }
+
+        if (!list.isEmpty() || list.size() != 0) {
+            deleteSpeedDial(list);
+        }
+        return this;
+    }
 
 
     /**
@@ -810,6 +849,21 @@ public class APIUtil {
         JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
 
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/holiday/batchdelete",jsonObject.toString());
+        return this;
+    }
+ /**
+     * 通过ID删除speed dail
+     * 对应接口：/api/v1.0/speeddial/batchdelete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteSpeedDial(List<Integer> idLsit){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idLsit);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/speeddial/batchdelete",jsonObject.toString());
         return this;
     }
 
