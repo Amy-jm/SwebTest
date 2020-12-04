@@ -30,7 +30,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestOutboundBasic() {
@@ -47,7 +47,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         long startTime = System.currentTimeMillis();
         if (isDebugInitExtensionFlag) {
             isDebugInitExtensionFlag = registerAllExtensions();
-            isRunRecoveryEnvFlag = false;
+            isRunRecoveryEnvFlag = true;
         }
 
         if (isRunRecoveryEnvFlag) {

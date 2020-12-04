@@ -81,7 +81,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P2", "testOR_01_CallerID_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2",  "OutboundRoute","OutboundCallerID", "Trunk","SPS", "P2", "testOR_01_CallerID_Trunk"})
     public void testOR_01_CallerID_Trunk() {
         prerequisite();
         step("新建呼出路由OutboundCallerID1,Outbound Caller ID 设置为1234567890，Pattern：61. ,Strip:2，选择sps外线，分机选择ExGroup1,1002,1003；");
@@ -118,7 +118,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P3", "testOR_02_CallerID_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2",  "OutboundRoute","OutboundCallerID", "Trunk","SIP_REGISTER", "P3", "testOR_02_CallerID_Trunk"})
     public void testOR_02_CallerID_Trunk() {
         prerequisite();
         step("新建呼出路由OutboundCallerID2,Outbound Caller ID 设置为+123abc0，Pattern：62. ,Strip:2，选择sip外线，分机选择ExGroup1,1002,1003；");
@@ -155,7 +155,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P2", "testOR_03_CallerID_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2",  "OutboundRoute","OutboundCallerID", "Trunk", "SIP_ACCOUNT","P2", "testOR_03_CallerID_Trunk"})
     public void testOR_03_CallerID_Trunk() {
         prerequisite();
         step("新建呼出路由OutboundCallerID3,Outbound Caller ID 设置为{{.Ext}}，Pattern：63. ,Strip:2，选择account外线，分机选择ExGroup1,1002,1003；");
@@ -192,7 +192,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P3", "testOR_04_CallerID_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2",  "OutboundRoute","OutboundCallerID", "Trunk","SPS", "P3", "testOR_04_CallerID_Trunk"})
     public void testOR_04_CallerID_Trunk() {
         prerequisite();
         step("新建呼出路由OutboundCallerID4,Outbound Caller ID 设置为+123abc0{{.Ext}}，Pattern：64. ,Strip:2，选择sps外线，分机选择ExGroup1,1002,1003；");
@@ -229,7 +229,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P3", "testOR_05_CallerID_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2",  "OutboundRoute","OutboundCallerID", "Trunk", "SPS","P3", "testOR_05_CallerID_Trunk"})
     public void testOR_05_CallerID_Trunk() {
         prerequisite();
         step("新建呼出路由OutboundCallerID4,Outbound Caller ID 设置为+123abc0{{.Ext}}，Pattern：64. ,Strip:2，选择sps外线，分机选择ExGroup1,1002,1003；");
@@ -266,7 +266,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P3", "testOR_06_CallerID_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2",  "OutboundRoute","OutboundCallerID", "Trunk","SPS", "P3", "testOR_06_CallerID_Trunk"})
     public void testOR_06_CallerID_Trunk() {
         prerequisite();
         step("新建呼出路由OutboundCallerID5,Outbound Caller ID 设置为{{.Ext}}+123abc0，Pattern：65. ,Strip:2，选择sps外线，分机选择ExGroup1,1002,1003；");
@@ -303,7 +303,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P3", "testOR_07_CallerID_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2",  "OutboundRoute","OutboundCallerID", "Trunk","SPS", "P3", "testOR_07_CallerID_Trunk"})
     public void testOR_07_CallerID_Trunk() {
         prerequisite();
         step("新建呼出路由OutboundCallerID6,Outbound Caller ID 设置为{{.Ext}}{{.Ext}}505{{.Ext}}123，Pattern：66. ,Strip:2，选择sps外线，分机选择ExGroup1,1002,1003；");
@@ -340,7 +340,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P3", "testOR_08_CallerID_Trunk"})
+    @Test(groups = {"PSeries",  "OutboundRoute","OutboundCallerID", "Trunk","FXO", "P3", "testOR_08_CallerID_Trunk"})
     public void testOR_08_CallerID_Trunk() {
         if (FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "FXO线路 不测试！");
@@ -380,7 +380,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P3", "testOR_09_CallerID_Trunk"})
+    @Test(groups = {"PSeries",  "OutboundRoute","OutboundCallerID", "Trunk","BRI", "P3", "testOR_09_CallerID_Trunk"})
     public void testOR_09_CallerID_Trunk() {
         prerequisite();
         step("新建呼出路由OutboundCallerID8,Outbound Caller ID 设置为{{.Ext}}abc+{{.Ext}}123，Pattern：68. ,Strip:2，选择BRI外线，分机选择ExGroup1,1002,1003");
@@ -417,7 +417,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P3", "testOR_10_CallerID_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2",  "OutboundRoute","OutboundCallerID", "Trunk","E1", "P3", "testOR_10_CallerID_Trunk"})
     public void testOR_10_CallerID_Trunk() {
         prerequisite();
         step("新建呼出路由OutboundCallerID9,Outbound Caller ID 设置为{{.Ext}}abc+{{.Ext}}123，Pattern：69. ,Strip:2，选择E1外线，分机选择ExGroup1,1002,1003；");
@@ -454,7 +454,7 @@ public class TestOutboundCallerID extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "OutboundRoute-OutboundCallerID", "OutboundCallerID", "Trunk", "P3", "testOR_11_CallerID_Trunk"})
+    @Test(groups = {"PSeries", "Cloud", "K2",  "OutboundRoute","OutboundCallerID", "Trunk","GSM", "P3", "testOR_11_CallerID_Trunk"})
     public void testOR_11_CallerID_Trunk() {
         if (GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")) {
             Assert.assertTrue(false, "GSM 线路 不测试！");
