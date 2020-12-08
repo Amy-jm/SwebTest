@@ -64,9 +64,10 @@ public class TestQueuePreferences extends TestCaseBaseNew {
             initRingGroup();
             initQueue();
             initConference();
+            initOutbound();
             initIVR();
             initInbound();
-            initOutbound();
+
 
             ArrayList<String> queueStaticMembers = new ArrayList<>();
             ArrayList<String> queueDynamicMembers = new ArrayList<>();

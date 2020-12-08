@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.tuple;
  */
 @Log4j2
 public class TestInboundRouteBasic extends TestCaseBaseNew {
-    private boolean isRunRecoveryEnvFlag = true;
+    private boolean isRunRecoveryEnvFlag = false;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
     APIUtil apiUtil = new APIUtil();
     List<String> trunk9 = new ArrayList<>();
@@ -304,7 +304,7 @@ public class TestInboundRouteBasic extends TestCaseBaseNew {
             return new Object[][]{
                     //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip）+ cdrCaller(CDR caller显示) + trunk(路由)
                     {"", 3001, "3000", DEVICE_ASSIST_1,"3001<3001>",SIPTrunk},//SIP  --55 REGISTER
-                    {"99", 2000, "1000", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
+                    {"99", 2000, "9999", DEVICE_ASSIST_2,"2000<2000>",SPS},//sps   前缀 替换
                     {"44", 4000, "4444", DEVICE_ASSIST_3,"4000<4000>",ACCOUNTTRUNK},
             };
         }
