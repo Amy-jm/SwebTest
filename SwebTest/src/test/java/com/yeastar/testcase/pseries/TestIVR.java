@@ -725,7 +725,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time："+ DataUtils.getCurrentTime()).extracting("callFrom","callTo","callDuration","status","reason","sourceTrunk","destinationTrunk","communicatonType")
-                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "1","ANSWERED", "IVR IVR1<6201> timed out, hung up",trunk,"","Inbound"));
+                .contains(tuple("2000<2000>".replace("2000",caller+""), cdrIVR1, "00:00:01","ANSWERED", "IVR IVR1<6201> timed out, hung up",trunk,"","Inbound"));
 
         softAssertPlus.assertAll();
 
@@ -2027,12 +2027,12 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2:通过sip外线呼入到IVR1，按4到IVR0,再按1" +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] 4 -->1");
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT*3);
+        sleep(WaitUntils.SHORT_WAIT*2);
         pjsip.Pj_Send_Dtmf(caller, "4");//转到IVR0
         sleep(WaitUntils.SHORT_WAIT*2);
-        pjsip.Pj_Send_Dtmf(caller,"1");//转到IVR0
+        pjsip.Pj_Send_Dtmf(caller,"1");//转到[None]
 
-        assertStep(caller + "[通话状态校验] 3001正常响铃，接听，查看cdr");
+        assertStep(caller + "[通话状态校验] ，被挂断，查看cdr");
         Assert.assertEquals(getExtensionStatus(caller,HUNGUP,60),HUNGUP);
 
         assertStep("[CDR校验]");
@@ -2186,6 +2186,7 @@ public class TestIVR extends TestCaseBaseNew{
         auto.loginPage().login("1001",EXTENSION_PASSWORD_NEW);
         sleep(3000);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
+        sleep(1000);
         softAssertPlus.assertThat(TableUtils.getTableForHeader(getDriver(),"Name",0)).contains("3001");
 
         assertStep("[CDR校验]");

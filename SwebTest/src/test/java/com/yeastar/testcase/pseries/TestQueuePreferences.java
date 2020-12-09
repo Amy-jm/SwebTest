@@ -64,9 +64,10 @@ public class TestQueuePreferences extends TestCaseBaseNew {
             initRingGroup();
             initQueue();
             initConference();
+            initOutbound();
             initIVR();
             initInbound();
-            initOutbound();
+
 
             ArrayList<String> queueStaticMembers = new ArrayList<>();
             ArrayList<String> queueDynamicMembers = new ArrayList<>();
@@ -291,7 +292,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
 
-        step("等待15s后，所有坐席同时响铃");
+        step("等待20s后，所有坐席同时响铃");
         softAssertPlus.assertThat(getExtensionStatus(1000, RING, 22)).as("[3.通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[3.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[3.通话校验]:1002分机响铃").isEqualTo(RING);
@@ -331,8 +332,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -347,7 +348,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","AgentTimeout","RetryInterval","SPS","PSeries","Cloud","K2","Queue","QueuePreferences"})
+    @Test(groups = {"P3","AgentTimeout","RetryInterval","Linear","PSeries","Cloud","K2","Queue","QueuePreferences"})
     public void testQP03_AgentTimeoutRetryInterval3() {
 
         prerequisite();
@@ -407,8 +408,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -470,9 +471,9 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2000.toString() + " hung up", SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2001.toString() + " hung up", SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
         step("编辑Queue1的Wrap-up Time：0；通过sps外线呼入到Queue1");
@@ -510,9 +511,9 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2000.toString() + " hung up", SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2001.toString() + " hung up", SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
     }
@@ -586,8 +587,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
     }
@@ -649,11 +650,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         step("1.编辑Queue1的MaximumCallersInQueue为1");
         apiUtil.editQueue(queueNum1, "\"max_calls\":1").apply();
 
-        step("2.通过sps外线呼入到Queue1，坐席1001接听并保持通话；\n" );
+        step("2.通过sps外线呼入到Queue1,无坐席接听保持通话；\n" );
         pjsip.Pj_Make_Call_No_Answer(2001, "996401");
 
-        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 1  )).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10  )).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1  )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1  )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
 
@@ -664,27 +665,25 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(1004);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1004);
-        pjsip.Pj_hangupCall(1001);
+        pjsip.Pj_hangupCall(2001);
 
         assertStep("CDR校验");
         auto.loginPage().loginWithAdmin();
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(4);
+        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), QUEUE1_6401.toString() + " connected", SIPTrunk, "", INBOUND.toString()))
+                .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SIPTrunk, "", INBOUND.toString()))
                 .contains(tuple(Extension_3001.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SIPTrunk, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
-
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2001.toString() + " hung up", SPS, "", INBOUND.toString()));
         pjsip.Pj_Hangup_All();
 
-        step("4.编辑Queue1的MaximumCallersInQueue为5；通过sps外线呼入到Queue1，坐席1001接听并保持通话；\n" );
+        step("4.编辑Queue1的MaximumCallersInQueue为5；通过sps外线呼入到Queue1，无坐席接听，并保持通话；\n" );
         apiUtil.editQueue(queueNum1, "\"max_calls\":5").apply();
         pjsip.Pj_Make_Call_No_Answer(2001, "996401");
 
-        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 1  )).as("[3.通话校验]:1000分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10 )).as("[3.通话校验]:1001分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10  )).as("[3.通话校验]:1000分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[3.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1  )).as("[3.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1  )).as("[3.通话校验]:1003分机响铃").isEqualTo(RING);
 
@@ -698,16 +697,15 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1003, TALKING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1003);
-        pjsip.Pj_hangupCall(1001);
+        pjsip.Pj_hangupCall(3001);
 
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        resultCDR = apiUtil.getCDRRecord(4);
+        resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_3001.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_3001.toString() + " hung up", SIPTrunk, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -745,8 +743,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), QUEUE1_6401.toString() + " timed out, failover", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), QUEUE1_6401.toString() + " timed out, failover", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -784,8 +782,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " timed out, failover", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " timed out, failover", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
     }
@@ -824,7 +822,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), QUEUE1_6401.toString() + " timed out, failover", SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), QUEUE1_6401.toString() + " timed out, failover", SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
     }
@@ -864,8 +862,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
 
         //todo  CDR结果需要确认
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
     }
@@ -907,8 +905,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
     }
@@ -962,8 +960,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
     }
@@ -1018,8 +1016,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
 
 
         step("编辑Queue1不勾选AgentIDAnnouncement，通过sps外线呼入到Queue1");
@@ -1051,8 +1049,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -1342,8 +1340,8 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
     }
