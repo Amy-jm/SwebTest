@@ -7,8 +7,6 @@ import com.yeastar.untils.PropertiesUntils;
 
 import java.io.File;
 
-import static com.yeastar.swebtest.driver.ConfigP.currentPath;
-
 /**
  * Created by GaGa on 2017-04-16.
  */

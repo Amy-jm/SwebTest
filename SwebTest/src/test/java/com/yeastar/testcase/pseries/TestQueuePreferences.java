@@ -606,26 +606,26 @@ public class TestQueuePreferences extends TestCaseBaseNew {
     @Test(groups = {"P2","RingInUse","SPS","PSeries","Cloud","K2","Queue","QueuePreferences"})
     public void testQP06_RingInUse()
     {
-        //todo 用例可执行，需要先把连接密码加密
-//        prerequisite();
-//
-//        step("[恢复环境]");
-//        resetQueue1();
-//
-//        step("1.编辑Queue1启用RingInUse\n") ;
-//        apiUtil.editQueue(queueNum1, "\"enb_ring_in_use\":1").apply();
-//
-//        step("2.进入redis-cli执行“Hget QueueCache 6401” 查看\"enb_ring_in_use\\\":1\n");
-//        softAssertPlus.assertThat(RedisUtils.hget(RedisUtils.REDIS_KEY.QueueCache.toString(),"6401", RedisUtils.QUEUE_KEY.RingInUse.toString()))
-//                .as("1.redis执行Hget QueueCache 6401查询enb_ring_in_use:1 ").isEqualTo("1");
-//
-//        step("3.编辑Queue1禁用RingInUse\n");
-//        apiUtil.editQueue(queueNum1, "\"enb_ring_in_use\":0").apply();
-//
-//        step("4.进入redis-cli执行“Hget QueueCache 6401” 查看\"enb_ring_in_use\\\":0\n");
-//        softAssertPlus.assertThat(RedisUtils.hget(RedisUtils.REDIS_KEY.QueueCache.toString(),"6401", RedisUtils.QUEUE_KEY.RingInUse.toString()))
-//                .as("1.redis执行Hget QueueCache 6401查询enb_ring_in_use:1 ").isEqualTo("0");
-//        softAssertPlus.assertAll();
+
+        prerequisite();
+
+        step("[恢复环境]");
+        resetQueue1();
+
+        step("1.编辑Queue1启用RingInUse\n") ;
+        apiUtil.editQueue(queueNum1, "\"enb_ring_in_use\":1").apply();
+
+        step("2.进入redis-cli执行“Hget QueueCache 6401” 查看\"enb_ring_in_use\\\":1\n");
+        softAssertPlus.assertThat(RedisUtils.hget(RedisUtils.REDIS_KEY.QueueCache.toString(),"6401", RedisUtils.QUEUE_KEY.RingInUse.toString()))
+                .as("1.redis执行Hget QueueCache 6401查询enb_ring_in_use:1 ").isEqualTo("1");
+
+        step("3.编辑Queue1禁用RingInUse\n");
+        apiUtil.editQueue(queueNum1, "\"enb_ring_in_use\":0").apply();
+
+        step("4.进入redis-cli执行“Hget QueueCache 6401” 查看\"enb_ring_in_use\\\":0\n");
+        softAssertPlus.assertThat(RedisUtils.hget(RedisUtils.REDIS_KEY.QueueCache.toString(),"6401", RedisUtils.QUEUE_KEY.RingInUse.toString()))
+                .as("1.redis执行Hget QueueCache 6401查询enb_ring_in_use:1 ").isEqualTo("0");
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")

@@ -172,10 +172,6 @@ import com.yeastar.swebtest.tools.TcpSocket.TcpSocket;
 import com.yeastar.swebtest.tools.pjsip.PjsipApp;
 import com.yeastar.swebtest.tools.ssh.SSHApp;
 
-
-import java.io.File;
-import java.util.SimpleTimeZone;
-
 /**
  * Created by GaGa on 2017-05-19.
  */
@@ -202,7 +198,7 @@ public class ConfigP extends DataReader2 {
     public static String CLOUD_PBX= "CloudPBX";
     public static String EXTENSION_PASSWORD = "Yeastar202Yeastar202";
     public static String EXTENSION_PASSWORD_NEW = "Yeastar123";
-    public static String currentPath = System.getProperty("user.dir")+ File.separator;
+    public static String currentPath = System.getProperty("user.dir");
 
     public static boolean Single_Init = true;
     public static boolean Single_Device_Test = false;
