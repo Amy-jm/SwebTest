@@ -24,7 +24,7 @@ public class TestFeatureCodeCallPickup extends TestCaseBaseNew {
 
     APIUtil apiUtil = new APIUtil();
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
-    private boolean runRecoveryEnvFlag = false;
+    private boolean runRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !runRecoveryEnvFlag;
     /**
      * 前提环境
