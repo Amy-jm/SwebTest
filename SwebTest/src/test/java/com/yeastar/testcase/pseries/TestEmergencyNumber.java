@@ -4,13 +4,17 @@ import com.yeastar.page.pseries.TestCaseBaseNew;
 import com.yeastar.untils.AsteriskObject;
 import com.yeastar.untils.CDRObject;
 import com.yeastar.untils.DataUtils;
+import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.yeastar.untils.CDRObject.*;
+
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
@@ -126,7 +130,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "3001",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound","EmergencySIP"));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "3001",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SIPTrunk, "Outbound","EmergencySIP"));
 
         softAssertPlus.assertAll();
     }
@@ -147,7 +151,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] 3001");
-        pjsip.Pj_Make_Call_No_Answer(1001, "", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1001, "3001", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(3001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
@@ -159,7 +163,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1001.toString(), "3001",  CDRObject.STATUS.ANSWER.toString(), "3001 hung up", "", SPS, "Outbound","EmergencySIP"));
+                .contains(tuple(CDRNAME.Extension_1001.toString(), "3001",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString()+" hung up", "", SIPTrunk, "Outbound","EmergencySIP"));
 
         softAssertPlus.assertAll();
     }
@@ -321,13 +325,13 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("主叫挂断");
-        pjsip.Pj_hangupCall(1001);
-        pjsip.Pj_hangupCall(2001);
-
+        pjsip.Pj_hangupCall(1000);
+        pjsip.Pj_hangupCall(2000);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound","EmergencySPS"));
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
+                .contains(tuple(CDRNAME.Extension_2000.toString(),CDRNAME.Extension_1000.toString(),  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", SPS,  "","Inbound",""))
+                .contains(tuple(CDRNAME.Extension_1001.toString(), "2101",  CDRObject.STATUS.ANSWER.toString(), "2101 hung up", "", SPS, "Outbound","EmergencySPS"));
 
         softAssertPlus.assertAll();
     }
@@ -344,25 +348,29 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_07_TrunkEmergency() {
         prerequisite();
+        step("添加紧急号码，Name:Emergency3 ,Emergency Number:2102,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：Account，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency3\",\"number\":\"2102\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee] 2102");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2102", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        assertThat(getExtensionStatus(4000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
        
-        pjsip.Pj_Answer_Call(2000, false);
-        assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+        pjsip.Pj_Answer_Call(4000, false);
+        assertThat(getExtensionStatus(4000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "2102",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound","EmergencyAccount"));
 
         softAssertPlus.assertAll();
     }
@@ -380,25 +388,30 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_08_TrunkEmergency() {
         prerequisite();
+        step("添加紧急号码，Name:Emergency3 ,Emergency Number:2102,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：Account，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency3\",\"number\":\"2102\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).
+                editEmergency("Emergency3",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testAccount123\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee] 2102");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2102", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        assertThat(getExtensionStatus(4000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
        
-        pjsip.Pj_Answer_Call(2000, false);
-        assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+        pjsip.Pj_Answer_Call(4000, false);
+        assertThat(getExtensionStatus(4000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "2102",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", ACCOUNTTRUNK, "Outbound","testAccount123"));
 
         softAssertPlus.assertAll();
     }
@@ -411,16 +424,20 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
             "\t\t辅助2分机2000响铃，接听，挂断，检查cdr,Outbound Caller ID 为EmergencyBRI\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_09_TrunkEmergency() {
         prerequisite();
+        step("添加紧急号码，Name:Emergency4 ,Emergency Number:2103,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：BRI，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency4\",\"number\":\"2103\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(BRI_1).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee] 2103");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2103", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
@@ -433,7 +450,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "2103",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", BRI_1, "Outbound","EmergencyBRI"));
 
         softAssertPlus.assertAll();
     }
@@ -447,10 +464,15 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
             "\t\t\t辅助2分机2000响铃，接听，挂断，检查cdr,Outbound Caller ID 为testbri")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_10_TrunkEmergency() {
         prerequisite();
+        step("添加紧急号码，Name:Emergency4 ,Emergency Number:2103,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：BRI，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency4\",\"number\":\"2103\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(BRI_1).id)).
+                editEmergency("Emergency4",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testbri\"}]",apiUtil.getTrunkSummary(BRI_1).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -469,7 +491,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", BRI_1, "Outbound",""));
 
         softAssertPlus.assertAll();
     }
@@ -482,16 +504,20 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
             "\t\t辅助2分机2000响铃，接听，挂断，检查cdr,Outbound Caller ID 为EmergencyE1\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_11_TrunkEmergency() {
         prerequisite();
+        step("添加紧急号码，Name:Emergency5 ,Emergency Number:2104,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：E1，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency5\",\"number\":\"2104\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(E1).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee] 2104");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2104", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
@@ -504,7 +530,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "2104",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", E1, "Outbound","EmergencyE1"));
 
         softAssertPlus.assertAll();
     }
@@ -518,16 +544,21 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
             "\t\t\t辅助2分机2000响铃，接听，挂断，检查cdr,Outbound Caller ID 为testE1")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_12_TrunkEmergency() {
         prerequisite();
+        step("添加紧急号码，Name:Emergency5 ,Emergency Number:2104,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：E1，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency5\",\"number\":\"2104\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(E1).id)).
+                editEmergency("Emergency5",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testbri\"}]",apiUtil.getTrunkSummary(E1).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "2104", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
@@ -540,7 +571,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "2104",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", E1, "Outbound",""));
 
         softAssertPlus.assertAll();
     }
@@ -556,26 +587,35 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_13_TrunkEmergency() {
+        if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"GSM线路 不测试！");
+        }
         prerequisite();
+        step("添加紧急号码，Name:Emergency6 ,Emergency Number:辅助2的GSM号码,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：GSM，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee] "+DEVICE_ASSIST_GSM);
+        pjsip.Pj_Make_Call_No_Answer(1000, DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        assertThat(getExtensionStatus(2000, RING, 120)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
        
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+
+        sleep(WaitUntils.SHORT_WAIT*30);
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), DEVICE_ASSIST_GSM,  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", GSM, "Outbound","1000"));
 
         softAssertPlus.assertAll();
     }
@@ -592,26 +632,34 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_14_TrunkEmergency() {
+        if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"GSM线路 不测试！");
+        }
         prerequisite();
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).
+                editEmergency("Emergency6",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testgsm\"}]",apiUtil.getTrunkSummary(GSM).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee] "+DEVICE_ASSIST_GSM);
+        pjsip.Pj_Make_Call_No_Answer(1000,DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        assertThat(getExtensionStatus(2000, RING, 120)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
        
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+
+        sleep(WaitUntils.SHORT_WAIT*30);
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), DEVICE_ASSIST_GSM,  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", GSM, "Outbound","testgsm"));
 
         softAssertPlus.assertAll();
     }
@@ -629,26 +677,35 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_15_TrunkEmergency() {
+        if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"GSM线路 不测试！");
+        }
         prerequisite();
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).
+                editEmergency("Emergency6",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\"}]",apiUtil.getTrunkSummary(GSM).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee] "+DEVICE_ASSIST_GSM);
+        pjsip.Pj_Make_Call_No_Answer(1000, DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        assertThat(getExtensionStatus(2000, RING, 120)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
        
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
+        sleep(WaitUntils.SHORT_WAIT*30);
+
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
+        sleep(3000);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(),DEVICE_ASSIST_GSM,  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", GSM, "Outbound","EmergencyExtA1000"));
 
         softAssertPlus.assertAll();
     }
@@ -664,26 +721,35 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_16_TrunkEmergency() {
+        if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"GSM线路 不测试！");
+        }
         prerequisite();
+        step("添加紧急号码，Name:Emergency6 ,Emergency Number:辅助2的GSM号码,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：GSM，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee]"+DEVICE_ASSIST_GSM);
+        pjsip.Pj_Make_Call_No_Answer(1000, DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        assertThat(getExtensionStatus(2000, RING, 120)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
        
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+
+        sleep(WaitUntils.SHORT_WAIT*30);
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), DEVICE_ASSIST_GSM,  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", GSM, "Outbound","EmergencyExtA1000"));
 
         softAssertPlus.assertAll();
     }
@@ -698,26 +764,35 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_17_TrunkEmergency() {
+        if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"GSM线路 不测试！");
+        }
         prerequisite();
+        step("添加紧急号码，Name:Emergency6 ,Emergency Number:辅助2的GSM号码,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：GSM，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1001" + ",[callee] "+DEVICE_ASSIST_GSM);
+        pjsip.Pj_Make_Call_No_Answer(1001, DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        assertThat(getExtensionStatus(2000, RING, 120)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
        
         pjsip.Pj_Answer_Call(2000, false);
         assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+
+        sleep(WaitUntils.SHORT_WAIT*30);
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(),DEVICE_ASSIST_GSM,  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", GSM, "Outbound","ExtTestGSM"));
 
         softAssertPlus.assertAll();
     }
@@ -731,15 +806,22 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_18_TrunkEmergency() {
+        if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO 线路 不测！");
+        }
         prerequisite();
+        step("添加紧急号码，Name:Emergency7 ,Emergency Number:2000,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
+                "            \"Trunk ：FXO，Trunk's Emergency Outbound Caller ID为空，保存");
+        apiUtil.deleteAllEmergency().
+                createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 1000" + ",[callee] ");
-        pjsip.Pj_Make_Call_No_Answer(1000, "", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee] 2000");
+        pjsip.Pj_Make_Call_No_Answer(1000, "2000", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
@@ -752,7 +834,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "222222",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound",""));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "2000",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", FXO_1, "Outbound","1000"));
 
         softAssertPlus.assertAll();
     }
@@ -767,8 +849,11 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries","EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_19_TrunkEmergency() {
+        if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO 线路 不测！");
+        }
         prerequisite();
 
         step("1:login with admin ");
@@ -804,8 +889,11 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_20_TrunkEmergency() {
+        if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO 线路 不测！");
+        }
         prerequisite();
 
         step("1:login with admin ");
@@ -839,8 +927,11 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_21_TrunkEmergency() {
+        if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO 线路 不测！");
+        }
         prerequisite();
 
         step("1:login with admin ");
@@ -874,8 +965,11 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_22_TrunkEmergency() {
+        if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO 线路 不测！");
+        }
         prerequisite();
 
         step("1:login with admin ");
@@ -914,8 +1008,11 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_23_TrunkEmergency() {
+        if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+            Assert.assertTrue(false,"FXO 线路 不测！");
+        }
         prerequisite();
 
         step("1:login with admin ");
