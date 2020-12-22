@@ -162,6 +162,7 @@ public class HomePage extends BasePage{
      * 系统提示信息
      */
     public SelenideElement system_alert_message = $(By.xpath("//a[contains(@class,'close')]"));
+    public SelenideElement dms_server_alert_message = $(By.xpath("//i[contains(@class,'close')]"));
 
     /**
      * 菜单选择
@@ -174,6 +175,11 @@ public class HomePage extends BasePage{
             system_alert_message.click();
             sleep(2000);
         }
+        if(dms_server_alert_message.exists()){
+            dms_server_alert_message.click();
+            sleep(2000);
+        }
+
         //左侧一级菜单
         switch (level_1) {
             case extension_trunk:

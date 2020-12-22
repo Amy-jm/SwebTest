@@ -217,7 +217,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency2 ,Emergency Number:2101,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：SPS，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency2").
                 createEmergency(String.format("{\"name\":\"Emergency2\",\"number\":\"2101\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
 
         step("1:login with admin ");
@@ -257,7 +257,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency2 ,Emergency Number:2101,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：SPS，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency2").
                 createEmergency(String.format("{\"name\":\"Emergency2\",\"number\":\"2101\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
         apiUtil.editEmergency("Emergency2",String.format("\"trunk_list\": [{\"value\": \"%s\", \"outb_cid\": \"0123456789\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
 
@@ -301,7 +301,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency2 ,Emergency Number:2101,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：SPS，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency2").
                 createEmergency(String.format("{\"name\":\"Emergency2\",\"number\":\"2101\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
 
         step("1:login with admin ");
@@ -348,7 +348,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency3 ,Emergency Number:2102,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：Account，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency3").
                 createEmergency(String.format("{\"name\":\"Emergency3\",\"number\":\"2102\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
 
         step("1:login with admin ");
@@ -388,7 +388,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency3 ,Emergency Number:2102,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：Account，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency3").
                 createEmergency(String.format("{\"name\":\"Emergency3\",\"number\":\"2102\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).
                 editEmergency("Emergency3",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testAccount123\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
 
@@ -428,7 +428,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency4 ,Emergency Number:2103,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：BRI，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency4").
                 createEmergency(String.format("{\"name\":\"Emergency4\",\"number\":\"2103\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(BRI_1).id)).apply();
 
         step("1:login with admin ");
@@ -478,7 +478,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency4 ,Emergency Number:2103,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：BRI，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency4").
                 createEmergency(String.format("{\"name\":\"Emergency4\",\"number\":\"2103\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(BRI_1).id)).
                 editEmergency("Emergency4",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testbri\"}]",apiUtil.getTrunkSummary(BRI_1).id)).apply();
 
@@ -521,7 +521,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency5 ,Emergency Number:2104,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：E1，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency5").
                 createEmergency(String.format("{\"name\":\"Emergency5\",\"number\":\"2104\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(E1).id)).apply();
 
         step("1:login with admin ");
@@ -570,7 +570,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency5 ,Emergency Number:2104,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：E1，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency5").
                 createEmergency(String.format("{\"name\":\"Emergency5\",\"number\":\"2104\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(E1).id)).
                 editEmergency("Emergency5",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testE1\"}]",apiUtil.getTrunkSummary(E1).id)).apply();
 
@@ -613,7 +613,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency6 ,Emergency Number:辅助2的GSM号码,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：GSM，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency6").
                 createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).apply();
 
         step("1:login with admin ");
@@ -656,7 +656,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
             Assert.assertTrue(false,"GSM线路 不测试！");
         }
         prerequisite();
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency6").
                 createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).
                 editEmergency("Emergency6",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testgsm\"}]",apiUtil.getTrunkSummary(GSM).id)).apply();
 
@@ -701,7 +701,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
             Assert.assertTrue(false,"GSM线路 不测试！");
         }
         prerequisite();
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency6").
                 createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).
                 editEmergency("Emergency6",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\"}]",apiUtil.getTrunkSummary(GSM).id)).apply();
 
@@ -837,7 +837,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency7 ,Emergency Number:2000,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：FXO，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency7").
                 createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).apply();
 
         step("1:login with admin ");
@@ -880,7 +880,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency7 ,Emergency Number:2000,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：FXO，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteAllEmergency().
+        apiUtil.deleteEmergency("Emergency7").
                 createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("Emergency7",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testfxo\"}]",apiUtil.getTrunkSummary(FXO_1).id)).apply();
 
@@ -925,7 +925,8 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency7 ,Emergency Number:2000,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：FXO，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteEmergency("Emergency7").createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+        apiUtil.deleteEmergency("Emergency7").
+                createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("Emergency7",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\"}]",apiUtil.getTrunkSummary(FXO_1).id)).apply();
 
         step("1:login with admin ");
@@ -968,7 +969,8 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency7 ,Emergency Number:2000,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：FXO，Trunk's Emergency Outbound Caller ID为空，保存,编辑Emergency7 ，Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID，Trunk's Emergency Outbound Caller ID为ExtTestFXO");
-        apiUtil.deleteEmergency("Emergency7").createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+        apiUtil.deleteEmergency("Emergency7").
+                createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("Emergency7",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestFXO\"}]",apiUtil.getTrunkSummary(FXO_1).id)).apply();
 
         step("1:login with admin ");
@@ -1012,7 +1014,8 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency7 ,Emergency Number:2000,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：FXO，Trunk's Emergency Outbound Caller ID为空，保存,编辑Emergency7 ，Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID，Trunk's Emergency Outbound Caller ID为ExtTestFXO");
-        apiUtil.deleteEmergency("Emergency7").createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+        apiUtil.deleteEmergency("Emergency7").
+                createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("Emergency7",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestFXO\"}]",apiUtil.getTrunkSummary(FXO_1).id)).apply();
 
         step("1:login with admin ");
@@ -1060,7 +1063,8 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency7 ,Emergency Number:2000,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：FXO，Trunk's Emergency Outbound Caller ID为空，保存");
-        apiUtil.deleteEmergency("Emergency7").createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).apply();
+        apiUtil.deleteEmergency("Emergency7").
+                createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -1195,7 +1199,8 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("编辑Emergency1，Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：SIP1，\\tTrunk's Emergency Outbound Caller ID：exttestsip");
-        apiUtil.editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"exttestsip\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
+        apiUtil.createEmergency(String.format("{\"name\":\"Emergency1\",\"number\":\"3001\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SIPTrunk).id)).
+        editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"exttestsip\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -1233,7 +1238,8 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("编辑Emergency1，Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：SIP1，\\tTrunk's Emergency Outbound Caller ID：exttestsip");
-        apiUtil.editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"exttestsip\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
+        apiUtil.createEmergency(String.format("{\"name\":\"Emergency1\",\"number\":\"3001\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SIPTrunk).id)).
+                editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"exttestsip\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -1271,7 +1277,8 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("编辑Emergency1，Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：SIP1，Trunk's Emergency Outbound Caller ID 改为空");
-        apiUtil.editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
+        apiUtil.createEmergency(String.format("{\"name\":\"Emergency1\",\"number\":\"3001\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SIPTrunk).id)).
+                editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -1309,7 +1316,8 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("编辑Emergency1，Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：SIP1，Trunk's Emergency Outbound Caller ID 改为空");
-        apiUtil.editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
+        apiUtil.createEmergency(String.format("{\"name\":\"Emergency1\",\"number\":\"3001\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SIPTrunk).id)).
+                editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
@@ -1971,7 +1979,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("主叫挂断");
-        pjsip.Pj_hangupCall(1000);
+        pjsip.Pj_hangupCall(1001);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
@@ -2061,11 +2069,11 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("主叫挂断");
-        pjsip.Pj_hangupCall(1000);
+        pjsip.Pj_hangupCall(1003);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo",  "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType","dod")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "999",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SPS, "Outbound","abc123"));
+                .contains(tuple(CDRNAME.Extension_1003.toString(), "999",  CDRObject.STATUS.ANSWER.toString(), CDRNAME.Extension_1003.toString() + " hung up", "", SPS, "Outbound","abc123"));
 
         softAssertPlus.assertAll();
     }
@@ -2123,7 +2131,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("2:进入Emergency Number界面");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_control_tree_emergency_number);
+        auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_emergency_number);
 
         assertStep("[删除成功]");
         List<String> list = TableUtils.getTableForHeader(getDriver(),"Name");
