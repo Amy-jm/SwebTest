@@ -682,6 +682,24 @@ public class BaseMethod extends WebDriverFactory {
 		apiUtil.editFeatureCode(String.format("\"enb_office_time\":1,\"office_time_permit_list\":[{\"value\":\"%s\",\"type\":\"extension\",\"text\":\"test A\",\"text2\":\"1000\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
 	}
 
+	/**
+	 * Before
+	 * 	System-》Storage-》删除所有网络磁盘-》添加网络磁盘record
+	 * 		在服务器上创建几个共享文件夹供录音使用
+	 * 		选择录音存储路径，参数化配置
+	 * 	编辑分机A-》Features-》勾选Allow the extension to stop or restart call recording during a call 【其它分机默认未勾选】
+	 * 	这部分麻烦提取到整体前置条件那边设置
+	 */
+	public void initRecord(){
+		//System-》Storage-》删除所有网络磁盘-》添加网络磁盘record
+		apiUtil.editStoragelocation(String.format("\"recording\":0")).deleteAllNetWorkStorage().
+				createStorage("\"name\":\"record\",\"host\":\"192.168.3.5\",\"share_name\":\"record\",\"username\":\"\",\"password\":\"\",\"work_group\":\"\",\"samba_version\":\"auto\"").apply();
+		String request = String.format("\"recording\":%d",apiUtil.getStorageObjectSummary("record"));
+		apiUtil.editStoragelocation(request).apply();
+		//编辑分机A-》Features-》勾选Allow the extension to stop or restart call recording during a call 【其它分机默认未勾选】
+		apiUtil.editExtension("1000","\"enb_ctl_record\":1").apply();
+	}
+
 	public boolean registerAllExtensions() {
 		log.debug("[prerequisite] init extension");
 		pjsip.Pj_CreateAccount(1000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);

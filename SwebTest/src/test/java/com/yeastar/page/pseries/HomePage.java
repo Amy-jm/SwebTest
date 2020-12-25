@@ -263,6 +263,12 @@ public class HomePage extends BasePage{
             case call_feature_tree_conference:
                 call_feature_tree_conference.click();
                 break;
+            case call_feature_tree_speed_dial:
+                call_feature_tree_speed_dial.click();
+                break;
+            case call_feature_tree_recording:
+                call_feature_tree_recording.click();
+                break;
             case pbx_settings_tree_preferences:
                 pbx_settings_tree_preferences.click();
                 break;
@@ -441,6 +447,8 @@ public class HomePage extends BasePage{
         call_feature_tree_ring_group,
         call_feature_tree_queue,
         call_feature_tree_conference,
+        call_feature_tree_speed_dial,
+        call_feature_tree_recording,
 
         pbx_settings_tree_preferences,
         pbx_settings_tree_voice_prompt,

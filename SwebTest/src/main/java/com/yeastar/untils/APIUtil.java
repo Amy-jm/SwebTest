@@ -230,6 +230,29 @@ public class APIUtil {
     }
 
     /**
+     * 读CDR的API接口
+     * @param num  要获取最新的num条CDR几率，从0开始
+     * @return 返回List类型的CDRObject对象，List里的对象数量和num一致
+     * @throws IOException
+     */
+    public  List<RecordingObject> getRecordingRecord(int num){
+        sleep(3000);
+        String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/recording/search?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
+        String respondJson = getRequest(req);
+        System.out.println("cdr record :"+respondJson);
+        List<RecordingObject> recordingList = new ArrayList<>();
+        try {
+            for (int k = 0; k < num; k++) {
+                RecordingObject p = new RecordingObject(respondJson, k);
+                recordingList.add(p);
+            }
+        }catch (IOException e){
+            log.error("[getCDRRecord exception] "+e);
+        }
+        return recordingList;
+    }
+
+    /**
      * apply 接口，apply发送后，判断设备apply状态，直到status参数消失，表示apply完成
      * @return
      */
@@ -881,9 +904,28 @@ public class APIUtil {
                 featureCodeObject.add(new FeatureCodeObject((JSONObject) jsonArray.getJsonObject(i)));
             }
         }else {
-            Assert.fail("[API getHolidaySummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+            Assert.fail("[API feature code object] ,errmsg: "+ jsonObject.getString("errmsg"));
         }
         return featureCodeObject;
+    }
+    /**
+     * 获取storage
+     * 对应API：api/v1.0/storage/list
+     */
+    public StorageObject getStorageObjectSummary(){
+        StorageObject storgeObject = null;
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storage/list");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+            if(!jsonObject.containsKey("storage_list")){
+                return storgeObject;
+            }else{
+                storgeObject = new StorageObject(jsonObject);
+            }
+        }else {
+            Assert.fail("[API get storge object] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return storgeObject;
     }
 
     /**
@@ -963,6 +1005,73 @@ public class APIUtil {
         }
         return this;
     }
+    /**
+     * 删除当前存在的所有speed dial
+     * */
+    public APIUtil deleteSpeedDial(String code){
+        List<SpeedDialObject> speedDialObjects = getSpeedDialSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(SpeedDialObject object : speedDialObjects){
+            if(object.code.equals(code)){
+                list.add(object.id);
+            }
+        }
+
+        if (!list.isEmpty() || list.size() != 0) {
+            deleteSpeedDial(list);
+        }
+        return this;
+    }
+
+
+    /**
+     * 删除当前存在的所有storage
+     * */
+    public APIUtil deleteAllNetWorkStorage(){
+        StorageObject storageObject = getStorageObjectSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < storageObject.storageList.size(); i++) {
+            if (storageObject.storageList.get(i).type.equals("netdisk")) {
+                list.add(storageObject.storageList.get(i).id);
+            }
+        }
+        if (!list.isEmpty() || list.size() != 0) {
+            deleteStorage(list);
+        }
+        return this;
+    }
+    /**
+     * 删除当前存在的所有storage
+     * */
+    public int getStorageObjectSummary(String name){
+        StorageObject storageObject = getStorageObjectSummary();
+        int storageID = 0;
+        for (int i = 0; i < storageObject.storageList.size(); i++) {
+            if (storageObject.storageList.get(i).name.equals(name)) {
+                storageID = storageObject.storageList.get(i).id;
+            }
+        }
+        return storageID;
+    }
+    /**
+     * 删除当前存在的所有storage
+     * */
+    public APIUtil deleteNetWorkStorage(String name){
+        StorageObject storageObject = getStorageObjectSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < storageObject.storageList.size(); i++) {
+            if (storageObject.storageList.get(i).type.equals("netdisk") && storageObject.storageList.get(i).name.equals(name)) {
+                list.add(storageObject.storageList.get(i).id);
+            }
+        }
+        if (!list.isEmpty() || list.size() != 0) {
+            deleteStorage(list);
+        }
+        return this;
+    }
 
 
     /**
@@ -1012,7 +1121,7 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/holiday/batchdelete",jsonObject.toString());
         return this;
     }
- /**
+    /**
      * 通过ID删除speed dail
      * 对应接口：/api/v1.0/speeddial/batchdelete
      * @param idLsit  int类型的id组成的list
@@ -1027,7 +1136,18 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/speeddial/batchdelete",jsonObject.toString());
         return this;
     }
+    /**
+     * 通过ID删除storage
+     * 对应接口：/api/v1.0/storage/delete
+     * @param idLsit  int类型的id组成的list
+     */
+    public APIUtil deleteStorage(List<Integer> idLsit){
+        for(Integer id :idLsit){
+            getRequest(String.format("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storage/delete?id=%s",id));
+        }
 
+        return this;
+    }
 
     public APIUtil deleteHoliday(String name){
         List<HolidayObject> holidayObjectList = getHolidaySummary();
@@ -1316,6 +1436,23 @@ public class APIUtil {
         }
         return this;
     }
+    /**
+     * 删除当前存在的所有呼出路由
+     * */
+    public APIUtil deleteOutbound(String name){
+        List<OutBoundRouteObject> OutboundObjectList = getOutboundSummary();
+
+        List<Integer> list = new ArrayList<>();
+        for(OutBoundRouteObject object : OutboundObjectList){
+            if(object.name.equals(name)){
+                list.add(object.id);
+            }
+        }
+        if(list != null && !list.isEmpty()){
+            deleteOutbound(list);
+        }
+        return this;
+    }
 
     /**
      * 删除当前存在的所有IVR
@@ -1365,6 +1502,8 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/outboundroute/batchdelete",jsonObject.toString());
         return this;
     }
+
+
 
     /**
      * 通过IVR的ID删除指定IVR
@@ -2198,8 +2337,16 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/sshaccess/update",String.format("{%s}",request));
         return this;
     }
+    public APIUtil editStoragelocation(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storagelocation/update",String.format("{%s}",request));
+        return this;
+    }
     public APIUtil createSpeeddial(String request){
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/speeddial/create",String.format("{%s}",request));
+        return this;
+    }
+    public APIUtil createStorage(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/storage/create",String.format("{%s}",request));
         return this;
     }
     /**
@@ -2219,6 +2366,15 @@ public class APIUtil {
      */
     public APIUtil linkusserverUpdate(String request){
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/linkusserver/update",request);
+        return this;
+    }
+    /**
+     * linkusServer 更新
+     * @param request
+     * @return
+     */
+    public APIUtil autorecordUpdate(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/autorecord/update",String.format("{%s}",request));
         return this;
     }
 
