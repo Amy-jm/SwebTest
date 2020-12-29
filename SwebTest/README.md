@@ -27,6 +27,10 @@
 - [RoadMap](#roadmap)
 - [FAQ](#faq)
 - [Plan](#plan)
+- [Code Sever 开启远程自动化编程之旅](#code-sever-开启远程自动化编程之旅)
+      - [[环境准备] code server global user Setting，记录，不需要修改](#环境准备-code-server-global-user-setting记录不需要修改)
+      - [Code Server 导入工程](#code-server-导入工程)
+      - [Code Server 运行测试](#code-server-运行测试)
     
 # Summary
 
@@ -281,3 +285,86 @@ https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindma
 2. 用例编写
 3. CI 使用
 4. git 基本使用
+
+
+# Code Sever 开启远程自动化编程之旅
+#### [环境准备] code server global user Setting，记录，不需要修改 
+  ``` 
+  {   
+    //=============== Nomal
+    "editor.fontSize": 14,
+    "editor.minimap.enabled": true,
+    "workbench.colorTheme": "Default Dark+",
+
+    //=============== 保存格式化
+    "files.autoSave": "onFocusChange",
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+
+    //=============== Java Env
+    "java.home": "/usr/lib/jvm/java-8-openjdk-amd64",
+    // "java.home": "/home/java_11/jdk-11.0.2",
+    "maven.executable.path": "/home/maven/bin/mvn",
+    "java.configuration.maven.userSettings": "/home/maven/conf/settings.xml",
+    "maven.terminal.customEnv":[
+        {
+            "environmentVariable": "MAVEN_OPTS", // variable name
+            "value": "-Xms1024m -Xmx4096m" // value
+        },
+        {
+            "environmentVariable": "JAVA_HOME",
+            "value": "/usr/lib/jvm/java-8-openjdk-amd64"
+        }
+    ],
+
+    "java.semanticHighlighting.enabled": true,
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.test.report.position": "currentView",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+
+    //=============== 环境配置 ==============
+    // 控制折行的方式
+    "editor.wordWrap": "off",
+    // "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms300m -javaagent:\"/root/.local/share/code-server/extensions/gabrielbb.vscode-lombok-1.0.0/server/lombok.jar\"",
+    "git.confirmSync": false,
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/root/.local/share/code-server/extensions/gabrielbb.vscode-lombok-1.0.0/server/lombok.jar\"",
+    "java.requirements.JDK11Warning": false
+}
+   ```   
+
+#### Code Server 导入工程   
+1. open code server : http://192.168.3.252:8077/
+2. TERMINAL 窗口新建：mkdir /home/autoCodeServer/workspace/NAME (NAME,替换为自己的名字) , 切换到自己的目录下
+   
+   ![po](./imgmd/workspace.png)
+3. 拉取代码：git clone http://192.168.3.252/caspar/swebtest.git (过程需要输入自己的gitlab信息)
+   
+4. vscode 打开项目：File->Open Folder
+
+#### Code Server 运行测试 
+
+5. 修改PjsipDll.java  so加载路径：  
+    ```    
+       /**
+         *  adapt testNG for code server
+         */ 
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
+    ```    
+6. 查看测试配置 src/test/resources  config.properties 与data.properties
+   
+  <font color=DarkOrchi size=2>**修改远端运行**</font> IS_RUN_REMOTE_SERVER = true 
+   
+   ```    
+   #Grid hub 服务地址
+    IS_RUN_REMOTE_SERVER = true
+    GRID_HUB_IP = 192.168.3.252
+    GRID_HUB_PORT = 4444
+   ``` 
+
+   
