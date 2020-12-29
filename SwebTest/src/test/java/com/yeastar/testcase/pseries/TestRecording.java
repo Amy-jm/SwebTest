@@ -378,24 +378,49 @@ public class TestRecording extends TestCaseBaseNew {
     public void testRecording_06_RecordedPrompt() {
         prerequisite();
         apiUtil.autorecordUpdate(String.format("\"enb_internal\":1,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[],\"record_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.autorecordUpdate(String.format("\"record_ext_list\":[{\"text\":\"ExGroup1\",\"text2\":\"ExGroup1\",\"value\":\"%s\",\"type\":\"ext_group\"}]",apiUtil.getExtensionGroupSummary("ExGroup1").id)).apply();
+
+        asteriskObjectList.clear();
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_1);
+        thread.start();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] " + ",[callee] *891");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*891", DEVICE_IP_LAN, false);
+        step("2:[caller] 1001" + ",[callee] 1002");
+        pjsip.Pj_Make_Call_No_Answer(1001, "1002", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(3001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
-        pjsip.Pj_Answer_Call(3001, false);
-        assertThat(getExtensionStatus(3001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+        assertThat(getExtensionStatus(1002, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        pjsip.Pj_Answer_Call(1002, false);
+        assertThat(getExtensionStatus(1002, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+
+        int tmp = 0;
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_" + tmp);
+        }
+        if (tmp == 301) {
+            for (int i = 0; i < asteriskObjectList.size(); i++) {
+                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
+            }
+            thread.flag = false;
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
+        }
+        thread.flag = false;
+        sleep(1000*15);
 
         step("主叫挂断");
-        pjsip.Pj_hangupCall(1000);
+        pjsip.Pj_hangupCall(1001);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "13001", STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SIPTrunk, "Outbound"));
+                .contains(tuple(CDRNAME.Extension_1001.toString(), CDRNAME.Extension_1002.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString() + " hung up", "", "", "Internal"));
+
+        assertStep("[Recording校验]");
+        softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
+                .contains(tuple(CDRNAME.Extension_1001.toString(), CDRNAME.Extension_1002.toString(),"Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -412,25 +437,30 @@ public class TestRecording extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "EnableRecordingofInternalCalls","RecordExtensions","InternalCallBeingRecordedPrompt","OutboundCallBeingRecordedPrompt","InboundCallBeingRecordedPrompt"})
     public void testRecording_07_RecordedPrompt() {
         prerequisite();
-        apiUtil.autorecordUpdate(String.format("\"enb_internal\":1,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[],\"record_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.autorecordUpdate(String.format("\"enb_internal\":0,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[],\"record_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] " + ",[callee] *891");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*891", DEVICE_IP_LAN, false);
+        step("2:[caller] " + ",[callee] 1001");
+        pjsip.Pj_Make_Call_No_Answer(1000, "1001", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(3001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
-        pjsip.Pj_Answer_Call(3001, false);
-        assertThat(getExtensionStatus(3001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+        assertThat(getExtensionStatus(1001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        pjsip.Pj_Answer_Call(1001, false);
+        assertThat(getExtensionStatus(1001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
+        sleep(1000*15);
         step("主叫挂断");
-        pjsip.Pj_hangupCall(1000);
+        pjsip.Pj_hangupCall(1001);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "13001", STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SIPTrunk, "Outbound"));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString() + " hung up", "", "", "Internal"));
+
+        assertStep("[Recording校验]");
+        softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
+                .doesNotContain(tuple(CDRNAME.Extension_1000.toString(), CDRNAME.Extension_1001.toString(),"Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -447,18 +477,38 @@ public class TestRecording extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "EnableRecordingofInternalCalls","RecordExtensions","InternalCallBeingRecordedPrompt","OutboundCallBeingRecordedPrompt","InboundCallBeingRecordedPrompt"})
     public void testRecording_08_RecordedPrompt() {
         prerequisite();
-        apiUtil.autorecordUpdate(String.format("\"enb_internal\":1,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[],\"record_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.autorecordUpdate(String.format("\"enb_internal\":0,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[],\"record_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
+
+        asteriskObjectList.clear();
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_2);
+        thread.start();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] " + ",[callee] *891");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*891", DEVICE_IP_LAN, false);
+        step("2:[caller] 1000" + ",[callee] 13001");
+        pjsip.Pj_Make_Call_No_Answer(1000, "13001", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(3001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         pjsip.Pj_Answer_Call(3001, false);
         assertThat(getExtensionStatus(3001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+
+        int tmp = 0;
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_" + tmp);
+        }
+        if (tmp == 301) {
+            for (int i = 0; i < asteriskObjectList.size(); i++) {
+                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
+            }
+            thread.flag = false;
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
+        }
+        thread.flag = false;
+        sleep(1000*15);
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
@@ -466,6 +516,10 @@ public class TestRecording extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_1000.toString(), "13001", STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SIPTrunk, "Outbound"));
+
+        assertStep("[Recording校验]");
+        softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "13001","Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -482,25 +536,49 @@ public class TestRecording extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "EnableRecordingofInternalCalls","RecordExtensions","InternalCallBeingRecordedPrompt","OutboundCallBeingRecordedPrompt","InboundCallBeingRecordedPrompt"})
     public void testRecording_09_RecordedPrompt() {
         prerequisite();
-        apiUtil.autorecordUpdate(String.format("\"enb_internal\":1,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[],\"record_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.autorecordUpdate(String.format("\"enb_internal\":0,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[],\"record_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
+
+        asteriskObjectList.clear();
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,PROMPT_3);
+        thread.start();
 
         step("1:login with admin ");
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] " + ",[callee] *891");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*891", DEVICE_IP_LAN, false);
+        step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(3001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
-        pjsip.Pj_Answer_Call(3001, false);
-        assertThat(getExtensionStatus(3001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+        assertThat(getExtensionStatus(1000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        pjsip.Pj_Answer_Call(1000, false);
+        assertThat(getExtensionStatus(1000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+
+        int tmp = 0;
+        while (asteriskObjectList.size() != 1 && tmp <= 300) {
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_" + tmp);
+        }
+        if (tmp == 301) {
+            for (int i = 0; i < asteriskObjectList.size(); i++) {
+                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
+            }
+            thread.flag = false;
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
+        }
+        thread.flag = false;
+        sleep(1000*15);
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "13001", STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", SIPTrunk, "Outbound"));
+                .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", SPS, "", "Inbound"));
+
+        assertStep("[Recording校验]");
+        softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
+                .contains(tuple("2000", CDRNAME.Extension_1000.toString(),"Inbound"));
 
         softAssertPlus.assertAll();
     }
