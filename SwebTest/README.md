@@ -2,6 +2,11 @@
 <font size=10>**UIAuto**</font>
 - [Summary](#summary)
 - [技术栈](#技术栈)
+- [Framework](#framework)
+- [TestNG 介绍](#testng-介绍)
+- [Allure Test Report 介绍](#allure-test-report-介绍)
+- [Zalenium 介绍](#zalenium-介绍)
+- [Jenkins 介绍](#jenkins-介绍)
 - [运行环境](#运行环境)
   - [Local](#local)
   - [Remote](#remote)
@@ -19,7 +24,7 @@
 - [P Series 应用](#p-series-应用)
     - [全局配置文件 config.properties](#全局配置文件-configproperties)
     - [用户配置文件 data.properties](#用户配置文件-dataproperties)
-    - [CI JOB](#ci-job)
+    - [通过 Jenkins 执行用例](#通过-jenkins-执行用例)
       - [KeyWord Job](#keyword-job)
       - [XML测试套件 Job](#xml测试套件-job)
       - [Pipline Job](#pipline-job)
@@ -41,6 +46,38 @@
 
 # 技术栈
 selenium + selenide + testng  + allure + zalenium + docker + maven + jenkins 
+
+# Framework
+![po](./imgmd/framework.png)
+
+# TestNG 介绍 
+
+TestNG 是一个开源自动化测试框架;TestNG表示下一代(Next Generation的首字母)。 TestNG 类似于JUnit(特别是JUnit 4)，但它不是JUnit框架的扩展。它的灵感来源于JUnit。它的目的是优于JUnit，尤其是在用于测试集成多类时。
+
+ TestNG的创始人是Cedric Beust(塞德里克·博伊斯特)。
+
+
+![po](./imgmd/test.png)
+
+【扩展】http://www.51testing.com/zhuanti/TestNG.htm
+
+【扩展】https://testng.org/doc/
+# Allure Test Report 介绍
+ Allure - an open-source framework designed to create test execution reports that are clear to everyone in the team.
+
+# Zalenium 介绍
+
+![po](./imgmd/zalenium.png)
+
+Selenium Grid 是基于Selenium RC的，作用就是分布式执行测试,而这所谓的分布式结构就是由一个hub节点和若干个node代理节点组成。Hub用来管理各个代理节点的注册信息和状态信息，并且接受远程客户端代码的请求调用，然后把请求的命令转发给代理节点来执行。 
+
+Zalenium 是对Selenium Grid 进行容器化扩展的应用，提供便捷的使用和丰富的功能。
+
+# Jenkins 介绍
+
+作为一个可扩展的自动化服务器,Jenkins 可以用作简单的 CI 服务器,或者变成任何项目的持续交付中心。
+
+
 
 # 运行环境
 ## Local 
@@ -245,7 +282,7 @@ screenResolution = 1920x1080
 ```
 
 
-### CI JOB
+### 通过 Jenkins 执行用例
 #### KeyWord Job
 *通过关键字运行用例*
 
@@ -350,6 +387,7 @@ https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindma
 #### Code Server 运行测试 
 
 5. 修改PjsipDll.java  so加载路径：  
+   路径：src/main/com/yeastar/swebtest/tools/pjsip/PjsipDll.java
     ```    
        /**
          *  adapt testNG for code server
@@ -358,7 +396,7 @@ https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindma
     ```    
 6. 查看测试配置 src/test/resources  config.properties 与data.properties
    
-  <font color=DarkOrchi size=2>**修改远端运行**</font> IS_RUN_REMOTE_SERVER = true 
+  <font color=DarkOrchi size=2>**修改在远端运行**</font> IS_RUN_REMOTE_SERVER = true 
    
    ```    
    #Grid hub 服务地址
