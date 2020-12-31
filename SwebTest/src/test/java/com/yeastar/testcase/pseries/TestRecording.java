@@ -31,7 +31,7 @@ public class TestRecording extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectList_true = new ArrayList<AsteriskObject>();
     List<String> officeTimes = new ArrayList<>();
     List<String> resetTimes = new ArrayList<>();
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestRecording() {
@@ -48,7 +48,7 @@ public class TestRecording extends TestCaseBaseNew {
         long startTime = System.currentTimeMillis();
         if (isDebugInitExtensionFlag) {
             initRecord();
-            initTestEnv();//TODO  local debug
+//            initTestEnv();//TODO  local debug
             isDebugInitExtensionFlag = registerAllExtensions();
             isRunRecoveryEnvFlag = false;
         }
@@ -268,8 +268,8 @@ public class TestRecording extends TestCaseBaseNew {
             "\t\tasterisk 检查播放提示音prompt3；通话15s，挂断，检查cdr，正常录音；检查Recording Files正常记录；\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "EnableRecordingofInternalCalls","RecordExtensions","InternalCallBeingRecordedPrompt","OutboundCallBeingRecordedPrompt","InboundCallBeingRecordedPrompt"})
+    @Issue("【ID1037991】【P系列】【自动化】外线呼入（SPS/SIPRegist/Accout）到Conference CDR/Recording 记录 Communication Type字段显示异常")
+    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "EnableRecordingofInternalCalls","RecordExtensions","InternalCallBeingRecordedPrompt","OutboundCallBeingRecordedPrompt","InboundCallBeingRecordedPrompt"},enabled = false)
     public void testRecording_04_RecordedPrompt() {
         prerequisite();
         apiUtil.autorecordUpdate(String.format("\"enb_internal\":1,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[],\"record_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
@@ -451,7 +451,7 @@ public class TestRecording extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString() + " hung up", "", "", "Internal"));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString() + " hung up", "", "", "Internal"));
 
         assertStep("[Recording校验]");
         softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
@@ -527,8 +527,8 @@ public class TestRecording extends TestCaseBaseNew {
             "\t\t\tasterisk 检查播放提示音prompt3；通话15s，挂断，检查cdr，正常录音；检查Recording Files正常记录；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "EnableRecordingofInternalCalls","RecordExtensions","InternalCallBeingRecordedPrompt","OutboundCallBeingRecordedPrompt","InboundCallBeingRecordedPrompt"})
+    @Issue(" @Issue(\"【ID1037962】【P系列】【自动化】Recording call from 字段格式显示异常\")")
+    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "EnableRecordingofInternalCalls","RecordExtensions","InternalCallBeingRecordedPrompt","OutboundCallBeingRecordedPrompt","InboundCallBeingRecordedPrompt"},enabled = false)
     public void testRecording_09_RecordedPrompt() {
         prerequisite();
         apiUtil.autorecordUpdate(String.format("\"enb_internal\":0,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[],\"record_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id)).apply();
@@ -586,8 +586,8 @@ public class TestRecording extends TestCaseBaseNew {
             "\t检查cdr；正常录音；检查Recording Files正常记录；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "RecordTrunks"})
+    @Issue("【ID1037962】【P系列】【自动化】Recording call from 字段格式显示异常")
+    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "RecordTrunks"},enabled = false)
     public void testRecording_10_RecordTrunks() {
         prerequisite();
         apiUtil.autorecordUpdate(String.format("\"enb_internal\":1,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"LTE\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"FXO\"},{\"text\":\"FXO1-6\",\"value\":\"%s\",\"type\":\"FXO\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"BRI\"},{\"text\":\"BRI1-8\",\"value\":\"%s\",\"type\":\"BRI\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"E1\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"peer\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"register\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"register\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"account\"}],\"record_ext_list\":[]",GSM,apiUtil.getTrunkSummary(GSM).id,FXO_1,apiUtil.getTrunkSummary(FXO_1).id,apiUtil.getTrunkSummary("FXO1-6").id,BRI_1,apiUtil.getTrunkSummary(BRI_1).id,apiUtil.getTrunkSummary("BRI1-8").id,E1,apiUtil.getTrunkSummary(E1).id,SPS,apiUtil.getTrunkSummary(SPS).id,SIPTrunk,apiUtil.getTrunkSummary(SIPTrunk).id,SIPTrunk2,apiUtil.getTrunkSummary(SIPTrunk2).id,ACCOUNTTRUNK,apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
@@ -627,7 +627,7 @@ public class TestRecording extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【ID1037962】【P系列】【自动化】Recording call from 字段格式显示异常")
-    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P2", "RecordTrunks"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P2", "RecordTrunks"},enabled = false)
     public void testRecording_11_RecordTrunks() {
         prerequisite();
         apiUtil.autorecordUpdate(String.format("\"enb_internal\":1,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"LTE\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"FXO\"},{\"text\":\"FXO1-6\",\"value\":\"%s\",\"type\":\"FXO\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"BRI\"},{\"text\":\"BRI1-8\",\"value\":\"%s\",\"type\":\"BRI\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"E1\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"peer\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"register\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"register\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"account\"}],\"record_ext_list\":[]",GSM,apiUtil.getTrunkSummary(GSM).id,FXO_1,apiUtil.getTrunkSummary(FXO_1).id,apiUtil.getTrunkSummary("FXO1-6").id,BRI_1,apiUtil.getTrunkSummary(BRI_1).id,apiUtil.getTrunkSummary("BRI1-8").id,E1,apiUtil.getTrunkSummary(E1).id,SPS,apiUtil.getTrunkSummary(SPS).id,SIPTrunk,apiUtil.getTrunkSummary(SIPTrunk).id,SIPTrunk2,apiUtil.getTrunkSummary(SIPTrunk2).id,ACCOUNTTRUNK,apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
@@ -666,8 +666,8 @@ public class TestRecording extends TestCaseBaseNew {
             "\t检查cdr；正常录音；检查Recording Files正常记录；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "RecordTrunks"})
+    @Issue("【ID1037962】【P系列】【自动化】Recording call from 字段格式显示异常")
+    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "RecordTrunks"},enabled = false)
     public void testRecording_12_RecordTrunks() {
         prerequisite();
         apiUtil.autorecordUpdate(String.format("\"enb_internal\":1,\"internal_prompt\":\"prompt1.wav\",\"outbound_prompt\":\"prompt2.wav\",\"inbound_prompt\":\"prompt3.wav\",\"record_trunk_list\":[{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"LTE\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"FXO\"},{\"text\":\"FXO1-6\",\"value\":\"%s\",\"type\":\"FXO\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"BRI\"},{\"text\":\"BRI1-8\",\"value\":\"%s\",\"type\":\"BRI\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"E1\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"peer\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"register\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"register\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"account\"}],\"record_ext_list\":[]",GSM,apiUtil.getTrunkSummary(GSM).id,FXO_1,apiUtil.getTrunkSummary(FXO_1).id,apiUtil.getTrunkSummary("FXO1-6").id,BRI_1,apiUtil.getTrunkSummary(BRI_1).id,apiUtil.getTrunkSummary("BRI1-8").id,E1,apiUtil.getTrunkSummary(E1).id,SPS,apiUtil.getTrunkSummary(SPS).id,SIPTrunk,apiUtil.getTrunkSummary(SIPTrunk).id,SIPTrunk2,apiUtil.getTrunkSummary(SIPTrunk2).id,ACCOUNTTRUNK,apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
@@ -706,8 +706,8 @@ public class TestRecording extends TestCaseBaseNew {
             "\t检查cdr；正常录音；检查Recording Files正常记录；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries","Recording","P3", "RecordTrunks"})
+    @Issue("【ID1037962】【P系列】【自动化】Recording call from 字段格式显示异常")
+    @Test(groups = {"PSeries","Recording","P3", "RecordTrunks"},enabled = false)
     public void testRecording_13_RecordTrunks() {
         if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
             Assert.assertTrue(false,"FXO 线路 不测！");
@@ -749,8 +749,8 @@ public class TestRecording extends TestCaseBaseNew {
             "\t检查cdr；正常录音；检查Recording Files正常记录；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Recording","P3", "RecordTrunks"})
+    @Issue("【ID1037962】【P系列】【自动化】Recording call from 字段格式显示异常")
+    @Test(groups = {"PSeries", "Recording","P3", "RecordTrunks"},enabled = false)
     public void testRecording_14_RecordTrunks() {
         if(BRI_1.trim().equalsIgnoreCase("null") || BRI_1.trim().equalsIgnoreCase("")){
             Assert.assertTrue(false,"BRI 线路 不测试！");
@@ -792,8 +792,8 @@ public class TestRecording extends TestCaseBaseNew {
             "\t检查cdr；正常录音；检查Recording Files正常记录；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Recording","P3", "RecordTrunks"})
+    @Issue("【ID1037962】【P系列】【自动化】Recording call from 字段格式显示异常")
+    @Test(groups = {"PSeries", "Recording","P3", "RecordTrunks"},enabled = false)
     public void testRecording_15_RecordTrunks() {
         if(E1.trim().equalsIgnoreCase("null") || E1.trim().equalsIgnoreCase("")){
             Assert.assertTrue(false,"E1线路 不测试！");
@@ -1023,7 +1023,7 @@ public class TestRecording extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_1001.toString(),"42000", STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up",  "",FXO_1, "Outbound"));
+                .contains(tuple(CDRNAME.Extension_1001.toString(),"42000", STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString() + " hung up",  "",FXO_1, "Outbound"));
 
         assertStep("[Recording校验]");
         softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
@@ -1291,7 +1291,7 @@ public class TestRecording extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】外线呼入（SPS/SIPRegist/Accout）到Conference   CDR/Recording 记录   Communication Type字段显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001037991")
-    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "RecordConferences"})
+    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "RecordConferences"},enabled = false)
     public void testRecording_27_RecordConferences() {
         prerequisite();
         apiUtil.autorecordUpdate(String.format("\"enb_internal\":0,\"record_trunk_list\":[],\"record_ext_list\":[],\"record_conference_list\":[{\"value\":\"%s\",\"text\":\"Conference0\"}]",apiUtil.getConferenceSummary("6500").id)).apply();
@@ -1377,12 +1377,12 @@ public class TestRecording extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_1000.toString(),CDRNAME.QUEUE0_6400.toString(), STATUS.ANSWER.toString(),"Queue Queue0<6400> connected", "", "", "Outbound"))
-                .contains(tuple(CDRNAME.Extension_1000.toString(),CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString() + " hung up", "", "", "Outbound"));
+                .contains(tuple(CDRNAME.Extension_1000.toString(),CDRNAME.QUEUE0_6400.toString(), STATUS.ANSWER.toString(),"Queue Queue0<6400> connected", "", "", "Internal"))
+                .contains(tuple(CDRNAME.Extension_1000.toString(),CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1001.toString() + " hung up", "", "", "Internal"));
 
         assertStep("[Recording校验]");
         softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
-                .doesNotContain(tuple(CDRNAME.Extension_1000.toString(),CDRNAME.QUEUE0_6400.toString(),"Outbound"));
+                .doesNotContain(tuple(CDRNAME.Extension_1000.toString(),CDRNAME.QUEUE0_6400.toString(),"Internal"));
 
         softAssertPlus.assertAll();
     }
@@ -1611,8 +1611,8 @@ public class TestRecording extends TestCaseBaseNew {
             "\t分机A按*1 暂停录音，asterisk 检查打印=== PAUSE MIXMON ，等待5s，分机A按*1恢复录音，asterisk 检查打印=== UNPAUSE MIXMON  ；等待5s后挂断通话，检查cdr，正常录音；检查Recording Files正常记录；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "FeatureCode","PauseRecording","ResumeRecording","CallRecording"})
+    @Issue("【ID1037962】【P系列】【自动化】Recording call from 字段格式显示异常")
+    @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "FeatureCode","PauseRecording","ResumeRecording","CallRecording"},enabled = false)
     public void testRecording_33_FeatureCode() {
         prerequisite();
         apiUtil.autorecordUpdate(String.format("\"enb_internal\":1,\"internal_prompt\":\"\",\"outbound_prompt\":\"\",\"inbound_prompt\":\"\",\"record_trunk_list\":[{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"LTE\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"FXO\"},{\"text\":\"FXO1-6\",\"value\":\"%s\",\"type\":\"FXO\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"BRI\"},{\"text\":\"BRI1-8\",\"value\":\"%s\",\"type\":\"BRI\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"E1\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"register\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"register\"},{\"text\":\"%s\",\"value\":\"%s\",\"type\":\"account\"}],\"record_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Default_Extension_Group\",\"value\":\"%s\",\"type\":\"ext_group\"}]",GSM,apiUtil.getTrunkSummary(GSM).id,FXO_1,apiUtil.getTrunkSummary(FXO_1).id,apiUtil.getTrunkSummary("FXO1-6").id,BRI_1,apiUtil.getTrunkSummary(BRI_1).id,apiUtil.getTrunkSummary("BRI1-8").id,E1,apiUtil.getTrunkSummary(E1).id,SIPTrunk,apiUtil.getTrunkSummary(SIPTrunk).id,SIPTrunk2,apiUtil.getTrunkSummary(SIPTrunk2).id,ACCOUNTTRUNK,apiUtil.getTrunkSummary(ACCOUNTTRUNK).id,apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
