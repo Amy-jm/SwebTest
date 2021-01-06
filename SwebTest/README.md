@@ -3,45 +3,52 @@
 - [Summary](#summary)
 - [技术栈](#技术栈)
 - [Framework](#framework)
-- [TestNG 介绍](#testng-介绍)
-- [Allure Test Report 介绍](#allure-test-report-介绍)
-- [Zalenium 介绍](#zalenium-介绍)
-- [Jenkins 介绍](#jenkins-介绍)
-- [运行环境](#运行环境)
+  - [TestNG 介绍](#testng-介绍)
+  - [Allure Test Report 介绍](#allure-test-report-介绍)
+  - [Zalenium 介绍](#zalenium-介绍)
+- [CI 持续集成测试](#ci-持续集成测试)
+  - [Jenkins 介绍](#jenkins-介绍)
+- [代码解读](#代码解读)
   - [Gitlab](#gitlab)
-  - [Remote Env](#remote-env)
-- [目录结构](#目录结构)
-- [用例编写](#用例编写)
-  - [用例模式 PageObject](#用例模式-pageobject)
-  - [用例组成](#用例组成)
-  - [用例注解](#用例注解)
+  - [目录结构](#目录结构)
+  - [用例解读](#用例解读)
+    - [用例组成](#用例组成)
+    - [用例注解](#用例注解)
   - [用例步骤](#用例步骤)
     - [步骤描述](#步骤描述)
-    - [具体步骤](#具体步骤)
+    - [Actions事件](#actions事件)
+      - [UI Page 调用](#ui-page-调用)
+      - [api调用](#api调用)
   - [用例验证](#用例验证)
-  - [用例执行](#用例执行)
-  - [报告查看](#报告查看)
-- [P Series 应用](#p-series-应用)
-    - [全局配置文件 config.properties](#全局配置文件-configproperties)
-    - [用户配置文件 data.properties](#用户配置文件-dataproperties)
-    - [通过 Jenkins 执行用例](#通过-jenkins-执行用例)
+  - [用例模式 PageObject](#用例模式-pageobject)
+  - [用例UML](#用例uml)
+  - [用例编写与调试](#用例编写与调试)
+    - [Local Evn -- IDEA](#local-evn----idea)
+    - [Remote Env -- CodeServer](#remote-env----codeserver)
+      - [1. Code (用例编写与调试)](#1-code-用例编写与调试)
+      - [2. Test Browser (远端运行浏览器)](#2-test-browser-远端运行浏览器)
+      - [3. Record Dashboard (录屏)](#3-record-dashboard-录屏)
+      - [4. CI Integration (CI 集成，S series，P series)](#4-ci-integration-ci-集成s-seriesp-series)
+      - [5. Code Sever 开启远程自动化编程之旅](#5-code-sever-开启远程自动化编程之旅)
+      - [6. Code Server 运行测试](#6-code-server-运行测试)
+- [P Series 配置解读](#p-series-配置解读)
+    - [1. 全局配置文件 config.properties](#1-全局配置文件-configproperties)
+    - [2. 用户配置文件 data.properties](#2-用户配置文件-dataproperties)
+- [CI 解读 -- Jenkins](#ci-解读----jenkins)
       - [KeyWord Job](#keyword-job)
       - [XML测试套件 Job](#xml测试套件-job)
       - [Pipline Job](#pipline-job)
       - [Run 5 Times Job](#run-5-times-job)
 - [RoadMap](#roadmap)
+- [Code Server user config](#code-server-user-config)
 - [FAQ](#faq)
 - [Plan](#plan)
-- [Code Sever 开启远程自动化编程之旅](#code-sever-开启远程自动化编程之旅)
-      - [【环境准备】 code server global user Setting，记录，不需要修改](#环境准备-code-server-global-user-setting记录不需要修改)
-      - [Code Server 导入工程](#code-server-导入工程)
-      - [Code Server 运行测试](#code-server-运行测试)
     
 # Summary
 
 【目标】
 1. 提供简洁易用的自动化测试方案
-2. 提高测试效率，结合DeveOps
+2. 提高测试效率，拥抱DeveOps
 3. 支持多产品线的自动化测试（Web,Mobile,PC）
 
 # 技术栈
@@ -50,7 +57,7 @@ selenium + selenide + testng  + allure + zalenium + docker + maven + jenkins
 # Framework
 ![po](./imgmd/framework.png)
 
-# TestNG 介绍 
+## TestNG 介绍 
 
 TestNG 是一个开源自动化测试框架;TestNG表示下一代(Next Generation的首字母)。 TestNG 类似于JUnit(特别是JUnit 4)，但它不是JUnit框架的扩展。它的灵感来源于JUnit。它的目的是优于JUnit，尤其是在用于测试集成多类时。
 
@@ -62,10 +69,10 @@ TestNG 是一个开源自动化测试框架;TestNG表示下一代(Next Generatio
 【扩展】http://www.51testing.com/zhuanti/TestNG.htm
 
 【扩展】https://testng.org/doc/
-# Allure Test Report 介绍
+## Allure Test Report 介绍
  Allure - an open-source framework designed to create test execution reports that are clear to everyone in the team.
 
-# Zalenium 介绍
+## Zalenium 介绍
 
 ![po](./imgmd/zalenium.png)
 
@@ -73,13 +80,18 @@ Selenium Grid 是基于Selenium RC的，作用就是分布式执行测试,而这
 
 Zalenium 是对Selenium Grid 进行容器化扩展的应用，提供便捷的使用和丰富的功能。
 
-# Jenkins 介绍
+
+# CI 持续集成测试
+
+![po](./imgmd/ci.png)
+
+## Jenkins 介绍
 
 作为一个可扩展的自动化服务器,Jenkins 可以用作简单的 CI 服务器,或者变成任何项目的持续交付中心。
 
 
 
-# 运行环境
+# 代码解读
 ## Gitlab
    *repo*
 
@@ -89,21 +101,8 @@ Zalenium 是对Selenium Grid 进行容器化扩展的应用，提供便捷的使
 
    http://192.168.3.252/caspar/swebtest.git
 
-## Remote Env
-  1. Code (用例编写与调试)
-        http://192.168.3.252:8077/
 
-  2. Test Browser (远端运行浏览器)
-        http://192.168.3.252:4444/grid/admin/live?only_active_sessions=true
-
-  3. Record Dashboard (录屏)
-        http://192.168.3.252:4444/dashboard/#
-
-  4. CI Integration (CI 集成，S series，P series)
-        http://192.168.3.252:8087/jenkins/
-
-
-# 目录结构
+## 目录结构
 ```
 ├── Readme.md                                            
 ├── src                                     
@@ -127,17 +126,13 @@ Zalenium 是对Selenium Grid 进行容器化扩展的应用，提供便捷的使
 └── pom.xm                                //配置文件
 
 ```
-# 用例编写
-## 用例模式 PageObject
-
-![po](./imgmd/po.png)
-
-## 用例组成
+## 用例解读
+### 用例组成
 <font color=DarkOrchi size=5>**注解**</font>+
 <font color=Cyan size=5>**步骤**</font>+
 <font color=#0099ff size=5>**验证**</font>
 
-## 用例注解
+### 用例注解
 |  字段           | 描述                  | 备注                             |
 |  ----           | ----                 |----                              |
 |Epic             |     敏捷保留字段      |report，Behaviors下级一级目录      |
@@ -158,12 +153,22 @@ step("1:login web client");
 
 assertStep("[VCP显示]");
 ```
-### 具体步骤
+### Actions事件
+#### UI Page 调用
 ``` java
 auto.loginPage().login("0", EXTENSION_PASSWORD_NEW);
 
 auto.extensionPage().deleAllExtension().createSipExtension("0",EXTENSION_PASSWORD).
                 switchToTab("Linkus Clients").editDataByEditImage("all").editLinksClientsUserType(ExtensionPage.USER_TYPE.Manager).clickSaveAndApply();
+       
+
+```
+
+#### api调用
+``` java
+apiUtil.deleteAllExtensionGroup().createExtensionGroup("{  \"name\": \"Default_Extension_Group\",  \"member_list\": [],  \"member_select\": \"sel_all_ext\",  \"share_group_info_to\": \"all_ext\",  \"specific_extensions\": [],  \"mgr_enb_widget_in_calls\": 1,  \"mgr_enb_widget_out_calls\": 1,  \"mgr_enb_widget_ext_list\": 1,  \"mgr_enb_widget_ring_group_list\": 1,  \"mgr_enb_widget_queue_list\": 1,  \"mgr_enb_widget_park_ext_list\": 1,  \"mgr_enb_widget_vm_group_list\": 1,  \"mgr_enb_chg_presence\": 1,  \"mgr_enb_call_distribution\": 1,  \"mgr_enb_call_conn\": 1,  \"mgr_enb_monitor\": 1,  \"mgr_enb_call_park\": 1,  \"mgr_enb_ctrl_ivr\": 1,  \"mgr_enb_office_time_switch\": 1,  \"mgr_enb_mgr_recording\": 1,  \"user_enb_widget_in_calls\": 0,  \"user_enb_widget_out_calls\": 0,  \"user_enb_widget_ext_list\": 0,  \"user_enb_widget_ring_group_list\": 0,  \"user_enb_widget_queue_list\": 0,  \"user_enb_widget_park_ext_list\": 0,  \"user_enb_widget_vm_group_list\": 0,  \"user_enb_chg_presence\": 0,  \"user_enb_call_distribution\": 0,  \"user_enb_call_conn\": 0,  \"user_enb_monitor\": 0,  \"user_enb_call_park\": 0,  \"user_enb_ctrl_ivr\": 0 }").
+				createExtensionGroup("ExGroup1",extensionExGroup1).
+				createExtensionGroup("ExGroup2",extensionExGroup2).apply();
        
 
 ```
@@ -185,19 +190,90 @@ softAssertPlus.assertAll();
 ```
 
 
+## 用例模式 PageObject
 
-## 用例执行
-1.TestNG
+![po](./imgmd/po.png)
+
+## 用例UML
+
+![po](./imgmd/testclass.png)
+
+## 用例编写与调试
+
+### Local Evn -- IDEA
+    本地执行参考S系列
+### Remote Env -- CodeServer
+  #### 1. Code (用例编写与调试)
+        http://192.168.3.252:8077/
+
+  #### 2. Test Browser (远端运行浏览器)
+        http://192.168.3.252:4444/grid/admin/live?only_active_sessions=true
+
+  #### 3. Record Dashboard (录屏)
+        http://192.168.3.252:4444/dashboard/#
+
+  #### 4. CI Integration (CI 集成，S series，P series)
+        http://192.168.3.252:8087/jenkins/
+
+  #### 5. Code Sever 开启远程自动化编程之旅
+
+1. open code server
+   
+    http://192.168.3.252:8077/
+
+2. TERMINAL 窗口创建工作空间
+   
+   mkdir /home/autoCodeServer/workspace/NAME (NAME,替换为自己的名字) , 切换到自己的目录下
+   
+   ![po](./imgmd/workspace.png)
+3. 拉取代码
+   
+   git clone http://192.168.3.252/caspar/swebtest.git 
+   
+   (过程需要输入自己的gitlab信息)
+   
+4. vscode 打开项目
+   
+   File->Open Folder  /home/autoCodeServer/workspace/XXX/swebTest/SwebTest
+
+#### 6. Code Server 运行测试 
+
+1. 修改Pjsip加载路径：  
+   src/main/com/yeastar/swebtest/tools/pjsip/PjsipDll.java
+    ```    
+       /**
+         *  adapt testNG for code server
+         */ 
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
+    ```    
+2. 查看测试配置 src/test/resources  config.properties 与data.properties
+   
+3.  <font color=DarkOrchi size=2>**修改全局配置文件 开启远程执行**</font> 
+   
+      //src/test/resources/config.properties
+
+    IS_RUN_REMOTE_SERVER = true 
+   
+   ```    
+   #Grid hub 服务地址
+    IS_RUN_REMOTE_SERVER = true
+    GRID_HUB_IP = 192.168.3.252
+    GRID_HUB_PORT = 4444
+   ``` 
+4. run /debug test case
+   
+    ![po](./imgmd/run.png)
+
+    用例执行：Run Test
+
+    用例调试：Debug Test
+
+    执行/调试页面：http://192.168.3.252:4444/grid/admin/live?only_active_sessions=true
+   
 
 
-2.maven
-
-
-## 报告查看
-
-
-# P Series 应用
-### 全局配置文件 config.properties
+# P Series 配置解读
+### 1. 全局配置文件 config.properties
 ```
 #Grid hub 服务地址
 IS_RUN_REMOTE_SERVER = true
@@ -217,7 +293,7 @@ RECORD_VIDEO=true
 #chrome 分辨率 default 1920x1080   1366x768	1440x900 	1536x864	1600x900 	1680x1050	1920x1080	2560x1080	 2560x1440	2560 x 1600	2880 x 1800	3440x1440	3840x2160
 screenResolution = 1920x1080
 ```
-### 用户配置文件 data.properties
+### 2. 用户配置文件 data.properties
 ```
 #=================P系列 被测设备信息设置======================
 #网页登录用户名、密码
@@ -287,7 +363,7 @@ screenResolution = 1920x1080
 ```
 
 
-### 通过 Jenkins 执行用例
+# CI 解读 -- Jenkins
 #### KeyWord Job
 *通过关键字运行用例*
 
@@ -311,26 +387,8 @@ http://192.168.3.252:8087/jenkins/view/PBX_P/job/yeastar-autotest-p-series-testc
 https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindmap
 
 
-
-# FAQ
-1. 
-   ![po](./imgmd/vs_error_java.png)
-
-2. ![po](./imgmd/vs_error_webview.png)
-   
-3. ![po](./imgmd/vs_error_domain.png)
-
-
-# Plan
-0. 自动化介绍
-1. vscode 使用
-2. 用例编写
-3. CI 使用
-4. git 基本使用
-
-
-# Code Sever 开启远程自动化编程之旅
-#### 【环境准备】 code server global user Setting，记录，不需要修改 
+# Code Server user config
+ code server global user Setting，记录，不需要修改 
   ``` 
   {   
     //=============== Nomal
@@ -380,38 +438,20 @@ https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindma
 }
    ```   
 
-#### Code Server 导入工程   
-1. open code server : http://192.168.3.252:8077/
-2. TERMINAL 窗口新建：mkdir /home/autoCodeServer/workspace/NAME (NAME,替换为自己的名字) , 切换到自己的目录下
-   
-   ![po](./imgmd/workspace.png)
-3. 拉取代码：git clone http://192.168.3.252/caspar/swebtest.git (过程需要输入自己的gitlab信息)
-   
-4. vscode 打开项目：File->Open Folder
+# FAQ
+1. 
+   ![po](./imgmd/vs_error_java.png)
 
-#### Code Server 运行测试 
+2. ![po](./imgmd/vs_error_webview.png)
+   
+3. ![po](./imgmd/vs_error_domain.png)
 
-1. 修改PjsipDll.java  so加载路径：  
-   路径：src/main/com/yeastar/swebtest/tools/pjsip/PjsipDll.java
-    ```    
-       /**
-         *  adapt testNG for code server
-         */ 
-        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
-    ```    
-2. 查看测试配置 src/test/resources  config.properties 与data.properties
-   
-3.  <font color=DarkOrchi size=2>**修改全局配置文件**</font> 
-   
-   //src/test/resources/config.properties
 
-    IS_RUN_REMOTE_SERVER = true 
-   
-   ```    
-   #Grid hub 服务地址
-    IS_RUN_REMOTE_SERVER = true
-    GRID_HUB_IP = 192.168.3.252
-    GRID_HUB_PORT = 4444
-   ``` 
+# Plan
+0. 自动化介绍
+1. vscode 使用
+2. 用例编写
+3. CI 使用
+4. git 基本使用
 
-   
+
