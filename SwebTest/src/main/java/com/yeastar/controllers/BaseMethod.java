@@ -711,6 +711,7 @@ public class BaseMethod extends WebDriverFactory {
 		pjsip.Pj_CreateAccount(2000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(2001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(3001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
+		pjsip.Pj_CreateAccount(3002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(4000, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(4001, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
 		pjsip.Pj_CreateAccount(4002, EXTENSION_PASSWORD, "UDP", UDP_PORT, -1);
@@ -724,6 +725,7 @@ public class BaseMethod extends WebDriverFactory {
 		pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
 		pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
 		pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
+		pjsip.Pj_Register_Account_WithoutAssist(3002, DEVICE_ASSIST_1);
 		pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
 		pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
 		pjsip.Pj_Register_Account_WithoutAssist(4002, DEVICE_ASSIST_3);

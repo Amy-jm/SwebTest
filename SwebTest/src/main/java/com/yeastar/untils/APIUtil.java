@@ -390,6 +390,17 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/siptrunk/update",String.format("{%s,\"id\":%s}",request,getTrunkSummary(number).id));
         return this;
     }
+
+    /**
+     * 编辑分机
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editSpsTrunk(String number, String request){
+        editSipTrunk(number, request);
+        return this;
+    }
     /**
      * 编辑bri trunk
      * @param number
