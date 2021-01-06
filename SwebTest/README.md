@@ -8,8 +8,8 @@
 - [Zalenium 介绍](#zalenium-介绍)
 - [Jenkins 介绍](#jenkins-介绍)
 - [运行环境](#运行环境)
-  - [Local](#local)
-  - [Remote](#remote)
+  - [Gitlab](#gitlab)
+  - [Remote Env](#remote-env)
 - [目录结构](#目录结构)
 - [用例编写](#用例编写)
   - [用例模式 PageObject](#用例模式-pageobject)
@@ -33,7 +33,7 @@
 - [FAQ](#faq)
 - [Plan](#plan)
 - [Code Sever 开启远程自动化编程之旅](#code-sever-开启远程自动化编程之旅)
-      - [[环境准备] code server global user Setting，记录，不需要修改](#环境准备-code-server-global-user-setting记录不需要修改)
+      - [【环境准备】 code server global user Setting，记录，不需要修改](#环境准备-code-server-global-user-setting记录不需要修改)
       - [Code Server 导入工程](#code-server-导入工程)
       - [Code Server 运行测试](#code-server-运行测试)
     
@@ -80,11 +80,16 @@ Zalenium 是对Selenium Grid 进行容器化扩展的应用，提供便捷的使
 
 
 # 运行环境
-## Local 
+## Gitlab
    *repo*
 
    http://192.168.5.142/caspar/swebtest.git
-## Remote
+  
+  *new repo*
+
+   http://192.168.3.252/caspar/swebtest.git
+
+## Remote Env
   1. Code (用例编写与调试)
         http://192.168.3.252:8077/
 
@@ -325,7 +330,7 @@ https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindma
 
 
 # Code Sever 开启远程自动化编程之旅
-#### [环境准备] code server global user Setting，记录，不需要修改 
+#### 【环境准备】 code server global user Setting，记录，不需要修改 
   ``` 
   {   
     //=============== Nomal
@@ -386,7 +391,7 @@ https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindma
 
 #### Code Server 运行测试 
 
-5. 修改PjsipDll.java  so加载路径：  
+1. 修改PjsipDll.java  so加载路径：  
    路径：src/main/com/yeastar/swebtest/tools/pjsip/PjsipDll.java
     ```    
        /**
@@ -394,9 +399,13 @@ https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindma
          */ 
         pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
     ```    
-6. 查看测试配置 src/test/resources  config.properties 与data.properties
+2. 查看测试配置 src/test/resources  config.properties 与data.properties
    
-  <font color=DarkOrchi size=2>**修改在远端运行**</font> IS_RUN_REMOTE_SERVER = true 
+3.  <font color=DarkOrchi size=2>**修改全局配置文件**</font> 
+   
+   //src/test/resources/config.properties
+
+    IS_RUN_REMOTE_SERVER = true 
    
    ```    
    #Grid hub 服务地址
