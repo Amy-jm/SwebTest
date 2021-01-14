@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
 
 @Log4j2
 public class BaseMethod extends WebDriverFactory {
@@ -116,7 +117,7 @@ public class BaseMethod extends WebDriverFactory {
 			Cookie cookie = new Cookie("zaleniumMessage", desc);
 			getWebDriver().manage().addCookie(cookie);
 		}catch (org.openqa.selenium.WebDriverException exception){
-			log.error("[org.openqa.selenium.WebDriverException: unable to set cookie]");
+			log.error("[Step -> org.openqa.selenium.WebDriverException: unable to set cookie]");
 		}catch(Exception ex){
 			log.error("[BaseMethod on step ] "+ex);
 		}
@@ -693,7 +694,8 @@ public class BaseMethod extends WebDriverFactory {
 	public void initRecord(){
 		//System-》Storage-》删除所有网络磁盘-》添加网络磁盘record
 		apiUtil.editStoragelocation(String.format("\"recording\":0")).deleteAllNetWorkStorage().
-				createStorage("\"name\":\"record\",\"host\":\"192.168.3.5\",\"share_name\":\"record\",\"username\":\"\",\"password\":\"\",\"work_group\":\"\",\"samba_version\":\"auto\"").apply();
+				createStorage(String.format("\"name\":\"record\",\"host\":\"%s\",\"share_name\":\"%s\",\"username\":\"%s\",\"password\":\"cQ==\",\"work_group\":\"\",\"samba_version\":\"auto\"",NETWORK_DEVICE_IP,NETWORK_DEVICE_SHARE_NAME,NETWORK_DEVICE_USER_NAME, md5Hex(NETWORK_DEVICE_USER_PASSWORD))).apply();
+//                createStorage("\"name\":\"record\",\"host\":\"192.168.3.5\",\"share_name\":\"record\",\"username\":\"\",\"password\":\"\",\"work_group\":\"\",\"samba_version\":\"auto\"").apply();
 		String request = String.format("\"recording\":%d",apiUtil.getStorageObjectSummary("record"));
 		apiUtil.editStoragelocation(request).apply();
 		//编辑分机A-》Features-》勾选Allow the extension to stop or restart call recording during a call 【其它分机默认未勾选】

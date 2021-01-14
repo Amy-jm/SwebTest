@@ -1,7 +1,6 @@
 package com.yeastar.testcase.pseries;
 
 import com.yeastar.page.pseries.TestCaseBaseNew;
-import com.yeastar.swebtest.pobject.Settings.PBX.General.SIP.SIP;
 import com.yeastar.untils.*;
 import com.yeastar.untils.CDRObject.CDRNAME;
 import com.yeastar.untils.CDRObject.STATUS;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.sleep;
+import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
@@ -31,7 +31,7 @@ public class TestRecording extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectList_true = new ArrayList<AsteriskObject>();
     List<String> officeTimes = new ArrayList<>();
     List<String> resetTimes = new ArrayList<>();
-    private boolean isRunRecoveryEnvFlag = true;
+    private boolean isRunRecoveryEnvFlag = false;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestRecording() {
@@ -73,11 +73,21 @@ public class TestRecording extends TestCaseBaseNew {
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
     }
 
+    public void initRecord(){
+        //System-》Storage-》删除所有网络磁盘-》添加网络磁盘record
+        apiUtil.editStoragelocation(String.format("\"recording\":0")).deleteAllNetWorkStorage().
+                createStorage(String.format("\"name\":\"record\",\"host\":\"%s\",\"share_name\":\"%s\",\"username\":\"%s\",\"password\":\"cQ==\",\"work_group\":\"\",\"samba_version\":\"auto\"",NETWORK_DEVICE_IP,NETWORK_DEVICE_SHARE_NAME,NETWORK_DEVICE_USER_NAME, md5Hex(NETWORK_DEVICE_USER_PASSWORD))).apply();
+//                createStorage("\"name\":\"record\",\"host\":\"192.168.3.5\",\"share_name\":\"record\",\"username\":\"\",\"password\":\"\",\"work_group\":\"\",\"samba_version\":\"auto\"").apply();
+        String request = String.format("\"recording\":%d",apiUtil.getStorageObjectSummary("record"));
+        apiUtil.editStoragelocation(request).apply();
+        //编辑分机A-》Features-》勾选Allow the extension to stop or restart call recording during a call 【其它分机默认未勾选】
+        apiUtil.editExtension("1000","\"enb_ctl_record\":1").apply();
+    }
 
     public void initTestEnv() {
         //System-》Storage-》删除所有网络磁盘-》添加网络磁盘record
         apiUtil.editStoragelocation(String.format("\"recording\":0")).deleteAllNetWorkStorage().
-                createStorage("\"name\":\"record\",\"host\":\"192.168.3.5\",\"share_name\":\"record\",\"username\":\"\",\"password\":\"\",\"work_group\":\"\",\"samba_version\":\"auto\"").apply();
+                createStorage(String.format("\"name\":\"record\",\"host\":\"%s\",\"share_name\":\"%s\",\"username\":\"%s\",\"password\":\"cQ==\",\"work_group\":\"\",\"samba_version\":\"auto\"",NETWORK_DEVICE_IP,NETWORK_DEVICE_SHARE_NAME,NETWORK_DEVICE_USER_NAME, md5Hex(NETWORK_DEVICE_USER_PASSWORD))).apply();
         String request = String.format("\"recording\":%d",apiUtil.getStorageObjectSummary("record"));
         apiUtil.editStoragelocation(request).apply();
         //编辑分机A-》Features-》勾选Allow the extension to stop or restart call recording during a call 【其它分机默认未勾选】
@@ -134,7 +144,6 @@ public class TestRecording extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_1000.toString(), CDRNAME.Extension_1001.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", "", "", "Internal"));
-
 
         assertStep("[Recording校验]");
         softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
@@ -1400,7 +1409,7 @@ public class TestRecording extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "RecordQueues"})
     public void testRecording_29_RecordQueues() {
         prerequisite();
-        apiUtil.autorecordUpdate(String.format("\"enb_internal\":0,\"record_trunk_list\":[],\"record_ext_list\":[],\"record_conference_list\":[{\"value\":\"%s\",\"text\":\"Conference0\"}]",apiUtil.getConferenceSummary("6500").id)).apply();
+        apiUtil.autorecordUpdate(String.format("\"enb_internal\":0,\"record_trunk_list\":[],\"record_ext_list\":[],\"record_conference_list\":[],\"record_queue_list\":[{\"value\":\"%s\",\"text\":\"Queue0\"}]",apiUtil.getQueueSummary("6400").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"",apiUtil.getQueueSummary("6400").id)).apply();
 
         step("1:login with admin ");
@@ -1446,7 +1455,7 @@ public class TestRecording extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "RecordQueues"})
     public void testRecording_30_RecordQueues() {
         prerequisite();
-        apiUtil.autorecordUpdate(String.format("\"enb_internal\":0,\"record_trunk_list\":[],\"record_ext_list\":[],\"record_conference_list\":[{\"value\":\"%s\",\"text\":\"Conference0\"}]",apiUtil.getConferenceSummary("6500").id)).apply();
+        apiUtil.autorecordUpdate(String.format("\"enb_internal\":0,\"record_trunk_list\":[],\"record_ext_list\":[],\"record_conference_list\":[],\"record_queue_list\":[{\"value\":\"%s\",\"text\":\"Queue0\"}]",apiUtil.getQueueSummary("6400").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"",apiUtil.getQueueSummary("6400").id)).apply();
 
         step("1:login with admin ");
@@ -1470,7 +1479,7 @@ public class TestRecording extends TestCaseBaseNew {
 
         assertStep("[Recording校验]");
         softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
-                .doesNotContain(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.QUEUE0_6400.toString(),"Inbound"));
+                .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.QUEUE0_6400.toString(),"Inbound"));
 
         apiUtil.deleteAllInbound().createInbound("In1", trunk9, "extension", "1000").apply();
 
@@ -1951,5 +1960,4 @@ public class TestRecording extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1000);
         softAssertPlus.assertAll();
     }
-
 }

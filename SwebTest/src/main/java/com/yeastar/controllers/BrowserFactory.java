@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import com.yeastar.swebtest.driver.ConfigP;
 import com.yeastar.untils.DataUtils;
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -227,6 +228,7 @@ public class BrowserFactory extends ConfigP {
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("disable-infobars");
 			options.addArguments("--no-sandbox");// 以最高权限运行
+			options.addArguments("--disable-dev-shm-usage");// 以最高权限运行
 			options.addArguments("--disable-gpu");//硬件加速，谷歌文档提到需要加上这个属性来规避bug
 			options.addArguments("--start-maximized");//默认启动最大化，避免最大化过程失败
 			options.addArguments("--lang=en");
@@ -244,6 +246,7 @@ public class BrowserFactory extends ConfigP {
 			desiredCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 			desiredCapabilities.setCapability("goog:"+ChromeOptions.CAPABILITY, options);
 			desiredCapabilities.setCapability("goog:"+CapabilityType.LOGGING_PREFS,logPrefs);
+			desiredCapabilities.setCapability(CapabilityType.PLATFORM, Platform.LINUX);
 			log.debug("[add config for DevToolsActivePort issue end...]");
 			try {
 				webDriver = new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);

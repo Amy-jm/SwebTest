@@ -171,11 +171,11 @@ public class HomePage extends BasePage{
         sleep(WaitUntils.SHORT_WAIT*2);
         //close alert
         // todo need to delete sleep
-        while(system_alert_message.exists()){
+        while(system_alert_message.exists() && system_alert_message.isEnabled()){
             system_alert_message.click();
             sleep(2000);
         }
-        if(dms_server_alert_message.exists()){
+        if(dms_server_alert_message.exists() && dms_server_alert_message.isEnabled()){
             dms_server_alert_message.click();
             sleep(2000);
         }

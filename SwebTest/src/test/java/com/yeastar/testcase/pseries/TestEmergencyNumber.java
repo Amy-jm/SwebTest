@@ -29,7 +29,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
     List<String> officeTimes = new ArrayList<>();
     List<String> resetTimes = new ArrayList<>();
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestEmergencyNumber() {
