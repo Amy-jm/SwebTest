@@ -228,7 +228,14 @@ public class TestRingGroup extends TestCaseBaseNew {
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME", "testa").replace("EXTENSIONLASTNAME", "D").replace("EXTENSIONNUM", "1003").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME", "t").replace("EXTENSIONLASTNAME", "estX").replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
                     .createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME", "0").replace("EXTENSIONLASTNAME", "0").replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList));
+                    .createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
+                    .loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+                    .loginWebClient("1030", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+                    .loginWebClient("1000", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+                    .loginWebClient("1001", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+                    .loginWebClient("1002", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+                    .loginWebClient("1003", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
+                    .loginWebClient("1004", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW).apply();;
 
             step("创建分机组 ExGroup1/ExGroup2");
             List<String> extensionExGroup1 = new ArrayList<>();

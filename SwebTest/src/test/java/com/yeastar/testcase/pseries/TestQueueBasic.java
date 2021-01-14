@@ -30,7 +30,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
     APIUtil apiUtil = new APIUtil();
-    private boolean runRecoveryEnvFlag = true;
+    private boolean runRecoveryEnvFlag = false;
     private boolean isDebugInitExtensionFlag = !runRecoveryEnvFlag;
     private String PROMPT_1 = "prompt1.slin";
     private String PROMPT_2 = "prompt2.slin";
@@ -883,7 +883,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 //        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
@@ -985,7 +985,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 //        pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
@@ -3450,7 +3450,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1005);
 
         assertStep("CDR校验");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
@@ -3553,7 +3553,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1005);
 
         assertStep("CDR校验");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
@@ -3680,7 +3680,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1005);
 
         assertStep("CDR校验");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         resultCDR = apiUtil.getCDRRecord(1);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
@@ -3808,7 +3808,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1005);
 
         assertStep("CDR校验");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
@@ -3871,7 +3871,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_queue);
 
-        auto.queuePage().createQueue("6402","QU2").clickSaveAndApply();
+        auto.queuePage().createQueue("6444","QU6").clickSaveAndApply();
 
         step("批量删除队列");
         auto.queuePage().deleAllQueue().clickSaveAndApply();
