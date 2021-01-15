@@ -58,6 +58,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     private final String ext_1004 = "t estX<1004>";
     private final String ext_1020 = "1020 1020<1020>";
     private final String ext_2000 = "2000<2000>";
+    private final String ext_2001 = "2001<2001>";
     private final String ext_3001 = "3001<3001>";
     private final String ext_4000 = "4000<4000>";
 
@@ -1791,8 +1792,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         step("CDR校验");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(ext_2000, cdrRingGroup1, CDRObject.STATUS.NO_ANSWER.toString(), cdrRingGroup1 + " timed out, failover", SPS, "", CDRObject.COMMUNICATION_TYPE.INBOUND.toString()))
-                .contains(tuple(ext_2000, ext_1020, CDRObject.STATUS.ANSWER.toString(), ext_2000+" hung up", SPS, "", CDRObject.COMMUNICATION_TYPE.INBOUND.toString()));
+                .contains(tuple(ext_2001, cdrRingGroup1, CDRObject.STATUS.NO_ANSWER.toString(), cdrRingGroup1 + " timed out, failover", SPS, "", CDRObject.COMMUNICATION_TYPE.INBOUND.toString()))
+                .contains(tuple(ext_2001, ext_1020, CDRObject.STATUS.ANSWER.toString(), ext_2001+" hung up", SPS, "", CDRObject.COMMUNICATION_TYPE.INBOUND.toString()));
 
 
 
