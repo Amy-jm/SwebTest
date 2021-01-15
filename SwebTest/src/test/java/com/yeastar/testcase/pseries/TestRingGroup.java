@@ -1830,6 +1830,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[通话校验]:1002分机响铃").isEqualTo(RING);
 
+        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 15)).as("[通话校验]:1000分机响铃").isEqualTo(HUNGUP);
+
         sleep(15000);
         pjsip.Pj_Hangup_All();
 
