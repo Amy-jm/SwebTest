@@ -215,10 +215,6 @@ public class TestRingGroup extends TestCaseBaseNew {
             apiUtil.apply();
 
             runRecoveryEnvFlag = registerAllExtensions();
-
-            step("1003 1004拨号*76400，登录Queue0");
-            pjsip.Pj_Make_Call_No_Answer(1003,  "*76400", DEVICE_IP_LAN, false);
-            pjsip.Pj_Make_Call_No_Answer(1004,  "*76400", DEVICE_IP_LAN, false);
         }
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
     }
@@ -2485,11 +2481,12 @@ public class TestRingGroup extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING ,  6)).as("[通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1)).as("[通话校验]:1000分机未响铃").isEqualTo(HUNGUP);
 
-        step("所有分机1000\\1001\\1002同时响铃10s后，进入到分机1004的语音留言，登录1004查看新增一条语音留言，Name记录正确");
+        step("所有分机1000\\1001\\1002按顺序响铃5s后，进入到分机1004的语音留言，登录1004查看新增一条语音留言，Name记录正确");
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP ,  10)).as("[通话校验]:1001分机响铃").isEqualTo(HUNGUP);
         sleep(10000);
         pjsip.Pj_Hangup_All();
 
-        step("网页admin登录,进入ringgroup界面 ");
+        step("网页1004登录,进入Voicemail界面 ");
         auto.loginPage().login("1004", EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
 
