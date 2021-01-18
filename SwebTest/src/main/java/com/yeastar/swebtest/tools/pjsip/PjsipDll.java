@@ -7,6 +7,8 @@ import com.yeastar.untils.PropertiesUntils;
 
 import java.io.File;
 
+import static com.yeastar.swebtest.driver.Config.currentPath;
+
 /**
  * Created by GaGa on 2017-04-16.
  */
@@ -31,7 +33,7 @@ public class PjsipDll {
         /**
          *  adapt testNG for code server
          */
-         pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
+//         pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
 
         /**
          *  adapt maven test for jenkins
@@ -41,7 +43,7 @@ public class PjsipDll {
 
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary("YsAutoTestPjsua_sound",pjsipdll.class);
 //
-//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"../src/main/resources/libYsAutoTestPjsua.so",pjsipdll.class);
         /**
          * adapt for coderserver
          *
