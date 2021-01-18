@@ -58,6 +58,7 @@ public class TestRingGroup extends TestCaseBaseNew {
     private final String ext_1004 = "t estX<1004>";
     private final String ext_1020 = "1020 1020<1020>";
     private final String ext_2000 = "2000<2000>";
+    private final String ext_2001 = "2001<2001>";
     private final String ext_3001 = "3001<3001>";
     private final String ext_4000 = "4000<4000>";
 
@@ -173,25 +174,15 @@ public class TestRingGroup extends TestCaseBaseNew {
 
         long startTime = System.currentTimeMillis();
         if (runRecoveryEnvFlag) {
+            initExtension();
+            initExtensionGroup();
+            initTrunk();
+            initQueue();
+            initConference();
+            initOutbound();
+            initIVR();
 
-            List<String> trunk1 = new ArrayList<>();
-            List<String> trunk2 = new ArrayList<>();
-            List<String> trunk3 = new ArrayList<>();
-            List<String> trunk4 = new ArrayList<>();
-            List<String> trunk5 = new ArrayList<>();
-            List<String> trunk6 = new ArrayList<>();
-            List<String> trunk7 = new ArrayList<>();
-            List<String> trunk8 = new ArrayList<>();
             List<String> trunk9 = new ArrayList<>();
-
-            trunk1.add(SIPTrunk);
-            trunk2.add(SPS);
-            trunk3.add(ACCOUNTTRUNK);
-            trunk4.add(FXO_1);
-            trunk5.add(BRI_1);
-            trunk6.add(E1);
-            trunk7.add(GSM);
-            trunk8.add(GSM);
             trunk9.add(SPS);
             trunk9.add(BRI_1);
             trunk9.add(FXO_1);
@@ -200,64 +191,8 @@ public class TestRingGroup extends TestCaseBaseNew {
             trunk9.add(ACCOUNTTRUNK);
             trunk9.add(GSM);
 
-            List<String> extensionNum = new ArrayList<>();
-            List<String> extensionNumA = new ArrayList<>();
-
-            queueStaticMembers = new ArrayList<>();
-            queueDynamicMembers = new ArrayList<>();
-            queueMembers = new ArrayList<>();
             ringGroupMembers0 = new ArrayList<>();
             ringGroupMembers1 = new ArrayList<>();
-            conferenceMember = new ArrayList<>();
-
-            extensionNum.add("0");
-            extensionNum.add("1000");
-            extensionNum.add("1001");
-            extensionNum.add("1002");
-            extensionNum.add("1003");
-            extensionNumA.add("1000");
-
-
-            step("创建分机1000-1010");
-            apiUtil.deleteAllExtension().apply();
-            sleep(WaitUntils.SHORT_WAIT);
-            String groupList = apiUtil.getInitialdata("extension").getString("group_list").replace("\"user\"", "\"Manager\"");
-            apiUtil.createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME", "test").replace("EXTENSIONLASTNAME", "A").replace("EXTENSIONNUM", "1000").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME", "test2").replace("EXTENSIONLASTNAME", "B").replace("EXTENSIONNUM", "1001").replace("EXTENSIONLASTNAME", "B").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME", "testta").replace("EXTENSIONLASTNAME", "C").replace("EXTENSIONNUM", "1002").replace("EXTENSIONLASTNAME", "C").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME", "testa").replace("EXTENSIONLASTNAME", "D").replace("EXTENSIONNUM", "1003").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME", "t").replace("EXTENSIONLASTNAME", "estX").replace("EXTENSIONNUM", "1004").replace("EXTENSIONLASTNAME", "D").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtension.replace("EXTENSIONFIRSTNAME", "0").replace("EXTENSIONLASTNAME", "0").replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
-                    .createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
-                    .loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
-                    .loginWebClient("1030", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
-                    .loginWebClient("1000", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
-                    .loginWebClient("1001", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
-                    .loginWebClient("1002", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
-                    .loginWebClient("1003", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
-                    .loginWebClient("1004", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW).apply();;
-
-            step("创建分机组 ExGroup1/ExGroup2");
-            List<String> extensionExGroup1 = new ArrayList<>();
-            List<String> extensionExGroup2 = new ArrayList<>();
-            extensionExGroup1.add("1000");
-            extensionExGroup1.add("1001");
-
-            extensionExGroup2.add("1000");
-            extensionExGroup2.add("1002");
-
-            apiUtil.deleteAllExtensionGroup().createExtensionGroup("{  \"name\": \"Default_Extension_Group\",  \"member_list\": [],  \"member_select\": \"sel_all_ext\",  \"share_group_info_to\": \"all_ext\",  \"specific_extensions\": [],  \"mgr_enb_widget_in_calls\": 1,  \"mgr_enb_widget_out_calls\": 1,  \"mgr_enb_widget_ext_list\": 1,  \"mgr_enb_widget_ring_group_list\": 1,  \"mgr_enb_widget_queue_list\": 1,  \"mgr_enb_widget_park_ext_list\": 1,  \"mgr_enb_widget_vm_group_list\": 1,  \"mgr_enb_chg_presence\": 1,  \"mgr_enb_call_distribution\": 1,  \"mgr_enb_call_conn\": 1,  \"mgr_enb_monitor\": 1,  \"mgr_enb_call_park\": 1,  \"mgr_enb_ctrl_ivr\": 1,  \"mgr_enb_office_time_switch\": 1,  \"mgr_enb_mgr_recording\": 1,  \"user_enb_widget_in_calls\": 0,  \"user_enb_widget_out_calls\": 0,  \"user_enb_widget_ext_list\": 0,  \"user_enb_widget_ring_group_list\": 0,  \"user_enb_widget_queue_list\": 0,  \"user_enb_widget_park_ext_list\": 0,  \"user_enb_widget_vm_group_list\": 0,  \"user_enb_chg_presence\": 0,  \"user_enb_call_distribution\": 0,  \"user_enb_call_conn\": 0,  \"user_enb_monitor\": 0,  \"user_enb_call_park\": 0,  \"user_enb_ctrl_ivr\": 0 }").
-                    createExtensionGroup("ExGroup1",extensionExGroup1).
-                    createExtensionGroup("ExGroup2",extensionExGroup2).apply();
-
-            step("创建SPS中继");
-            apiUtil.deleteTrunk(SPS)
-                    .createSIPTrunk(reqDataCreateSPS_2);
-
-            step("创建IVR 6301");
-            ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
-            pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0, "extension", "", "1000", 0));
-            apiUtil.deleteAllIVR().createIVR(ivrNum0, ivrName0, pressKeyObjects_0);
 
             step("创建响铃组6300 6301");
             ringGroupMembers0.add("1003");
@@ -274,41 +209,12 @@ public class TestRingGroup extends TestCaseBaseNew {
                     .editRingGroup(ringGroupNum0, String.format("\"ring_strategy\":\"ring_all\",\"ring_timeout\":10,\"fail_dest\":\"extension\",\"fail_dest_value\":\"%s\"", extensionObject.id))
                     .editRingGroup(ringGroupNum1, String.format("\"ring_strategy\":\"ring_all\",\"fail_dest\":\"extension\",\"fail_dest_value\":\"%s\"", extensionObject2.id));
 
-            step("创建队列6400");
-            queueStaticMembers.add("1000");
-            queueStaticMembers.add("1001");
-            queueDynamicMembers.add("1003");
-            queueDynamicMembers.add("1004");
-            apiUtil.deleteAllQueue().createQueue(queueName0, queueNum0, queueDynamicMembers, queueStaticMembers, null)
-            .editQueue(queueNum0,String.format("\"fail_dest\":\"extension\",\"fail_dest_value\":\"%s\",\"max_wait_time\":60," +
-                    "\"press_key\":\"0\",\"key_dest\":\"extension\",\"key_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1001").id));
-
-            step("创建会议室");
-            apiUtil.deleteAllConference().createConference(conferenceName0, conferenceNum0, conferenceMember);
-
             step("创建呼入路由InRoute3,目的地到响铃组6300");
             apiUtil.deleteAllInbound()
                     .createInbound("In1", trunk9, "ring_group", ringGroupNum1);
-
-            step("创建呼出路由");
-            apiUtil.deleteAllOutbound().createOutbound("Out1", trunk1, extensionNum, "1.", 1).
-                    createOutbound("Out2", trunk2, extensionNum, "2.", 1).
-                    createOutbound("Out3", trunk3, extensionNum, "3.", 1).
-                    createOutbound("Out4", trunk4, extensionNum, "4.", 1).
-                    createOutbound("Out5", trunk5, extensionNum, "5.", 1).
-                    createOutbound("Out6", trunk6, extensionNum, "6.", 1).
-                    createOutbound("Out7", trunk7, extensionNum, "7.", 1).
-                    createOutbound("Out8", trunk8, extensionNumA).
-                    createOutbound("Out9", trunk9, extensionNum);
-
             apiUtil.apply();
-            //todo role_id 需要获取
-            apiUtil.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW).editExtension("0","\"role_id\":1").apply();
-            runRecoveryEnvFlag = registerAllExtensions();
 
-            step("1003 1004拨号*76400，登录Queue0");
-            pjsip.Pj_Make_Call_No_Answer(1003,  "*76400", DEVICE_IP_LAN, false);
-            pjsip.Pj_Make_Call_No_Answer(1004,  "*76400", DEVICE_IP_LAN, false);
+            runRecoveryEnvFlag = registerAllExtensions();
         }
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
     }
@@ -1882,8 +1788,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         step("CDR校验");
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(ext_2000, cdrRingGroup1, CDRObject.STATUS.NO_ANSWER.toString(), cdrRingGroup1 + " timed out, failover", SPS, "", CDRObject.COMMUNICATION_TYPE.INBOUND.toString()))
-                .contains(tuple(ext_2000, ext_1020, CDRObject.STATUS.ANSWER.toString(), ext_2000+" hung up", SPS, "", CDRObject.COMMUNICATION_TYPE.INBOUND.toString()));
+                .contains(tuple(ext_2001, cdrRingGroup1, CDRObject.STATUS.NO_ANSWER.toString(), cdrRingGroup1 + " timed out, failover", SPS, "", CDRObject.COMMUNICATION_TYPE.INBOUND.toString()))
+                .contains(tuple(ext_2001, ext_1020, CDRObject.STATUS.ANSWER.toString(), ext_2001+" hung up", SPS, "", CDRObject.COMMUNICATION_TYPE.INBOUND.toString()));
 
 
 
@@ -1919,6 +1825,8 @@ public class TestRingGroup extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, RING, 5)).as("[通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[通话校验]:1002分机响铃").isEqualTo(RING);
+
+        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 15)).as("[通话校验]:1000分机响铃").isEqualTo(HUNGUP);
 
         sleep(15000);
         pjsip.Pj_Hangup_All();
@@ -2573,11 +2481,12 @@ public class TestRingGroup extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING ,  6)).as("[通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1)).as("[通话校验]:1000分机未响铃").isEqualTo(HUNGUP);
 
-        step("所有分机1000\\1001\\1002同时响铃10s后，进入到分机1004的语音留言，登录1004查看新增一条语音留言，Name记录正确");
+        step("所有分机1000\\1001\\1002按顺序响铃5s后，进入到分机1004的语音留言，登录1004查看新增一条语音留言，Name记录正确");
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP ,  10)).as("[通话校验]:1001分机响铃").isEqualTo(HUNGUP);
         sleep(10000);
         pjsip.Pj_Hangup_All();
 
-        step("网页admin登录,进入ringgroup界面 ");
+        step("网页1004登录,进入Voicemail界面 ");
         auto.loginPage().login("1004", EXTENSION_PASSWORD_NEW);
         auto.me_homePage().intoPage(Me_HomePage.Menu_Level_1.voicemails);
 
