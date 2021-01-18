@@ -19,19 +19,19 @@ public class PjsipDll {
         /**
          *  adapt local testNG ok
          */
-        pjsipdll instance = (pjsipdll) Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+ File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+//        pjsipdll instance = (pjsipdll) Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+ File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
 
 
         /**
          *  adapt local  maven test ok
          */
-        // pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"classes"+ File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+//         pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"classes"+ File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
 
 
         /**
          *  adapt testNG for code server
          */
-        // pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
+         pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
 
         /**
          *  adapt maven test for jenkins
