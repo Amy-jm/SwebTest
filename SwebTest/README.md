@@ -446,6 +446,12 @@ https://www.tapd.cn/22454281/documents/view/1122454281001002456?file_type=mindma
    
 3. ![po](./imgmd/vs_error_domain.png)
 
+4. ![po](./imgmd/pjsipInit.png)
+   Q: PJSIP库本地初始化异常
+
+   A: 本地新增音频文件，F:\molihua.wav  (文件位置：src/main/resources/molihua.wav)
+
+
 
 # Plan
 0. 自动化介绍

@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"workbench.colorTheme": "Default Dark+",
+		"files.autoSave": "onFocusChange",
+		"java.home": "/usr/lib/jvm/java-8-openjdk-amd64",
+		"java.configuration.maven.userSettings": "/home/maven/conf/settings.xml",
+		"maven.terminal.customEnv": [
+			{
+				"environmentVariable": "MAVEN_OPTS",
+				"value": "-Xms1024m -Xmx4096m"
+			},
+			{
+				"environmentVariable": "JAVA_HOME",
+				"value": "/usr/lib/jvm/java-8-openjdk-amd64"
+			}
+		],
+		"java.semanticHighlighting.enabled": true,
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"java.test.report.position": "currentView",
+		"git.confirmSync": false,
+		"java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/root/.local/share/code-server/extensions/gabrielbb.vscode-lombok-1.0.0/server/lombok.jar\"",
+		"java.requirements.JDK11Warning": false
+	}
+}
