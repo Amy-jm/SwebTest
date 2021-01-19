@@ -2369,7 +2369,6 @@ public class TestIVR extends TestCaseBaseNew{
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1004);
 
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
@@ -2422,7 +2421,6 @@ public class TestIVR extends TestCaseBaseNew{
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1001);
 
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
@@ -2440,7 +2438,7 @@ public class TestIVR extends TestCaseBaseNew{
             "\t\t\t60秒后，只有分机1000响铃，可正常接听，检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("Queue ,no answer, 异常")
     @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR44_KeyPressEvent_13","PSeries","Cloud","K2","Queue"}, dataProvider = "routesKeyPressEvent")
     public void testIVR44_KeyPressEvent_13(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) throws IOException, JSchException {
         prerequisite(false);
@@ -2482,7 +2480,6 @@ public class TestIVR extends TestCaseBaseNew{
         sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_hangupCall(1000);
 
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         assertStep("[CDR校验]");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording,HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
@@ -2500,7 +2497,7 @@ public class TestIVR extends TestCaseBaseNew{
             "\t\t\t只有分机1001正常响铃、接听；检查cdr" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("Queue ,no answer, 异常")
     @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR45_KeyPressEvent_14","PSeries","Cloud","K2","Queue"}, dataProvider = "routesKeyPressEvent")
     public void testIVR45_KeyPressEvent_14(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) throws IOException, JSchException {
         prerequisite(false);
@@ -2944,7 +2941,7 @@ public class TestIVR extends TestCaseBaseNew{
 
         step("2:"+dtmfMessage +"，[caller]:"+caller+" ,[callee]:"+routePrefix + callee+"[dtmf] "+dtmf);
         pjsip.Pj_Make_Call_No_Answer(caller, routePrefix + callee, deviceAssist, false);
-        sleep(WaitUntils.SHORT_WAIT*3);
+        sleep(WaitUntils.SHORT_WAIT*5);
         pjsip.Pj_Send_Dtmf(caller, dtmf);
 
         assertStep(caller + "[通话状态校验]");

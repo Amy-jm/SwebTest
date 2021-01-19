@@ -503,14 +503,14 @@ public class BaseMethod extends WebDriverFactory {
 	 */
 	public void initTrunk(){
 		step("初始化 trunk");
-		if(!FXO_1.trim().equalsIgnoreCase("null") || !FXO_1.trim().equalsIgnoreCase("")){
+		if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
 			step("编辑 FXO_1,DID:13001");
 			apiUtil.editFXOTrunk(FXO_1,String.format("\"did\":\"13001\"")).apply();
 		}
 
-		if(!DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("null") || !DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("") ||
-				!DEVICE_TEST_GSM.trim().equalsIgnoreCase("null") || !DEVICE_TEST_GSM.trim().equalsIgnoreCase("") ||
-				!GSM.trim().equalsIgnoreCase("null") || !GSM.trim().equalsIgnoreCase("") ){
+		if(DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("null") || DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("") ||
+				DEVICE_TEST_GSM.trim().equalsIgnoreCase("null") || DEVICE_TEST_GSM.trim().equalsIgnoreCase("") ||
+				GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("") ){
 			step("编辑 GSM,DID:7"+ DEVICE_ASSIST_GSM);
 			apiUtil.editGSMTrunk(GSM,String.format("\"did\":\"7"+DEVICE_ASSIST_GSM+"\"")).apply();
 		}

@@ -36,7 +36,7 @@ public class TestIVRAllowOptoutofCallRecording extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectListSecond = new ArrayList<AsteriskObject>();
     List<String> officeTimes = new ArrayList<>();
     List<String> resetTimes = new ArrayList<>();
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestIVRAllowOptoutofCallRecording() {
@@ -545,7 +545,7 @@ public class TestIVRAllowOptoutofCallRecording extends TestCaseBaseNew {
             "\t检查cdr ，不会录音；检查Recording Files没有产生记录；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("bug, 到queue为no_answer时候 cdr显示异常异常，异常信息： \"SPS1\", \"SPS1\", \"Outbound\")")
     @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "IVR-AllowOptoutofCallRecording"})
     public void testRecording_08_Recording() {
         prerequisite();
@@ -1226,7 +1226,7 @@ public class TestIVRAllowOptoutofCallRecording extends TestCaseBaseNew {
             "\tasterisk 检查打印=== PAUSE MIXMON ，等待5s，分机A按*1恢复录音，asterisk 检查打印=== UNPAUSE MIXMON  ；等待5s后挂断通话，检查cdr，正常录音；检查Recording Files正常记录；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("到队列，no answer的时候，\"destinationTrunk\", \"communicatonType\" 两个字段显示异常")
+    @Issue("bug, 到queue为no_answer时候 cdr显示异常异常，异常信息： \"SPS1\", \"SPS1\", \"Outbound\")")
     @Test(groups = {"PSeries", "Cloud", "K2", "Recording","P3", "IVR-AllowOptoutofCallRecording","FeatureCode","PauseRecording","ResumeRecording","CallRecording"})
     public void testRecording_15_FeatureCode() {
         prerequisite();

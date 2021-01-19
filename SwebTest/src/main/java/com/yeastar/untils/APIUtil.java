@@ -2389,6 +2389,16 @@ public class APIUtil {
         return this;
     }
 
+    /**
+     * voicemail 更新
+     * @param request
+     * @return
+     */
+    public APIUtil voicemailUpdate(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/vmsettings/update",String.format("{%s}",request));
+        return this;
+    }
+
 
     /**
      * 发送get请求
