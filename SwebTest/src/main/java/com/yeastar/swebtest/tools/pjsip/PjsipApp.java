@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static com.yeastar.swebtest.driver.Config.*;
 import static com.yeastar.swebtest.driver.SwebDriver.gridExtensonStatus;
@@ -86,13 +87,14 @@ public class PjsipApp extends PjsipDll {
          * number  对方送来的callid（来显？）
          */
         public int fptr_callincoming(int id, String number, int accid) {
-            log.debug("incomingcallback" + number + "callid:" + id + "accid:" + accid + "accounts.size(): " + accounts.size());
+            log.debug("incomingcallback " + number + "callid: " + id + "accid: " + accid + "accounts.size(): " + accounts.size());
 
             for (int i = 0; i < accounts.size(); i++) {
                 if (accounts.get(i).accId == accid) {
                     accounts.get(i).callId = id;
                     accounts.get(i).status = RING;
-                    accounts.get(i).callerId = number.substring(5, number.indexOf("@"));
+                    accounts.get(i).callerId = number.substring(number.indexOf("\"")+1, number.indexOf("\"",2));
+
                 }
             }
             return 0;
@@ -153,9 +155,20 @@ public class PjsipApp extends PjsipDll {
         }
     };
 
-    public List<UserAccount> get_account() {
+    public List<UserAccount> get_accounts() {
         return accounts;
     }
+
+    public UserAccount getAccount(int num){
+
+        for (int i=0; i<accounts.size(); i++){
+            if(accounts.get(i).username.equals(String.valueOf(num))){
+                return accounts.get(i);
+            }
+        }
+        return null;
+    }
+
 
     public void setAccounts(List<UserAccount> accounts) {
         this.accounts = accounts;
