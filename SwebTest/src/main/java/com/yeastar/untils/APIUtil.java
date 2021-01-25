@@ -381,7 +381,7 @@ public class APIUtil {
         return this;
     }
     /**
-     * 编辑分机
+     * 编辑sip Trunk
      * @param number
      * @param request
      * @return
@@ -392,12 +392,23 @@ public class APIUtil {
     }
 
     /**
-     * 编辑分机
+     * 编辑SPS Trunk
      * @param number
      * @param request
      * @return
      */
     public APIUtil editSpsTrunk(String number, String request){
+        editSipTrunk(number, request);
+        return this;
+    }
+
+    /**
+     * 编辑Account trunk
+     * @param number
+     * @param request
+     * @return
+     */
+    public APIUtil editAccountTrunk(String number, String request){
         editSipTrunk(number, request);
         return this;
     }
