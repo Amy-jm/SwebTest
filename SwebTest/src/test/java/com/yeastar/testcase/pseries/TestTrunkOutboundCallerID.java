@@ -540,6 +540,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","SPS"})
     public void testTrunkOutCallerID_12_SPS() {
         prerequisite();
+        apiUtil.editSpsTrunk(SPS,"\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
         apiUtil.editSpsTrunk(SPS,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 22000");
@@ -585,6 +586,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","SPS"})
     public void testTrunkOutCallerID_13_SPS() {
         prerequisite();
+        apiUtil.editSpsTrunk(SPS,"\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
         apiUtil.editSpsTrunk(SPS,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 22000");
@@ -633,6 +635,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","SPS"})
     public void testTrunkOutCallerID_14_SPS() {
         prerequisite();
+        apiUtil.editSpsTrunk(SPS,"\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
         apiUtil.editSpsTrunk(SPS,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":5,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":1,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 22000");
@@ -692,11 +695,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Description("编辑BRI外线-》Outbound Caller ID" +
             "Outbound Caller ID: 空 ,Outbound Caller ID Name:空,\n" +
             "Outbound Caller ID List : Create Method 选择“Shared Outbound Caller ID\",Outbound Caller ID: SharedCallerID123,Outbound Caller ID Name:SharedCallerName, 分机选择：Default_Extension_Group\n" +
-            "\t2.分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
+            "\t16.分机1000通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为SharedCallerName，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID123\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_16_BRI() {
         prerequisite();
@@ -727,11 +731,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Description("编辑BRI外线-》Outbound Caller ID" +
             "Outbound Caller ID: 空 ,Outbound Caller ID Name:空,\n" +
             "Outbound Caller ID List : Create Method 选择“Shared Outbound Caller ID\",Outbound Caller ID: SharedCallerID123,Outbound Caller ID Name:SharedCallerName, 分机选择：Default_Extension_Group\n" +
-            "\t3.分机1001通过sps外线呼出，辅助2分机2000响铃\n" +
+            "\t17.分机1001通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为SharedCallerName，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID123")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_17_BRI() {
         prerequisite();
@@ -765,11 +770,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1001-1002\n" +
             "Outbound Caller ID Name：RanggeName1\n" +
-            "\t4.分机1001通过sps外线呼出，辅助2分机2000响铃\n" +
+            "\t18.分机1001通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为RanggeName1，接听，挂断；检查cdr,Outbound Caller ID: +5503301\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_18_BRI() {
         prerequisite();
@@ -803,11 +809,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1001-1002\n" +
             "Outbound Caller ID Name：RanggeName1\n" +
-            "\t5.分机1002通过sps外线呼出，辅助2分机2000响铃\n" +
+            "\t19.分机1002通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为RanggeName1，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_19_BRI() {
         prerequisite();
@@ -847,11 +854,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "6.分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
+            "20.分机1000通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t检查来电显示为SharedCallerName1，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID1")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_20_BRI() {
         prerequisite();
@@ -891,11 +899,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "7.分机1001通过sps外线呼出，辅助2分机2000响铃\n" +
-            "\t检查来电显示为RangeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
+            "21.分机1001通过bri外线呼出，辅助2分机2000响铃\n" +
+            "\t检查来电显示为RanggeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_21_BRI() {
         prerequisite();
@@ -935,11 +944,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "8.分机1002通过sps外线呼出，辅助2分机2000响铃\n" +
+            "22.分机1002通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t检查来电显示为SharedCallerName4，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID4")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_22_BRI() {
         prerequisite();
@@ -979,11 +989,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "9.分机1003通过sps外线呼出，辅助2分机2000响铃\n" +
+            "23.分机1003通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t检查来电显示为SharedCallerName3，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID3")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_23_BRI() {
         prerequisite();
@@ -1023,11 +1034,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "10.分机1004通过sps外线呼出，辅助2分机2000响铃\n" +
+            "24.分机1004通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t检查来电显示为SharedCallerName3，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID3")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_24_BRI() {
         prerequisite();
@@ -1067,11 +1079,12 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "11.分机1005通过sps外线呼出，辅助2分机2000响铃\n" +
-            "\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: spsOuntCid ")
+            "25.分机1005通过bri外线呼出，辅助2分机2000响铃\n" +
+            "\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: briOuntCid ")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_25_BRI() {
         prerequisite();
@@ -1111,15 +1124,17 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "12.编辑Outbound Caller ID List 的顺序：Outbound Caller ID: SharedCallerID5,Outbound Caller ID Name:SharedCallerName5, 分机选择：分机A-1000 调整到第一条\n" +
-            "\t分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
+            "26.编辑Outbound Caller ID List 的顺序：Outbound Caller ID: SharedCallerID5,Outbound Caller ID Name:SharedCallerName5, 分机选择：分机A-1000 调整到第一条\n" +
+            "\t分机1000通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为SharedCallerName5，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID5")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_26_BRI() {
         prerequisite();
+        apiUtil.editBriTrunk(BRI_1,"\"def_outbound_cid\":\"briOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
         apiUtil.editBriTrunk(BRI_1,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 52000");
@@ -1156,15 +1171,17 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "13.编辑Outbound Caller ID List 的顺序：,Outbound Caller ID: SharedCallerID4,Outbound Caller ID Name:SharedCallerName4, 分机选择：ExGroup2；调整到第一条\n" +
-            "\t分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
+            "27.编辑Outbound Caller ID List 的顺序：,Outbound Caller ID: SharedCallerID4,Outbound Caller ID Name:SharedCallerName4, 分机选择：ExGroup2；调整到第一条\n" +
+            "\t分机1000通过bri外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为SharedCallerName4，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID4")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries", "P3", "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_27_BRI() {
         prerequisite();
+        apiUtil.editBriTrunk(BRI_1,"\"def_outbound_cid\":\"briOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
         apiUtil.editBriTrunk(BRI_1,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 52000");
@@ -1201,18 +1218,20 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "14.编辑Outbound Caller ID List 的顺序：5)Outbound Caller ID List : Create Method 选择“Outbound Caller ID Range”；\n" +
+            "28.编辑Outbound Caller ID List 的顺序：5)Outbound Caller ID List : Create Method 选择“Outbound Caller ID Range”；\n" +
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
-            "Outbound Caller ID Name：RangeNameXXX  调整到第一条\n" +
-            "\t分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
-            "\t\t检查来电显示为RangeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503301")
+            "Outbound Caller ID Name：RanggeNameXXX  调整到第一条\n" +
+            "\t分机1000通过bri外线呼出，辅助2分机2000响铃\n" +
+            "\t\t检查来电显示为RanggeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
     @Test(groups = {"PSeries", "P3", "Trunk-OutboundCallerID","BRI"})
     public void testTrunkOutCallerID_28_BRI() {
         prerequisite();
+        apiUtil.editBriTrunk(BRI_1,"\"def_outbound_cid\":\"briOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
         apiUtil.editBriTrunk(BRI_1,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":5,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":1,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 52000");
@@ -1239,13 +1258,13 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Story("E1")
     @Description("编辑E1外线-》Outbound Caller ID" +
             "Outbound Caller ID: spsOuntCid ,Outbound Caller ID Name:DOD,Outbound Caller ID List 为空\n" +
-            "\t1.分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
-            "\t\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: spsOuntCid\n" +
-            "\t前置条件的默认值设置为这个，跑完其它的修改回去")
+            "29.分机1000通过E1外线呼出，辅助2分机2000响铃\n" +
+            "\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: E1OuntCid")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","E1"})
+    @Issues({@Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常"),
+            @Issue("【ID1039079】【P系列】【自动化】BRI呼出时候，来显caller name为null")})
+    @Test(groups = {"PSeries","P2",  "Trunk-OutboundCallerID","E1"})
     public void testTrunkOutCallerID_29_E1() {
         prerequisite();
         apiUtil.editDigitalTrunk(E1,"\"def_outbound_cid\":\"E1OuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
@@ -1274,7 +1293,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Description("编辑E1外线-》Outbound Caller ID" +
             "Outbound Caller ID: 空 ,Outbound Caller ID Name:空,\n" +
             "Outbound Caller ID List : Create Method 选择“Shared Outbound Caller ID\",Outbound Caller ID: SharedCallerID123,Outbound Caller ID Name:SharedCallerName, 分机选择：Default_Extension_Group\n" +
-            "\t2.分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
+            "\t30.分机1000通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为SharedCallerName，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID123\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1290,7 +1309,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName");//todo [来显检查] expected:<"[SharedCallerName1]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1309,7 +1328,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Description("编辑E1外线-》Outbound Caller ID" +
             "Outbound Caller ID: 空 ,Outbound Caller ID Name:空,\n" +
             "Outbound Caller ID List : Create Method 选择“Shared Outbound Caller ID\",Outbound Caller ID: SharedCallerID123,Outbound Caller ID Name:SharedCallerName, 分机选择：Default_Extension_Group\n" +
-            "\t3.分机1001通过sps外线呼出，辅助2分机2000响铃\n" +
+            "\t31.分机1001通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为SharedCallerName，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID123")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1325,7 +1344,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName");//todo [来显检查] expected:<"[SharedCallerName1]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1347,7 +1366,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1001-1002\n" +
             "Outbound Caller ID Name：RanggeName1\n" +
-            "\t4.分机1001通过sps外线呼出，辅助2分机2000响铃\n" +
+            "\t32.分机1001通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为RanggeName1，接听，挂断；检查cdr,Outbound Caller ID: +5503301\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1363,7 +1382,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("RangeName1");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("RangeName1");//todo [来显检查] expected:<"[SharedCallerName1]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1385,7 +1404,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1001-1002\n" +
             "Outbound Caller ID Name：RanggeName1\n" +
-            "\t5.分机1002通过sps外线呼出，辅助2分机2000响铃\n" +
+            "\t33.分机1002通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为RanggeName1，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1401,7 +1420,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("RangeName1");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("RangeName1");//todo [来显检查] expected:<"[SharedCallerName1]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1429,7 +1448,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "6.分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
+            "34.分机1000通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t检查来电显示为SharedCallerName1，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID1")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1445,7 +1464,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName1");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName1");//todo [来显检查] expected:<"[SharedCallerName1]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1473,8 +1492,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "7.分机1001通过sps外线呼出，辅助2分机2000响铃\n" +
-            "\t检查来电显示为RangeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
+            "35.分机1001通过E1外线呼出，辅助2分机2000响铃\n" +
+            "\t检查来电显示为RanggeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常")
@@ -1517,7 +1536,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "8.分机1002通过sps外线呼出，辅助2分机2000响铃\n" +
+            "36.分机1002通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t检查来电显示为SharedCallerName4，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID4")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1533,7 +1552,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName4");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName4");//todo [来显检查] expected:<"[SharedCallerName3]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1561,7 +1580,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "9.分机1003通过sps外线呼出，辅助2分机2000响铃\n" +
+            "37.分机1003通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t检查来电显示为SharedCallerName3，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID3")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1577,7 +1596,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName3");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName3");//todo [来显检查] expected:<"[SharedCallerName3]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1605,7 +1624,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "10.分机1004通过sps外线呼出，辅助2分机2000响铃\n" +
+            "38.分机1004通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t检查来电显示为SharedCallerName3，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID3")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1621,7 +1640,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName3");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName3");//todo [来显检查] expected:<"[SharedCallerName3]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1649,8 +1668,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "11.分机1005通过sps外线呼出，辅助2分机2000响铃\n" +
-            "\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: spsOuntCid ")
+            "39.分机1005通过E1外线呼出，辅助2分机2000响铃\n" +
+            "\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: E1OuntCid ")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常")
@@ -1665,7 +1684,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("DOD");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("DOD");//todo [来显检查] expected:<"[DOD]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1693,8 +1712,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "12.编辑Outbound Caller ID List 的顺序：Outbound Caller ID: SharedCallerID5,Outbound Caller ID Name:SharedCallerName5, 分机选择：分机A-1000 调整到第一条\n" +
-            "\t分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
+            "40.编辑Outbound Caller ID List 的顺序：Outbound Caller ID: SharedCallerID5,Outbound Caller ID Name:SharedCallerName5, 分机选择：分机A-1000 调整到第一条\n" +
+            "\t分机1000通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为SharedCallerName5，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID5")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1702,6 +1721,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","E1"})
     public void testTrunkOutCallerID_40_E1() {
         prerequisite();
+        apiUtil.editDigitalTrunk(E1,"\"def_outbound_cid\":\"E1OuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
         apiUtil.editDigitalTrunk(E1,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 62000");
@@ -1710,7 +1730,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName5");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName5");//todo [来显检查] expected:<"[SharedCallerName5]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1738,8 +1758,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "13.编辑Outbound Caller ID List 的顺序：,Outbound Caller ID: SharedCallerID4,Outbound Caller ID Name:SharedCallerName4, 分机选择：ExGroup2；调整到第一条\n" +
-            "\t分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
+            "41.编辑Outbound Caller ID List 的顺序：,Outbound Caller ID: SharedCallerID4,Outbound Caller ID Name:SharedCallerName4, 分机选择：ExGroup2；调整到第一条\n" +
+            "\t分机1000通过E1外线呼出，辅助2分机2000响铃\n" +
             "\t\t检查来电显示为SharedCallerName4，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID4")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -1747,6 +1767,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","E1"})
     public void testTrunkOutCallerID_41_E1() {
         prerequisite();
+        apiUtil.editDigitalTrunk(E1,"\"def_outbound_cid\":\"E1OuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
         apiUtil.editDigitalTrunk(E1,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 62000");
@@ -1755,7 +1776,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(2000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName4");
+        softAssertPlus.assertThat(pjsip.getAccount(2000).callerId).as("来显检查").isEqualTo("SharedCallerName4");//todo  expected:<"[SharedCallerName4]"> but was:<"[RangeNameXXX]">
         assertThat(getExtensionStatus(2000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1783,18 +1804,19 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "14.编辑Outbound Caller ID List 的顺序：5)Outbound Caller ID List : Create Method 选择“Outbound Caller ID Range”；\n" +
+            "42.编辑Outbound Caller ID List 的顺序：5)Outbound Caller ID List : Create Method 选择“Outbound Caller ID Range”；\n" +
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
-            "Outbound Caller ID Name：RangeNameXXX  调整到第一条\n" +
-            "\t分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
-            "\t\t检查来电显示为RangeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503301")
+            "Outbound Caller ID Name：RanggeNameXXX  调整到第一条\n" +
+            "\t分机1000通过E1外线呼出，辅助2分机2000响铃\n" +
+            "\t\t检查来电显示为RanggeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【ID1036056】【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常")
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","E1"})
     public void testTrunkOutCallerID_42_E1() {
         prerequisite();
+        apiUtil.editDigitalTrunk(E1,"\"def_outbound_cid\":\"E1OuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
         apiUtil.editDigitalTrunk(E1,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":5,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":1,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 62000");
@@ -1822,9 +1844,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Story("Account")
     @Description("编辑Account外线-》Outbound Caller ID" +
             "Outbound Caller ID: AccountOuntCid ,Outbound Caller ID Name:DOD,Outbound Caller ID List 为空\n" +
-            "\t1.分机1000通过Account外线呼出，辅助2分机2000响铃\n" +
-            "\t\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: AccountOuntCid\n" +
-            "\t前置条件的默认值设置为这个，跑完其它的修改回去")
+            "43.分机1000通过Account外线呼出，辅助3分机4000响铃\n" +
+            "\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: AccountOuntCid")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -1857,8 +1878,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Description("编辑sps外线-》Outbound Caller ID" +
             "Outbound Caller ID: 空 ,Outbound Caller ID Name:空,\n" +
             "Outbound Caller ID List : Create Method 选择“Shared Outbound Caller ID\",Outbound Caller ID: SharedCallerID123,Outbound Caller ID Name:SharedCallerName, 分机选择：Default_Extension_Group\n" +
-            "\t2.分机1000通过sps外线呼出，辅助2分机2000响铃\n" +
-            "\t\t检查来电显示为SharedCallerName，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID123\n")
+            "44.分机1000通过Account外线呼出，辅助3分机4000响铃\n" +
+            "\t检查来电显示为SharedCallerName，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID123")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -1892,8 +1913,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Description("编辑sps外线-》Outbound Caller ID" +
             "Outbound Caller ID: 空 ,Outbound Caller ID Name:空,\n" +
             "Outbound Caller ID List : Create Method 选择“Shared Outbound Caller ID\",Outbound Caller ID: SharedCallerID123,Outbound Caller ID Name:SharedCallerName, 分机选择：Default_Extension_Group\n" +
-            "\t3.分机1001通过sps外线呼出，辅助3分机4000响铃\n" +
-            "\t\t检查来电显示为SharedCallerName，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID123")
+            "45.分机1001通过Account外线呼出，辅助3分机4000响铃\n" +
+            "\t检查来电显示为SharedCallerName，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID123")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -1929,16 +1950,16 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID List : Create Method 选择“Outbound Caller ID Range”；\n" +
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1001-1002\n" +
-            "Outbound Caller ID Name：RanggeName1\n" +
-            "\t4.分机1001通过sps外线呼出，辅助3分机4000响铃\n" +
-            "\t\t检查来电显示为RanggeName1，接听，挂断；检查cdr,Outbound Caller ID: +5503301\n")
+            "Outbound Caller ID Name：RangeName1\n" +
+            "46.分机1001通过Account外线呼出，辅助3分机4000响铃\n" +
+            "\t检查来电显示为RangeName1，接听，挂断；检查cdr,Outbound Caller ID: +5503301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_46_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,"\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeName1\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1001-1002\",\"pos\":1,\"outbound_cid\":\"\"}]").apply();
 
         step("[caller] 1001" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1001, "34000", DEVICE_IP_LAN, false);
@@ -1946,7 +1967,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
         step("[通话状态校验]");
         assertThat(getExtensionStatus(4000, RING, 30)).isEqualTo(RING).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime());
         pjsip.Pj_Answer_Call(4000, false);
-        softAssertPlus.assertThat(pjsip.getAccount(4000).callerId).as("来显检查").isEqualTo("RangeName1");
+        softAssertPlus.assertThat(pjsip.getAccount(4000).callerId).as("来显检查").isEqualTo("RangeName1");//todo [来显检查] expected:<"[RangeName1]"> but was:<"[SharedCallerName]">
         assertThat(getExtensionStatus(4000, TALKING, 30)).isEqualTo(TALKING).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime());
 
         step("[主叫挂断]");
@@ -1967,16 +1988,16 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID List : Create Method 选择“Outbound Caller ID Range”；\n" +
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1001-1002\n" +
-            "Outbound Caller ID Name：RanggeName1\n" +
-            "\t5.分机1002通过sps外线呼出，辅助3分机4000响铃\n" +
-            "\t\t检查来电显示为RanggeName1，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
+            "Outbound Caller ID Name：RangeName1\n" +
+            "47.分机1002通过Account外线呼出，辅助3分机4000响铃\n" +
+            "\t检查来电显示为RanggeName1，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_47_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,"\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeName1\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1001-1002\",\"pos\":1,\"outbound_cid\":\"\"}]").apply();
 
         step("[caller] 1002" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1002, "34000", DEVICE_IP_LAN, false);
@@ -2012,7 +2033,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "6.分机1000通过sps外线呼出，辅助3分机4000响铃\n" +
+            "48.分机1000通过Account外线呼出，辅助3分机4000响铃\n" +
             "\t检查来电显示为SharedCallerName1，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID1")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -2020,7 +2041,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_48_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1000, "34000", DEVICE_IP_LAN, false);
@@ -2056,15 +2077,15 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "7.分机1001通过sps外线呼出，辅助3分机4000响铃\n" +
-            "\t检查来电显示为RangeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
+            "49.分机1001通过Account外线呼出，辅助3分机4000响铃\n" +
+            "\t检查来电显示为RanggeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503302")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_49_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1001" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1001, "34000", DEVICE_IP_LAN, false);
@@ -2100,7 +2121,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "8.分机1002通过sps外线呼出，辅助3分机4000响铃\n" +
+            "50.分机1002通过Account外线呼出，辅助3分机4000响铃\n" +
             "\t检查来电显示为SharedCallerName4，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID4")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -2108,7 +2129,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_50_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1002" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1002, "34000", DEVICE_IP_LAN, false);
@@ -2144,7 +2165,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "9.分机1003通过sps外线呼出，辅助3分机4000响铃\n" +
+            "51.分机1003通过Account外线呼出，辅助3分机4000响铃\n" +
             "\t检查来电显示为SharedCallerName3，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID3")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -2152,7 +2173,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_51_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1003" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1003, "34000", DEVICE_IP_LAN, false);
@@ -2188,7 +2209,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "10.分机1004通过sps外线呼出，辅助3分机4000响铃\n" +
+            "52.分机1004通过Account外线呼出，辅助3分机4000响铃\n" +
             "\t检查来电显示为SharedCallerName3，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID3")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -2196,7 +2217,7 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_52_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1004" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1004, "34000", DEVICE_IP_LAN, false);
@@ -2232,15 +2253,15 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "11.分机1005通过sps外线呼出，辅助3分机4000响铃\n" +
-            "\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: spsOuntCid ")
+            "53.分机1005通过Account外线呼出，辅助3分机4000响铃\n" +
+            "\t检查来电显示为DOD，接听，挂断；检查cdr,Outbound Caller ID: AccountOuntCid ")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_53_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1005" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1005, "34000", DEVICE_IP_LAN, false);
@@ -2276,8 +2297,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "12.编辑Outbound Caller ID List 的顺序：Outbound Caller ID: SharedCallerID5,Outbound Caller ID Name:SharedCallerName5, 分机选择：分机A-1000 调整到第一条\n" +
-            "\t分机1000通过sps外线呼出，辅助3分机4000响铃\n" +
+            "54.编辑Outbound Caller ID List 的顺序：Outbound Caller ID: SharedCallerID5,Outbound Caller ID Name:SharedCallerName5, 分机选择：分机A-1000 调整到第一条\n" +
+            "\t分机1000通过Account外线呼出，辅助3分机4000响铃\n" +
             "\t\t检查来电显示为SharedCallerName5，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID5")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -2285,7 +2306,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_54_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,"\"def_outbound_cid\":\"AccountOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1000, "34000", DEVICE_IP_LAN, false);
@@ -2321,8 +2343,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "13.编辑Outbound Caller ID List 的顺序：,Outbound Caller ID: SharedCallerID4,Outbound Caller ID Name:SharedCallerName4, 分机选择：ExGroup2；调整到第一条\n" +
-            "\t分机1000通过sps外线呼出，辅助3分机4000响铃\n" +
+            "55.编辑Outbound Caller ID List 的顺序：,Outbound Caller ID: SharedCallerID4,Outbound Caller ID Name:SharedCallerName4, 分机选择：ExGroup2；调整到第一条\n" +
+            "\t分机1000通过Account外线呼出，辅助3分机4000响铃\n" +
             "\t\t检查来电显示为SharedCallerName4，接听，挂断；检查cdr,Outbound Caller ID: SharedCallerID4")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -2330,7 +2352,8 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_55_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,"\"def_outbound_cid\":\"AccountOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":5,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1000, "34000", DEVICE_IP_LAN, false);
@@ -2366,19 +2389,20 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
             "Outbound Caller ID Name：RangeNameXXX" +
-            "14.编辑Outbound Caller ID List 的顺序：5)Outbound Caller ID List : Create Method 选择“Outbound Caller ID Range”；\n" +
+            "56.编辑Outbound Caller ID List 的顺序：5)Outbound Caller ID List : Create Method 选择“Outbound Caller ID Range”；\n" +
             "Outbound Caller ID Range：+5503301-+5503302\n" +
             "Extension Range：1000-1001\n" +
-            "Outbound Caller ID Name：RangeNameXXX  调整到第一条\n" +
-            "\t分机1000通过sps外线呼出，辅助3分机4000响铃\n" +
-            "\t\t检查来电显示为RangeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503301")
+            "Outbound Caller ID Name：RanggeNameXXX  调整到第一条\n" +
+            "\t分机1000通过Account外线呼出，辅助3分机4000响铃\n" +
+            "\t\t检查来电显示为RanggeNameXXX，接听，挂断；检查cdr,Outbound Caller ID: +5503301")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries","P3",  "Trunk-OutboundCallerID","Account"})
     public void testTrunkOutCallerID_56_Account() {
         prerequisite();
-        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"\",\"def_outbound_cid_name\":\"\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName\",\"outbound_cid\":\"SharedCallerID123\",\"assoc_ext_list\":[{\"text\":\"Default_Extension_Group\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":1,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,"\"def_outbound_cid\":\"AccountOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[]").apply();
+        apiUtil.editAccountTrunk(ACCOUNTTRUNK,String.format("\"def_outbound_cid\":\"spsOuntCid\",\"def_outbound_cid_name\":\"DOD\",\"outbound_cid_list\":[{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName1\",\"outbound_cid\":\"SharedCallerID1\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":5,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName3\",\"outbound_cid\":\"SharedCallerID3\",\"assoc_ext_list\":[{\"text\":\"testa D\",\"text2\":\"1003\",\"value\":\"%s\",\"type\":\"extension\"},{\"text\":\"t estX\",\"text2\":\"1004\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":2,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName4\",\"outbound_cid\":\"SharedCallerID4\",\"assoc_ext_list\":[{\"text\":\"ExGroup2\",\"text2\":\"Extension Group\",\"value\":\"%s\",\"type\":\"ext_group\"}],\"pos\":3,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"single\",\"outbound_cid_name\":\"SharedCallerName5\",\"outbound_cid\":\"SharedCallerID5\",\"assoc_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}],\"pos\":4,\"outbound_cid_start\":\"\",\"outbound_cid_end\":\"\"},{\"outbound_cid_type\":\"range\",\"outbound_cid_name\":\"RangeNameXXX\",\"outbound_cid_start\":\"+5503301\",\"outbound_cid_end\":\"+5503302\",\"assoc_exts\":\"1000-1001\",\"pos\":1,\"outbound_cid\":\"\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionSummary("1004").id,apiUtil.getExtensionGroupSummary("ExGroup2").id,apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("[caller] 1000" + ",[callee] 34000");
         pjsip.Pj_Make_Call_No_Answer(1000, "34000", DEVICE_IP_LAN, false);
@@ -2398,7 +2422,4 @@ public class TestTrunkOutboundCallerID extends TestCaseBaseNew {
 
         softAssertPlus.assertAll();
     }
-
-
-
 }
