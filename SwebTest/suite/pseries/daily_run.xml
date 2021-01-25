@@ -35,6 +35,7 @@
             <class name="com.yeastar.testcase.pseries.TestRingGroup"/>
             <class name="com.yeastar.testcase.pseries.TestSpeedDial"/>
             <class name="com.yeastar.testcase.pseries.TestTrunkInboundRouteCallerIDReformatting"/>
+            <class name="com.yeastar.testcase.pseries.TestTrunkOutboundCallerID"/>
         </classes>
     </test>
 </suite>
