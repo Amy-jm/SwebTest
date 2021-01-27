@@ -796,4 +796,25 @@ public class BaseMethod extends WebDriverFactory {
 		}
 		return reg;
 	}
+
+	/**
+	 * 提示音 初始化
+	 * 	上传prompt1，上传prompt2，上传prompt3,上传prompt4,上传prompt5,上传prompt6
+	 * 		2020.11.18 新增提示音6，播放时长21秒
+	 * 	上传VoicemailMaxDuration30.wav
+	 * 		2020-12-16 修改
+	 * 	备注：
+	 * 	192.168.3.252 服务器上需要 存在 /home/autotest/pseries/wav/record/目录（prompt1~prompt6.wav，VoicemailMaxDuration30.wav）
+	 */
+	public void initPrompt(){
+		log.debug("[prerequisite] init prompt");
+		String COMMAND = "sshpass -p '' scp -r -P "+SSH_PORT+" /home/autotest/pseries/wav/record/ "+USERNAEM_LS+"@"+DEVICE_IP_LAN+":/ysdisk/ysapps/pbxcenter/var/lib/asterisk/sounds/";
+		try {
+			SSHLinuxUntils.exeCommand(GRID_HUB_IP,22,"root","r@@t",COMMAND);
+		} catch (JSchException e) {
+			log.error("[ERROR initPrompt exception]"+e.getMessage());
+		} catch (IOException e) {
+			log.error("[ERROR initPrompt exception]"+e.getMessage());
+		}
+	}
 }
