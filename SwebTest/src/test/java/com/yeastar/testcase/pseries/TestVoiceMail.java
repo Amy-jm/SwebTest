@@ -54,7 +54,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         trunk9.add(ACCOUNTTRUNK);
         trunk9.add(GSM);
     }
-    @Test
+
     public void prerequisite() {
         long startTime = System.currentTimeMillis();
         if (isDebugInitExtensionFlag) {
@@ -127,13 +127,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
         SSHLinuxUntils.exeCommand(GRID_HUB_IP,22,"root","r@@t",COMMAND_1005);
 
 
-       apiUtil.editExtension("1000","\"presence_status\":\"available\",\"vm_greeting\":\"VoicemailDefaultExt.wav\"")
-               .editExtension("0","\"presence_status\":\"available\",\"vm_greeting\":\"VoicemailDefaultExt.wav\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"available\",\"vm_greeting\":\"VoicemailAvailable.wav\"}]")
-               .editExtension("1001","\"presence_status\":\"away\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"away\"}]")
-               .editExtension("1002","\"presence_status\":\"business_trip\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"business_trip\",\"vm_greeting\":\"VoicemailBusinessTrip.wav\"}]")
-               .editExtension("1003","\"presence_status\":\"do_not_disturb\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"do_not_disturb\",\"vm_greeting\":\"VoicemailDND.wav\"}]")
-               .editExtension("1004","\"presence_status\":\"launch\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"launch\",\"vm_greeting\":\"VoicemailLunchBreak.wav\"}]")
-               .editExtension("1005","\"presence_status\":\"off_work\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"off_work\",\"vm_greeting\":\"VoicemailOffWork.wav\"}]")
+       apiUtil.editExtension("1000","\"presence_status\":\"available\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"")
+               .editExtension("0","\"presence_status\":\"available\",\"vm_greeting\":\"VoicemailDefaultExt.wav\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"available\",\"vm_greeting\":\"VoicemailAvailable.wav\"}],\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0")
+               .editExtension("1001","\"presence_status\":\"away\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"available\",\"vm_greeting\":\"VoicemailAway.wav\",\"status\":\"away\"}],\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0")
+               .editExtension("1002","\"presence_status\":\"business_trip\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"business_trip\",\"vm_greeting\":\"VoicemailBusinessTrip.wav\"}],\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0")
+               .editExtension("1003","\"presence_status\":\"do_not_disturb\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"do_not_disturb\",\"vm_greeting\":\"VoicemailDND.wav\"}],\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0")
+               .editExtension("1004","\"presence_status\":\"launch\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"launch\",\"vm_greeting\":\"VoicemailLunchBreak.wav\"}],\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0")
+               .editExtension("1005","\"presence_status\":\"off_work\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"off_work\",\"vm_greeting\":\"VoicemailOffWork.wav\"}],\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0")
                .apply();
 
        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
@@ -163,7 +163,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_01_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"global_vm_greeting\":\"default\",\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListSecond.clear();
@@ -273,8 +274,10 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_02_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
@@ -367,6 +370,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         sleep(20*1000);
         pjsip.Pj_hangupCall(2000);
 
+        sleep(5000);
         step("登录分机1000查看新增一条语音留言，Name记录正确");
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -396,8 +400,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_03_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("0").id)).apply();
 
         asteriskObjectList.clear();
@@ -454,8 +458,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_04_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("0").id)).apply();
 
         asteriskObjectList.clear();
@@ -521,8 +525,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_05_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("0").id)).apply();
 
         asteriskObjectList.clear();
@@ -599,8 +603,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_06_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+//        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1001").id)).apply();
 
         asteriskObjectList.clear();
@@ -658,8 +662,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_07_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1001").id)).apply();
 
         asteriskObjectList.clear();
@@ -725,8 +729,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_08_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1001").id)).apply();
 
         asteriskObjectList.clear();
@@ -1543,7 +1547,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_20_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
 
@@ -1621,12 +1625,12 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_21_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
-        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1005/VoicemailDefaultExt.slin");
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
         thread.start();
 
         step("1:login with admin ");
@@ -1681,8 +1685,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_22_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
@@ -1748,13 +1752,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_23_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
-        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1005/VoicemailDefaultExt.slin");
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
         threadExten.start();
@@ -2217,7 +2221,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_29_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
 
         asteriskObjectList.clear();
@@ -2295,12 +2299,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_30_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
+        apiUtil.editExtension("1000","\"presence_status\":\"available\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
-        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1005/VoicemailOffWork.slin");
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
         threadExten.start();
@@ -2375,8 +2380,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_31_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).
-                voicemailUpdate("\"vm_greeting\": \"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\",\"vm_greeting\": \"follow_system\"",apiUtil.getIVRSummary("6200").id)).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
@@ -2453,7 +2458,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_32_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"dial_ext_list\":[{\"text\":\"test2 B\",\"text2\":\"1001\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1001").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test2 B\",\"text2\":\"1001\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1001").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
@@ -2525,7 +2530,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_33_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"dial_ext_list\":[{\"text\":\"ExGroup1\",\"text2\":\"ExGroup1\",\"value\":\"%s\",\"type\":\"ext_group\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionGroupSummary("ExGroup1").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"ExGroup1\",\"text2\":\"ExGroup1\",\"value\":\"%s\",\"type\":\"ext_group\"}]",apiUtil.getExtensionGroupSummary("ExGroup1").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
@@ -2602,7 +2607,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_34_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"global_vm_greeting\":\"default\",\"press0_dest_value\":\"%s\",\"dial_ext_list\":[{\"text\":\"ExGroup1\",\"text2\":\"ExGroup1\",\"value\":\"%s\",\"type\":\"ext_group\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"ExGroup1\",\"text2\":\"ExGroup1\",\"value\":\"%s\",\"type\":\"ext_group\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
@@ -2677,7 +2682,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions","press5",""})
     public void testVoicemail_35_press5() {
         prerequisite();
- apiUtil.voicemailUpdate("\"enb_press5_leave\":1").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.voicemailUpdate("\"enb_press5_leave\":1").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"global_vm_greeting\":\"default\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
@@ -2728,7 +2734,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions","press5",""})
     public void testVoicemail_36_press5() {
         prerequisite();
- apiUtil.voicemailUpdate("\"enb_press5_leave\":1").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.voicemailUpdate("\"enb_press5_leave\":1").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"global_vm_greeting\":\"default\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
@@ -2810,7 +2817,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions","press5",""})
     public void testVoicemail_37_press5() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
         apiUtil.voicemailUpdate("\"enb_press5_leave\":1").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -2895,7 +2903,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions","ReviewMessage",""})
     public void testVoicemail_38_CallerOptions() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+
         apiUtil.voicemailUpdate("\"enb_review\": 1").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3056,7 +3066,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         List<AsteriskObject> asteriskObjectListVM = new ArrayList<AsteriskObject>();
 
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.voicemailUpdate("\"enb_review\": 1").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3198,7 +3209,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         List<AsteriskObject> asteriskObjectListVM = new ArrayList<AsteriskObject>();
 
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.voicemailUpdate("\"enb_review\": 1").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3335,7 +3347,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions","ReviewMessage",""})
     public void testVoicemail_41_CallerOptions() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.voicemailUpdate("\"enb_review\": 1").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3419,7 +3432,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "MessageOptions","MaxMessageTime",""})
     public void testVoicemail_42_MaxMessageTime() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.voicemailUpdate("\"enb_review\": 1,\"max_msg_time\": 60").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3479,7 +3493,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "MessageOptions","MaxMessageTime",""})
     public void testVoicemail_43_MaxMessageTime() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.voicemailUpdate("\"enb_review\": 1,\"max_msg_time\": 600").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3541,7 +3556,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "MessageOptions","MinMessageTime",""})
     public void testVoicemail_44_MinMessageTime() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.voicemailUpdate("\"enb_review\": 1,\"min_msg_time\": 5,\"max_msg_time\": 600").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3600,7 +3616,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "MessageOptions","MinMessageTime",""})
     public void testVoicemail_45_MinMessageTime() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.voicemailUpdate("\"enb_review\": 1,\"min_msg_time\": 5,\"max_msg_time\": 600").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3663,7 +3680,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "GreetingOptions","",""})
     public void testVoicemail_46_GreetingOptions() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailMaxDuration30.wav\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailMaxDuration30.wav\"").apply();
         apiUtil.voicemailUpdate("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_greeting_time\":30").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3727,7 +3745,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "GreetingOptions","",""})
     public void testVoicemail_47_GreetingOptions() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"presence_list\":[{\"vm_greeting\":\"VoicemailMaxDuration30.wav\",\"status\":\"available\"}]").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"presence_list\":[{\"vm_greeting\":\"VoicemailMaxDuration30.wav\",\"status\":\"available\"}]").apply();
         apiUtil.voicemailUpdate("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_greeting_time\":30").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3791,7 +3810,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "GreetingOptions","",""})
     public void testVoicemail_48_GreetingOptions() {
         prerequisite();
- apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"presence_list\":[{\"vm_greeting\":\"\",\"status\":\"available\"}]").apply();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"presence_list\":[{\"vm_greeting\":\"\",\"status\":\"available\"}]").apply();
         apiUtil.voicemailUpdate("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_greeting_time\":30,\"global_vm_greeting\":\"VoicemailMaxDuration30.wav\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
@@ -3918,7 +3937,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
         pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0, "extension", "", "1000", 0));
- apiUtil.deleteIVR("IVR-Voicemail-6201").createIVR("6201", "IVR-Voicemail-6201", pressKeyObjects_0).editIVR("6201","\"enb_dial_check_vm\": 1").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.deleteIVR("IVR-Voicemail-6201").createIVR("6201", "IVR-Voicemail-6201", pressKeyObjects_0).editIVR("6201","\"enb_dial_check_vm\": 1").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ivr\",\"def_dest_value\":\"%s\"",apiUtil.getIVRSummary("6201").id)).apply();
 
         asteriskObjectListExten.clear();
@@ -4039,7 +4059,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
         pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0, "extension", "", "1000", 0));
- apiUtil.deleteIVR("IVR-Voicemail-6201").createIVR("6201", "IVR-Voicemail-6201", pressKeyObjects_0).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.deleteIVR("IVR-Voicemail-6201").createIVR("6201", "IVR-Voicemail-6201", pressKeyObjects_0).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ivr\",\"def_dest_value\":\"%s\"",apiUtil.getIVRSummary("6201").id)).apply();
 
         asteriskObjectListExten.clear();
@@ -4095,7 +4116,10 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CheckVoicemail","",""})
     public void testVoicemail_52_CheckVoicemail() {
         prerequisite();
- asteriskObjectList.clear();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+
+        asteriskObjectList.clear();
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"vm-enterpin.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"press-pound-exit.slin");
@@ -4163,7 +4187,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CheckVoicemail","",""})
     public void testVoicemail_53_CheckVoicemail() {
- List<AsteriskObject> asteriskObjectListPress = new ArrayList<AsteriskObject>();
+        List<AsteriskObject> asteriskObjectListPress = new ArrayList<AsteriskObject>();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         prerequisite();
 
@@ -4257,7 +4283,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CheckVoicemail","",""})
     public void testVoicemail_54_CheckVoicemail() {
         prerequisite();
- apiUtil.editFeatureCode("\"enb_vm\":0").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editFeatureCode("\"enb_vm\":0").apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("2:[caller] 1000" + ",[callee] *2");
         pjsip.Pj_Make_Call_No_Answer(1000, "*2", DEVICE_IP_LAN, false);
@@ -4284,7 +4312,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CheckVoicemail","",""})
     public void testVoicemail_55_CheckVoicemail() {
         prerequisite();
- apiUtil.editFeatureCode("\"enb_vm\":1,\"voicemail\": \"*232323\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editFeatureCode("\"enb_vm\":1,\"voicemail\": \"*232323\"").apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
@@ -4357,7 +4387,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "LeaveaVoicemailforanExtension",""})
     public void testVoicemail_56_LeaveaVoicemailforanExtension() {
         prerequisite();
- apiUtil.voicemailUpdate("\"enb_press5_leave\":1").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.voicemailUpdate("\"enb_press5_leave\":1").apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailAway.slin");
@@ -4418,7 +4450,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "LeaveaVoicemailforanExtension",""})
     public void testVoicemail_57_LeaveaVoicemailforanExtension() {
         prerequisite();
- apiUtil.voicemailUpdate("\"enb_press5_leave\":0").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.voicemailUpdate("\"enb_press5_leave\":0").apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailAway.slin");
@@ -4480,8 +4514,10 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "LeaveaVoicemailforanExtension",""})
     public void testVoicemail_58_LeaveaVoicemailforanExtension() {
         prerequisite();
- apiUtil.editFeatureCode("\"enb_leave_vm_for_ext\":0").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editFeatureCode("\"enb_leave_vm_for_ext\":0").apply();
         apiUtil.voicemailUpdate("\"enb_press5_leave\":0").apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailAway.slin");
@@ -4540,8 +4576,10 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "LeaveaVoicemailforanExtension",""})
     public void testVoicemail_59_LeaveaVoicemailforanExtension() {
         prerequisite();
- apiUtil.editFeatureCode("\"enb_leave_vm_for_ext\":1,\"leave_vm_for_ext\":\"*121212\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editFeatureCode("\"enb_leave_vm_for_ext\":1,\"leave_vm_for_ext\":\"*121212\"").apply();
         apiUtil.voicemailUpdate("\"enb_press5_leave\":0").apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailAway.slin");
@@ -4612,7 +4650,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "Extension",""})
     public void testVoicemail_60_Extension() {
         prerequisite();
- apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"with_attach\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"delete\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"with_attach\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"delete\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
@@ -4669,7 +4708,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "Extension",""})
     public void testVoicemail_61_Extension() {
         prerequisite();
- apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"without_attach\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"mark_read\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"without_attach\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"mark_read\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
@@ -4726,7 +4766,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "Extension",""})
     public void testVoicemail_62_Extension() {
         prerequisite();
- apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"no\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"mark_read\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"no\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"mark_read\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
@@ -4781,7 +4822,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "Extension",""})
     public void testVoicemail_63_Extension() {
         prerequisite();
- apiUtil.editExtension("1000","\"enb_vm\": 0").apply();
+        apiUtil.editExtension("1000","\"enb_vm\": 0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         step("2:[caller] 2001" + ",[callee]991000");
