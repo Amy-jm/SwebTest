@@ -232,10 +232,19 @@ softAssertPlus.assertAll();
    
    (过程需要输入自己的gitlab信息)
    
-4. vscode 打开项目
+4. vscode 打开项目目录
    
    File->Open Folder  /home/autoCodeServer/workspace/XXX/swebTest/SwebTest
 
+5. 将工程保存为自己的workspace  
+   File->add folder to Workspace... 
+
+   workspace.code 保存在当前工程根目录下（如下图所示）
+   ![po](./imgmd/workspaceSave.png)
+
+6. 进入刚才创建的workspace
+
+   File->Open Workspace，选择到刚创建的workspace.code文件
 #### 6. Code Server 运行测试 
 
 1. 修改Pjsip加载路径：  
