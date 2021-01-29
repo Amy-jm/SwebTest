@@ -350,7 +350,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
 
         tmp = 0;
-        while (asteriskObjectListOperator.size() != 1 && tmp <= 300) {
+        while (asteriskObjectListOperator.size() != 2 && tmp <= 300) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -3197,7 +3197,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Story("CallerOptions")
     @Description("编辑Call Features-》Voicemail-》勾选Allow callers to review message,通过sps外线呼入" +
             "40.asterisk检测到beep.gsm后，等待10秒，按#；asterisk播放提示音：review-save.slin、review-listen.slin、review-recordagain.slin、press-pound-cancel-and-exit.slin，按3\n" +
-            "\tasterisk打印Re-recording the message、再次打印review-save.slin时，按1\n" +
+            "\tasterisk打印Re-recording the message,等待10秒后按#、再次打印review-save.slin时，按1\n" +
             "\t\tasterisk检查播放vm-msg-saved.slin ，主叫被挂断，分机1000登录查看新增了1条语音留言")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -3285,9 +3285,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectListReview.size());
         }
         threadReview.flag = false;
+        sleep(10*1000);
+        pjsip.Pj_Send_Dtmf(2000,"#");
 
         tmp = 0;
-        while (asteriskObjectListSave.size() != 1 && tmp <=600) {
+        while (asteriskObjectListSave.size() != 2 && tmp <=600) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -3302,7 +3304,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         threadSave.flag = false;
         pjsip.Pj_Send_Dtmf(2000,"1");
 
-        tmp = 0;//todo  not found asteriskObjectListVM
+        tmp = 0;
         while (asteriskObjectListVM.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
@@ -3434,7 +3436,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.voicemailUpdate("\"enb_review\": 1,\"max_msg_time\": 60").apply();
+        apiUtil.voicemailUpdate("\"max_msg_time\": 60").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectListExten.clear();
@@ -3462,9 +3464,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectListExten.size());
         }
         threadExten.flag = false;
-        sleep(60*1000);
+        sleep(90*1000);
 
-        step("[通话状态校验]");//TODO  60S 后 通话没有挂断
+        step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, HUNGUP, 20)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
@@ -3558,7 +3560,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.voicemailUpdate("\"enb_review\": 1,\"min_msg_time\": 5,\"max_msg_time\": 600").apply();
+        apiUtil.voicemailUpdate("\"min_msg_time\": 5,\"max_msg_time\": 600").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectListExten.clear();
@@ -3618,7 +3620,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.voicemailUpdate("\"enb_review\": 1,\"min_msg_time\": 5,\"max_msg_time\": 600").apply();
+        apiUtil.voicemailUpdate("\"min_msg_time\": 5,\"max_msg_time\": 600").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectListExten.clear();
@@ -3747,7 +3749,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"presence_list\":[{\"vm_greeting\":\"VoicemailMaxDuration30.wav\",\"status\":\"available\"}]").apply();
-        apiUtil.voicemailUpdate("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_greeting_time\":30").apply();
+        apiUtil.voicemailUpdate("\"max_greeting_time\":30").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectListExten.clear();
@@ -4171,7 +4173,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_1000.toString(), "*2", "ANSWERED", "test A<1000> hung up", SPS, "", "Internal"));
+                .contains(tuple(CDRNAME.Extension_1000.toString(), "*2", "ANSWERED", "test A<1000> hung up", "", "", "Internal"));
 
         softAssertPlus.assertAll();
     }
