@@ -91,19 +91,28 @@ public class BrowserFactory extends ConfigP {
 		//这里保留IE、EDGE等浏览器的判断，以及比较重要的一个：PhantomJS
 		if (browser.equals("chrome")) {
 			Configuration.browser = CHROME;
+			desiredCapabilities=DesiredCapabilities.chrome();
+
 			System.setProperty("webdriver.chrome.driver", CHROME_PATH);
 			ChromeOptions options = new ChromeOptions();
-			options.addArguments("disable-infobars");
-			options.addArguments("--no-sandbox");// 以最高权限运行
-			options.addArguments("--disable-dev-shm-usage");// 以最高权限运行
+
+			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-dev-shm-usage");
 			options.addArguments("--disable-gpu");//硬件加速，谷歌文档提到需要加上这个属性来规避bug
 			options.addArguments("--start-maximized");//默认启动最大化，避免最大化过程失败
 			options.addArguments("--lang=en");
+//			options.addArguments("--headless");
 			options.addArguments("--ignore-certificate-errors");
+
+			desiredCapabilities.setCapability("goog:"+ChromeOptions.CAPABILITY, options);
+			desiredCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+			desiredCapabilities.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+			desiredCapabilities.setCapability(CapabilityType.ENABLE_PROFILING_CAPABILITY, true);
+
 			LoggingPreferences logs = new LoggingPreferences();
 			logs.enable(LogType.PERFORMANCE, Level.ALL);
 
-			return webDriver = new ChromeDriver(options);
+			return webDriver = new ChromeDriver (desiredCapabilities);
 
 		} else if (browser.equals("firefox")) {
 			desiredCapabilities = DesiredCapabilities.firefox();
