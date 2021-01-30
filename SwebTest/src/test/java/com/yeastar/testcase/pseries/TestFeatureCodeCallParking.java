@@ -62,7 +62,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         }
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
         //reset test env
-        apiUtil.editFeatureCode("\"enb_park\": 1,\"park\":\"*5\",\"park_start\":\"6000\",\"park_end\":\"6099\",\"park_timeout\":60").apply();
+        apiUtil.editFeatureCode("\"enb_park\": 1,\"park\":\"*5\",\"park_start\":\"6000\",\"park_end\":\"6099\",\"park_timeout\":60,\"enb_park_on_slots\":1,\"park_on_slots\":\"*05\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
     }
 
@@ -818,7 +818,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
         thread.start();
 
-        step("[caller] 2000" + ",[callee] 2005");
+        step("[caller] 2000" + ",[callee] 2005");//todo call failed
         pjsip.Pj_Make_Call_No_Answer(2000 ,"2005");
 
         step("[通话状态校验]");
@@ -999,10 +999,10 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         sleep(3*1000);
         pjsip.Pj_hangupCall(1002);
 
-        assertStep("[CDR校验]");
+        assertStep("[CDR校验]");//todo check ivr
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple("22001", CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up",SPS,"", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_1002.toString(), "22001", CDRObject.STATUS.ANSWER.toString(), "22001 parked at 6000", "", SPS, "Outbound"));
+                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), "22001", CDRObject.STATUS.ANSWER.toString(), "22001 parked at 6000", "", SPS, "Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1032,7 +1032,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         step("[caller] 1001" + ",[callee] 33001");
         pjsip.Pj_Make_Call_No_Answer(1001 ,"33001");
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo call failed
         assertThat(getExtensionStatus(3000, RING, 30)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         pjsip.Pj_Answer_Call(3000, false);
         assertThat(getExtensionStatus(3000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
@@ -1105,7 +1105,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         step("[caller] 1001" + ",[callee] 42000");
         pjsip.Pj_Make_Call_No_Answer(1001 ,"42000");
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo call failed
         assertThat(getExtensionStatus(4000, RING, 30)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         pjsip.Pj_Answer_Call(4000, false);
         assertThat(getExtensionStatus(4000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
@@ -1218,7 +1218,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), "5555", CDRObject.STATUS.ANSWER.toString(), CDRObject.CDRNAME.Extension_1002.toString() + " hung up", "", BRI_1, "Outbound"));
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(),  "testta C<1002> retrieved from 6000 , testta C<1002> hung up", BRI_1,"", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), "2000", CDRObject.STATUS.ANSWER.toString(), "2000 parked at 6000", "", BRI_1, "Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -1430,7 +1431,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         }
         thread.flag = false;
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo auto hungup failed
         assertThat(getExtensionStatus(1001, HUNGUP, 30)).as("通话状态校验 自动挂断失败!").isIn(HUNGUP,IDLE);
         assertThat(getExtensionStatus(1000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
@@ -1564,9 +1565,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1001);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), "22001", CDRObject.STATUS.ANSWER.toString(), "22001 parked at 6000",  "",SPS, "Outbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), "*", CDRObject.STATUS.ANSWER.toString(), "2000<2000> hung up", SPS, "", "Inbound"));
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), "22001", CDRObject.STATUS.ANSWER.toString(), "22001 parked at 6000",  "",SPS, "Outbound"));
         softAssertPlus.assertAll();
 
     }
@@ -2079,8 +2079,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up", SPS, "", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6000", SPS, "", "Inbound"));
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "test A<1000> hung up", SPS, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6000 , timed out", SPS, "", "Inbound"));
 
         step("编辑Feature->ParkingTimeout 为60s");
         apiUtil.editFeatureCode("\"park_timeout\":60").apply();
@@ -2126,7 +2126,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "test A<1000> hung up", SPS, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "test A<1000> hung up", SPS, "", "Inbound"))
                 .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6000 , timed out", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
@@ -2314,8 +2314,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1002);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up", SPS, "", "Inbound"))
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6060 , testta C<1002> hung up", SPS, "", "Inbound"))
                 .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6060", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
@@ -2396,8 +2396,10 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(5)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up", SPS, "", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6000", SPS, "", "Inbound"));
+                .contains(tuple(CDRObject.CDRNAME.Extension_1002.toString(), "*", CDRObject.STATUS.ANSWER.toString(), "test2 B<1001> hung up", "", "", "Internal"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "test2 B<1001> parked at 6060", "", "", "Internal"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at", SPS, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6060 , testta C<1002> hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2469,8 +2471,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple( "13001",CDRObject.CDRNAME.Extension_1002.toString(),CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up",SIPTrunk,"", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), "13001", CDRObject.STATUS.ANSWER.toString(), "13001 parked at 6000", "", SIPTrunk, "Outbound"));
+                .contains(tuple( CDRObject.CDRNAME.Extension_3001.toString(),CDRObject.CDRNAME.Extension_1002.toString(),CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6001 , testta C<1002> hung up",SIPTrunk,"", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_3001.toString(), "13001", CDRObject.STATUS.ANSWER.toString(), "13001 parked at 6000", "", SIPTrunk, "Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2542,8 +2544,9 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple( "13001",CDRObject.CDRNAME.Extension_1002.toString(),CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up",SIPTrunk,"", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_1003.toString(), "6002", CDRObject.STATUS.ANSWER.toString(), "13001 parked at 6000", "", SIPTrunk, "Outbound"));
+                .contains(tuple( CDRObject.CDRNAME.Extension_4000.toString(),CDRObject.CDRNAME.Extension_1003.toString(),CDRObject.STATUS.ANSWER.toString(), "testa D<1003> retrieved from 6002 , testa D<1003> hung up",ACCOUNTTRUNK,"", "Inbound"))
+                .contains(tuple( CDRObject.CDRNAME.Extension_4000.toString(),CDRObject.CDRNAME.RINGGROUP0_6300.toString(),CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up",ACCOUNTTRUNK,"", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_4000.toString(),CDRObject.CDRNAME.Extension_1003.toString(), CDRObject.STATUS.ANSWER.toString(), "4000<4000> parked at 6002", ACCOUNTTRUNK, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2616,8 +2619,9 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple( "13001",CDRObject.CDRNAME.Extension_1002.toString(),CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up",SIPTrunk,"", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_1003.toString(), "6002", CDRObject.STATUS.ANSWER.toString(), "13001 parked at 6000", "", SIPTrunk, "Outbound"));
+                .contains(tuple( CDRObject.CDRNAME.Extension_2000.toString(),CDRObject.CDRNAME.Extension_1003.toString(),CDRObject.STATUS.ANSWER.toString(), "testa D<1003> retrieved from 6003 , testa D<1003> hung up",SPS,"", "Inbound"))
+                .contains(tuple( CDRObject.CDRNAME.Extension_2000.toString(),CDRObject.CDRNAME.QUEUE0_6400.toString(),CDRObject.STATUS.ANSWER.toString(), "Queue Queue0<6400> connected",SPS,"", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1004.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6003",SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2687,9 +2691,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up", SPS, "", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6000", SPS, "", "Inbound"));
-
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6010 , testta C<1002> hung up", FXO_1, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6010", FXO_1, "", "Inbound"));
         softAssertPlus.assertAll();
     }
     @Epic("P_Series")
@@ -2702,7 +2705,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
             "\t\t\t\t分机C与外线正常通话，分机C挂断，检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("BRI call From 显示异常")
     @Test(groups = {"PSeries", "FeatureCode-CallParking","P3", "DirectedCallParking"})
     public void testCallParking_35_DirectedCallParking() {
         if(BRI_1.trim().equalsIgnoreCase("null") || BRI_1.trim().equalsIgnoreCase("")){
@@ -2758,8 +2761,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up", SPS, "", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6000", SPS, "", "Inbound"));
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6020 , testta C<1002> hung up", BRI_1, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6020", BRI_1, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2829,8 +2832,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up", SPS, "", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6000", SPS, "", "Inbound"));
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6030 , testta C<1002> hung up", E1, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6030", E1, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2856,7 +2859,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
         thread.start();
 
-        step("[caller] 2000" + ",[callee] 33"+DEVICE_TEST_GSM);
+        step("[caller] 2000" + ",[callee] 33"+DEVICE_TEST_GSM);//TODO NO answer
         pjsip.Pj_Make_Call_No_Answer(2000, "33"+DEVICE_TEST_GSM);
 
         step("[通话状态校验]");
@@ -2927,7 +2930,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         step("[caller] 1000" + ",[callee] 1001");
         pjsip.Pj_Make_Call_No_Answer(1000, "1001");
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo no answer
         assertThat(getExtensionStatus(1001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         pjsip.Pj_Answer_Call(1001, false);
         assertThat(getExtensionStatus(1001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
@@ -3020,7 +3023,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         thread.flag = false;
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(1001, HUNGUP, 30)).as("通话状态校验 自动挂断失败!").isIn(HUNGUP,IDLE);
+        assertThat(getExtensionStatus(1001, HUNGUP, 30)).as("通话状态校验 自动挂断失败!").isIn(HUNGUP,IDLE);//todo failed
         assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("分机C-1002拨打6098接回通话");
@@ -3063,7 +3066,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         step("[caller] 1001" + ",[callee] 13001");
         pjsip.Pj_Make_Call_No_Answer(1001, "13001");
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo NullPointerException
         assertThat(getExtensionStatus(3000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         pjsip.Pj_Answer_Call(3000, false);
         assertThat(getExtensionStatus(3000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
@@ -3141,7 +3144,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         pjsip.Pj_Send_Dtmf(1001,"*","0","5","6","0","0","0");
 
         int tmp = 0;
-        while (asteriskObjectList.size() != 1 && tmp <=800) {
+        while (asteriskObjectList.size() != 1 && tmp <=800) {//todo no found
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -3199,7 +3202,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         step("[caller] 1001" + ",[callee] 33001");
         pjsip.Pj_Make_Call_No_Answer(1001, "33001");
 
-        step("[通话状态校验]");
+        step("[通话状态校验]");//todo NullPointerException
         assertThat(getExtensionStatus(3000, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         pjsip.Pj_Answer_Call(3000, false);
         assertThat(getExtensionStatus(3000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
@@ -3279,7 +3282,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         sleep(5000);
         pjsip.Pj_Send_Dtmf(1001,"*","0","5","6","0","6","6");
 
-        int tmp = 0;
+        int tmp = 0;//todo nofound
         while (asteriskObjectList.size() != 1 && tmp <=800) {
             sleep(50);
             tmp++;
@@ -3382,8 +3385,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "", SPS, "", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6000", SPS, "", "Inbound"));
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6055 , testta C<1002> hung up", BRI_1, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), "2000", CDRObject.STATUS.ANSWER.toString(), "2000 parked at 6055", "", BRI_1, "Outbound"));
 
         softAssertPlus.assertAll();
 
@@ -3398,7 +3401,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
             "\t\t\t\t分机C与外线正常通话，分机C挂断，检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("E1,callfrom 异常")
     @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "DirectedCallParking"})
     public void testCallParking_45_DirectedCallParking() {
         if(E1.trim().equalsIgnoreCase("null") || E1.trim().equalsIgnoreCase("")){
@@ -3454,8 +3457,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "", SPS, "", "Inbound"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6000", SPS, "", "Inbound"));
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6049 , testta C<1002> hung up", E1, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), "2000", CDRObject.STATUS.ANSWER.toString(), "2000<2000> parked at 6049", "", E1, "Outbound"));
 
         softAssertPlus.assertAll();
     }
@@ -3548,44 +3551,152 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "DirectedCallParking"})
     public void testCallParking_47_DirectedCallParking() {
+        prerequisite();
+        apiUtil.editFeatureCode("\"enb_park_on_slots\":0").apply();
+
+        asteriskObjectList.clear();
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
+        thread.start();
+
+        step("[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1000, RING, 30), RING);
+        pjsip.Pj_Answer_Call(1000, false);
+        Assert.assertEquals(getExtensionStatus(1000, TALKING, 30), TALKING);
+
+        step("分机1000按*056000将通话停泊");
+        sleep(5000);
+        pjsip.Pj_Send_Dtmf(1000,"*","0","5","6","0","0","0");
+
+        assertThat(getExtensionStatus(1000, TALKING, 30)).as("通话状态校验 自动挂断失败!").isIn(TALKING);
+
+        pjsip.Pj_hangupCall(1000);
+
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1003.toString(), CDRObject.STATUS.ANSWER.toString(), "testa D<1003> retrieved from 6000 , testa D<1003> hung up", SPS, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.QUEUE0_6400.toString(), CDRObject.STATUS.ANSWER.toString(), "Queue Queue0<6400> connected", SPS, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1004.toString(), CDRObject.STATUS.ANSWER.toString(),"2000<2000> parked at 6000", SPS, "", "Inbound"));
+
+        step("编辑Feature->Directed Call Parking启用");
+        apiUtil.editFeatureCode("\"enb_park_on_slots\":1,\"park_on_slots\":\"*05\"").apply();
+
+        step("[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(1000, RING, 30), RING);
+        pjsip.Pj_Answer_Call(1000, false);
+        Assert.assertEquals(getExtensionStatus(1000, TALKING, 30), TALKING);
+
+        step("分机1000按*056000将通话停泊");
+        sleep(5000);
+        pjsip.Pj_Send_Dtmf(1000,"*","0","5","6","0","0","0");
+
+        int tmp = 0;//todo no found
+        while (asteriskObjectList.size() != 1 && tmp <=800) {
+            sleep(50);
+            tmp++;
+            log.debug("[tmp]_" + tmp);
+        }
+        if (tmp == 801) {
+            for (int i = 0; i < asteriskObjectList.size(); i++) {
+                log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
+            }
+            thread.flag = false;
+            Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
+        }
+        thread.flag = false;
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1000, HUNGUP, 30)).as("通话状态校验 自动挂断失败!").isIn(HUNGUP,IDLE);
+        assertThat(getExtensionStatus(2000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+
+        step("[caller] 1002" + ",[callee] 6000");
+        pjsip.Pj_Make_Call_No_Answer(1002, "6000");
+
+        step("[通话状态校验]");
+        assertThat(getExtensionStatus(1002, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+
+        step("挂断");
+        sleep(2000);
+        pjsip.Pj_hangupCall(1002);
+
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1003.toString(), CDRObject.STATUS.ANSWER.toString(), "testa D<1003> retrieved from 6000 , testa D<1003> hung up", SPS, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.QUEUE0_6400.toString(), CDRObject.STATUS.ANSWER.toString(), "Queue Queue0<6400> connected", SPS, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1004.toString(), CDRObject.STATUS.ANSWER.toString(),"2000<2000> parked at 6000", SPS, "", "Inbound"));
+
+        softAssertPlus.assertAll();
+    }
+    @Epic("P_Series")
+    @Feature("FeatureCode-CallParking")
+    @Story("DirectedCallParking")
+    @Description("编辑Feature->Directed CallParking 禁用" +
+            "48.分机1001拨打22001通过SPS外线呼出，被叫应答；\n" +
+            "分机1001按*056001将通话停泊；\n" +
+            "\t停泊失败，分机1001与外线保持通话，挂断；检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "DirectedCallParking"})
+    public void testCallParking_48_DirectedCallParking() {
+        prerequisite();
+        apiUtil.editFeatureCode("\"enb_park_on_slots\":0").apply();
+
+        asteriskObjectList.clear();
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
+        thread.start();
+
+        step("[caller] 1001" + ",[callee] 22001");
+        pjsip.Pj_Make_Call_No_Answer(1001, "22001");
+
+        step("[通话状态校验]");
+        Assert.assertEquals(getExtensionStatus(2000, RING, 30), RING);
+        pjsip.Pj_Answer_Call(2000, false);
+        Assert.assertEquals(getExtensionStatus(2000, TALKING, 30), TALKING);
+
+        step("分机1001按*056001将通话停泊");
+        sleep(5000);
+        pjsip.Pj_Send_Dtmf(1001,"*","0","5","6","0","0","1");
+
+        assertThat(getExtensionStatus(1000, TALKING, 30)).as("通话状态校验 自动挂断失败!").isIn(TALKING);
+
+        pjsip.Pj_hangupCall(1001);
+
+        assertStep("[CDR校验]");
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1003.toString(), CDRObject.STATUS.ANSWER.toString(), "testa D<1003> retrieved from 6000 , testa D<1003> hung up", SPS, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.QUEUE0_6400.toString(), CDRObject.STATUS.ANSWER.toString(), "Queue Queue0<6400> connected", SPS, "", "Inbound"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1004.toString(), CDRObject.STATUS.ANSWER.toString(),"2000<2000> parked at 6000", SPS, "", "Inbound"));
+
+        softAssertPlus.assertAll();
+    }
+    @Epic("P_Series")
+    @Feature("FeatureCode-CallParking")
+    @Story("DirectedCallParking")
+    @Description("49.编辑Feature->Directed CallParking 修改特征码为#******\n" +
+            "\t通过sps外线呼入到分机A-1000,1000接听；\n" +
+            "分机1000按*056000将通话停泊；\n" +
+            "\t\t停泊失败，分机1000与外线保持通话，挂断；检查cdr\n" +
+            "\t\t\t分机1000按#******6000将通话停泊；\n" +
+            "\t\t\t\tasterisk播放提示音call-parked-at.slin，一会儿后1000自动挂断，外线保持通话状态；\n" +
+            "\t\t\t\t\t分机C-1002拨打6000接回通话\n" +
+            "\t\t\t\t\t\t分机C与外线正常通话，分机C挂断，检查cdr\n" +
+            "\t\t\t\t\t\t\t编辑Feature->Directed Call Parking 修改特征码为*05\n" +
+            "通过sps外线呼入到分机A-1000,1000接听；\n" +
+            "分机1000按*056000将通话停泊；\n" +
+            "\t\t\t\t\t\t\t\tasterisk播放提示音call-parked-at.slin，一会儿后1000自动挂断，外线保持通话状态；主叫挂断，检查cdr")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "DirectedCallParking"})
+    public void testCallParking_49_DirectedCallParking() {
 
     }
-//    @Epic("P_Series")
-//    @Feature("FeatureCode-CallParking")
-//    @Story("DirectedCallParking")
-//    @Description("编辑Feature->Directed CallParking 禁用" +
-//            "48.分机1001拨打22001通过SPS外线呼出，被叫应答；\n" +
-//            "分机1001按*056001将通话停泊；\n" +
-//            "\t停泊失败，分机1001与外线保持通话，挂断；检查cdr")
-//    @Severity(SeverityLevel.BLOCKER)
-//    @TmsLink(value = "")
-//    @Issue("")
-//    @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "DirectedCallParking"})
-//    public void testCallParking_48_DirectedCallParking() {
-//
-//    }
-//    @Epic("P_Series")
-//    @Feature("FeatureCode-CallParking")
-//    @Story("DirectedCallParking")
-//    @Description("49.编辑Feature->Directed CallParking 修改特征码为#******\n" +
-//            "\t通过sps外线呼入到分机A-1000,1000接听；\n" +
-//            "分机1000按*056000将通话停泊；\n" +
-//            "\t\t停泊失败，分机1000与外线保持通话，挂断；检查cdr\n" +
-//            "\t\t\t分机1000按#******6000将通话停泊；\n" +
-//            "\t\t\t\tasterisk播放提示音call-parked-at.slin，一会儿后1000自动挂断，外线保持通话状态；\n" +
-//            "\t\t\t\t\t分机C-1002拨打6000接回通话\n" +
-//            "\t\t\t\t\t\t分机C与外线正常通话，分机C挂断，检查cdr\n" +
-//            "\t\t\t\t\t\t\t编辑Feature->Directed Call Parking 修改特征码为*05\n" +
-//            "通过sps外线呼入到分机A-1000,1000接听；\n" +
-//            "分机1000按*056000将通话停泊；\n" +
-//            "\t\t\t\t\t\t\t\tasterisk播放提示音call-parked-at.slin，一会儿后1000自动挂断，外线保持通话状态；主叫挂断，检查cdr")
-//    @Severity(SeverityLevel.BLOCKER)
-//    @TmsLink(value = "")
-//    @Issue("")
-//    @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "DirectedCallParking"})
-//    public void testCallParking_49_DirectedCallParking() {
-//
-//    }
 //    @Epic("P_Series")
 //    @Feature("FeatureCode-CallParking")
 //    @Story("TimeoutDestination")

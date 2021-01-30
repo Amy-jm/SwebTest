@@ -9,10 +9,6 @@
     </listeners>
     <test name="pbxcore">
         <classes>
-            <class name="com.yeastar.testcase.pseries.TestIVRAllowOptoutofCallRecording"/>
-            <class name="com.yeastar.testcase.pseries.TestOperatorConference"/>
-            <class name="com.yeastar.testcase.pseries.TestOutboundBasic"/>
-            <class name="com.yeastar.testcase.pseries.TestOutboundCallerID"/>
             <class name="com.yeastar.testcase.pseries.TestOutboundDialPattern"/>
             <class name="com.yeastar.testcase.pseries.TestOutboundTimeCondition"/>
             <class name="com.yeastar.testcase.pseries.TestPreferencesMaxCallDuration"/>
