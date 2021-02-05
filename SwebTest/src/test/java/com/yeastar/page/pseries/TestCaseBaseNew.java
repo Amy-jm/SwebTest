@@ -35,7 +35,7 @@ public class TestCaseBaseNew extends BaseMethod {
     private WebDriver webDriver;
     public SoftAssert softAssert;
     public SoftAssertions softAssertPlus = new SoftAssertions();
-    public boolean isRunRecoveryEnvFlag = true;
+    public boolean isRunRecoveryEnvFlag = false;
 
     @BeforeClass(alwaysRun = true)
     public void beforeClass(){

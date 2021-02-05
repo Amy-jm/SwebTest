@@ -84,7 +84,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","PSeries", "Cloud", "K2", "BlindTransfer", "Transfer", "testFCBT01"})
+    @Test(groups = {"P2","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "Transfer", "testFCBT01"})
     public void testFCBT01() {
         prerequisite();
 
@@ -121,7 +121,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "Transfer", "testFCBT02"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "Transfer", "testFCBT02"})
     public void testFCBT02() {
         prerequisite();
 
@@ -160,7 +160,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "Transfer", "testFCBT03"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "Transfer", "testFCBT03"})
     public void testFCBT03() {
         prerequisite();
 
@@ -200,7 +200,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","PSeries", "Cloud", "K2", "BlindTransfer", "Transfer", "testFCBT04"})
+    @Test(groups = {"P2","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "Transfer", "testFCBT04"})
     public void testFCBT04() {
         prerequisite();
 
@@ -239,7 +239,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P1","PSeries", "Cloud", "K2", "BlindTransfer", "SPS","Transfer", "testFCBT05"})
+    @Test(groups = {"P1","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SPS","Transfer", "testFCBT05"})
     public void testFCBT05() {
         prerequisite();
 
@@ -280,7 +280,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SPS","Transfer", "testFCBT06"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SPS","Transfer", "testFCBT06"})
     public void testFCBT06() {
         prerequisite();
 
@@ -335,7 +335,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SIP_REGISTER","Transfer", "testFCBT07"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SIP_REGISTER","Transfer", "testFCBT07"})
     public void testFCBT07() {
         prerequisite();
 
@@ -379,7 +379,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SIP_ACCOUNT","Transfer", "testFCBT08"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SIP_ACCOUNT","Transfer", "testFCBT08"})
     public void testFCBT08() {
         prerequisite();
 
@@ -423,7 +423,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SPS","Transfer", "testFCBT09"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SPS","Transfer", "testFCBT09"})
     public void testFCBT09() {
         prerequisite();
         step("修改In1呼入到分机1004");
@@ -463,7 +463,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SPS","Transfer", "testFCBT10"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SPS","Transfer", "testFCBT10"})
     public void testFCBT10() throws IOException, JSchException {
         prerequisite();
 
@@ -506,7 +506,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "FXO","Transfer", "testFCBT11"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "FXO","Transfer", "testFCBT11"})
     public void testFCBT11() {
         prerequisite();
 
@@ -547,7 +547,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "BRI","Transfer", "testFCBT12"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "BRI","Transfer", "testFCBT12"})
     public void testFCBT12() {
         prerequisite();
         step("修改In1呼入到分机1004");
@@ -587,7 +587,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer","E1", "Transfer", "testFCBT13"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer","E1", "Transfer", "testFCBT13"})
     public void testFCBT13() {
         prerequisite();
         step("修改In1呼入到分机1004");
@@ -627,7 +627,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "GSM","Transfer", "testFCBT14"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "GSM","Transfer", "testFCBT14"})
     public void testFCBT14() {
         prerequisite();
         step("修改In1呼入到分机1004");
@@ -668,7 +668,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P1","PSeries", "Cloud", "K2", "BlindTransfer", "SPS","Transfer", "testFCBT15"})
+    @Test(groups = {"P1","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SPS","Transfer", "testFCBT15"})
     public void testFCBT15() {
         prerequisite();
         recoveryEvn();
@@ -711,7 +711,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SPS","Transfer", "testFCBT16"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SPS","Transfer", "testFCBT16"})
     public void testFCBT16() {
         prerequisite();
 
@@ -767,7 +767,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SIP_REGISTER","Transfer", "testFCBT17"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SIP_REGISTER","Transfer", "testFCBT17"})
     public void testFCBT17() {
         prerequisite();
 
@@ -813,7 +813,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SIP_ACCOUNT","Transfer", "testFCBT18"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SIP_ACCOUNT","Transfer", "testFCBT18"})
     public void testFCBT18() {
         prerequisite();
 
@@ -857,7 +857,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SPS","Transfer", "testFCBT19"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SPS","Transfer", "testFCBT19"})
     public void testFCBT19() {
         prerequisite();
 
@@ -896,7 +896,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "SPS","Transfer", "testFCBT20"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "SPS","Transfer", "testFCBT20"})
     public void testFCBT20() throws IOException, JSchException {
         prerequisite();
 
@@ -935,7 +935,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "FXO","Transfer", "testFCBT21"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "FXO","Transfer", "testFCBT21"})
     public void testFCBT21() {
         prerequisite();
 
@@ -975,7 +975,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("呼出的CDR被叫方显示缺少分机号")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "BRI","Transfer", "testFCBT22"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "BRI","Transfer", "testFCBT22"})
     public void testFCBT22() {
         prerequisite();
 
@@ -1015,7 +1015,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("呼出的CDR被叫方显示缺少分机号")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "E1","Transfer", "testFCBT23"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "E1","Transfer", "testFCBT23"})
     public void testFCBT23() {
         prerequisite();
 
@@ -1055,7 +1055,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "BlindTransfer", "GSM","Transfer", "testFCBT24"})
+    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "GSM","Transfer", "testFCBT24"})
     public void testFCBT24() {
         prerequisite();
 
@@ -1099,7 +1099,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","PSeries", "Cloud", "K2", "BlindTransfer","Transfer", "testFCBT25"})
+    @Test(groups = {"P2","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer","Transfer", "testFCBT25"})
     public void testFCBT25() {
         prerequisite();
 
@@ -1180,7 +1180,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P2","PSeries", "Cloud", "K2", "BlindTransfer", "Transfer", "testFCBT26"})
+    @Test(groups = {"P2","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "Transfer", "testFCBT26"})
     public void testFCBT26() {
         prerequisite();
 
