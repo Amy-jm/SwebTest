@@ -837,13 +837,13 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(4000, TALKING, 10)).as("[通话校验] 4000通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 10)).as("[通话校验] 1001挂断").isEqualTo(HUNGUP);
         sleep(WaitUntils.TALKING_WAIT);
-        pjsip.Pj_hangupCall(1003);
+        pjsip.Pj_hangupCall(4000);
         assertStep("检查cdr");
 
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_1005.toString(), "3333", ANSWER.toString(), Extension_1005.toString()+" called 3333", "", ACCOUNTTRUNK, OUTBOUND.toString()))
                 .contains(tuple("6700<3333>", RINGGROUP0_6300.toString(), ANSWER.toString(), Extension_1005.toString()+" blind transferred , "+RINGGROUP0_6300.toString()+" connected",  ACCOUNTTRUNK, "", INBOUND.toString()))
-                .contains(tuple("6700<3333>", Extension_1003.toString(), ANSWER.toString(), Extension_1003.toString()+" hung up", ACCOUNTTRUNK, "", INBOUND.toString()));
+                .contains(tuple("6700<3333>", Extension_1003.toString(), ANSWER.toString(), Extension_4000.toString()+" hung up", ACCOUNTTRUNK, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -989,7 +989,7 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
         step("分机1005拨打*031003#盲转移给分机D-1003 ");
         pjsip.Pj_Send_Dtmf(1005,"*031003#");
 
-        step("分机1005自动挂断，分机D响铃，接听；分机D-1003与外线保持通话，外线挂断； ");
+        step("分机1005自动挂断，分机D响铃，接听；分机D-1003与外线保持通话，1003挂断； ");
         softAssertPlus.assertThat(getExtensionStatus(1005, HUNGUP, 10)).as("[通话校验] 1005自动挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 10)).as("[通话校验] 1003响铃").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1003);
