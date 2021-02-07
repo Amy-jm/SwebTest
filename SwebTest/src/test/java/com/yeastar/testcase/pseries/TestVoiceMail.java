@@ -61,6 +61,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 //            initTestEnv();//TODO  local debug
             isDebugInitExtensionFlag = registerAllExtensions();
             isRunRecoveryEnvFlag = false;
+            initTestEnv();
         }
 
         if (isRunRecoveryEnvFlag) {
@@ -86,7 +87,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
     @SneakyThrows
     public void initTestEnv(){
-       log.info("Beforeclass\n" +
+       log.info("==============  start init test Env ==================\n" +
                "\t分机1000~1005分别上传greeting提示音：\n" +
                "/ysdisk/ysapps/pbxcenter/var/lib/asterisk/sounds/record/1000/\n" +
                "/ysdisk/ysapps/pbxcenter/var/lib/asterisk/sounds/record/1001/\n" +
@@ -582,7 +583,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
-        assertStep("[CDR校验]");
+        assertStep("[CDR校验]");//todo get cdr java.lang.NullPointerException
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", SPS, "", "Inbound"));
 
@@ -1480,7 +1481,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_19_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
 
@@ -2450,7 +2451,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Description("press*" +
             "32.编辑Call Features-》Voicemail-》勾选Allow callers to dial extension 选择分机1001\n" +
             "\t编通过sps外线呼入;\n" +
-            "\t\tasterisk播放提示音record/1001/VoicemailDefaultExt.slin时,按*；\n" +
+            "\t\tasterisk播放提示音record/1005/VoicemailDefaultExt.slin时,按*；\n" +
             "\t\t\tasterisk检测打印“vm-operate-dial-exten”时，按1000，通话被挂断；检测cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
@@ -2472,7 +2473,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
