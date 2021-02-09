@@ -61,7 +61,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 //            initTestEnv();//TODO  local debug
             isDebugInitExtensionFlag = registerAllExtensions();
             isRunRecoveryEnvFlag = false;
-            initTestEnv();
+//            initTestEnv();
         }
 
         if (isRunRecoveryEnvFlag) {
@@ -81,11 +81,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
             isRunRecoveryEnvFlag = registerAllExtensions();
             step("=========== init before class  end =========");
         }
+        initTestEnv();
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
-    }
-
-
-    @SneakyThrows
+    }@SneakyThrows
     public void initTestEnv(){
        log.info("==============  start init test Env ==================\n" +
                "\t分机1000~1005分别上传greeting提示音：\n" +
@@ -126,9 +124,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         SSHLinuxUntils.exeCommand(GRID_HUB_IP,22,"root","r@@t",COMMAND_1003);
         SSHLinuxUntils.exeCommand(GRID_HUB_IP,22,"root","r@@t",COMMAND_1004);
         SSHLinuxUntils.exeCommand(GRID_HUB_IP,22,"root","r@@t",COMMAND_1005);
-
-
-       apiUtil.editExtension("1000","\"presence_status\":\"available\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"")
+        apiUtil.editExtension("1000","\"presence_status\":\"available\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\",\"after_vm_notify\":\"no\"")
                .editExtension("0","\"presence_status\":\"available\",\"vm_greeting\":\"VoicemailDefaultExt.wav\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"available\",\"vm_greeting\":\"VoicemailAvailable.wav\"}],\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0")
                .editExtension("1001","\"presence_status\":\"away\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"available\",\"vm_greeting\":\"VoicemailAway.wav\",\"status\":\"away\"}],\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0")
                .editExtension("1002","\"presence_status\":\"business_trip\",\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"status\":\"business_trip\",\"vm_greeting\":\"VoicemailBusinessTrip.wav\"}],\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0")
@@ -165,7 +161,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"global_vm_greeting\":\"default\",\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListSecond.clear();
@@ -174,12 +169,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadSecond.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-        sleep(10000);
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         sleep(3000);
         int tmp = 0;
@@ -206,8 +197,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
-        auto.homePage().logout();
-
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", SPS, "", "Inbound"));
@@ -217,7 +206,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         tmp = 0;
         while (asteriskObjectListSecond.size() != 2 && tmp <= 300) {
@@ -278,7 +267,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
@@ -290,11 +278,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         threadExten.start();
         threadOperator.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         sleep(5*1000);
         int tmp = 0;
@@ -312,7 +297,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
         }
         thread.flag = false;
         pjsip.Pj_Send_Dtmf(2000,"*");
-
 
         tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <= 300) {
@@ -337,7 +321,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
-        auto.homePage().logout();
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
@@ -348,7 +331,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         tmp = 0;
         while (asteriskObjectListOperator.size() != 2 && tmp <= 300) {
@@ -402,18 +385,14 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_03_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("0").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/0/VoicemailAvailable.slin");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -442,10 +421,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", SPS, "", "Inbound"));
-    }
-
-
-    @Epic("P_Series")
+    }@Epic("P_Series")
     @Feature("Voicemail")
     @Story("CallerOptions")
     @Description("编辑Call Features-》Voicemail-》勾选Allow callers to press 0 to break out from voicemail -》Destination 选择到分机1000\n" +
@@ -460,19 +436,15 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_04_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("0").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"beep.gsm");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -497,7 +469,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
         auto.loginPage().login("0",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -527,7 +498,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_05_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("0").id)).apply();
 
         asteriskObjectList.clear();
@@ -537,11 +507,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadExten.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -583,7 +550,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         step("主叫挂断");
         pjsip.Pj_hangupCall(1000);
 
-        assertStep("[CDR校验]");//todo get cdr java.lang.NullPointerException
+        assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", SPS, "", "Inbound"));
 
@@ -600,23 +567,19 @@ public class TestVoiceMail extends TestCaseBaseNew {
             "\t\t分机1000响铃，接听，挂断；检查cdr\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")//todo  bug  set presence  always failed
+    @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_06_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-//        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1001").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1001/VoicemailAway.slin");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -664,19 +627,15 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_07_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1001").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"beep.gsm");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -701,7 +660,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
         auto.loginPage().login("1001",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -731,7 +689,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_08_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1001").id)).apply();
 
         asteriskObjectList.clear();
@@ -741,11 +698,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadExten.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -808,19 +762,15 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_09_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1002").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1002/VoicemailBusinessTrip.slin");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -867,20 +817,16 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_10_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1002").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"beep.gsm");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -905,7 +851,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+
         auto.loginPage().login("1002",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -934,8 +880,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_11_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1002").id)).apply();
 
         asteriskObjectList.clear();
@@ -945,11 +890,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadExten.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1012,19 +954,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_12_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1003").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1003/VoicemailDND.slin");
-        thread.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        thread.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1055,11 +991,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
                 .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
-    }
-
-
-
-    @Epic("P_Series")
+    }@Epic("P_Series")
     @Feature("Voicemail")
     @Story("CallerOptions")
     @Description("编辑Call Features-》Voicemail-》勾选Allow callers to press 0 to break out from voicemail -》Destination 选择到分机1000\n" +
@@ -1073,20 +1005,14 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_13_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1003").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"beep.gsm");
-        thread.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        thread.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1111,7 +1037,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1003",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -1140,22 +1066,16 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_14_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1003").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
-        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1003/VoicemailDND.slin");
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDND.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1218,19 +1138,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_15_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1004").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1004/VoicemailLunchBreak.slin");
-        thread.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        thread.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1277,20 +1191,16 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_16_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1004").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"beep.gsm");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1315,7 +1225,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
         auto.loginPage().login("1004",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -1344,8 +1253,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_17_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1004").id)).apply();
 
         asteriskObjectList.clear();
@@ -1355,11 +1263,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadExten.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1422,19 +1327,15 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_18_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1005/VoicemailOffWork.slin");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1482,19 +1383,15 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_19_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"beep.gsm");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1519,7 +1416,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
         auto.loginPage().login("1005",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -1559,11 +1455,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadExten.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1627,18 +1520,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_21_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1669,10 +1557,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
                 .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
-    }
-
-
-    @Epic("P_Series")
+    }@Epic("P_Series")
     @Feature("Voicemail")
     @Story("CallerOptions")
     @Description("编辑Call Features-》Voicemail-》勾选Allow callers to press 0 to break out from voicemail -》Destination 选择到分机1000\n" +
@@ -1687,19 +1572,14 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_22_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"beep.gsm");
         thread.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1724,7 +1604,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -1754,8 +1634,6 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_23_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"extension\",\"press0_dest_value\":\"%s\",\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test A\",\"text2\":\"1000\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1000").id,apiUtil.getExtensionSummary("1000").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
@@ -1763,12 +1641,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
         threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
+        
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1832,7 +1707,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_24_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("0").id)).apply();
 
         asteriskObjectList.clear();
@@ -1842,11 +1717,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadExten.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1910,7 +1782,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_25_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1001").id)).apply();
 
         asteriskObjectList.clear();
@@ -1919,12 +1791,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
         threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
+        
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -1988,7 +1857,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_26_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1002").id)).apply();
 
         asteriskObjectList.clear();
@@ -1996,13 +1865,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1002/VoicemailBusinessTrip.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -2066,7 +1930,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_27_CallerOptions() {
         prerequisite();
- apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1003").id)).apply();
 
         asteriskObjectList.clear();
@@ -2076,11 +1940,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadExten.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -2154,11 +2015,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadExten.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -2227,16 +2085,12 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
-        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"record/1005/VoicemailOffWork.slin");
+        SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailOffWork.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
-        threadExten.start();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -2301,21 +2155,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_30_CallerOptions() {
         prerequisite();
         apiUtil.editExtension("1000","\"presence_status\":\"available\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectList.clear();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();asteriskObjectList.clear();
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -2382,21 +2228,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_31_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":1,\"press0_dest\":\"ivr\",\"press0_dest_value\":\"%s\",\"vm_greeting\": \"follow_system\"",apiUtil.getIVRSummary("6200").id)).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectList.clear();
+        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0").apply();asteriskObjectList.clear();
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"vm-greeting-dial-operator.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -2459,20 +2297,12 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions",""})
     public void testVoicemail_32_CallerOptions() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test2 B\",\"text2\":\"1001\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1001").id)).apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectList.clear();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"test2 B\",\"text2\":\"1001\",\"value\":\"%s\",\"type\":\"extension\"}]",apiUtil.getExtensionSummary("1001").id)).apply();asteriskObjectList.clear();
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
@@ -2532,20 +2362,14 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_33_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"ExGroup1\",\"text2\":\"ExGroup1\",\"value\":\"%s\",\"type\":\"ext_group\"}]",apiUtil.getExtensionGroupSummary("ExGroup1").id)).apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -2609,20 +2433,14 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_34_CallerOptions() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":1,\"dial_ext_list\":[{\"text\":\"ExGroup1\",\"text2\":\"ExGroup1\",\"value\":\"%s\",\"type\":\"ext_group\"}]",apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"WaitExten");
         thread.start();
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=600) {
@@ -2689,13 +2507,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
-        thread.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        thread.start();step("2:[caller] 2000" + ",[callee] 991000");
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 3 && tmp <=600) {
@@ -2744,14 +2557,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailDefaultExt.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"beep.gsm");
         thread.start();
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 2 && tmp <=600) {
@@ -2790,7 +2598,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -2818,24 +2626,17 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions","press5",""})
     public void testVoicemail_37_press5() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\"").apply();
-        apiUtil.voicemailUpdate("\"enb_press5_leave\":1").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":1,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.editExtension("1000","\"enb_vm\": 1, \"vm_greeting\": \"follow_system\"").apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"vm-greeting-leave-press5.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"beep.gsm");
         thread.start();
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 3 && tmp <=900) {
@@ -2874,7 +2675,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -2904,11 +2705,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions","ReviewMessage",""})
     public void testVoicemail_38_CallerOptions() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":1,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-
-        apiUtil.voicemailUpdate("\"enb_review\": 1").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectListExten.clear();
         asteriskObjectList.clear();
@@ -2924,14 +2722,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadFailed.start();
         threadGsm.start();
-        threadSecond.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadSecond.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=900) {
@@ -2964,10 +2757,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
         thread.flag = false;
-        pjsip.Pj_Send_Dtmf(2000,"1");
-
-
-        tmp = 0;
+        pjsip.Pj_Send_Dtmf(2000,"1");tmp = 0;
         while (asteriskObjectListSecond.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
@@ -2986,7 +2776,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         assertThat(getExtensionStatus(2000, HUNGUP, 20)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -2995,13 +2785,12 @@ public class TestVoiceMail extends TestCaseBaseNew {
         sleep(3000);
         String voiceMailTime =TableUtils.getTableForHeader(getDriver(),"Time",0);
         log.debug("[callTime] " + callTime+" ,[voiceMailTime] " + voiceMailTime);
-        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);
-        auto.homePage().logout();
+        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);step("编辑Call Features-》Voicemail-》不勾选Allow callers to review message；");
 
-        step("编辑Call Features-》Voicemail-》不勾选Allow callers to review message；");
+        auto.homePage().logout();
         apiUtil.voicemailUpdate("\"enb_review\": 0").apply();
         callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         tmp = 0;
         while (asteriskObjectListGSM.size() != 2 && tmp <=900) {
@@ -3036,7 +2825,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         threadFailed.flag = false;
 
         step("主叫挂断");
-        pjsip.Pj_hangupCall(2000);
+        pjsip.Pj_Hangup_All();
 
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -3069,10 +2858,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.voicemailUpdate("\"enb_review\": 1").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectListExten.clear();
+        apiUtil.voicemailUpdate("\"enb_review\": 1").apply();asteriskObjectListExten.clear();
         asteriskObjectList.clear();
         asteriskObjectListReview.clear();
         asteriskObjectListSave.clear();
@@ -3086,14 +2872,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadReview.start();
         threadSave.start();
-        threadVM.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadVM.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=900) {
@@ -3126,10 +2907,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
         thread.flag = false;
-        pjsip.Pj_Send_Dtmf(2000,"2");
-
-
-        tmp = 0;
+        pjsip.Pj_Send_Dtmf(2000,"2");tmp = 0;
         while (asteriskObjectListReview.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
@@ -3158,10 +2936,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectListSave.size());
         }
         threadSave.flag = false;
-        pjsip.Pj_Send_Dtmf(2000,"1");
-
-
-        while (asteriskObjectListVM.size() != 1 && tmp <=600) {
+        pjsip.Pj_Send_Dtmf(2000,"1");while (asteriskObjectListVM.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -3179,7 +2954,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         assertThat(getExtensionStatus(2000, HUNGUP, 20)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -3205,6 +2980,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CallerOptions","ReviewMessage",""})
     public void testVoicemail_40_CallerOptions() {
+        prerequisite();
+        apiUtil.voicemailUpdate(String.format("\"enb_review\":1")).apply();
+
         List<AsteriskObject> asteriskObjectListReview = new ArrayList<AsteriskObject>();
         List<AsteriskObject> asteriskObjectListSave = new ArrayList<AsteriskObject>();
         List<AsteriskObject> asteriskObjectListVM = new ArrayList<AsteriskObject>();
@@ -3212,10 +2990,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.voicemailUpdate("\"enb_review\": 1").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectListExten.clear();
+        apiUtil.voicemailUpdate("\"enb_review\": 1").apply();asteriskObjectListExten.clear();
         asteriskObjectList.clear();
         asteriskObjectListReview.clear();
         asteriskObjectListSave.clear();
@@ -3229,14 +3004,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.start();
         threadReview.start();
         threadSave.start();
-        threadVM.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadVM.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=900) {
@@ -3269,10 +3039,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
         thread.flag = false;
-        pjsip.Pj_Send_Dtmf(2000,"3");
-
-
-        tmp = 0;
+        pjsip.Pj_Send_Dtmf(2000,"3");tmp = 0;
         while (asteriskObjectListReview.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
@@ -3324,7 +3091,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         assertThat(getExtensionStatus(2000, HUNGUP, 20)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -3352,25 +3119,16 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.voicemailUpdate("\"enb_review\": 1").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectListExten.clear();
+        apiUtil.voicemailUpdate("\"enb_review\": 1").apply();asteriskObjectListExten.clear();
         asteriskObjectList.clear();
 
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"beep.gsm");
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"press-pound-cancel-and-exit.slin");
 
         threadExten.start();
-        thread.start();
-
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        thread.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=900) {
@@ -3403,14 +3161,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectList.size());
         }
         thread.flag = false;
-        pjsip.Pj_Send_Dtmf(2000,"#");
-
-
-        step("[通话状态校验]");
+        pjsip.Pj_Send_Dtmf(2000,"#");step("[通话状态校验]");
         assertThat(getExtensionStatus(2000, HUNGUP, 20)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -3437,19 +3192,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"enb_vm\":1,\"enb_vm_play_datetime\":0,\"enb_vm_play_caller_id\":0,\"enb_vm_play_duration\":0,\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.voicemailUpdate("\"max_msg_time\": 60").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectListExten.clear();
+        apiUtil.voicemailUpdate("\"max_msg_time\": 60").apply();asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"beep.gsm");
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=900) {
@@ -3471,7 +3218,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         assertThat(getExtensionStatus(2000, HUNGUP, 20)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -3498,19 +3245,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
-        apiUtil.voicemailUpdate("\"enb_review\": 1,\"max_msg_time\": 600").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectListExten.clear();
+        apiUtil.voicemailUpdate("\"enb_review\": 1,\"max_msg_time\": 600").apply();asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"beep.gsm");
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=900) {
@@ -3535,7 +3274,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -3559,21 +3298,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "MessageOptions","MinMessageTime",""})
     public void testVoicemail_44_MinMessageTime() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.voicemailUpdate("\"min_msg_time\": 5,\"max_msg_time\": 600").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"beep.gsm");
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=900) {
@@ -3591,11 +3322,10 @@ public class TestVoiceMail extends TestCaseBaseNew {
         threadExten.flag = false;
         sleep(1000);
 
-        step("[通话状态校验]");//TODO 1s 后主叫不会挂断
-        assertThat(getExtensionStatus(2000, HUNGUP, 20)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+        pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -3619,21 +3349,13 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "MessageOptions","MinMessageTime",""})
     public void testVoicemail_45_MinMessageTime() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailDefaultExt.wav\"").apply();
         apiUtil.voicemailUpdate("\"min_msg_time\": 5,\"max_msg_time\": 600").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"beep.gsm");
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=900) {
@@ -3651,11 +3373,10 @@ public class TestVoiceMail extends TestCaseBaseNew {
         threadExten.flag = false;
         sleep(1000*6);
 
-        step("[通话状态校验]");//todo  6s 后主叫没有挂断
-        assertThat(getExtensionStatus(2000, HUNGUP, 5)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+        pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -3683,21 +3404,14 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "GreetingOptions","",""})
     public void testVoicemail_46_GreetingOptions() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"VoicemailMaxDuration30.wav\"").apply();
         apiUtil.voicemailUpdate("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_greeting_time\":30").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"Prompt is too long, cut short, max prompt time: 30");
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         sleep(30*1000);
         int tmp = 0;
@@ -3720,7 +3434,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -3748,21 +3462,14 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "GreetingOptions","",""})
     public void testVoicemail_47_GreetingOptions() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"presence_list\":[{\"vm_greeting\":\"VoicemailMaxDuration30.wav\",\"status\":\"available\"}]").apply();
         apiUtil.voicemailUpdate("\"max_greeting_time\":30").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"Prompt is too long, cut short, max prompt time: 30");
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 4000" + ",[callee] 441000");
+        threadExten.start();step("2:[caller] 4000" + ",[callee] 441000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(4000, "441000", DEVICE_ASSIST_3, false);
+        pjsip.Pj_Make_Call_No_Answer(4000, "441000");
 
         sleep(30*1000);
         int tmp = 0;
@@ -3782,17 +3489,17 @@ public class TestVoiceMail extends TestCaseBaseNew {
         sleep(1000*10);
 
         step("[通话状态校验]");
-        pjsip.Pj_hangupCall(2000);
+        pjsip.Pj_hangupCall(4000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
         sleep(3000);
         String voiceMailTime =TableUtils.getTableForHeader(getDriver(),"Time",0);
         log.debug("[callTime] " + callTime+" ,[voiceMailTime] " + voiceMailTime);
-        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);//todo  时间校验失败，没有生成录音文件
+        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);
 
         softAssertPlus.assertAll();
     }
@@ -3814,19 +3521,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_48_GreetingOptions() {
         prerequisite();
         apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"presence_list\":[{\"vm_greeting\":\"\",\"status\":\"available\"}]").apply();
-        apiUtil.voicemailUpdate("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_greeting_time\":30,\"global_vm_greeting\":\"VoicemailMaxDuration30.wav\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectListExten.clear();
+        apiUtil.voicemailUpdate("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_greeting_time\":30,\"global_vm_greeting\":\"VoicemailMaxDuration30.wav\"").apply();asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"Prompt is too long, cut short, max prompt time: 30");
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         sleep(30*1000);
         int tmp = 0;
@@ -3849,7 +3548,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2000);
 
         step("登录分机1000查看新增一条语音留言，Name记录正确");
-        auto.homePage().logout();
+        
         auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
         sleep(WaitUntils.SHORT_WAIT*2);
         auto.homePage().intoPage(HomePage.Menu_Level_1.voicemails);
@@ -3878,19 +3577,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_49_GreetingOptions() {
         prerequisite();
  apiUtil.editExtension("1000","\"vm_greeting\":\"follow_system\",\"presence_list\":[{\"vm_greeting\":\"\",\"status\":\"available\"}]").apply();
-        apiUtil.voicemailUpdate("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":1,\"enb_review\":0,\"max_greeting_time\":30,\"global_vm_greeting\":\"VoicemailMaxDuration30.wav\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectListExten.clear();
+        apiUtil.voicemailUpdate("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":1,\"enb_review\":0,\"max_greeting_time\":30,\"global_vm_greeting\":\"VoicemailMaxDuration30.wav\"").apply();asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"Prompt is too long, cut short, max prompt time: 30");
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         sleep(30*1000);
         int tmp = 0;
@@ -3936,7 +3627,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "GreetingOptions","",""})
-    public void testVoicemail_50_IVR() throws IOException, JSchException {
+    public void testVoicemail_50_IVR() {
         prerequisite();
         ArrayList<IVRObject.PressKeyObject> pressKeyObjects_0 = new ArrayList<>();
         pressKeyObjects_0.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0, "extension", "", "1000", 0));
@@ -3955,17 +3646,12 @@ public class TestVoiceMail extends TestCaseBaseNew {
         threadExten.start();
         thread.start();
         threadSecond.start();
-        threadGb.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadGb.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
-        while (asteriskObjectListExten.size() >= 1 && tmp <=900) {
+        while (asteriskObjectListExten.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -3979,17 +3665,16 @@ public class TestVoiceMail extends TestCaseBaseNew {
         }
         threadExten.flag = false;
         step("asterisk打印ivr-greeting-dial-ext.slin时输入*21000#查看分机1000的语音留言");
-//        SSHLinuxUntils.exePjsip("*21000#");
         sleep(3000);
         pjsip.Pj_Send_Dtmf(2000,"*","2","1","0","0","0","#");
 
         tmp = 0;
-        while (asteriskObjectList.size() != 1 && tmp <=900) {
+        while (asteriskObjectList.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
         }
-        if (tmp == 901) {
+        if (tmp == 601) {
             for (int i = 0; i < asteriskObjectList.size(); i++) {
                 log.debug(i + "_【asterisk object name】 " + asteriskObjectList.get(i).getName() + " [asterisk object time] " + asteriskObjectList.get(i).getTime() + "[asterisk object tag] " + asteriskObjectList.get(i).getTag());
             }
@@ -3998,35 +3683,33 @@ public class TestVoiceMail extends TestCaseBaseNew {
         }
         thread.flag = false;
 
-        step("aasterisk打印vm-enterpin.slin时输入PIN码1000#");
+        step("asterisk打印vm-enterpin.slin时输入PIN码1000#");
         sleep(3000);
-        pjsip.Pj_Send_Dtmf(2000,"*","2","1","0","0","0","#");
-
-
-        tmp = 0;
-        while (asteriskObjectListSecond.size() != 1 && tmp <=900) {
+        pjsip.Pj_Send_Dtmf(2000,"1","0","0","0","#");tmp = 0;
+        while (asteriskObjectListSecond.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
         }
-        if (tmp == 901) {
+        if (tmp == 601) {
             for (int i = 0; i < asteriskObjectListSecond.size(); i++) {
                 log.debug(i + "_【asterisk object name】 " + asteriskObjectListSecond.get(i).getName() + " [asterisk object time] " + asteriskObjectListSecond.get(i).getTime() + "[asterisk object tag] " + asteriskObjectListSecond.get(i).getTag());
             }
-            threadExten.flag = false;
+            threadSecond.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectListSecond.size());
         }
         threadSecond.flag = false;
         sleep(3000);
+        step("按#退出语音信箱");
         pjsip.Pj_Send_Dtmf(2000,"#");
 
         tmp = 0;
-        while (asteriskObjectListGoogbye.size() != 1 && tmp <=900) {
+        while (asteriskObjectListGoogbye.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
         }
-        if (tmp == 901) {
+        if (tmp == 601) {
             for (int i = 0; i < asteriskObjectListGoogbye.size(); i++) {
                 log.debug(i + "_【asterisk object name】 " + asteriskObjectListGoogbye.get(i).getName() + " [asterisk object time] " + asteriskObjectListGoogbye.get(i).getTime() + "[asterisk object tag] " + asteriskObjectListGoogbye.get(i).getTag());
             }
@@ -4040,7 +3723,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.Extension_1000_VOICEMAIL.toString(), "VOICEMAIL", CDRNAME.Extension_2000.toString() + " hung up", SPS, "", "Inbound"));
+                .contains(tuple(CDRNAME.Extension_2000.toString(), "IVR 6201", "ANSWERED", CDRNAME.Extension_2000.toString() + " hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
 
@@ -4068,14 +3751,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"ivr-greeting-dial-ext.slin");
-        threadExten.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
-        step("2:[caller] 2000" + ",[callee] 991000");
+        threadExten.start();step("2:[caller] 2000" + ",[callee] 991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "991000");
 
         int tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=900) {
@@ -4119,21 +3797,18 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CheckVoicemail","",""})
     public void testVoicemail_52_CheckVoicemail() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectList.clear();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();asteriskObjectList.clear();
         asteriskObjectListExten.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"vm-enterpin.slin");
         SSHLinuxUntils.AsteriskThread threadExten=new SSHLinuxUntils.AsteriskThread(asteriskObjectListExten,"press-pound-exit.slin");
         thread.start();
         threadExten.start();
 
-//        step("1:login with admin ");
-//        auto.loginPage().loginWithAdmin();
+//        
+//        
 
         step("2:[caller] 1000" + ",[callee] *2");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*2", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*2");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=900) {
@@ -4151,10 +3826,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.flag = false;
 
         sleep(3000);
-        pjsip.Pj_Send_Dtmf(1000,"1","0","0","0","#");
-
-
-        tmp = 0;
+        pjsip.Pj_Send_Dtmf(1000,"1","0","0","0","#");tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
@@ -4191,10 +3863,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CheckVoicemail","",""})
     public void testVoicemail_53_CheckVoicemail() {
         List<AsteriskObject> asteriskObjectListPress = new ArrayList<AsteriskObject>();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        prerequisite();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();prerequisite();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
@@ -4206,11 +3875,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
         threadExten.start();
         threadPress.start();
 
-//        step("1:login with admin ");
-//        auto.loginPage().loginWithAdmin();
+//        
+//        
 
         step("2:[caller] 1000" + ",[callee] *2");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*2", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*2");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=900) {
@@ -4228,10 +3897,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.flag = false;
 
         sleep(4000);
-        pjsip.Pj_Send_Dtmf(1000,"1","0","0","1","#");
-
-
-        tmp = 0;
+        pjsip.Pj_Send_Dtmf(1000,"1","0","0","1","#");tmp = 0;
         while (asteriskObjectListExten.size() != 1 && tmp <=600) {
             sleep(50);
             tmp++;
@@ -4261,10 +3927,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
             threadPress.flag = false;
             Assert.assertTrue(false, "[没有检测到提示音文件！！！]，[size] " + asteriskObjectListPress.size());
         }
-        threadPress.flag = false;
-
-
-        step("[通话状态校验]");
+        threadPress.flag = false;step("[通话状态校验]");
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
@@ -4287,14 +3950,8 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_54_CheckVoicemail() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.editFeatureCode("\"enb_vm\":0").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        step("2:[caller] 1000" + ",[callee] *2");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*2", DEVICE_IP_LAN, false);
-
-
-        assertThat(getExtensionStatus(1000, HUNGUP, 5)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+        apiUtil.editFeatureCode("\"enb_vm\":0").apply();step("2:[caller] 1000" + ",[callee] *2");
+        pjsip.Pj_Make_Call_No_Answer(1000, "*2");assertThat(getExtensionStatus(1000, HUNGUP, 5)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
     }
 
@@ -4315,9 +3972,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "CheckVoicemail","",""})
     public void testVoicemail_55_CheckVoicemail() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editFeatureCode("\"enb_vm\":1,\"voicemail\": \"*232323\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         asteriskObjectListExten.clear();
@@ -4327,7 +3982,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         threadExten.start();
 
         step("2:[caller] 1000" + ",[callee]*232323");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*232323", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*232323");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=900) {
@@ -4345,6 +4000,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
         thread.flag = false;
 
         sleep(3000);
+        step("asterisk打印vm-enterpin.slin时输入PIN码1000#");
         pjsip.Pj_Send_Dtmf(1000,"1","0","0","0","#");
 
         tmp = 0;
@@ -4371,12 +4027,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
         apiUtil.editFeatureCode("\"enb_vm\":1,\"voicemail\": \"*2\"").apply();
 
         step("2:[caller] 1000" + ",[callee]*232323");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*232323", DEVICE_IP_LAN, false);//todo  不会自动挂断
+        pjsip.Pj_Make_Call_No_Answer(1000, "*232323");
 
-        assertThat(getExtensionStatus(1000, HUNGUP, 60)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
+        assertThat(getExtensionStatus(1000, HUNGUP, 100)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
         softAssertPlus.assertAll();
     }
-
 
     @Epic("P_Series")
     @Feature("Voicemail")
@@ -4390,9 +4045,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "LeaveaVoicemailforanExtension",""})
     public void testVoicemail_56_LeaveaVoicemailforanExtension() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.voicemailUpdate("\"enb_press5_leave\":1").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":1,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailAway.slin");
@@ -4400,7 +4053,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         step("2:[caller] 1000" + ",[callee]*121001");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*121001", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*121001");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 2 && tmp <=1200) {
@@ -4453,9 +4106,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "LeaveaVoicemailforanExtension",""})
     public void testVoicemail_57_LeaveaVoicemailforanExtension() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.voicemailUpdate("\"enb_press5_leave\":0").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailAway.slin");
@@ -4463,7 +4114,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         step("2:[caller] 1000" + ",[callee]*121001");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*121001", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*121001");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=1200) {
@@ -4519,22 +4170,19 @@ public class TestVoiceMail extends TestCaseBaseNew {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editFeatureCode("\"enb_leave_vm_for_ext\":0").apply();
-        apiUtil.voicemailUpdate("\"enb_press5_leave\":0").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectList.clear();
+        apiUtil.voicemailUpdate("\"enb_press5_leave\":0").apply();asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailAway.slin");
         thread.start();
 
         step("2:[caller] 1000" + ",[callee]*121001");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*121001", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*121001");
 
         assertThat(getExtensionStatus(1000, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
         step("编辑Feature Code-》勾选Leave a Voicemail for an Extension");
         apiUtil.editFeatureCode("\"enb_leave_vm_for_ext\":1").apply();
-        pjsip.Pj_Make_Call_No_Answer(1000, "*121001", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*121001");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=1200) {
@@ -4579,18 +4227,14 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "LeaveaVoicemailforanExtension",""})
     public void testVoicemail_59_LeaveaVoicemailforanExtension() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
         apiUtil.editFeatureCode("\"enb_leave_vm_for_ext\":1,\"leave_vm_for_ext\":\"*121212\"").apply();
-        apiUtil.voicemailUpdate("\"enb_press5_leave\":0").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        asteriskObjectList.clear();
+        apiUtil.voicemailUpdate("\"enb_press5_leave\":0").apply();asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"VoicemailAway.slin");
         thread.start();
 
         step("2:[caller] 1000" + ",[callee]*1212121001");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*1212121001", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*1212121001");
 
         int tmp = 0;
         while (asteriskObjectList.size() != 1 && tmp <=1200) {
@@ -4623,14 +4267,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
         sleep(3000);
         String voiceMailTime =TableUtils.getTableForHeader(getDriver(),"Time",0);
         log.debug("[callTime] " + callTime+" ,[voiceMailTime] " + voiceMailTime);
-        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);
-
-
-        step("编辑Feature Code-》Leave a Voicemail for an Extension 修改值为*12；");
+        softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isAfter(callTime);step("编辑Feature Code-》Leave a Voicemail for an Extension 修改值为*12；");
         apiUtil.editFeatureCode("\"enb_leave_vm_for_ext\":1,\"leave_vm_for_ext\":\"*12\"").apply();
 
         step("2:[caller] 1000" + ",[callee]*1212121001");
-        pjsip.Pj_Make_Call_No_Answer(1000, "*1212121001", DEVICE_IP_LAN, false);
+        pjsip.Pj_Make_Call_No_Answer(1000, "*1212121001");
 
         assertThat(getExtensionStatus(1000, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
 
@@ -4653,23 +4294,22 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "Extension",""})
     public void testVoicemail_60_Extension() {
         prerequisite();
-        apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"with_attach\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"delete\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"with_attach\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"delete\",\"vm_greeting\":\"follow_system\",\"presence_list\":[{\"vm_greeting\":\"\",\"status\":\"available\"}]").apply();
 
         int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
 
-        step("2:[caller] 2000" + ",[callee]991000");
+        step("2:[caller] 2001" + ",[callee]991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2001, "991000");
 
         sleep(120*1000);
 
-        pjsip.Pj_hangupCall(2000);
+        pjsip.Pj_hangupCall(2001);
+        pjsip.Pj_Hangup_All();
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_2000.toString(), CDRNAME.Extension_1000_VOICEMAIL.toString(), "VOICEMAIL", "2000<2000> hung up", SPS, "", "Inbound"));
+                .contains(tuple(CDRNAME.Extension_2001.toString(), CDRNAME.Extension_1000_VOICEMAIL.toString(), "VOICEMAIL", "2001<2001> hung up", SPS, "", "Inbound"));
 
         step("分机1000登录webclient，voicemail页面未新增一条来自2001未读的留言记录");
         sleep(5000);
@@ -4685,9 +4325,10 @@ public class TestVoiceMail extends TestCaseBaseNew {
         if(voiceMailTime.contains("Yesterday") || voiceMailTime.contains("yesterday") || voiceMailTime.contains("YESTERDAY")){
             //true
         }else{
-            softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isBefore(callTime);//没有收到语音留言  Yesterday 17:18:56
+            softAssertPlus.assertThat(LocalTime.parse(voiceMailTime)).isBefore(callTime);
         }
 
+        sleep(60*1000);//邮件可能延迟
         int emailUnreadCount_after = MailUtils.getEmailUnreadMessageCountFrom163();
         step("[邮箱校验] 3.[邮箱服务器功能验证][测试前邮箱数量] " + emailUnreadCount_before + "-->>[验证邮箱功能，数量+1] " + emailUnreadCount_after);
         softAssertPlus.assertThat(emailUnreadCount_before + 1).as("邮箱服务器没有收到邮件！！！").isEqualTo( emailUnreadCount_after);
@@ -4712,14 +4353,11 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_61_Extension() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"without_attach\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"mark_read\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
+        apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"without_attach\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"mark_read\"").apply();int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
 
         step("2:[caller] 2001" + ",[callee]991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2001, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2001, "991000");
 
         sleep(120*1000);
 
@@ -4770,18 +4408,18 @@ public class TestVoiceMail extends TestCaseBaseNew {
     public void testVoicemail_62_Extension() {
         prerequisite();
         apiUtil.voicemailUpdate(String.format("\"enb_press0\":0,\"enb_dial_exts\":0,\"enb_press5_leave\":0,\"enb_review\":0,\"max_msg_time\":600,\"min_msg_time\":2,\"max_greeting_time\":60,\"global_vm_greeting\":\"default\"")).apply();
-        apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"no\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1,\"after_vm_notify\":\"mark_read\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editExtension("1000","\"email_addr\":\"yeastarautotest@163.com\",\"vm_pin\":\"MTAwMA==\",\"new_vm_notify\":\"no\",\"enb_vm_play_datetime\":1,\"enb_vm_play_caller_id\":1,\"enb_vm_play_duration\":1").apply();
 
         int emailUnreadCount_before = MailUtils.getEmailUnreadMessageCountFrom163();
 
         step("2:[caller] 2001" + ",[callee]991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2001, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2001, "991000");
 
         sleep(120*1000);
 
         pjsip.Pj_hangupCall(2001);
+        pjsip.Pj_Hangup_All();
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
@@ -4806,7 +4444,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
 
         int emailUnreadCount_after = MailUtils.getEmailUnreadMessageCountFrom163();
         step("[邮箱校验] 3.[邮箱服务器功能验证][测试前邮箱数量] " + emailUnreadCount_before + "-->>[验证邮箱功能，数量+1] " + emailUnreadCount_after);
-        softAssertPlus.assertThat(emailUnreadCount_before + 1).as("邮箱服务器没有收到邮件！！！").isEqualTo( emailUnreadCount_after);
+        softAssertPlus.assertThat(emailUnreadCount_before).as("邮箱服务器没有收到邮件！！！").isEqualTo( emailUnreadCount_after);
 
         softAssertPlus.assertAll();
     }
@@ -4825,12 +4463,9 @@ public class TestVoiceMail extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Voicemail","P3", "Extension",""})
     public void testVoicemail_63_Extension() {
         prerequisite();
-        apiUtil.editExtension("1000","\"enb_vm\": 0").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        step("2:[caller] 2001" + ",[callee]991000");
+        apiUtil.editExtension("1000","\"enb_vm\": 0").apply();step("2:[caller] 2001" + ",[callee]991000");
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
-        pjsip.Pj_Make_Call_No_Answer(2001, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2001, "991000");
 
         assertThat(getExtensionStatus(2001, HUNGUP, 30)).isIn(HUNGUP, IDLE).as("通话状态校验 失败!");
     }
