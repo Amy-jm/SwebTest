@@ -18,6 +18,7 @@
             <class name="com.yeastar.testcase.pseries.TestInboundRouteDIDPattern"/>
             <class name="com.yeastar.testcase.pseries.TestInboundRouteGlobalBusiness"/>
             <class name="com.yeastar.testcase.pseries.TestInitializeDevice"/>
+            <class name="com.yeastar.testcase.pseries.TestVoiceMail"/>
         </classes>
     </test>
 </suite>

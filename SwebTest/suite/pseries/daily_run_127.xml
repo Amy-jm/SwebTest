@@ -19,6 +19,7 @@
             <class name="com.yeastar.testcase.pseries.TestSpeedDial"/>
             <class name="com.yeastar.testcase.pseries.TestTrunkInboundRouteCallerIDReformatting"/>
             <class name="com.yeastar.testcase.pseries.TestTrunkOutboundCallerID"/>
+            <class name="com.yeastar.testcase.pseries.TestFeatureCodeCallParking"/>
         </classes>
     </test>
 </suite>
