@@ -3663,8 +3663,8 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "DirectedCallParking"})
     public void testCallParking_49_DirectedCallParking() {
-        prerequisite();//todo rerun pass
-        apiUtil.editFeatureCode("\"enb_park\": 1,\"park\":\"#******\"").apply();
+        prerequisite();
+        apiUtil.editFeatureCode("\"enb_park\": 1,\"park_on_slots\":\"#******\"").apply();
 
         asteriskObjectList.clear();
         asteriskObjectListSecond.clear();
@@ -3688,7 +3688,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(),"2000<2000> parked at", SPS, "", "Inbound"));
+                .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(),"test A<1000> hung up", SPS, "", "Inbound"));
 
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
         SSHLinuxUntils.AsteriskThread threadSecond=new SSHLinuxUntils.AsteriskThread(asteriskObjectListSecond,CALL_PARKED_AT);
@@ -3739,7 +3739,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(), "testta C<1002> retrieved from 6000 , testta C<1002> hung up", SPS, "", "Inbound"));
 
-        apiUtil.editFeatureCode("\"enb_park\": 1,\"park\":\"*5\"").apply();
+        apiUtil.editFeatureCode("\"enb_park\": 1,\"park_on_slots\":\"*05\"").apply();
 
         step("[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000");
