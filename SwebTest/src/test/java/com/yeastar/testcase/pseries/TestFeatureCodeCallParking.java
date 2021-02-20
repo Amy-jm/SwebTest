@@ -57,7 +57,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
         //reset test env
         apiUtil.editFeatureCode("\"digit_timeout\": 4000,\"enb_park\": 1,\"park\":\"*5\",\"park_start\":\"6000\",\"park_end\":\"6099\",\"park_timeout\":60,\"enb_park_on_slots\":1,\"park_on_slots\":\"*05\",\"park_timeout_dest\": \"original\"").apply();
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
+        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\",\"enb_time_condition\":0",apiUtil.getExtensionSummary("1000").id)).apply();
     }
 
     @Epic("P_Series")
@@ -74,8 +74,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "CallParking",""})
     public void testCallParking_01_CallParking() {
         prerequisite();
-
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
@@ -519,8 +517,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         }
         prerequisite();
 
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
         thread.start();
@@ -593,8 +589,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         }
         prerequisite();
 
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
         thread.start();
@@ -662,8 +656,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "CallParking",""})
     public void testCallParking_09_CallParking() {
         prerequisite();
-
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
@@ -733,8 +725,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "CallParking",""})
     public void testCallParking_10_CallParking() {
         prerequisite();
-
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
@@ -807,14 +797,12 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     public void testCallParking_11_CallParking() {
         prerequisite();
 
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
         thread.start();
 
-        step("[caller] 2000" + ",[callee] 2005");
-        pjsip.Pj_Make_Call_No_Answer(2000 ,"2005");
+        step("[caller] 2000" + ",[callee] 771000");
+        pjsip.Pj_Make_Call_No_Answer(2000 ,"771000");
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(1000, RING, 30)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
@@ -844,18 +832,20 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         assertThat(getExtensionStatus(1000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("[caller] 2000" + ",[callee] 776000");
-        pjsip.Pj_Make_Call_No_Answer(2000, "776000");
+        pjsip.Pj_Make_Call_Auto_Answer(2000, "776000",DEVICE_ASSIST_2,false);
 
         step("[通话状态校验]");
-        assertThat(getExtensionStatus(1000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+        assertThat(getExtensionStatus(2000, TALKING, 60)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("挂断");
-        sleep(3*1000);
+        sleep(2*1000);
         pjsip.Pj_hangupCall(2000);
+        sleep(2*1000);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRObject.CDRNAME.Extension_1020.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), CDRObject.CDRNAME.Extension_2000.toString() + " hung up", SPS, "", "Inbound"));
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.CDRNAME.Extension_1020.toString(), CDRObject.STATUS.ANSWER.toString(), "1020 1020<1020> hung up", "", "", "Internal"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_1020.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), CDRObject.CDRNAME.Extension_1000.toString() + " parked at 6000", "", "", "Internal"));
 
         softAssertPlus.assertAll();
 
@@ -875,8 +865,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "CallParking",""})
     public void testCallParking_12_CallParking() {
         prerequisite();
-
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
@@ -946,8 +934,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     public void testCallParking_13_CallParking() {
         prerequisite();
 
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
         thread.start();
@@ -1016,8 +1002,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "CallParking",""})
     public void testCallParking_14_CallParking() {
         prerequisite();
-
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
@@ -1089,8 +1073,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
             Assert.assertTrue(false,"FXO 线路 不测！");
         }
         prerequisite();
-
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
@@ -1164,8 +1146,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         }
         prerequisite();
 
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
         thread.start();
@@ -1238,8 +1218,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         }
         prerequisite();
 
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
         thread.start();
@@ -1311,8 +1289,6 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
             Assert.assertTrue(false,"GSM线路 不测试！");
         }
         prerequisite();
-
-        apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,CALL_PARKED_AT);
@@ -1493,7 +1469,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         pjsip.Pj_Send_Dtmf(1000,"*","5");
 
         int tmp = 0;
-        while (asteriskObjectList.size() != 2 && tmp <=800) {
+        while (asteriskObjectList.size() < 1 && tmp <=800) {
             sleep(50);
             tmp++;
             log.debug("[tmp]_" + tmp);
@@ -2395,7 +2371,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), "*", CDRObject.STATUS.ANSWER.toString(), CDRObject.CDRNAME.Extension_1001.toString()+" hung up", "", "", "Internal"))
-                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), CDRObject.CDRNAME.Extension_1001.toString(), CDRObject.STATUS.ANSWER.toString(), CDRObject.CDRNAME.Extension_1001.toString()+" test2 B<1001> parked at 6060", "", "", "Internal"))
+                .contains(tuple(CDRObject.CDRNAME.Extension_1001.toString(), CDRObject.CDRNAME.Extension_1002.toString(), CDRObject.STATUS.ANSWER.toString(),"test2 B<1001> parked at 6060", "", "", "Internal"))
                 .contains(tuple(CDRObject.CDRNAME.Extension_2000.toString(), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), CDRObject.CDRNAME.Extension_2000.toString()+" parked at", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
@@ -3687,7 +3663,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "FeatureCode-CallParking","P3", "DirectedCallParking"})
     public void testCallParking_49_DirectedCallParking() {
-        prerequisite();
+        prerequisite();//todo rerun pass
         apiUtil.editFeatureCode("\"enb_park\": 1,\"park\":\"#******\"").apply();
 
         asteriskObjectList.clear();
