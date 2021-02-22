@@ -9,7 +9,7 @@
     </listeners>
     <test name="pbxcore">
         <classes>
-            <class name="com.yeastar.testcase.pseries.TestFeatureCodeCallPickup"/>
+<!--            <class name="com.yeastar.testcase.pseries.TestFeatureCodeCallPickup"/>-->
             <class name="com.yeastar.testcase.pseries.TestFeatureCodeSwitchBusinessHoursStatus"/>
             <class name="com.yeastar.testcase.pseries.TestInboundRouteBasic"/>
             <class name="com.yeastar.testcase.pseries.TestInboundRouteCallerIDPattern"/>
