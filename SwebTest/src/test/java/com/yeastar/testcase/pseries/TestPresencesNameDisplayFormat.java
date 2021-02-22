@@ -101,10 +101,10 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(1000, "1001", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        Assertions.assertThat(getExtensionStatus(1001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         Selenide.sleep(5000);
         pjsip.Pj_Answer_Call(1001, false);
-        Assertions.assertThat(getExtensionStatus(1001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("1001 被叫挂断");
         pjsip.Pj_hangupCall(1001);
@@ -136,10 +136,10 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
             pjsip.Pj_Make_Call_No_Answer(1000, "1001", DEVICE_IP_LAN, false);
 
             step("[通话状态校验]");
-            Assertions.assertThat(getExtensionStatus(1001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+            softAssertPlus.assertThat(getExtensionStatus(1001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
             Selenide.sleep(5000);
             pjsip.Pj_Answer_Call(1001, false);
-            Assertions.assertThat(getExtensionStatus(1001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+            softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
             step("1001 被叫挂断");
             pjsip.Pj_hangupCall(1001);
@@ -170,10 +170,10 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(1000, "1001", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
-        Assertions.assertThat(getExtensionStatus(1001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 60)).as("[通话状态校验_响铃] Time：" + DataUtils.getCurrentTime()).isEqualTo(RING);
         Selenide.sleep(5000);
         pjsip.Pj_Answer_Call(1001, false);
-        Assertions.assertThat(getExtensionStatus(1001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("1001 被叫挂断");
         pjsip.Pj_hangupCall(1001);
