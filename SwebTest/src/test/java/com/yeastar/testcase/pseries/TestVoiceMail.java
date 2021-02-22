@@ -42,7 +42,7 @@ public class TestVoiceMail extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectListGoogbye = new ArrayList<AsteriskObject>();
     List<String> officeTimes = new ArrayList<>();
     List<String> resetTimes = new ArrayList<>();
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestVoiceMail() {
