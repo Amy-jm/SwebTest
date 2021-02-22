@@ -35,6 +35,8 @@ import static com.yeastar.untils.TableUtils.strTableXPATH;
 public class ExtensionPage extends BasePage implements IExtensionPageElement {
 
 
+    public Object getEle_extension_user_caller_id;
+
     /**
      * @param extensionName
      * 点击表格，选择分机状态 Available\Away\Business Trip\Do Not Disturb\Lunch Break\Off Work

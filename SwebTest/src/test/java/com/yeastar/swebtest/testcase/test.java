@@ -30,7 +30,7 @@ public class test {
     @BeforeClass
     public void BeforeClass() {
 
-            ys_apply();
+//            ys_apply();
 //        pjsip.Pj_Init();
 //        initialDriver(BROWSER, "https://" + DEVICE_IP_LAN + ":" + DEVICE_PORT + "/");
 //        login(LOGIN_USERNAME, LOGIN_PASSWORD);
@@ -44,7 +44,7 @@ public class test {
     public void CaseName() throws IOException {
 //        Reporter.infoExec("执行的操作"); //执行操作
 //        Reporter.infoExec(" 主测设备注册分机1100"); //执行操作
-//        pjsip.Pj_Init();
+        pjsip.Pj_Init();
 //        System.out.println("sadfffffffffffffffffffff");
 //        YsAssert.fail("sdfasfd");
 //        System.out.println(DEVICE_VERSION);
@@ -82,7 +82,7 @@ public class test {
 //        Reporter.infoAfterClass("执行的操作"); //执行操作
 //        Thread.sleep(15000);
 //        Reporter.infoAfterClass("执行完毕：======  InboundRoute  ======"); //执行操作
-////        pjsip.Pj_Destory();
+        pjsip.Pj_Destory();
 //        quitDriver();
 //        System.out.println("quitDriver end");
 ////        killChromePid();

@@ -30,6 +30,7 @@ public class HomePage extends BasePage{
     public SelenideElement extension_trunk_tree_extension_group = $(By.id("m_extension_groups"));
     public SelenideElement extension_trunk_tree_trunks = $(By.id("m_trunks"));
     public SelenideElement extension_trunk_tree_role_management = $(By.id("m_role_management"));
+//  public SelenideElement Contacts_tree = $(By.id("m_contacts");
     /**
      * 左侧菜单 -- Call Control
      **/

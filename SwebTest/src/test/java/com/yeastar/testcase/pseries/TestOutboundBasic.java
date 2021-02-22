@@ -30,7 +30,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = true;
+    private boolean isRunRecoveryEnvFlag = false;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestOutboundBasic() {
@@ -106,6 +106,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         apiUtil.deleteAllOutbound().createOutbound("OR1", asList(SIPTrunk), asList("Default_Extension_Group", "1000"), "11.", 2).apply();
 
         step("1:login with admin,trunk: " + SIPTrunk);
+        //autolog.loginWithAdmin();
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 113001");

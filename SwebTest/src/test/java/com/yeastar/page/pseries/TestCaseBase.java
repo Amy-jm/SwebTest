@@ -5,6 +5,7 @@ import com.jcraft.jsch.JSchException;
 import com.yeastar.controllers.BaseMethod;
 import com.yeastar.page.pseries.PageEngine;
 import com.yeastar.page.pseries.PbxSettings.IPreferencesPageElement;
+import com.yeastar.swebtest.driver.DataReader2;
 import com.yeastar.swebtest.tools.pjsip.PjsipApp;
 import com.yeastar.untils.*;
 import lombok.SneakyThrows;
@@ -45,7 +46,7 @@ public class TestCaseBase extends BaseMethod {
         log.info("\r\n====== [SetUp] " + getTestName(method) + " [Times] " + DataUtils.getCurrentTime("yyyy-MM-dd hh:mm:ss") + "======");
 
         long startTime=System.currentTimeMillis();
-        webDriver = initialDriver(BROWSER,PBX_URL,method);
+        webDriver = initialDriver(DataReader2.BROWSER,PBX_URL,method);
         log.debug("[init driver time]:"+(System.currentTimeMillis()-startTime)/1000+" Seconds");
 
         long startTime_1=System.currentTimeMillis();
