@@ -27,7 +27,7 @@ public class TestFeatureCodeCallParking extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
     List<AsteriskObject> asteriskObjectListSecond = new ArrayList<AsteriskObject>();
 
-    private boolean isRunRecoveryEnvFlag = false;
+    private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
 
