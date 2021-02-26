@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="P Series Daily Run" parallel="false" verbose="10">
+    <listeners>
+        <listener class-name="com.yeastar.untils.AllureReporterListener"/>
+        <listener class-name="com.yeastar.untils.RetryListener"/>
+        <listener class-name="com.yeastar.untils.TestNGListenerP"/>
+        <listener class-name="com.yeastar.untils.ExecutionListener"/>
+    </listeners>
+    <test name="pbxcore">
+        <classes>
+            <class name="com.yeastar.testcase.pseries.TestIVRAllowOptoutofCallRecording"/>
+            <class name="com.yeastar.testcase.pseries.TestOperatorConference"/>
+            <class name="com.yeastar.testcase.pseries.TestOutboundBasic"/>
+            <class name="com.yeastar.testcase.pseries.TestOutboundCallerID"/>
+            <class name="com.yeastar.testcase.pseries.TestIVR"/>
+            <class name="com.yeastar.testcase.pseries.TestConference"/>
+            <class name="com.yeastar.testcase.pseries.TestEmergencyNumber"/>
+            <class name="com.yeastar.testcase.pseries.TestExtension"/>
+        </classes>
+    </test>
+</suite>

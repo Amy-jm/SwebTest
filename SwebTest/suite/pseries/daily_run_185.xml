@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="P Series Daily Run" parallel="false" verbose="10">
+    <listeners>
+        <listener class-name="com.yeastar.untils.AllureReporterListener"/>
+        <listener class-name="com.yeastar.untils.RetryListener"/>
+        <listener class-name="com.yeastar.untils.TestNGListenerP"/>
+        <listener class-name="com.yeastar.untils.ExecutionListener"/>
+    </listeners>
+    <test name="pbxcore">
+        <classes>
+<!--            <class name="com.yeastar.testcase.pseries.TestFeatureCodeCallPickup"/>-->
+            <class name="com.yeastar.testcase.pseries.TestFeatureCodeSwitchBusinessHoursStatus"/>
+            <class name="com.yeastar.testcase.pseries.TestInboundRouteBasic"/>
+            <class name="com.yeastar.testcase.pseries.TestInboundRouteCallerIDPattern"/>
+            <class name="com.yeastar.testcase.pseries.TestInboundRouteCustomBusiness"/>
+            <class name="com.yeastar.testcase.pseries.TestInboundRouteCustomTime"/>
+            <class name="com.yeastar.testcase.pseries.TestInboundRouteDIDPattern"/>
+            <class name="com.yeastar.testcase.pseries.TestInboundRouteGlobalBusiness"/>
+            <class name="com.yeastar.testcase.pseries.TestInitializeDevice"/>
+        </classes>
+    </test>
+</suite>

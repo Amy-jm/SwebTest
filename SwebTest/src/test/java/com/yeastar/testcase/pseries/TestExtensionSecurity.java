@@ -33,6 +33,9 @@ import static org.assertj.core.groups.Tuple.tuple;
  * @description: Extension security 用例
  * @author: huangjx@yeastar.com
  * @create: 2020/06/17
+ *
+ *  * 【修改记录】
+ *  *  20210126--重复--注释7条用例,enabled = false
  */
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
@@ -87,7 +90,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("1001596")
     @Issue("")
-    @Test(groups = {"P0","testEnableDisableOutCall","Extension","Regression","PSeries","Security"})
+    @Test(groups = {"P0","testEnableDisableOutCall","Extension","Regression","PSeries","Security"},enabled = false)
     public void testEnableDisableOutCall(){
         prerequisite();
 
@@ -124,7 +127,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("1001599")
     @Issue("")
-    @Test(groups = {"P0","testDisableOutCall","Extension","Regression","PSeries","Security"})
+    @Test(groups = {"P0","testDisableOutCall","Extension","Regression","PSeries","Security"},enabled = false)
     public void testDisableOutCall() throws IOException, JSchException {
         prerequisite();
 
@@ -181,7 +184,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("")
     @Issue(" bug 23版本 设置不生效，待24版本验证")
-    @Test(groups = {"P0","testEnableDisableOutCallBusinessHours","Extension","Regression","PSeries","Security"})
+    @Test(groups = {"P0","testEnableDisableOutCallBusinessHours","Extension","Regression","PSeries","Security"},enabled = false)
     public void testEnableDisableOutCallBusinessHours(){
         prerequisite();
         //新增时间条件
@@ -229,7 +232,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("1001597")
     @Issue("")
-    @Test(groups = {"P0","testDisableOutCallBusinessHours","Extension","Regression","PSeries","Security"})
+    @Test(groups = {"P0","testDisableOutCallBusinessHours","Extension","Regression","PSeries","Security"},enabled = false)
     public void testDisableOutCallBusinessHours() throws IOException, JSchException {
         prerequisite();
 
@@ -395,7 +398,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001609")
     @Issue("bug cdr 多显示一条 call to T")
-    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"})
+    @Test(groups = {"P0","TestExtensionBasicDisplayAndRegistration","testCalled0To9999999","Regression","PSeries","Security"},enabled = false)
     public void testMaxCallDurationForInternalExtension() throws IOException, JSchException {
         step("1:login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);
@@ -454,7 +457,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001610")
     @Issue("bug cdr 多显示一条为 call to T的记录")
-    @Test(groups = {"P0","testMaxCallDurationForSPSTrunk","testCalled0To9999999","Regression","PSeries","Security"})
+    @Test(groups = {"P0","testMaxCallDurationForSPSTrunk","testCalled0To9999999","Regression","PSeries","Security"},enabled = false)
     public void testMaxCallDurationForSPSTrunk() throws IOException, JSchException {
         prerequisite();
 
@@ -511,7 +514,7 @@ public class TestExtensionSecurity extends TestCaseBase {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink("ID1001611")
     @Issue("bug cdr 多显示一条 call to T")
-    @Test(groups = {"P0","TestExtensionSecurity","testMaxCallDurationForSPSTrunkTo0","Regression","PSeries","Security"})
+    @Test(groups = {"P0","TestExtensionSecurity","testMaxCallDurationForSPSTrunkTo0","Regression","PSeries","Security"},enabled = false)
     public void testMaxCallDurationForSPSTrunkTo0() throws IOException, JSchException {
         step("1.login PBX");
         auto.loginPage().login(LOGIN_USERNAME,LOGIN_PASSWORD);

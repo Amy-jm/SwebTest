@@ -1,13 +1,11 @@
 package com.yeastar.testcase.pseries;
 
 import com.codeborne.selenide.Condition;
+import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.untils.*;
 import com.yeastar.untils.APIObject.IVRObject;
-import com.yeastar.untils.APIUtil;
-import com.yeastar.untils.AllureReporterListener;
-import com.yeastar.untils.ExecutionListener;
-import com.yeastar.untils.TestNGListenerP;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.openqa.selenium.Cookie;
@@ -176,6 +174,21 @@ public class TestDebug extends TestCaseBase {
     {
         int range = Math.abs(max - min) + 1;
         return (int)(Math.random() * range) + (min <= max ? min : max);
+    }
+
+    @Test
+    public void testSSHCPWAV() throws Exception {
+
+        String COMMAND = "sshpass -p '' scp -r -P "+SSH_PORT+" /home/autotest/pseries/wav/record/ "+USERNAEM_LS+"@"+DEVICE_IP_LAN+":/ysdisk/ysapps/pbxcenter/var/lib/asterisk/sounds/";
+        try {
+            SSHLinuxUntils.exeCommand(GRID_HUB_IP,22,"root","r@@t",COMMAND);
+        } catch (JSchException e) {
+            log.error("[ERROR initPrompt exception]"+e.getMessage());
+        } catch (IOException e) {
+            log.error("[ERROR initPrompt exception]"+e.getMessage());
+        }
+
+
     }
 }
 

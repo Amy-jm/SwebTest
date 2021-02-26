@@ -32,6 +32,8 @@ import static com.yeastar.swebtest.driver.SwebDriverP.ys_waitingTime;
  * @description: 分机模块用例-voicemail
  * @author: linhaoran@yeastar.com
  * @create: 2020/06/18
+ * 【修改记录】
+ *  20210126--重复--注释voicemail所有用例
  */
 @Listeners({AllureReporterListener.class, TestNGListenerP.class})
 @Log4j2
@@ -128,7 +130,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "cli确认播放提示音为vm-greeting-leave-after-tone.slin")
     @Issue("V26分机voicemail页面消失 ")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void test2000To0Voicemail() throws IOException, JSchException {
 
         step("环境准备");
@@ -198,7 +200,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testVoicemailGreetingForAvailable(){
         step("环境准备");
         preparationSteps();
@@ -235,7 +237,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testVoicemailGreetingForAway(){
         step("环境准备");
         preparationSteps();
@@ -272,7 +274,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testVoicemailGreetingForBusinessTrip(){
         step("环境准备");
         preparationSteps();
@@ -308,7 +310,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testVoicemailGreetingForDnd(){
         step("环境准备");
         preparationSteps();
@@ -350,7 +352,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test.slin")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testVoicemailGreetingForLunch(){
         step("环境准备");
         preparationSteps();
@@ -388,7 +390,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test1.wav")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testVoicemailGreetingForOffWork(){
         step("环境准备");
         preparationSteps();
@@ -424,7 +426,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
     @Description("Voicemail MODE 功能验证：" +
             "修改New Voicemail Notification设置为send email notification with attachment，afternotification设置为delete voicemail")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testNotification1(){
         step("环境准备");
         preparationSteps();
@@ -483,7 +485,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test1.wav")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testNotification2(){
         step("环境准备");
         preparationSteps();
@@ -527,7 +529,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "清空asterisk log文件，辅助设备分机2000通过sps trunk呼入，进入voicemial" +
             "cli确认播放提示音为test1.wav")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testNotification3(){
         step("环境准备");
         preparationSteps();
@@ -571,7 +573,7 @@ public class TestExtensionVoicemail extends TestCaseBase {
             "分机0禁用voicemail，保存并应用" +
             "辅助设备分机2000通过sps trunk呼入，未进入voicemial")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"})
+    @Test(groups = {"P0","TestExtensionVoicemail","Extension","Regression","PSeries","Voicemail"},enabled = false)
     public void testVoicemailDisable(){
         step("环境准备");
         preparationSteps();

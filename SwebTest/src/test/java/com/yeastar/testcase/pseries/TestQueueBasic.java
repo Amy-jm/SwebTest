@@ -30,7 +30,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
     APIUtil apiUtil = new APIUtil();
-    private boolean runRecoveryEnvFlag = false;
+    private boolean runRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !runRecoveryEnvFlag;
     private String PROMPT_1 = "prompt1.slin";
     private String PROMPT_2 = "prompt2.slin";
@@ -44,7 +44,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     public void prerequisite() {
 
         if (isDebugInitExtensionFlag) {
-            log.debug("*****************init extension************");
+            log.debug("***************** init extension ************");
 
             apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW);
             runRecoveryEnvFlag = false;
@@ -61,6 +61,23 @@ public class TestQueueBasic extends TestCaseBaseNew {
                 step("1001拨号*76401，登录Queue1");
                 pjsip.Pj_Make_Call_No_Answer(1001,  "*76401", DEVICE_IP_LAN, false);
             }
+
+            try {
+                if(!apiUtil.getQueueSummary(queueNum1).number.equals("6401")){
+                    initQueue6401();
+                }
+            }catch (java.lang.NullPointerException e){
+                log.error("ignore queue 6401 error");
+            }
+
+            try {
+                if(!apiUtil.getQueueSummary("6402").number.equals("6402")){
+                    initQueue6402();
+                }
+            }catch (java.lang.NullPointerException e){
+                log.error("ignore queue 6402 error");
+            }
+
         }
 
         if (runRecoveryEnvFlag) {
@@ -74,23 +91,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
             initIVR();
             initInbound();
 
-
-            ArrayList<String> queueStaticMembers = new ArrayList<>();
-            ArrayList<String> queueStaticMembers2 = new ArrayList<>();
-            ArrayList<String> queueDynamicMembers = new ArrayList<>();
-            queueStaticMembers2.add("1002");
-            queueStaticMembers2.add("1003");
-            queueStaticMembers.add("1002");
-            queueStaticMembers.add("1003");
-            queueStaticMembers.add("1020");
-            queueDynamicMembers.add("1000");
-            queueDynamicMembers.add("1001");
-            step("创建队列6401");
-            apiUtil.createQueue(queueName1, queueNum1, queueDynamicMembers, queueStaticMembers, null)
-                    .editQueue(queueNum1,String.format("\"agent_timeout\":10,\"retry_time\":10,\"wrap_up_time\":10"))
-
-                    .createQueue("Queue3","6402",queueStaticMembers2,queueDynamicMembers,null)
-                    .apply();
+            initQueue6401();
+            initQueue6402();
 
             step("编辑呼入路由In1呼入目的地为Queue1-6401");
             apiUtil.editInbound("In1",String.format("\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"",apiUtil.getQueueSummary(queueNum1).id));
@@ -109,6 +111,32 @@ public class TestQueueBasic extends TestCaseBaseNew {
             }
 
         }
+    }
+
+    public void initQueue6401(){
+        ArrayList<String> queueStaticMembers = new ArrayList<>();
+        ArrayList<String> queueDynamicMembers = new ArrayList<>();
+        queueStaticMembers.add("1002");
+        queueStaticMembers.add("1003");
+        queueStaticMembers.add("1020");
+        queueDynamicMembers.add("1000");
+        queueDynamicMembers.add("1001");
+        step("创建队列6401");
+        apiUtil.createQueue(queueName1, queueNum1, queueDynamicMembers, queueStaticMembers, null)
+                .editQueue(queueNum1,String.format("\"agent_timeout\":10,\"retry_time\":10,\"wrap_up_time\":10"))
+                .apply();
+    }
+
+    public void initQueue6402(){
+        ArrayList<String> queueStaticMembers2 = new ArrayList<>();
+        ArrayList<String> queueDynamicMembers = new ArrayList<>();
+        queueStaticMembers2.add("1002");
+        queueStaticMembers2.add("1003");
+        queueDynamicMembers.add("1000");
+        queueDynamicMembers.add("1001");
+        step("创建队列6401");
+        apiUtil.createQueue("Queue3","6402",queueStaticMembers2,queueDynamicMembers,null)
+                .apply();
     }
 
     private void resetQueue1(){
@@ -151,7 +179,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
                 }
             }
         }
+        try{
         apiUtil.editQueue(queueNum1,String.format("\"agent_timeout\":10,\"retry_time\":10,\"wrap_up_time\":10,\"ring_strategy\": \"ring_all\",\"max_wait_time\":1800,\"fail_dest\":\"end_call\",\"dynamic_agent_list\":%s,\"static_agent_list\":%s",jsonArray1,jsonArray2)).apply();
+    }catch (java.lang.NullPointerException e){
+
+        }
     }
 
     @Epic("P_Series")
