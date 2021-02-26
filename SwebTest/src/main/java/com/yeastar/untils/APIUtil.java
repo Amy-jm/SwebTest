@@ -31,6 +31,7 @@ public class APIUtil {
     private String webSession = NULL;
     private String m_loginName = "";
     private String m_loginPwd = "";
+    private String m_deviceIp = "";
     /**
      * 登录aip，获取cookie
      * @return

@@ -3,13 +3,13 @@ package com.yeastar.testcase.pseries;
 import com.jcraft.jsch.JSchException;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBaseNew;
+import com.yeastar.swebtest.tools.pjsip.PjsipApp;
 import com.yeastar.untils.AsteriskObject;
 import com.yeastar.untils.DataUtils;
 import com.yeastar.untils.SSHLinuxUntils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -52,7 +52,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     private void prerequisite() {
         long startTime = System.currentTimeMillis();
         if (isDebugInitExtensionFlag) {
-//            apiUtil.editFeatureCode("\"enb_blind_transfer\":1,\"blind_transfer\":\"*03\"").apply();
+            apiUtil.editFeatureCode("\"transfer_digit_timeout\":8").apply();
+            apiUtil.editFeatureCode("\"attend_transfer_timeout\":15").apply();
             isDebugInitExtensionFlag = registerAllExtensions();
             isRunRecoveryEnvFlag = false;
         }
@@ -69,6 +70,9 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
             initIVR();
             initInbound();
             initFeatureCode();
+
+            apiUtil.editFeatureCode("\"transfer_digit_timeout\":8").apply();
+            apiUtil.editFeatureCode("\"attend_transfer_timeout\":15").apply();
 
             isRunRecoveryEnvFlag = registerAllExtensions();
             step("=========== init before class  end =========");
@@ -88,7 +92,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer01"})
-    public void testFCCT01_AttendedTransfer01()
+    public void testFCCT01_AttendedTransfer()
     {
         prerequisite();
 
@@ -114,8 +118,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1000);
 
         step("分机BC保持通话，分机B挂断通话");
-        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as("4.[通话校验] 1001预期通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as("4.[通话校验] 1002预期通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as("5.[通话校验] 1001预期通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as("5.[通话校验] 1002预期通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1001);
 
@@ -140,7 +144,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer02"})
-    public void testFCCT01_AttendedTransfer02()
+    public void testFCCT02_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
@@ -165,8 +169,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1000);
 
         step("分机BC保持通话，分机C挂断通话");
-        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as("4.[通话校验] 1001预期通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as("4.[通话校验] 1002预期通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as("5.[通话校验] 1001预期通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as("5.[通话校验] 1002预期通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1002);
 
@@ -176,7 +180,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_1000.toString(), Extension_1001.toString(), ANSWER.toString(), Extension_1000.toString()+" called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
                 .contains(tuple(Extension_1000.toString(), Extension_1002.toString(), ANSWER.toString(), Extension_1000.toString()+" called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
-                .contains(tuple(Extension_1002.toString(), Extension_1001.toString(), ANSWER.toString(), Extension_1000.toString()+" attended transferred , "+Extension_1002.toString()+" hung up", "", "", INTERNAL.toString()));
+                .contains(tuple(Extension_1001.toString(), Extension_1002.toString(), ANSWER.toString(), Extension_1000.toString()+" attended transferred , "+Extension_1002.toString()+" hung up", "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -191,7 +195,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer03"})
-    public void testFCCT01_AttendedTransfer03()
+    public void testFCCT03_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；" );
@@ -222,9 +226,9 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(), ANSWER.toString(), Extension_1000.toString()+" hung up", "", "", INTERNAL.toString()))
                 .contains(tuple(Extension_1000.toString(), Extension_1001.toString(), ANSWER.toString(), Extension_1000.toString()+" called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
-                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(), ANSWER.toString(), Extension_1000.toString()+" called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
-                .contains(tuple(Extension_1001.toString(), Extension_1002.toString(), ANSWER.toString(), Extension_1000.toString()+" attended transferred , "+Extension_1002.toString()+" hung up", "", "", INTERNAL.toString()));
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(), ANSWER.toString(), Extension_1000.toString()+" called "+Extension_1002.toString(), "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -239,7 +243,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer04"})
-    public void testFCCT01_AttendedTransfer04()
+    public void testFCCT04_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
@@ -259,19 +263,20 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
 
         sleep(18000);
         step("等待15秒后，分机C停止响铃，分机AB恢复通话，分机B挂断通话，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 10)).as(".[通话校验] 1002挂断").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 10)).as("4.[通话校验] 1002挂断").isEqualTo(HUNGUP);
 
-        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as("5.[通话校验] 1000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as("5.[通话校验] 1001通话中").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1002);
 
         assertStep("CDR校验");
         auto.loginPage().loginWithAdmin();
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
 
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(), NO_ANSWER.toString(), Extension_1000.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
 
     }
@@ -287,7 +292,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer05"})
-    public void testFCCT01_AttendedTransfer05()
+    public void testFCCT05_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
@@ -303,18 +308,26 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         pjsip.Pj_Send_Dtmf(1000,"*31002#");
 
         step("分机C保持响铃3秒后，分机A挂断通话" );
-        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 10)).as(".[通话校验] 1002响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 10)).as("3.[通话校验] 1002响铃").isEqualTo(RING);
         sleep(3000);
         pjsip.Pj_hangupCall(1000);
         step("分机C继续响铃，应答，BC保持通话，分机B挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 10)).as(".[通话校验] 1002响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 10)).as("4.[通话校验] 1002响铃").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1002);
-        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as(".[通话校验] 1002通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as("5.[通话校验] 1001通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as("5.[通话校验] 1002通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
 
         pjsip.Pj_hangupCall(1001);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1002.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() + " attended transferred , "+Extension_1001.toString()+" hung up", "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -329,7 +342,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer06"})
-    public void testFCCT01_AttendedTransfer06()
+    public void testFCCT06_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
@@ -349,9 +362,16 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(3000);
         pjsip.Pj_hangupCall(1001);
 
-        step("通话被挂断，检查cdr");
+        step("通话被挂断");
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 10)).as(".[通话校验] 1000挂断").isEqualTo(HUNGUP);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(),NO_ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -366,7 +386,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P2","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer07"})
-    public void testFCCT01_AttendedTransfer07()
+    public void testFCCT07_AttendedTransfer()
     {
         prerequisite();
 
@@ -384,15 +404,26 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
 
         step("分机C接听后，等待3秒，分机B挂断通话；");
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 10)).as("3.[通话校验] 1002响铃").isEqualTo(RING);
+
+        pjsip.Pj_Answer_Call(1002);
         sleep(3000);
+
         pjsip.Pj_hangupCall(1001);
 
         step("分机AC保持通话，分机A挂断通话，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as(".[通话校验] 1002通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as("4.[通话校验] 1000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as("4.[通话校验] 1002通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1000);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1001.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1001.toString() + " attended transferred , "+Extension_1000.toString()+" hung up", "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
 
     }
@@ -408,7 +439,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer08"})
-    public void testFCCT01_AttendedTransfer08()
+    public void testFCCT08_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
@@ -428,13 +459,21 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(1002);
         sleep(3000);
         pjsip.Pj_hangupCall(1001);
-        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 10)).as(".[通话校验] 1001通话中").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 10)).as("4.[通话校验] 1001通话中").isEqualTo(HUNGUP);
 
         step("分机AC保持通话，分机C挂断通话，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as(".[通话校验] 1002通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as("5.[通话校验] 1000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as("5.[通话校验] 1002通话中").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1002);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1001.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1001.toString() + " attended transferred , "+Extension_1002.toString()+" hung up", "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -449,14 +488,41 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer09"})
-    public void testFCCT01_AttendedTransfer09()
+    public void testFCCT09_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
-        step("分机B拨打*31002#将通话转移给分机C-1002；");
-        step("分机C接听后，等待3秒，分机C挂断通话；");
-        step("分机AB恢复通话，分机B挂断通话，检查cdr");
+        pjsip.Pj_Make_Call_No_Answer(1000, "1001");
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("1.[通话校验] 1000响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("1.[通话校验] 1001响铃").isEqualTo(RING);
+        pjsip.Pj_Answer_Call(1001);
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as("2.[通话校验] 1000预期通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as("2.[通话校验] 1001预期通话中").isEqualTo(TALKING);
+        sleep(5000);
 
+        step("分机B拨打*31002#将通话转移给分机C-1002；");
+        pjsip.Pj_Send_Dtmf(1001,"*31002#");
+
+        step("分机C接听后，等待3秒，分机C挂断通话；");
+        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 10)).as("3.[通话校验] 1002响铃").isEqualTo(RING);
+        pjsip.Pj_Answer_Call(1002);
+        sleep(3000);
+        pjsip.Pj_hangupCall(1002);
+        softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 10)).as(".[通话校验] 1002挂断").isEqualTo(HUNGUP);
+
+        step("分机AB恢复通话，分机B挂断通话，检查cdr");
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
+        sleep(WaitUntils.TALKING_WAIT);;
+        pjsip.Pj_hangupCall(1001);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1001.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1001.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -471,7 +537,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer10"})
-    public void testFCCT01_AttendedTransfer10()
+    public void testFCCT10_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
@@ -494,6 +560,16 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 10)).as(".[通话校验] 1002挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
+
+        pjsip.Pj_hangupCall(1000);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() +" hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), Extension_1002.toString(),NO_ANSWER.toString(), Extension_1001.toString() +" hung up", "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -508,7 +584,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer11"})
-    public void testFCCT01_AttendedTransfer11()
+    public void testFCCT11_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
@@ -529,10 +605,17 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1000);
 
         step("通话被挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 10)).as(".[通话校验] 1000挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 10)).as(".[通话校验] 1001挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 10)).as(".[通话校验] 1002挂断").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 10)).as("4.[通话校验] 1000挂断").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 10)).as("4.[通话校验] 1001挂断").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 10)).as("4.[通话校验] 1002挂断").isEqualTo(HUNGUP);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() +" called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), Extension_1002.toString(),NO_ANSWER.toString(), Extension_1001.toString() +" called "+Extension_1002.toString(), "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -547,7 +630,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer12"})
-    public void testFCCT01_AttendedTransfer12()
+    public void testFCCT12_AttendedTransfer()
     {
         prerequisite();
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
@@ -574,6 +657,14 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as(".[通话校验] 1002通话中").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1002);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1001.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1001.toString() + " attended transferred , "+Extension_1002.toString()+" hung up", "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -597,25 +688,34 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
 
         step("通过sps外线呼入到分机1005，分机1005应答");
         pjsip.Pj_Make_Call_No_Answer(2000,"991005");
-        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 10)).as(".[通话校验] 1005响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 10)).as("1.[通话校验] 1005响铃").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1005);
-        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as(".[通话校验] 1005通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("1.[通话校验] 1005通话中").isEqualTo(TALKING);
 
         step("分机1005拨打*31001#将通话转移给分机B-1001");
         pjsip.Pj_Send_Dtmf(1005,"*31001#");
 
         step("分机B接听后，等待3秒，分机1005挂断通话；");
-        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("2.[通话校验] 1001响铃").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1001);
         sleep(3000);
         pjsip.Pj_hangupCall(1005);
 
         step("分机B与外线保持通话，分机B挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as("3.[通话校验] 1001通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as("3.[通话校验] 2000通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
 
         pjsip.Pj_hangupCall(1001);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_1001.toString()+" hung up", SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -640,25 +740,34 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
 
         step("通过sps外线呼入到分机1005，分机1005应答");
         pjsip.Pj_Make_Call_No_Answer(2000,"991005");
-        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 10)).as(".[通话校验] 1005响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 10)).as("1.[通话校验] 1005响铃").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1005);
-        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as(".[通话校验] 1005通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("1.[通话校验] 1005通话中").isEqualTo(TALKING);
 
         step("分机1005拨打*31001#将通话转移给分机B-1001");
         pjsip.Pj_Send_Dtmf(1005,"*31001#");
 
         step("分机B接听后，等待3秒，分机1005挂断通话 ");
-        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("2.[通话校验] 1001响铃").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1001);
         sleep(3000);
         pjsip.Pj_hangupCall(1005);
 
         step("分机B与外线保持通话，外线挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as("3.[通话校验] 1001通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as("3.[通话校验] 2000通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
 
         pjsip.Pj_hangupCall(2000);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_2000.toString()+" hung up", SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -700,6 +809,14 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as(".[通话校验] 1005通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(1005);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_1005.toString() + " hung up", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -744,6 +861,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
 
         pjsip.Pj_hangupCall(2000);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " hung up", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(), NO_ANSWER.toString(), Extension_1005.toString() + " hung up", "", "", INTERNAL.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -770,20 +894,28 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
 
         step("通过sps外线呼入到分机1005，分机1005应答");
         pjsip.Pj_Make_Call_No_Answer(2000,"991005");
-        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 10)).as(".[通话校验] 1005响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 10)).as("1.[通话校验] 1005响铃").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1005);
-        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as(".[通话校验] 1005通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("1.[通话校验] 1005通话中").isEqualTo(TALKING);
 
         step("分机1005拨打*31001#将通话转移给分机B-1001");
         pjsip.Pj_Send_Dtmf(1005,"*31001#");
 
         step("分机B保持响铃3秒后，外线挂断通话 ");
-        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("2.[通话校验] 1001响铃").isEqualTo(RING);
         sleep(3000);
         pjsip.Pj_hangupCall(2000);
 
         step("通话被挂断，检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 10)).as(".[通话校验] 1001挂断").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 10)).as("3.[通话校验] 1001挂断").isEqualTo(HUNGUP);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(), NO_ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1001.toString(), "" , "", INTERNAL.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -795,7 +927,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
             "通过sps外线呼入到分机1005，分机1005应答" +
             "分机1005拨打*31001#将通话转移给分机B-1001 " +
             "分机B保持响铃3秒后，分机1005挂断通话 " +
-            "分机B与外线保持通话，分机B挂断，检查cdr")
+            "分机B继续响铃，应答，分机B与外线正常通话，挂断，检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -817,17 +949,27 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         step("分机1005拨打*31001#将通话转移给分机B-1001");
         pjsip.Pj_Send_Dtmf(1005,"*31001#");
 
-        step("分机B保持响铃3秒后，分机1005挂断通话 ");
+        step("分机B保持响铃3秒后，分机1005挂断通话");
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
         sleep(3000);
         pjsip.Pj_hangupCall(1005);
 
-        step("分机B与外线保持通话，分机B挂断，检查cdr");
+        step("分机B继续响铃，应答，分机B与外线正常通话，挂断");
+        pjsip.Pj_Answer_Call(1001);
         softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
 
         pjsip.Pj_hangupCall(1001);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_1001.toString()+" hung up", SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -881,6 +1023,16 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         step("分机A挂断；检查cdr ");
         pjsip.Pj_hangupCall(1000);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(4)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), IVR0_6200.toString(),   ANSWER.toString(), Extension_1005.toString() + " called Extension", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1000.toString(),   ANSWER.toString(), Extension_1005.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_1000.toString()+" hung up", SPS, "", INBOUND.toString()));
+
         softAssertPlus.assertAll();
     }
 
@@ -903,15 +1055,15 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
 
         step("通过Account外线呼入到分机1005，分机1005应答");
         pjsip.Pj_Make_Call_No_Answer(4000,"441005");
-        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 10)).as("[通话校验] 1005响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, RING, 30)).as("[通话校验] 1005响铃").isEqualTo(RING);
         pjsip.Pj_Answer_Call(1005);
-        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as(".[通话校验] 1005通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 30)).as(".[通话校验] 1005通话中").isEqualTo(TALKING);
 
         step("分机1005拨打*36300#将通话转移给响铃组RingGroup0 ");
         pjsip.Pj_Send_Dtmf(1005,"*36300#");
 
         step("分机1000、1001、1003同时响铃，分机1003应答后，分机1005挂断；分机1003与外线保持通话，外线挂断；检查cdr");
-        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("3.[通话校验] 1000响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 30)).as("3.[通话校验] 1000响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as(".[通话校验] 1003响铃").isEqualTo(RING);
 
@@ -919,10 +1071,20 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1005);
 
-        softAssertPlus.assertThat(getExtensionStatus(1003, TALKING, 10)).as(".[通话校验] 1003通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(4000, TALKING, 10)).as(".[通话校验] 4000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, TALKING, 30)).as(".[通话校验] 1003通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(4000, TALKING, 30)).as(".[通话校验] 4000通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(4000);
+        pjsip.Pj_Hangup_All();
+        sleep(5000);
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_4000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_4000.toString() + " called "+Extension_1005.toString(), ACCOUNTTRUNK, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), RINGGROUP0_6300.toString(),  ANSWER.toString(), RINGGROUP0_6300.toString() + " connected", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_4000.toString(), Extension_1003.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_4000.toString()+" hung up", ACCOUNTTRUNK, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -958,14 +1120,26 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as(".[通话校验] 1003响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1004, RING, 1)).as(".[通话校验] 1004响铃").isEqualTo(RING);
-
+        sleep(WaitUntils.SHORT_WAIT);
         pjsip.Pj_Answer_Call(1004);
+        pjsip.Pj_hangupCall(1005);
         softAssertPlus.assertThat(getExtensionStatus(1004, TALKING, 10)).as(".[通话校验] 1004通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(3001, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(1005, HUNGUP, 10)).as(".[通话校验] 1005挂断").isEqualTo(HUNGUP);
         sleep(WaitUntils.TALKING_WAIT);
 
         pjsip.Pj_hangupCall(1004);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(4)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_3001.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_3001.toString() + " called "+Extension_1005.toString(), SIPTrunk, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), QUEUE0_6400.toString(),   ANSWER.toString(), QUEUE0_6400.toString() + " connected", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1004.toString(),   ANSWER.toString(), Extension_1005.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_3001.toString(), Extension_1004.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_1004.toString()+" hung up", SIPTrunk, "", INBOUND.toString()));
+
         softAssertPlus.assertAll();
     }
 
@@ -998,10 +1172,20 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         step("辅助1的3001响铃，接听，分机1005挂断；sps外线与3001保持通话，3001挂断；检查cdr");
         softAssertPlus.assertThat(getExtensionStatus(3001, RING, 10)).as("3.[通话校验] 3001响铃").isEqualTo(RING);
         pjsip.Pj_Answer_Call(3001);
+        pjsip.Pj_hangupCall(1005);
         softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as(".[通话校验] 1005通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(3001, TALKING, 10)).as(".[通话校验] 3001通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(3001);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), "13001",   ANSWER.toString(), Extension_1005.toString() +" attended transferred ,13001 hung up", SPS, SIPTrunk, INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), "13001",   ANSWER.toString(), Extension_1005.toString() + " called 13001", "", SIPTrunk, OUTBOUND.toString()))
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), SPS, "", INBOUND.toString()));
+
         softAssertPlus.assertAll();
     }
 
@@ -1032,12 +1216,21 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(3000);
 
         step("分机1005挂断通话，检查会议室6500存在一路通话，外线挂断，检查cdr");
-        //todo
-        softAssertPlus.assertThat(getExtensionStatus(1004, HUNGUP, 10)).as("[通话校验] 1004自动挂断").isEqualTo(HUNGUP);
+        pjsip.Pj_hangupCall(1005);
 
         softAssertPlus.assertThat(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,"meetme list 6500")))
                 .as("会议室6500存在一路通话")
                 .contains("1 users in that conference");
+
+        pjsip.Pj_Hangup_All();
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Conference0_6500.toString(),   ANSWER.toString(), Extension_1005.toString() + " hung up", "", "", INTERNAL.toString()));
+
         softAssertPlus.assertAll();
     }
 
@@ -1079,6 +1272,14 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1002);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), FXO_1, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_2000.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_1002.toString()+" hung up", FXO_1, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -1120,6 +1321,14 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(2000);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), BRI_1, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1003.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1003.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_2000.toString(), Extension_1003.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_2000.toString()+" hung up", BRI_1, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -1161,6 +1370,14 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1002);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), E1, "", INBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_2000.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_1002.toString()+" hung up", E1, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -1202,6 +1419,14 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(2000);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_2000.toString(), "22222",   ANSWER.toString(), Extension_1005.toString() + " called 22222", "", SPS, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple("22222", Extension_1001.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_1001.toString()+" hung up", SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -1220,6 +1445,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P1","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT28_AttendedTransfer"})
     public void testFCCT28_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打22222通过sps外线呼出 ");
         pjsip.Pj_Make_Call_No_Answer(1005,"22222");
 
@@ -1229,9 +1456,9 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as("[通话校验] 2000通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("[通话校验] 1005通话中").isEqualTo(TALKING);
 
-        step("分机1005拨打*031001#将通话转移给分机B-1001； ");
-        pjsip.Pj_Send_Dtmf(1005,"*031001#");
-
+        step("分机1005拨打*31001#将通话转移给分机B-1001； ");
+        pjsip.Pj_Send_Dtmf(1005,"*31001#");
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
         step("分机B接听后，等待3秒，分机1005挂断通话；");
         pjsip.Pj_Answer_Call(1001);
         softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
@@ -1242,11 +1469,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(1005, HUNGUP, 10)).as(".[通话校验] 1005挂断").isEqualTo(HUNGUP);
-
+        pjsip.Pj_hangupCall(1001);
         assertStep("检查cdr");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_1005.toString(), "22222", ANSWER.toString(), Extension_1005.toString()+" called 22222", "", SPS, OUTBOUND.toString()))
-                .contains(tuple("22222", Extension_1001.toString(), ANSWER.toString(), Extension_1005.toString()+" blind transferred , "+Extension_1001.toString()+" hung up", SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(), ANSWER.toString(), Extension_1005.toString()+" called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple("22222", Extension_1001.toString(), ANSWER.toString(), Extension_1005.toString()+" attended transferred , "+Extension_1001.toString()+" hung up", SPS, "", INBOUND.toString()))
+        ;
         softAssertPlus.assertAll();
     }
 
@@ -1264,14 +1493,16 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT29_AttendedTransfer"})
     public void testFCCT29_AttendedTransfer()
     {
-        step("分机1005拨打22222通过sps外线呼出");
-        pjsip.Pj_Make_Call_No_Answer(1005,"22222");
+        prerequisite();
 
-        step("辅助2的分机2000应答 ");
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[通话校验] 2000响铃").isEqualTo(RING);
-        pjsip.Pj_Answer_Call(2000);
-        softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as("[通话校验] 2000通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("[通话校验] 1005通话中").isEqualTo(TALKING);
+        step("分机1005拨打22222通过sps外线呼出");
+//        pjsip.Pj_Make_Call_No_Answer(1005,"22222");
+//
+//        step("辅助2的分机2000应答 ");
+//        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[通话校验] 2000响铃").isEqualTo(RING);
+//        pjsip.Pj_Answer_Call(2000);
+//        softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as("[通话校验] 2000通话中").isEqualTo(TALKING);
+//        softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("[通话校验] 1005通话中").isEqualTo(TALKING);
 //todo yong li bu zhun que
         step("分机1005拨打*31001#将通话转移给分机B-1001 ");
 
@@ -1293,6 +1524,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT30_AttendedTransfer"})
     public void testFCCT30_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打22222通过sps外线呼出");
         pjsip.Pj_Make_Call_No_Answer(1005,"22222");
 
@@ -1303,7 +1536,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("[通话校验] 1005通话中").isEqualTo(TALKING);
 
         step("分机1005拨打*31001#将通话转移给分机B-1001 ");
-        pjsip.Pj_Send_Dtmf(1005,"*031001#");
+        pjsip.Pj_Send_Dtmf(1005,"*31001#");
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
 
         step("分机B接听后，等待3秒，分机B挂断通话；");
@@ -1322,6 +1555,15 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1005);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "22222", ANSWER.toString(), Extension_1005.toString()+" called 22222", "", SPS, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(),  ANSWER.toString(), Extension_1005.toString()+" called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1005.toString(), "22222", ANSWER.toString(), Extension_1005.toString()+" hung up", "", SPS, OUTBOUND.toString()));
+
         softAssertPlus.assertAll();
     }
 
@@ -1339,6 +1581,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT31_AttendedTransfer"})
     public void testFCCT31_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打22222通过sps外线呼出");
         pjsip.Pj_Make_Call_No_Answer(1005,"22222");
 
@@ -1349,7 +1593,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("[通话校验] 1005通话中").isEqualTo(TALKING);
 
         step("分机1005拨打*31001#将通话转移给分机B-1001 ");
-        pjsip.Pj_Send_Dtmf(1005,"*031001#");
+        pjsip.Pj_Send_Dtmf(1005,"*31001#");
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
 
         step("分机B保持响铃，不接听,等待15秒后");
@@ -1360,6 +1604,14 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(2000);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "22222", ANSWER.toString(), Extension_1005.toString()+" called 22222", "", SPS, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), "22222", ANSWER.toString(), "22222 hung up", "", SPS, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(), NO_ANSWER.toString(), Extension_1005.toString()+"  hung up", "", "", INTERNAL.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -1377,6 +1629,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT32_AttendedTransfer"})
     public void testFCCT32_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打22222通过sps外线呼出");
         pjsip.Pj_Make_Call_No_Answer(1005,"22222");
 
@@ -1387,7 +1641,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("[通话校验] 1005通话中").isEqualTo(TALKING);
 
         step("分机1005拨打*31001#将通话转移给分机B-1001 ");
-        pjsip.Pj_Send_Dtmf(1005,"*031001#");
+        pjsip.Pj_Send_Dtmf(1005,"*31001#");
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
 
         step("分机B保持响铃3秒后，外线挂断通话 ");
@@ -1399,6 +1653,14 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1005, HUNGUP, 10)).as(".[通话校验] 1005挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 10)).as(".[通话校验] 1001挂断").isEqualTo(HUNGUP);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "22222",ANSWER.toString(), Extension_1005.toString()+" called 22222", "",  SPS, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(), NO_ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1005.toString(), "22222",ANSWER.toString(), "22222 hung up", "",  SPS, OUTBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -1416,6 +1678,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT33_AttendedTransfer"})
     public void testFCCT33_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打22222通过sps外线呼出");
         pjsip.Pj_Make_Call_No_Answer(1005,"22222");
 
@@ -1426,7 +1690,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1005, TALKING, 10)).as("[通话校验] 1005通话中").isEqualTo(TALKING);
 
         step("分机1005拨打*31001#将通话转移给分机B-1001 ");
-        pjsip.Pj_Send_Dtmf(1005,"*031001#");
+        pjsip.Pj_Send_Dtmf(1005,"*31001#");
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
 
         step("分机B保持响铃3秒后，分机1005挂断通话");
@@ -1442,6 +1706,15 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
 
         pjsip.Pj_hangupCall(1001);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "22222",ANSWER.toString(), Extension_1005.toString()+" called 22222", "",  SPS, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1001.toString(), ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1001.toString(), "22222",ANSWER.toString(), Extension_1005.toString()+" attended transferred , "+Extension_1001.toString()+" hung up", "",  SPS, OUTBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -1459,6 +1732,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT34_AttendedTransfer"})
     public void testFCCT34_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打22222通过sps外线呼出");
         pjsip.Pj_Make_Call_No_Answer(1005,"22222");
 
@@ -1493,6 +1768,16 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         step("分机A挂断；检查cdr ");
         pjsip.Pj_hangupCall(1000);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(4)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "22222",ANSWER.toString(), Extension_1005.toString()+" called 22222", "",  SPS, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), IVR0_6200.toString(), ANSWER.toString(), Extension_1005.toString() + " called Extension", "", "", INTERNAL.toString()))
+//                .contains(tuple(Extension_1005.toString(), Extension_1000.toString(), ANSWER.toString(), Extension_1005.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1005.toString(), "22222",ANSWER.toString(), Extension_1005.toString()+" attended transferred , "+Extension_1001.toString()+" hung up", "",  SPS, OUTBOUND.toString()));
+
         softAssertPlus.assertAll();
     }
 
@@ -1508,6 +1793,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT35_AttendedTransfer"})
     public void testFCCT35_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打13001通过sip外线呼出，辅助1的3001接听");
         pjsip.Pj_Make_Call_No_Answer(1005,"13001");
         softAssertPlus.assertThat(getExtensionStatus(3001, RING, 10)).as(".[通话校验] 3001响铃").isEqualTo(RING);
@@ -1524,12 +1811,24 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1004, RING, 1)).as(".[通话校验] 1004响铃").isEqualTo(RING);
 
         pjsip.Pj_Answer_Call(1004);
+        pjsip.Pj_hangupCall(1005);
         softAssertPlus.assertThat(getExtensionStatus(1004, TALKING, 10)).as(".[通话校验] 1004通话中").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(3001, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(1005, HUNGUP, 10)).as(".[通话校验] 1005挂断").isEqualTo(HUNGUP);
         sleep(WaitUntils.TALKING_WAIT);
 
         pjsip.Pj_hangupCall(1004);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(4)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "13001",ANSWER.toString(), Extension_1005.toString()+" called 13001", "",  SIPTrunk, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), QUEUE0_6400.toString(), ANSWER.toString(), QUEUE0_6400.toString() + " connected", "", "", INTERNAL.toString()))
+//                .contains(tuple(Extension_1005.toString(), Extension_1004, ANSWER.toString(), Extension_1005.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple("13001", Extension_1004.toString(),ANSWER.toString(), Extension_1005.toString()+" attended transferred , "+Extension_1004.toString()+" hung up",   SIPTrunk,"", INBOUND.toString()));
+
         softAssertPlus.assertAll();
     }
 
@@ -1545,6 +1844,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT36_AttendedTransfer"})
     public void testFCCT36_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打3333通过Account外线呼出，辅助3的4000接听");
         pjsip.Pj_Make_Call_No_Answer(1005,"3333");
         softAssertPlus.assertThat(getExtensionStatus(4000, RING, 10)).as("[通话校验] 4000响铃").isEqualTo(RING);
@@ -1565,7 +1866,15 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1003, TALKING, 10)).as("[通话校验] 1003通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(4000, TALKING, 10)).as("[通话校验] 4000通话中").isEqualTo(TALKING);
         pjsip.Pj_hangupCall(4000);
-        assertStep("检查cdr");
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "3333",   ANSWER.toString(), Extension_1005.toString() + " called 3333", "", ACCOUNTTRUNK, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), RINGGROUP0_6300.toString(),   ANSWER.toString(), RINGGROUP0_6300.toString() + " connected", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1003.toString(), "3333",   ANSWER.toString(), Extension_1005.toString() + " attended transferred , 3333 hung up","", ACCOUNTTRUNK, OUTBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -1582,6 +1891,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT37_AttendedTransfer"})
     public void testFCCT37_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打22222通过sps外线呼出，辅助2的分机2000接听");
         pjsip.Pj_Make_Call_No_Answer(1005,"22222");
         softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[通话校验] 2000响铃").isEqualTo(RING);
@@ -1601,6 +1912,16 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         step("sps外线与3001保持通话，3001挂断；检查cdr");
         softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as(".[通话校验] 2000通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(3001, TALKING, 10)).as(".[通话校验] 3001通话中").isEqualTo(TALKING);
+        pjsip.Pj_hangupCall(3001);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "22222",   ANSWER.toString(), Extension_1005.toString() + " called 22222", "", SPS, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), "13001",   ANSWER.toString(), Extension_1005.toString() + " called 13001", "", SIPTrunk, OUTBOUND.toString()))
+                .contains(tuple("22222", "13001",   ANSWER.toString(), Extension_1005.toString() + " attended transferred ,22222 hung up", SPS, SIPTrunk, OUTBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -1615,7 +1936,10 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT38_AttendedTransfer"})
-    public void testFCCT38_AttendedTransfer() throws IOException, JSchException {
+    public void testFCCT38_AttendedTransfer() throws IOException, JSchException
+    {
+        prerequisite();
+
         step("分机1005拨打22222通过sps外线呼出，辅助2的分机2000接听");
         pjsip.Pj_Make_Call_No_Answer(1005,"22222");
         softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[通话校验] 2000响铃").isEqualTo(RING);
@@ -1628,14 +1952,22 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         step("分机1005挂断通话，检查会议室6500存在一路通话，外线挂断，检查cdr");
         pjsip.Pj_hangupCall(1005);
-        softAssertPlus.assertThat(getExtensionStatus(1005, HUNGUP, 10)).as("[通话校验] 1005自动挂断").isEqualTo(HUNGUP);
 
         softAssertPlus.assertThat(SSHLinuxUntils.exePjsip(String.format(ASTERISK_CLI,"meetme list 6500")))
                 .as("会议室6500存在一路通话")
                 .contains("1 users in that conference");
 
         pjsip.Pj_Hangup_All();
-        assertStep("检查cdr");
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "22222",   ANSWER.toString(), Extension_1005.toString() + " called 22222","", SPS, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Conference0_6500.toString(),   ANSWER.toString(), Extension_1005.toString() + " hung up", "", "", INTERNAL.toString()));
+
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
@@ -1651,6 +1983,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT39_AttendedTransfer"})
     public void testFCCT39_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打42000通过FXO外线呼出，辅助2的分机2000接听");
         pjsip.Pj_Make_Call_No_Answer(1005,"42000");
         softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[通话校验] 2000响铃").isEqualTo(RING);
@@ -1674,7 +2008,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1002);
 
-        assertStep("检查cdr");
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "42000",   ANSWER.toString(), Extension_1005.toString() + " called 42000", "", FXO_1, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1002.toString(), "42000",   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_1002.toString()+" hung up", "", FXO_1, OUTBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -1692,6 +2032,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT40_AttendedTransfer"})
     public void testFCCT40_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打5555通过BRI外线呼出，辅助2的分机2000接听");
         pjsip.Pj_Make_Call_No_Answer(1005,"5555");
         softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[通话校验] 2000响铃").isEqualTo(RING);
@@ -1700,7 +2042,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as("[通话校验] 2000通话中").isEqualTo(TALKING);
 
         step("分机1005拨打*31003#转移给分机D-1003 ");
-        pjsip.Pj_Send_Dtmf(1005,"*031003#");
+        pjsip.Pj_Send_Dtmf(1005,"*31003#");
 
         step("分机D接听后，等待3秒，分机1005挂断通话；");
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 10)).as(".[通话校验] 1003响铃").isEqualTo(RING);
@@ -1714,6 +2056,15 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(2000, TALKING, 10)).as("[通话校验] 2000通话中").isEqualTo(TALKING);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(2000);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "2000",   ANSWER.toString(), Extension_1005.toString() + " called 2000", "", BRI_1, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1003.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1003.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1003.toString(), "2000",   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_2000.toString()+" hung up",  BRI_1,"", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -1731,6 +2082,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT41_AttendedTransfer"})
     public void testFCCT41_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打6666通过E1外线呼出，辅助2的分机2000接听");
         pjsip.Pj_Make_Call_No_Answer(1005,"6666");
         softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[通话校验] 2000响铃").isEqualTo(RING);
@@ -1754,6 +2107,15 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1002);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "2000",   ANSWER.toString(), Extension_1005.toString() + " called 2000",  "",E1, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple("2000", Extension_1002.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_1002.toString()+" hung up",  E1, "",INBOUND.toString()));
+
         softAssertPlus.assertAll();
 
     }
@@ -1771,6 +2133,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT42_AttendedTransfer"})
     public void testFCCT42_AttendedTransfer()
     {
+        prerequisite();
+
         step("分机1005拨打7+辅助2GSM号码通过GSM外线呼出，辅助2分机2000接听");
         pjsip.Pj_Make_Call_No_Answer(1005,"7"+DEVICE_TEST_GSM);
         softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[通话校验] 2000响铃").isEqualTo(RING);
@@ -1793,6 +2157,15 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(2000);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1005.toString(), "7"+DEVICE_TEST_GSM,   ANSWER.toString(), Extension_1005.toString() + " called "+"7"+DEVICE_TEST_GSM, "", GSM, OUTBOUND.toString()))
+                .contains(tuple(Extension_1005.toString(), Extension_1003.toString(),   ANSWER.toString(), Extension_1005.toString() + " called "+Extension_1003.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple("7"+DEVICE_TEST_GSM, Extension_1003.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_2000.toString()+" hung up", "", GSM, OUTBOUND.toString()));
+
         softAssertPlus.assertAll();
     }
 
@@ -1814,8 +2187,10 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT43_AttendedTransfer"})
     public void testFCCT43_AttendedTransfer()
     {
+        prerequisite();
+
         step("编辑Feature Code-》Attended Transfer 禁用");
-        apiUtil.editFeatureCode("\"enb_transfer\":0").apply();
+
 
         step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
         step("分机A拨打*31002#将通话转移给分机C-1002； ");
@@ -1849,7 +2224,21 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT44_AttendedTransfer"})
     public void testFCCT44_AttendedTransfer()
     {
+        prerequisite();
 
+        step("编辑Feature Code-》Attended Transfer 修改特征码为*12345*");
+        step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
+        step("分机A拨打*31002#将通话转移给分机C-1002； ");
+        step("转移失败，分机1002不会响铃，AB保持通话；通话挂断，检查cdr");
+        step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
+        step("分机A拨打*12345*1002#将通话转移给分机C-1002；");
+        step("分机C响铃，接听后，等待3秒，分机A挂断通话；");
+        step("分机BC保持通话，分机B挂断通话，检查cdr");
+        step("编辑Feature Code-》Attended Transfer 修改特征码为*3；");
+        step("分机A-1000拨打分机B-1001，B-1001应答，等待5s；");
+        step("分机A拨打*31002#将通话转移给分机C-1002；");
+        step("分机C响铃，接听后，等待3秒，分机A挂断通话；");
+        step("分机BC保持通话，分机B挂断通话，检查cdr");
     }
 
     @Epic("P_Series")
@@ -1865,7 +2254,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT45_AttendedTransfer"})
     public void testFCCT45_AttendedTransfer()
     {
-        step("默认值8s ");
+        prerequisite();
 
         step("分机A-1000拨打分机C-1002,1002应答 ");
         pjsip.Pj_Make_Call_No_Answer(1000,"1002");
@@ -1883,6 +2272,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
 
         pjsip.Pj_hangupCall(1000);
 
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1000.toString()+" hung up", "", "", INTERNAL.toString()));
+
         softAssertPlus.assertAll();
     }
 
@@ -1899,7 +2295,8 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT42_AttendedTransfer"})
     public void testFCCT46_AttendedTransfer()
     {
-        step("默认值8s ");
+        prerequisite();
+
         step("分机A-1000拨打分机C-1002,1002应答 ");
         pjsip.Pj_Make_Call_No_Answer(1000,"1002");
         pjsip.Pj_Answer_Call(1002);
@@ -1914,9 +2311,20 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         pjsip.Pj_Answer_Call(1003);
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1002);
+        sleep(WaitUntils.TALKING_WAIT);
         softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(1003, TALKING, 10)).as(".[通话校验] 1003通话中").isEqualTo(TALKING);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 10)).as(".[通话校验] 1002挂断").isEqualTo(HUNGUP);
+
+        pjsip.Pj_hangupCall(1000);
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1003.toString(),   ANSWER.toString(), Extension_1002.toString() + " attended transferred , "+Extension_1000.toString()+" hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1002.toString(), Extension_1003.toString(),   ANSWER.toString(), Extension_1002.toString() + " called "+Extension_1003.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(),   ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1002.toString(), "", "", INTERNAL.toString()));
 
         softAssertPlus.assertAll();
 
@@ -1932,20 +2340,76 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
             "编辑Feature Code-》Digit Timeout (s) 为8秒；\n" +
             "分机A-1000拨打分机C-1002,1002应答" +
             "分机1002按*31停5秒后按003#" +
-            "分机1003响铃，接听，分机1002挂断；分机1000、1002正常通话，挂断，检查cdr")
+            "分机1003响铃，接听，分机1003挂断；分机1000、1002正常通话，挂断，检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT42_AttendedTransfer"})
     public void testFCCT47_AttendedTransfer()
     {
+        prerequisite();
 
+        step("编辑Feature Code-》Digit Timeout (s) 为3秒；");
+        apiUtil.editFeatureCode("\"transfer_digit_timeout\":3").apply();
+
+        step("分机A-1000拨打分机C-1002,1002应答 ");
+        pjsip.Pj_Make_Call_No_Answer(1000,"1002");
+        pjsip.Pj_Answer_Call(1002);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("分机1002按*31停5秒后按003# ");
+        pjsip.Pj_Send_Dtmf(1002,"*31");
+        sleep(4000);
+        pjsip.Pj_Send_Dtmf(1002,"003#");
+
+        step("分机AC保持正常通话，分机1003不会响铃;挂断，检查cdr");
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as(".[通话校验] 1002通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 10)).as(".[通话校验] 1003不会响铃").isEqualTo(HUNGUP);
+
+        pjsip.Pj_hangupCall(1000);
+        pjsip.Pj_Hangup_All();
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1000.toString() + " hung up", "", "", INTERNAL.toString()));
+
+        step("编辑Feature Code-》Digit Timeout (s) 为8秒；");
+        apiUtil.editFeatureCode("\"transfer_digit_timeout\":8").apply();
+
+        step("分机A-1000拨打分机C-1002,1002应答");
+        pjsip.Pj_Make_Call_No_Answer(1000,"1002");
+        pjsip.Pj_Answer_Call(1002);
+        sleep(WaitUntils.TALKING_WAIT);
+
+        step("分机1002按*31停5秒后按003#");
+        pjsip.Pj_Send_Dtmf(1002,"*31");
+        sleep(4000);
+        pjsip.Pj_Send_Dtmf(1002,"003#");
+
+        step("分机1003响铃，接听，分机1003挂断；分机1000、1002正常通话，挂断，检查cdr");
+        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 10)).as(".[通话校验] 1003响铃").isEqualTo(RING);
+        pjsip.Pj_Answer_Call(1003);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1003);
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING, 10)).as(".[通话校验] 1002通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 10)).as(".[通话校验] 1003挂断").isEqualTo(HUNGUP);
+
+        assertStep("CDR校验");
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1002.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1002.toString() + " called "+Extension_1003.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  "", "", INTERNAL.toString()));
+        softAssertPlus.assertAll();
     }
 
     @Epic("P_Series")
     @Feature("FeatureCode-CallTransfer")
     @Story("AttendedTransferTimeout,Transfer")
-    @Description("48.编辑Feature Code-》Attended Transfer Timeout 设置为5s" +
+    @Description("编辑Feature Code-》Attended Transfer Timeout 设置为5s" +
             "分机A-1000拨打分机D-1003,1003应答，分机按*31001" +
             "分机1001响铃未接，5秒后停止响铃，分机AD恢复通话，挂断，检查cdr" +
             "编辑Feature Code-》Attended Transfer Timeout 设置为15s;\n" +
@@ -1954,9 +2418,65 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT42_AttendedTransfer"})
+    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT48_AttendedTransfer"})
     public void testFCCT48_AttendedTransfer()
     {
+        prerequisite();
 
+        step("编辑Feature Code-》Attended Transfer Timeout 设置为5s");
+        apiUtil.editFeatureCode("\"attend_transfer_timeout\":5").apply();
+
+        step("分机A-1000拨打分机D-1003,1003应答，分机按*31001");
+        pjsip.Pj_Make_Call_No_Answer(1000,"1003");
+        pjsip.Pj_Answer_Call(1003);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Send_Dtmf(1000,"*31001");
+
+        step("分机1001响铃未接，5秒后停止响铃，分机AD恢复通话，挂断，检查cdr");
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
+        sleep(WaitUntils.TALKING_WAIT);
+        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 10)).as(".[通话校验] 1001挂断").isEqualTo(HUNGUP);
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1003, TALKING, 10)).as(".[通话校验] 1003通话中").isEqualTo(TALKING);
+        pjsip.Pj_hangupCall(1000);
+
+        assertStep("CDR校验");
+        auto.loginPage().loginWithAdmin();
+        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1000.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),NO_ANSWER.toString(), Extension_1000.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1003.toString(), "", "", INTERNAL.toString()));
+
+        step("编辑Feature Code-》Attended Transfer Timeout 设置为15s;");
+        apiUtil.editFeatureCode("\"attend_transfer_timeout\":15").apply();
+
+        step("分机A-1000拨打分机D-1003,1003应答，分机1003按*31001");
+        pjsip.Pj_Make_Call_No_Answer(1000,"1003");
+        pjsip.Pj_Answer_Call(1003);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_Send_Dtmf(1000,"*31001");
+
+        step("分机1001响铃未接，5秒后继续响铃，分机1001接听，分机1003挂断，AB正常通话，挂断，检查cdr");
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
+        sleep(5000);
+        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("3.[通话校验] 1001响铃").isEqualTo(RING);
+        pjsip.Pj_Answer_Call(1001);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1003);
+        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 10)).as(".[通话校验] 1000通话中").isEqualTo(TALKING);
+        softAssertPlus.assertThat(getExtensionStatus(1001, TALKING, 10)).as(".[通话校验] 1001通话中").isEqualTo(TALKING);
+        sleep(WaitUntils.TALKING_WAIT);
+        pjsip.Pj_hangupCall(1000);
+
+        assertStep("CDR校验");
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+        auto.cdrPage().refresh();
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1000.toString() + " hung up", "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1001.toString(), "", "", INTERNAL.toString()))
+                .contains(tuple(Extension_1000.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1000.toString() + " called "+Extension_1003.toString(), "", "", INTERNAL.toString()));
+        softAssertPlus.assertAll();
     }
 }
