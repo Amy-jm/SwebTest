@@ -155,19 +155,19 @@ public class PjsipApp extends PjsipDll {
         }
     };
 
-    public pjsipdll.CallMediaState callMediaState = new pjsipdll.CallMediaState() {
-        @Override
-        public int fptr_callholdconf(int id) {
-            log.debug("CallMediaState id:" + id );
-            for (int i = 0; i < accounts.size(); i++) {
-                if (accounts.get(i).callId == id) {
-                    log.debug("CallMediaState : username :" + accounts.get(i).username);
-                    break;
-                }
-            }
-            return 0;
-        }
-    };
+//    public pjsipdll.CallMediaState callMediaState = new pjsipdll.CallMediaState() {
+//        @Override
+//        public int fptr_callholdconf(int id) {
+//            log.debug("CallMediaState id:" + id );
+//            for (int i = 0; i < accounts.size(); i++) {
+//                if (accounts.get(i).callId == id) {
+//                    log.debug("CallMediaState : username :" + accounts.get(i).username);
+//                    break;
+//                }
+//            }
+//            return 0;
+//        }
+//    };
 
     public List<UserAccount> get_accounts() {
         return accounts;
@@ -201,7 +201,7 @@ public class PjsipApp extends PjsipDll {
             pjsipdll.instance.onCallIncoming(incomingcallback);
             pjsipdll.instance.onCallStateCallback(callstateCallBack);
             pjsipdll.instance.onDtmfDigitCallback(dtmfCallBack);
-            pjsipdll.instance.onCallHoldConfirmCallback(callMediaState);
+//            pjsipdll.instance.onCallHoldConfirmCallback(callMediaState);
 
             String m_os = System.getProperty("os.name");
             log.debug("[System Property:]" + m_os);
