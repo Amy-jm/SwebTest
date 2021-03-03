@@ -87,7 +87,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2","P2",""})
+    @Test(groups = {"PSeries", "Cloud", "K2","P2","testOR_01_SwitchBusinessHoursStatus"})
     public void testOR_01_SwitchBusinessHoursStatus() throws IOException, JSchException {
         prerequisite();
         initBusinessHours();
