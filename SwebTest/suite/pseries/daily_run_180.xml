@@ -17,6 +17,7 @@
             <class name="com.yeastar.testcase.pseries.TestConference"/>
             <class name="com.yeastar.testcase.pseries.TestEmergencyNumber"/>
             <class name="com.yeastar.testcase.pseries.TestExtension"/>
+            <class name="com.yeastar.testcase.pseries.TestOutboundTimeCondition"/>
         </classes>
     </test>
 </suite>

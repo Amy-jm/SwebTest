@@ -18,6 +18,8 @@
             <class name="com.yeastar.testcase.pseries.TestInboundRouteDIDPattern"/>
             <class name="com.yeastar.testcase.pseries.TestInboundRouteGlobalBusiness"/>
             <class name="com.yeastar.testcase.pseries.TestInitializeDevice"/>
+            <class name="com.yeastar.testcase.pseries.TestQueuePreferences"/>
+            <class name="com.yeastar.testcase.pseries.TestOutboundDialPattern"/>
         </classes>
     </test>
 </suite>
