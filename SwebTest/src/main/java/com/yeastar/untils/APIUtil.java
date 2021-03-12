@@ -2449,7 +2449,7 @@ public class APIUtil {
 
             if(conn.getResponseCode() == 200){
                 String cookies = conn.getHeaderField("Set-Cookie");
-                log.debug("[获取Cookies] "+ cookies);
+//                log.debug("[获取Cookies] "+ cookies);
                 if(cookies != null){
                     webSession = cookies.split(";")[0].replace("websession=","");
                 }
