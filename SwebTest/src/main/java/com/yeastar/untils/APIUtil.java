@@ -2428,7 +2428,7 @@ public class APIUtil {
      * @return
      */
     private String m_getRequest(String urlpath) {
-        log.debug("deGetRequest cmd: "+urlpath);
+//        log.debug("deGetRequest cmd: "+urlpath);
         HttpsURLConnection.setDefaultHostnameVerifier(new APIUtil().new NullHostNameVerifier());
 
         String responeData = null;
@@ -2460,6 +2460,7 @@ public class APIUtil {
                 responeData = new String(bytes, "utf-8").trim();
             }
         } catch (Exception e) {
+            log.debug("[Exception] deGetRequest cmd: "+urlpath);
             e.printStackTrace();
         }
 //        log.debug("[GET result: ] "+responeData);
@@ -2476,7 +2477,7 @@ public class APIUtil {
      * @return
      */
     private String m_postRequest(String urlpath,String args1) {
-        log.debug("postRequest cmd: "+urlpath + "  body: "+args1);
+//        log.debug("postRequest cmd: "+urlpath + "  body: "+args1);
         HttpsURLConnection.setDefaultHostnameVerifier(new APIUtil().new NullHostNameVerifier());
 
         OutputStreamWriter out = null;
@@ -2512,9 +2513,10 @@ public class APIUtil {
             }
 
         } catch (Exception e) {
+            log.debug("[Exception] postRequest cmd: "+urlpath + "  body: "+args1);
+            log.debug("[POST responeData] "+responeData);
             e.printStackTrace();
         }
-        log.debug("[POST responeData: ] "+responeData);
 
         JSONObject jsonObject = new JSONObject(String.valueOf(responeData));
         if(jsonObject.getInteger("errcode") != 0){
