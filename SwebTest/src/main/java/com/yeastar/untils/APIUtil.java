@@ -217,7 +217,6 @@ public class APIUtil {
         sleep(3000);
         String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/search?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
         String respondJson = getRequest(req);
-        System.out.println("cdr record :"+respondJson);
         List<CDRObject> cdrList = new ArrayList<>();
         try {
             for (int k = 0; k < num; k++) {
@@ -225,6 +224,7 @@ public class APIUtil {
                 cdrList.add(p);
             }
         }catch (IOException e){
+            log.error("[Exception] cdr record"+respondJson);
             log.error("[getCDRRecord exception] "+e);
         }
         return cdrList;
@@ -2460,7 +2460,7 @@ public class APIUtil {
                 responeData = new String(bytes, "utf-8").trim();
             }
         } catch (Exception e) {
-            log.debug("[Exception] deGetRequest cmd: "+urlpath);
+            log.error("[Exception] deGetRequest cmd: "+urlpath);
             e.printStackTrace();
         }
 //        log.debug("[GET result: ] "+responeData);
@@ -2513,8 +2513,8 @@ public class APIUtil {
             }
 
         } catch (Exception e) {
-            log.debug("[Exception] postRequest cmd: "+urlpath + "  body: "+args1);
-            log.debug("[POST responeData] "+responeData);
+            log.error("[Exception] postRequest cmd: "+urlpath + "  body: "+args1);
+            log.error("[POST responeData] "+responeData);
             e.printStackTrace();
         }
 

@@ -56,7 +56,7 @@ public class UIMapUtils {
         File file = null;
         file=new File(FILE_PATH+FILE_NAME);
         if(!file.exists()){
-            log.error("Local 文案文件en.ts不存在，请检查文件是否在项目根目录-->"+FILE_PATH+FILE_NAME);
+//            log.error("Local 文案文件en.ts不存在，请检查文件是否在项目根目录-->"+FILE_PATH+FILE_NAME);
             file = new File(CI_FILE_PATH+FILE_NAME);
             if(!file.exists()){
                 log.error("CI 文案文件en.ts不存在，请检查文件是否在项目根目录-->"+CI_FILE_PATH+FILE_NAME);

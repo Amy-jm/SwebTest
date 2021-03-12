@@ -46,7 +46,7 @@ public class PageEngine {
     SpeedDialPage speedDialPage;
 
     public PageEngine() {
-        log.debug("【PageEngine】。。。。");
+//        log.debug("【PageEngine】。。。。");
         basePage = new BasePage();
         loginPage = new LoginPage();
         homePage =  new HomePage();
