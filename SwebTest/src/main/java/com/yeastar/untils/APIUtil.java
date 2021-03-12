@@ -684,7 +684,7 @@ public class APIUtil {
 
         String request = String.format("{\"name\":\"%s\",\"member_list\":%s,\"member_select\":\"sel_specific\",\"share_group_info_to\":\"all_ext\",\"specific_extensions\":[],\"mgr_enb_widget_in_calls\":1,\"mgr_enb_widget_out_calls\":1,\"mgr_enb_widget_ext_list\":1,\"mgr_enb_widget_ring_group_list\":1,\"mgr_enb_widget_queue_list\":1,\"mgr_enb_widget_park_ext_list\":1,\"mgr_enb_widget_vm_group_list\":1,\"mgr_enb_chg_presence\":1,\"mgr_enb_call_distribution\":1,\"mgr_enb_call_conn\":1,\"mgr_enb_monitor\":1,\"mgr_enb_call_park\":1,\"mgr_enb_ctrl_ivr\":1,\"mgr_enb_office_time_switch\":0,\"mgr_enb_mgr_recording\":0,\"user_enb_widget_in_calls\":0,\"user_enb_widget_out_calls\":0,\"user_enb_widget_ext_list\":0,\"user_enb_widget_ring_group_list\":0,\"user_enb_widget_queue_list\":0,\"user_enb_widget_park_ext_list\":0,\"user_enb_widget_vm_group_list\":0,\"user_enb_chg_presence\":0,\"user_enb_call_distribution\":0,\"user_enb_call_conn\":0,\"user_enb_monitor\":0,\"user_enb_call_park\":0,\"user_enb_ctrl_ivr\":0}"
                 ,name,jsonArray.toString());
-        log.debug("【creat Extension Group】 "+request);
+//        log.debug("【creat Extension Group】 "+request);
         //获取默认分机组
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/create",request);
         return this;

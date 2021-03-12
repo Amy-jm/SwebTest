@@ -735,46 +735,46 @@ public class BaseMethod extends WebDriverFactory {
 		boolean reg = false;
 		if (getExtensionStatus(1000, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("1000注册失败");
+			log.error("1000注册失败");
 		}
 		if (getExtensionStatus(1001, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("1001注册失败");
+			log.error("1001注册失败");
 		}
 		if (getExtensionStatus(1002, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("1002注册失败");
+			log.error("1002注册失败");
 		}
 		if (getExtensionStatus(1003, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("1003注册失败");
+			log.error("1003注册失败");
 		}
 		if (getExtensionStatus(1004, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("1004注册失败");
+			log.error("1004注册失败");
 		}
 		if (getExtensionStatus(2000, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("2000注册失败");
+			log.error("2000注册失败");
 		}
 		if (getExtensionStatus(2001, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("2001注册失败");
+			log.error("2001注册失败");
 		}
 		if (getExtensionStatus(3001, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("3001注册失败");
+			log.error("3001注册失败");
 		}
 		if (getExtensionStatus(4000, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("4000注册失败");
+			log.error("4000注册失败");
 		}
 		if (getExtensionStatus(4001, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("4001注册失败");
+			log.error("4001注册失败");
 		}if (getExtensionStatus(4002, IDLE, 5) != IDLE) {
 			reg = true;
-			log.debug("4002注册失败");
+			log.error("4002注册失败");
 		}
 		if(reg){
 			pjsip.Pj_Unregister_Accounts();
