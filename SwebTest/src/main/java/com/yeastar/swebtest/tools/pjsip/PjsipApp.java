@@ -189,7 +189,7 @@ public class PjsipApp extends PjsipDll {
     }
 
     //初始化PJSIP
-    @Step("【pjsip】初始化PJSIP")
+    //@Step("【pjsip】初始化PJSIP")
     public void Pj_Init() {
         try {
             accounts = new ArrayList<UserAccount>();
@@ -211,7 +211,7 @@ public class PjsipApp extends PjsipDll {
             } else {
             }
 //
-            Reporter.infoExec("pjs_init done");
+//            Reporter.infoExec("pjs_init done");
         } catch (Throwable ex) {
             log.error("【PjsipException Init】" + ex);
         }
