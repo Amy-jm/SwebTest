@@ -2023,7 +2023,7 @@ public class TestTrunkInboundRouteCallerIDReformatting extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");//todo adapt gsm cdr
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("<05910>"+DEVICE_TEST_GSM, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "2000<0591000> hung up", GSM, "", "Inbound"));
+                .contains(tuple(DEVICE_ASSIST_GSM+"<059"+DEVICE_ASSIST_GSM+">"+CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), DEVICE_ASSIST_GSM+"<059"+DEVICE_ASSIST_GSM+">"+" hung up", GSM, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2061,9 +2061,9 @@ public class TestTrunkInboundRouteCallerIDReformatting extends TestCaseBaseNew {
         step("[主叫挂断]");
         pjsip.Pj_hangupCall(2000);
 
-        assertStep("[CDR校验]");//todo adapt gsm cdr
+        assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(DEVICE_TEST_GSM+"<"+DEVICE_TEST_GSM+">", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), DEVICE_TEST_GSM+"<"+DEVICE_TEST_GSM+">"+" hung up", E1, "", "Inbound"));
+                .contains(tuple(DEVICE_ASSIST_GSM+"<"+DEVICE_ASSIST_GSM+">", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), DEVICE_ASSIST_GSM+"<"+DEVICE_ASSIST_GSM+">"+" hung up", GSM, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
