@@ -3,6 +3,7 @@ package com.yeastar.page.pseries;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.untils.APIUtil;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
@@ -44,6 +45,8 @@ public class LoginPage extends BasePage{
      */
     @Step("login with userName:{0} , password:{1}")
     public LoginPage login(String userName,String passWord){
+        //Mark search read
+        new APIUtil().editMarksearchread().apply();
         login_username.shouldBe(Condition.visible).setValue(userName);
         setElementValue(login_password,passWord);
         loginBtn.click();
