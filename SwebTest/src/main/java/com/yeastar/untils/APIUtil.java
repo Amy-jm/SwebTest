@@ -2586,7 +2586,8 @@ public class APIUtil {
      */
     public APIUtil editMarksearchread(){
         String todayData = DataUtils.getCurrentTime("MM/dd/YYYY");//03/22/2021
-        String request = String.format("\"create_time_from\":\"%s 00:00:00\",\"create_time_to\":\"%s 23:59:59\",\"event_type\":\"\",\"event_name\":\"\",\"event_level\":\"\",\"read\":\"\"",todayData,todayData);
+        String last7Days = DataUtils.getLast7Days("MM/dd/YYYY");
+        String request = String.format("\"create_time_from\":\"%s 00:00:00\",\"create_time_to\":\"%s 23:59:59\",\"event_type\":\"\",\"event_name\":\"\",\"event_level\":\"\",\"read\":\"\"",last7Days,todayData);
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/eventlog/marksearchread",String.format("{%s}",request));
         return this;
     }
