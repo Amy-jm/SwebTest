@@ -30,7 +30,11 @@ public class HomePage extends BasePage{
     public SelenideElement extension_trunk_tree_extension_group = $(By.id("m_extension_groups"));
     public SelenideElement extension_trunk_tree_trunks = $(By.id("m_trunks"));
     public SelenideElement extension_trunk_tree_role_management = $(By.id("m_role_management"));
-//  public SelenideElement Contacts_tree = $(By.id("m_contacts");
+    /**
+     * 左侧菜单 -- contacts
+     */
+    public SelenideElement contacts_tree = $(By.id("m_contacts"));
+
     /**
      * 左侧菜单 -- Call Control
      **/
@@ -185,6 +189,9 @@ public class HomePage extends BasePage{
         switch (level_1) {
             case extension_trunk:
                 isLevel2Visible(left_menu_first_level_extension_trunk);
+                break;
+            case contacts:
+                isLevel2Visible(contacts_tree);
                 break;
             case call_control:
                 isLevel2Visible(left_menu_first_level_call_control);
@@ -366,6 +373,9 @@ public class HomePage extends BasePage{
             case extension_trunk:
                 isLevel2Visible(left_menu_first_level_extension_trunk);
                 break;
+            case contacts:
+                isLevel2Visible(contacts_tree);
+                break;
             case call_control:
                 isLevel2Visible(left_menu_first_level_call_control);
                 break;
@@ -417,6 +427,7 @@ public class HomePage extends BasePage{
      **/
     public enum Menu_Level_1 {
         extension_trunk,
+        contacts,
         call_control,
         call_feature,
         pbx_settings,

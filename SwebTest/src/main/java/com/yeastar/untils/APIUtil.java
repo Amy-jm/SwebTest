@@ -97,6 +97,12 @@ public class APIUtil {
         }
         return this;
     }
+//    /**
+//     * 获取webclient Extension信息
+//     */
+//    public APIUtil getwebclientExtension(){
+//
+//    }
 
     /**
      * 更新WebClient页面的Preferences
@@ -274,6 +280,7 @@ public class APIUtil {
     }
 
 
+
     /**
      * 创建时需要获取的初始化参数
      * @param arg ，根据需要创建的事件填写，分机相关：extension,队列相关：queue 以此类推
@@ -287,6 +294,74 @@ public class APIUtil {
 
         return jsonObject.getJsonObject("initial_data");
     }
+//    /**
+//     * 获取webclient可见分机组
+//     */
+//    public List<WebclientGroupObject> getWebclientGroupObject(){
+//        List<WebclinetGroupObject> webclinetGroupObject = new ArrayList<>();
+//
+//    }
+    /**
+     * 获取当前登录分机的 name
+     * zjm
+     * @return
+     */
+    public String getWebclientPerson(){
+//        List<WebclientPersonObject> webclientPersonObject = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/getpersonal");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        System.out.print("\n" + jsonObject);
+//        String errcode =jsonObject.getString("errcode");
+//        System.out.print("\n" + errcode);
+//        String errmsg =jsonObject.getString("errmsg");
+//        System.out.print("\n" + errmsg);
+
+        JsonObject jsonObject1 = jsonObject.getJsonObject("extension");
+        System.out.print("\n" + jsonObject1);
+        String caller_id_name = jsonObject1.getString("caller_id_name");
+        System.out.print("\n" + caller_id_name);
+
+
+//        JsonArray jsonarray = jsonObject1.getJsonArray("presence_list");
+//        System.out.print("\n" + jsonarray);
+//        String status = jsonarray.getJsonObject(0).getString("status");
+//        System.out.print("\n" + status);
+
+
+        if(jsonObject.getString("errcode").equals("0")){
+
+        }else {
+            Assert.fail("[API getWebclientPerson] ,errmsg: "+ jsonObject.getJsonObject("errmsg"));
+        }
+        return caller_id_name;
+
+    }
+    /**
+     *
+     * 获取webclient的Extension列表
+     * zjm
+     */
+    public List<WebclientExtensionObject> getWebclientExtensionSummary(){
+        List<WebclientExtensionObject> webclientextObjList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/searchwebclientext?page=1&page_size=30&sort_by=number&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        System.out.print(jsonObject);
+        if(jsonObject.getString("errcode").equals("0")){
+
+            if(!jsonObject.containsKey("ext_list"))
+                return webclientextObjList;
+
+            JsonArray jsonArray = jsonObject.getJsonArray("ext_list");
+            for (int i=0; i<jsonArray.size(); i++){
+                webclientextObjList.add(new WebclientExtensionObject((JSONObject) jsonArray.getJsonObject(i)));
+            }
+
+        }else {
+            Assert.fail("[API getExtensionSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return webclientextObjList;
+    }
+
 
     /**
      * 获取分机概要列表
@@ -312,6 +387,37 @@ public class APIUtil {
         }
         return extObjList;
     }
+    /**
+     * 获取webclient 当前登录的分机的name
+     * zjm
+     * @return
+//     */
+//    public WebclientPersonObject getWebclientPerson(String num){
+//        List<WebclientPersonObject> webclientPersonObjects = getWebclientPerson();
+//        for (WebclientPersonObject object : webclientPersonObjects){
+//            if(object.number.equals(num)){
+//                return object;
+//            }
+//        }
+//        return null;
+//
+//    }
+    /**
+     * 在webclient Extension页面，找到指定分机 信息
+     * num 分机号
+     * zjm
+     */
+    public WebclientExtensionObject getWebclientExtensionSummary(String num){
+        List<WebclientExtensionObject> webclientextObjList = getWebclientExtensionSummary();
+        for (WebclientExtensionObject object : webclientextObjList){
+            if(object.ext_num.equals(num)){
+                return object;
+            }
+        }
+        return null;
+
+    }
+
 
     /**
      * 找到指定分机信息
@@ -2380,6 +2486,20 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/preferences/update",request);
         return this;
     }
+    /**
+     * Yeastar  FQDN 更新
+     */
+    public APIUtil FQDN(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/fqdn/update",request);
+        return this;
+    }
+    /**
+     * admin  Conatct 导入
+     */
+    public APIUtil contactsImport(String request){
+        postRequest("https://\"+DEVICE_IP_LAN+\":8088/api/v1.0/admincontacts/import",request);
+        return this;
+    }
 
     /**
      * linkusServer 更新
@@ -2575,4 +2695,5 @@ public class APIUtil {
         String encoded = Base64.getEncoder().encodeToString(bytes);
         return encoded;
     }
+
 }

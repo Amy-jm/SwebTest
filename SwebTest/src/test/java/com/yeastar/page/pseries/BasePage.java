@@ -36,6 +36,7 @@ public class BasePage implements IButton{
     public String SELECT_COMM_XPATH = "//li[contains(text(),'%s')]";
     //tab标签页定位
     public String TAB_COMM_XPATH = "//div[contains(@role,'tab') and contains(text(),\"%s\")]";
+//    public Object contacts;
     //表格全选
     SelenideElement ele_delete_all_table = $(By.xpath("//table//thead//input[1]"));
 

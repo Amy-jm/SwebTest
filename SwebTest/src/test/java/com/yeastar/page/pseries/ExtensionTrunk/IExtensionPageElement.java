@@ -11,6 +11,11 @@ import static com.codeborne.selenide.Selenide.$$;
 import static com.yeastar.swebtest.driver.DataReader2.UI_MAP;
 
 public interface IExtensionPageElement {
+    /**
+     * 分机1000 Caller ID name
+     */
+    SelenideElement extension_user_caller_id = $(By.xpath("//*[@id=\"root\"]/div/section/section/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div/table/tbody/tr[2]/td[5]"));
+
     /**查询输入框*/
     SelenideElement searchIpt = $(By.xpath("//input[@placeholder='"+UI_MAP.getString("header.search_placeholder")+"']"));
 

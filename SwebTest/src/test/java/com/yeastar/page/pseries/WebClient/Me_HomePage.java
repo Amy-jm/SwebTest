@@ -1,13 +1,15 @@
 package com.yeastar.page.pseries.WebClient;
 
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.page.pseries.BasePage;
 import com.yeastar.untils.WaitUntils;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
 
-public class Me_HomePage {
+public class Me_HomePage extends BasePage {
+
 
     /**
      * 左侧菜单  //a[contains(@id,"m_w_preferences")]/..
@@ -51,6 +53,7 @@ public class Me_HomePage {
      * 系统提示信息
      */
     public SelenideElement system_alert_message = $(By.xpath("//a[contains(@class,'close')]"));
+
     /**
      * 菜单选择
      */
