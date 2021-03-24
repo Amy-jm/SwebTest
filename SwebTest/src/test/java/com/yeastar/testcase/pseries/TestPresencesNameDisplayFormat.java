@@ -113,11 +113,11 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("Preferences-Name Display Format")
     @Story("Name Display Format")
-    @Description("1.分机1000呼叫分机1001，应答，预期：CDR的CallFrom分机1000的nametest A，CallTO分机1001显示test2 B，reason为分机B挂断，分机B的name正确\n")
+    @Description("1.分机1000呼叫分机1001，应答，预期：CDR的CallFrom分机1000的name test A，CallTO分机1001显示test2 B，reason为分机B挂断，分机B的name正确\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Cloud,K2,Preferences-Basic,Name Display Format,P1")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P1")
 
     public void testPreferences_01_NameDisplayFormat() {
         prerequisite();
@@ -147,11 +147,11 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("Preferences-Name Display Format")
     @Story("Name Display Format")
-    @Description("1.分机1000呼叫分机1001，未接，预期：CDR的CallFrom分机1000的nametest A，CallTO分机1001显示test2 B，reason为分机B挂断，分机B的name正确\n")
+    @Description("1.分机1000呼叫分机1001，未接，预期：CDR的CallFrom分机1000的name test A，CallTO分机1001显示test2 B，reason为分机B挂断，分机B的name正确\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Cloud,K2,Preferences-Basic,Name Display Format,P2")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
 
     public void testPreferences_02_NameDisplayFormat() {
         prerequisite();
@@ -170,7 +170,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         Selenide.sleep(2000);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(Assertions.tuple(CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.CDRNAME.Extension_1001.toString(), CDRObject.STATUS.NO_ANSWER.toString(), "test A<1000> hung up", "", "", "Internal"));
 
         softAssertPlus.assertAll();
@@ -183,7 +183,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Cloud,K2,Preferences-Basic,Name Display Format,P1")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
 
     public void testPreferences_03_NameDisplayFormat() {
         prerequisite();
@@ -201,7 +201,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(Assertions.tuple("3002<3002>", CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), "test A<1000> hung up", "sipRegister", "", "Inbound"));
 
         softAssertPlus.assertAll();
@@ -213,7 +213,14 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
      * 	4.查看分机列表
      * 		1000的Caller ID Name显示test A
      */
-    @Test
+    @Epic("P_Series")
+    @Feature("Preferences-Name Display Format")
+    @Story("Name Display Format")
+    @Description("admin登录，1000的Caller ID Name显示test A\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_04_NameDisplayFromat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"first_last\"}").apply();
         String callerIdName_1000 = apiUtil.getExtensionSummary("1000").callerIdName;
@@ -225,7 +232,14 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
      * 	8.查看右上角名称
      * 		name显示test A
      */
-    @Test
+    @Epic("P_Series")
+    @Feature("Preferences-Name Display Format")
+    @Story("Name Display Format")
+    @Description("分机1000登录，查看右上角名称,1000的Caller ID Name显示test A\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_08_NameDisplayFormat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"first_last\"}").apply();
         apiUtil.loginWeb("1000",EXTENSION_PASSWORD_NEW);
@@ -243,7 +257,14 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
      * 		name显示test2 B
 
      */
-    @Test
+    @Epic("P_Series")
+    @Feature("Preferences-Name Display Format")
+    @Story("Name Display Format")
+    @Description("机1000登录，查看分机列表1001,1001的Caller ID Name显示test2 B\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_09_NameDisplayFormat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"first_last\"}").apply();
 
@@ -256,7 +277,14 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
 //        auto.me_homePage().ext_name.shouldHave(Condition.exactText("test B"));
     }
 
-    @Test
+    @Epic("P_Series")
+    @Feature("Preferences-Name Display Format")
+    @Story("Name Display Format")
+    @Description("admin登录，1000的Caller ID Name显示A test\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_17_NameDisplayFromat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"last_first\"}").apply();
         String callerIdName_1000 = apiUtil.getExtensionSummary("1000").callerIdName;
@@ -266,7 +294,15 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
      * 21.分机1000登录,查看右上角名称
      * 	name显示A test
      */
-    @Test
+
+    @Epic("P_Series")
+    @Feature("Preferences-Name Display Format")
+    @Story("Name Display Format")
+    @Description("分机1000登录，查看右上角名称,1000的Caller ID Name显示A test\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_21_NameDisplayFormat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"last_first\"}").apply();
         apiUtil.loginWeb("1000",EXTENSION_PASSWORD_NEW);
@@ -280,7 +316,14 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
      * 22.登录分机1000,查看分机列表1001
      * 	name显示B test2
      */
-    @Test
+    @Epic("P_Series")
+    @Feature("Preferences-Name Display Format")
+    @Story("Name Display Format")
+    @Description("分机1000登录，查看分机列表1001,1001的Caller ID Name显示B test2\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_22_NameDisplayFormat(){
 //        网页写法，容易误报
 //        auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
@@ -301,7 +344,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         @Severity(SeverityLevel.BLOCKER)
         @TmsLink(value = "")
         @Issue("")
-        @Test(groups = "PSeries,Cloud,K2,Preferences-Basic,Name Display Format,P1")
+        @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P1")
 
         public void testPreferences_30_NameDisplayFormat() {
             prerequisite();
@@ -333,8 +376,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Cloud,K2,Preferences-Basic,Name Display Format,P2")
-
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_31_NameDisplayFormat() {
         prerequisite();
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"last_first\"}").apply();
@@ -353,7 +395,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         Selenide.sleep(2000);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(Assertions.tuple("A test<1000>", "B test2<1001>", CDRObject.STATUS.NO_ANSWER.toString(), "A test<1000> hung up", "", "", "Internal"));
 
         softAssertPlus.assertAll();
@@ -366,7 +408,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Cloud,K2,Preferences-Basic,Name Display Format,P1")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
 
     public void testPreferences_32_NameDisplayFormat() {
         prerequisite();
@@ -385,7 +427,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(Assertions.tuple("3002<3002>", "A test<1000>", CDRObject.STATUS.ANSWER.toString(), "A test<1000> hung up", "sipRegister", "", "Inbound"));
 
         softAssertPlus.assertAll();
@@ -396,7 +438,14 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
      *  33.查看分机列表
      *    1000的Caller ID Name显示Atest
      */
-    @Test
+    @Epic("P_Series")
+    @Feature("Preferences-Name Display Format")
+    @Story("Name Display Format")
+    @Description("admin登录，查看分机列表,1000的Caller ID Name显示Atest\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_33_NameDisplayFromat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"lastfirst\"}").apply();
         String callerIdName_1000 = apiUtil.getExtensionSummary("1000").callerIdName;
@@ -407,7 +456,14 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
      * 	37.查看右上角名称
      * 		name显示Atest
      */
-    @Test
+    @Epic("P_Series")
+    @Feature("Preferences-Name Display Format")
+    @Story("Name Display Format")
+    @Description("分机1000登录，查看右上角名称,1000的Caller ID Name显示Atest\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_37_NameDisplayFormat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"lastfirst\"}").apply();
         apiUtil.loginWeb("1000",EXTENSION_PASSWORD_NEW);
@@ -423,7 +479,14 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
      * 	38.查看分机列表1001
      * 		name显示Btest2
      */
-    @Test
+    @Epic("P_Series")
+    @Feature("Preferences-Name Display Format")
+    @Story("Name Display Format")
+    @Description("分机1000登录，查看分机列表1001,1000的Caller ID Name显示Btest2\n")
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "")
+    @Issue("")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
     public void testPreferences_38_NameDisplayFormat(){
 //        网页写法
 //        auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
@@ -442,7 +505,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         @Severity(SeverityLevel.BLOCKER)
         @TmsLink(value = "")
         @Issue("")
-        @Test(groups = "PSeries,Cloud,K2,Preferences-Basic,Name Display Format,P1")
+        @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P1")
 
     public void testPreferences_46_NameDisplayFormat() {
         prerequisite();
@@ -474,7 +537,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Cloud,K2,Preferences-Basic,Name Display Format,P2")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
 
     public void testPreferences_47_NameDisplayFormat() {
         prerequisite();
@@ -494,7 +557,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         Selenide.sleep(2000);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(Assertions.tuple("Atest<1000>", "Btest2<1001>", CDRObject.STATUS.NO_ANSWER.toString(), "Atest<1000> hung up", "", "", "Internal"));
 
         softAssertPlus.assertAll();
@@ -503,11 +566,11 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("Preferences-Name Display Format")
     @Story("Name Display Format")
-    @Description("1.3002通过SIP外线呼叫分机1000，应答，预期：CDR的CallFrom分机3002 ，CallTO分机1000显示A test，reason为分机1000挂断\n")
+    @Description("1.3002通过SIP外线呼叫分机1000，应答，预期：CDR的CallFrom分机3002 ，CallTO分机1000显示Atest，reason为分机1000挂断\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Cloud,K2,Preferences-Basic,Name Display Format,P1")
+    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P1")
 
     public void testPreferences_48_NameDisplayFormat() {
         prerequisite();
@@ -526,7 +589,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1000);
 
         assertStep("[CDR校验]");
-        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(Assertions.tuple("3002<3002>", "Atest<1000>", CDRObject.STATUS.ANSWER.toString(), "Atest<1000> hung up", "sipRegister", "", "Inbound"));
 
         softAssertPlus.assertAll();
