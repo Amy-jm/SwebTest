@@ -2695,5 +2695,28 @@ public class APIUtil {
         String encoded = Base64.getEncoder().encodeToString(bytes);
         return encoded;
     }
+    /**
+     * SIP Setting TLS 启用/禁用 开关接口
+     */
+    public APIUtil tls(String request){
+
+        postRequest("https://"+ DEVICE_IP_LAN +":8088/api/v1.0/sipsettings/update",String.format("{%s}",request));
+
+        return this;
+    }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
+    public APIUtil rebootask(){
+        getRequest("https://"+ DEVICE_IP_LAN +":8088/api/v1.0/pbx/reboot?type=ask");
+        return  this;
+    }
+    public  APIUtil reboot(){
+        getRequest("https://"+ DEVICE_IP_LAN +":8088/api/v1.0/pbx/reboot");
+        return this;
+    }
 
 }

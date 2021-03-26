@@ -7,6 +7,7 @@ import com.yeastar.untils.APIObject.ExtensionObject;
 import com.yeastar.untils.*;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 import top.jfunc.json.impl.JSONArray;
 import top.jfunc.json.impl.JSONObject;
@@ -67,6 +68,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
             initOutbound();
             initIVR();
             initInbound();
+            initPrompt();
 
 
             ArrayList<String> queueStaticMembers = new ArrayList<>();
@@ -237,11 +239,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SIPTrunk, "", INBOUND.toString()))
                 .contains(tuple(Extension_3001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SIPTrunk, "", INBOUND.toString()));
         softAssertPlus.assertAll();
@@ -327,11 +329,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
@@ -403,13 +405,13 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_Hangup_All();
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2001.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+                .contains(Assertions.tuple(Extension_2001.toString(), QUEUE1_6401.toString(),ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(Assertions.tuple(Extension_2001.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -466,11 +468,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
 
         pjsip.Pj_hangupCall(2001);
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2001.toString() + " hung up", SPS, "", INBOUND.toString()));
@@ -507,10 +509,10 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2001);
 
         assertStep("CDR校验");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        resultCDR = apiUtil.getCDRRecord(3);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        resultCDR = apiUtil.getCDRRecord(3);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2001.toString() + " hung up", SPS, "", INBOUND.toString()));
@@ -582,11 +584,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
 
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
@@ -668,11 +670,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2001);
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SIPTrunk, "", INBOUND.toString()))
                 .contains(tuple(Extension_3001.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SIPTrunk, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2001.toString() + " hung up", SPS, "", INBOUND.toString()));
@@ -699,10 +701,10 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1003);
         pjsip.Pj_hangupCall(3001);
 
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        resultCDR = apiUtil.getCDRRecord(3);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        resultCDR = apiUtil.getCDRRecord(3);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_3001.toString() + " hung up", SIPTrunk, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()));
@@ -717,7 +719,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
             "3.通话转到Failover Destination，分机1004响铃，接听，通话，挂断；cdr正确" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("37.2.0.12版本发现BUG，ID：ID1044024，链接：https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001044024")
     @Test(groups = {"P3","LeaveEmpty","JoinEmpty","SPS","PSeries","Cloud","K2","Queue","QueuePreferences"})
     public void testQP08_LeaveEmptyJoinEmpty1() {
         prerequisite();
@@ -738,11 +740,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1004);
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), QUEUE1_6401.toString() + " timed out, failover", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
@@ -756,7 +758,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
             "3.通话转到Failover Destination，分机1004响铃，接听，通话，挂断；cdr正确" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("37.2.0.12版本发现BUG，ID：ID1044024，链接：https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001044024")
     @Test(groups = {"P3","LeaveEmpty","JoinEmpty","SPS","PSeries","Cloud","K2","Queue","QueuePreferences"})
     public void testQP09_LeaveEmptyJoinEmpty2() {
         prerequisite();
@@ -777,11 +779,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1004);
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " timed out, failover", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
@@ -817,11 +819,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(2001);
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), QUEUE1_6401.toString() + " timed out, failover", SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
 
@@ -835,7 +837,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
             "3.通话转到Failover Destination，分机1004响铃，接听，通话，挂断；cdr正确" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("37.2.0.12版本发现BUG，ID：ID1044024，链接：https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001044024")
     @Test(groups = {"P2","LeaveEmpty","JoinEmpty","SPS","PSeries","Cloud","K2","Queue","QueuePreferences"})
     public void testQP11_LeaveEmptyJoinEmpty4() {
         prerequisite();
@@ -856,12 +858,12 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1004);
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         //todo  CDR结果需要确认
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
@@ -876,7 +878,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
             "3.通话转到Failover Destination，分机1004响铃，接听，通话，挂断；cdr正确" )
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("37.2.0.12版本发现BUG，ID：ID1044024，链接：https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001044024")
     @Test(groups = {"P2","LeaveEmpty","JoinEmpty","SPS","PSeries","Cloud","K2","Queue","QueuePreferences"})
     public void testQP12_LeaveEmptyJoinEmpty5() {
         prerequisite();
@@ -900,11 +902,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1003);
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
@@ -955,11 +957,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1002);
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
@@ -1045,10 +1047,10 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         pjsip.Pj_hangupCall(1000);
 
         assertStep("CDR校验");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        resultCDR = apiUtil.getCDRRecord(2);
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();
@@ -1311,7 +1313,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
             "3.坐席1003接听，通话，1003挂断，通话立马被挂断；cdr正确\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("概率性问题，本地环境多次都跑通过，需要叫重跑机制")
     @Test(groups = {"P2","SatisfactionSurveyPrompt","SPS","PSeries","Cloud","K2","Queue","QueuePreferences"})
     public void testQP20_SatisfactionSurveyPrompt2() {
         prerequisite();
@@ -1335,11 +1337,11 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(2001, HUNGUP, 1)).as("[1.通话校验]:2001分机挂断").isEqualTo(HUNGUP);
 
         assertStep("CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+        softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()));
         softAssertPlus.assertAll();

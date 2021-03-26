@@ -183,7 +183,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "Permission选择分机组ExGroup1、分机1003、ExGroup2" +
             "")
-    @Issue("")
+    @Issue("概率性失败，当独跑多次均可通过，完整跑会出现概率性失败，需要加重跑机制")
     @Test(groups = {"PSeries", "Cloud", "K2","P2",""})
     public void testOR_03_Permission() throws IOException, JSchException {
         prerequisite();
