@@ -171,7 +171,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(Assertions.tuple(CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.CDRNAME.Extension_1001.toString(), CDRObject.STATUS.NO_ANSWER.toString(), "test A<1000> hung up", "", "", "Internal"));
+                .contains(Assertions.tuple(CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.CDRNAME.Extension_1001.toString(), CDRObject.STATUS.NO_ANSWER.toString(), "test2 B<1001> rejected", "", "", "Internal"));
 
         softAssertPlus.assertAll();
 
@@ -196,7 +196,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         Selenide.sleep(5000);
         pjsip.Pj_Answer_Call(1000, false);
         softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
-        Selenide.sleep(5000);
+//        Selenide.sleep(5000);
 
         step("1000 被叫挂断");
         pjsip.Pj_hangupCall(1000);
@@ -373,7 +373,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("Preferences-Name Display Format")
     @Story("Name Display Format")
-    @Description("1.分机1000呼叫分机1001，未接，预期：CDR的CallFrom分机1000的name 正确，CallTO分机1001显示 正确，reason为分机A挂断，分机B的name正确\n")
+    @Description("1.分机1000呼叫分机1001，100挂断，预期：CDR的CallFrom分机1000的name 正确，CallTO分机1001显示 正确，reason为分机A挂断，分机B的name正确\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -391,7 +391,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
 
 //        softAssertPlus.assertThat(getExtensionStatus(1001, IDLE, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
-        step("1001 被叫挂断");
+        step("1000 挂断");
         pjsip.Pj_hangupCall(1000);
         Selenide.sleep(2000);
 
@@ -534,7 +534,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Epic("P_Series")
     @Feature("Preferences-Name Display Format")
     @Story("Name Display Format")
-    @Description("1.分机1000呼叫分机1001，未接，预期：CDR的CallFrom分机1000的name 正确，CallTO分机1001显示正确，reason为分机B挂断，分机B的name正确\n")
+    @Description("1.分机1000呼叫分机1001，1000 挂断，预期：CDR的CallFrom分机1000的name 正确，CallTO分机1001显示正确，reason为分机B挂断，分机B的name正确\n")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -553,7 +553,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
 
 //        softAssertPlus.assertThat(getExtensionStatus(1001, IDLE, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
-        step("1001 被叫挂断");
+        step("1000 挂断");
         pjsip.Pj_hangupCall(1000);
         Selenide.sleep(2000);
 
