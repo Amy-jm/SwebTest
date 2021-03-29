@@ -140,11 +140,11 @@ public class HomePage extends BasePage{
      * web client 菜单
      */
      public SelenideElement left_menu_first_level_operator_panel = $(By.xpath("//a[contains(@id,\"m_w_visual_control_panel\")]/.."));//todo adapt for linux chrome
-     public SelenideElement left_menu_first_level_call_log = $(By.id("m_w_call_log"));
+     public SelenideElement left_menu_first_level_call_log = $(By.xpath("//a[contains(@id,\"m_w_call_log\")]/.."));//todo adapt for linux chrome,采用id定位,linux chrome有问题
      public SelenideElement left_menu_first_level_voicemails = $(By.xpath("//a[contains(@id,\"m_w_voicemail\")]/.."));
      public SelenideElement left_menu_first_level_recordings = $(By.id("m_w_recordings"));
      public SelenideElement left_menu_first_level_preferences =$(By.xpath("//a[contains(@id,\"m_w_preferences\")]/.."));//todo adapt for linux chrome
-     public SelenideElement left_menu_first_level_personal_contacts = $(By.id("m_w_contact"));
+     public SelenideElement left_menu_first_level_personal_contacts = $(By.xpath("//a[contains(@id,\"m_w_contact\")]/.."));//todo adapt for linux chrome,采用id定位,linux chrome有问题
 
 
     /**
