@@ -117,7 +117,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P1"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P1"})
 
     public void testPreferences_01_NameDisplayFormat() {
         prerequisite();
@@ -151,7 +151,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
 
     public void testPreferences_02_NameDisplayFormat() {
         prerequisite();
@@ -183,7 +183,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
 
     public void testPreferences_03_NameDisplayFormat() {
         prerequisite();
@@ -220,7 +220,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
     public void testPreferences_04_NameDisplayFromat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"first_last\"}").apply();
         String callerIdName_1000 = apiUtil.getExtensionSummary("1000").callerIdName;
@@ -239,7 +239,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NNameDisplayFormat","P2"})
     public void testPreferences_08_NameDisplayFormat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"first_last\"}").apply();
         apiUtil.loginWeb("1000",EXTENSION_PASSWORD_NEW);
@@ -264,7 +264,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
     public void testPreferences_09_NameDisplayFormat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"first_last\"}").apply();
 
@@ -284,7 +284,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
     public void testPreferences_17_NameDisplayFromat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"last_first\"}").apply();
         String callerIdName_1000 = apiUtil.getExtensionSummary("1000").callerIdName;
@@ -302,7 +302,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
     public void testPreferences_21_NameDisplayFormat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"last_first\"}").apply();
         apiUtil.loginWeb("1000",EXTENSION_PASSWORD_NEW);
@@ -323,7 +323,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
     public void testPreferences_22_NameDisplayFormat(){
 //        网页写法，容易误报
 //        auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
@@ -344,7 +344,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         @Severity(SeverityLevel.BLOCKER)
         @TmsLink(value = "")
         @Issue("")
-        @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+        @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
 
         public void testPreferences_30_NameDisplayFormat() {
             prerequisite();
@@ -376,7 +376,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
     public void testPreferences_31_NameDisplayFormat() {
         prerequisite();
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"last_first\"}").apply();
@@ -408,7 +408,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
 
     public void testPreferences_32_NameDisplayFormat() {
         prerequisite();
@@ -445,7 +445,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
     public void testPreferences_33_NameDisplayFromat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"lastfirst\"}").apply();
         String callerIdName_1000 = apiUtil.getExtensionSummary("1000").callerIdName;
@@ -463,7 +463,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
     public void testPreferences_37_NameDisplayFormat(){
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"lastfirst\"}").apply();
         apiUtil.loginWeb("1000",EXTENSION_PASSWORD_NEW);
@@ -486,7 +486,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = "PSeries,Preferences-Basic,Name Display Format,P2")
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
     public void testPreferences_38_NameDisplayFormat(){
 //        网页写法
 //        auto.loginPage().login("1000",EXTENSION_PASSWORD_NEW);
@@ -505,7 +505,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         @Severity(SeverityLevel.BLOCKER)
         @TmsLink(value = "")
         @Issue("")
-        @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P1"})
+        @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
 
     public void testPreferences_46_NameDisplayFormat() {
         prerequisite();
@@ -537,7 +537,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
 
     public void testPreferences_47_NameDisplayFormat() {
         prerequisite();
@@ -570,7 +570,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","Name Display Format","P1"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
 
     public void testPreferences_48_NameDisplayFormat() {
         prerequisite();
