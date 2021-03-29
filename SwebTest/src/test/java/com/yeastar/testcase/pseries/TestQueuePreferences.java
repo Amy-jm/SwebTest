@@ -475,7 +475,7 @@ public class TestQueuePreferences extends TestCaseBaseNew {
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
                 .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2001.toString() + " hung up", SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2001.toString() + " hung up", SPS,"" , INBOUND.toString()));
         softAssertPlus.assertAll();
 
         step("编辑Queue1的Wrap-up Time：0；通过sps外线呼入到Queue1");

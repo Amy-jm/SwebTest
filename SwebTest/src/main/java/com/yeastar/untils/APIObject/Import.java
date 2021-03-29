@@ -14,16 +14,16 @@ public class Import {
      * 读取CSV文件内容
      * @return
      */
-    public static ArrayList<String[]> readCsvFile(String filePath){
-        try {
-            ArrayList<String[]> csvList = new ArrayList<String[]>();
-            CsvReader reader = new CsvReader(filePath, ',', Charset.forName("GBK"));
-            reader.readHeaders();
-            while (reader.readRecord()){
-                csvList.add(reader.getValues());
-            }
-            reader.close();
-            return csvList;
+//    public static ArrayList<String[]> readCsvFile(String filePath){
+//        try {
+//            ArrayList<String[]> csvList = new ArrayList<String[]>();
+//            CsvReader reader = new CsvReader(filePath, ',', Charset.forName("GBK"));
+//            reader.readHeaders();
+//            while (reader.readRecord()){
+//                csvList.add(reader.getValues());
+//            }
+//            reader.close();
+//            return csvList;
 //            System.out.println("读取的行数：" + csvList.size());
 //
 //            for (int row=0;row<csvList.size();row++){
@@ -34,13 +34,13 @@ public class Import {
 //            }
 
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+////        return null;
 //        return null;
-        return null;
-    }
+//    }
 }
