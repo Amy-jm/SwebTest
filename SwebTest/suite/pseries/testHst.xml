@@ -9,7 +9,11 @@
     </listeners>
     <test name="TestMe">
         <classes>
-            <class name="com.yeastar.testcase.pseries.TestCompanyContacts"/>
+            <class name="com.yeastar.testcase.pseries.TestCompanyContacts">
+            <methods>
+                <include name="testContactsAddPersonalContactsSucc"/>
+            </methods>
+            </class>
         </classes>
     </test>
 </suite>
