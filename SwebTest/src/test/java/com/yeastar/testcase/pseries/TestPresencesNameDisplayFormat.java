@@ -25,7 +25,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.yeastar.swebtest.driver.DataReader2.*;
-import static com.yeastar.untils.APIObject.Import.readCsvFile;
+//import static com.yeastar.untils.APIObject.Import.readCsvFile;
 import static io.qameta.allure.Allure.step;
 import static java.lang.Thread.sleep;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -80,7 +80,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
             //上面默认的初始化内容，initTestNameDisplayFormat是执行这个用例需要的初始化
 
             initTestNameDisplayFormat();
-            initTestContacts();
+//            initTestContacts();
             step("=========== init before class  end =========");
         }
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
@@ -96,17 +96,17 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     /**
      * 读取CSV文件内容
      */
-    public void initTestContacts() {
-        log.debug("######### 初始化测试环境\n" +"admin导入企业联系人");
-        String filePath = "F:\\swebtest\\SwebTest\\exportFile\\P570-company_contact-37.2.0.81-export-企业联系人.csv";
-        ArrayList<String[]> a = readCsvFile(filePath);
-        System.out.print(a);
+//    public void initTestContacts() {
+//        log.debug("######### 初始化测试环境\n" +"admin导入企业联系人");
+//        String filePath = "F:\\swebtest\\SwebTest\\exportFile\\P570-company_contact-37.2.0.81-export-企业联系人.csv";
+//        ArrayList<String[]> a = readCsvFile(filePath);
+//        System.out.print(a);
 
 //        ArrayList<String[]> binary = readCsvFile(filePath);
 //        String s = binary.toString();
 //        apiUtil.contactsImport("{\"format\": \"csv\",\"file\": " + binary +"}");
 //        apiUtil.apply();
-    }
+//    }
 
 
 
