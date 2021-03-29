@@ -2411,6 +2411,133 @@ public class APIUtil {
         return this;
     }
 
+    /***
+     * 获取个人联系人的cdr记录
+     * @param num
+     * @return
+     */
+    public List<CallLogObject> getPerCdrRecord(int num) {
+        List<CallLogObject> perCdrList = new ArrayList<>();
+        String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/searchpersonal?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
+        String respondJson = getRequest(req);
+
+        for(int i=0; i<num; i++){
+            CallLogObject cdr = new CallLogObject(respondJson, i);
+            perCdrList.add(cdr);
+        }
+
+        return perCdrList;
+    }
+
+    public APIUtil contactsOptionsUpdate(String  request){
+        String response = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/contactsoptions/update", request);
+        return this;
+    }
+
+    /**
+     * 创建企业联系人
+     * @param request
+     * @return
+     */
+    public APIUtil createCompanyContacts(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/admincontacts/create",request);
+        return this;
+    }
+
+    /**
+     * 创建个人联系人
+     * @param requsts
+     * @return
+     */
+    public APIUtil createPersonalContacts(String requsts){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/contacts/create", requsts);
+        return this;
+    }
+
+    /**
+     * 获取company contacts列表
+     * @return
+     */
+    public List<CompanyContactsObject> getCompanyContactSummary(){
+        List<CompanyContactsObject> companyContactList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/admincontacts/searchsummary?page=1&page_size=20&sort_by=contact_name&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+            if(!jsonObject.containsKey("data")){
+                return companyContactList;
+            }else {
+                JsonArray jsonArray = jsonObject.getJsonArray("data");
+                for(int i=0;i<jsonArray.size();i++){
+                    companyContactList.add(new CompanyContactsObject((JSONObject) jsonArray.getJsonObject(i)));
+                }
+            }
+        }else {
+            Assert.fail("[API getCompanyContactSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return companyContactList;
+    }
+
+    /**
+     * 删除当前页所有的contacts记录
+     * @return
+     */
+    public APIUtil deleteAllCompanyContacts(){
+        List<CompanyContactsObject> comList = getCompanyContactSummary();
+        List<Integer> idList = new ArrayList<Integer>();
+        for (CompanyContactsObject comObject: comList){
+            idList.add(comObject.id);
+        }
+        if (idList != null && !idList.isEmpty()){
+            deleteAdminContacts(idList);
+        }
+
+        return this;
+    }
+
+    /**
+     * 通过id去删除company contacts
+     * @param request
+     */
+    public APIUtil deleteAdminContacts(List<Integer> idList){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idList);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/admincontacts/batchdelete",jsonObject.toString());
+
+        return this;
+    }
+
+    public List<PerContactsObject> getPerContacts(){
+        List<PerContactsObject> objectList = new ArrayList<>();
+        String getStringResponse = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/contacts/searchsummary?page=1&page_size=30&sort_by=contact_name&order_by=asc&search_value=&type=personal");
+        JSONObject responJsonObject = new JSONObject(getStringResponse);
+        if(responJsonObject.getString("errcode").equals("0")){
+            if(responJsonObject.containsKey("data")){
+                JsonArray responJsonArray = new JSONArray(responJsonObject.getString("data"));
+                for(int i=0; i< responJsonArray.size(); i++){
+                    objectList.add(new PerContactsObject(((JSONObject) responJsonArray.getJsonObject(i))));
+                }
+                return objectList;
+            }else
+                return objectList;
+        }else{
+            Assert.fail("[API getCompanyContactSummary] ,errmsg: "+ responJsonObject.getString("errmsg"));
+        }
+        return objectList;
+    }
+
+    public void delPerContacts(){
+        int id;
+        List<PerContactsObject> objectList = getPerContacts();
+        for(int i=0; i<objectList.size();i++){
+            id = objectList.get(i).id;
+            getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/contacts/delete?id="+id+"&type=personal");
+        }
+    }
+
 
     /**
      * 发送get请求

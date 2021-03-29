@@ -40,6 +40,8 @@ public interface IButton {
 
     SelenideElement testBtn = $(By.xpath(String.format(buttonLocationXpath,"Test")));
 
+    SelenideElement addPerCont = $(By.xpath(String.format(buttonLocationXpath,"Add New Contact")));
+
 
 
     //alert

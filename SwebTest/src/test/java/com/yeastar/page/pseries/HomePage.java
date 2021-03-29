@@ -41,6 +41,11 @@ public class HomePage extends BasePage{
     public SelenideElement call_control_tree_emergency_number = $(By.id("m_emergency_number"));
 
     /**
+     * 左侧菜单--Contacts
+     * **/
+    public SelenideElement company_contacts = $(By.xpath("//*[@id=\"m_contacts\"]/div/span"));
+
+    /**
      * 左侧菜单 -- Call Feature
      **/
     public SelenideElement left_menu_first_level_call_feature = $(By.id("m_call_features"));
@@ -139,6 +144,7 @@ public class HomePage extends BasePage{
      public SelenideElement left_menu_first_level_voicemails = $(By.xpath("//a[contains(@id,\"m_w_voicemail\")]/.."));
      public SelenideElement left_menu_first_level_recordings = $(By.id("m_w_recordings"));
      public SelenideElement left_menu_first_level_preferences =$(By.xpath("//a[contains(@id,\"m_w_preferences\")]/.."));//todo adapt for linux chrome
+     public SelenideElement left_menu_first_level_personal_contacts = $(By.id("m_w_contact"));
 
 
     /**
@@ -368,6 +374,9 @@ public class HomePage extends BasePage{
             case call_control:
                 isLevel2Visible(left_menu_first_level_call_control);
                 break;
+            case company_contacts:
+                company_contacts.shouldBe(Condition.enabled).click();
+                break;
             case call_feature:
                 isLevel2Visible(left_menu_first_level_call_feature);
                 break;
@@ -385,6 +394,9 @@ public class HomePage extends BasePage{
                 break;
             case operator_panel:
                 left_menu_first_level_operator_panel.click();
+                break;
+            case personal_contacts:
+                left_menu_first_level_personal_contacts.click();
                 break;
             case call_log:
                 left_menu_first_level_call_log.click();
@@ -417,6 +429,7 @@ public class HomePage extends BasePage{
     public enum Menu_Level_1 {
         extension_trunk,
         call_control,
+        company_contacts,
         call_feature,
         pbx_settings,
         system,
@@ -424,6 +437,7 @@ public class HomePage extends BasePage{
         maintenance,
         cdr_recording,
         operator_panel,
+        personal_contacts,
         call_log,
         voicemails,
         recordings,

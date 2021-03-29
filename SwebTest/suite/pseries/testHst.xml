@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="P Series" parallel="false">
+    <listeners>
+        <listener class-name="com.yeastar.untils.AllureReporterListener"/>
+        <listener class-name="com.yeastar.untils.RetryListener"/>
+        <listener class-name="com.yeastar.untils.TestNGListenerP"/>
+        <listener class-name="com.yeastar.untils.ExecutionListener"/>
+    </listeners>
+    <test name="TestMe">
+        <classes>
+            <class name="com.yeastar.testcase.pseries.TestCompanyContacts"/>
+        </classes>
+    </test>
+</suite>

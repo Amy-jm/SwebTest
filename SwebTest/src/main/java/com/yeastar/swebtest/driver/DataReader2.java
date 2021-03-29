@@ -32,12 +32,17 @@ public class DataReader2 {
     public final static String PJSIP_SSH_PASSWORD = "";
     public final static String PJSIP_SSH_USER = "ls@yf";
 
+    public final static String SOFTWAREP_SSH_PASSWORD = "1";
+    public final static String SOFTWAREP_SSH_USER = "root";
+
     public final String PBX_URL = "https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT;
 
     public static JSONObject UI_MAP = UIMapUtils.getUIMapHandle();
     /**
      * Data.properties配置
      */
+    public static int PSERIES_TYPE = Integer.parseInt(PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "PSERIES_TYPE"));
+
     public static String SCREENSHOT_PATH = System.getProperty("user.dir")+"\\"+ PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "SCREENSHOT_PATH");
     public static String FIREFOX_PATH = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH, "FIREFOX_PATH");
 //    public static String CHROME_PATH = "src\\main\\resources\\driver\\chrome\\chromedriver.exe";

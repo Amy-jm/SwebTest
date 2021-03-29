@@ -244,7 +244,11 @@ public class BaseMethod extends WebDriverFactory {
 		log.debug("[asterisk_command]"+asterisk_commond);
 		String str = null;
 		try {
-			str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
+			if(PSERIES_TYPE == 0){
+				str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
+			}else if(PSERIES_TYPE == 1){
+				str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, SOFTWAREP_SSH_USER, SOFTWAREP_SSH_PASSWORD, asterisk_commond);
+			}
 		} catch (JSchException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -253,6 +257,7 @@ public class BaseMethod extends WebDriverFactory {
 		log.debug("[asterisk_command_return_string] "+str);
 		return str;
 	}
+
 	private String findExtCdrRecordByExtNum(String extNum){
 		if (extNum.equals("1000")){
 			return CDRObject.CDRNAME.Extension_1000.toString();
@@ -409,7 +414,6 @@ public class BaseMethod extends WebDriverFactory {
 			sleep(50);
 			account = pjsip.getUserAccountInfo(username);
 //                        account = getPjsip().getUserAccountInfo(username);
-
 			if (account == null) {
 				status = -1;
 			}
@@ -503,14 +507,14 @@ public class BaseMethod extends WebDriverFactory {
 	 */
 	public void initTrunk(){
 		step("初始化 trunk");
-		if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+		if(!FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
 			step("编辑 FXO_1,DID:13001");
 			apiUtil.editFXOTrunk(FXO_1,String.format("\"did\":\"13001\"")).apply();
 		}
 
-		if(DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("null") || DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("") ||
-				DEVICE_TEST_GSM.trim().equalsIgnoreCase("null") || DEVICE_TEST_GSM.trim().equalsIgnoreCase("") ||
-				GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("") ){
+		if(!DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("null") || DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("") ||
+				!DEVICE_TEST_GSM.trim().equalsIgnoreCase("null") || DEVICE_TEST_GSM.trim().equalsIgnoreCase("") ||
+				!GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("") ){
 			step("编辑 GSM,DID:7"+ DEVICE_ASSIST_GSM);
 			apiUtil.editGSMTrunk(GSM,String.format("\"did\":\"7"+DEVICE_ASSIST_GSM+"\"")).apply();
 		}
@@ -725,12 +729,12 @@ public class BaseMethod extends WebDriverFactory {
 		pjsip.Pj_Register_Account_WithoutAssist(1004, DEVICE_IP_LAN);
 		pjsip.Pj_Register_Account_WithoutAssist(1005, DEVICE_IP_LAN);
 		pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-		pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
-		pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
-		pjsip.Pj_Register_Account_WithoutAssist(3002, DEVICE_ASSIST_1);
-		pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
-		pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
-		pjsip.Pj_Register_Account_WithoutAssist(4002, DEVICE_ASSIST_3);
+//		pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
+//		pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
+//		pjsip.Pj_Register_Account_WithoutAssist(3002, DEVICE_ASSIST_1);
+//		pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
+//		pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
+//		pjsip.Pj_Register_Account_WithoutAssist(4002, DEVICE_ASSIST_3);
 
 		boolean reg = false;
 		if (getExtensionStatus(1000, IDLE, 5) != IDLE) {
@@ -757,25 +761,25 @@ public class BaseMethod extends WebDriverFactory {
 			reg = true;
 			log.error("2000注册失败");
 		}
-		if (getExtensionStatus(2001, IDLE, 5) != IDLE) {
-			reg = true;
-			log.error("2001注册失败");
-		}
-		if (getExtensionStatus(3001, IDLE, 5) != IDLE) {
-			reg = true;
-			log.error("3001注册失败");
-		}
-		if (getExtensionStatus(4000, IDLE, 5) != IDLE) {
-			reg = true;
-			log.error("4000注册失败");
-		}
-		if (getExtensionStatus(4001, IDLE, 5) != IDLE) {
-			reg = true;
-			log.error("4001注册失败");
-		}if (getExtensionStatus(4002, IDLE, 5) != IDLE) {
-			reg = true;
-			log.error("4002注册失败");
-		}
+//		if (getExtensionStatus(2001, IDLE, 5) != IDLE) {
+//			reg = true;
+//			log.error("2001注册失败");
+//		}
+//		if (getExtensionStatus(3001, IDLE, 5) != IDLE) {
+//			reg = true;
+//			log.error("3001注册失败");
+//		}
+//		if (getExtensionStatus(4000, IDLE, 5) != IDLE) {
+//			reg = true;
+//			log.error("4000注册失败");
+//		}
+//		if (getExtensionStatus(4001, IDLE, 5) != IDLE) {
+//			reg = true;
+//			log.error("4001注册失败");
+//		}if (getExtensionStatus(4002, IDLE, 5) != IDLE) {
+//			reg = true;
+//			log.error("4002注册失败");
+//		}
 		if(reg){
 			pjsip.Pj_Unregister_Accounts();
 		}else{

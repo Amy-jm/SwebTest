@@ -12,6 +12,7 @@ import com.yeastar.page.pseries.ExtensionTrunk.TrunkPage;
 import com.yeastar.page.pseries.OperatorPanel.OperatorPanelPage;
 import com.yeastar.page.pseries.PbxSettings.PreferencesPage;
 import com.yeastar.page.pseries.WebClient.Me_HomePage;
+import com.yeastar.page.pseries.Contacts.ContactsPage;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -44,6 +45,7 @@ public class PageEngine {
     OperatorPanelPage operatorPanelPage;
     ConferencePage conferencePage;
     SpeedDialPage speedDialPage;
+    ContactsPage contactsPage;
 
     public PageEngine() {
 //        log.debug("【PageEngine】。。。。");
@@ -65,6 +67,7 @@ public class PageEngine {
         operatorPanelPage = new OperatorPanelPage();
         conferencePage = new ConferencePage();
         speedDialPage = new SpeedDialPage();
+        contactsPage = new ContactsPage();
 
     }
     public BasePage basePage() { return basePage; }
@@ -85,4 +88,5 @@ public class PageEngine {
     public OperatorPanelPage operatorPanelPage(){return  operatorPanelPage;}
     public ConferencePage conferencePage(){return conferencePage;}
     public SpeedDialPage speedDialPage(){return speedDialPage;}
+    public ContactsPage contactsPage(){return contactsPage;}
 }
