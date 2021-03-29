@@ -13,5 +13,6 @@ public class TestPublicIPAndPorts extends TestCaseBaseNew {
     @Test
     public void testPublicIPAndPorts(){
         initTest();
+
     }
 }

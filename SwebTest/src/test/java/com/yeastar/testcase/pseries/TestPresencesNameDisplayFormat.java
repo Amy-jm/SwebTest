@@ -166,7 +166,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
 //        softAssertPlus.assertThat(getExtensionStatus(1001, IDLE, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
 
         step("1001 被叫挂断");
-        pjsip.Pj_hangupCall(1000);
+        pjsip.Pj_hangupCall(1001);
         Selenide.sleep(2000);
 
         assertStep("[CDR校验]");
@@ -183,12 +183,12 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","testPreferences_03_NameDisplayFormat","P2"})
 
     public void testPreferences_03_NameDisplayFormat() {
         prerequisite();
 
-        step("2:[caller] 3002" + ",[callee] 1001");
+        step("2:[caller] 3002" + ",[callee] 3000");
         pjsip.Pj_Make_Call_No_Answer(3002, "3000", DEVICE_ASSIST_1, false);
 
         step("[通话状态校验]");
