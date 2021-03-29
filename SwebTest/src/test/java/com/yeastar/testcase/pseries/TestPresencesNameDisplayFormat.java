@@ -196,6 +196,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
         Selenide.sleep(5000);
         pjsip.Pj_Answer_Call(1000, false);
         softAssertPlus.assertThat(getExtensionStatus(1000, TALKING, 30)).as("[通话状态校验_通话] Time：" + DataUtils.getCurrentTime()).isEqualTo(TALKING);
+        Selenide.sleep(5000);
 
         step("1000 被叫挂断");
         pjsip.Pj_hangupCall(1000);
