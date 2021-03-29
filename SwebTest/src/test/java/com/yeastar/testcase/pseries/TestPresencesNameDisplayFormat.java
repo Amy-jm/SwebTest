@@ -183,7 +183,7 @@ public class TestPresencesNameDisplayFormat extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","testPreferences_03_NameDisplayFormat","P2"})
+    @Test(groups = {"PSeries","Preferences-Basic","NameDisplayFormat","P2"})
 
     public void testPreferences_03_NameDisplayFormat() {
         prerequisite();
