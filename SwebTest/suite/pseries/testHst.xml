@@ -9,11 +9,21 @@
     </listeners>
     <test name="TestMe">
         <classes>
-            <class name="com.yeastar.testcase.pseries.TestCompanyContacts">
-            <methods>
-                <include name="testContactsAddPersonalContactsSucc"/>
-            </methods>
-            </class>
+            <class name="com.yeastar.testcase.pseries.TestCompanyContacts"/>
+            <class name="com.yeastar.testcase.pseries.TestIVR"/>
+            <class name="com.yeastar.testcase.pseries.TestInboundRouteGlobalBusiness"/>
+            <class name="com.yeastar.testcase.pseries.TestEmergencyNumber"/>
+
+            <class name="com.yeastar.testcase.pseries.TestPreferencesMaxCallDuration"/>
+            <class name="com.yeastar.testcase.pseries.TestQueueBasic"/>
+
+            <class name="com.yeastar.testcase.pseries.TestIVRAllowOptoutofCallRecording"/>
+
+            <class name="com.yeastar.testcase.pseries.TestConference"/>
+            <class name="com.yeastar.testcase.pseries.TestFeatureCodeBlindTransfer"/>
+            <class name="com.yeastar.testcase.pseries.TestFeatureCodeCallParking"/>
+            <class name="com.yeastar.testcase.pseries.TestFeatureCodeCallPickup"/>
+            <class name="com.yeastar.testcase.pseries.TestFeatureCodeCallTransfer"/>
         </classes>
     </test>
 </suite>

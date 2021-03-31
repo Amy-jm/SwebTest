@@ -104,7 +104,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         apiUtil.editExtension("1003", "\"max_outb_call_duration\":-1").apply();
         apiUtil.editExtension("1004", String.format("\"max_outb_call_duration\":30,\"presence_list\":[{\"enb_in_always_forward\":1,\"enb_ex_always_forward\":1,\"ex_always_forward_dest\":\"extension\",\"ex_always_forward_value\":\"%s\",\"status\":\"available\"}]", apiUtil.getExtensionSummary("1000").id)).apply();
         apiUtil.editExtension("1005", String.format("\"enb_ctl_record\":1,\"max_outb_call_duration\":30,\"caller_id_rule_list\":[{\"caller_id\":\"2000\",\"action_dest\":\"extension\",\"action_value\":\"%s\",\"pos\":1},{\"caller_id\":\"4000\",\"action_dest\":\"ext_vm\",\"pos\":2},{\"caller_id\":\"3001\",\"action_dest\":\"ivr\",\"action_value\":\"%s\",\"pos\":3},{\"caller_id\":\"4001\",\"action_dest\":\"play_greeting\",\"play_greeting_times\":5,\"action_value\":\"prompt6.wav\",\"pos\":4},{\"caller_id\":\"4002\",\"action_dest\":\"accept_call\",\"pos\":5}]", apiUtil.getExtensionSummary("1000").id, apiUtil.getIVRSummary("6200").id)).apply();
-        if (!FXO_1.trim().equalsIgnoreCase("null") || !FXO_1.trim().equalsIgnoreCase("")) {
+        if (!FXO_1.trim().equalsIgnoreCase("null") || (!FXO_1.trim().equalsIgnoreCase("")&&!FXO_1.trim().equalsIgnoreCase("null"))) {
             apiUtil.editExtension("1020", "\"max_outb_call_duration\":20").apply();
         } else {
             log.debug("【FXS 分机不存在 初始环境失败！！！】7、编辑分机1020，Security-》Max Outbound Call Duration 设置为20s；【需判断FXS分机是否存在】");
@@ -124,9 +124,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Preferences", "MaxCallDuration", "P3", "MaxCallDuration", "MaxOutboundCallDuration", ""})
     public void testPreferences_01_MaxCallDuration() {
         prerequisite();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 222222");
         pjsip.Pj_Make_Call_No_Answer(1000, "222222", DEVICE_IP_LAN, false);
@@ -159,9 +156,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     public void testPreferences_02_MaxCallDuration() {
         prerequisite();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] 1001");
         pjsip.Pj_Make_Call_No_Answer(1000, "1001", DEVICE_IP_LAN, false);
 
@@ -193,9 +187,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     public void testPreferences_03_MaxCallDuration() {
         prerequisite();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee]22222");
         pjsip.Pj_Make_Call_No_Answer(1000, "22222", DEVICE_IP_LAN, false);
 
@@ -223,9 +214,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Preferences", "MaxCallDuration", "P3", "MaxCallDuration", "MaxOutboundCallDuration", ""})
     public void testPreferences_04_MaxCallDuration() {
         prerequisite();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] 3333");
         pjsip.Pj_Make_Call_No_Answer(1001, "3333", DEVICE_IP_LAN, false);
@@ -257,9 +245,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     public void testPreferences_05_MaxCallDuration() {
         prerequisite();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1002" + ",[callee] 2222");
         pjsip.Pj_Make_Call_No_Answer(1002, "2222", DEVICE_IP_LAN, false);
 
@@ -290,9 +275,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     public void testPreferences_06_MaxCallDuration() {
         prerequisite();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1003" + ",[callee] ");
         pjsip.Pj_Make_Call_No_Answer(1003, "13001", DEVICE_IP_LAN, false);
 
@@ -316,7 +298,8 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     @Story("MaxCallDuration,MaxOutboundCallDuration")
     @Description("7.辅助2分机2001拨打773333呼出【即FXS分机1020拨打3333呼出】\n" +
             "\t辅助3的分机4000响铃，接听，直到通话被自动挂断；检查cdr,CallDuration为： 00:00:20，Reason为Exceeded the max call duration(s)\n" +
-            "\t【需判断FXS分机是否存在】")
+            "\t【需判断FXS分机是否存在】" +
+            "------------------该用例p系列cloud版或者软件版运行报错的话，可以不用理会----------------------")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】+ 外线 呼入目的地到 RingGroup、Queue、Conference、Play、Voicemail  Max Call Duration 设置 不生效】" +
@@ -328,9 +311,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         }
 
         prerequisite();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2001" + ",[callee] 773333");
         pjsip.Pj_Make_Call_No_Answer(2001, "773333", DEVICE_ASSIST_2, false);
@@ -362,9 +342,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Preferences", "MaxCallDuration", "P3", "MaxCallDuration", "MaxOutboundCallDuration", ""})
     public void testPreferences_08_MaxCallDuration() {
         prerequisite();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 9999");
         pjsip.Pj_Make_Call_No_Answer(2000, "9999", DEVICE_ASSIST_2, false);
@@ -398,9 +375,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         step("编辑In1，呼入目的地为IVR0");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ivr\",\"def_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
@@ -436,9 +410,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         step("编辑In1，呼入目的地为IVR0");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ivr\",\"def_dest_value\":\"%s\"",apiUtil.getIVRSummary("6200").id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
@@ -477,9 +448,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         step(".编辑In1,呼入目的地为RingGroup0");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ring_group\",\"def_dest_value\":\"%s\"",apiUtil.getRingGroupSummary(ringGroupNum0).id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
 
@@ -513,9 +481,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         step("12.编辑In1,呼入目的地为Queue0");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"queue\",\"def_dest_value\":\"%s\"",apiUtil.getQueueSummary(queueNum0).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
@@ -551,7 +516,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         step("13.编辑In1,呼入目的地为Extension Voicemail-分机1000");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"ext_vm\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
-        step("1:login with admin ");
+        step("1:admin登录");
         auto.loginPage().loginWithAdmin();
 
         String callTime = DataUtils.getCurrentTime("HH:mm:ss");
@@ -596,9 +561,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         step("14.编辑In1，呼入目的地为Conference6500");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"conference\",\"def_dest_value\":\"%s\"",apiUtil.getConferenceSummary("6500").id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
 
@@ -626,9 +588,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         step("15.编辑In1,呼入目的地为External Number，Prefix:1 号码3001");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"external_num\",\"def_dest_prefix\":\"1\",\"def_dest_value\":\"3001\"")).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
@@ -662,9 +621,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         step("16.编辑In1,呼入目的地为Outbound Route，选择Out8");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"outroute\",\"def_dest_value\":\"%s\"",apiUtil.getOutBoundRouteSummary("Out8").id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 3001" + ",[callee] 3000");
         pjsip.Pj_Make_Call_No_Answer(3001, "3000",DEVICE_ASSIST_1,false);
@@ -701,9 +657,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"play_greeting\",\"def_dest_prefix\":\"5\",\"def_dest_value\":\"prompt6.wav\""));
         SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "prompt6.slin");
         thread.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
@@ -749,9 +702,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         step("编辑In1，呼入目的地为分机1004");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1004").id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] 1004");
         pjsip.Pj_Make_Call_No_Answer(1000, "1004", DEVICE_IP_LAN, false);
 
@@ -772,16 +722,13 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
             "\t19.通过account外线呼入到1004\n" +
             "\t\t分机1000响铃，接听，直到通话被自动挂断；检查cdr,CallDuration为： 00:00:50，Reason为Exceeded the max call duration(s)")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
+    @TmsLink(value = "此处pbx产生的cdr有问题，针对6700到1004这条cdr的校验pbx当前产生该记录有误，所以会导致这边校验失败-》【【P系列】（2期遗留）CDR问题】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001033151")
     @Issue("时间误差，暂不校验 CallDuration")
     @Test(groups = {"PSeries", "Cloud", "K2", "Preferences", "MaxCallDuration", "P3", "MaxCallDuration", "MaxOutboundCallDuration", ""})
     public void testPreferences_19_MaxCallDuration() {
         prerequisite();
         step("编辑In1，呼入目的地为分机1004");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1004").id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 4000" + ",[callee] 441004 ");
         pjsip.Pj_Make_Call_No_Answer(4000, "441004", DEVICE_ASSIST_3, false);
@@ -796,8 +743,8 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.Extension_1004.toString(), STATUS.NO_ANSWER.toString(), "t estX<1004> forwarded",  ACCOUNTTRUNK,"", "Inbound"))
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "Exceeded the max call duration(s)",  ACCOUNTTRUNK,"", "Inbound"));
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.Extension_1004.toString(), STATUS.NO_ANSWER.toString(), "testX<1004> forwarded",  ACCOUNTTRUNK,"", "Inbound"))
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "Exceeded the max call duration(s)",  ACCOUNTTRUNK,"", "Inbound"));
 
         softAssertPlus.assertAll();
 
@@ -829,9 +776,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         step("编辑In1，呼入目的地为分机1005");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 9999");
         pjsip.Pj_Make_Call_No_Answer(2000, "9999", DEVICE_ASSIST_2, false);
@@ -867,9 +811,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         step("编辑In1，呼入目的地为分机1005");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 4000" + ",[callee] 444444");
         pjsip.Pj_Make_Call_No_Answer(4000, "444444", DEVICE_ASSIST_3, false);
 
@@ -898,9 +839,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         step("编辑In1，呼入目的地为分机1005");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 3001" + ",[callee] 3000");
         pjsip.Pj_Make_Call_No_Answer(3001, "3000", DEVICE_ASSIST_1, false);
@@ -939,9 +877,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
         SSHLinuxUntils.AsteriskThread thread = new SSHLinuxUntils.AsteriskThread(asteriskObjectList, "prompt6.slin");
         thread.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 4001" + ",[callee] 4444");
         pjsip.Pj_Make_Call_No_Answer(4001, "4444", DEVICE_ASSIST_3, false);
@@ -986,9 +921,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         step("编辑In1，呼入目的地为分机1005");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 4002" + ",[callee] 4444");
         pjsip.Pj_Make_Call_No_Answer(4002, "4444", DEVICE_ASSIST_3, false);
 
@@ -1003,7 +935,7 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         assertThat(getExtensionStatus(4002, HUNGUP, 5)).as("通话状态校验 失败!").isIn(HUNGUP, IDLE);
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(1)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "callDuration", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-               .contains(tuple( "4002<4002>",CDRNAME.Extension_1005.toString(), "00:00:50", STATUS.ANSWER.toString(), "Exceeded the max call duration(s)", ACCOUNTTRUNK, "",  "Inbound"));
+               .contains(tuple( CDRNAME.Account_6700,CDRNAME.Extension_1005.toString(), "00:00:50", STATUS.ANSWER.toString(), "Exceeded the max call duration(s)", ACCOUNTTRUNK, "",  "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1023,9 +955,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         step("编辑In1，呼入目的地为分机1000");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
@@ -1083,9 +1012,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         step("编辑In1，呼入目的地为分机1000");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -1131,9 +1057,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         step("编辑In1，呼入目的地为分机1000");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1000").id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 991000");
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
@@ -1189,9 +1112,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     public void testPreferences_28_MaxCallDuration() {
         prerequisite();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] *2");
         pjsip.Pj_Make_Call_No_Answer(1000, "*2", DEVICE_IP_LAN, false);
         sleep(WaitUntils.SHORT_WAIT*2);
@@ -1227,9 +1147,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
         prerequisite();
         apiUtil.deleteAllSpeedDial().createSpeeddial("\"code\":\"1\",\"phone_number\":\"13001\"").apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee]*891 ");
         pjsip.Pj_Make_Call_No_Answer(1000, "*891", DEVICE_IP_LAN, false);
 
@@ -1260,9 +1177,6 @@ public class TestPreferencesMaxCallDuration extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "Preferences", "MaxCallDuration", "P3", "MaxCallDuration", "MaxOutboundCallDuration", ""})
     public void testPreferences_30_MaxCallDuration() {
         prerequisite();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] *61001");
         pjsip.Pj_Make_Call_No_Answer(1000, "*61001", DEVICE_IP_LAN, false);

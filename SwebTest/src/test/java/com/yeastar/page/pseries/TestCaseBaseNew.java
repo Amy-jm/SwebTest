@@ -50,6 +50,10 @@ public class TestCaseBaseNew extends BaseMethod {
             log.error("【Pjsip Exception new】" + ex);
         }
 
+        if(PSERIES_TYPE == 1){
+            PJSIP_SSH_USER = "root";
+            PJSIP_SSH_PASSWORD = "1";
+        }
     }
 
     @AfterClass(alwaysRun = true)
@@ -61,6 +65,9 @@ public class TestCaseBaseNew extends BaseMethod {
 //            pjsip=null;
             log.debug("[end destroy pjsip] pjsip->"+pjsip);
         }
+
+        PJSIP_SSH_USER = "ls@yf";
+        PJSIP_SSH_PASSWORD = "";
     }
 
     @BeforeMethod(alwaysRun = true)

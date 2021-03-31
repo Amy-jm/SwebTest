@@ -244,11 +244,7 @@ public class BaseMethod extends WebDriverFactory {
 		log.debug("[asterisk_command]"+asterisk_commond);
 		String str = null;
 		try {
-			if(PSERIES_TYPE == 0){
-				str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
-			}else if(PSERIES_TYPE == 1){
-				str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, SOFTWAREP_SSH_USER, SOFTWAREP_SSH_PASSWORD, asterisk_commond);
-			}
+			str = SSHLinuxUntils.exePjsip(DEVICE_IP_LAN, PJSIP_TCP_PORT, PJSIP_SSH_USER, PJSIP_SSH_PASSWORD, asterisk_commond);
 		} catch (JSchException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -469,7 +465,6 @@ public class BaseMethod extends WebDriverFactory {
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Accounting.toString()).replace("EXTENSIONFIRSTNAME", "First").replace("EXTENSIONLASTNAME", "Last").replace("EXTENSIONNUM", "1005").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Administrator.toString()).replace("EXTENSIONFIRSTNAME", "0").replace("EXTENSIONLASTNAME", "0").replace("EXTENSIONNUM", "0").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.createExtension(reqDataCreateExtension.replace(ROLE + "",ROLE_ID.Administrator.toString()).replace("EXTENSIONFIRSTNAME", "1030").replace("EXTENSIONLASTNAME", "1030").replace("EXTENSIONNUM", "1030").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
-				.createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList))
 				.loginWebClient("0", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1030", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1000", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
@@ -478,6 +473,9 @@ public class BaseMethod extends WebDriverFactory {
 				.loginWebClient("1003", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1004", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW)
 				.loginWebClient("1005", EXTENSION_PASSWORD, EXTENSION_PASSWORD_NEW).apply();
+		if(!FXS_1.trim().equalsIgnoreCase("null")){
+			apiUtil.createExtension(reqDataCreateExtensionFXS.replace("EXTENSIONFIRSTNAME", "1020").replace("EXTENSIONLASTNAME", "1020").replace("FXSPORT", FXS_1).replace("EXTENSIONNUM", "1020").replace("EXTENSIONLASTNAME", "").replace("GROUPLIST", groupList)).apply();
+		}
 	}
 
 	/**
@@ -507,14 +505,12 @@ public class BaseMethod extends WebDriverFactory {
 	 */
 	public void initTrunk(){
 		step("初始化 trunk");
-		if(!FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+		if(!FXO_1.trim().equalsIgnoreCase("null")){
 			step("编辑 FXO_1,DID:13001");
 			apiUtil.editFXOTrunk(FXO_1,String.format("\"did\":\"13001\"")).apply();
 		}
 
-		if(!DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("null") || DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("") ||
-				!DEVICE_TEST_GSM.trim().equalsIgnoreCase("null") || DEVICE_TEST_GSM.trim().equalsIgnoreCase("") ||
-				!GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("") ){
+		if(!DEVICE_ASSIST_GSM.trim().equalsIgnoreCase("null") ||!DEVICE_TEST_GSM.trim().equalsIgnoreCase("null") ||!GSM.trim().equalsIgnoreCase("null")){
 			step("编辑 GSM,DID:7"+ DEVICE_ASSIST_GSM);
 			apiUtil.editGSMTrunk(GSM,String.format("\"did\":\"7"+DEVICE_ASSIST_GSM+"\"")).apply();
 		}
@@ -729,12 +725,12 @@ public class BaseMethod extends WebDriverFactory {
 		pjsip.Pj_Register_Account_WithoutAssist(1004, DEVICE_IP_LAN);
 		pjsip.Pj_Register_Account_WithoutAssist(1005, DEVICE_IP_LAN);
 		pjsip.Pj_Register_Account_WithoutAssist(2000, DEVICE_ASSIST_2);
-//		pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
-//		pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
-//		pjsip.Pj_Register_Account_WithoutAssist(3002, DEVICE_ASSIST_1);
-//		pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
-//		pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
-//		pjsip.Pj_Register_Account_WithoutAssist(4002, DEVICE_ASSIST_3);
+		pjsip.Pj_Register_Account_WithoutAssist(2001, DEVICE_ASSIST_2);
+		pjsip.Pj_Register_Account_WithoutAssist(3001, DEVICE_ASSIST_1);
+		pjsip.Pj_Register_Account_WithoutAssist(3002, DEVICE_ASSIST_1);
+		pjsip.Pj_Register_Account_WithoutAssist(4000, DEVICE_ASSIST_3);
+		pjsip.Pj_Register_Account_WithoutAssist(4001, DEVICE_ASSIST_3);
+		pjsip.Pj_Register_Account_WithoutAssist(4002, DEVICE_ASSIST_3);
 
 		boolean reg = false;
 		if (getExtensionStatus(1000, IDLE, 5) != IDLE) {
@@ -761,25 +757,25 @@ public class BaseMethod extends WebDriverFactory {
 			reg = true;
 			log.error("2000注册失败");
 		}
-//		if (getExtensionStatus(2001, IDLE, 5) != IDLE) {
-//			reg = true;
-//			log.error("2001注册失败");
-//		}
-//		if (getExtensionStatus(3001, IDLE, 5) != IDLE) {
-//			reg = true;
-//			log.error("3001注册失败");
-//		}
-//		if (getExtensionStatus(4000, IDLE, 5) != IDLE) {
-//			reg = true;
-//			log.error("4000注册失败");
-//		}
-//		if (getExtensionStatus(4001, IDLE, 5) != IDLE) {
-//			reg = true;
-//			log.error("4001注册失败");
-//		}if (getExtensionStatus(4002, IDLE, 5) != IDLE) {
-//			reg = true;
-//			log.error("4002注册失败");
-//		}
+		if (getExtensionStatus(2001, IDLE, 5) != IDLE) {
+			reg = true;
+			log.error("2001注册失败");
+		}
+		if (getExtensionStatus(3001, IDLE, 5) != IDLE) {
+			reg = true;
+			log.error("3001注册失败");
+		}
+		if (getExtensionStatus(4000, IDLE, 5) != IDLE) {
+			reg = true;
+			log.error("4000注册失败");
+		}
+		if (getExtensionStatus(4001, IDLE, 5) != IDLE) {
+			reg = true;
+			log.error("4001注册失败");
+		}if (getExtensionStatus(4002, IDLE, 5) != IDLE) {
+			reg = true;
+			log.error("4002注册失败");
+		}
 		if(reg){
 			pjsip.Pj_Unregister_Accounts();
 		}else{

@@ -7,6 +7,7 @@ import com.yeastar.untils.APIObject.CallLogObject;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -24,23 +25,10 @@ import static org.assertj.core.api.Assertions.tuple;
 @Log4j2
 public class TestCompanyContacts extends TestCaseBaseNew {
 
-//    List<String> trunk9 = new ArrayList<>();
     private boolean isRunRecoveryEnvFlag = true;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
-
-    //############### dataProvider #########################
-//
-//    TestCompanyContacts() {
-//        trunk9.add(SPS);
-//        trunk9.add(BRI_1);
-//        trunk9.add(FXO_1);
-//        trunk9.add(E1);
-//        trunk9.add(SIPTrunk);
-//        trunk9.add(ACCOUNTTRUNK);
-//        trunk9.add(GSM);
-//    }
 
     //############### dataProvider #########################
 
@@ -63,41 +51,52 @@ public class TestCompanyContacts extends TestCaseBaseNew {
         log.debug("[prerequisite time]:" + (System.currentTimeMillis() - startTime) / 1000 + " Seconds");
     }
 
+    @AfterMethod
+    public void afterMethodRecover(){
+        log.info("api恢复默认用admin登录");
+        apiUtil.loginWeb(LOGIN_USERNAME,LOGIN_PASSWORD);
+        apiUtil.deleteAllCompanyContacts();
+        log.info("contacts匹配恢复默认");
+        apiUtil.contactsOptionsUpdate("{\"match_model\":\"fuzzy_match\",\"fuzzy_count\":7}");
+        log.info("分机1000恢复mobile设置为空");
+        apiUtil.editExtension("1000","\"mobile_number\":\"\"").apply();
+    }
+
     @DataProvider(name = "route")
     public Object[][] Route(Method method){
         Object[][] ob = null;
         String methodName = method.getName();
-        if (methodName == "testContactsAddCompanyContactsSucc"){
+        if (methodName == "testContacts_01_AddCompanyContactsSucc"){
             ob = new Object[][]{
 //                    呼入路由前缀，主叫号码 ，被叫号码 ，admin-cdr匹配结果 ，采用中继 ，联系人名称
                     {"99", 2000, "1000", "mytestadmincontacts<2000>", SPS, "mytestadmincontacts"}
             };
-        }else if(methodName=="testContactsAddPersonalContactsSucc"){
+        }else if(methodName=="testContacts_02_AddPersonalContactsSucc"){
             ob = new Object[][]{
 //                    呼入路由前缀，主叫号码，被叫号码 ，admin-cdr匹配结果，分机-cdr匹配结果 ，采用中继，联系人名称
                     {"99", 2000, "1000", "2000<2000>", "mytestpercontacts",SPS, "mytestpercontacts"}
             };
-        }else if(methodName == "testContactsPersonalAndCompanyContactsSucc"){
+        }else if(methodName == "testContacts_03_PersonalAndCompanyContactsSucc"){
             ob = new Object[][]{
 //                    呼入路由前缀，主叫号码，被叫号码 ，，admin-cdr匹配结果，分机-cdr匹配结果，采用中继，个人联系人名称，企业联系人名称
                     {"99", 2000, "1000", "mytestadmincontacts<2000>", "mytestpercontacts",SPS, "mytestpercontacts","mytestadmincontacts"}
             };
-        }else if(methodName == "testContactsExtensionMobileSucc"){
+        }else if(methodName == "testContacts_04_ExtensionMobileSucc"){
             ob = new Object[][]{
 //                    呼入路由前缀，主叫号码 ，被叫号码，，admin-cdr匹配结果，分机-cdr匹配结果，采用中继，个人联系人名称，企业联系人名称
                     {"99", 2000, "1000", "test A<2000>", "test A",SPS, "mytestpercontacts","mytestadmincontacts"}
             };
-        }else if(methodName == "testContactsOptionSetNoMatchSucc"){
+        }else if(methodName == "testContacts_05_OptionSetNoMatchSucc"){
             ob = new Object[][]{
 //                    呼入路由前缀，主叫号码，被叫号码，admin-cdr匹配结果，采用中继，个人联系人名称，企业联系人名称
                     {"99", 2000, "1000", "2000<2000>", SPS, "mytestpercontacts","mytestadmincontacts"}
             };
-        }else if(methodName == "testContactsSameNumberDostNotHaveTheSameName"|| methodName == "testContactsSameNumberAndSameName"){
+        }else if(methodName == "testContacts_06_SameNumberDostNotHaveTheSameName"|| methodName == "testContacts_07_SameNumberAndSameName"){
             ob = new Object[][]{
 //                    呼入路由前缀，主叫号码 ，被叫号码，admin-cdr匹配结果，分机-cdr匹配结果，采用中继，个人联系人1，企业联系人1，个人联系人2，企业联系人2
                     {"99", 2000, "1000", "testcompanyone<2000>","testpersonalone",SPS,"testpersonalone","testcompanyone","testpersonaltwo","testcompanytwo"}
             };
-        }else if(methodName == "testContactsCallOut"){
+        }else if(methodName == "testContacts_08_CallOut"){
             ob = new Object[][]{
                     {1000, "2000", "testcompany<2000>","testpersonal",SPS,"testpersonal","testcompany"}
             };
@@ -109,11 +108,11 @@ public class TestCompanyContacts extends TestCaseBaseNew {
     @Feature("新增企业联系人，无对应个人联系人，然后该联系人呼入到Pbx，进行企业联系人匹配")
     @Description("1:login PBX->2:创建联系人->3:联系人外呼进来，呼入到分机1000->4:admin界面进行cdr记录联系人匹配校验")
     @Severity(SeverityLevel.NORMAL)
-    @Test(dataProvider = "route", groups = {"Contacts"})
-    public void testContactsAddCompanyContactsSucc(String routePrefix, int caller, String callee, String cdrCaller, String trunk, String contactsName){
+    @Test(dataProvider = "route", groups = {"PSeries", "Cloud", "K2","P2","","Contacts"})
+    public void testContacts_01_AddCompanyContactsSucc(String routePrefix, int caller, String callee, String cdrCaller, String trunk, String contactsName){
         prerequisite();
         log.info("操作前删除所有联系人");
-        apiUtil.deleteAllCompanyContacts();
+        apiUtil.deleteAllCompanyContacts().apply();
 
         log.info("设置Name Display Format为first name在前，last name在后");
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"first_last\"}").apply();
@@ -154,8 +153,8 @@ public class TestCompanyContacts extends TestCaseBaseNew {
     @Feature("新增个人联系人，无对应企业联系人，然后该联系人呼入到Pbx，进行个人联系人匹配")
     @Description("1:删除联系人记录->2:创建联系人->3:联系人外呼进来，呼入到分机1000->4：webclient-》call log界面进行cdr记录联系人匹配校验->5:admin进行cdr校验")
     @Severity(SeverityLevel.NORMAL)
-    @Test(dataProvider = "route", groups = {"Contacts"})
-    public void testContactsAddPersonalContactsSucc(String routePrefix, int caller, String callee, String adminCdrCaller, String perCdrCaller, String trunk, String perContactsName){
+    @Test(dataProvider = "route", groups = {"PSeries", "Cloud", "K2","P2","","Contacts"})
+    public void testContacts_02_AddPersonalContactsSucc(String routePrefix, int caller, String callee, String adminCdrCaller, String perCdrCaller, String trunk, String perContactsName){
         prerequisite();
 
         log.info("操作前删除所有联系人");
@@ -166,7 +165,7 @@ public class TestCompanyContacts extends TestCaseBaseNew {
 
         step("删除个人联系人记录，然后分机创建个人联系人");
         apiUtil.loginWeb(callee,EXTENSION_PASSWORD_NEW);
-        apiUtil.delPerContacts();
+        apiUtil.delPerContacts().apply();
 
         auto.loginPage().loginWithExtension(callee, EXTENSION_PASSWORD_NEW);
         auto.homePage().intoPage(HomePage.Menu_Level_1.personal_contacts);
@@ -206,8 +205,8 @@ public class TestCompanyContacts extends TestCaseBaseNew {
     @Feature("新增个人联系人和企业联系人，然后该联系人呼入到Pbx，进行个人/企业联系人匹配")
     @Description("1:login webclient->2:创建联系人->3:联系人外呼进来，呼入到分机1001->4：webclient-》call log界面进行cdr记录联系人匹配校验->5:admin进行cdr校验")
     @Severity(SeverityLevel.NORMAL)
-    @Test(dataProvider = "route", groups = {"Contacts"})
-    public void testContactsPersonalAndCompanyContactsSucc(String routePrefix, int caller, String callee, String adminCdrCaller, String perCdrCaller, String trunk, String perContactsName,String comContactsName){
+    @Test(dataProvider = "route", groups = {"PSeries", "Cloud", "K2","P2","","Contacts"})
+    public void testContacts_03_PersonalAndCompanyContactsSucc(String routePrefix, int caller, String callee, String adminCdrCaller, String perCdrCaller, String trunk, String perContactsName,String comContactsName){
         prerequisite();
 
         log.info("操作前删除所有联系人");
@@ -221,7 +220,7 @@ public class TestCompanyContacts extends TestCaseBaseNew {
 
         step("删除个人联系人记录，然后分机创建个人联系人");
         apiUtil.loginWeb(callee,EXTENSION_PASSWORD_NEW);
-        apiUtil.delPerContacts();
+        apiUtil.delPerContacts().apply();
 
         auto.loginPage().loginWithExtension(callee, EXTENSION_PASSWORD_NEW);
         auto.homePage().intoPage(HomePage.Menu_Level_1.personal_contacts);
@@ -261,8 +260,8 @@ public class TestCompanyContacts extends TestCaseBaseNew {
     @Feature("2000为分机1000的跟随mobile")
     @Description("1->删除联系人记录，然后进行新增企业联系人;2->修改分机1000的mobile为外线号码2000;3->分机登录webclient进行新增个人联系人记录;4->外线号码2000进行呼入到分机1000;5->call log进行联系人匹配校验;6->admin cdr进行联系人匹配校验;7->恢复分机2000的mobile为空")
     @Severity(SeverityLevel.NORMAL)
-    @Test(dataProvider = "route", groups = {"Contacts"})
-    public void testContactsExtensionMobileSucc(String routePrefix, int caller, String callee, String adminCdrCaller, String perCdrCaller, String trunk, String perContactsName,String comContactsName){
+    @Test(dataProvider = "route", groups = {"PSeries", "Cloud", "K2","P2","","Contacts"})
+    public void testContacts_04_ExtensionMobileSucc(String routePrefix, int caller, String callee, String adminCdrCaller, String perCdrCaller, String trunk, String perContactsName,String comContactsName){
         prerequisite();
 
         log.info("操作前删除所有联系人");
@@ -279,7 +278,7 @@ public class TestCompanyContacts extends TestCaseBaseNew {
 
         step("删除个人联系人记录，然后分机创建个人联系人");
         apiUtil.loginWeb(callee,EXTENSION_PASSWORD_NEW);
-        apiUtil.delPerContacts();
+        apiUtil.delPerContacts().apply();
 
         auto.loginPage().loginWithExtension(callee, EXTENSION_PASSWORD_NEW);
         auto.homePage().intoPage(HomePage.Menu_Level_1.personal_contacts);
@@ -311,17 +310,14 @@ public class TestCompanyContacts extends TestCaseBaseNew {
         softAssertPlus.assertThat(getCDRRecord).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(String.valueOf(adminCdrCaller), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), ""+adminCdrCaller+" hung up", trunk, "", "Inbound"));
         softAssertPlus.assertAll();
-
-        step("修改分机1000，清除mobile设置");
-        apiUtil.editExtension("1000","\"mobile_number\":\"\"").apply();
     }
 
     @Epic("option set no match")
     @Feature("匹配模式当前设置不匹配")
     @Description("1->删除联系人记录，进行新增企业联系人，且设置匹配模式为不匹配;2->新增个人联系人记录;3->外线号码2000进行呼入到分机1000;4->call log进行联系人匹配校验;5->admin cdr进行联系人匹配校验;6->恢复匹配模式为模糊匹配7位")
     @Severity(SeverityLevel.NORMAL)
-    @Test(dataProvider = "route", groups = {"Contacts"})
-    public void testContactsOptionSetNoMatchSucc(String routePrefix, int caller, String callee, String adminCdrCaller,String trunk, String perContactsName,String comContactsName){
+    @Test(dataProvider = "route", groups = {"PSeries", "Cloud", "K2","P2","","Contacts"})
+    public void testContacts_05_OptionSetNoMatchSucc(String routePrefix, int caller, String callee, String adminCdrCaller,String trunk, String perContactsName,String comContactsName){
         prerequisite();
 
         log.info("操作前删除所有联系人");
@@ -338,7 +334,7 @@ public class TestCompanyContacts extends TestCaseBaseNew {
 
         step("操作前删除个人联系人，然后分机创建个人联系人");
         apiUtil.loginWeb(callee,EXTENSION_PASSWORD_NEW);
-        apiUtil.delPerContacts();
+        apiUtil.delPerContacts().apply();
 
         auto.loginPage().loginWithExtension(callee, EXTENSION_PASSWORD_NEW);
         auto.homePage().intoPage(HomePage.Menu_Level_1.personal_contacts);
@@ -370,17 +366,14 @@ public class TestCompanyContacts extends TestCaseBaseNew {
         softAssertPlus.assertThat(getCDRRecord).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(String.valueOf(adminCdrCaller), CDRObject.CDRNAME.Extension_1000.toString(), CDRObject.STATUS.ANSWER.toString(), ""+adminCdrCaller+" hung up", trunk, "", "Inbound"));
         softAssertPlus.assertAll();
-
-        step("contacts匹配恢复默认");
-        apiUtil.contactsOptionsUpdate("{\"match_model\":\"fuzzy_match\",\"fuzzy_count\":7}").apply();
     }
 
     @Epic("The same number does not have the same name")
     @Feature("同号不同名")
     @Description("1->删除联系人记录，然后进行新增联系人;2->2000外线号码进行呼入到分机1000;3->call log进行联系人匹配校验;4->admin cdr进行联系人匹配校验")
     @Severity(SeverityLevel.NORMAL)
-    @Test(dataProvider = "route", groups = {"Contacts"})
-    public void testContactsSameNumberDostNotHaveTheSameName(String routePrefix, int caller, String callee, String adminCdrCaller,String perCdrCaller,String trunk, String perContactsNameOne,String comContactsNameOne, String perContactsNameTwo,String comContactsNameTwo){
+    @Test(dataProvider = "route", groups = {"PSeries", "Cloud", "K2","P2","","Contacts"})
+    public void testContacts_06_SameNumberDostNotHaveTheSameName(String routePrefix, int caller, String callee, String adminCdrCaller,String perCdrCaller,String trunk, String perContactsNameOne,String comContactsNameOne, String perContactsNameTwo,String comContactsNameTwo){
         prerequisite();
 
         log.info("操作前删除所有联系人");
@@ -391,11 +384,11 @@ public class TestCompanyContacts extends TestCaseBaseNew {
 
         step("创建企业联系人");
         apiUtil.createCompanyContacts("{\"first_name\":\""+comContactsNameOne+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616583707962,\"num_type\":\"business_number\",\"number\":\""+caller+"\"}]}");
-        apiUtil.createCompanyContacts("{\"first_name\":\""+comContactsNameTwo+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616583707962,\"num_type\":\"business_number\",\"number\":\"1539888"+caller+"\"}]}");
+        apiUtil.createCompanyContacts("{\"first_name\":\""+comContactsNameTwo+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616583707962,\"num_type\":\"business_number\",\"number\":\"1539888"+caller+"\"}]}").apply();
 
         step("操作前删除个人联系人，然后分机创建个人联系人");
         apiUtil.loginWeb(callee,EXTENSION_PASSWORD_NEW);
-        apiUtil.delPerContacts();
+        apiUtil.delPerContacts().apply();
 
         apiUtil.createPersonalContacts("{\"first_name\":\""+perContactsNameOne+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616981912633,\"num_type\":\"business_number\",\"number\":\"1597222"+caller+"\"}],\"type\":\"personal\"}");
         apiUtil.createPersonalContacts("{\"first_name\":\""+perContactsNameTwo+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616981912633,\"num_type\":\"business_number\",\"number\":\""+caller+"\"}],\"type\":\"personal\"}");
@@ -429,8 +422,8 @@ public class TestCompanyContacts extends TestCaseBaseNew {
     @Feature("同号又同名")
     @Description("1->删除联系人记录，然后进行新增联系人;2->2000外线号码进行呼入到分机1000;3->call log进行联系人匹配校验;4->admin cdr进行联系人匹配校验")
     @Severity(SeverityLevel.NORMAL)
-    @Test(dataProvider = "route", groups = {"Contacts"})
-    public void testContactsSameNumberAndSameName(String routePrefix, int caller, String callee, String adminCdrCaller,String perCdrCaller,String trunk, String perContactsNameOne,String comContactsNameOne, String perContactsNameTwo,String comContactsNameTwo){
+    @Test(dataProvider = "route", groups = {"PSeries", "Cloud", "K2","P2","","Contacts"})
+    public void testContacts_07_SameNumberAndSameName(String routePrefix, int caller, String callee, String adminCdrCaller,String perCdrCaller,String trunk, String perContactsNameOne,String comContactsNameOne, String perContactsNameTwo,String comContactsNameTwo){
         prerequisite();
 
         log.info("操作前删除所有联系人");
@@ -441,11 +434,11 @@ public class TestCompanyContacts extends TestCaseBaseNew {
 
         step("创建企业联系人");
         apiUtil.createCompanyContacts("{\"first_name\":\""+comContactsNameOne+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616583707962,\"num_type\":\"business_number\",\"number\":\""+caller+"\"}]}");
-        apiUtil.createCompanyContacts("{\"first_name\":\""+comContactsNameTwo+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616583707962,\"num_type\":\"business_number\",\"number\":\""+caller+"\"}]}");
+        apiUtil.createCompanyContacts("{\"first_name\":\""+comContactsNameTwo+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616583707962,\"num_type\":\"business_number\",\"number\":\""+caller+"\"}]}").apply();
 
         step("操作前删除个人联系人，然后分机创建个人联系人");
         apiUtil.loginWeb(callee,EXTENSION_PASSWORD_NEW);
-        apiUtil.delPerContacts();
+        apiUtil.delPerContacts().apply();
 
         apiUtil.createPersonalContacts("{\"first_name\":\""+perContactsNameOne+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616981912633,\"num_type\":\"business_number\",\"number\":\""+caller+"\"}],\"type\":\"personal\"}");
         apiUtil.createPersonalContacts("{\"first_name\":\""+perContactsNameTwo+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616981912633,\"num_type\":\"business_number\",\"number\":\""+caller+"\"}],\"type\":\"personal\"}");
@@ -479,8 +472,8 @@ public class TestCompanyContacts extends TestCaseBaseNew {
     @Feature("1000外呼2000")
     @Description("1->删除联系人记录，然后进行新增联系人;2->1000外呼到2000;3->call log进行联系人匹配校验;4->admin cdr进行联系人匹配校验")
     @Severity(SeverityLevel.NORMAL)
-    @Test(dataProvider = "route",groups = {"Contacts"})
-    public void testContactsCallOut(int caller, String callee, String adminCdrCaller,String perCdrCaller,String trunk, String perContactsName,String comContactsName){
+    @Test(dataProvider = "route",groups = {"PSeries", "Cloud", "K2","P2","","Contacts"})
+    public void testContacts_08_CallOut(int caller, String callee, String adminCdrCaller,String perCdrCaller,String trunk, String perContactsName,String comContactsName){
         prerequisite();
 
         log.info("操作前删除所有联系人");
@@ -490,11 +483,11 @@ public class TestCompanyContacts extends TestCaseBaseNew {
         apiUtil.preferencesUpdate("{\"name_disp_fmt\":\"first_last\"}");
 
         step("创建企业联系人");
-        apiUtil.createCompanyContacts("{\"first_name\":\""+comContactsName+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616583707962,\"num_type\":\"business_number\",\"number\":\""+callee+"\"}]}");
+        apiUtil.createCompanyContacts("{\"first_name\":\""+comContactsName+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616583707962,\"num_type\":\"business_number\",\"number\":\""+callee+"\"}]}").apply();
 
         step("操作前删除个人联系人，然后分机创建个人联系人");
         apiUtil.loginWeb(String.valueOf(caller),EXTENSION_PASSWORD_NEW);
-        apiUtil.delPerContacts();
+        apiUtil.delPerContacts().apply();
 
         apiUtil.createPersonalContacts("{\"first_name\":\""+perContactsName+"\",\"last_name\":\"\",\"company\":\"\",\"email\":\"\",\"zip_code\":\"\",\"street\":\"\",\"city\":\"\",\"state\":\"\",\"country\":\"\",\"number_list\":[{\"new\":true,\"id\":1616981912633,\"num_type\":\"business_number\",\"number\":\""+callee+"\"}],\"type\":\"personal\"}");
 

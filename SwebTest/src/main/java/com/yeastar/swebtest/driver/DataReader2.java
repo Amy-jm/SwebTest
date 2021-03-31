@@ -29,11 +29,8 @@ public class DataReader2 {
     public final static String PJSIP_COMMAND_reboot = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;reboot";
     public final static String SHOW_CLI_LOG = "export PATH=$PATH:$HOME/bin:/sbin:/usr/bin:/usr/sbin;cat /ysdisk/syslog/pbxlog.0";
     public final static int PJSIP_TCP_PORT = 8022;
-    public final static String PJSIP_SSH_PASSWORD = "";
-    public final static String PJSIP_SSH_USER = "ls@yf";
-
-    public final static String SOFTWAREP_SSH_PASSWORD = "1";
-    public final static String SOFTWAREP_SSH_USER = "root";
+    public static String PJSIP_SSH_PASSWORD = "";
+    public static String PJSIP_SSH_USER = "ls@yf";
 
     public final String PBX_URL = "https://"+ DEVICE_IP_LAN +":"+DEVICE_PORT;
 
@@ -161,7 +158,6 @@ public class DataReader2 {
     public  static String RECORD_VIDEO = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"RECORD_VIDEO");
     public  static String screenResolution = PropertiesUntils.getInstance().getPropertiesValue(CONFIG_PROPERTIES_FILE_PATH,"screenResolution");//全局分辨率     用户分辨率 > 全局分辨率
     public static String screenResolutionUser = PropertiesUntils.getInstance().getPropertiesValue(DATA_PROPERTIES_FILE_PATH,"screenResolutionUser");//用户分辨率    用户分辨率 > 全局分辨率
-
 
     /**
      * 根据key返回key值

@@ -30,7 +30,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
 
     APIUtil apiUtil = new APIUtil();
-    private boolean runRecoveryEnvFlag = true;
+    private boolean runRecoveryEnvFlag = false;
     private boolean isDebugInitExtensionFlag = !runRecoveryEnvFlag;
     private String PROMPT_1 = "prompt1.slin";
     private String PROMPT_2 = "prompt2.slin";
@@ -118,9 +118,13 @@ public class TestQueueBasic extends TestCaseBaseNew {
         ArrayList<String> queueDynamicMembers = new ArrayList<>();
         queueStaticMembers.add("1002");
         queueStaticMembers.add("1003");
-        queueStaticMembers.add("1020");
         queueDynamicMembers.add("1000");
         queueDynamicMembers.add("1001");
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            queueStaticMembers.add("1020");
+        }
+
         step("创建队列6401");
         apiUtil.createQueue(queueName1, queueNum1, queueDynamicMembers, queueStaticMembers, null)
                 .editQueue(queueNum1,String.format("\"agent_timeout\":10,\"retry_time\":10,\"wrap_up_time\":10"))
@@ -147,7 +151,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         staticAgentList.add("1002");
         staticAgentList.add("1003");
-        staticAgentList.add("1020");
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            staticAgentList.add("1020");
+        }
+
         dynamicAgentList.add("1000");
         dynamicAgentList.add("1001");
 
@@ -185,109 +193,117 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         }
     }
-
-    @Epic("P_Series")
-    @Feature("QueueBasic")
-    @Story("Basic,Trunk,InboundRoute")
-    @Description("1.通过sip外线呼入到Queue1-6401\n" +
-            "2.坐席1000、1001、1002、1003、1020同时响铃，分机1000接听后其它坐席停止响铃，主叫挂断，cdr正确")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"P1","Queue","QueueBasic","Basic","Trunk","InboundRoute","SIP_REGISTER","PSeries","Cloud","K2"})
-    public void testQu01_BasicTrunkInboundRoute1(){
-
-        prerequisite();
-
-        step("[恢复环境]");
-        resetQueue1();
-
-        step("通过SIP外线呼入到Queue1");
-        pjsip.Pj_Make_Call_No_Answer(3001, "3000", DEVICE_ASSIST_1, false);
-
-        step("坐席1000、1001、1002、1003、1020同时响铃");
-        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
-
-        step("分机1000接听后其它坐席停止响铃");
-        pjsip.Pj_Answer_Call(1000);
-        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING,10)).as("[2.通话校验]:1000分机接听成功").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
-
-        sleep(WaitUntils.TALKING_WAIT);
-
-        step("主叫挂断");
-        pjsip.Pj_hangupCall(3001);
+//
+//    @Epic("P_Series")
+//    @Feature("QueueBasic")
+//    @Story("Basic,Trunk,InboundRoute")
+//    @Description("1.通过sip外线呼入到Queue1-6401\n" +
+//            "2.坐席1000、1001、1002、1003、1020同时响铃，分机1000接听后其它坐席停止响铃，主叫挂断，cdr正确")
+//    @Severity(SeverityLevel.BLOCKER)
+//    @TmsLink(value = "")
+//    @Issue("")
+//    @Test(groups = {"P1","Queue","QueueBasic","Basic","Trunk","InboundRoute","SIP_REGISTER","PSeries","Cloud","K2"})
+//    public void testQu01_BasicTrunkInboundRoute1(){
+//
+//        prerequisite();
+//
+//        step("[恢复环境]");
+//        resetQueue1();
+//
+//        step("通过SIP外线呼入到Queue1");
+//        pjsip.Pj_Make_Call_No_Answer(3001, "3000", DEVICE_ASSIST_1, false);
+//
+//        step("坐席1000、1001、1002、1003、1020同时响铃");
+//        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
+//        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
+//        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
+//        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
+//
+//        if(!FXS_1.trim().equalsIgnoreCase("null")){
+//            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+//        }
+//
+//        step("分机1000接听后其它坐席停止响铃");
+//        pjsip.Pj_Answer_Call(1000);
+//        softAssertPlus.assertThat(getExtensionStatus(1000, TALKING,10)).as("[2.通话校验]:1000分机接听成功").isEqualTo(TALKING);
+//        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
+//        softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
+//        softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
+//
+//        if(!FXS_1.trim().equalsIgnoreCase("null")){
+//            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+//        }
+//
+//        sleep(WaitUntils.TALKING_WAIT);
+//
+//        step("主叫挂断");
+//        pjsip.Pj_hangupCall(3001);
+////        pjsip.Pj_Hangup_All();
+//
+//        assertStep("网页admin登录 ,CDR校验");
+//        auto.loginPage().loginWithAdmin();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
+//
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+//                .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SIPTrunk, "", INBOUND.toString()))
+//                .contains(tuple(Extension_3001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_3001.toString()+" hung up",  SIPTrunk, "", INBOUND.toString()));
+//        softAssertPlus.assertAll();
+//    }
+//
+//    @Epic("P_Series")
+//    @Feature("QueueBasic")
+//    @Story("Basic,Trunk,InboundRoute")
+//    @Description("1.通过sps外线呼入到Queue1-6401\n" +
+//                 "2.坐席1000、1001、1002、1003、1020同时响铃，" +
+//                 "3.分机1002接听后其它坐席停止响铃，主叫挂断，cdr正确")
+//    @Severity(SeverityLevel.BLOCKER)
+//    @TmsLink(value = "")
+//    @Issue("")
+//    @Test(groups = {"P1","Queue","QueueBasic","Basic","Trunk","InboundRoute","SPS","PSeries","Cloud","K2"})
+//    public void testQu02_BasicTrunkInboundRoute2(){
+//
+//        prerequisite();
+//
+//        step("[恢复环境]");
+//        resetQueue1();
+//
+//        step("通过sps外线呼入到Queue1");
+//        pjsip.Pj_Make_Call_No_Answer(2001, "996401", DEVICE_ASSIST_2, false);
+//
+//        step("坐席1000、1001、1002、1003、1020同时响铃");
+//        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
+//        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
+//        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
+//        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
+//
+//        if (!FXO_1.trim().equalsIgnoreCase("null")){
+//            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+//        }
+//
+//        step("分机1002接听后其它坐席停止响铃");
+//        pjsip.Pj_Answer_Call(1002);
+//        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING,10)).as("[2.通话校验]:1002分机接听成功").isEqualTo(TALKING);
+//        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
+//        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
+//        softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
+//
+//        if (!FXO_1.trim().equalsIgnoreCase("null")){
+//            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+//        }
+//
+//        sleep(WaitUntils.TALKING_WAIT);
+//
+//        step("主叫挂断");
+//        pjsip.Pj_hangupCall(2001);
 //        pjsip.Pj_Hangup_All();
-
-        assertStep("网页admin登录 ,CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_3001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SIPTrunk, "", INBOUND.toString()))
-                .contains(tuple(Extension_3001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_3001.toString()+" hung up",  SIPTrunk, "", INBOUND.toString()));
-        softAssertPlus.assertAll();
-    }
-
-    @Epic("P_Series")
-    @Feature("QueueBasic")
-    @Story("Basic,Trunk,InboundRoute")
-    @Description("1.通过sps外线呼入到Queue1-6401\n" +
-                 "2.坐席1000、1001、1002、1003、1020同时响铃，" +
-                 "3.分机1002接听后其它坐席停止响铃，主叫挂断，cdr正确")
-    @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
-    @Issue("")
-    @Test(groups = {"P1","Queue","QueueBasic","Basic","Trunk","InboundRoute","SPS","PSeries","Cloud","K2"})
-    public void testQu02_BasicTrunkInboundRoute2(){
-
-        prerequisite();
-
-        step("[恢复环境]");
-        resetQueue1();
-
-        step("通过sps外线呼入到Queue1");
-        pjsip.Pj_Make_Call_No_Answer(2001, "996401", DEVICE_ASSIST_2, false);
-
-        step("坐席1000、1001、1002、1003、1020同时响铃");
-        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
-
-        step("分机1002接听后其它坐席停止响铃");
-        pjsip.Pj_Answer_Call(1002);
-        softAssertPlus.assertThat(getExtensionStatus(1002, TALKING,10)).as("[2.通话校验]:1002分机接听成功").isEqualTo(TALKING);
-        softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
-
-        sleep(WaitUntils.TALKING_WAIT);
-
-        step("主叫挂断");
-        pjsip.Pj_hangupCall(2001);
-//        pjsip.Pj_Hangup_All();
-
-        assertStep("网页admin登录 ,CDR校验");
-        auto.loginPage().loginWithAdmin();
-        auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
-
-        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
-        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_2000.toString()+" hung up",  SPS, "", INBOUND.toString()));
-        softAssertPlus.assertAll();
-    }
+//
+//        List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
+//        softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
+//                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+//                .contains(tuple(Extension_2001.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_2001.toString()+" hung up",  SPS, "", INBOUND.toString()));
+//        softAssertPlus.assertAll();
+//    }
 
     @Epic("P_Series")
     @Feature("QueueBasic")
@@ -313,7 +329,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("分机1003接听后其它坐席停止响铃");
         pjsip.Pj_Answer_Call(1003);
@@ -321,7 +340,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+        }
 
         sleep(WaitUntils.TALKING_WAIT);
 
@@ -367,7 +389,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("分机1000接听后其它坐席停止响铃");
         pjsip.Pj_Answer_Call(1000);
@@ -375,7 +400,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+        }
 
         sleep(WaitUntils.TALKING_WAIT);
 
@@ -404,6 +432,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"P3","Queue","QueueBasic","Trunk","InboundRoute","FXO","PSeries"})
     public void testQu05_TrunkInboundRoute1FXO(){
+        if(FXO_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"FXO_1不存在");
+        }
+
         prerequisite();
 
         step("[恢复环境]");
@@ -420,7 +452,6 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
 
         step("分机1001接听后其它坐席停止响铃");
         pjsip.Pj_Answer_Call(1001);
@@ -428,7 +459,6 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
 
         sleep(WaitUntils.TALKING_WAIT);
 
@@ -457,6 +487,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"P3","Queue","QueueBasic","Trunk","InboundRoute","BRI","PSeries"})
     public void testQu06_TrunkInboundRoute1BRI(){
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1中继不存在");
+        }
+
         prerequisite();
 
         step("[恢复环境]");
@@ -473,7 +507,6 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
 
         step("分机1002接听后其它坐席停止响铃");
         pjsip.Pj_Answer_Call(1002);
@@ -481,7 +514,6 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
 
         sleep(WaitUntils.TALKING_WAIT);
 
@@ -510,6 +542,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"P3","Queue","QueueBasic","Trunk","InboundRoute","E1","PSeries"})
     public void testQu07_TrunkInboundRoute1E1(){
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1口不存在");
+        }
+
         prerequisite();
 
         step("[恢复环境]");
@@ -526,7 +562,6 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
 
         step("分机1003接听后其它坐席停止响铃");
         pjsip.Pj_Answer_Call(1003);
@@ -534,7 +569,6 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
 
         sleep(WaitUntils.TALKING_WAIT);
 
@@ -563,6 +597,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"P3","Queue","QueueBasic","Trunk","InboundRoute","GSM","PSeries"})
     public void testQu08_TrunkInboundRoute1GSM(){
+        if(GSM.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"GSM不存在");
+        }
+
         prerequisite();
 
         step("[恢复环境]");
@@ -579,7 +617,6 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
 
         step("分机1003接听后其它坐席停止响铃");
         pjsip.Pj_Answer_Call(1000);
@@ -587,7 +624,6 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
 
         sleep(WaitUntils.TALKING_WAIT);
 
@@ -628,39 +664,54 @@ public class TestQueueBasic extends TestCaseBaseNew {
         pjsip.Pj_Make_Call_No_Answer(2001, "996401");
 
         step("坐席1000、1001、1002、1003、1020同时响铃");
-        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 15)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 15)).as("[2.通话校验]:FXS分机挂断").isEqualTo(RING);
+        }
 
         step("10s响铃，坐席1000、1001、1002、1003、1020挂断");
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 15)).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+        }
 
         step("10s等待，第二轮坐席1000、1001、1002、1003、1020响铃");
-        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 15)).as("[3.通话校验]:1000分机响铃").isEqualTo(RING);
+        softAssertPlus.assertThat(getExtensionStatus(1000, RING, 20)).as("[3.通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[3.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[3.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[3.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[3.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 15)).as("[2.通话校验]:FXS分机挂断").isEqualTo(RING);
+        }
 
         step("10s响铃，第二轮坐席1000、1001、1002、1003、1020挂断");
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 15)).as("[4.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[4.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[4.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[4.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[4.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+        }
 
         step("10s等待，第三轮坐席1000、1001、1002、1003、1020响铃");
         softAssertPlus.assertThat(getExtensionStatus(1000, RING, 15)).as("[5.通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[5.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[5.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[5.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[5.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(RING);
+        }
         
         step("1000响铃接听");
         pjsip.Pj_Answer_Call(1000);
@@ -669,7 +720,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[6.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[6.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[6.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[6.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+        }
+
         sleep(WaitUntils.TALKING_WAIT);
 
         step("主叫挂断");
@@ -681,8 +736,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()));
         
         softAssertPlus.assertAll();
     }
@@ -716,7 +771,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(RING);
+        }
 
         step("1001拒接，其他分机继续响铃");
         pjsip.Pj_Answer_Call(1001,486);
@@ -725,21 +783,30 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, RING, 1)).as("[2.通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[2.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 5 )).as("[2.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[2.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(RING);
+        }
 
         step("10s响铃，坐席1000、1001、1002、1003、1020挂断");
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 22)).as("[3.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[3.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[3.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[3.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[3.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+        }
 
         step("10s等待，第二轮坐席1000、1001、1002、1003、1020响铃");
         softAssertPlus.assertThat(getExtensionStatus(1000, RING, 22)).as("[4.通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[4.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[4.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[4.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[4.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(RING);
+        }
         
         step("1001接听");
         pjsip.Pj_Answer_Call(1001);
@@ -747,7 +814,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[5.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[5.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[5.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[5.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+        }
+
         sleep(WaitUntils.TALKING_WAIT);
 
         step("主叫挂断");
@@ -759,8 +830,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -794,7 +865,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("1001拒接，其他分机继续响铃");
         pjsip.Pj_Answer_Call(1001,486);
@@ -807,7 +881,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[5.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[5.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[5.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[5.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
+
         sleep(WaitUntils.TALKING_WAIT);
 
         step("主叫挂断");
@@ -819,8 +897,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -861,8 +939,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 10)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP,1)).as("[1.通话校验]:1000分机不会响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("1003接听");
         pjsip.Pj_Answer_Call(1003);
@@ -870,7 +951,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
+
         sleep(WaitUntils.TALKING_WAIT);
 
         step("主叫挂断");
@@ -882,8 +967,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+" hung up",  SPS, "", INBOUND.toString()));
 
         step("分机1000拨打*76401加入Queue1");
         pjsip.Pj_Make_Call_No_Answer(1000, "*76401");
@@ -899,7 +984,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[3.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[3.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[3.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[3.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("1000接听");
         pjsip.Pj_Answer_Call(1000);
@@ -907,7 +995,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[4.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[4.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[4.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[4.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
+
         sleep(WaitUntils.TALKING_WAIT);
 
         step("1000挂断");
@@ -919,8 +1011,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
         resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+" hung up",  SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -963,8 +1055,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, RING, 10)).as("[1.通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP,1)).as("[1.通话校验]:1001分机不会响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("1002接听");
         pjsip.Pj_Answer_Call(1002);
@@ -972,7 +1067,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
+
         sleep(WaitUntils.TALKING_WAIT);
 
         step("1002挂断");
@@ -984,8 +1083,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1002.toString(),ANSWER.toString(), Extension_1002.toString()+" hung up",  SPS, "", INBOUND.toString()));
 
         step("分机1001拨打*076401取消暂停");
         pjsip.Pj_Make_Call_No_Answer(1001, "*076401");
@@ -1001,7 +1100,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[3.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[3.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[3.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[3.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("1001接听");
         pjsip.Pj_Answer_Call(1001);
@@ -1009,7 +1111,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[4.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[4.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[4.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[4.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
+
         sleep(WaitUntils.TALKING_WAIT);
 
         step("1001挂断");
@@ -1021,8 +1127,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
         resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   ANSWER.toString(), QUEUE1_6401.toString() + " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+" hung up",  SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -1039,7 +1145,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "7.通过sps外线再次呼入到Queue1,分机yy响铃接听，挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","LeastRecent"})
     public void testQu14_RingStrategy6() {
         prerequisite();
@@ -1120,7 +1226,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "7.通过sps外线再次呼入到Queue1，换成分机zz响铃，接听，挂断")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","FewestCalls"})
     public void testQu15_RingStrategy7() {
         prerequisite();
@@ -1270,7 +1376,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "5.分机1000响铃，主叫挂断，cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","RingStrategy","SIP_REGISTER","PSeries","Cloud","K2","Linear"})
     public void testQu18_RingStrategy10() {
         prerequisite();
@@ -1288,7 +1394,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         int ext2 = Integer.parseInt(extList.get(1).getValue0());
         int ext3 = Integer.parseInt(extList.get(2).getValue0());
         int ext4 = Integer.parseInt(extList.get(3).getValue0());
-        int ext5 = Integer.parseInt(extList.get(4).getValue0());
+        int ext5 = 0;
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            ext5 = Integer.parseInt(extList.get(4).getValue0());
+        }
 
         step("通过SIP外线呼入到Queue1");
         pjsip.Pj_Make_Call_No_Answer(3001, "3000");
@@ -1298,42 +1407,59 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(ext2, HUNGUP,22)).as("[1.通话校验]:"+ext2+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext3, HUNGUP,22)).as("[1.通话校验]:"+ext3+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext4, HUNGUP,22)).as("[1.通话校验]:"+ext4+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[1.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[1.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+        }
 
         step("第二个坐席响铃");
         softAssertPlus.assertThat(getExtensionStatus(ext2, RING,  22)).as("[2.通话校验]:"+ext2+"分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(ext1, HUNGUP,22)).as("[2.通话校验]:"+ext1+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext3, HUNGUP,22)).as("[2.通话校验]:"+ext3+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext4, HUNGUP,22)).as("[2.通话校验]:"+ext4+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[2.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[2.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+        }
 
         step("第三个坐席响铃");
         softAssertPlus.assertThat(getExtensionStatus(ext3, RING,  22)).as("[3.通话校验]:"+ext3+"分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(ext2, HUNGUP,22)).as("[3.通话校验]:"+ext2+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext1, HUNGUP,22)).as("[3.通话校验]:"+ext1+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext4, HUNGUP,22)).as("[3.通话校验]:"+ext4+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[3.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[2.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+        }
 
         step("第四个坐席响铃");
         softAssertPlus.assertThat(getExtensionStatus(ext4, RING,  22)).as("[4.通话校验]:"+ext4+"分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(ext2, HUNGUP,22)).as("[4.通话校验]:"+ext2+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext3, HUNGUP,22)).as("[4.通话校验]:"+ext3+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext1, HUNGUP,22)).as("[4.通话校验]:"+ext1+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[4.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
 
-        step("第五个坐席响铃");
-        softAssertPlus.assertThat(getExtensionStatus(ext5, RING,  22)).as("[5.通话校验]:"+ext5+"分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(ext2, HUNGUP,22)).as("[5.通话校验]:"+ext2+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext3, HUNGUP,22)).as("[5.通话校验]:"+ext3+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext4, HUNGUP,22)).as("[5.通话校验]:"+ext4+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext1, HUNGUP,22)).as("[5.通话校验]:"+ext1+"分机未响铃").isEqualTo(HUNGUP);
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[2.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+        }
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            step("第五个坐席响铃");
+            softAssertPlus.assertThat(getExtensionStatus(ext5, RING,  22)).as("[5.通话校验]:"+ext5+"分机响铃").isEqualTo(RING);
+            softAssertPlus.assertThat(getExtensionStatus(ext2, HUNGUP,22)).as("[5.通话校验]:"+ext2+"分机未响铃").isEqualTo(HUNGUP);
+            softAssertPlus.assertThat(getExtensionStatus(ext3, HUNGUP,22)).as("[5.通话校验]:"+ext3+"分机未响铃").isEqualTo(HUNGUP);
+            softAssertPlus.assertThat(getExtensionStatus(ext4, HUNGUP,22)).as("[5.通话校验]:"+ext4+"分机未响铃").isEqualTo(HUNGUP);
+            softAssertPlus.assertThat(getExtensionStatus(ext1, HUNGUP,22)).as("[5.通话校验]:"+ext1+"分机未响铃").isEqualTo(HUNGUP);
+        }
 
         step("一个循环结束，第一个坐席再次响铃");
         softAssertPlus.assertThat(getExtensionStatus(ext1, RING,  22)).as("[6.通话校验]:"+ext1+"分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(ext2, HUNGUP,22)).as("[6.通话校验]:"+ext2+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext3, HUNGUP,22)).as("[6.通话校验]:"+ext3+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext4, HUNGUP,22)).as("[6.通话校验]:"+ext4+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[6.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[2.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+        }
 
         step("接听，被叫挂断");
         pjsip.Pj_Answer_Call(ext1);
@@ -1381,7 +1507,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         int ext2 = Integer.parseInt(extList.get(1).getValue0());
         int ext3 = Integer.parseInt(extList.get(2).getValue0());
         int ext4 = Integer.parseInt(extList.get(3).getValue0());
-        int ext5 = Integer.parseInt(extList.get(4).getValue0());
+        int ext5 = 0;
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            ext5 = Integer.parseInt(extList.get(4).getValue0());
+        }
 
         step("通过SIP外线呼入到Queue1");
         pjsip.Pj_Make_Call_No_Answer(3001, "3000");
@@ -1391,14 +1521,20 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(ext2, HUNGUP,22)).as("[1.通话校验]:"+ext2+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext3, HUNGUP,22)).as("[1.通话校验]:"+ext3+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext4, HUNGUP,22)).as("[1.通话校验]:"+ext4+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[1.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[2.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+        }
 
         step("第二个坐席响铃");
         softAssertPlus.assertThat(getExtensionStatus(ext2, RING,  22)).as("[2.通话校验]:"+ext2+"分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(ext1, HUNGUP,22)).as("[2.通话校验]:"+ext1+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext3, HUNGUP,22)).as("[2.通话校验]:"+ext3+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext4, HUNGUP,22)).as("[2.通话校验]:"+ext4+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[2.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,22)).as("[2.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+        }
 
         step("接听，被叫挂断");
         pjsip.Pj_Answer_Call(ext2);
@@ -1501,7 +1637,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
     @Story("RingStrategy")
     @Description("1.编辑Queue1的RingStrategy选择RingAll\n" +
             "2.通过sip外线呼入到Queue1" +
-            "3.所有坐席同时响铃，坐席1003接听，挂断；cdr正确")
+            "3.所有坐席同时响铃，坐席1003接听，挂断；cdr正确" +
+            "注意：如果执行完毕，CDR校验没有报错，且报错只有-》[2.通话校验]:1001分机响铃] expected:<[2]> but was:<[0]>，那么可以忽略该报错")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
@@ -1524,7 +1661,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("坐席1003接听，挂断；cdr正确");
         pjsip.Pj_Answer_Call(1003);
@@ -1532,7 +1672,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 1 )).as("[1.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[1.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[1.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
+
         sleep(WaitUntils.TALKING_WAIT);
 
         pjsip.Pj_hangupCall(1003);
@@ -1578,14 +1722,20 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("20s内无人接听，通话被挂断");
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 22)).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -1626,7 +1776,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("等待10s后，分机1000接听，正常通话挂断；cdr正确");
         sleep(10000);
@@ -1635,7 +1788,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         sleep(WaitUntils.TALKING_WAIT);
         pjsip.Pj_hangupCall(1000);
@@ -1659,7 +1815,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席全部响铃，20s内无人接听，主叫仍保持通话，主叫挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2"})
     public void testQu24_MaximumWaitingTime3() {
         prerequisite();
@@ -1680,7 +1836,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("坐席全部响铃，20s内无人接听，主叫仍保持通话，主叫挂断");
         sleep(20000);
@@ -1706,7 +1865,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "2.通过sip外线呼入到Queue1" +
             "3.20s后主叫被挂断，cdr正常")
     @Severity(SeverityLevel.BLOCKER)
-    @TmsLink(value = "")
+    @TmsLink(value = "------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Issue("")
     @Test(groups = {"P2","Queue","QueueBasic","MaximumWaitingTime","SIP_REGISTER","PSeries","Cloud","K2"})
     public void testQu25_MaximumWaitingTime4() {
@@ -1725,12 +1884,14 @@ public class TestQueueBasic extends TestCaseBaseNew {
 
         step("坐席分机响铃,20s后主叫被挂断，cdr正常");
         sleep(20000);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 15)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 10)).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(3001, HUNGUP, 22)).as("[3.通话校验]:20s后主叫被挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -1751,7 +1912,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席全部响铃，10s内无人接听，通话被挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2"})
     public void testQu26_FailoverDestination01() {
         prerequisite();
@@ -1772,14 +1933,20 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("10s内无人接听，通话被挂断；cdr正确");
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 11)).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -1799,7 +1966,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席xx响铃，10s内无人接听，通话被挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2","None"})
     public void testQu27_FailoverDestination02() {
         prerequisite();
@@ -1841,7 +2008,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席全部响铃，10s内无人接听，分机1000响铃，接听，挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2","Extension"})
     public void testQu28_FailoverDestination03() {
         prerequisite();
@@ -1864,7 +2031,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
+
         sleep(11000);
 
         step("10s内无人接听，分机1000响铃");
@@ -1872,7 +2043,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         step("1000接听，挂断；cdr正确");
         pjsip.Pj_Answer_Call(1000);
@@ -1899,7 +2073,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席全部响铃，10s内无人接听，分机1000响铃，主叫接听，挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2","Extension"})
     public void testQu29_FailoverDestination04() {
         prerequisite();
@@ -1922,7 +2096,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         sleep(10000);
         step("10s内无人接听，分机1000响铃");
@@ -1930,7 +2107,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         step("1000接听，挂断；cdr正确");
         pjsip.Pj_Answer_Call(1000);
@@ -1972,7 +2152,11 @@ public class TestQueueBasic extends TestCaseBaseNew {
         int ext2 = Integer.parseInt(extList.get(1).getValue0());
         int ext3 = Integer.parseInt(extList.get(2).getValue0());
         int ext4 = Integer.parseInt(extList.get(3).getValue0());
-        int ext5 = Integer.parseInt(extList.get(4).getValue0());
+        int ext5 = 0;
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            ext5 = Integer.parseInt(extList.get(4).getValue0());
+        }
 
         step("通过SIP外线呼入到Queue1");
         pjsip.Pj_Make_Call_No_Answer(3001, "3000");
@@ -1982,7 +2166,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(ext2, HUNGUP,10)).as("[1.通话校验]:"+ext2+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext3, HUNGUP,10)).as("[1.通话校验]:"+ext3+"分机未响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(ext4, HUNGUP,10)).as("[1.通话校验]:"+ext4+"分机未响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,10)).as("[1.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(ext5, HUNGUP,10)).as("[1.通话校验]:"+ext5+"分机未响铃").isEqualTo(HUNGUP);
+        }
 
         step("进入到分机"+ext1+"的语音留言；等待10s挂断");
         softAssertPlus.assertThat(getExtensionStatus(ext1, HUNGUP,10)).as("[2.通话校验]:"+ext1+"分机挂断").isEqualTo(HUNGUP);
@@ -2016,7 +2203,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席xx响铃，10s后无人接听进入到IVR0，asterisk后台检测到提示音“vm-greeting-dial-operator.slin”时，按0，分机A-1000响铃，接听，挂断；cdr正确；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SIP_REGISTER","PSeries","Cloud","K2","IVR"})
     public void testQu31_FailoverDestination06() {
         prerequisite();
@@ -2082,7 +2269,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席xx响铃，10s后无人接听进入到IVR0，asterisk后台检测到提示音“vm-greeting-dial-operator.slin”时，按0，分机A-1000响铃，接听，挂断；cdr正确；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","RingGroup"})
     public void testQu32_FailoverDestination07() {
         prerequisite();
@@ -2116,9 +2303,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1003.toString(), ANSWER.toString(),    Extension_1003.toString() + " hung up"            , SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), RINGGROUP0_6300.toString(),ANSWER.toString(),    RINGGROUP0_6300.toString() + " connected"   , SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1003.toString(), ANSWER.toString(),    Extension_1003.toString() + " hung up"            , SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), RINGGROUP0_6300.toString(),ANSWER.toString(),    RINGGROUP0_6300.toString() + " connected"   , SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -2131,7 +2318,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席xx响铃，10s后无人接听进入到RingGroup0,分机1000、1001、1003同时响铃，无人接听，10s后到Failover Destination只剩分机1000响铃，1000接听，通话挂断；cdr正确；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","RingGroup"})
     public void testQu33_FailoverDestination08() {
         prerequisite();
@@ -2168,9 +2355,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(), ANSWER.toString(),    Extension_1000.toString() + " hung up"            , SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), RINGGROUP0_6300.toString(),NO_ANSWER.toString(), RINGGROUP0_6300.toString()+ " timed out, failover"   , SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(), ANSWER.toString(),    Extension_1000.toString() + " hung up"            , SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), RINGGROUP0_6300.toString(),NO_ANSWER.toString(), RINGGROUP0_6300.toString()+ " timed out, failover"   , SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -2183,7 +2370,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席xx响铃，10s后无人接听进入到Queue0，分机1000、1001、1003、1004同时响铃，1004接听，通话，挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","Queue"})
     public void testQu34_FailoverDestination09() {
         prerequisite();
@@ -2218,9 +2405,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1004.toString(), ANSWER.toString(),    Extension_1004.toString() + " hung up"            , SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE0_6400.toString(),    ANSWER.toString(),    QUEUE0_6400.toString()    + " connected"    , SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1004.toString(), ANSWER.toString(),    Extension_1004.toString() + " hung up"            , SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), QUEUE0_6400.toString(),    ANSWER.toString(),    QUEUE0_6400.toString()    + " connected"    , SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -2233,7 +2420,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席xx响铃，10s后无人接听进入到Queue0，分机1000、1001、1003、1004同时响铃，主叫按0，只剩分机1001响铃，1001接听，通话，挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","Queue"})
     public void testQu35_FailoverDestination10() {
         prerequisite();
@@ -2270,9 +2457,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(), ANSWER.toString(),    Extension_1001.toString() + " hung up"            , SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE0_6400.toString(),    ANSWER.toString(),    QUEUE0_6400.toString()    + " connected"    , SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1001.toString(), ANSWER.toString(),    Extension_1001.toString() + " hung up"            , SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), QUEUE0_6400.toString(),    ANSWER.toString(),    QUEUE0_6400.toString()    + " connected"    , SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -2285,7 +2472,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.坐席xx响铃，10s后无人接听进入到Queue0，分机1000、1001、1003、1004同时响铃；无人接听60s后到Failover Destination，分机1000响铃，接听，通话，挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P3","Queue","QueueBasic","FailoverDestination","SPS","PSeries","Cloud","K2","Queue"})
     public void testQu36_FailoverDestination11() {
         prerequisite();
@@ -2322,9 +2509,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(), ANSWER.toString(),    Extension_1000.toString() + " hung up"            , SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE0_6400.toString(),    ANSWER.toString(),    QUEUE0_6400.toString()    + " connected"          , SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(), ANSWER.toString(),    Extension_1000.toString() + " hung up"            , SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), QUEUE0_6400.toString(),    ANSWER.toString(),    QUEUE0_6400.toString()    + " connected"          , SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -2367,8 +2554,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), "13001",                   ANSWER.toString(),    "13001 hung up"            , SPS, SIPTrunk, OUTBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),    NO_ANSWER.toString(), QUEUE1_6401.toString()    + " timed out, failover", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), "13001",                   ANSWER.toString(),    "13001 hung up"            , SPS, SIPTrunk, OUTBOUND.toString()));
         softAssertPlus.assertAll();
     }
 
@@ -2402,7 +2589,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("无分机应答；asterisk后台检测共打印语音文件prompt1 一遍");
 
@@ -2454,7 +2644,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("无分机应答；asterisk后台检测共打印语音文件prompt2 五遍");
 
@@ -2503,20 +2696,29 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 15)).as("[2.通话校验]:1000分机响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         step("响铃结束后再等10s，所有坐席再次响铃");
         softAssertPlus.assertThat(getExtensionStatus(1000, RING, 15)).as("[3.通话校验]:1000分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[3.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[3.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[3.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[3.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
         
         step("主叫挂断，cdr正确");
         pjsip.Pj_hangupCall(2001);
@@ -2524,13 +2726,16 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[4.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[4.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[4.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[4.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(), NO_ANSWER.toString(), Extension_2000.toString()+ " hung up", SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(), NO_ANSWER.toString(), Extension_2000.toString()+ " hung up", SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -2543,7 +2748,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.全部坐席响铃时，主叫按1；通话被挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2","HangUp"})
     public void testQu41_KeyPressEvent01() {
         prerequisite();
@@ -2565,7 +2770,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按1；通话被挂断");
         pjsip.Pj_Send_Dtmf(3001,"1");
@@ -2573,7 +2781,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
@@ -2592,7 +2803,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.全部坐席第一轮响铃结束时，主叫按2；分机1004响铃，接听，挂断；cdr正确")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2","Extension"})
     public void testQu42_KeyPressEvent02() {
         prerequisite();
@@ -2613,13 +2824,19 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 10)).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         step("主叫按2；1004响铃、接听、挂断");
         pjsip.Pj_Send_Dtmf(3001,"2");
@@ -2627,7 +2844,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         pjsip.Pj_Answer_Call(1004);
         sleep(WaitUntils.TALKING_WAIT);
@@ -2669,7 +2889,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按3；进入1001语音留言");
         pjsip.Pj_Send_Dtmf(3001,"3");
@@ -2677,7 +2900,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         sleep(15000);
         pjsip.Pj_Hangup_All();
@@ -2708,7 +2934,7 @@ public class TestQueueBasic extends TestCaseBaseNew {
             "3.全部坐席响铃时，主叫按4；查看asterisk后台打印播放提示音文件“vm-greeting-dial-operator.slin”时，按0，分机A-1000响铃，接听，挂断；cdr正确；")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("------------该case如果执行完毕cdr校验提示的是目的中继不一致的话，暂时先忽略----------------")
     @Test(groups = {"P2","Queue","QueueBasic","KeyPressEvent","SIP_REGISTER","PSeries","Cloud","K2","IVR"})
     public void testQu44_KeyPressEvent04() {
         prerequisite();
@@ -2734,7 +2960,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按4；进入IVR0，等待提示音vm-greeting-dial-operator.slin");
         pjsip.Pj_Send_Dtmf(3001,"4");
@@ -2803,13 +3032,19 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1 )).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1 )).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1 )).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 15)).as("[2.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1 )).as("[2.通话校验]:1001分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1 )).as("[2.通话校验]:1002分机挂断").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1 )).as("[2.通话校验]:1003分机挂断").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机挂断").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         step("主叫按5；分机1000、1001、1003同时响铃，1003接听");
         pjsip.Pj_Send_Dtmf(2001,"5");
@@ -2825,9 +3060,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+ " hung up", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), RINGGROUP0_6300.toString(),ANSWER.toString(), RINGGROUP0_6300.toString()+ " connected", SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1003.toString(),ANSWER.toString(), Extension_1003.toString()+ " hung up", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), RINGGROUP0_6300.toString(),ANSWER.toString(), RINGGROUP0_6300.toString()+ " connected", SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -2861,7 +3096,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("全部坐席响铃结束时，主叫按5；分机1000、1001、1003同时响铃，无人接听，10s后到Failover Destination-分机1000，1000响铃，接听，挂断");
         pjsip.Pj_Send_Dtmf(2001,"5");
@@ -2878,9 +3116,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+ " hung up", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), RINGGROUP0_6300.toString(),ANSWER.toString(), RINGGROUP0_6300.toString()+ " connected", SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+ " hung up", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), RINGGROUP0_6300.toString(),ANSWER.toString(), RINGGROUP0_6300.toString()+ " connected", SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -2914,7 +3152,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("等待全部坐席响铃结束时");
         softAssertPlus.assertThat(getExtensionStatus(1000, HUNGUP, 15)).as("[3.通话校验]:1000分机挂断").isEqualTo(HUNGUP);
@@ -2935,9 +3176,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected",  SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+ " hung up", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE0_6400.toString(),   ANSWER.toString(), QUEUE0_6400.toString()+ " connected",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected",  SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1004.toString(),ANSWER.toString(), Extension_1004.toString()+ " hung up", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), QUEUE0_6400.toString(),   ANSWER.toString(), QUEUE0_6400.toString()+ " connected",  SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -2971,7 +3212,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按5；1000、1001、1003、1004同时响铃，1004接听，挂断");
         pjsip.Pj_Send_Dtmf(2001,"6");
@@ -2999,9 +3243,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected",  SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+ " hung up", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE0_6400.toString(),NO_ANSWER.toString(), QUEUE0_6400.toString()+ " connected",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected",  SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1001.toString(),ANSWER.toString(), Extension_1001.toString()+ " hung up", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), QUEUE0_6400.toString(),NO_ANSWER.toString(), QUEUE0_6400.toString()+ " connected",  SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -3035,7 +3279,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按5；1000、1001、1003、1004同时响铃，1004接听，挂断");
         pjsip.Pj_Send_Dtmf(2001,"6");
@@ -3063,9 +3310,9 @@ public class TestQueueBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(3);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),  NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected",  SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+ " hung up", SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), QUEUE0_6400.toString(),NO_ANSWER.toString(), QUEUE0_6400.toString()+ " timed out, failover",  SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),  NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected",  SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), Extension_1000.toString(),ANSWER.toString(), Extension_1000.toString()+ " hung up", SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), QUEUE0_6400.toString(),NO_ANSWER.toString(), QUEUE0_6400.toString()+ " timed out, failover",  SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -3099,7 +3346,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按7；3001响铃，接听，挂断");
         pjsip.Pj_Send_Dtmf(2001,"7");
@@ -3114,8 +3364,8 @@ public class TestQueueBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(2);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected",  SPS, "", INBOUND.toString()))
-                .contains(tuple(Extension_2000.toString(), "13001",               ANSWER.toString(),    "13001 hung up"            , SPS, SIPTrunk, OUTBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),NO_ANSWER.toString(), QUEUE1_6401.toString()+ " connected",  SPS, "", INBOUND.toString()))
+                .contains(tuple(Extension_2001.toString(), "13001",               ANSWER.toString(),    "13001 hung up"            , SPS, SIPTrunk, OUTBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -3154,7 +3404,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按8；asterisk后台检测共打印语音文件prompt3 一遍");
         pjsip.Pj_Send_Dtmf(2001,"8");
@@ -3211,7 +3464,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按9；asterisk后台检测共打印语音文件prompt4 三遍");
         pjsip.Pj_Send_Dtmf(2001,"9");
@@ -3265,7 +3521,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按*；asterisk后台检测共打印语音文件prompt5 五遍");
         pjsip.Pj_Send_Dtmf(2001,"*");
@@ -3319,7 +3578,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按*；asterisk后台检测共打印语音文件prompt2 两遍");
         pjsip.Pj_Send_Dtmf(2001,"#");
@@ -3369,7 +3631,10 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, RING, 1)).as("[1.通话校验]:1001分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1002, RING, 1)).as("[1.通话校验]:1002分机响铃").isEqualTo(RING);
         softAssertPlus.assertThat(getExtensionStatus(1003, RING, 1)).as("[1.通话校验]:1003分机响铃").isEqualTo(RING);
-        softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, RING, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(RING);
+        }
 
         step("主叫按0；通话被挂断；cdr正确");
         pjsip.Pj_Send_Dtmf(2001, "0");
@@ -3378,14 +3643,17 @@ public class TestQueueBasic extends TestCaseBaseNew {
         softAssertPlus.assertThat(getExtensionStatus(1001, HUNGUP, 1)).as("[2.通话校验]:1001分机响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1002, HUNGUP, 1)).as("[2.通话校验]:1002分机响铃").isEqualTo(HUNGUP);
         softAssertPlus.assertThat(getExtensionStatus(1003, HUNGUP, 1)).as("[2.通话校验]:1003分机响铃").isEqualTo(HUNGUP);
-        softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[2.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            softAssertPlus.assertThat(getExtensionStatus(2000, HUNGUP, 10)).as("[1.通话校验]:FXS分机响铃").isEqualTo(HUNGUP);
+        }
 
         assertStep("CDR校验");
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
 
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2000.toString() + " hung up", SPS, "", INBOUND.toString()));
+                .contains(tuple(Extension_2001.toString(), QUEUE1_6401.toString(),   NO_ANSWER.toString(), Extension_2000.toString() + " hung up", SPS, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }

@@ -31,20 +31,6 @@ public class CDRObject {
     public String callerIpAddr;
     public String recordingFile;
 
-    public String perCallType;
-    public String perCallerId;
-    public String perClid;
-    public String perContactName;
-    public String perDate;
-    public String perDcontext;
-    public String perDisposition;
-    public String perId;
-    public String perNumber;
-    public String perNumberType;
-    public String perStatus;
-    public String perTalkDuration;
-    public String perTime;
-
     public CDRObject(String respondJson, int index) throws IOException {
 
         JSONObject object = new JSONObject(respondJson);
@@ -74,33 +60,6 @@ public class CDRObject {
         dod = getValue("dod_number").replace(prefix,"");
         callerIpAddr = getValue("src_addr");
         reason = getReason().replace(prefix,"");
-
-    }
-
-    public CDRObject(String respondJson, int index, int type) throws IOException {
-        JSONObject object = new JSONObject(respondJson);
-        errorcode = object.getString("errcode").trim();
-        errmsg  = object.getString("errmsg");
-
-        if(!errorcode.trim().equals("0")){
-            log.error("[CDR API] errorcode: "+errorcode+" errmsg:"+errmsg);
-            return;
-        }
-
-        obj = (JSONObject) object.getJsonArray("personal_cdr_list").getJsonObject(index);
-        perCallType = getValue("call_type").replace(prefix,"");
-        perCallerId = getValue("caller_id").replace(prefix,"");
-        perClid = getValue("clid").replace(prefix,"");
-        perContactName = getValue("contact_name").replace(prefix,"");
-        perDate = getValue("date").replace(prefix,"");
-        perDcontext = getValue("dcontext").replace(prefix,"");
-        perDisposition = getValue("disposition").replace(prefix,"");
-        perId = getValue("id").replace(prefix,"");
-        perNumber = getValue("number").replace(prefix,"");
-        perNumberType = getValue("number_type").replace(prefix,"");
-        perStatus = getValue("status").replace(prefix,"");
-        perTalkDuration = getValue("talk_duration").replace(prefix,"");
-        perTime = getValue("time").replace(prefix,"");
 
     }
 
@@ -182,8 +141,9 @@ public class CDRObject {
         Extension_1005_VOICEMAIL("Voicemail First Last<1005>"),
 
 
-        Conference0_6500("Conference Conference0<6500>");
+        Conference0_6500("Conference Conference0<6500>"),
 
+        Account_6700("6700<6700>");
 
         private final String alias;
         CDRNAME(String alias) {

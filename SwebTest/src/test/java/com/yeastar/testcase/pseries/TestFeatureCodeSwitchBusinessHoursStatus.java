@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.tuple;
  */
 @Log4j2
 public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
-    private boolean isRunRecoveryEnvFlag = true;
+    private boolean isRunRecoveryEnvFlag = false;
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     public void prerequisite() {
@@ -109,6 +109,15 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
 
         step("[Asterisk校验]");
         assertThat(getAsteriskFORCEDEST()).contains("/FORCEDEST/global                                 : outoffice").as("[asterisk 切换失败]");
+
+        pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
+        getExtensionStatus(1000, HUNGUP, 30);
+
+        step("[Asterisk校验]");
+        assertThat(getAsteriskFORCEDEST()).doesNotContain("/FORCEDEST/global                                 : outoffice").as("[asterisk 切换失败]");
+
+        step("###  恢复Switch Business Hours Status启用");
+        apiUtil.editFeatureCode("\"enb_office_time\":1").apply();
     }
 
     @Epic("P_Series")
@@ -168,6 +177,8 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
 
         step("[Asterisk校验]");
         assertThat(getAsteriskFORCEDEST()).doesNotContain("/FORCEDEST/global                                 : outoffice").as("[asterisk 切换失败]");
+
+        apiUtil.editFeatureCode("\"enb_office_time\":1,\"office_time\":\"*99\"").apply();
     }
 
     @Epic("P_Series")
@@ -190,7 +201,6 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
         initBusinessHours();
         apiUtil.deleteAllHoliday().editFeatureCode(String.format("\"office_time_permit_list\":[{\"value\":\"%s\",\"type\":\"ext_group\",\"text\":\"ExGroup1\",\"text2\":\"ExGroup1\"},{\"value\":\"%s\",\"type\":\"extension\",\"text\":\"testa D\",\"text2\":\"1003\"},{\"value\":\"%s\",\"type\":\"ext_group\",\"text\":\"ExGroup2\",\"text2\":\"ExGroup2\"}]",
                 apiUtil.getExtensionGroupSummary("ExGroup1").id,apiUtil.getExtensionSummary("1003").id,apiUtil.getExtensionGroupSummary("ExGroup2").id)).apply();
-        apiUtil.editFeatureCode("\"enb_office_time\":1,\"office_time\":\"*99\"").apply();
 
         step("分机1000拨打*99");
         pjsip.Pj_Make_Call_No_Answer(1000, "*99", DEVICE_IP_LAN, false);
@@ -234,7 +244,7 @@ public class TestFeatureCodeSwitchBusinessHoursStatus extends TestCaseBaseNew {
         step("[Asterisk校验]");
         assertThat(getAsteriskFORCEDEST()).contains("/FORCEDEST/global                                 : outoffice").as("[asterisk 切换失败]");
 
-        step("分机1000拨打*99");
+        step("分机1003拨打*99");
         pjsip.Pj_Make_Call_No_Answer(1003, "*99", DEVICE_IP_LAN, false);
         getExtensionStatus(1003, HUNGUP, 30);
 

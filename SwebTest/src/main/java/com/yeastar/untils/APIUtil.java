@@ -2529,13 +2529,14 @@ public class APIUtil {
         return objectList;
     }
 
-    public void delPerContacts(){
+    public APIUtil delPerContacts(){
         int id;
         List<PerContactsObject> objectList = getPerContacts();
         for(int i=0; i<objectList.size();i++){
             id = objectList.get(i).id;
             getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/contacts/delete?id="+id+"&type=personal");
         }
+        return this;
     }
 
 

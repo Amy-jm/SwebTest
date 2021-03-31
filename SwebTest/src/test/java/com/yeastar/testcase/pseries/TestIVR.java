@@ -68,6 +68,7 @@ public class TestIVR extends TestCaseBaseNew{
 
     String cdrIVR1 ="IVR IVR1<6201>";//6201
     String  invalidKey = "Invalid key";
+    Object[][] real_routes = null;
     Object[][] routes = new Object[][]{
 
             {"99", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SPS"},//sps   前缀 替换
@@ -77,6 +78,13 @@ public class TestIVR extends TestCaseBaseNew{
             {"",   3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
             {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"},
             {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),"GSM"}
+    };
+
+    Object[][] routes_software = new Object[][]{
+
+            {"99", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SPS"},//sps   前缀 替换
+            {"",   3001, "3000", DEVICE_ASSIST_1, "3001 [3001]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_REGISTER"},//SIP  --55 REGISTER
+            {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SIP_ACCOUNT"},
     };
 
     /**
@@ -100,19 +108,32 @@ public class TestIVR extends TestCaseBaseNew{
             return  new Object[][]{{"99", 2000, "6201", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(),SPS, "SPS"}};
         }
         if(methodName.equals("testIVR03_trunk")){
-            Object[][] routes = new Object[][]{
-                    {"88", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),BRI_1, "BRI"},//BRI   前缀 替换
-                    {"",   2000, "2005", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),FXO_1,"FXO"},//FXO --77 不输   2005（FXS）
-                    {"66", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),E1, "E1"},//E1     前缀 替换
-                    {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),ACCOUNTTRUNK ,"SIP_ACCOUNT"},
-                    {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),GSM,"GSM"}
-            };
-            return routes;
+            if(!FXO_1.trim().equalsIgnoreCase("null")){
+                Object[][] routes = new Object[][]{
+                        {"88", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),BRI_1, "BRI"},//BRI   前缀 替换
+                        {"",   2000, "2005", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),FXO_1,"FXO"},//FXO --77 不输   2005（FXS）
+                        {"66", 2000, "1000", DEVICE_ASSIST_2, "2000 [2000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),E1, "E1"},//E1     前缀 替换
+                        {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),ACCOUNTTRUNK ,"SIP_ACCOUNT"},
+                        {"33", 2000,DEVICE_TEST_GSM,DEVICE_ASSIST_2,DEVICE_ASSIST_GSM+" ["+DEVICE_ASSIST_GSM+"]",RECORD_DETAILS.EXTERNAL.getAlias(),GSM,"GSM"}
+                };
+                return routes;
+            }else {
+                Object[][] routes = new Object[][]{
+                        {"44", 4000, "1000", DEVICE_ASSIST_3, "4000 [4000]", RECORD_DETAILS.EXTERNAL_IVR.getAlias(),ACCOUNTTRUNK ,"SIP_ACCOUNT"}
+                };
+                return routes;
+            }
         }
         else {
+            System.out.println("用来判断哪些用了这些数据的用例："+method.getName()+"---------------------------------------------");
             for (String groups : c.getIncludedGroups()) {
-                for (int i = 0; i < routes.length; i++) {
-                    for (int j = 0; j < routes[i].length; j++) {
+                if(!FXO_1.trim().equalsIgnoreCase("null")){
+                    real_routes = routes_software;
+                }else {
+                    real_routes = routes;
+                }
+                for (int i = 0; i < real_routes.length; i++) {
+                    for (int j = 0; j < real_routes[i].length; j++) {
                         if (groups.equalsIgnoreCase("SPS")) {
                             group = new Object[][]{{"99", 2000, "6200", DEVICE_ASSIST_2, "2000 [2000]", OperatorPanelPage.RECORD_DETAILS.EXTERNAL_IVR.getAlias(), "SPS"}};
                         } else if (groups.equalsIgnoreCase("BRI")) {
@@ -141,7 +162,6 @@ public class TestIVR extends TestCaseBaseNew{
         return group;
     }
 
-
     Object[][] routesOutbound = new Object[][]{
             //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + prefix + callee + RingExtension + InBoundTrunk(呼入线路) + OutBoundTrunk(呼出线路)
             {"", 3001, "3000", DEVICE_ASSIST_1, "2",2222,"RingExtension","SIP_REGISTER", "SPS"},//SIP  --55 REGISTER
@@ -150,6 +170,12 @@ public class TestIVR extends TestCaseBaseNew{
             {"", 3001, "3000", DEVICE_ASSIST_1, "5",5555,"RingExtension","SIP_REGISTER", "SPS", "BRI"},
             {"", 3001, "3000", DEVICE_ASSIST_1, "6",6666,"RingExtension","SIP_REGISTER", "SPS", "EI"},
             {"", 3001, "3000", DEVICE_ASSIST_1, "7",DEVICE_ASSIST_GSM,"RingExtension" ,"SIP_REGISTER", "SPS", "EI"}
+    };
+
+    Object[][] routesOutbound_software = new Object[][]{
+            //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + prefix + callee + RingExtension + InBoundTrunk(呼入线路) + OutBoundTrunk(呼出线路)
+            {"", 3001, "3000", DEVICE_ASSIST_1, "2",2222,"RingExtension","SIP_REGISTER", "SPS"},//SIP  --55 REGISTER
+            {"99", 2000, "1000", DEVICE_ASSIST_2,"3",2001,"RingExtension","SPS", "SIP_ACCOUNT"},
     };
 
 
@@ -166,23 +192,33 @@ public class TestIVR extends TestCaseBaseNew{
         }
         //
         if(methodName.equals("testIVR28_DialOutboundRoutes_2To7")){
-            Object[][] routes = new Object[][]{
-                    //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + DTMF + RingExtension + InBoundTrunk(呼入线路) + OutBoundTrunk(呼出线路)
-                    {"", 3001, "3000", DEVICE_ASSIST_1, "2",2000,2000,SIPTrunk, SPS},//SIP  --55 REGISTER
-                    {"99", 2000, "1000", DEVICE_ASSIST_2,"3",4000,4000,SPS, ACCOUNTTRUNK},
-                    {"", 3001, "3000", DEVICE_ASSIST_1, "4",2000,2000,SIPTrunk, FXO_1},
-                    {"", 3001, "3000", DEVICE_ASSIST_1, "5",2000,2000,SIPTrunk, BRI_1},
-                    {"", 3001, "3000", DEVICE_ASSIST_1, "6",2000,2000,SIPTrunk,  E1},
+            if(!FXO_1.trim().equalsIgnoreCase("null")){
+                Object[][] routes = new Object[][]{
+                        //routePrefix（路由前缀） + caller（主叫） + callee（被叫） + device_assist（主叫所在的设置ip） + DTMF + RingExtension + InBoundTrunk(呼入线路) + OutBoundTrunk(呼出线路)
+                        {"", 3001, "3000", DEVICE_ASSIST_1, "2",2000,2000,SIPTrunk, SPS},//SIP  --55 REGISTER
+                        {"99", 2000, "1000", DEVICE_ASSIST_2,"3",4000,4000,SPS, ACCOUNTTRUNK},
+                        {"", 3001, "3000", DEVICE_ASSIST_1, "4",2000,2000,SIPTrunk, FXO_1},
+                        {"", 3001, "3000", DEVICE_ASSIST_1, "5",2000,2000,SIPTrunk, BRI_1},
+                        {"", 3001, "3000", DEVICE_ASSIST_1, "6",2000,2000,SIPTrunk,  E1},
 //                    {"", 3001, "3000", DEVICE_ASSIST_1, "7",DEVICE_ASSIST_GSM, "2000","SIP_REGISTER", "GSM"}
-            };
-            return routes;
+                };
+                return routes;
+            }else {
+                Object[][] routes = new Object[][]{
+                        {"", 3001, "3000", DEVICE_ASSIST_1, "2",2000,2000,SIPTrunk, SPS},//SIP  --55 REGISTER
+                        {"99", 2000, "1000", DEVICE_ASSIST_2,"3",4000,4000,SPS, ACCOUNTTRUNK},
+                };
+                return routes;
+            }
         }
         //sip呼入--sps呼出
         if(methodName.equals("testIVR32_DialOutboundRoutes_11") || methodName.equals("testIVR33_DialOutboundRoutes_12")  || methodName.equals("testIVR30_DialOutboundRoutes_9")|| methodName.equals("testIVR31_DialOutboundRoutes_10"))
             return  new Object[][]{{"", 3001, "3000", DEVICE_ASSIST_1, "2",2000,2000,SIPTrunk, SPS}};//SIP  --55 REGISTER
         //jenkins  run with xml and ITestContext c will be null
-        if (group == null) {
+        if (group == null && !FXO_1.trim().equalsIgnoreCase("null")) {
             group = routesOutbound; //default run all routes
+        }else if(group == null && FXO_1.trim().equalsIgnoreCase("null")){
+            group = routesOutbound_software;
         }
         return group;
     }
@@ -969,6 +1005,10 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","DialExtension", "testIVR10_DialExtension_1","FXS","PSeries"}, dataProvider = "routes")
     public void testIVR10_DialExtension_1(String routePrefix, int caller, String callee, String deviceAssist, String vcpCaller, String vcpDetail, String trunk, String message) {
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"FXS不存在");
+        }
+
         prerequisite(true);
 
         step("1:login with admin,trunk: "+message);
@@ -3016,6 +3056,5 @@ public class TestIVR extends TestCaseBaseNew{
         softAssertPlus.assertThat(list.size()).isEqualTo(0);
         softAssertPlus.assertAll();
     }
-
 }
 
