@@ -2027,7 +2027,7 @@ public class TestOutboundBasic extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.call_control, HomePage.Menu_Level_2.call_control_tree_outbound_routes);
 
         step("单条删除");
-        auto.inboundRoute().deleDataByDeleImage("OR1").clickSaveAndApply();
+        auto.inboundRoute().deleDataByDeleImage("OR1","Name").clickSaveAndApply();
 
         assertStep("[删除成功]");
         List<String> list = TableUtils.getTableForHeader(getDriver(), "Name");

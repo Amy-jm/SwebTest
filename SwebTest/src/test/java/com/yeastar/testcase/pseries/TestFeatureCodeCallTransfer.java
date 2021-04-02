@@ -10,6 +10,7 @@ import com.yeastar.untils.SSHLinuxUntils;
 import com.yeastar.untils.WaitUntils;
 import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -437,7 +438,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
             "分机AC保持通话，分机C挂断通话，检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("此处若校验失败，那么就是跑自动化出来的cdr有问题导致校验失败")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer08"})
     public void testFCCT08_AttendedTransfer()
     {
@@ -582,7 +583,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
             "通话被挂断，检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("此处若校验失败，那么就是跑自动化出来的cdr有问题导致校验失败")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT01_AttendedTransfer11"})
     public void testFCCT11_AttendedTransfer()
     {
@@ -1082,9 +1083,9 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
 
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_4000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_4000.toString() + " called "+Extension_1005.toString(), ACCOUNTTRUNK, "", INBOUND.toString()))
+                .contains(tuple(Account_6700.toString(), Extension_1005.toString(),   ANSWER.toString(), Account_6700.toString() + " called "+Extension_1005.toString(), ACCOUNTTRUNK, "", INBOUND.toString()))
                 .contains(tuple(Extension_1005.toString(), RINGGROUP0_6300.toString(),  ANSWER.toString(), RINGGROUP0_6300.toString() + " connected", "", "", INTERNAL.toString()))
-                .contains(tuple(Extension_4000.toString(), Extension_1003.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Extension_4000.toString()+" hung up", ACCOUNTTRUNK, "", INBOUND.toString()));
+                .contains(tuple(Account_6700.toString(), Extension_1003.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , "+Account_6700.toString()+" hung up", ACCOUNTTRUNK, "", INBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -1182,7 +1183,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(Extension_2000.toString(), "13001",   ANSWER.toString(), Extension_1005.toString() +" attended transferred ,13001 hung up", SPS, SIPTrunk, INBOUND.toString()))
+                .contains(tuple(Extension_2000.toString(), "13001",   ANSWER.toString(), Extension_1005.toString() +" attended transferred ,13001 hung up", SPS, SIPTrunk, OUTBOUND.toString()))
                 .contains(tuple(Extension_1005.toString(), "13001",   ANSWER.toString(), Extension_1005.toString() + " called 13001", "", SIPTrunk, OUTBOUND.toString()))
                 .contains(tuple(Extension_2000.toString(), Extension_1005.toString(),   ANSWER.toString(), Extension_2000.toString() + " called "+Extension_1005.toString(), SPS, "", INBOUND.toString()));
 
@@ -1245,9 +1246,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","IVR","testFCCT19_AttendedTransfer"})
+    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","IVR","testFCCT19_AttendedTransfer"})
     public void testFCCT24_AttendedTransfer()
     {
+        if(FXO_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"FXO不存在，不测");
+        }
+
         prerequisite();
         step("修改In1呼入到分机1005");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
@@ -1294,9 +1299,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","IVR","testFCCT19_AttendedTransfer"})
+    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","IVR","testFCCT19_AttendedTransfer"})
     public void testFCCT25_AttendedTransfer()
     {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在，不测");
+        }
+
         prerequisite();
         step("修改In1呼入到分机1005");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
@@ -1343,9 +1352,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","IVR","testFCCT19_AttendedTransfer"})
+    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","IVR","testFCCT19_AttendedTransfer"})
     public void testFCCT26_AttendedTransfer()
     {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在，不测");
+        }
+
         prerequisite();
         step("修改In1呼入到分机1005");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
@@ -1392,9 +1405,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","IVR","testFCCT19_AttendedTransfer"})
+    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","IVR","testFCCT19_AttendedTransfer"})
     public void testFCCT27_AttendedTransfer()
     {
+        if(GSM.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"GSM不存在，不测");
+        }
+
         prerequisite();
         step("修改In1呼入到分机1005");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1005").id)).apply();
@@ -1441,7 +1458,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
             "分机B与外线保持通话，分机B挂断，检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("此处若在cdr校验报错的话，那么就看实际生成的cdr是不是不正确")
     @Test(groups = {"P1","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT28_AttendedTransfer"})
     public void testFCCT28_AttendedTransfer()
     {
@@ -1840,7 +1857,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
             "分机1000、1001、1003同时响铃，分机1003应答后，分机1005挂断；分机1003与外线保持通话，外线挂断；检查cdr")
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
-    @Issue("")
+    @Issue("此处若cdr校验失败，则看实际生成的cdr可能有误导致的")
     @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT36_AttendedTransfer"})
     public void testFCCT36_AttendedTransfer()
     {
@@ -1874,7 +1891,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_1005.toString(), "3333",   ANSWER.toString(), Extension_1005.toString() + " called 3333", "", ACCOUNTTRUNK, OUTBOUND.toString()))
                 .contains(tuple(Extension_1005.toString(), RINGGROUP0_6300.toString(),   ANSWER.toString(), RINGGROUP0_6300.toString() + " connected", "", "", INTERNAL.toString()))
-                .contains(tuple(Extension_1003.toString(), "3333",   ANSWER.toString(), Extension_1005.toString() + " attended transferred , 3333 hung up","", ACCOUNTTRUNK, OUTBOUND.toString()));
+                .contains(tuple("3333", Extension_1003.toString(),   ANSWER.toString(), Extension_1005.toString() + " attended transferred , 3333 hung up","", ACCOUNTTRUNK, OUTBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -1921,7 +1938,7 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
                 .contains(tuple(Extension_1005.toString(), "22222",   ANSWER.toString(), Extension_1005.toString() + " called 22222", "", SPS, OUTBOUND.toString()))
                 .contains(tuple(Extension_1005.toString(), "13001",   ANSWER.toString(), Extension_1005.toString() + " called 13001", "", SIPTrunk, OUTBOUND.toString()))
-                .contains(tuple("22222", "13001",   ANSWER.toString(), Extension_1005.toString() + " attended transferred ,22222 hung up", SPS, SIPTrunk, OUTBOUND.toString()));
+                .contains(tuple("22222", "13001",   ANSWER.toString(), Extension_1005.toString() + " attended transferred ,13001 hung up", SPS, SIPTrunk, OUTBOUND.toString()));
 
         softAssertPlus.assertAll();
     }
@@ -1980,9 +1997,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT39_AttendedTransfer"})
+    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","testFCCT39_AttendedTransfer"})
     public void testFCCT39_AttendedTransfer()
     {
+        if(FXO_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"FXO不存在，不测");
+        }
+
         prerequisite();
 
         step("分机1005拨打42000通过FXO外线呼出，辅助2的分机2000接听");
@@ -2029,9 +2050,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT40_AttendedTransfer"})
+    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","testFCCT40_AttendedTransfer"})
     public void testFCCT40_AttendedTransfer()
     {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在，不测");
+        }
+
         prerequisite();
 
         step("分机1005拨打5555通过BRI外线呼出，辅助2的分机2000接听");
@@ -2079,9 +2104,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT41_AttendedTransfer"})
+    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","testFCCT41_AttendedTransfer"})
     public void testFCCT41_AttendedTransfer()
     {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在，不测");
+        }
+
         prerequisite();
 
         step("分机1005拨打6666通过E1外线呼出，辅助2的分机2000接听");
@@ -2130,9 +2159,13 @@ public class TestFeatureCodeCallTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","Cloud","K2","testFCCT42_AttendedTransfer"})
+    @Test(groups = {"P3","FeatureCode","FeatureCodeCallTransfer","AttendedTransfer","Transfer","PSeries","testFCCT42_AttendedTransfer"})
     public void testFCCT42_AttendedTransfer()
     {
+        if(GSM.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"GSM不存在，不测");
+        }
+
         prerequisite();
 
         step("分机1005拨打7+辅助2GSM号码通过GSM外线呼出，辅助2分机2000接听");

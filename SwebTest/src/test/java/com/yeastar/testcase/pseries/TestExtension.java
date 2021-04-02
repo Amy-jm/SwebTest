@@ -3,6 +3,7 @@ package com.yeastar.testcase.pseries;
 import com.codeborne.selenide.Condition;
 import com.yeastar.page.pseries.HomePage;
 import com.yeastar.page.pseries.TestCaseBase;
+import com.yeastar.untils.APIObject.IVRObject;
 import com.yeastar.untils.AllureReporterListener;
 import com.yeastar.untils.ExecutionListener;
 import com.yeastar.untils.RetryListener;
@@ -11,6 +12,8 @@ import io.qameta.allure.*;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.util.ArrayList;
 
 
 @Listeners({ExecutionListener.class,AllureReporterListener.class, TestNGListenerP.class})
@@ -90,8 +93,13 @@ public class TestExtension extends TestCaseBase {
         auto.extensionPage().createSipExtensionAndConf("1002", EXTENSION_PASSWORD,EXTENSION_PASSWORD).configPresence().clickSaveAndApply();
 
         step("2:创建IVR 6200");
-        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
-        auto.ivrPage().deleAllIVR().createIVR("6200","6200","Yeastar Test9999999 朗视信息科技").clickSaveAndApply();
+//        auto.homePage().intoPage(HomePage.Menu_Level_1.call_feature, HomePage.Menu_Level_2.call_feature_tree_ivr);
+//        auto.ivrPage().deleAllIVR().createIVR("6200","6200","Yeastar Test9999999 朗视信息科技").clickSaveAndApply();
+
+        ArrayList<IVRObject.PressKeyObject> pressKeyObjects_1 = new ArrayList<>();
+        pressKeyObjects_1.clear();
+        pressKeyObjects_1.add(new IVRObject.PressKeyObject(IVRObject.PressKey.press0, "", "", "", 0));
+        apiUtil.deleteAllIVR().createIVR("6200", "6200", pressKeyObjects_1);
 
         assertStep("3:提示注册密码强度不够，继续保存成功");
         auto.extensionPage().registration_Password_Alert_Exist_And_GoOn();

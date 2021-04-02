@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.yeastar.controllers.WebDriverFactory;
 import com.yeastar.page.pseries.CallFeatures.ConferencePage;
 import com.yeastar.page.pseries.CallFeatures.IVRPage;
 import com.yeastar.page.pseries.ExtensionTrunk.ExtensionPage;
@@ -264,8 +265,15 @@ public class BasePage implements IButton{
      * @return
      */
     public BasePage deleDataByDeleImage(String extensionNumber){
-        $(By.xpath(String.format(DELETE_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH
-                ,extensionNumber))).click();
+//        $(By.xpath(String.format(DELETE_IMAGE_FOR_TABLE_FROM_TABLE_EXTENSION_NUMBER_XPATH
+//                ,extensionNumber))).click();
+        TableUtils.clickTableDeletBtn(WebDriverFactory.getDriver(),"Number",extensionNumber);
+        OKAlertBtn.shouldBe(Condition.visible).click();
+        return this;
+    }
+
+    public BasePage deleDataByDeleImage(String extensionNumber,String strHeader){
+        TableUtils.clickTableDeletBtn(WebDriverFactory.getDriver(),strHeader,extensionNumber);
         OKAlertBtn.shouldBe(Condition.visible).click();
         return this;
     }

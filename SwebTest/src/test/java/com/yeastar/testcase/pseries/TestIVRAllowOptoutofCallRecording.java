@@ -340,12 +340,12 @@ public class TestIVRAllowOptoutofCallRecording extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.RINGGROUP0_6300.toString(), STATUS.ANSWER.toString(),CDRNAME.RINGGROUP0_6300.toString()+" connected", ACCOUNTTRUNK, "", "Inbound"))
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", ACCOUNTTRUNK, "", "Inbound"));
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.RINGGROUP0_6300.toString(), STATUS.ANSWER.toString(),CDRNAME.RINGGROUP0_6300.toString()+" connected", ACCOUNTTRUNK, "", "Inbound"))
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", ACCOUNTTRUNK, "", "Inbound"));
 
         assertStep("[Recording校验]");
         softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
-                .doesNotContain(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.Extension_1000.toString(),"Inbound"));
+                .doesNotContain(tuple(CDRNAME.Account_6700.toString(), CDRNAME.Extension_1000.toString(),"Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -397,12 +397,12 @@ public class TestIVRAllowOptoutofCallRecording extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(2)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.RINGGROUP0_6300.toString(), STATUS.ANSWER.toString(),CDRNAME.RINGGROUP0_6300.toString()+" connected", ACCOUNTTRUNK, "", "Inbound"))
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", ACCOUNTTRUNK, "", "Inbound"));
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.RINGGROUP0_6300.toString(), STATUS.ANSWER.toString(),CDRNAME.RINGGROUP0_6300.toString()+" connected", ACCOUNTTRUNK, "", "Inbound"))
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_1000.toString() + " hung up", ACCOUNTTRUNK, "", "Inbound"));
 
         assertStep("[Recording校验]");
         softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
-                .doesNotContain(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.Extension_1000.toString(),"Inbound"));
+                .doesNotContain(tuple(CDRNAME.Account_6700.toString(), CDRNAME.Extension_1000.toString(),"Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -974,13 +974,13 @@ public class TestIVRAllowOptoutofCallRecording extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_4000.toString(), "RingGroup RingGroup0<6300>", STATUS.ANSWER.toString(),"RingGroup RingGroup0<6300> connected", ACCOUNTTRUNK, "", "Inbound"))
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_4000.toString() + " hung up", ACCOUNTTRUNK, "", "Inbound"))
-                .contains(tuple(CDRNAME.Extension_4000.toString(), "IVR IVR-Recording1-8888<8888>", STATUS.ANSWER.toString(), "4000<4000> called Ring Group",ACCOUNTTRUNK, "", "Inbound"));
+                .contains(tuple(CDRNAME.Account_6700.toString(), "RingGroup RingGroup0<6300>", STATUS.ANSWER.toString(),"RingGroup RingGroup0<6300> connected", ACCOUNTTRUNK, "", "Inbound"))
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Account_6700.toString() + " hung up", ACCOUNTTRUNK, "", "Inbound"))
+                .contains(tuple(CDRNAME.Account_6700.toString(), "IVR IVR-Recording1-8888<8888>", STATUS.ANSWER.toString(), ""+CDRNAME.Account_6700+" called Ring Group",ACCOUNTTRUNK, "", "Inbound"));
 
         assertStep("[Recording校验]");
         softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.RINGGROUP0_6300.toString(),"Inbound"));
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.RINGGROUP0_6300.toString(),"Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1075,13 +1075,13 @@ public class TestIVRAllowOptoutofCallRecording extends TestCaseBaseNew {
 
         assertStep("[CDR校验]");//TODO CHECK
         softAssertPlus.assertThat(apiUtil.getCDRRecord(3)).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Extension_4000.toString() + " hung up", ACCOUNTTRUNK, "", "Inbound"))
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.RINGGROUP0_6300.toString(), STATUS.NO_ANSWER.toString(),"RingGroup RingGroup0<6300> timed out, failover", ACCOUNTTRUNK, "", "Inbound"))
-                .contains(tuple(CDRNAME.Extension_4000.toString(), "IVR IVR-Recording1-8888<8888>", STATUS.ANSWER.toString(), "4000<4000> called Ring Group", ACCOUNTTRUNK, "", "Inbound"));
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), CDRNAME.Account_6700.toString() + " hung up", ACCOUNTTRUNK, "", "Inbound"))
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.RINGGROUP0_6300.toString(), STATUS.NO_ANSWER.toString(),"RingGroup RingGroup0<6300> timed out, failover", ACCOUNTTRUNK, "", "Inbound"))
+                .contains(tuple(CDRNAME.Account_6700.toString(), "IVR IVR-Recording1-8888<8888>", STATUS.ANSWER.toString(), ""+CDRNAME.Account_6700+" called Ring Group", ACCOUNTTRUNK, "", "Inbound"));
 
         assertStep("[Recording校验]");
         softAssertPlus.assertThat(apiUtil.getRecordingRecord(1)).as("[Recording校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo","callType")
-                .contains(tuple(CDRNAME.Extension_4000.toString(), CDRNAME.Extension_1000.toString(),"Inbound"));
+                .contains(tuple(CDRNAME.Account_6700.toString(), CDRNAME.Extension_1000.toString(),"Inbound"));
 
         softAssertPlus.assertAll();
     }

@@ -506,8 +506,12 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "FXO","Transfer", "testFCBT11"})
+    @Test(groups = {"P3","PSeries", "FeatureCode-CallTransfer","BlindTransfer", "FXO","Transfer", "testFCBT11"})
     public void testFCBT11() {
+        if(FXO_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"FXO不存在，不测");
+        }
+
         prerequisite();
 
         step("修改In1呼入到分机1004");
@@ -547,8 +551,12 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "BRI","Transfer", "testFCBT12"})
+    @Test(groups = {"P3","PSeries", "FeatureCode-CallTransfer","BlindTransfer", "BRI","Transfer", "testFCBT12"})
     public void testFCBT12() {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在，不测");
+        }
+
         prerequisite();
         step("修改In1呼入到分机1004");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1004").id)).apply();
@@ -587,8 +595,12 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer","E1", "Transfer", "testFCBT13"})
+    @Test(groups = {"P3","PSeries", "FeatureCode-CallTransfer","BlindTransfer","E1", "Transfer", "testFCBT13"})
     public void testFCBT13() {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在，不测");
+        }
+
         prerequisite();
         step("修改In1呼入到分机1004");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1004").id)).apply();
@@ -627,8 +639,12 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "GSM","Transfer", "testFCBT14"})
+    @Test(groups = {"P3","PSeries", "FeatureCode-CallTransfer","BlindTransfer", "GSM","Transfer", "testFCBT14"})
     public void testFCBT14() {
+        if(GSM.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"GSM不存在，不测");
+        }
+
         prerequisite();
         step("修改In1呼入到分机1004");
         apiUtil.editInbound("In1",String.format("\"def_dest\":\"extension\",\"def_dest_value\":\"%s\"",apiUtil.getExtensionSummary("1004").id)).apply();
@@ -935,8 +951,12 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "FXO","Transfer", "testFCBT21"})
+    @Test(groups = {"P3","PSeries", "FeatureCode-CallTransfer","BlindTransfer", "FXO","Transfer", "testFCBT21"})
     public void testFCBT21() {
+        if(FXO_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"FXO不存在，不测");
+        }
+
         prerequisite();
 
         step("分机1005拨打42000通过FXO外线呼出，辅助2的分机2000接听 ");
@@ -975,8 +995,12 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("呼出的CDR被叫方显示缺少分机号")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "BRI","Transfer", "testFCBT22"})
+    @Test(groups = {"P3","PSeries", "FeatureCode-CallTransfer","BlindTransfer", "BRI","Transfer", "testFCBT22"})
     public void testFCBT22() {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在，不测");
+        }
+
         prerequisite();
 
         step("分机1005拨打5555通过BRI外线呼出，辅助2的分机2000接听 ");
@@ -1015,8 +1039,12 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("呼出的CDR被叫方显示缺少分机号")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "E1","Transfer", "testFCBT23"})
+    @Test(groups = {"P3","PSeries", "FeatureCode-CallTransfer","BlindTransfer", "E1","Transfer", "testFCBT23"})
     public void testFCBT23() {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在，不测");
+        }
+
         prerequisite();
 
         step("分机1005拨打6666通过E1外线呼出，辅助2的分机2000接听 ");
@@ -1055,8 +1083,12 @@ public class TestFeatureCodeBlindTransfer extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"P3","PSeries", "Cloud", "K2", "FeatureCode-CallTransfer","BlindTransfer", "GSM","Transfer", "testFCBT24"})
+    @Test(groups = {"P3","PSeries", "FeatureCode-CallTransfer","BlindTransfer", "GSM","Transfer", "testFCBT24"})
     public void testFCBT24() {
+        if(GSM.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"GSM不存在，不测");
+        }
+
         prerequisite();
 
         step("分机1005拨打7+辅助2GSM号码通过GSM外线呼出，辅助2分机2000接听 ");

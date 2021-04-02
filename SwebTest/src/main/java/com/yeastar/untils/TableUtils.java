@@ -158,13 +158,12 @@ public class TableUtils {
 
         WebElement tableElement = driver.findElement(By.xpath(strTableXPATH));
         SeleniumTable table = SeleniumTable.getInstance(tableElement);
-
         if (table.hasColumn(strHeader)) {
             List<SeleniumTableCell> header1Cells = table.getColumn(strHeader);
             for(int row=0; row<header1Cells.size(); row++){
                 if(header1Cells.get(row).getText().equals(tagName)){
                     log.debug("[clickTableDeletBtn:find table data,row=] "+row);
-                    $(By.xpath("//table/tbody/tr["+(row+1)+"]//i[contains(@class,'delete')]")).click();
+                    $(By.xpath("//div[@class='ant-table-body-inner']//table/tbody/tr["+(row+1)+"]//i[@title=\"Delete\"]")).click();
                     return true;
                 }
             }

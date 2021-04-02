@@ -2974,6 +2974,10 @@ public class TestIVR extends TestCaseBaseNew{
     @Issue("")
     @Test(groups = {"P3", "IVR","KeyPressEvent", "testIVR54_KeyPressEvent_23","FXS","PSeries"}, dataProvider = "routesKeyPressEvent")
     public void testIVR54_KeyPressEvent_23(String routePrefix, int caller, String callee, String deviceAssist, String dtmf, String dtmfMessage, String trunk, String message) {
+        if(!FXS_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"FXS不存在");
+        }
+
         prerequisite(false);
 
         step("1:login with admin,trunk: "+message);
