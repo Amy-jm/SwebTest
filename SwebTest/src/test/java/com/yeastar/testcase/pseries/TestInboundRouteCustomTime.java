@@ -953,7 +953,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1003.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up", BRI_1, "", "Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1003.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -1007,7 +1007,7 @@ public class TestInboundRouteCustomTime extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("2000<2000>", CDRNAME.Extension_1004.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up", BRI_1, "", "Inbound"));
+                .contains(tuple("2000<2000>", CDRNAME.Extension_1004.toString(), STATUS.ANSWER.toString(), "2000<2000> hung up", SPS, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }

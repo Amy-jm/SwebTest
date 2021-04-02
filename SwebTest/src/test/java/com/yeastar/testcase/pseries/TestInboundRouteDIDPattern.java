@@ -1125,6 +1125,9 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries","FXS", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions", "MatchSelectedExtensions", "P3"})
     public void testIRDID_32_MatchDIDToExt() {
+        if(FXS_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"FXS不存在，不测");
+        }
         prerequisite();
         step("编辑呼入路由In1，DID Pattern 选择“Match DID Pattern to Extensions\" ,值为：{{.Ext}}，选择所有外线；呼入目的地选择Match Selected Extensions-Default_All_Extensions\n");
         apiUtil.deleteAllInbound().
@@ -1166,7 +1169,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "BRI", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_33_MatchDIDToExt() {
-        if(BRI_1.trim().equalsIgnoreCase("null") || BRI_1.trim().equalsIgnoreCase("")){
+        if(BRI_1.trim().equalsIgnoreCase("null")){
             Assert.assertTrue(false,"BRI线路未配置！");
         }
         prerequisite();
@@ -1210,7 +1213,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "E1", "InboundRoute","DIDPattern", "MatchDIDPatterntoExtensions","MatchSelectedExtensions", "P3"})
     public void testIRDID_34_MatchDIDToExt() {
-        if(E1.trim().equalsIgnoreCase("null") || E1.trim().equalsIgnoreCase("")){
+        if(E1.trim().equalsIgnoreCase("null")){
             Assert.assertTrue(false,"E1线路未配置！");
         }
         prerequisite();
@@ -1261,10 +1264,10 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
                 editInbound("In1", String.format("\"did_option\":\"pattern_to_ext\",\"did_pattern_to_ext\":\"{{.Ext}}\",\"def_dest\":\"pattern_to_ext\",\"def_dest_ext_list\":[{\"value\":\"%s\"}]", apiUtil.getExtensionGroupSummary("Default_Extension_Group").id)).
                 apply();
 
-        step("1:login with admin,trunk: " + SPS);
+        step("1:login with admin,trunk: " + ACCOUNTTRUNK);
         auto.loginPage().loginWithAdmin();
 
-        step("2:[caller] 4000" + ",[callee] 441000" + ",[trunk] " + SPS);
+        step("2:[caller] 4000" + ",[callee] 441000" + ",[trunk] " + ACCOUNTTRUNK);
         pjsip.Pj_Make_Call_No_Answer(4000, "441000", DEVICE_ASSIST_3, false);
 
         step("[通话状态校验]");
@@ -1279,7 +1282,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.homePage().intoPage(HomePage.Menu_Level_1.cdr_recording, HomePage.Menu_Level_2.cdr_recording_tree_cdr);
         List<CDRObject> resultCDR = apiUtil.getCDRRecord(1);
         softAssertPlus.assertThat(resultCDR).as("[CDR校验] Time：" + DataUtils.getCurrentTime()).extracting("callFrom", "callTo", "status", "reason", "sourceTrunk", "destinationTrunk", "communicatonType")
-                .contains(tuple("4000<4000>", CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), "4000<4000> hung up", ACCOUNTTRUNK, "", "Inbound"));
+                .contains(tuple(CDRNAME.Account_6700, CDRNAME.Extension_1000.toString(), STATUS.ANSWER.toString(), ""+CDRNAME.Account_6700+" hung up", ACCOUNTTRUNK, "", "Inbound"));
 
         softAssertPlus.assertAll();
     }
@@ -2245,6 +2248,9 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "MatchExtensionRange", "P3"})
     public void testIRDID_60_MatchDIDToExtRange() {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在，不测");
+        }
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
         apiUtil.deleteAllInbound().
@@ -2287,6 +2293,9 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "InboundRoute","DIDPattern", "MatchDIDRangetoExtensionRange", "MatchExtensionRange", "P3"})
     public void testIRDID_61_MatchDIDToExtRange() {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在，不测");
+        }
         prerequisite();
         step("编辑呼入路由In1，DID Pattern选择Match DID Range to Extension Range，DID Range: 5503300-5503304，呼入目的地选择Match Extension Range：1000-1004\n");
         apiUtil.deleteAllInbound().
@@ -2490,7 +2499,7 @@ public class TestInboundRouteDIDPattern extends TestCaseBaseNew {
         auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
-        pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
+        pjsip.Pj_Make_Call_No_Answer(2000, "995503300", DEVICE_ASSIST_2, false);
         int tmp = 0;
         while (asteriskObjectList.size() >= 1 && tmp <= 300) {
             sleep(50);

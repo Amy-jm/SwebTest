@@ -257,7 +257,7 @@ public class TestExtensionCallRestrictions extends TestCaseBaseNew {
     @Description("编辑分机1020，Security-》启用Disable Outbound Calls ,不启用Disable Outbound Calls outside Business Hours\n" +
             "\tFXS需判断是否存在\n" +
             "\t5.分机1020拨打13001呼出；即辅助2分机2001拨打7713001\n" +
-            "\t\t等待30s，辅助1的分机3001始终不会响铃，主叫挂断\n" +
+            "\t\t等待30s，辅助1的分机3  001始终不会响铃，主叫挂断\n" +
             "\t\t\tFXO挂不断\n" +
             "\t\t\t编辑分机1020，Security-》禁用Disable Outbound Calls ,不启用Disable Outbound Calls outside Business Hours ；\n" +
             "分机1020拨打13001呼出；即辅助2分机2001拨打7713001；\n" +

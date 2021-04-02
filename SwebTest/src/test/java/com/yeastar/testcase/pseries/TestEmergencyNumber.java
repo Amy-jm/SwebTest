@@ -88,10 +88,11 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.editExtension("1000","\"emergency_caller_id\":\"EmergencyExtA1000\"").apply();
         apiUtil.editSipTrunk(SPS,EMERGENCY.replace("EMERGENCYNAME","EmergencySPS")).
                 editSipTrunk(SIPTrunk,EMERGENCY.replace("EMERGENCYNAME","EmergencySIP")).
-                editSipTrunk(ACCOUNTTRUNK,EMERGENCY.replace("EMERGENCYNAME","EmergencyAccount")).
-                editBriTrunk(BRI_1,EMERGENCY.replace("EMERGENCYNAME","EmergencyBRI")).
-                editDigitalTrunk(E1,EMERGENCY.replace("EMERGENCYNAME","EmergencyE1")).
-                apply();
+                editSipTrunk(ACCOUNTTRUNK,EMERGENCY.replace("EMERGENCYNAME","EmergencyAccount")).apply();
+//                if(PSERIES_TYPE == 0){
+//                    apiUtil.editBriTrunk(BRI_1,EMERGENCY.replace("EMERGENCYNAME","EmergencyBRI")).
+//                            editDigitalTrunk(E1,EMERGENCY.replace("EMERGENCYNAME","EmergencyE1")).apply();
+//                }
 
         apiUtil.deleteAllEmergency().
                 createEmergency(String.format("{\"name\":\"EmergencyOthertest\",\"number\":\"999\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"abc123\"}]}",apiUtil.getTrunkSummary(SPS).id)).
@@ -111,9 +112,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     public void testPreferences_01_TrunkEmergency() {
         prerequisite();
         initTestEnv();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 3001");
         pjsip.Pj_Make_Call_No_Answer(1000, "3001", DEVICE_IP_LAN, false);
@@ -144,9 +142,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_02_TrunkEmergency() {
         prerequisite();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] 3001");
         pjsip.Pj_Make_Call_No_Answer(1001, "3001", DEVICE_IP_LAN, false);
@@ -180,9 +175,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     public void testPreferences_03_TrunkEmergency() {
         prerequisite();
         apiUtil.editEmergency("Emergency1",String.format("\"trunk_list\": [{\"value\": \"%s\", \"outb_cid\": \"siptest\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 3001");
         pjsip.Pj_Make_Call_No_Answer(1000, "3001", DEVICE_IP_LAN, false);
@@ -219,9 +211,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
                 "            \"Trunk ：SPS，Trunk's Emergency Outbound Caller ID为空，保存");
         apiUtil.deleteEmergency("Emergency2").
                 createEmergency(String.format("{\"name\":\"Emergency2\",\"number\":\"2101\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee]2101 ");
         pjsip.Pj_Make_Call_No_Answer(1000, "2101", DEVICE_IP_LAN, false);
@@ -260,9 +249,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency2").
                 createEmergency(String.format("{\"name\":\"Emergency2\",\"number\":\"2101\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
         apiUtil.editEmergency("Emergency2",String.format("\"trunk_list\": [{\"value\": \"%s\", \"outb_cid\": \"0123456789\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2101");
         pjsip.Pj_Make_Call_No_Answer(1000, "2101", DEVICE_IP_LAN, false);
@@ -303,9 +289,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
                 "            \"Trunk ：SPS，Trunk's Emergency Outbound Caller ID为空，保存");
         apiUtil.deleteEmergency("Emergency2").
                 createEmergency(String.format("{\"name\":\"Emergency2\",\"number\":\"2101\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2001" + ",[callee] 9999");
         pjsip.Pj_Make_Call_No_Answer(2001, "9999", DEVICE_ASSIST_2, false);
@@ -351,9 +334,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency3").
                 createEmergency(String.format("{\"name\":\"Emergency3\",\"number\":\"2102\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] 2102");
         pjsip.Pj_Make_Call_No_Answer(1000, "2102", DEVICE_IP_LAN, false);
 
@@ -392,9 +372,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
                 createEmergency(String.format("{\"name\":\"Emergency3\",\"number\":\"2102\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).
                 editEmergency("Emergency3",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testAccount123\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] 2102");
         pjsip.Pj_Make_Call_No_Answer(1000, "2102", DEVICE_IP_LAN, false);
 
@@ -423,16 +400,17 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_09_TrunkEmergency() {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:Emergency4 ,Emergency Number:2103,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：BRI，Trunk's Emergency Outbound Caller ID为空，保存");
         apiUtil.deleteEmergency("Emergency4").
                 createEmergency(String.format("{\"name\":\"Emergency4\",\"number\":\"2103\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(BRI_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2103");
         pjsip.Pj_Make_Call_No_Answer(1000, "2103", DEVICE_IP_LAN, false);
@@ -473,17 +451,18 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_10_TrunkEmergency() {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:Emergency4 ,Emergency Number:2103,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：BRI，Trunk's Emergency Outbound Caller ID为空，保存");
         apiUtil.deleteEmergency("Emergency4").
                 createEmergency(String.format("{\"name\":\"Emergency4\",\"number\":\"2103\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(BRI_1).id)).
                 editEmergency("Emergency4",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testbri\"}]",apiUtil.getTrunkSummary(BRI_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2103");
         pjsip.Pj_Make_Call_No_Answer(1000, "2103", DEVICE_IP_LAN, false);
@@ -516,16 +495,17 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_11_TrunkEmergency() {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:Emergency5 ,Emergency Number:2104,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：E1，Trunk's Emergency Outbound Caller ID为空，保存");
         apiUtil.deleteEmergency("Emergency5").
                 createEmergency(String.format("{\"name\":\"Emergency5\",\"number\":\"2104\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(E1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2104");
         pjsip.Pj_Make_Call_No_Answer(1000, "2104", DEVICE_IP_LAN, false);
@@ -565,17 +545,18 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_12_TrunkEmergency() {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:Emergency5 ,Emergency Number:2104,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：E1，Trunk's Emergency Outbound Caller ID为空，保存");
         apiUtil.deleteEmergency("Emergency5").
                 createEmergency(String.format("{\"name\":\"Emergency5\",\"number\":\"2104\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(E1).id)).
                 editEmergency("Emergency5",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testE1\"}]",apiUtil.getTrunkSummary(E1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] ");
         pjsip.Pj_Make_Call_No_Answer(1000, "2104", DEVICE_IP_LAN, false);
@@ -605,19 +586,17 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_13_TrunkEmergency() {
-        if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
+        if(GSM.trim().equalsIgnoreCase("null")){
             Assert.assertTrue(false,"GSM线路 不测试！");
         }
+
         prerequisite();
         step("添加紧急号码，Name:Emergency6 ,Emergency Number:辅助2的GSM号码,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk ：GSM，Trunk's Emergency Outbound Caller ID为空，保存");
         apiUtil.deleteEmergency("Emergency6").
                 createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] "+DEVICE_ASSIST_GSM);
         pjsip.Pj_Make_Call_No_Answer(1000, DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
@@ -650,18 +629,15 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_14_TrunkEmergency() {
-        if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
+        if(GSM.trim().equalsIgnoreCase("null")){
             Assert.assertTrue(false,"GSM线路 不测试！");
         }
         prerequisite();
         apiUtil.deleteEmergency("Emergency6").
                 createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).
                 editEmergency("Emergency6",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testgsm\"}]",apiUtil.getTrunkSummary(GSM).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] "+DEVICE_ASSIST_GSM);
         pjsip.Pj_Make_Call_No_Answer(1000,DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
@@ -695,7 +671,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_15_TrunkEmergency() {
         if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
             Assert.assertTrue(false,"GSM线路 不测试！");
@@ -704,9 +680,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency6").
                 createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).
                 editEmergency("Emergency6",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\"}]",apiUtil.getTrunkSummary(GSM).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] "+DEVICE_ASSIST_GSM);
         pjsip.Pj_Make_Call_No_Answer(1000, DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
@@ -739,7 +712,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_16_TrunkEmergency() {
         if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
             Assert.assertTrue(false,"GSM线路 不测试！");
@@ -750,9 +723,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency6").
                 createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).
                 editEmergency("Emergency6",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestGSM\"}]",apiUtil.getTrunkSummary(GSM).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee]"+DEVICE_ASSIST_GSM);
         pjsip.Pj_Make_Call_No_Answer(1000, DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
@@ -784,7 +754,7 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
+    @Test(groups = {"PSeries", "EmergencyNumber","TrunkEmergencyOutboundCallerID","P3",  ""})
     public void testPreferences_17_TrunkEmergency() {
         if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
             Assert.assertTrue(false,"GSM线路 不测试！");
@@ -795,9 +765,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency6").
                 createEmergency(String.format("{\"name\":\"Emergency6\",\"number\":\"%s\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",DEVICE_ASSIST_GSM,apiUtil.getTrunkSummary(GSM).id)).
                 editEmergency("Emergency6",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestGSM\"}]",apiUtil.getTrunkSummary(GSM).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] "+DEVICE_ASSIST_GSM);
         pjsip.Pj_Make_Call_No_Answer(1001, DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
@@ -840,9 +807,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency7").
                 createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] 2000");
         pjsip.Pj_Make_Call_No_Answer(1000, "2000", DEVICE_IP_LAN, false);
 
@@ -883,9 +847,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency7").
                 createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("Emergency7",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"testfxo\"}]",apiUtil.getTrunkSummary(FXO_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2000");
         pjsip.Pj_Make_Call_No_Answer(1000, "2000", DEVICE_IP_LAN, false);
@@ -929,9 +890,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
                 createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("Emergency7",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\"}]",apiUtil.getTrunkSummary(FXO_1).id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] 2000");
         pjsip.Pj_Make_Call_No_Answer(1000, "2000", DEVICE_IP_LAN, false);
 
@@ -972,9 +930,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency7").
                 createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("Emergency7",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestFXO\"}]",apiUtil.getTrunkSummary(FXO_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2000");
         pjsip.Pj_Make_Call_No_Answer(1000, "2000", DEVICE_IP_LAN, false);
@@ -1017,9 +972,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency7").
                 createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("Emergency7",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestFXO\"}]",apiUtil.getTrunkSummary(FXO_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] 2000");
         pjsip.Pj_Make_Call_No_Answer(1001, "2000", DEVICE_IP_LAN, false);
@@ -1065,9 +1017,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
                 "            \"Trunk ：FXO，Trunk's Emergency Outbound Caller ID为空，保存");
         apiUtil.deleteEmergency("Emergency7").
                 createEmergency(String.format("{\"name\":\"Emergency7\",\"number\":\"2000\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 2001" + ",[callee] 2005");
         pjsip.Pj_Make_Call_No_Answer(2001, "2005", DEVICE_ASSIST_2, false);
@@ -1116,12 +1065,15 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     public void testPreferences_24_TrunkEmergency() {
         prerequisite();
         step("添加紧急号码，Name:Emergency8 ,Emergency Number:2105,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID");
-        apiUtil.deleteEmergency("Emergency8").
-                createEmergency(String.format("{\"name\":\"Emergency8\",\"number\":\"2105\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("Emergency8",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"SIP\"},{\"value\":\"%s\",\"outb_cid\":\"SPS\"},{\"value\":\"%s\",\"outb_cid\":\"Account\"}]",apiUtil.getTrunkSummary("SIP2").id,apiUtil.getTrunkSummary(SPS).id,apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        apiUtil.deleteEmergency("Emergency8");
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"Emergency8\",\"number\":\"2105\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("Emergency8",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"SIP\"},{\"value\":\"%s\",\"outb_cid\":\"SPS\"},{\"value\":\"%s\",\"outb_cid\":\"Account\"}]",apiUtil.getTrunkSummary("SIP2").id,apiUtil.getTrunkSummary(SPS).id,apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }else{
+            apiUtil.createEmergency(String.format("{\"name\":\"Emergency8\",\"number\":\"2105\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary("SIP2").id)).
+                    editEmergency("Emergency8",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"SPS\"},{\"value\":\"%s\",\"outb_cid\":\"Account\"}]",apiUtil.getTrunkSummary(SPS).id,apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2105");
         pjsip.Pj_Make_Call_No_Answer(1000, "2105", DEVICE_IP_LAN, false);
@@ -1159,12 +1111,15 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:Emergency8 ,Emergency Number:2105,Emergency Outbound Caller ID Priority选择Trunk's Emergency Outbound Caller ID" +
                 "编辑Emergency8，调整外线Account在sps前面");
-        apiUtil.deleteEmergency("Emergency8").
-                createEmergency(String.format("{\"name\":\"Emergency8\",\"number\":\"2105\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("Emergency8",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"SIP\"},{\"value\":\"%s\",\"outb_cid\":\"Account\"},{\"value\":\"%s\",\"outb_cid\":\"SPS\"}]",apiUtil.getTrunkSummary("SIP2").id,apiUtil.getTrunkSummary(ACCOUNTTRUNK).id,apiUtil.getTrunkSummary(SPS).id)).apply();
+        apiUtil.deleteEmergency("Emergency8");
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"Emergency8\",\"number\":\"2105\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("Emergency8",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"SIP\"},{\"value\":\"%s\",\"outb_cid\":\"Account\"},{\"value\":\"%s\",\"outb_cid\":\"SPS\"}]",apiUtil.getTrunkSummary("SIP2").id,apiUtil.getTrunkSummary(ACCOUNTTRUNK).id,apiUtil.getTrunkSummary(SPS).id)).apply();
+        }else{
+            apiUtil.createEmergency(String.format("{\"name\":\"Emergency8\",\"number\":\"2105\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary("SIP2").id)).
+                    editEmergency("Emergency8",String.format("\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"Account\"},{\"value\":\"%s\",\"outb_cid\":\"SPS\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id,apiUtil.getTrunkSummary(SPS).id)).apply();
+        }
 
         step("2:[caller] 1000" + ",[callee] 2105");
         pjsip.Pj_Make_Call_No_Answer(1000, "2105", DEVICE_IP_LAN, false);
@@ -1202,9 +1157,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency1").createEmergency(String.format("{\"name\":\"Emergency1\",\"number\":\"3001\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SIPTrunk).id)).
         editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"exttestsip\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] 3001");
         pjsip.Pj_Make_Call_No_Answer(1000, "3001", DEVICE_IP_LAN, false);
 
@@ -1240,9 +1192,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
                 "            \"Trunk：SIP1，\\tTrunk's Emergency Outbound Caller ID：exttestsip");
         apiUtil.deleteEmergency("Emergency1").createEmergency(String.format("{\"name\":\"Emergency1\",\"number\":\"3001\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SIPTrunk).id)).
                 editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"exttestsip\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] 3001");
         pjsip.Pj_Make_Call_No_Answer(1001, "3001", DEVICE_IP_LAN, false);
@@ -1280,9 +1229,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency1").createEmergency(String.format("{\"name\":\"Emergency1\",\"number\":\"3001\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SIPTrunk).id)).
                 editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] 3001");
         pjsip.Pj_Make_Call_No_Answer(1000, "3001", DEVICE_IP_LAN, false);
 
@@ -1319,9 +1265,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("Emergency1").createEmergency(String.format("{\"name\":\"Emergency1\",\"number\":\"3001\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SIPTrunk).id)).
                 editEmergency("Emergency1",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SIPTrunk).id)).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1001" + ",[callee] 3001");
         pjsip.Pj_Make_Call_No_Answer(1001, "3001", DEVICE_IP_LAN, false);
 
@@ -1355,12 +1298,15 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt2 ,Emergency Number:2201,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：SPS，\\tTrunk's Emergency Outbound Caller ID：EXTTestSPS");
-        apiUtil.deleteEmergency("EmergencyExt2").
-                createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("EmergencyExt2",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"EXTTestSPS\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
+        apiUtil.deleteEmergency("EmergencyExt2");
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("EmergencyExt2",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"EXTTestSPS\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
+        }else {
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
+        }
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+
 
         step("2:[caller] 1000" + ",[callee] 2201");
         pjsip.Pj_Make_Call_No_Answer(1000, "2201", DEVICE_IP_LAN, false);
@@ -1396,12 +1342,13 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt2 ,Emergency Number:2201,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：SPS，\\tTrunk's Emergency Outbound Caller ID：EXTTestSPS");
-        apiUtil.deleteEmergency("EmergencyExt2").
-                createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("EmergencyExt2",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"EXTTestSPS\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+        apiUtil.deleteEmergency("EmergencyExt2");
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("EmergencyExt2",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"EXTTestSPS\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
+        }else {
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"EXTTestSPS\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
+        }
 
         step("2:[caller] 1001" + ",[callee] 2201");
         pjsip.Pj_Make_Call_No_Answer(1001, "2201", DEVICE_IP_LAN, false);
@@ -1437,12 +1384,13 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt2 ,Emergency Number:2201,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：SPS，\\tTrunk's Emergency Outbound Caller ID：EXTTestSPS，编辑EmergencyExt2，Trunk's Emergency Outbound Caller ID 改为空");
-        apiUtil.deleteEmergency("EmergencyExt2").
-                createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("EmergencyExt2",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+        apiUtil.deleteEmergency("EmergencyExt2");
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("EmergencyExt2",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
+        }else {
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
+        }
 
         step("2:[caller] 1000" + ",[callee] 2201");
         pjsip.Pj_Make_Call_No_Answer(1000, "2201", DEVICE_IP_LAN, false);
@@ -1477,12 +1425,13 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt2 ,Emergency Number:2201,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：SPS，\\tTrunk's Emergency Outbound Caller ID：EXTTestSPS，编辑EmergencyExt2，Trunk's Emergency Outbound Caller ID 改为空");
-        apiUtil.deleteEmergency("EmergencyExt2").
-                createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("EmergencyExt2",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+        apiUtil.deleteEmergency("EmergencyExt2");
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("EmergencyExt2",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(SPS).id)).apply();
+        }else {
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt2\",\"number\":\"2201\",\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(SPS).id)).apply();
+        }
 
         step("2:[caller] 1000" + ",[callee] ");
         pjsip.Pj_Make_Call_No_Answer(1001, "2201", DEVICE_IP_LAN, false);
@@ -1517,12 +1466,14 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt3 ,Emergency Number:2202,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：Account，\\tTrunk's Emergency Outbound Caller ID：ExtTestAccount");
-        apiUtil.deleteEmergency("EmergencyExt3").
-                createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("EmergencyExt3",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestAccount\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        apiUtil.deleteEmergency("EmergencyExt3");
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("EmergencyExt3",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestAccount\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }else {
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestAccount\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }
 
         step("2:[caller] 1000" + ",[callee] 2202");
         pjsip.Pj_Make_Call_No_Answer(1000, "2202", DEVICE_IP_LAN, false);
@@ -1558,12 +1509,13 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt3 ,Emergency Number:2202,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：Account，\\tTrunk's Emergency Outbound Caller ID：ExtTestAccount");
-        apiUtil.deleteEmergency("EmergencyExt3").
-                createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("EmergencyExt3",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestAccount\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+        apiUtil.deleteEmergency("EmergencyExt3");
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("EmergencyExt3",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestAccount\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }else {
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestAccount\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }
 
         step("2:[caller] 1001" + ",[callee] 2202");
         pjsip.Pj_Make_Call_No_Answer(1001, "2202", DEVICE_IP_LAN, false);
@@ -1598,12 +1550,13 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt3 ,Emergency Number:2202,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：Account，\\tTrunk's Emergency Outbound Caller ID：ExtTestAccount");
-        apiUtil.deleteEmergency("EmergencyExt3").
-                createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("EmergencyExt3",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+        apiUtil.deleteEmergency("EmergencyExt3");
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("EmergencyExt3",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }else {
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }
 
         step("2:[caller] 1001" + ",[callee] 2202");
         pjsip.Pj_Make_Call_No_Answer(1001, "2202", DEVICE_IP_LAN, false);
@@ -1638,12 +1591,13 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt3 ,Emergency Number:2202,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：Account，\\tTrunk's Emergency Outbound Caller ID：ExtTestAccount");
-        apiUtil.deleteEmergency("EmergencyExt3").
-                createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
-                editEmergency("EmergencyExt3",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+        apiUtil.deleteEmergency("EmergencyExt3");
+        if(!FXO_1.trim().equalsIgnoreCase("null")){
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
+                    editEmergency("EmergencyExt3",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }else {
+            apiUtil.createEmergency(String.format("{\"name\":\"EmergencyExt3\",\"number\":\"2202\",\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(ACCOUNTTRUNK).id)).apply();
+        }
 
         step("2:[caller] 1000" + ",[callee] 2202");
         pjsip.Pj_Make_Call_No_Answer(1000, "2202", DEVICE_IP_LAN, false);
@@ -1673,17 +1627,18 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_38_ExtensionEmergency() {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt4 ,Emergency Number:2203,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：BRI，\\tTrunk's Emergency Outbound Caller ID：ExtTestBRI");
         apiUtil.deleteEmergency("EmergencyExt4").
                 createEmergency(String.format("{\"name\":\"EmergencyExt4\",\"number\":\"2203\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("EmergencyExt4",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestBRI\"}]",apiUtil.getTrunkSummary(BRI_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2203 ");
         pjsip.Pj_Make_Call_No_Answer(1000, "2203", DEVICE_IP_LAN, false);
@@ -1713,17 +1668,18 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_39_ExtensionEmergency() {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt4 ,Emergency Number:2203,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：BRI，\\tTrunk's Emergency Outbound Caller ID：ExtTestBRI");
         apiUtil.deleteEmergency("EmergencyExt4").
                 createEmergency(String.format("{\"name\":\"EmergencyExt4\",\"number\":\"2203\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("EmergencyExt4",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestBRI\"}]",apiUtil.getTrunkSummary(BRI_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] 2203");
         pjsip.Pj_Make_Call_No_Answer(1001, "2203", DEVICE_IP_LAN, false);
@@ -1754,17 +1710,18 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_40_ExtensionEmergency() {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt4 ,Emergency Number:2203,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：BRI，\\tTrunk's Emergency Outbound Caller ID：ExtTestBRI");
         apiUtil.deleteEmergency("EmergencyExt4").
                 createEmergency(String.format("{\"name\":\"EmergencyExt4\",\"number\":\"2203\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("EmergencyExt4",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(BRI_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2203");
         pjsip.Pj_Make_Call_No_Answer(1000, "2203", DEVICE_IP_LAN, false);
@@ -1795,8 +1752,12 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_41_ExtensionEmergency() {
+        if(BRI_1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"BRI_1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt4 ,Emergency Number:2203,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：BRI，\\tTrunk's Emergency Outbound Caller ID：ExtTestBRI\\n\" +\n" +
@@ -1804,9 +1765,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         apiUtil.deleteEmergency("EmergencyExt4").
                 createEmergency(String.format("{\"name\":\"EmergencyExt4\",\"number\":\"2203\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("EmergencyExt4",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(BRI_1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] 2203");
         pjsip.Pj_Make_Call_No_Answer(1001, "2203", DEVICE_IP_LAN, false);
@@ -1836,17 +1794,18 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_42_ExtensionEmergency() {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt5 ,Emergency Number:2204,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：E1，\\tTrunk's Emergency Outbound Caller ID：ExtTestE1");
         apiUtil.deleteEmergency("EmergencyExt5").
                 createEmergency(String.format("{\"name\":\"EmergencyExt5\",\"number\":\"2204\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("EmergencyExt5",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestE1\"}]",apiUtil.getTrunkSummary(E1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2204");
         pjsip.Pj_Make_Call_No_Answer(1000, "2204", DEVICE_IP_LAN, false);
@@ -1877,17 +1836,18 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_43_ExtensionEmergency() {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt5 ,Emergency Number:2204,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：E1，\\tTrunk's Emergency Outbound Caller ID：ExtTestE1");
         apiUtil.deleteEmergency("EmergencyExt5").
                 createEmergency(String.format("{\"name\":\"EmergencyExt5\",\"number\":\"2204\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("EmergencyExt5",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"ExtTestE1\"}]",apiUtil.getTrunkSummary(E1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] ");
         pjsip.Pj_Make_Call_No_Answer(1001, "2204", DEVICE_IP_LAN, false);
@@ -1917,17 +1877,18 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_44_ExtensionEmergency() {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt5 ,Emergency Number:2204,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：E1，\\tTrunk's Emergency Outbound Caller ID：ExtTestE1 编辑EmergencyExt5，Trunk's Emergency Outbound Caller ID 改为空");
         apiUtil.deleteEmergency("EmergencyExt5").
                 createEmergency(String.format("{\"name\":\"EmergencyExt5\",\"number\":\"2204\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("EmergencyExt5",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(E1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 2204");
         pjsip.Pj_Make_Call_No_Answer(1000, "2204", DEVICE_IP_LAN, false);
@@ -1957,17 +1918,18 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
     @Severity(SeverityLevel.BLOCKER)
     @TmsLink(value = "")
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
-    @Test(groups = {"PSeries", "Cloud", "K2", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
+    @Test(groups = {"PSeries", "EmergencyNumber","ExtensionEmergencyOutboundCallerID","P3",  ""},enabled = false)
     public void testPreferences_45_ExtensionEmergency() {
+        if(E1.trim().equalsIgnoreCase("null")){
+            Assert.assertTrue(false,"E1不存在");
+        }
+
         prerequisite();
         step("添加紧急号码，Name:EmergencyExt5 ,Emergency Number:2204,Emergency Outbound Caller ID Priority选择Extension's Emergency Outbound Caller ID\\n\" +\n" +
                 "            \"Trunk：E1，\\tTrunk's Emergency Outbound Caller ID：ExtTestE1 编辑EmergencyExt5，Trunk's Emergency Outbound Caller ID 改为空");
         apiUtil.deleteEmergency("EmergencyExt5").
                 createEmergency(String.format("{\"name\":\"EmergencyExt5\",\"number\":\"2204\",\"outb_cid_option\":\"emergency_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]}",apiUtil.getTrunkSummary(FXO_1).id)).
                 editEmergency("EmergencyExt5",String.format("\"outb_cid_option\":\"ext_first\",\"trunk_list\":[{\"value\":\"%s\",\"outb_cid\":\"\"}]",apiUtil.getTrunkSummary(E1).id)).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] 2204");
         pjsip.Pj_Make_Call_No_Answer(1001, "2204", DEVICE_IP_LAN, false);
@@ -2002,9 +1964,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step(".编辑Preferences-》Max Call Duration 为40s;");
         apiUtil.preferencesUpdate("{\"max_call_duration\":40}").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1002" + ",[callee] 999");
         pjsip.Pj_Make_Call_No_Answer(1002, "999", DEVICE_IP_LAN, false);
@@ -2046,9 +2005,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         step("编辑分机D-1003启用Disable Outbound Calls");
         apiUtil.editExtension("1003","\"disable_outb_call\":1").apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1003" + ",[callee] 999");
         pjsip.Pj_Make_Call_No_Answer(1003, "999", DEVICE_IP_LAN, false);
 
@@ -2082,9 +2038,6 @@ public class TestEmergencyNumber extends TestCaseBaseNew {
         prerequisite();
         step("48.删除Emergency1");
         apiUtil.deleteEmergency("Emergency1").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 3001");
         pjsip.Pj_Make_Call_No_Answer(1000, "3001", DEVICE_IP_LAN, false);

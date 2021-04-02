@@ -138,10 +138,12 @@ public class CDRObject {
         Extension_1000_VOICEMAIL("Voicemail test A<1000>"),
         Extension_1001_VOICEMAIL("Voicemail test2 B<1001>"),
         Extension_1004_VOICEMAIL("Voicemail t estX<1004>"),
+        Extension_1005_VOICEMAIL("Voicemail First Last<1005>"),
 
 
-        Conference0_6500("Conference Conference0<6500>");
+        Conference0_6500("Conference Conference0<6500>"),
 
+        Account_6700("6700<6700>");
 
         private final String alias;
         CDRNAME(String alias) {

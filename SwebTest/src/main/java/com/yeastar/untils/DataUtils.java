@@ -37,6 +37,22 @@ public class DataUtils {
     }
 
     /**
+     * 获取7天前的日期
+     * @param DataForm
+     * @return
+     */
+    public static String getLast7Days(String DataForm){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(DataForm);
+        Date today = calendar.getTime();
+        calendar.setTime(today);
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        Date today30 = calendar.getTime();
+        return sdf.format(today30);
+
+    }
+
+    /**
      * 获取当前时间的 偏移时间
      * @param DataForm  HH:mm
      * @param HourOffset

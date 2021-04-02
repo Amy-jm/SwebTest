@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SwebTest.iml" filepath="$PROJECT_DIR$/SwebTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/swebtest.iml" filepath="$PROJECT_DIR$/.idea/swebtest.iml" />
     </modules>
   </component>
 </project>

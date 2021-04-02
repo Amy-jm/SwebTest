@@ -124,9 +124,6 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
         prerequisite();
         initBusinessHoursAndIn1();
 
-        step("1:login with admin,trunk: " + SPS);
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 2000" + ",[callee] 991000" + ",[trunk] " + SPS);
         pjsip.Pj_Make_Call_No_Answer(2000, "991000", DEVICE_ASSIST_2, false);
 
@@ -339,6 +336,9 @@ public class TestInboundRouteGlobalBusiness extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "InboundRoute","BasedonGlobalBusinessHours", "BusinessHoursDestination", "FXS","Extension", "P3"})
     public void testIR_04_HoursDestination()  {
+        if(FXS_1.trim().equalsIgnoreCase("null")){
+           Assert.assertTrue(false,"fxs不存在");
+        }
         prerequisite();
         initBusinessHoursAndIn1();
         step("编辑呼入路由In1,DID Pattern选择DID Pattern，模式为空，Caller IDPattern为空，Business Hours Destination选择Extension-1020");

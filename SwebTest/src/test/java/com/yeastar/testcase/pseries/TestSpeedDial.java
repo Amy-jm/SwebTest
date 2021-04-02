@@ -26,6 +26,10 @@ import static org.assertj.core.api.Assertions.tuple;
 @Log4j2
 public class TestSpeedDial extends TestCaseBaseNew {
     List<String> trunk9 = new ArrayList<>();
+    List<String> trunk8 = new ArrayList<>();
+    List<String> extensionNum = new ArrayList<>();
+    List<String> extensionNumA = new ArrayList<>();
+
     //启动子线程，监控asterisk log
     List<AsteriskObject> asteriskObjectList = new ArrayList<AsteriskObject>();
     List<String> officeTimes = new ArrayList<>();
@@ -34,6 +38,7 @@ public class TestSpeedDial extends TestCaseBaseNew {
     private boolean isDebugInitExtensionFlag = !isRunRecoveryEnvFlag;
 
     TestSpeedDial() {
+        trunk8.add(SPS);
         trunk9.add(SPS);
         trunk9.add(BRI_1);
         trunk9.add(FXO_1);
@@ -41,6 +46,9 @@ public class TestSpeedDial extends TestCaseBaseNew {
         trunk9.add(SIPTrunk);
         trunk9.add(ACCOUNTTRUNK);
         trunk9.add(GSM);
+
+        extensionNum.add("Default_Extension_Group");
+        extensionNumA.add("1000");
     }
 
     public void prerequisite() {
@@ -98,9 +106,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
     public void testSpeedDial_01_Trunk() {
         prerequisite();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] *891");
         pjsip.Pj_Make_Call_No_Answer(1000, "*891", DEVICE_IP_LAN, false);
 
@@ -132,9 +137,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
     public void testSpeedDial_02_Trunk() {
         prerequisite();
         apiUtil.deleteSpeedDial("#").createSpeeddial("\"code\":\"#\",\"phone_number\":\"21234567890\"").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] *89#");
         pjsip.Pj_Make_Call_No_Answer(1001, "*89#", DEVICE_IP_LAN, false);
@@ -170,9 +172,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
         prerequisite();
         apiUtil.deleteSpeedDial("*").createSpeeddial("\"code\":\"*\",\"phone_number\":\"33333\"").apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1002" + ",[callee] *89*");
         pjsip.Pj_Make_Call_No_Answer(1002, "*89*", DEVICE_IP_LAN, false);
 
@@ -203,14 +202,11 @@ public class TestSpeedDial extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "SpeedDial","P3", "Trunk"})
     public void testSpeedDial_04_Trunk() {
-        if(FXO_1.trim().equalsIgnoreCase("null") || FXO_1.trim().equalsIgnoreCase("")){
+        if(FXO_1.trim().equalsIgnoreCase("null")){
             Assert.assertTrue(false,"FXO 线路 不测！");
         }
         prerequisite();
         apiUtil.deleteSpeedDial("5").createSpeeddial("\"code\":\"5\",\"phone_number\":\"42000\"").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] *895");
         pjsip.Pj_Make_Call_No_Answer(1001, "*895", DEVICE_IP_LAN, false);
@@ -241,14 +237,11 @@ public class TestSpeedDial extends TestCaseBaseNew {
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
     @Test(groups = {"PSeries", "SpeedDial","P3", "Trunk"},enabled = false)
     public void testSpeedDial_05_Trunk() {
-        if(BRI_1.trim().equalsIgnoreCase("null") || BRI_1.trim().equalsIgnoreCase("")){
+        if(BRI_1.trim().equalsIgnoreCase("null")){
             Assert.assertTrue(false,"BRI 线路 不测试！");
         }
         prerequisite();
         apiUtil.deleteSpeedDial("55").createSpeeddial("\"code\":\"55\",\"phone_number\":\"52000\"").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] *8955");
         pjsip.Pj_Make_Call_No_Answer(1001, "*8955", DEVICE_IP_LAN, false);
@@ -289,14 +282,11 @@ public class TestSpeedDial extends TestCaseBaseNew {
     @Issue("【【P系列】【自动化】 呼出路由 E1/BRI CDR 被叫显示异常】https://www.tapd.cn/32809406/bugtrace/bugs/view?bug_id=1132809406001036056")
     @Test(groups = {"PSeries", "SpeedDial","P3", "Trunk"},enabled = false)
     public void testSpeedDial_06_Trunk() {
-        if(E1.trim().equalsIgnoreCase("null") || E1.trim().equalsIgnoreCase("")){
+        if(E1.trim().equalsIgnoreCase("null")){
             Assert.assertTrue(false,"E1线路 不测试！");
         }
         prerequisite();
         apiUtil.deleteSpeedDial("*#12").createSpeeddial("\"code\":\"*#12\",\"phone_number\":\"62000\"").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] *89*#12");
         pjsip.Pj_Make_Call_No_Answer(1001, "*89*#12", DEVICE_IP_LAN, false);
@@ -337,14 +327,11 @@ public class TestSpeedDial extends TestCaseBaseNew {
     @Issue("")
     @Test(groups = {"PSeries", "Cloud", "K2", "SpeedDial","P3", "Trunk"})
     public void testSpeedDial_07_Trunk() {
-        if(GSM.trim().equalsIgnoreCase("null") || GSM.trim().equalsIgnoreCase("")){
+        if(GSM.trim().equalsIgnoreCase("null")){
             Assert.assertTrue(false,"GSM线路 不测试！");
         }
         prerequisite();
         apiUtil.deleteSpeedDial("1234").createSpeeddial("\"code\":\"1234\",\"phone_number\":\"7"+DEVICE_ASSIST_GSM+"\"").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] 7"+DEVICE_ASSIST_GSM);
         pjsip.Pj_Make_Call_No_Answer(1001, "7"+DEVICE_ASSIST_GSM, DEVICE_IP_LAN, false);
@@ -383,9 +370,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
         prerequisite();
         apiUtil.editFeatureCode("\"speed_dial\":\"*1238*3\"").deleteSpeedDial("2").createSpeeddial("\"code\":\"2\",\"phone_number\":\"23001\"").apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] *892");
         pjsip.Pj_Make_Call_No_Answer(1000, "*892", DEVICE_IP_LAN, false);
 
@@ -411,9 +395,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
     public void testSpeedDial_09_FeatureCode() {
         prerequisite();
         apiUtil.editFeatureCode("\"speed_dial\":\"*1238*3\"").deleteSpeedDial("2").createSpeeddial("\"code\":\"2\",\"phone_number\":\"23001\"").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] *1238*32");
         pjsip.Pj_Make_Call_No_Answer(1000, "*1238*32", DEVICE_IP_LAN, false);
@@ -470,9 +451,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
         prerequisite();
         apiUtil.editFeatureCode("\"enb_speed_dial\": 0").deleteSpeedDial("3").createSpeeddial("\"code\":\"3\",\"phone_number\":\"23001\"").apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1000" + ",[callee] *893");
         pjsip.Pj_Make_Call_No_Answer(1000, "*893", DEVICE_IP_LAN, false);
 
@@ -516,9 +494,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
         asteriskObjectList.clear();
         SSHLinuxUntils.AsteriskThread thread=new SSHLinuxUntils.AsteriskThread(asteriskObjectList,"enter-password.gsm");
         thread.start();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] *8981");
         pjsip.Pj_Make_Call_No_Answer(1001, "*8981", DEVICE_IP_LAN, false);
@@ -568,17 +543,17 @@ public class TestSpeedDial extends TestCaseBaseNew {
     @Test(groups = { "PSeries", "Cloud", "K2", "Role", "SpeedDial","P3", "" })
     public void testSpeedDial_12_Role() {
         prerequisite();
-        apiUtil.deleteOutbound("OutSpeedDial2").createOutbound("OutSpeedDial2", asList(SPS), asList(""), "82.", 0).
+        apiUtil.deleteOutbound("Out8").deleteOutbound("Out9").deleteOutbound("OutSpeedDial2").createOutbound("OutSpeedDial2", asList(SPS), asList(""), "82.", 0).
                 editOutbound("OutSpeedDial2", "\"role_list\":[{\"value\":\"2\",\"text\":\"Supervisor\"}]").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1000" + ",[callee] *8982");
         pjsip.Pj_Make_Call_No_Answer(1000, "*8982", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(1000, HUNGUP, 30)).as("通话状态校验 失败!").isIn(HUNGUP, IDLE);
+
+        apiUtil.createOutbound("Out8", trunk8, extensionNumA).
+                createOutbound("Out9", trunk9, extensionNum).apply();
     }
 
     @Epic("P_Series")
@@ -595,9 +570,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
         prerequisite();
         apiUtil.deleteOutbound("OutSpeedDial2").createOutbound("OutSpeedDial2", asList(SPS), asList(""), "82.", 0).
                 editOutbound("OutSpeedDial2", "\"role_list\":[{\"value\":\"2\",\"text\":\"Supervisor\"}]").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1001" + ",[callee] *8982");
         pjsip.Pj_Make_Call_No_Answer(1001, "*8982", DEVICE_IP_LAN, false);
@@ -631,9 +603,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
         prerequisite();
         apiUtil.deleteOutbound("OutSpeedDial3").createOutbound("OutSpeedDial3", asList(SPS), asList("1002"), "83.", 0).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1002" + ",[callee] *8983");
         pjsip.Pj_Make_Call_No_Answer(1002, "*8983", DEVICE_IP_LAN, false);
 
@@ -666,16 +635,16 @@ public class TestSpeedDial extends TestCaseBaseNew {
     @Test(groups = { "PSeries", "Cloud", "K2", "Role","SpeedDial", "P3", "" })
     public void testSpeedDial_15_Role() {
         prerequisite();
-        apiUtil.deleteOutbound("OutSpeedDial3").createOutbound("OutSpeedDial3", asList(SPS), asList("1002"), "83.", 0).apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
+        apiUtil.deleteOutbound("Out8").deleteOutbound("Out9").deleteOutbound("OutSpeedDial3").createOutbound("OutSpeedDial3", asList(SPS), asList("1002"), "83.", 0).apply();
 
         step("2:[caller] 1000" + ",[callee] *8983");
         pjsip.Pj_Make_Call_No_Answer(1000, "*8983", DEVICE_IP_LAN, false);
 
         step("[通话状态校验]");
         assertThat(getExtensionStatus(1000, HUNGUP, 30)).as("通话状态校验 失败!").isIn(HUNGUP, IDLE);
+
+        apiUtil.createOutbound("Out8", trunk8, extensionNumA).
+                createOutbound("Out9", trunk9, extensionNum).apply();
     }
 
     @Epic("P_Series")
@@ -691,9 +660,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
     public void testSpeedDial_16_DisableOutboundCalls() {
         prerequisite();
         apiUtil.editExtension("1003","\"disable_outb_call\":1").apply();
-
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
 
         step("2:[caller] 1003" + ",[callee] ");
         pjsip.Pj_Make_Call_No_Answer(1003, "*891", DEVICE_IP_LAN, false);
@@ -723,9 +689,6 @@ public class TestSpeedDial extends TestCaseBaseNew {
         apiUtil.editExtension("1004","\"disable_office_time_outb_call\":1").apply();
         apiUtil.deleteAllHoliday().deleteAllOfficeTime().createOfficeTime("sun", officeTimes, resetTimes).apply();
 
-        step("1:login with admin ");
-        auto.loginPage().loginWithAdmin();
-
         step("2:[caller] 1004" + ",[callee] *891");
         pjsip.Pj_Make_Call_No_Answer(1004, "*891", DEVICE_IP_LAN, false);
 
@@ -745,7 +708,7 @@ public class TestSpeedDial extends TestCaseBaseNew {
     public void testSpeedDial_18_Delete() {
         prerequisite();
 
-        step("1:login with admin ");
+        step("1:admin login");
         auto.loginPage().loginWithAdmin();
 
         step("2:进入界面");
@@ -757,7 +720,7 @@ public class TestSpeedDial extends TestCaseBaseNew {
             apiUtil.loginWeb("0",EXTENSION_PASSWORD_NEW).createSpeeddial("\"code\":\"81\",\"phone_number\":\"813001\"").apply();
         }
         step("3:删除");
-        auto.speedDialPage().deleDataByDeleImage("81").clickSaveAndApply();
+        auto.speedDialPage().deleDataByDeleImage("81","Speed Dial Number").clickSaveAndApply();
 
         assertStep("[删除成功]");
         List<String> list = TableUtils.getTableForHeader(getDriver(),"Speed Dial Number");

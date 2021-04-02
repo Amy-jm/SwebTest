@@ -70,7 +70,7 @@ public class TestCaseBase extends BaseMethod {
         long startTime_3=System.currentTimeMillis();
         softAssert = new SoftAssert();
         softAssertPlus = new SoftAssertions();
-        log.debug("[soft time]:"+(System.currentTimeMillis()-startTime_3)/1000+" Seconds");
+//        log.debug("[soft time]:"+(System.currentTimeMillis()-startTime_3)/1000+" Seconds");
     }
 
     @AfterMethod(alwaysRun = true)

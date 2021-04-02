@@ -21,19 +21,19 @@ public class PjsipDll {
         /**
          *  adapt local testNG ok
          */
-        pjsipdll instance = (pjsipdll) Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+ File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+//         pjsipdll instance = (pjsipdll) Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+ File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
 
 
         /**
          *  adapt local  maven test ok
          */
-//         pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"classes"+ File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
+//        pjsipdll instance = (pjsipdll)Native.loadLibrary(currentPath+"classes"+ File.separator+"pjsip"+File.separator+"pjsipDll.dll",pjsipdll.class);
 
 
         /**
          *  adapt testNG for code server
          */
-//         pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
+        // pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
 
         /**
          *  adapt maven test for jenkins
@@ -43,7 +43,7 @@ public class PjsipDll {
 
 //        pjsipdll instance = (pjsipdll)Native.loadLibrary("YsAutoTestPjsua_sound",pjsipdll.class);
 //
-//        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+ File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
+        pjsipdll instance = (pjsipdll)Native.loadLibrary(PropertiesUntils.getInstance().getUserDirPath()+ File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"libYsAutoTestPjsua.so",pjsipdll.class);
         /**
          * adapt for coderserver
          *
@@ -92,13 +92,16 @@ public class PjsipDll {
         interface DtmfCallBack extends Callback{
             int fptr_dtmfdigit(int id, int dtmf);
         }
+//        interface CallMediaState extends Callback{
+//            int fptr_callholdconf(int id);
+//        }
 
         //=======================注册回调函数=====================//
         int onCallIncoming(IncomingCallBack cb);
         int onRegStateCallback(RegisterCallBack cb);
         int onCallStateCallback(CallstateCallBack cb);
         int onDtmfDigitCallback(DtmfCallBack cb);
-
+//        int onCallHoldConfirmCallback(CallMediaState cb);
 
 
 

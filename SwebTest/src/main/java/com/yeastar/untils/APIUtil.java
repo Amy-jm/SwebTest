@@ -31,6 +31,7 @@ public class APIUtil {
     private String webSession = NULL;
     private String m_loginName = "";
     private String m_loginPwd = "";
+    private String m_deviceIp = "";
     /**
      * 登录aip，获取cookie
      * @return
@@ -97,12 +98,6 @@ public class APIUtil {
         }
         return this;
     }
-//    /**
-//     * 获取webclient Extension信息
-//     */
-//    public APIUtil getwebclientExtension(){
-//
-//    }
 
     /**
      * 更新WebClient页面的Preferences
@@ -222,7 +217,6 @@ public class APIUtil {
         sleep(3000);
         String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/search?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
         String respondJson = getRequest(req);
-        System.out.println("cdr record :"+respondJson);
         List<CDRObject> cdrList = new ArrayList<>();
         try {
             for (int k = 0; k < num; k++) {
@@ -230,6 +224,7 @@ public class APIUtil {
                 cdrList.add(p);
             }
         }catch (IOException e){
+            log.error("[Exception] cdr record"+respondJson);
             log.error("[getCDRRecord exception] "+e);
         }
         return cdrList;
@@ -280,7 +275,6 @@ public class APIUtil {
     }
 
 
-
     /**
      * 创建时需要获取的初始化参数
      * @param arg ，根据需要创建的事件填写，分机相关：extension,队列相关：queue 以此类推
@@ -294,74 +288,6 @@ public class APIUtil {
 
         return jsonObject.getJsonObject("initial_data");
     }
-//    /**
-//     * 获取webclient可见分机组
-//     */
-//    public List<WebclientGroupObject> getWebclientGroupObject(){
-//        List<WebclinetGroupObject> webclinetGroupObject = new ArrayList<>();
-//
-//    }
-    /**
-     * 获取当前登录分机的 name
-     * zjm
-     * @return
-     */
-    public String getWebclientPerson(){
-//        List<WebclientPersonObject> webclientPersonObject = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/getpersonal");
-        JSONObject jsonObject = new JSONObject(jsonString);
-        System.out.print("\n" + jsonObject);
-//        String errcode =jsonObject.getString("errcode");
-//        System.out.print("\n" + errcode);
-//        String errmsg =jsonObject.getString("errmsg");
-//        System.out.print("\n" + errmsg);
-
-        JsonObject jsonObject1 = jsonObject.getJsonObject("extension");
-        System.out.print("\n" + jsonObject1);
-        String caller_id_name = jsonObject1.getString("caller_id_name");
-        System.out.print("\n" + caller_id_name);
-
-
-//        JsonArray jsonarray = jsonObject1.getJsonArray("presence_list");
-//        System.out.print("\n" + jsonarray);
-//        String status = jsonarray.getJsonObject(0).getString("status");
-//        System.out.print("\n" + status);
-
-
-        if(jsonObject.getString("errcode").equals("0")){
-
-        }else {
-            Assert.fail("[API getWebclientPerson] ,errmsg: "+ jsonObject.getJsonObject("errmsg"));
-        }
-        return caller_id_name;
-
-    }
-    /**
-     *
-     * 获取webclient的Extension列表
-     * zjm
-     */
-    public List<WebclientExtensionObject> getWebclientExtensionSummary(){
-        List<WebclientExtensionObject> webclientextObjList = new ArrayList<>();
-        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extension/searchwebclientext?page=1&page_size=30&sort_by=number&order_by=asc");
-        JSONObject jsonObject = new JSONObject(jsonString);
-        System.out.print(jsonObject);
-        if(jsonObject.getString("errcode").equals("0")){
-
-            if(!jsonObject.containsKey("ext_list"))
-                return webclientextObjList;
-
-            JsonArray jsonArray = jsonObject.getJsonArray("ext_list");
-            for (int i=0; i<jsonArray.size(); i++){
-                webclientextObjList.add(new WebclientExtensionObject((JSONObject) jsonArray.getJsonObject(i)));
-            }
-
-        }else {
-            Assert.fail("[API getExtensionSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
-        }
-        return webclientextObjList;
-    }
-
 
     /**
      * 获取分机概要列表
@@ -387,37 +313,6 @@ public class APIUtil {
         }
         return extObjList;
     }
-    /**
-     * 获取webclient 当前登录的分机的name
-     * zjm
-     * @return
-//     */
-//    public WebclientPersonObject getWebclientPerson(String num){
-//        List<WebclientPersonObject> webclientPersonObjects = getWebclientPerson();
-//        for (WebclientPersonObject object : webclientPersonObjects){
-//            if(object.number.equals(num)){
-//                return object;
-//            }
-//        }
-//        return null;
-//
-//    }
-    /**
-     * 在webclient Extension页面，找到指定分机 信息
-     * num 分机号
-     * zjm
-     */
-    public WebclientExtensionObject getWebclientExtensionSummary(String num){
-        List<WebclientExtensionObject> webclientextObjList = getWebclientExtensionSummary();
-        for (WebclientExtensionObject object : webclientextObjList){
-            if(object.ext_num.equals(num)){
-                return object;
-            }
-        }
-        return null;
-
-    }
-
 
     /**
      * 找到指定分机信息
@@ -789,7 +684,7 @@ public class APIUtil {
 
         String request = String.format("{\"name\":\"%s\",\"member_list\":%s,\"member_select\":\"sel_specific\",\"share_group_info_to\":\"all_ext\",\"specific_extensions\":[],\"mgr_enb_widget_in_calls\":1,\"mgr_enb_widget_out_calls\":1,\"mgr_enb_widget_ext_list\":1,\"mgr_enb_widget_ring_group_list\":1,\"mgr_enb_widget_queue_list\":1,\"mgr_enb_widget_park_ext_list\":1,\"mgr_enb_widget_vm_group_list\":1,\"mgr_enb_chg_presence\":1,\"mgr_enb_call_distribution\":1,\"mgr_enb_call_conn\":1,\"mgr_enb_monitor\":1,\"mgr_enb_call_park\":1,\"mgr_enb_ctrl_ivr\":1,\"mgr_enb_office_time_switch\":0,\"mgr_enb_mgr_recording\":0,\"user_enb_widget_in_calls\":0,\"user_enb_widget_out_calls\":0,\"user_enb_widget_ext_list\":0,\"user_enb_widget_ring_group_list\":0,\"user_enb_widget_queue_list\":0,\"user_enb_widget_park_ext_list\":0,\"user_enb_widget_vm_group_list\":0,\"user_enb_chg_presence\":0,\"user_enb_call_distribution\":0,\"user_enb_call_conn\":0,\"user_enb_monitor\":0,\"user_enb_call_park\":0,\"user_enb_ctrl_ivr\":0}"
                 ,name,jsonArray.toString());
-        log.debug("【creat Extension Group】 "+request);
+//        log.debug("【creat Extension Group】 "+request);
         //获取默认分机组
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/extensiongroup/create",request);
         return this;
@@ -2486,20 +2381,6 @@ public class APIUtil {
         postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/preferences/update",request);
         return this;
     }
-    /**
-     * Yeastar  FQDN 更新
-     */
-    public APIUtil FQDN(String request){
-        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/fqdn/update",request);
-        return this;
-    }
-    /**
-     * admin  Conatct 导入
-     */
-    public APIUtil contactsImport(String request){
-        postRequest("https://\"+DEVICE_IP_LAN+\":8088/api/v1.0/admincontacts/import",request);
-        return this;
-    }
 
     /**
      * linkusServer 更新
@@ -2530,6 +2411,134 @@ public class APIUtil {
         return this;
     }
 
+    /***
+     * 获取个人联系人的cdr记录
+     * @param num
+     * @return
+     */
+    public List<CallLogObject> getPerCdrRecord(int num) {
+        List<CallLogObject> perCdrList = new ArrayList<>();
+        String req = "https://"+DEVICE_IP_LAN+":8088/api/v1.0/cdr/searchpersonal?page=1&page_size="+(num+1)+"&sort_by=id&order_by=desc";
+        String respondJson = getRequest(req);
+
+        for(int i=0; i<num; i++){
+            CallLogObject cdr = new CallLogObject(respondJson, i);
+            perCdrList.add(cdr);
+        }
+
+        return perCdrList;
+    }
+
+    public APIUtil contactsOptionsUpdate(String  request){
+        String response = postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/contactsoptions/update", request);
+        return this;
+    }
+
+    /**
+     * 创建企业联系人
+     * @param request
+     * @return
+     */
+    public APIUtil createCompanyContacts(String request){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/admincontacts/create",request);
+        return this;
+    }
+
+    /**
+     * 创建个人联系人
+     * @param requsts
+     * @return
+     */
+    public APIUtil createPersonalContacts(String requsts){
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/contacts/create", requsts);
+        return this;
+    }
+
+    /**
+     * 获取company contacts列表
+     * @return
+     */
+    public List<CompanyContactsObject> getCompanyContactSummary(){
+        List<CompanyContactsObject> companyContactList = new ArrayList<>();
+        String jsonString = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/admincontacts/searchsummary?page=1&page_size=20&sort_by=contact_name&order_by=asc");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        if(jsonObject.getString("errcode").equals("0")){
+            if(!jsonObject.containsKey("data")){
+                return companyContactList;
+            }else {
+                JsonArray jsonArray = jsonObject.getJsonArray("data");
+                for(int i=0;i<jsonArray.size();i++){
+                    companyContactList.add(new CompanyContactsObject((JSONObject) jsonArray.getJsonObject(i)));
+                }
+            }
+        }else {
+            Assert.fail("[API getCompanyContactSummary] ,errmsg: "+ jsonObject.getString("errmsg"));
+        }
+        return companyContactList;
+    }
+
+    /**
+     * 删除当前页所有的contacts记录
+     * @return
+     */
+    public APIUtil deleteAllCompanyContacts(){
+        List<CompanyContactsObject> comList = getCompanyContactSummary();
+        List<Integer> idList = new ArrayList<Integer>();
+        for (CompanyContactsObject comObject: comList){
+            idList.add(comObject.id);
+        }
+        if (idList != null && !idList.isEmpty()){
+            deleteAdminContacts(idList);
+        }
+
+        return this;
+    }
+
+    /**
+     * 通过id去删除company contacts
+     * @param request
+     */
+    public APIUtil deleteAdminContacts(List<Integer> idList){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id_list",idList);
+
+        JSONObject jsonObject = (JSONObject) new JSONObject().fromMap(map);
+
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/admincontacts/batchdelete",jsonObject.toString());
+
+        return this;
+    }
+
+    public List<PerContactsObject> getPerContacts(){
+        List<PerContactsObject> objectList = new ArrayList<>();
+        String getStringResponse = getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/contacts/searchsummary?page=1&page_size=30&sort_by=contact_name&order_by=asc&search_value=&type=personal");
+        JSONObject responJsonObject = new JSONObject(getStringResponse);
+        if(responJsonObject.getString("errcode").equals("0")){
+            if(responJsonObject.containsKey("data")){
+                JsonArray responJsonArray = new JSONArray(responJsonObject.getString("data"));
+                for(int i=0; i< responJsonArray.size(); i++){
+                    objectList.add(new PerContactsObject(((JSONObject) responJsonArray.getJsonObject(i))));
+                }
+                return objectList;
+            }else
+                return objectList;
+        }else{
+            Assert.fail("[API getCompanyContactSummary] ,errmsg: "+ responJsonObject.getString("errmsg"));
+        }
+        return objectList;
+    }
+
+    public APIUtil delPerContacts(){
+        int id;
+        List<PerContactsObject> objectList = getPerContacts();
+        for(int i=0; i<objectList.size();i++){
+            id = objectList.get(i).id;
+            getRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/contacts/delete?id="+id+"&type=personal");
+        }
+        return this;
+    }
+
 
     /**
      * 发送get请求
@@ -2547,7 +2556,7 @@ public class APIUtil {
      * @return
      */
     private String m_getRequest(String urlpath) {
-        log.debug("deGetRequest cmd: "+urlpath);
+//        log.debug("deGetRequest cmd: "+urlpath);
         HttpsURLConnection.setDefaultHostnameVerifier(new APIUtil().new NullHostNameVerifier());
 
         String responeData = null;
@@ -2568,7 +2577,7 @@ public class APIUtil {
 
             if(conn.getResponseCode() == 200){
                 String cookies = conn.getHeaderField("Set-Cookie");
-                log.debug("[获取Cookies] "+ cookies);
+//                log.debug("[获取Cookies] "+ cookies);
                 if(cookies != null){
                     webSession = cookies.split(";")[0].replace("websession=","");
                 }
@@ -2579,6 +2588,7 @@ public class APIUtil {
                 responeData = new String(bytes, "utf-8").trim();
             }
         } catch (Exception e) {
+            log.error("[Exception] deGetRequest cmd: "+urlpath);
             e.printStackTrace();
         }
 //        log.debug("[GET result: ] "+responeData);
@@ -2595,7 +2605,7 @@ public class APIUtil {
      * @return
      */
     private String m_postRequest(String urlpath,String args1) {
-        log.debug("postRequest cmd: "+urlpath + "  body: "+args1);
+//        log.debug("postRequest cmd: "+urlpath + "  body: "+args1);
         HttpsURLConnection.setDefaultHostnameVerifier(new APIUtil().new NullHostNameVerifier());
 
         OutputStreamWriter out = null;
@@ -2631,9 +2641,10 @@ public class APIUtil {
             }
 
         } catch (Exception e) {
+            log.error("[Exception] postRequest cmd: "+urlpath + "  body: "+args1);
+            log.error("[POST responeData] "+responeData);
             e.printStackTrace();
         }
-        log.debug("[POST responeData: ] "+responeData);
 
         JSONObject jsonObject = new JSONObject(String.valueOf(responeData));
         if(jsonObject.getInteger("errcode") != 0){
@@ -2695,28 +2706,17 @@ public class APIUtil {
         String encoded = Base64.getEncoder().encodeToString(bytes);
         return encoded;
     }
-    /**
-     * SIP Setting TLS 启用/禁用 开关接口
-     */
-    public APIUtil tls(String request){
-
-        postRequest("https://"+ DEVICE_IP_LAN +":8088/api/v1.0/sipsettings/update",String.format("{%s}",request));
-
-        return this;
-    }
 
     /**
-     *
-     * @param request
+     * Event Notification:Mark All as Read
+     * System -> Event Notification -> Event Logs -> Mark All as Read
      * @return
      */
-    public APIUtil rebootask(){
-        getRequest("https://"+ DEVICE_IP_LAN +":8088/api/v1.0/pbx/reboot?type=ask");
-        return  this;
-    }
-    public  APIUtil reboot(){
-        getRequest("https://"+ DEVICE_IP_LAN +":8088/api/v1.0/pbx/reboot");
+    public APIUtil editMarksearchread(){
+        String todayData = DataUtils.getCurrentTime("MM/dd/YYYY");//03/22/2021
+        String last7Days = DataUtils.getLast7Days("MM/dd/YYYY");
+        String request = String.format("\"create_time_from\":\"%s 00:00:00\",\"create_time_to\":\"%s 23:59:59\",\"event_type\":\"\",\"event_name\":\"\",\"event_level\":\"\",\"read\":\"\"",last7Days,todayData);
+        postRequest("https://"+DEVICE_IP_LAN+":8088/api/v1.0/eventlog/marksearchread",String.format("{%s}",request));
         return this;
     }
-
 }

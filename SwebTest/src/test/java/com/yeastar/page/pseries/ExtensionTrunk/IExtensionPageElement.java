@@ -74,7 +74,7 @@ public interface IExtensionPageElement {
 
     //密码强度不够弹框
     SelenideElement ele_registration_password_not_strong_alert = $(By.xpath("//div[contains(text(),\""+UI_MAP.getString("extension_trunk.extensions.pwd_weak_continue")+"\")]"));
-    SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//span[contains(@title,\""+UI_MAP.getString("extension_trunk.extensions.weak_reg_password")+"\")]"));
+    SelenideElement ele_extension_list_warning_registration_warning_img = $(By.xpath("//span[contains(@text,\""+UI_MAP.getString("extension_trunk.extensions.weak_reg_password")+"\")]"));
 
 
     /********advance ***/

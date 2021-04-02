@@ -87,7 +87,7 @@ public class PjsipApp extends PjsipDll {
          * number  对方送来的callid（来显？）
          */
         public int fptr_callincoming(int id, String number, int accid) {
-            log.debug("incomingcallback " + number + "callid: " + id + "accid: " + accid + "accounts.size(): " + accounts.size());
+            log.debug("incomingcallback " + number + " callid: " + id + " accid: " + accid + " accounts.size(): " + accounts.size());
 
             for (int i = 0; i < accounts.size(); i++) {
                 if (accounts.get(i).accId == accid) {
@@ -155,6 +155,20 @@ public class PjsipApp extends PjsipDll {
         }
     };
 
+//    public pjsipdll.CallMediaState callMediaState = new pjsipdll.CallMediaState() {
+//        @Override
+//        public int fptr_callholdconf(int id) {
+//            log.debug("CallMediaState id:" + id );
+//            for (int i = 0; i < accounts.size(); i++) {
+//                if (accounts.get(i).callId == id) {
+//                    log.debug("CallMediaState : username :" + accounts.get(i).username);
+//                    break;
+//                }
+//            }
+//            return 0;
+//        }
+//    };
+
     public List<UserAccount> get_accounts() {
         return accounts;
     }
@@ -175,7 +189,7 @@ public class PjsipApp extends PjsipDll {
     }
 
     //初始化PJSIP
-    @Step("【pjsip】初始化PJSIP")
+    //@Step("【pjsip】初始化PJSIP")
     public void Pj_Init() {
         try {
             accounts = new ArrayList<UserAccount>();
@@ -187,6 +201,7 @@ public class PjsipApp extends PjsipDll {
             pjsipdll.instance.onCallIncoming(incomingcallback);
             pjsipdll.instance.onCallStateCallback(callstateCallBack);
             pjsipdll.instance.onDtmfDigitCallback(dtmfCallBack);
+//            pjsipdll.instance.onCallHoldConfirmCallback(callMediaState);
 
             String m_os = System.getProperty("os.name");
             log.debug("[System Property:]" + m_os);
@@ -196,7 +211,7 @@ public class PjsipApp extends PjsipDll {
             } else {
             }
 //
-            Reporter.infoExec("pjs_init done");
+//            Reporter.infoExec("pjs_init done");
         } catch (Throwable ex) {
             log.error("【PjsipException Init】" + ex);
         }
@@ -309,7 +324,7 @@ public class PjsipApp extends PjsipDll {
 //        account.accId  = pjsipdll.instance.ys_registerAccount(account.uriHead+String.valueOf(username)+"@"+ip+":"+String.valueOf(port), "sip:"+ip+":"+account.port, "*", String.valueOf(username), account.password, "", true);
             account.accId = pjsipdll.instance.ys_registerAccount(account.uriHead + String.valueOf(username) + "@" + ip + ":" + account.port, "sip:" + ip + ":" + account.port, "*", String.valueOf(username), account.password, "", true, 99999);
 
-//        log.debug("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
+        log.debug("sip: ."+account.uriHead+String.valueOf(username)+"@"+ip+":"+account.port+"......." + account.accId);
 //        log.debug("sip register: "+"sip:"+ip+":"+account.port);
 //        log.debug("username:"+String.valueOf(username));
 //        log.debug("pwd :" +account.password);
